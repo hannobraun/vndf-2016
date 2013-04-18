@@ -1,1 +1,1 @@
-clang source/main.c && ./a.out
+clang source/main.c output/lib/libglfw.a -lGL && ./a.out
