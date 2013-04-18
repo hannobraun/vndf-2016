@@ -29,7 +29,9 @@ int main(int argc, char const *argv[])
 		-screenHeight/2, screenHeight/2,
 		-1, 1);
 
-	while (glfwGetWindowParam(GLFW_OPENED))
+	while (
+		glfwGetWindowParam(GLFW_OPENED) &&
+		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
     {
 		glClear(GL_COLOR_BUFFER_BIT);
 
