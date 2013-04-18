@@ -2,6 +2,9 @@
 
 #include "GL/glfw.h"
 
+const int screenWidth  = 800;
+const int screenHeight = 600;
+
 int main(int argc, char const *argv[])
 {
 	if (!glfwInit())
@@ -12,7 +15,7 @@ int main(int argc, char const *argv[])
 
 	if (
 		!glfwOpenWindow(
-			800, 600,
+			screenWidth, screenHeight,
 			8, 8, 8, 8,
 			0, 0,
 			GLFW_WINDOW))
