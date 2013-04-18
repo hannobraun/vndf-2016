@@ -1,1 +1,6 @@
-clang source/main.c output/lib/libglfw.a -lGL && ./a.out
+BINARY_DIR=output/bin
+BINARY=$BINARY_DIR/vndf
+
+mkdir -p $BINARY_DIR
+
+clang source/main.c output/lib/libglfw.a -lGL -o $BINARY && ./$BINARY
