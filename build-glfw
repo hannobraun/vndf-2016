@@ -1,0 +1,13 @@
+LIB_DIR=output/lib
+
+CURRENT_DIR=$(pwd)
+
+mkdir -p $LIB_DIR
+
+cd vendor/glfw
+
+make x11
+cp lib/x11/libglfw.a $CURRENT_DIR/$LIB_DIR
+make x11-clean
+
+cd $CURRENT_DIR
