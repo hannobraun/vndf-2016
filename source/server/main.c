@@ -38,7 +38,8 @@ int main(int argc, char const *argv[])
 	}
 
 	int yes=1;
-	if (setsockopt(socket_fd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1) {
+	if (setsockopt(socket_fd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1)
+	{
 		printf("Error setting socket option: %s", strerror(errno));
 		return 1;
 	}
