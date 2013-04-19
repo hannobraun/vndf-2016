@@ -29,11 +29,14 @@ int main(int argc, char const *argv[])
 		return 1;
 	}
 
+	float xPos = -300.0f;
+
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
     {
-		render(50.0f, 0.0f);
+    	xPos += 0.5f;
+		render(xPos, 0.0f);
     }
 
 	return 0;
