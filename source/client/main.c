@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "GL/glfw.h"
+#include <GL/glfw.h>
 
 
 const int screenWidth  = 800;
