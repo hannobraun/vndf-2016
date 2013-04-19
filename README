@@ -1,2 +1,2 @@
-* Build dependencies: ./build-glfw
-* Build and run vndf: ./run
+* Build dependencies: ./scripts/build-glfw
+* Build and run vndf: ./scripts/run
