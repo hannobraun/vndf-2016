@@ -1,5 +1,5 @@
 BINARY_DIR=output/bin
-BINARY=$BINARY_DIR/vndf
+BINARY=$BINARY_DIR/vndf-client
 
 mkdir -p $BINARY_DIR
 
