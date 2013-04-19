@@ -24,16 +24,18 @@ int main(int argc, char const *argv[])
 		return 1;
 	}
 
-	glOrtho(
-		-screenWidth/2, screenWidth/2,
-		-screenHeight/2, screenHeight/2,
-		-1, 1);
-
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
     {
 		glClear(GL_COLOR_BUFFER_BIT);
+		glLoadIdentity();
+		glOrtho(
+			-screenWidth/2, screenWidth/2,
+			-screenHeight/2, screenHeight/2,
+			-1, 1);
+
+		glTranslatef(50.0f, 0.0f, 0.0f);
 
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glBegin(GL_TRIANGLE_STRIP);
