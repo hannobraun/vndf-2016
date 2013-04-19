@@ -1,0 +1,5 @@
+Issue types
+* Convenience: The issue caused programmer inconvenience.
+
+Convenience:
+Compiler invocation is duplicated between server and client scripts.
