@@ -1,5 +1,8 @@
-Issue types
-* Convenience: The issue caused programmer inconvenience.
+This file collects real issues that occured during development or in production.
+The following list defines the types of issues that belong in this file. It is
+not complete and should be extended as necessary:
+* convenience: The issue caused programmer inconvenience.
 
-Convenience:
-Compiler invocation is duplicated between server and client scripts.
+Compiler invocation is duplicated between scripts (convenience)
+If the compiler should be called with different options, this must be changed in
+both the client and server scripts.
