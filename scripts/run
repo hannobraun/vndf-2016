@@ -3,5 +3,6 @@ BINARY=$BINARY_DIR/vndf
 
 mkdir -p $BINARY_DIR
 
-clang source/main.c output/lib/libglfw.a -lGL -Isource/include/ -o $BINARY &&
+clang source/client/main.c output/lib/libglfw.a \
+	-lGL -Isource/include/ -o $BINARY &&
 	./$BINARY
