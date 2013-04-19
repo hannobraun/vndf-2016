@@ -7,7 +7,7 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-void render();
+void render(float xPos, float yPos);
 
 
 int main(int argc, char const *argv[])
@@ -33,13 +33,13 @@ int main(int argc, char const *argv[])
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
     {
-		render();
+		render(50.0f, 0.0f);
     }
 
 	return 0;
 }
 
-void render() {
+void render(float xPos, float yPos) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glOrtho(
@@ -47,7 +47,7 @@ void render() {
 		-screenHeight/2, screenHeight/2,
 		-1, 1);
 
-	glTranslatef(50.0f, 0.0f, 0.0f);
+	glTranslatef(xPos, yPos, 0.0f);
 
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glBegin(GL_TRIANGLE_STRIP);
