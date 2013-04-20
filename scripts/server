@@ -4,5 +4,6 @@ BINARY=$BINARY_DIR/vndf-server
 mkdir -p $BINARY_DIR
 
 clang source/server/main.c output/lib/libglfw.a \
-	-lGL -Isource/include/ -o $BINARY -Werror &&
+	-lGL -Isource/include/ -o $BINARY \
+	-Werror -Weverything -Wno-unused-parameter &&
 	./$BINARY
