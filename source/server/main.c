@@ -67,16 +67,16 @@ int main(int argc, char const *argv[])
 		&address_size);
 
 	char *message = "50 50\n";
-	int message_length = strlen(message);
-	int bytes_sent = send(client_fd, message, message_length, 0);
-	if (bytes_sent == -1)
+	size_t message_length = strlen(message);
+	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
+	if (bytes_sent < 0)
 	{
 		printf("Error sending message: %s\n", strerror(errno));
 		return 1;
 	}
-	if (bytes_sent != message_length)
+	if ((size_t)bytes_sent != message_length)
 	{
-		printf("Only sent %d of %d bytes.\n", bytes_sent, message_length);
+		printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
 		return 1;
 	}
 
