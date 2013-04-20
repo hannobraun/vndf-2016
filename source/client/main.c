@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <GL/glfw.h>
 
@@ -15,7 +16,7 @@ int main(int argc, char const *argv[])
 	if (!glfwInit())
 	{
 		printf("Error initializing GLFW.\n");
-		return 1;
+		exit(1);
 	}
 
 	if (
@@ -26,7 +27,7 @@ int main(int argc, char const *argv[])
 			GLFW_WINDOW))
 	{
 		printf("Error opening GLFW window.\n");
-		return 1;
+		exit(1);
 	}
 
 	float xPos = -300.0f;
