@@ -42,7 +42,8 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void render(float xPos, float yPos) {
+void render(float xPos, float yPos)
+{
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 	glOrtho(
