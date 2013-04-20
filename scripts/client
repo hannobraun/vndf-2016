@@ -1,9 +1,6 @@
-BINARY_DIR=output/bin
-BINARY=$BINARY_DIR/vndf-client
+export BINARY_NAME=vndf-client
+export SOURCE_FILES=source/client/main.c
+export STATIC_LIBS=output/lib/libglfw.a
+export LIB_ARGS=-lGL
 
-mkdir -p $BINARY_DIR
-
-clang source/client/main.c output/lib/libglfw.a \
-	-lGL -Isource/include/ -o $BINARY \
-	-Werror -Weverything -Wno-unused-parameter &&
-	./$BINARY
+./scripts/helper/run
