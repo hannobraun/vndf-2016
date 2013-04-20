@@ -1,5 +1,10 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include <netdb.h>
+
 
 #include <GL/glfw.h>
 
@@ -36,8 +41,62 @@ int main(int argc, char const *argv[])
 
 void read_initial_position(float *xPos, float *yPos)
 {
-	*xPos = -300.0f;
-	*yPos = 0.0f;
+	int status;
+
+	struct addrinfo hints;
+	memset(&hints, 0, sizeof hints);
+	hints.ai_family   = AF_UNSPEC;
+	hints.ai_socktype = SOCK_STREAM;
+
+	struct addrinfo *servinfo;
+
+	status = getaddrinfo("localhost", "34481", &hints, &servinfo);
+	if (status != 0)
+	{
+		printf("Error getting address info: %s\n", strerror(errno));
+		exit(1);
+	}
+
+	int socket_fd = socket(
+		servinfo->ai_family,
+		servinfo->ai_socktype,
+		servinfo->ai_protocol);
+	if (socket_fd == -1)
+	{
+		printf("Error creating socket: %s\n", strerror(errno));
+		exit(1);
+	}
+
+	status = connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+	if (status != 0)
+	{
+		printf("Error connecting to server: %s\n", strerror(errno));
+		exit(1);
+	}
+
+	char message[256];
+	ssize_t bytes_received = recv(socket_fd, message, sizeof(message), 0);
+	if (bytes_received < 0)
+	{
+		printf("Error receiving message: %s\n", strerror(errno));
+		exit(1);
+	}
+	if (bytes_received == 0)
+	{
+		printf("Connection closed while receiving.\n");
+		exit(1);
+	}
+
+	status = sscanf(message, "%f %f\n", xPos, yPos);
+	if (status != 2)
+	{
+		printf("Error reading from socket. Only %d item(s) matched.\n", status);
+		exit(1);
+	}
+
+	printf("%f %f\n", *xPos, *yPos);
+
+	freeaddrinfo(servinfo);
 }
 
 void init_rendering()
