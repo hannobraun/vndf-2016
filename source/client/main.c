@@ -8,15 +8,20 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
+void read_initial_position(float *xPos, float *yPos);
+
 void init_rendering(void);
 void render(float xPos, float yPos);
 
 
 int main(int argc, char const *argv[])
 {
-	init_rendering();
+	float xPos;
+	float yPos;
 
-	float xPos = -300.0f;
+	read_initial_position(&xPos, &yPos);
+
+	init_rendering();
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -27,6 +32,12 @@ int main(int argc, char const *argv[])
 	}
 
 	return 0;
+}
+
+void read_initial_position(float *xPos, float *yPos)
+{
+	*xPos = -300.0f;
+	*yPos = 0.0f;
 }
 
 void init_rendering()
