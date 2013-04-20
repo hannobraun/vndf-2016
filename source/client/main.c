@@ -8,10 +8,28 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
+void init_rendering(void);
 void render(float xPos, float yPos);
 
 
 int main(int argc, char const *argv[])
+{
+	init_rendering();
+
+	float xPos = -300.0f;
+
+	while (
+		glfwGetWindowParam(GLFW_OPENED) &&
+		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
+	{
+		xPos += 0.5f;
+		render(xPos, 0.0f);
+	}
+
+	return 0;
+}
+
+void init_rendering()
 {
 	if (!glfwInit())
 	{
@@ -29,18 +47,6 @@ int main(int argc, char const *argv[])
 		printf("Error opening GLFW window.\n");
 		exit(1);
 	}
-
-	float xPos = -300.0f;
-
-	while (
-		glfwGetWindowParam(GLFW_OPENED) &&
-		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
-    {
-    	xPos += 0.5f;
-		render(xPos, 0.0f);
-    }
-
-	return 0;
 }
 
 void render(float xPos, float yPos)
