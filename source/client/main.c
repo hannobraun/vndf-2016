@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
 		xPos += 0.5f;
-		render(xPos, 0.0f);
+		render(xPos, yPos);
 	}
 
 	return 0;
