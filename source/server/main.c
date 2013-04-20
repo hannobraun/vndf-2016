@@ -67,7 +67,7 @@ int main(int argc, char const *argv[])
 		(struct sockaddr *)&remote_address,
 		&address_size);
 
-	char *message = "50 50\n";
+	char *message = "-300 200\n";
 	size_t message_length = strlen(message);
 	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
 	if (bytes_sent < 0)
