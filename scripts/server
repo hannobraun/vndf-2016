@@ -1,9 +1,4 @@
-BINARY_DIR=output/bin
-BINARY=$BINARY_DIR/vndf-server
+export BINARY_NAME=vndf-server
+export SOURCE_FILES=source/server/main.c
 
-mkdir -p $BINARY_DIR
-
-clang source/server/main.c output/lib/libglfw.a \
-	-lGL -Isource/include/ -o $BINARY \
-	-Werror -Weverything -Wno-unused-parameter &&
-	./$BINARY
+./scripts/helper/run
