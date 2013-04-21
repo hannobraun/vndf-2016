@@ -5,7 +5,6 @@
 
 #include <netdb.h>
 
-
 #include <GL/glfw.h>
 
 
