@@ -9,6 +9,7 @@
 
 
 int init_server(void);
+int accept_client(int server_fd);
 
 
 int main(int argc, char const *argv[])
@@ -19,13 +20,7 @@ int main(int argc, char const *argv[])
 
 	for (;;)
 	{
-		struct sockaddr_storage remote_address;
-		socklen_t address_size = sizeof remote_address;
-
-		int client_fd = accept(
-			server_fd,
-			(struct sockaddr *)&remote_address,
-			&address_size);
+		int client_fd = accept_client(server_fd);
 
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
@@ -113,4 +108,17 @@ int init_server()
 	freeaddrinfo(servinfo);
 
 	return socket_fd;
+}
+
+int accept_client(int server_fd)
+{
+	struct sockaddr_storage remote_address;
+	socklen_t address_size = sizeof remote_address;
+
+	int client_fd = accept(
+		server_fd,
+		(struct sockaddr *)&remote_address,
+		&address_size);
+
+	return client_fd;
 }
