@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <sys/socket.h>
 #include <netdb.h>
@@ -12,6 +13,8 @@ int init_server(void);
 
 int main(int argc, char const *argv[])
 {
+	srand((unsigned int)time(NULL));
+
 	int server_fd = init_server();
 
 	for (;;)
@@ -24,8 +27,8 @@ int main(int argc, char const *argv[])
 			(struct sockaddr *)&remote_address,
 			&address_size);
 
-		int xPos = -300;
-		int yPos = 200;
+		int xPos = rand() % 600 - 300;
+		int yPos = rand() % 400 - 200;
 
 		char message[256];
 		int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
