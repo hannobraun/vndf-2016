@@ -24,7 +24,22 @@ int main(int argc, char const *argv[])
 			(struct sockaddr *)&remote_address,
 			&address_size);
 
-		char *message = "-300 200\n";
+		int xPos = -300;
+		int yPos = 200;
+
+		char message[256];
+		int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
+		if (status < 0)
+		{
+			printf("Error encoding message.\n");
+			exit(1);
+		}
+		if ((size_t)status > sizeof message)
+		{
+			printf("Message did not fit into buffer.\n");
+			exit(1);
+		}
+
 		size_t message_length = strlen(message);
 		ssize_t bytes_sent = send(client_fd, message, message_length, 0);
 		if (bytes_sent < 0)
