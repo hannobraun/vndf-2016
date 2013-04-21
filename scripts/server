@@ -1,4 +1,14 @@
 export BINARY_NAME=vndf-server
 export SOURCE_FILES=source/server/main.c
 
-./scripts/helper/run
+function restart_server() {
+	killall $BINARY_NAME
+	./scripts/helper/run &
+}
+
+restart_server
+
+while inotifywait -qq -e modify $SOURCE_FILES; do
+	echo "Restarting server..."
+	restart_server
+done
