@@ -8,4 +8,4 @@ Core goals:
 
 Next Step
 
-Make the server capable of handling any number of clients sequentially.
+Randomize initial position returned by server.
