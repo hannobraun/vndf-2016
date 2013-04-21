@@ -94,8 +94,6 @@ void read_initial_position(float *xPos, float *yPos)
 		exit(1);
 	}
 
-	printf("%f %f\n", *xPos, *yPos);
-
 	freeaddrinfo(servinfo);
 }
 
