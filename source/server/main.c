@@ -10,6 +10,7 @@
 
 int init_server(void);
 int accept_client(int server_fd);
+void send_position(int client_fd, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -25,31 +26,7 @@ int main(int argc, char const *argv[])
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
-		char message[256];
-		int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
-		if (status < 0)
-		{
-			printf("Error encoding message.\n");
-			exit(1);
-		}
-		if ((size_t)status > sizeof message)
-		{
-			printf("Message did not fit into buffer.\n");
-			exit(1);
-		}
-
-		size_t message_length = strlen(message);
-		ssize_t bytes_sent = send(client_fd, message, message_length, 0);
-		if (bytes_sent < 0)
-		{
-			printf("Error sending message: %s\n", strerror(errno));
-			exit(1);
-		}
-		if ((size_t)bytes_sent != message_length)
-		{
-			printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
-			exit(1);
-		}
+		send_position(client_fd, xPos, yPos);
 	}
 }
 
@@ -121,4 +98,33 @@ int accept_client(int server_fd)
 		&address_size);
 
 	return client_fd;
+}
+
+void send_position(int client_fd, int xPos, int yPos)
+{
+	char message[256];
+	int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
+	if (status < 0)
+	{
+		printf("Error encoding message.\n");
+		exit(1);
+	}
+	if ((size_t)status > sizeof message)
+	{
+		printf("Message did not fit into buffer.\n");
+		exit(1);
+	}
+
+	size_t message_length = strlen(message);
+	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
+	if (bytes_sent < 0)
+	{
+		printf("Error sending message: %s\n", strerror(errno));
+		exit(1);
+	}
+	if ((size_t)bytes_sent != message_length)
+	{
+		printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
+		exit(1);
+	}
 }
