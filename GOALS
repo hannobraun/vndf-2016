@@ -1,11 +1,12 @@
 Vision
 
-A space MMO that about freedom.
+A space MMO about freedom.
 
 Core goals:
-* The mechanics make player skill the prime condition for success.
+* Mechanics that make player skill the prime condition for success.
 
 
 Next Step
 
-Randomize initial position returned by server.
+Compute the triangle position on the server and send continuous updates to the
+client.
