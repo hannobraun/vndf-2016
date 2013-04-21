@@ -3,6 +3,4 @@ The following list defines the types of issues that belong in this file. It is
 not complete and should be extended as necessary:
 * convenience: The issue caused programmer inconvenience.
 
-Server needs to be restarted after a change has been made (convenience).
-It would be perfect, if the server would be compiled and re-started any time a
-change has been made to its source file.
+No issues.
