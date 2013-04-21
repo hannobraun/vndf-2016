@@ -7,7 +7,39 @@
 #include <netdb.h>
 
 
+int init_server(void);
+
+
 int main(int argc, char const *argv[])
+{
+	int server_fd = init_server();
+
+	struct sockaddr_storage remote_address;
+	socklen_t address_size = sizeof remote_address;
+
+	int client_fd = accept(
+		server_fd,
+		(struct sockaddr *)&remote_address,
+		&address_size);
+
+	char *message = "-300 200\n";
+	size_t message_length = strlen(message);
+	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
+	if (bytes_sent < 0)
+	{
+		printf("Error sending message: %s\n", strerror(errno));
+		exit(1);
+	}
+	if ((size_t)bytes_sent != message_length)
+	{
+		printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
+		exit(1);
+	}
+
+	return 0;
+}
+
+int init_server()
 {
 	int status;
 
@@ -59,29 +91,7 @@ int main(int argc, char const *argv[])
 		exit(1);
 	}
 
-	struct sockaddr_storage remote_address;
-	socklen_t address_size = sizeof remote_address;
-
-	int client_fd = accept(
-		socket_fd,
-		(struct sockaddr *)&remote_address,
-		&address_size);
-
-	char *message = "-300 200\n";
-	size_t message_length = strlen(message);
-	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
-	if (bytes_sent < 0)
-	{
-		printf("Error sending message: %s\n", strerror(errno));
-		exit(1);
-	}
-	if ((size_t)bytes_sent != message_length)
-	{
-		printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
-		exit(1);
-	}
-
 	freeaddrinfo(servinfo);
 
-	return 0;
+	return socket_fd;
 }
