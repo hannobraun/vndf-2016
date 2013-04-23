@@ -17,8 +17,8 @@ int acceptClient(int serverFD);
 void sendPosition(int clientFD, int xPos, int yPos);
 
 
-#define CLIENT_ACCEPT_BACKLOG 1
-#define MAX_CLIENTS 1
+#define CLIENT_ACCEPT_BACKLOG 1024
+#define MAX_CLIENTS 1024
 
 
 int main(int argc, char const *argv[])
