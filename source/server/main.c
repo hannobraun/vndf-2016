@@ -12,6 +12,7 @@
 
 int initSocket(void);
 int initPoller(void);
+void registerAccept(int pollerFD, int serverFD);
 int acceptClient(int serverFD);
 void sendPosition(int clientFD, int xPos, int yPos);
 
@@ -29,14 +30,7 @@ int main(int argc, char const *argv[])
 	int serverFD = initSocket();
 	int pollerFD = initPoller();
 
-	struct epoll_event event;
-	event.events = EPOLLIN;
-	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, &event);
-	if (status != 0)
-	{
-		perror("Error registering server socket with epoll");
-		exit(1);
-	}
+	registerAccept(pollerFD, serverFD);
 
 	#define MAX_EVENTS 1024
 	struct epoll_event events[MAX_EVENTS];
@@ -130,6 +124,18 @@ int initPoller()
 	}
 
 	return pollerFD;
+}
+
+void registerAccept(int pollerFD, int serverFD)
+{
+	struct epoll_event event;
+	event.events = EPOLLIN;
+	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, &event);
+	if (status != 0)
+	{
+		perror("Error registering server socket with epoll");
+		exit(1);
+	}
 }
 
 int acceptClient(int serverFD)
