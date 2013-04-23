@@ -54,7 +54,7 @@ int connectToServer()
 	status = getaddrinfo("localhost", "34481", &hints, &servinfo);
 	if (status != 0)
 	{
-		printf("Error getting address info: %s\n", strerror(errno));
+		perror("Error getting address info");
 		exit(1);
 	}
 
@@ -64,14 +64,14 @@ int connectToServer()
 		servinfo->ai_protocol);
 	if (socket_fd == -1)
 	{
-		printf("Error creating socket: %s\n", strerror(errno));
+		perror("Error creating socket");
 		exit(1);
 	}
 
 	status = connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (status != 0)
 	{
-		printf("Error connecting to server: %s\n", strerror(errno));
+		perror("Error connecting to server");
 		exit(1);
 	}
 
@@ -94,7 +94,7 @@ bool receivePosition(int socket_fd, float *xPos, float *yPos)
 	}
 	if (bytes_received < 0)
 	{
-		printf("Error receiving message: %s\n", strerror(errno));
+		perror("Error receiving message");
 		exit(1);
 	}
 	if (bytes_received == 0)
