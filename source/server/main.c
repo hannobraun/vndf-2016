@@ -15,6 +15,8 @@ void sendPosition(int client_fd, int xPos, int yPos);
 
 int main(int argc, char const *argv[])
 {
+	printf("Server started.\n");
+
 	srand((unsigned int)time(NULL));
 
 	int server_fd = initServer();
