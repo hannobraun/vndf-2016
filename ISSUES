@@ -4,15 +4,11 @@ not complete and should be extended as necessary:
 * bug: Incorrect behavior.
 * convenience: The issue caused programmer inconvenience.
 
-Print message on server startup. (convenience)
-It can be confusing to start up the server for the first time after a while,
-because you kinda expect something to happen but nothing does.
-
 Server should restart automatically. (convenience)
 If the server crashes for some reason during development, the build script needs
 to be restarted manually. It should print a message instead and restart if
 automatically.
 
-Client doesn't react quickly to events. (bug)
-There's a delay to event processing because the client is blocking on the socket
-receive.
+Need a simple way to add comments to issues. (convenience)
+I feel like managing issue comments in this file will be more trouble than it's
+worth. It's probably time to migrate to a real issue tracker.
