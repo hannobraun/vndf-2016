@@ -6,12 +6,17 @@
 #include <time.h>
 
 #include <netdb.h>
+#include <sys/epoll.h>
 #include <unistd.h>
 
 
 int initServer(void);
+int initPoller(void);
 int acceptClient(int server_fd);
 void sendPosition(int client_fd, int xPos, int yPos);
+
+
+#define MAX_CLIENTS 1
 
 
 int main(int argc, char const *argv[])
@@ -21,7 +26,31 @@ int main(int argc, char const *argv[])
 	srand((unsigned int)time(NULL));
 
 	int server_fd = initServer();
-	int client_fd = acceptClient(server_fd);
+	int pollerFD  = initPoller();
+
+	struct epoll_event event;
+	event.events = EPOLLIN;
+	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, server_fd, &event);
+	if (status != 0)
+	{
+		perror("Error registering server socket with epoll");
+		exit(1);
+	}
+
+	#define MAX_EVENTS 1024
+	struct epoll_event events[MAX_EVENTS];
+	int numberOfEvents = epoll_wait(pollerFD, events, MAX_EVENTS, -1);
+	if (numberOfEvents == -1)
+	{
+		perror("Error waiting for socket events");
+		exit(1);
+	}
+
+	int client_fd = 0;
+	for (int i = 0; i < numberOfEvents; i += 1)
+	{
+		client_fd = acceptClient(server_fd);
+	}
 
 	while (true)
 	{
@@ -88,6 +117,18 @@ int initServer()
 	freeaddrinfo(servinfo);
 
 	return socket_fd;
+}
+
+int initPoller()
+{
+	int pollerFD = epoll_create(MAX_CLIENTS);
+	if (pollerFD < 0)
+	{
+		perror("Error initiating epoll");
+		exit(1);
+	}
+
+	return pollerFD;
 }
 
 int acceptClient(int server_fd)
