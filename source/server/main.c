@@ -16,6 +16,7 @@ int acceptClient(int serverFD);
 void sendPosition(int clientFD, int xPos, int yPos);
 
 
+#define CLIENT_ACCEPT_BACKLOG 1
 #define MAX_CLIENTS 1
 
 
@@ -107,7 +108,7 @@ int initSocket()
 		exit(1);
 	}
 
-	status = listen(socketFD, 20);
+	status = listen(socketFD, CLIENT_ACCEPT_BACKLOG);
 	if (status != 0)
 	{
 		perror("Error listening on socket");
