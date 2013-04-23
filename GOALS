@@ -4,8 +4,9 @@ A space MMO about freedom.
 
 Core goals:
 * Mechanics that make player skill the prime condition for success.
+* Players that drive everything that is meaningful about the game.
 
 
 Next Step
 
-Support multiple clients in parallel.
+Deploy the server into a local VM.
