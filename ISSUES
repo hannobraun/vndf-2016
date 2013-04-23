@@ -1,6 +1,7 @@
 This file collects real issues that occured during development or in production.
 The following list defines the types of issues that belong in this file. It is
 not complete and should be extended as necessary:
+* bug: Incorrect behavior.
 * convenience: The issue caused programmer inconvenience.
 
 Print message on server startup. (convenience)
@@ -11,3 +12,7 @@ Server should restart automatically. (convenience)
 If the server crashes for some reason during development, the build script needs
 to be restarted manually. It should print a message instead and restart if
 automatically.
+
+Client doesn't react quickly to events. (bug)
+There's a delay to event processing because the client is blocking on the socket
+receive.
