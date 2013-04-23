@@ -21,19 +21,18 @@ void render(float xPos, float yPos);
 
 int main(int argc, char const *argv[])
 {
-	float xPos;
-	float yPos;
-
 	int socket_fd = connectToServer();
-	receivePosition(socket_fd, &xPos, &yPos);
-
 	initRendering();
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		xPos += 0.5f;
+		float xPos;
+		float yPos;
+
+		receivePosition(socket_fd, &xPos, &yPos);
+
 		render(xPos, yPos);
 	}
 
