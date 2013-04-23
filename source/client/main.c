@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,7 +14,7 @@ const int screenHeight = 600;
 
 
 int connectToServer(void);
-void receivePosition(int socket_fd, float *xPos, float *yPos);
+bool receivePosition(int socket_fd, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -79,10 +80,18 @@ int connectToServer()
 	return socket_fd;
 }
 
-void receivePosition(int socket_fd, float *xPos, float *yPos)
+bool receivePosition(int socket_fd, float *xPos, float *yPos)
 {
 	char message[256];
-	ssize_t bytes_received = recv(socket_fd, message, sizeof(message), 0);
+	ssize_t bytes_received = recv(
+		socket_fd,
+		message,
+		sizeof(message),
+		MSG_DONTWAIT);
+	if (bytes_received == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+	{
+		return false;
+	}
 	if (bytes_received < 0)
 	{
 		printf("Error receiving message: %s\n", strerror(errno));
@@ -100,6 +109,8 @@ void receivePosition(int socket_fd, float *xPos, float *yPos)
 		printf("Error reading from socket. Only %d item(s) matched.\n", status);
 		exit(1);
 	}
+
+	return true;
 }
 
 void initRendering()
