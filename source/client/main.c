@@ -14,7 +14,7 @@ const int screenHeight = 600;
 
 void receivePosition(float *xPos, float *yPos);
 
-void init_rendering(void);
+void initRendering(void);
 void render(float xPos, float yPos);
 
 
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
 
 	receivePosition(&xPos, &yPos);
 
-	init_rendering();
+	initRendering();
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -96,7 +96,7 @@ void receivePosition(float *xPos, float *yPos)
 	freeaddrinfo(servinfo);
 }
 
-void init_rendering()
+void initRendering()
 {
 	if (!glfwInit())
 	{
