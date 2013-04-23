@@ -9,7 +9,7 @@
 
 
 int initServer(void);
-int accept_client(int server_fd);
+int acceptClient(int server_fd);
 void send_position(int client_fd, int xPos, int yPos);
 
 
@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
 
 	for (;;)
 	{
-		int client_fd = accept_client(server_fd);
+		int client_fd = acceptClient(server_fd);
 
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
@@ -87,7 +87,7 @@ int initServer()
 	return socket_fd;
 }
 
-int accept_client(int server_fd)
+int acceptClient(int server_fd)
 {
 	struct sockaddr_storage remote_address;
 	socklen_t address_size = sizeof remote_address;
