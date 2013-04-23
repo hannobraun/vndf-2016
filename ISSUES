@@ -6,3 +6,8 @@ not complete and should be extended as necessary:
 Print message on server startup. (convenience)
 It can be confusing to start up the server for the first time after a while,
 because you kinda expect something to happen but nothing does.
+
+Server should restart automatically. (convenience)
+If the server crashes for some reason during development, the build script needs
+to be restarted manually. It should print a message instead and restart if
+automatically.
