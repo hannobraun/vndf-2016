@@ -167,7 +167,7 @@ void sendPosition(int clientFD, int xPos, int yPos)
 	}
 
 	size_t message_length = strlen(message);
-	ssize_t bytes_sent = send(clientFD, message, message_length, 0);
+	ssize_t bytes_sent = send(clientFD, message, message_length, MSG_NOSIGNAL);
 	if (bytes_sent < 0)
 	{
 		perror("Error sending message");
