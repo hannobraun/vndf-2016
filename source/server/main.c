@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,7 +23,7 @@ int main(int argc, char const *argv[])
 	int server_fd = initServer();
 	int client_fd = acceptClient(server_fd);
 
-	for (;;)
+	while (true)
 	{
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
