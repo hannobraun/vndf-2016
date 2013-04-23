@@ -8,5 +8,4 @@ Core goals:
 
 Next Step
 
-Compute the triangle position on the server and send continuous updates to the
-client.
+Support multiple clients in parallel.
