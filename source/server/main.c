@@ -8,7 +8,7 @@
 #include <netdb.h>
 
 
-int init_server(void);
+int initServer(void);
 int accept_client(int server_fd);
 void send_position(int client_fd, int xPos, int yPos);
 
@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
 {
 	srand((unsigned int)time(NULL));
 
-	int server_fd = init_server();
+	int server_fd = initServer();
 
 	for (;;)
 	{
@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 	}
 }
 
-int init_server()
+int initServer()
 {
 	int status;
 
