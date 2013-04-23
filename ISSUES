@@ -3,4 +3,6 @@ The following list defines the types of issues that belong in this file. It is
 not complete and should be extended as necessary:
 * convenience: The issue caused programmer inconvenience.
 
-No issues.
+Print message on server startup. (convenience)
+It can be confusing to start up the server for the first time after a while,
+because you kinda expect something to happen but nothing does.
