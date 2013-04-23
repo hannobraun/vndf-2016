@@ -4,7 +4,6 @@
 #include <string.h>
 #include <time.h>
 
-#include <sys/socket.h>
 #include <netdb.h>
 
 
