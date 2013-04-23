@@ -12,8 +12,8 @@
 
 int initServer(void);
 int initPoller(void);
-int acceptClient(int server_fd);
-void sendPosition(int client_fd, int xPos, int yPos);
+int acceptClient(int serverFD);
+void sendPosition(int clientFD, int xPos, int yPos);
 
 
 #define MAX_CLIENTS 1
@@ -25,12 +25,12 @@ int main(int argc, char const *argv[])
 
 	srand((unsigned int)time(NULL));
 
-	int server_fd = initServer();
-	int pollerFD  = initPoller();
+	int serverFD = initServer();
+	int pollerFD = initPoller();
 
 	struct epoll_event event;
 	event.events = EPOLLIN;
-	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, server_fd, &event);
+	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, &event);
 	if (status != 0)
 	{
 		perror("Error registering server socket with epoll");
@@ -46,10 +46,10 @@ int main(int argc, char const *argv[])
 		exit(1);
 	}
 
-	int client_fd = 0;
+	int clientFD = 0;
 	for (int i = 0; i < numberOfEvents; i += 1)
 	{
-		client_fd = acceptClient(server_fd);
+		clientFD = acceptClient(serverFD);
 	}
 
 	while (true)
@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
-		sendPosition(client_fd, xPos, yPos);
+		sendPosition(clientFD, xPos, yPos);
 		usleep(500000);
 	}
 }
@@ -131,20 +131,20 @@ int initPoller()
 	return pollerFD;
 }
 
-int acceptClient(int server_fd)
+int acceptClient(int serverFD)
 {
 	struct sockaddr_storage remote_address;
 	socklen_t address_size = sizeof remote_address;
 
-	int client_fd = accept(
-		server_fd,
+	int clientFD = accept(
+		serverFD,
 		(struct sockaddr *)&remote_address,
 		&address_size);
 
-	return client_fd;
+	return clientFD;
 }
 
-void sendPosition(int client_fd, int xPos, int yPos)
+void sendPosition(int clientFD, int xPos, int yPos)
 {
 	char message[256];
 	int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
@@ -160,7 +160,7 @@ void sendPosition(int client_fd, int xPos, int yPos)
 	}
 
 	size_t message_length = strlen(message);
-	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
+	ssize_t bytes_sent = send(clientFD, message, message_length, 0);
 	if (bytes_sent < 0)
 	{
 		perror("Error sending message");
