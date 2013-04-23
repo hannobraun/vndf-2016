@@ -49,7 +49,7 @@ int initServer()
 
 	if (status != 0)
 	{
-		printf("Error getting address info: %s\n", strerror(errno));
+		perror("Error getting address info");
 		exit(1);
 	}
 
@@ -60,28 +60,28 @@ int initServer()
 
 	if (socket_fd == -1)
 	{
-		printf("Error creating socket: %s\n", strerror(errno));
+		perror("Error creating socket");
 		exit(1);
 	}
 
 	int yes=1;
 	if (setsockopt(socket_fd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1)
 	{
-		printf("Error setting socket option: %s", strerror(errno));
+		perror("Error setting socket option");
 		exit(1);
 	}
 
 	status = bind(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (status != 0)
 	{
-		printf("Error binding socket: %s\n", strerror(errno));
+		perror("Error binding socket");
 		exit(1);
 	}
 
 	status = listen(socket_fd, 20);
 	if (status != 0)
 	{
-		printf("Error listening on socket: %s\n", strerror(errno));
+		perror("Error listening on socket");
 		exit(1);
 	}
 
@@ -122,7 +122,7 @@ void sendPosition(int client_fd, int xPos, int yPos)
 	ssize_t bytes_sent = send(client_fd, message, message_length, 0);
 	if (bytes_sent < 0)
 	{
-		printf("Error sending message: %s\n", strerror(errno));
+		perror("Error sending message");
 		exit(1);
 	}
 	if ((size_t)bytes_sent != message_length)
