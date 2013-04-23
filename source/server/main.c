@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 
-int initServer(void);
+int initSocket(void);
 int initPoller(void);
 int acceptClient(int serverFD);
 void sendPosition(int clientFD, int xPos, int yPos);
@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
 
 	srand((unsigned int)time(NULL));
 
-	int serverFD = initServer();
+	int serverFD = initSocket();
 	int pollerFD = initPoller();
 
 	struct epoll_event event;
@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
 	}
 }
 
-int initServer()
+int initSocket()
 {
 	int status;
 
