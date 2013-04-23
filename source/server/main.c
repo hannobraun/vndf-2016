@@ -10,7 +10,7 @@
 
 int initServer(void);
 int acceptClient(int server_fd);
-void send_position(int client_fd, int xPos, int yPos);
+void sendPosition(int client_fd, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
-		send_position(client_fd, xPos, yPos);
+		sendPosition(client_fd, xPos, yPos);
 	}
 }
 
@@ -100,7 +100,7 @@ int acceptClient(int server_fd)
 	return client_fd;
 }
 
-void send_position(int client_fd, int xPos, int yPos)
+void sendPosition(int client_fd, int xPos, int yPos)
 {
 	char message[256];
 	int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
