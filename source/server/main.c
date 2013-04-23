@@ -82,32 +82,32 @@ int initServer()
 		exit(1);
 	}
 
-	int socket_fd = socket(
+	int socketFD = socket(
 		servinfo->ai_family,
 		servinfo->ai_socktype,
 		servinfo->ai_protocol);
 
-	if (socket_fd == -1)
+	if (socketFD == -1)
 	{
 		perror("Error creating socket");
 		exit(1);
 	}
 
 	int yes=1;
-	if (setsockopt(socket_fd,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1)
+	if (setsockopt(socketFD,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1)
 	{
 		perror("Error setting socket option");
 		exit(1);
 	}
 
-	status = bind(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+	status = bind(socketFD, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (status != 0)
 	{
 		perror("Error binding socket");
 		exit(1);
 	}
 
-	status = listen(socket_fd, 20);
+	status = listen(socketFD, 20);
 	if (status != 0)
 	{
 		perror("Error listening on socket");
@@ -116,7 +116,7 @@ int initServer()
 
 	freeaddrinfo(servinfo);
 
-	return socket_fd;
+	return socketFD;
 }
 
 int initPoller()
