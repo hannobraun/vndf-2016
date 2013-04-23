@@ -12,7 +12,8 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-void receivePosition(float *xPos, float *yPos);
+int connectToServer(void);
+void receivePosition(int socket_fd, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -23,7 +24,8 @@ int main(int argc, char const *argv[])
 	float xPos;
 	float yPos;
 
-	receivePosition(&xPos, &yPos);
+	int socket_fd = connectToServer();
+	receivePosition(socket_fd, &xPos, &yPos);
 
 	initRendering();
 
@@ -38,7 +40,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(float *xPos, float *yPos)
+int connectToServer()
 {
 	int status;
 
@@ -73,6 +75,13 @@ void receivePosition(float *xPos, float *yPos)
 		exit(1);
 	}
 
+	freeaddrinfo(servinfo);
+
+	return socket_fd;
+}
+
+void receivePosition(int socket_fd, float *xPos, float *yPos)
+{
 	char message[256];
 	ssize_t bytes_received = recv(socket_fd, message, sizeof(message), 0);
 	if (bytes_received < 0)
@@ -86,14 +95,12 @@ void receivePosition(float *xPos, float *yPos)
 		exit(1);
 	}
 
-	status = sscanf(message, "%f %f\n", xPos, yPos);
+	int status = sscanf(message, "%f %f\n", xPos, yPos);
 	if (status != 2)
 	{
 		printf("Error reading from socket. Only %d item(s) matched.\n", status);
 		exit(1);
 	}
-
-	freeaddrinfo(servinfo);
 }
 
 void initRendering()
