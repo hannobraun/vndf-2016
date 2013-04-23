@@ -32,28 +32,48 @@ int main(int argc, char const *argv[])
 
 	registerAccept(pollerFD, serverFD);
 
-	#define MAX_EVENTS 1024
-	struct epoll_event events[MAX_EVENTS];
-	int numberOfEvents = epoll_wait(pollerFD, events, MAX_EVENTS, -1);
-	if (numberOfEvents == -1)
-	{
-		perror("Error waiting for socket events");
-		exit(1);
-	}
-
-	int clientFD = 0;
-	for (int i = 0; i < numberOfEvents; i += 1)
-	{
-		clientFD = acceptClient(serverFD);
-	}
+	int clients[MAX_CLIENTS];
+	int nextClientIndex = 0;
 
 	while (true)
 	{
+		#define MAX_EVENTS 1024
+		struct epoll_event events[MAX_EVENTS];
+		int numberOfEvents = epoll_wait(pollerFD, events, MAX_EVENTS, 500);
+		if (numberOfEvents == -1)
+		{
+			perror("Error waiting for socket events");
+			exit(1);
+		}
+
+		for (int i = 0; i < numberOfEvents; i += 1)
+		{
+			int clientFD = acceptClient(serverFD);
+
+			if (nextClientIndex == MAX_CLIENTS)
+			{
+				int status = close(clientFD);
+				if (status != 0)
+				{
+					perror("Error rejecting client connection.");
+					exit(1);
+				}
+			}
+			else
+			{
+				clients[nextClientIndex] = clientFD;
+				nextClientIndex += 1;
+			}
+		}
+
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
-		sendPosition(clientFD, xPos, yPos);
-		usleep(500000);
+		for (int i = 0; i < nextClientIndex; i += 1)
+		{
+			int clientFD = clients[i];
+			sendPosition(clientFD, xPos, yPos);
+		}
 	}
 }
 
