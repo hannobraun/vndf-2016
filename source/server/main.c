@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include <netdb.h>
+#include <unistd.h>
 
 
 int initServer(void);
@@ -17,15 +18,15 @@ int main(int argc, char const *argv[])
 	srand((unsigned int)time(NULL));
 
 	int server_fd = initServer();
+	int client_fd = acceptClient(server_fd);
 
 	for (;;)
 	{
-		int client_fd = acceptClient(server_fd);
-
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
 		sendPosition(client_fd, xPos, yPos);
+		usleep(500000);
 	}
 }
 
