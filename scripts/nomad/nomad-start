@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]
+then
+	echo "Usage: $(basename $0) vm.img pidFile.run ramSize"
+	exit 1
+fi
+
+VM_IMAGE=$1
+RUN_FILE=$2
+RAM_SIZE=$3
+
+qemu-system-x86_64 -hda $VM_IMAGE -m $RAM_SIZE -display none \
+	-redir tcp:2222::22 &
+echo $! > $RUN_FILE
