@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]
+then
+	echo "Usage: $(basename $0) example.img install-image.iso ramSize"
+	exit 1
+fi
+
+TEMPLATE_FILE_PATH=$1
+INSTALL_ISO_PATH=$2
+RAM_SIZE=$3
+
+qemu-system-x86_64 \
+	-hda "$TEMPLATE_FILE_PATH" \
+	-cdrom "$INSTALL_ISO_PATH" \
+	-boot d
+	-m $RAM_SIZE
