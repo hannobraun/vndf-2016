@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 2 ]
+then
+	echo "Usage: $(basename $0) example.img imageSize"
+	exit 1
+fi
+
+TEMPLATE_FILE_PATH=$1
+IMAGE_SIZE=$2
+
+qemu-img create -f qcow2 "$TEMPLATE_FILE_PATH" $IMAGE_SIZE
