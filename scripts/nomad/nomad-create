@@ -6,7 +6,7 @@ then
 	exit 1
 fi
 
-TEMPLATE_FILE_PATH=$1
+VM_IMAGE=$1
 IMAGE_SIZE=$2
 
-qemu-img create -f qcow2 "$TEMPLATE_FILE_PATH" $IMAGE_SIZE
+qemu-img create -f qcow2 "$VM_IMAGE" $IMAGE_SIZE
