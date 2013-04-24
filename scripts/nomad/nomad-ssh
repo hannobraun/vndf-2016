@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]
+then
+	echo "Usage: $(basename $0) username"
+	exit 1
+fi
+
+USER=$1
+
+ssh $USER@localhost \
+	-i scripts/nomad/key/id_rsa \
+	-o "BatchMode yes" \
+	-p 2222
