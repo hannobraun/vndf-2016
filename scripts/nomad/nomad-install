@@ -6,12 +6,12 @@ then
 	exit 1
 fi
 
-TEMPLATE_FILE_PATH=$1
+VM_IMAGE=$1
 INSTALL_ISO_PATH=$2
 RAM_SIZE=$3
 
 qemu-system-x86_64 \
-	-hda "$TEMPLATE_FILE_PATH" \
+	-hda "$VM_IMAGE" \
 	-cdrom "$INSTALL_ISO_PATH" \
 	-boot d
 	-m $RAM_SIZE
