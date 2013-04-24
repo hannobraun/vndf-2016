@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]
+then
+	echo "Usage: $(basename $0) username sourceFile targetFile"
+	exit 1
+fi
+
+USER=$1
+SOURCE_FILE=$2
+TARGET_FILE=$3
+
+scp -i scripts/nomad/key/id_rsa \
+	-o "BatchMode yes" \
+	-P 2222 \
+	$SOURCE_FILE $USER@localhost:$TARGET_FILE
