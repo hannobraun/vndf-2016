@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]
+then
+	echo "Usage: $(basename $0) pidFile.run"
+	exit 1
+fi
+
+RUN_FILE=$1
+
+kill -9 $(cat $RUN_FILE)
