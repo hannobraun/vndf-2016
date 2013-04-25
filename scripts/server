@@ -2,7 +2,7 @@ export BINARY_NAME=vndf-server
 export SOURCE_FILES=source/server/main.c
 
 function deployServer() {
-	echo "Change detected. Deploying server..."
+	echo "Deploying server..."
 
 	source ./scripts/helper/compile
 
@@ -17,5 +17,6 @@ function deployServer() {
 deployServer
 
 while inotifywait -qq -e modify $SOURCE_FILES; do
+	echo "Change detected."
 	deployServer
 done
