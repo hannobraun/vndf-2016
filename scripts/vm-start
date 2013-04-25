@@ -1,0 +1,2 @@
+./scripts/nomad/nomad-start ubuntu1204.img ubuntu1204.run 2G \
+	"-redir tcp:34481::34481"
