@@ -131,6 +131,8 @@ void initRendering()
 		printf("Error opening GLFW window.\n");
 		exit(1);
 	}
+
+	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
 void render(float xPos, float yPos)
