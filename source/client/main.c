@@ -13,7 +13,7 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-int connectToServer(void);
+int connectToServer(const char *hostname);
 bool receivePosition(int socket_fd, float *xPos, float *yPos);
 
 void initRendering(void);
@@ -22,7 +22,13 @@ void render(float xPos, float yPos);
 
 int main(int argc, char const *argv[])
 {
-	int socket_fd = connectToServer();
+	if (argc != 2)
+	{
+		fprintf(stderr, "Usage: %s serverHostname\n", argv[0]);
+		exit(1);
+	}
+
+	int socket_fd = connectToServer(argv[1]);
 	initRendering();
 
 	while (
@@ -40,7 +46,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-int connectToServer()
+int connectToServer(const char *hostname)
 {
 	int status;
 
@@ -51,7 +57,7 @@ int connectToServer()
 
 	struct addrinfo *servinfo;
 
-	status = getaddrinfo("localhost", "34481", &hints, &servinfo);
+	status = getaddrinfo(hostname, "34481", &hints, &servinfo);
 	if (status != 0)
 	{
 		perror("Error getting address info");
