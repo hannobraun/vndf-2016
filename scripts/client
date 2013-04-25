@@ -4,4 +4,4 @@ export STATIC_LIBS=output/lib/libglfw.a
 export LIB_ARGS=-lGL
 
 source ./scripts/helper/compile
-./$BINARY
+./$BINARY $@
