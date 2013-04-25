@@ -9,5 +9,4 @@ Core goals:
 
 Next Step
 
-Deploy the client onto reineke.hannobraun.com, so it can be downloaded
-publically.
+Have the server maintain one position per client.
