@@ -1,16 +1,20 @@
 export BINARY_NAME=vndf-server
 export SOURCE_FILES=source/server/main.c
-export UPSTART_JOB=source/upstart/vndf-server.conf
+
+UPSTART_JOB=source/upstart/vndf-server.conf
+DEPLOY_DIR=/opt/vndf
 
 function deployServer() {
 	echo "Deploying server..."
 
 	source ./scripts/helper/compile
 
-	./scripts/nomad/nomad-ssh root "mkdir -p /opt/vndf"
-	./scripts/nomad/nomad-scp root $BINARY /opt/vndf
+	./scripts/nomad/nomad-ssh root "mkdir -p $DEPLOY_DIR"
+	./scripts/nomad/nomad-scp root $BINARY $DEPLOY_DIR/$BINARY_NAME-new
 	./scripts/nomad/nomad-scp root source/upstart/vndf-server.conf /etc/init
-	./scripts/nomad/nomad-ssh root "killall $BINARY_NAME; start vndf-server"
+	./scripts/nomad/nomad-ssh root \
+		"cd $DEPLOY_DIR; rm $BINARY_NAME; mv $BINARY_NAME-new $BINARY_NAME;
+		killall $BINARY_NAME; start vndf-server"
 
 	echo "Server deployed."
 }
