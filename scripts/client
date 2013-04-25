@@ -3,4 +3,5 @@ export SOURCE_FILES=source/client/main.c
 export STATIC_LIBS=output/lib/libglfw.a
 export LIB_ARGS=-lGL
 
-./scripts/helper/run
+source ./scripts/helper/compile
+./$BINARY

@@ -3,7 +3,8 @@ export SOURCE_FILES=source/server/main.c
 
 function restart_server() {
 	killall $BINARY_NAME
-	./scripts/helper/run &
+	source ./scripts/helper/compile
+	./$BINARY &
 }
 
 restart_server
