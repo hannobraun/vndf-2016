@@ -2,7 +2,7 @@ export BINARY_NAME=vndf-server
 export SOURCE_FILES=source/server/main.c
 
 function deployServer() {
-	echo "Deploying server..."
+	echo "Change detected. Deploying server..."
 
 	source ./scripts/helper/compile
 
@@ -10,6 +10,8 @@ function deployServer() {
 	./scripts/nomad/nomad-scp root $BINARY /opt/vndf
 	./scripts/nomad/nomad-scp root source/upstart/vndf-server.conf /etc/init
 	./scripts/nomad/nomad-ssh root "killall $BINARY_NAME; start vndf-server"
+
+	echo "Server deployed."
 }
 
 deployServer
