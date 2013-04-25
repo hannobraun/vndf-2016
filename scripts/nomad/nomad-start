@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 3 ]
+if [[ $# -lt 3 || $# -gt 4 ]]
 then
-	echo "Usage: $(basename $0) vm.img pidFile.run ramSize"
+	echo "Usage: $(basename $0) vm.img pidFile.run ramSize [qemuArgs]"
 	exit 1
 fi
 
 VM_IMAGE=$1
 RUN_FILE=$2
 RAM_SIZE=$3
+QEMU_ARGS=$4
 
 qemu-system-x86_64 -hda $VM_IMAGE -m $RAM_SIZE -display none \
-	-redir tcp:2222::22 &
+	-redir tcp:2222::22 $QEMU_ARGS &
 echo $! > $RUN_FILE
