@@ -12,8 +12,7 @@ function deployServer() {
 
 	./scripts/zwobot/zwobot-compile $SOURCE_FILES "" "" $BINARY
 
-	./scripts/nomad/nomad-scp root $BINARY "~/"
-	./scripts/nomad/nomad-scp root $UPSTART_JOB "~/"
+	./scripts/nomad/nomad-scp root "$BINARY $UPSTART_JOB" "~/"
 	./scripts/nomad/nomad-ssh root \
 		"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
 		mv $(basename $UPSTART_JOB) /etc/init;
