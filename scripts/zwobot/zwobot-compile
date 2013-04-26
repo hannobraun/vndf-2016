@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 4 ]
+then
+	echo "Usage: $(basename $0) sourceFiles staticLibs libArgs binary"
+	exit 1
+fi
+
+BINARY_DIR=output/bin
+BINARY=$BINARY_DIR/$BINARY_NAME
+
+SOURCE_FILES=$1
+STATIC_LIBS=$2
+LIB_ARGS=$3
+BINARY=$4
+
+mkdir -p $(dirname $BINARY)
+
+clang $SOURCE_FILES $STATIC_LIBS $LIB_ARGS -o $BINARY \
+	-Isource/include/ -Werror -Weverything -Wno-unused-parameter -g

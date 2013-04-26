@@ -1,7 +1,8 @@
-export BINARY_NAME=vndf-client
-export SOURCE_FILES=source/client/main.c
-export STATIC_LIBS=output/lib/libglfw.a
-export LIB_ARGS=-lGL
+SOURCE_FILES=source/client/main.c
+STATIC_LIBS=output/lib/libglfw.a
+LIB_ARGS=-lGL
+BINARY=output/bin/vndf-client
 
-source ./scripts/helper/compile
-./$BINARY $@
+./scripts/zwobot/zwobot-compile \
+	$SOURCE_FILES $STATIC_LIBS $LIB_ARGS $BINARY &&
+	./$BINARY $@

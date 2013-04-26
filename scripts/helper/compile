@@ -1,7 +1,0 @@
-BINARY_DIR=output/bin
-BINARY=$BINARY_DIR/$BINARY_NAME
-
-mkdir -p $BINARY_DIR
-
-clang $SOURCE_FILES $STATIC_LIBS $LIB_ARGS -o $BINARY \
-	-Isource/include/ -Werror -Weverything -Wno-unused-parameter -g
