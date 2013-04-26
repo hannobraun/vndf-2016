@@ -1,7 +1,9 @@
+source project.conf
+
 SOURCE_FILES=source/client/main.c
 STATIC_LIBS=output/lib/libglfw.a
 LIB_ARGS=-lGL
-BINARY=output/bin/vndf-client
+BINARY=$OUTPUT_DIR/vndf-client
 
 ./scripts/zwobot/zwobot-compile \
 	$SOURCE_FILES $STATIC_LIBS $LIB_ARGS $BINARY &&

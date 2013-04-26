@@ -1,5 +1,7 @@
+source project.conf
+
 SOURCE_FILES=source/server/main.c
-BINARY=output/bin/vndf-server
+BINARY=$OUTPUT_DIR/vndf-server
 
 UPSTART_JOB=source/upstart/vndf-server.conf
 DEPLOY_DIR=/opt/vndf
