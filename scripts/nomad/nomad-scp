@@ -2,15 +2,15 @@
 
 if [ $# -ne 3 ]
 then
-	echo "Usage: $(basename $0) username sourceFile targetFile"
+	echo "Usage: $(basename $0) username sourceFiles target"
 	exit 1
 fi
 
 USER=$1
-SOURCE_FILE=$2
-TARGET_FILE=$3
+SOURCE_FILES=$2
+TARGET=$3
 
 scp -i scripts/nomad/key/id_rsa \
 	-o "BatchMode yes" \
 	-P 2222 \
-	$SOURCE_FILE $USER@localhost:$TARGET_FILE
+	$SOURCE_FILES $USER@localhost:$TARGET
