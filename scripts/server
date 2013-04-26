@@ -12,12 +12,12 @@ function deployServer() {
 
 	./scripts/zwobot/zwobot-compile $SOURCE_FILES "" "" $BINARY
 
-	./scripts/nomad/nomad-ssh root "mkdir -p $DEPLOY_DIR"
-	./scripts/nomad/nomad-scp root $BINARY $DEPLOY_DIR/$BINARY_NAME-new
-	./scripts/nomad/nomad-scp root source/upstart/vndf-server.conf /etc/init
+	./scripts/nomad/nomad-scp root $BINARY "~/"
+	./scripts/nomad/nomad-scp root $UPSTART_JOB "~/"
 	./scripts/nomad/nomad-ssh root \
-		"cd $DEPLOY_DIR; rm $BINARY_NAME; mv $BINARY_NAME-new $BINARY_NAME;
-		killall $BINARY_NAME; start vndf-server"
+		"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
+		mv $(basename $UPSTART_JOB) /etc/init;
+		killall $BINARY_NAME; start $BINARY_NAME"
 
 	echo "Server deployed."
 }
