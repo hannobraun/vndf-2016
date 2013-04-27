@@ -9,4 +9,4 @@ Core goals:
 
 Next Step
 
-Have the server maintain one position per client.
+Send each client the positions of all clients.
