@@ -11,10 +11,10 @@
 #include "net.h"
 
 
-void sendPosition(int clientFD, int xPos, int yPos);
-
-
 #define MAX_CLIENTS 1024
+
+
+void sendPosition(int clientFD, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])

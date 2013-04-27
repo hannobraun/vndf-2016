@@ -8,12 +8,13 @@
 #include "net.h"
 
 
+#define CLIENT_ACCEPT_BACKLOG 1024
+
+
 int initSocket(void);
 int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
-
-#define CLIENT_ACCEPT_BACKLOG 1024
 
 net net_init()
 {
