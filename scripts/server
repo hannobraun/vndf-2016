@@ -1,6 +1,6 @@
 source project.conf
 
-SOURCE_FILES=source/server/main.c
+SOURCE_FILES="source/server/main.c source/server/net.c"
 BINARY=$OUTPUT_DIR/vndf-server
 
 UPSTART_JOB=source/upstart/vndf-server.conf
@@ -10,7 +10,7 @@ BINARY_NAME=$(basename $BINARY)
 function deployServer() {
 	echo "Deploying server..."
 
-	./scripts/zwobot/zwobot-compile $SOURCE_FILES "" "" $BINARY
+	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY
 
 	./scripts/nomad/nomad-scp root "$BINARY $UPSTART_JOB" "~/"
 	./scripts/nomad/nomad-ssh root \
