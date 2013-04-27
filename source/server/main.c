@@ -14,6 +14,13 @@
 #define MAX_CLIENTS 1024
 
 
+typedef struct {
+	int socketFD;
+	int xPos;
+	int yPos;
+} client;
+
+
 void sendPosition(int clientFD, int xPos, int yPos);
 
 
@@ -25,7 +32,7 @@ int main(int argc, char const *argv[])
 
 	net net = net_init();
 
-	int clients[MAX_CLIENTS];
+	client clients[MAX_CLIENTS];
 	int nextClientIndex = 0;
 
 	while (true)
@@ -54,18 +61,23 @@ int main(int argc, char const *argv[])
 			}
 			else
 			{
-				clients[nextClientIndex] = clientFD;
+				int xPos = rand() % 600 - 300;
+				int yPos = rand() % 400 - 200;
+
+				clients[nextClientIndex] = (client){clientFD, xPos, yPos};
 				nextClientIndex += 1;
 			}
 		}
 
-		int xPos = rand() % 600 - 300;
-		int yPos = rand() % 400 - 200;
-
 		for (int i = 0; i < nextClientIndex; i += 1)
 		{
-			int clientFD = clients[i];
-			sendPosition(clientFD, xPos, yPos);
+			clients[i].xPos += 5;
+			clients[i].yPos += 0;
+
+			sendPosition(
+				clients[i].socketFD,
+				clients[i].xPos,
+				clients[i].yPos);
 		}
 	}
 }
