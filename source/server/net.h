@@ -1,4 +1,7 @@
-int net_initSocket(void);
-int net_initPoller(void);
-void net_registerAccept(int pollerFD, int serverFD);
+typedef struct {
+	int pollerFD;
+	int serverFD;
+} net;
+
+net net_init(void);
 int net_acceptClient(int serverFD);

@@ -8,10 +8,26 @@
 #include "net.h"
 
 
+int initSocket(void);
+int initPoller(void);
+void registerAccept(int pollerFD, int serverFD);
+
+
 #define CLIENT_ACCEPT_BACKLOG 1024
 
+net net_init()
+{
+	int serverFD = initSocket();
+	int pollerFD = initPoller();
 
-int net_initSocket()
+	registerAccept(pollerFD, serverFD);
+
+	net net = {pollerFD, serverFD};
+
+	return net;
+}
+
+int initSocket()
 {
 	int status;
 
@@ -68,7 +84,7 @@ int net_initSocket()
 	return socketFD;
 }
 
-int net_initPoller()
+int initPoller()
 {
 	int pollerFD = epoll_create(1);
 	if (pollerFD < 0)
@@ -80,7 +96,7 @@ int net_initPoller()
 	return pollerFD;
 }
 
-void net_registerAccept(int pollerFD, int serverFD)
+void registerAccept(int pollerFD, int serverFD)
 {
 	struct epoll_event event;
 	event.events = EPOLLIN;

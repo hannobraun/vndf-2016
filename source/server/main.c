@@ -23,10 +23,7 @@ int main(int argc, char const *argv[])
 
 	srand((unsigned int)time(NULL));
 
-	int serverFD = net_initSocket();
-	int pollerFD = net_initPoller();
-
-	net_registerAccept(pollerFD, serverFD);
+	net net = net_init();
 
 	int clients[MAX_CLIENTS];
 	int nextClientIndex = 0;
@@ -35,7 +32,7 @@ int main(int argc, char const *argv[])
 	{
 		#define MAX_EVENTS 1024
 		struct epoll_event events[MAX_EVENTS];
-		int numberOfEvents = epoll_wait(pollerFD, events, MAX_EVENTS, 500);
+		int numberOfEvents = epoll_wait(net.pollerFD, events, MAX_EVENTS, 500);
 		if (numberOfEvents == -1)
 		{
 			perror("Error waiting for socket events");
@@ -44,7 +41,7 @@ int main(int argc, char const *argv[])
 
 		for (int i = 0; i < numberOfEvents; i += 1)
 		{
-			int clientFD = net_acceptClient(serverFD);
+			int clientFD = net_acceptClient(net.serverFD);
 
 			if (nextClientIndex == MAX_CLIENTS)
 			{
