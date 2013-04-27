@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 LIB_DIR=output/lib
 
 CURRENT_DIR=$(pwd)

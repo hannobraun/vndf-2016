@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 source project.conf
 
 SOURCE_FILES="source/server/main.c source/server/net.c"
