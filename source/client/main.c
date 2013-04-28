@@ -109,8 +109,11 @@ bool receivePosition(int socket_fd, float *xPos, float *yPos)
 		exit(1);
 	}
 
-	int status = sscanf(message, "%f %f\n", xPos, yPos);
-	if (status != 2)
+	int id;
+	int status = sscanf(message,
+		"id: %d, pos: (%f, %f)\n",
+		&id, xPos, yPos);
+	if (status != 3)
 	{
 		printf("Error reading from socket. Only %d item(s) matched.\n", status);
 		exit(1);

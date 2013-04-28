@@ -84,8 +84,13 @@ int main(int argc, char const *argv[])
 
 void sendPosition(int clientFD, int xPos, int yPos)
 {
+	int id = 0;
+
 	char message[256];
-	int status = snprintf(message, sizeof message, "%d %d\n", xPos, yPos);
+	int status = snprintf(
+		message, sizeof message,
+		"id: %d, pos: (%d, %d)\n",
+		id, xPos, yPos);
 	if (status < 0)
 	{
 		printf("Error encoding message.\n");
