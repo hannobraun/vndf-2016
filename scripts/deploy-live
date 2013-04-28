@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "This script deploys the server and client to the live server."
+echo "Please make sure that you have compiled the latest versions."
+read
+
+FILES="output/bin/vndf-server source/upstart/vndf-server.conf
+	output/bin/vndf-client"
+
+COMMANDS="mv -f vndf-server /opt/vndf; mv -f vndf-server.conf /etc/init;
+	mv -f vndf-client /srv/http/default; restart vndf-server"
+
+./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" reineke.hannobraun.com
