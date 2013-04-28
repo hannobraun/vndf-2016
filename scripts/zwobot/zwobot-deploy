@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]
+then
+	echo "Usage: $(basename $0) files commands server[:port]"
+	exit 1
+fi
+
+FILES=$1
+COMMANDS=$2
+SERVER=$3
+
+COLON_INDEX=$(expr index $SERVER ":")
+if [ $COLON_INDEX -ne 0 ]
+then
+	PORT=${SERVER:COLON_INDEX}
+	SERVER=${SERVER:0:COLON_INDEX-1}
+else
+	PORT=22
+fi
+
+DEPLOY_DIR="~/deploy-$RANDOM"
+
+rsync -e "ssh -p $PORT" $FILES root@$SERVER:$DEPLOY_DIR
+
+ssh root@$SERVER \
+	-o "BatchMode yes" \
+	-p $PORT \
+	"cd $DEPLOY_DIR; $COMMANDS"
