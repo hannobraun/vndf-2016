@@ -14,7 +14,7 @@ const int screenHeight = 600;
 
 
 int connectToServer(const char *hostname);
-bool receivePosition(int socket_fd, float *xPos, float *yPos);
+bool receivePosition(int socketFD, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 		exit(1);
 	}
 
-	int socket_fd = connectToServer(argv[1]);
+	int socketFD = connectToServer(argv[1]);
 	initRendering();
 
 	while (
@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 		float xPos;
 		float yPos;
 
-		receivePosition(socket_fd, &xPos, &yPos);
+		receivePosition(socketFD, &xPos, &yPos);
 
 		render(xPos, yPos);
 	}
@@ -64,17 +64,17 @@ int connectToServer(const char *hostname)
 		exit(1);
 	}
 
-	int socket_fd = socket(
+	int socketFD = socket(
 		servinfo->ai_family,
 		servinfo->ai_socktype,
 		servinfo->ai_protocol);
-	if (socket_fd == -1)
+	if (socketFD == -1)
 	{
 		perror("Error creating socket");
 		exit(1);
 	}
 
-	status = connect(socket_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+	status = connect(socketFD, servinfo->ai_addr, servinfo->ai_addrlen);
 	if (status != 0)
 	{
 		perror("Error connecting to server");
@@ -83,14 +83,14 @@ int connectToServer(const char *hostname)
 
 	freeaddrinfo(servinfo);
 
-	return socket_fd;
+	return socketFD;
 }
 
-bool receivePosition(int socket_fd, float *xPos, float *yPos)
+bool receivePosition(int socketFD, float *xPos, float *yPos)
 {
 	char message[256];
 	ssize_t bytes_received = recv(
-		socket_fd,
+		socketFD,
 		message,
 		sizeof(message),
 		MSG_DONTWAIT);
