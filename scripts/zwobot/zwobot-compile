@@ -6,9 +6,6 @@ then
 	exit 1
 fi
 
-BINARY_DIR=output/bin
-BINARY=$BINARY_DIR/$BINARY_NAME
-
 SOURCE_FILES=$1
 STATIC_LIBS=$2
 LIB_ARGS=$3
