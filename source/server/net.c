@@ -16,9 +16,9 @@ int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
 
-net net_init()
+net net_init(char *port)
 {
-	int serverFD = initSocket("34481");
+	int serverFD = initSocket(port);
 	int pollerFD = initPoller();
 
 	registerAccept(pollerFD, serverFD);

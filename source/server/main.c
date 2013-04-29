@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
 
 	srand((unsigned int)time(NULL));
 
-	net net = net_init();
+	net net = net_init("34481");
 
 	client clients[MAX_CLIENTS];
 	int nextClientIndex = 0;
