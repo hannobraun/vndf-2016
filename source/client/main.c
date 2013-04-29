@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
 		exit(1);
 	}
 
-	int socketFD = net_connect(argv[1]);
+	int socketFD = net_connect(argv[1], "34481");
 	initRendering();
 
 	while (

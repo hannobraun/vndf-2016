@@ -6,7 +6,7 @@
 
 #include "net.h"
 
-int net_connect(const char *hostname)
+int net_connect(const char *hostname, char *port)
 {
 	int status;
 
@@ -17,7 +17,7 @@ int net_connect(const char *hostname)
 
 	struct addrinfo *servinfo;
 
-	status = getaddrinfo(hostname, "34481", &hints, &servinfo);
+	status = getaddrinfo(hostname, port, &hints, &servinfo);
 	if (status != 0)
 	{
 		perror("Error getting address info");
