@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+TEST_BINARY=output/test-bin/client
+
+./scripts/zwobot/zwobot-compile test/client/net.c "" "" $TEST_BINARY &&
+	./$TEST_BINARY
