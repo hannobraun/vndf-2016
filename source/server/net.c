@@ -11,14 +11,14 @@
 #define CLIENT_ACCEPT_BACKLOG 1024
 
 
-int initSocket(void);
+int initSocket(char *port);
 int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
 
 net net_init()
 {
-	int serverFD = initSocket();
+	int serverFD = initSocket("34481");
 	int pollerFD = initPoller();
 
 	registerAccept(pollerFD, serverFD);
@@ -28,7 +28,7 @@ net net_init()
 	return net;
 }
 
-int initSocket()
+int initSocket(char *port)
 {
 	int status;
 
@@ -40,7 +40,7 @@ int initSocket()
 
 	struct addrinfo *servinfo;
 
-	status = getaddrinfo(NULL, "34481", &hints, &servinfo);
+	status = getaddrinfo(NULL, port, &hints, &servinfo);
 
 	if (status != 0)
 	{
