@@ -23,8 +23,9 @@ void fail(char *message)
 
 describe(net_receiveMessages,
 	it("should return all received messages",
-		// initialize networking
-		// send a few message
+		// start stub server
+		// connect to stub server
+		// send a few message from stub server to client
 		// call receiveMessages
 		// expect the messages to be there
 
