@@ -11,14 +11,13 @@
 #define CLIENT_ACCEPT_BACKLOG 1024
 
 
-int initSocket(char *port);
 int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
 
 net net_init(char *port)
 {
-	int serverFD = initSocket(port);
+	int serverFD = net_initSocket(port);
 	int pollerFD = initPoller();
 
 	registerAccept(pollerFD, serverFD);
@@ -28,7 +27,7 @@ net net_init(char *port)
 	return net;
 }
 
-int initSocket(char *port)
+int net_initSocket(char *port)
 {
 	int status;
 
