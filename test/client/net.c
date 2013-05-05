@@ -1,4 +1,9 @@
 #include <stdio.h>
+#include <string.h>
+
+#include <client/net.h>
+#include <server/net.h>
+
 
 char *currentSpec;
 char *currentExample;
@@ -21,15 +26,38 @@ void fail(char *message)
 		currentSpec, currentExample, message);
 }
 
+#define MAX_MESSAGES 3
+
 describe(net_receiveMessages,
 	it("should return all received messages",
-		// start stub server
-		// connect to stub server
-		// send a few message from stub server to client
-		// call receiveMessages
-		// expect the messages to be there
+		int serverServerFD = net_initSocket("34489");
+		int clientServerFD = net_connect("localhost", "34489");
+		int serverClientFD = net_acceptClient(serverServerFD);
 
-		fail("Not implemented.");
+		char *msg1 = "Message 1\n";
+		char *msg2 = "Message 2\n";
+		net_send(serverClientFD, msg1, strlen(msg1));
+		net_send(serverClientFD, msg2, strlen(msg2));
+
+		char messages[MAX_MESSAGES][MESSAGE_LENGTH];
+
+		int numberOfMessages = net_receiveMessages(
+			clientServerFD,
+			messages,
+			MAX_MESSAGES);
+
+		if (numberOfMessages != 2)
+		{
+			fail("Expected to receive 2 messages.");
+		}
+		if (strcmp(messages[0], msg1) != 0)
+		{
+			fail("First message not identical.");
+		}
+		if (strcmp(messages[1], msg2) != 0)
+		{
+			fail("Second message not identical.");
+		}
 	)
 )
 
