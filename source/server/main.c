@@ -102,16 +102,5 @@ void sendPosition(int clientFD, int xPos, int yPos)
 		exit(1);
 	}
 
-	size_t message_length = strlen(message);
-	ssize_t bytes_sent = send(clientFD, message, message_length, MSG_NOSIGNAL);
-	if (bytes_sent < 0)
-	{
-		perror("Error sending message");
-		exit(1);
-	}
-	if ((size_t)bytes_sent != message_length)
-	{
-		printf("Only sent %ld of %lu bytes.\n", bytes_sent, message_length);
-		exit(1);
-	}
+	net_send(clientFD, message, strlen(message));
 }
