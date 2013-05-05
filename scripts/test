@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 TEST_BINARY=output/test-bin/client
+SOURCE_FILES="source/server/net.c source/client/net.c"
 
-./scripts/zwobot/zwobot-compile test/client/net.c "" "" $TEST_BINARY &&
+./scripts/zwobot/zwobot-compile \
+	"$SOURCE_FILES test/client/net.c" "" "" $TEST_BINARY &&
 	./$TEST_BINARY
