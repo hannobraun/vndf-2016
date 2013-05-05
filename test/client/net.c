@@ -59,6 +59,10 @@ describe(net_receiveMessages,
 			fail("Second message not identical.");
 		}
 	)
+
+	// Receive partial message
+	// More messages available then can be received
+	// Received message exceeds maximum length
 )
 
 int main(int argc, char const *argv[])
