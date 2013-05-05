@@ -45,3 +45,13 @@ int net_connect(const char *hostname, char *port)
 
 	return socketFD;
 }
+
+int net_receiveMessages(
+	int socketFD,
+	char messages[][MESSAGE_LENGTH],
+	size_t maxMessage)
+{
+	strcpy(messages[0], "Message 1\n");
+	strcpy(messages[1], "Message 2\n");
+	return 2;
+}
