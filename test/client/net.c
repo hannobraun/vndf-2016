@@ -60,6 +60,7 @@ describe(net_receiveMessages,
 		}
 	)
 
+	// Nothing to receive.
 	// Receive partial message
 	// More messages available then can be received
 	// Received message exceeds maximum length
