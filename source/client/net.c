@@ -51,7 +51,44 @@ int net_receiveMessages(
 	char messages[][MESSAGE_LENGTH],
 	size_t maxMessage)
 {
-	strcpy(messages[0], "Message 1\n");
-	strcpy(messages[1], "Message 2\n");
-	return 2;
+	char message[MESSAGE_LENGTH];
+
+	ssize_t bytesReceived = recv(
+		socketFD,
+		message,
+		MESSAGE_LENGTH,
+		MSG_DONTWAIT);
+
+	// TODO: Handle no bytes being available.
+	// if (bytesReceived == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+	// {
+	// 	return 0;
+	// }
+
+	if (bytesReceived == -1)
+	{
+		perror("Error receiving message");
+		exit(1);
+	}
+	if (bytesReceived == 0)
+	{
+		printf("Connection closed while receiving.\n");
+		exit(1);
+	}
+
+	int currentMessage = 0;
+	size_t start = 0;
+	for (size_t i = 0; (ssize_t)i < bytesReceived; i += 1)
+	{
+		if (message[i] == '\n')
+		{
+			size_t bytes = i - start;
+			memcpy(messages[currentMessage], message + start, bytes);
+			strcpy(messages[currentMessage] + bytes, "\n\0");
+			currentMessage += 1;
+			start = i + 1;
+		}
+	}
+
+	return currentMessage;
 }
