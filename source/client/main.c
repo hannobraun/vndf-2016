@@ -59,7 +59,9 @@ void receivePosition(int socketFD, float *xPos, float *yPos)
 			&id, xPos, yPos);
 		if (status != 3)
 		{
-			printf("Error reading from socket. Only %d item(s) matched.\n", status);
+			printf(
+				"Error reading from socket. Only %d item(s) matched.\n",
+				status);
 			exit(1);
 		}
 	}
