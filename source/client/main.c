@@ -68,9 +68,6 @@ void receivePosition(connection *c, float *xPos, float *yPos)
 
 	c->bufferPos += bytesReceived;
 
-	c->buffer[c->bufferPos] = '\0';
-	printf("buffer: \"%s\" (%ld)\n", c->buffer, bytesReceived);
-
 	while (c->bufferPos > 0 && c->buffer[0] <= c->bufferPos)
 	{
 		if (c->buffer[0] < 0)
