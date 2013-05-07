@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,24 +47,18 @@ int net_connect(const char *hostname, char *port)
 	return socketFD;
 }
 
-int net_receiveMessages(
-	int socketFD,
-	char messages[][MESSAGE_LENGTH],
-	size_t maxMessage)
+ssize_t net_receive(int socketFD, char *buffer, size_t bufferSize)
 {
-	char message[MESSAGE_LENGTH];
-
 	ssize_t bytesReceived = recv(
 		socketFD,
-		message,
-		MESSAGE_LENGTH,
+		buffer,
+		bufferSize,
 		MSG_DONTWAIT);
 
-	// TODO: Handle no bytes being available.
-	// if (bytesReceived == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
-	// {
-	// 	return 0;
-	// }
+	if (bytesReceived == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+	{
+		return 0;
+	}
 
 	if (bytesReceived == -1)
 	{
@@ -76,19 +71,5 @@ int net_receiveMessages(
 		exit(1);
 	}
 
-	int currentMessage = 0;
-	size_t start = 0;
-	for (size_t i = 0; (ssize_t)i < bytesReceived; i += 1)
-	{
-		if (message[i] == '\n')
-		{
-			size_t bytes = i - start;
-			memcpy(messages[currentMessage], message + start, bytes);
-			strcpy(messages[currentMessage] + bytes, "\n\0");
-			currentMessage += 1;
-			start = i + 1;
-		}
-	}
-
-	return currentMessage;
+	return bytesReceived;
 }
