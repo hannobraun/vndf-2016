@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <sys/socket.h>
 
@@ -18,6 +19,7 @@ const int screenHeight = 600;
 typedef struct {
 	int  socketFD;
 	char buffer[BUFFER_SIZE];
+	int  bufferPos;
 } connection;
 
 
@@ -39,7 +41,8 @@ int main(int argc, char const *argv[])
 	initRendering();
 
 	connection c;
-	c.socketFD = socketFD;
+	c.socketFD  = socketFD;
+	c.bufferPos = 0;
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -58,9 +61,24 @@ int main(int argc, char const *argv[])
 
 void receivePosition(connection *c, float *xPos, float *yPos)
 {
-	ssize_t bytesReceived = net_receive(c->socketFD, c->buffer, BUFFER_SIZE);
-	if (bytesReceived > 0)
+	ssize_t bytesReceived = net_receive(
+		c->socketFD,
+		c->buffer + c->bufferPos,
+		(size_t)(BUFFER_SIZE - c->bufferPos));
+
+	c->bufferPos += bytesReceived;
+
+	c->buffer[c->bufferPos] = '\0';
+	printf("buffer: \"%s\" (%ld)\n", c->buffer, bytesReceived);
+
+	while (c->bufferPos > 0 && c->buffer[0] <= c->bufferPos)
 	{
+		if (c->buffer[0] < 0)
+		{
+			printf("Invalid message length: %d", c->buffer[0]);
+			exit(1);
+		}
+
 		int id;
 		int status = sscanf(c->buffer + 1,
 			"id: %d, pos: (%f, %f)\n",
@@ -72,6 +90,11 @@ void receivePosition(connection *c, float *xPos, float *yPos)
 				status);
 			exit(1);
 		}
+
+		size_t messageSize = (size_t)c->buffer[0];
+
+		memcpy(c->buffer, c->buffer + messageSize, messageSize);
+		c->bufferPos -= messageSize;
 	}
 }
 
