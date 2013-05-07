@@ -103,7 +103,7 @@ void sendPosition(int clientFD, int xPos, int yPos)
 		exit(1);
 	}
 
-	size_t messageLength = strlen(message);
+	size_t messageLength = strlen(message) + 1;
 	if (messageLength <= CHAR_MAX)
 	{
 		message[0] = (char)messageLength;
