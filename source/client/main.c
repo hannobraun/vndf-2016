@@ -14,7 +14,7 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-bool receivePosition(int socketFD, float *xPos, float *yPos);
+void receivePosition(int socketFD, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -46,40 +46,23 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-bool receivePosition(int socketFD, float *xPos, float *yPos)
+void receivePosition(int socketFD, float *xPos, float *yPos)
 {
-	char message[256];
-	ssize_t bytes_received = recv(
-		socketFD,
-		message,
-		sizeof(message),
-		MSG_DONTWAIT);
-	if (bytes_received == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+	#define MESSAGE_LENGTH 256
+	char message[MESSAGE_LENGTH];
+	ssize_t bytesReceived = net_receive(socketFD, message, MESSAGE_LENGTH);
+	if (bytesReceived > 0)
 	{
-		return false;
+		int id;
+		int status = sscanf(message,
+			"id: %d, pos: (%f, %f)\n",
+			&id, xPos, yPos);
+		if (status != 3)
+		{
+			printf("Error reading from socket. Only %d item(s) matched.\n", status);
+			exit(1);
+		}
 	}
-	if (bytes_received < 0)
-	{
-		perror("Error receiving message");
-		exit(1);
-	}
-	if (bytes_received == 0)
-	{
-		printf("Connection closed while receiving.\n");
-		exit(1);
-	}
-
-	int id;
-	int status = sscanf(message,
-		"id: %d, pos: (%f, %f)\n",
-		&id, xPos, yPos);
-	if (status != 3)
-	{
-		printf("Error reading from socket. Only %d item(s) matched.\n", status);
-		exit(1);
-	}
-
-	return true;
 }
 
 void initRendering()
