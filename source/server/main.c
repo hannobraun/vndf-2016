@@ -90,7 +90,7 @@ void sendPosition(int clientFD, int xPos, int yPos)
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
-		"id: %d, pos: (%d, %d)\n",
+		"id: %d, pos: (%d, %d)",
 		id, xPos, yPos);
 	if (status < 0)
 	{
@@ -103,7 +103,7 @@ void sendPosition(int clientFD, int xPos, int yPos)
 		exit(1);
 	}
 
-	size_t messageLength = strlen(message) + 1;
+	size_t messageLength = strlen(message);
 	if (messageLength <= CHAR_MAX)
 	{
 		message[0] = (char)messageLength;
