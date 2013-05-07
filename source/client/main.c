@@ -14,10 +14,14 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-void receivePosition(
-	int socketFD,
-	char *buffer, size_t bufferSize,
-	float *xPos, float *yPos);
+#define BUFFER_SIZE 256
+typedef struct {
+	int    socketFD;
+	char   buffer[BUFFER_SIZE];
+} connection;
+
+
+void receivePosition(connection *c, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -34,8 +38,8 @@ int main(int argc, char const *argv[])
 	int socketFD = net_connect(argv[1], "34481");
 	initRendering();
 
-	#define BUFFER_SIZE 256
-	char buffer[BUFFER_SIZE];
+	connection c;
+	c.socketFD = socketFD;
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -44,7 +48,7 @@ int main(int argc, char const *argv[])
 		float xPos;
 		float yPos;
 
-		receivePosition(socketFD, buffer, BUFFER_SIZE, &xPos, &yPos);
+		receivePosition(&c, &xPos, &yPos);
 
 		render(xPos, yPos);
 	}
@@ -52,16 +56,13 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(
-	int socketFD,
-	char *buffer, size_t bufferSize,
-	float *xPos, float *yPos)
+void receivePosition(connection *c, float *xPos, float *yPos)
 {
-	ssize_t bytesReceived = net_receive(socketFD, buffer, BUFFER_SIZE);
+	ssize_t bytesReceived = net_receive(c->socketFD, c->buffer, BUFFER_SIZE);
 	if (bytesReceived > 0)
 	{
 		int id;
-		int status = sscanf(buffer + 1,
+		int status = sscanf(c->buffer + 1,
 			"id: %d, pos: (%f, %f)\n",
 			&id, xPos, yPos);
 		if (status != 3)
