@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,7 +89,7 @@ void sendPosition(int clientFD, int xPos, int yPos)
 
 	char message[256];
 	int status = snprintf(
-		message, sizeof message,
+		message + 1, sizeof message - 1,
 		"id: %d, pos: (%d, %d)\n",
 		id, xPos, yPos);
 	if (status < 0)
@@ -99,6 +100,19 @@ void sendPosition(int clientFD, int xPos, int yPos)
 	if ((size_t)status > sizeof message)
 	{
 		printf("Message did not fit into buffer.\n");
+		exit(1);
+	}
+
+	size_t messageLength = strlen(message);
+	if (messageLength <= CHAR_MAX)
+	{
+		message[0] = (char)messageLength;
+	}
+	else
+	{
+		printf(
+			"Message size cannot be encoded. Message: \"%s\", size: %lu\n",
+			message + 1, messageLength);
 		exit(1);
 	}
 

@@ -54,7 +54,7 @@ void receivePosition(int socketFD, float *xPos, float *yPos)
 	if (bytesReceived > 0)
 	{
 		int id;
-		int status = sscanf(message,
+		int status = sscanf(message + 1,
 			"id: %d, pos: (%f, %f)\n",
 			&id, xPos, yPos);
 		if (status != 3)
