@@ -49,15 +49,16 @@ int main(int argc, char const *argv[])
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
+	#define NUM_POSITIONS 2
+	pos positions[NUM_POSITIONS];
+
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		pos p;
+		receivePosition(&c, &positions[0].x, &positions[0].y);
 
-		receivePosition(&c, &p.x, &p.y);
-
-		render(p.x, p.y);
+		render(positions[0].x, positions[0].y);
 	}
 
 	return 0;
