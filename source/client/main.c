@@ -22,6 +22,11 @@ typedef struct {
 	int  bufferPos;
 } conn;
 
+typedef struct {
+	float x;
+	float y;
+} pos;
+
 
 void receivePosition(conn *c, float *xPos, float *yPos);
 
@@ -48,12 +53,11 @@ int main(int argc, char const *argv[])
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		float xPos;
-		float yPos;
+		pos p;
 
-		receivePosition(&c, &xPos, &yPos);
+		receivePosition(&c, &p.x, &p.y);
 
-		render(xPos, yPos);
+		render(p.x, p.y);
 	}
 
 	return 0;
