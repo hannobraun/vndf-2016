@@ -17,12 +17,13 @@
 
 typedef struct {
 	int socketFD;
+	int id;
 	int xPos;
 	int yPos;
 } client;
 
 
-void sendPosition(int clientFD, int xPos, int yPos);
+void sendPosition(int clientFD, int id, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -34,7 +35,7 @@ int main(int argc, char const *argv[])
 	net net = net_init("34481");
 
 	client clients[MAX_CLIENTS];
-	int nextClientIndex = 0;
+	int nextClientId = 0;
 
 	while (true)
 	{
@@ -51,7 +52,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (nextClientIndex == MAX_CLIENTS)
+			if (nextClientId == MAX_CLIENTS)
 			{
 				int status = close(clientFD);
 				if (status != 0)
@@ -65,28 +66,28 @@ int main(int argc, char const *argv[])
 				int xPos = rand() % 600 - 300;
 				int yPos = rand() % 400 - 200;
 
-				clients[nextClientIndex] = (client){clientFD, xPos, yPos};
-				nextClientIndex += 1;
+				clients[nextClientId] =
+					(client){clientFD, nextClientId, xPos, yPos};
+				nextClientId += 1;
 			}
 		}
 
-		for (int i = 0; i < nextClientIndex; i += 1)
+		for (int i = 0; i < nextClientId; i += 1)
 		{
 			clients[i].xPos += 5;
 			clients[i].yPos += 0;
 
 			sendPosition(
 				clients[i].socketFD,
+				clients[i].id,
 				clients[i].xPos,
 				clients[i].yPos);
 		}
 	}
 }
 
-void sendPosition(int clientFD, int xPos, int yPos)
+void sendPosition(int clientFD, int id, int xPos, int yPos)
 {
-	int id = 0;
-
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
