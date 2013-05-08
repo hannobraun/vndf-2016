@@ -28,7 +28,7 @@ typedef struct {
 } pos;
 
 
-void receivePosition(conn *c, float *xPos, float *yPos);
+void receivePosition(conn *c, pos *positions, size_t positionLimit);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -49,14 +49,14 @@ int main(int argc, char const *argv[])
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
-	#define NUM_POSITIONS 2
-	pos positions[NUM_POSITIONS];
+	#define POSITION_LIMIT 2
+	pos positions[POSITION_LIMIT];
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		receivePosition(&c, &positions[0].x, &positions[0].y);
+		receivePosition(&c, positions, POSITION_LIMIT);
 
 		render(positions[0].x, positions[0].y);
 	}
@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(conn *c, float *xPos, float *yPos)
+void receivePosition(conn *c, pos *positions, size_t positionLimit)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
@@ -84,7 +84,7 @@ void receivePosition(conn *c, float *xPos, float *yPos)
 		int id;
 		int status = sscanf(c->buffer + 1,
 			"id: %d, pos: (%f, %f)\n",
-			&id, xPos, yPos);
+			&id, &positions[0].x, &positions[0].y);
 		if (status != 3)
 		{
 			printf(
