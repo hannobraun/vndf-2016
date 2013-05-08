@@ -20,10 +20,10 @@ typedef struct {
 	int  socketFD;
 	char buffer[BUFFER_SIZE];
 	int  bufferPos;
-} connection;
+} conn;
 
 
-void receivePosition(connection *c, float *xPos, float *yPos);
+void receivePosition(conn *c, float *xPos, float *yPos);
 
 void initRendering(void);
 void render(float xPos, float yPos);
@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
 	int socketFD = net_connect(argv[1], "34481");
 	initRendering();
 
-	connection c;
+	conn c;
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
@@ -59,7 +59,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(connection *c, float *xPos, float *yPos)
+void receivePosition(conn *c, float *xPos, float *yPos)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
