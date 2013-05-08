@@ -5,8 +5,10 @@ A space MMO about freedom.
 Core goals:
 * Mechanics that make player skill the prime condition for success.
 * Players that drive everything that is meaningful about the game.
+* As few arbitrary limitations as possible. Players should only be limited by
+  the physics of the game world.
 
 
 Next Step
 
-Send each client the positions of all clients.
+Remove clients that log out from the game.
