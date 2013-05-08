@@ -31,7 +31,7 @@ typedef struct {
 void receivePosition(conn *c, pos *positions, size_t positionLimit);
 
 void initRendering(void);
-void render(float xPos, float yPos);
+void render(pos *positions, size_t positionLimit);
 
 
 int main(int argc, char const *argv[])
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePosition(&c, positions, POSITION_LIMIT);
 
-		render(positions[0].x, positions[0].y);
+		render(positions, POSITION_LIMIT);
 	}
 
 	return 0;
@@ -132,7 +132,7 @@ void initRendering()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void render(float xPos, float yPos)
+void render(pos *positions, size_t positionLimit)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -141,14 +141,17 @@ void render(float xPos, float yPos)
 		-screenHeight/2, screenHeight/2,
 		-1, 1);
 
-	glTranslatef(xPos, yPos, 0.0f);
+	for (size_t i = 0; i < positionLimit; i+= 1)
+	{
+		glTranslatef(positions[i].x, positions[i].y, 0.0f);
 
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glBegin(GL_TRIANGLE_STRIP);
-		glVertex3f(  0.0f, 20.0f, 0.0f);
-		glVertex3f(-20.0f,-10.0f, 0.0f);
-		glVertex3f( 20.0f,-10.0f, 0.0f);
-	glEnd();
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glBegin(GL_TRIANGLE_STRIP);
+			glVertex3f(  0.0f, 20.0f, 0.0f);
+			glVertex3f(-20.0f,-10.0f, 0.0f);
+			glVertex3f( 20.0f,-10.0f, 0.0f);
+		glEnd();
+	}
 
 	glfwSwapBuffers();
 }
