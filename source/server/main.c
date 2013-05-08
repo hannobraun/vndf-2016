@@ -76,12 +76,19 @@ int main(int argc, char const *argv[])
 		{
 			clients[i].xPos += 5;
 			clients[i].yPos += 0;
+		}
 
-			sendPosition(
-				clients[i].socketFD,
-				clients[i].id,
-				clients[i].xPos,
-				clients[i].yPos);
+		for (int i = 0; i < nextClientId; i += 1)
+		{
+			for (int j = 0; j < nextClientId; j += 1)
+			{
+				sendPosition(
+					clients[i].socketFD,
+					clients[j].id,
+					clients[j].xPos,
+					clients[j].yPos);
+			}
+
 		}
 	}
 }
