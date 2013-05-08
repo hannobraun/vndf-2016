@@ -81,10 +81,11 @@ void receivePosition(conn *c, pos *positions, size_t positionLimit)
 			exit(1);
 		}
 
-		int id;
+		size_t id;
+		float posX, posY;
 		int status = sscanf(c->buffer + 1,
-			"id: %d, pos: (%f, %f)\n",
-			&id, &positions[0].x, &positions[0].y);
+			"id: %lu, pos: (%f, %f)\n",
+			&id, &posX, &posY);
 		if (status != 3)
 		{
 			printf(
@@ -92,6 +93,15 @@ void receivePosition(conn *c, pos *positions, size_t positionLimit)
 				status);
 			exit(1);
 		}
+
+		if (id >= positionLimit)
+		{
+			printf("Received id (%lu) too high. Limit: %lu\n", id, positionLimit);
+			exit(1);
+		}
+
+		positions[id].x = posX;
+		positions[id].y = posY;
 
 		size_t messageSize = (size_t)c->buffer[0];
 
