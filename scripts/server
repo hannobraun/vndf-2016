@@ -12,15 +12,13 @@ BINARY_NAME=$(basename $BINARY)
 function deployServer() {
 	echo "Deploying server..."
 
-	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY
-
-	./scripts/nomad/nomad-scp root "$BINARY $UPSTART_JOB" "~/"
-	./scripts/nomad/nomad-ssh root \
-		"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
-		mv $(basename $UPSTART_JOB) /etc/init;
-		killall $BINARY_NAME; start $BINARY_NAME"
-
-	echo "Server deployed."
+	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY &&
+		./scripts/nomad/nomad-scp root "$BINARY $UPSTART_JOB" "~/" &&
+		./scripts/nomad/nomad-ssh root \
+			"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
+			mv $(basename $UPSTART_JOB) /etc/init;
+			killall $BINARY_NAME; start $BINARY_NAME" &&
+		echo "Server deployed."
 }
 
 deployServer
