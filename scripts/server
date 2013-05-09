@@ -17,7 +17,7 @@ function deployServer() {
 		./scripts/nomad/nomad-ssh root \
 			"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
 			mv $(basename $UPSTART_JOB) /etc/init;
-			killall $BINARY_NAME; start $BINARY_NAME" &&
+			killall $BINARY_NAME; restart $BINARY_NAME" &&
 		echo "Server deployed."
 }
 
