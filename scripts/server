@@ -18,7 +18,7 @@ function deployServer() {
 			"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
 			mv $(basename $UPSTART_JOB) /etc/init;
 			killall $BINARY_NAME; restart $BINARY_NAME" &&
-		echo "Server deployed."
+		echo "$(date +%F_%T): Server deployed."
 }
 
 deployServer
