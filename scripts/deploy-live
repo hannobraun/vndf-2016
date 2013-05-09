@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 echo "This script deploys the server and client to the live server."
-echo "Please make sure that you have compiled the latest versions."
+echo "Please make sure that you have compiled the latest versions of both."
+echo "[Press Enter to continue.]"
 read
 
 FILES="output/bin/vndf-server source/upstart/vndf-server.conf
