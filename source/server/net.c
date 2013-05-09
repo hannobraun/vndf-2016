@@ -99,6 +99,7 @@ int initPoller()
 void registerAccept(int pollerFD, int serverFD)
 {
 	struct epoll_event event;
+	memset(&event, 0, sizeof event);
 	event.events = EPOLLIN;
 	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, &event);
 	if (status != 0)
