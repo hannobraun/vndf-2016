@@ -98,7 +98,7 @@ void sendPosition(int clientFD, int id, int xPos, int yPos)
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
-		"id: %d, pos: (%d, %d)",
+		"UPDATE id: %d, pos: (%d, %d)",
 		id, xPos, yPos);
 	if (status < 0)
 	{

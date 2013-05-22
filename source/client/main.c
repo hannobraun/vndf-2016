@@ -92,7 +92,7 @@ void receivePosition(conn *c, posMap positions, size_t positionLimit)
 		size_t id;
 		float posX, posY;
 		int status = sscanf(c->buffer + 1,
-			"id: %lu, pos: (%f, %f)\n",
+			"UPDATE id: %lu, pos: (%f, %f)\n",
 			&id, &posX, &posY);
 		if (status != 3)
 		{
