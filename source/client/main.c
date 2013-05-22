@@ -31,7 +31,7 @@ typedef struct {
 void receivePosition(conn *c, pos positions[], size_t positionLimit);
 
 void initRendering(void);
-void render(pos *positions, size_t positionLimit);
+void render(pos positions[], size_t positionLimit);
 
 
 int main(int argc, char const *argv[])
@@ -133,7 +133,7 @@ void initRendering()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void render(pos *positions, size_t positionLimit)
+void render(pos positions[], size_t positionLimit)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
