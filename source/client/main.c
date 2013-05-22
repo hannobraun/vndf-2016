@@ -28,7 +28,7 @@ typedef struct {
 } pos;
 
 
-void receivePosition(conn *c, pos *positions, size_t positionLimit);
+void receivePosition(conn *c, pos positions[], size_t positionLimit);
 
 void initRendering(void);
 void render(pos *positions, size_t positionLimit);
@@ -64,7 +64,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(conn *c, pos *positions, size_t positionLimit)
+void receivePosition(conn *c, pos positions[], size_t positionLimit)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
