@@ -27,8 +27,13 @@ typedef struct {
 	float y;
 } pos;
 
+typedef struct {
+	int isOccupied;
+	pos value;
+} posEntry;
+
 #define POSITION_LIMIT 2
-typedef pos posMap[POSITION_LIMIT];
+typedef posEntry posMap[POSITION_LIMIT];
 
 
 void receivePosition(conn *c, posMap positions, size_t positionLimit);
@@ -53,6 +58,7 @@ int main(int argc, char const *argv[])
 	c.bufferPos = 0;
 
 	posMap positions;
+	memset(positions, 0, sizeof positions);
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -103,8 +109,9 @@ void receivePosition(conn *c, posMap positions, size_t positionLimit)
 			exit(1);
 		}
 
-		positions[id].x = posX;
-		positions[id].y = posY;
+		positions[id].isOccupied = 1;
+		positions[id].value.x = posX;
+		positions[id].value.y = posY;
 
 		size_t messageSize = (size_t)c->buffer[0];
 
@@ -146,14 +153,19 @@ void render(posMap positions, size_t positionLimit)
 
 	for (size_t i = 0; i < positionLimit; i+= 1)
 	{
-		glTranslatef(positions[i].x, positions[i].y, 0.0f);
+		if (positions[i].isOccupied)
+		{
+			glTranslatef(
+				positions[i].value.x,
+				positions[i].value.y, 0.0f);
 
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f(  0.0f, 20.0f, 0.0f);
-			glVertex3f(-20.0f,-10.0f, 0.0f);
-			glVertex3f( 20.0f,-10.0f, 0.0f);
-		glEnd();
+			glColor3f(0.0f, 0.0f, 1.0f);
+			glBegin(GL_TRIANGLE_STRIP);
+				glVertex3f(  0.0f, 20.0f, 0.0f);
+				glVertex3f(-20.0f,-10.0f, 0.0f);
+				glVertex3f( 20.0f,-10.0f, 0.0f);
+			glEnd();
+		}
 	}
 
 	glfwSwapBuffers();
