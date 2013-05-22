@@ -27,11 +27,14 @@ typedef struct {
 	float y;
 } pos;
 
+#define POSITION_LIMIT 2
+typedef pos posMap[POSITION_LIMIT];
 
-void receivePosition(conn *c, pos positions[], size_t positionLimit);
+
+void receivePosition(conn *c, posMap positions, size_t positionLimit);
 
 void initRendering(void);
-void render(pos positions[], size_t positionLimit);
+void render(posMap positions, size_t positionLimit);
 
 
 int main(int argc, char const *argv[])
@@ -49,8 +52,7 @@ int main(int argc, char const *argv[])
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
-	#define POSITION_LIMIT 2
-	pos positions[POSITION_LIMIT];
+	posMap positions;
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
@@ -64,7 +66,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(conn *c, pos positions[], size_t positionLimit)
+void receivePosition(conn *c, posMap positions, size_t positionLimit)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
@@ -133,7 +135,7 @@ void initRendering()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void render(pos positions[], size_t positionLimit)
+void render(posMap positions, size_t positionLimit)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
