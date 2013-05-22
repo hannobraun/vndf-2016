@@ -30,14 +30,16 @@ typedef struct {
 
 typedef idmap_entry(pos) posEntry;
 
-#define POSITION_LIMIT 2
-typedef posEntry posMap[POSITION_LIMIT];
+typedef struct {
+	size_t cap;
+	posEntry *elems;
+} posMap;
 
 
-void receivePosition(conn *c, posMap positions, size_t positionLimit);
+void receivePosition(conn *c, posEntry positions[], size_t positionLimit);
 
 void initRendering(void);
-void render(posMap positions, size_t positionLimit);
+void render(posEntry positions[], size_t positionLimit);
 
 
 int main(int argc, char const *argv[])
@@ -55,22 +57,27 @@ int main(int argc, char const *argv[])
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
+	const size_t maxPositions = 2;
+	const size_t positionsMem = maxPositions * sizeof(posEntry);
+
 	posMap positions;
-	memset(positions, 0, sizeof positions);
+	positions.cap = maxPositions;
+	positions.elems = malloc(positionsMem);
+	memset(positions.elems, 0, positionsMem);
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		receivePosition(&c, positions, POSITION_LIMIT);
+		receivePosition(&c, positions.elems, positions.cap);
 
-		render(positions, POSITION_LIMIT);
+		render(positions.elems, positions.cap);
 	}
 
 	return 0;
 }
 
-void receivePosition(conn *c, posMap positions, size_t positionLimit)
+void receivePosition(conn *c, posEntry positions[], size_t positionLimit)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
@@ -138,7 +145,7 @@ void initRendering()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void render(posMap positions, size_t positionLimit)
+void render(posEntry positions[], size_t positionLimit)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
