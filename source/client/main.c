@@ -39,7 +39,7 @@ typedef struct {
 void receivePosition(conn *c, posMap positions);
 
 void initRendering(void);
-void render(posEntry positions[], size_t positionLimit);
+void render(posMap positions);
 
 
 int main(int argc, char const *argv[])
@@ -71,7 +71,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePosition(&c, positions);
 
-		render(positions.elems, positions.cap);
+		render(positions);
 	}
 
 	return 0;
@@ -145,7 +145,7 @@ void initRendering()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void render(posEntry positions[], size_t positionLimit)
+void render(posMap positions)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -154,13 +154,13 @@ void render(posEntry positions[], size_t positionLimit)
 		-screenHeight/2, screenHeight/2,
 		-1, 1);
 
-	for (size_t i = 0; i < positionLimit; i+= 1)
+	for (size_t i = 0; i < positions.cap; i+= 1)
 	{
-		if (positions[i].isOccupied)
+		if (positions.elems[i].isOccupied)
 		{
 			glTranslatef(
-				positions[i].value.x,
-				positions[i].value.y, 0.0f);
+				positions.elems[i].value.x,
+				positions.elems[i].value.y, 0.0f);
 
 			glColor3f(0.0f, 0.0f, 1.0f);
 			glBegin(GL_TRIANGLE_STRIP);
