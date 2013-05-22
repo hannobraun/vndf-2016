@@ -96,7 +96,8 @@ void receivePosition(conn *c, pos *positions, size_t positionLimit)
 
 		if (id >= positionLimit)
 		{
-			printf("Received id (%lu) too high. Limit: %lu\n", id, positionLimit);
+			printf("Received id (%lu) too high. Limit: %lu\n",
+				id, positionLimit);
 			exit(1);
 		}
 
