@@ -36,7 +36,7 @@ typedef struct {
 } posMap;
 
 
-void receivePosition(conn *c, posEntry positions[], size_t positionLimit);
+void receivePosition(conn *c, posMap positions);
 
 void initRendering(void);
 void render(posEntry positions[], size_t positionLimit);
@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		receivePosition(&c, positions.elems, positions.cap);
+		receivePosition(&c, positions);
 
 		render(positions.elems, positions.cap);
 	}
@@ -77,7 +77,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(conn *c, posEntry positions[], size_t positionLimit)
+void receivePosition(conn *c, posMap positions)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
@@ -107,14 +107,14 @@ void receivePosition(conn *c, posEntry positions[], size_t positionLimit)
 			exit(1);
 		}
 
-		if (id >= positionLimit)
+		if (id >= positions.cap)
 		{
 			printf("Received id (%lu) too high. Limit: %lu\n",
-				id, positionLimit);
+				id, positions.cap);
 			exit(1);
 		}
 
-		idmap_put(positions, id, position);
+		idmap_put(positions.elems, id, position);
 
 		size_t messageSize = (size_t)c->buffer[0];
 
