@@ -88,10 +88,10 @@ void receivePosition(conn *c, posMap positions, size_t positionLimit)
 		}
 
 		size_t id;
-		float posX, posY;
+		pos position;
 		int status = sscanf(c->buffer + 1,
 			"UPDATE id: %lu, pos: (%f, %f)\n",
-			&id, &posX, &posY);
+			&id, &position.x, &position.y);
 		if (status != 3)
 		{
 			printf(
@@ -107,9 +107,7 @@ void receivePosition(conn *c, posMap positions, size_t positionLimit)
 			exit(1);
 		}
 
-		positions[id].isOccupied = 1;
-		positions[id].value.x = posX;
-		positions[id].value.y = posY;
+		idmap_put(positions, id, position);
 
 		size_t messageSize = (size_t)c->buffer[0];
 
