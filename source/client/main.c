@@ -9,6 +9,7 @@
 #include <GL/glfw.h>
 
 #include "net.h"
+#include <common/idmap.h>
 
 
 const int screenWidth  = 800;
@@ -27,10 +28,7 @@ typedef struct {
 	float y;
 } pos;
 
-typedef struct {
-	int isOccupied;
-	pos value;
-} posEntry;
+typedef idmap_entry(pos) posEntry;
 
 #define POSITION_LIMIT 2
 typedef posEntry posMap[POSITION_LIMIT];
