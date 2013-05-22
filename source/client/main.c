@@ -109,7 +109,7 @@ void receivePosition(conn *c, posMap positions)
 			exit(1);
 		}
 
-		idmap_put(positions.elems, id, position);
+		idmap_put(positions, id, position);
 
 		size_t messageSize = (size_t)c->buffer[0];
 

@@ -7,5 +7,5 @@ struct { \
 }
 
 #define idmap_put(map, k, v) \
-map[k].isOccupied = 1; \
-map[k].value = v;
+map.elems[k].isOccupied = 1; \
+map.elems[k].value = v;
