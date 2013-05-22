@@ -28,12 +28,7 @@ typedef struct {
 	float y;
 } pos;
 
-typedef idmap_entry(pos) posEntry;
-
-typedef struct {
-	size_t cap;
-	posEntry *elems;
-} posMap;
+typedef idmap(pos) posMap;
 
 
 void receivePosition(conn *c, posMap positions);
@@ -58,7 +53,7 @@ int main(int argc, char const *argv[])
 	c.bufferPos = 0;
 
 	const size_t maxPositions = 2;
-	const size_t positionsMem = maxPositions * sizeof(posEntry);
+	const size_t positionsMem = maxPositions * sizeof(idmap_entry(pos));
 
 	posMap positions;
 	positions.cap = maxPositions;
