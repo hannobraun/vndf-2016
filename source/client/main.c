@@ -138,6 +138,8 @@ void render(posMap positions)
 		-1, 1);
 
 	idmap_each(positions, i,
+		glPushMatrix();
+
 		glTranslatef(
 			idmap_get(positions, i).x,
 			idmap_get(positions, i).y,
@@ -149,6 +151,8 @@ void render(posMap positions)
 			glVertex3f(-20.0f,-10.0f, 0.0f);
 			glVertex3f( 20.0f,-10.0f, 0.0f);
 		glEnd();
+
+		glPopMatrix();
 	)
 
 	glfwSwapBuffers();
