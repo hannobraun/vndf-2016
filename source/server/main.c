@@ -77,8 +77,8 @@ int main(int argc, char const *argv[])
 
 		for (size_t i = 0; i < nextClientId; i += 1)
 		{
-			clients.elems[i].value.xPos += 5;
-			clients.elems[i].value.yPos += 0;
+			idmap_get(clients, i).xPos += 5;
+			idmap_get(clients, i).yPos += 0;
 		}
 
 		idmap_each(clients, i,
