@@ -81,18 +81,15 @@ int main(int argc, char const *argv[])
 			clients.elems[i].value.yPos += 0;
 		}
 
-		for (size_t i = 0; i < nextClientId; i += 1)
-		{
-			for (size_t j = 0; j < nextClientId; j += 1)
-			{
+		idmap_each(clients, i,
+			idmap_each(clients, j,
 				sendPosition(
 					clients.elems[i].value.socketFD,
 					clients.elems[j].value.id,
 					clients.elems[j].value.xPos,
 					clients.elems[j].value.yPos);
-			}
-
-		}
+			)
+		)
 	}
 }
 
