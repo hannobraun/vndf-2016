@@ -97,7 +97,6 @@ void receivePosition(conn *c, posMap positions)
 			exit(1);
 		}
 
-		printf("id: %lu\n", id);
 		idmap_put(positions, id, position);
 
 		size_t messageSize = (size_t)c->buffer[0];
