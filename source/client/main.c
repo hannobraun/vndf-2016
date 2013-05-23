@@ -139,8 +139,9 @@ void render(posMap positions)
 
 	idmap_each(positions, i,
 		glTranslatef(
-			positions.elems[i].value.x,
-			positions.elems[i].value.y, 0.0f);
+			idmap_get(positions, i).x,
+			idmap_get(positions, i).y,
+			0.0f);
 
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glBegin(GL_TRIANGLE_STRIP);
