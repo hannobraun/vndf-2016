@@ -75,11 +75,10 @@ int main(int argc, char const *argv[])
 			}
 		}
 
-		for (size_t i = 0; i < nextClientId; i += 1)
-		{
+		idmap_each(clients, i,
 			idmap_get(clients, i).xPos += 5;
 			idmap_get(clients, i).yPos += 0;
-		}
+		)
 
 		idmap_each(clients, i,
 			idmap_each(clients, j,
