@@ -16,7 +16,7 @@ memset(map.elems, 0, idmap_memSize(type, capacity));
 if (k >= map.cap) \
 { \
 	printf("Can't add id (%lu). Value too high. Largest possible id: %lu\n", \
-		id, map.cap - 1); \
+		k, map.cap - 1); \
 	exit(1); \
 } \
 map.elems[k].isOccupied = 1; \
