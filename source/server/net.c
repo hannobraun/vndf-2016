@@ -122,17 +122,18 @@ int net_acceptClient(int serverFD)
 	return clientFD;
 }
 
-void net_send(int clientFD, char *message, size_t messageLength)
+int net_send(int clientFD, char *message, size_t messageLength)
 {
 	ssize_t bytesSent = send(clientFD, message, messageLength, MSG_NOSIGNAL);
 	if (bytesSent < 0)
 	{
-		perror("Error sending message");
-		exit(1);
+		return -1;
 	}
 	if ((size_t)bytesSent != messageLength)
 	{
 		printf("Only sent %ld of %lu bytes.\n", bytesSent, messageLength);
 		exit(1);
 	}
+
+	return 0;
 }
