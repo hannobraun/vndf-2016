@@ -137,22 +137,18 @@ void render(posMap positions)
 		-screenHeight/2, screenHeight/2,
 		-1, 1);
 
-	for (size_t i = 0; i < positions.cap; i+= 1)
-	{
-		if (positions.elems[i].isOccupied)
-		{
-			glTranslatef(
-				positions.elems[i].value.x,
-				positions.elems[i].value.y, 0.0f);
+	idmap_each(positions, i,
+		glTranslatef(
+			positions.elems[i].value.x,
+			positions.elems[i].value.y, 0.0f);
 
-			glColor3f(0.0f, 0.0f, 1.0f);
-			glBegin(GL_TRIANGLE_STRIP);
-				glVertex3f(  0.0f, 20.0f, 0.0f);
-				glVertex3f(-20.0f,-10.0f, 0.0f);
-				glVertex3f( 20.0f,-10.0f, 0.0f);
-			glEnd();
-		}
-	}
+		glColor3f(0.0f, 0.0f, 1.0f);
+		glBegin(GL_TRIANGLE_STRIP);
+			glVertex3f(  0.0f, 20.0f, 0.0f);
+			glVertex3f(-20.0f,-10.0f, 0.0f);
+			glVertex3f( 20.0f,-10.0f, 0.0f);
+		glEnd();
+	)
 
 	glfwSwapBuffers();
 }
