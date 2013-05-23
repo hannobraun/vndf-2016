@@ -52,13 +52,8 @@ int main(int argc, char const *argv[])
 	c.socketFD  = socketFD;
 	c.bufferPos = 0;
 
-	const size_t maxPositions = 2;
-	const size_t positionsMem = maxPositions * sizeof(idmap_entry(pos));
-
 	posMap positions;
-	positions.cap = maxPositions;
-	positions.elems = malloc(positionsMem);
-	memset(positions.elems, 0, positionsMem);
+	idmap_init(pos, positions, 2);
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
