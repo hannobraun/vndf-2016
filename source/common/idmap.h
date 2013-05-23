@@ -24,6 +24,8 @@ if (k >= map.cap) \
 map.elems[k].isOccupied = 1; \
 map.elems[k].value = v;
 
+#define idmap_remove(map, k) map.elems[k].isOccupied = 0;
+
 #define idmap_each(map, i, body) \
 for (size_t i = 0; i < map.cap; i += 1) \
 { \
