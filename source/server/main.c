@@ -16,14 +16,14 @@
 
 
 typedef struct {
-	int socketFD;
-	int id;
-	int xPos;
-	int yPos;
+	int    socketFD;
+	size_t id;
+	int    xPos;
+	int    yPos;
 } client;
 
 
-void sendPosition(int clientFD, int id, int xPos, int yPos);
+void sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
 	net net = net_init("34481");
 
 	client clients[MAX_CLIENTS];
-	int nextClientId = 0;
+	size_t nextClientId = 0;
 
 	while (true)
 	{
@@ -72,15 +72,15 @@ int main(int argc, char const *argv[])
 			}
 		}
 
-		for (int i = 0; i < nextClientId; i += 1)
+		for (size_t i = 0; i < nextClientId; i += 1)
 		{
 			clients[i].xPos += 5;
 			clients[i].yPos += 0;
 		}
 
-		for (int i = 0; i < nextClientId; i += 1)
+		for (size_t i = 0; i < nextClientId; i += 1)
 		{
-			for (int j = 0; j < nextClientId; j += 1)
+			for (size_t j = 0; j < nextClientId; j += 1)
 			{
 				sendPosition(
 					clients[i].socketFD,
@@ -93,12 +93,12 @@ int main(int argc, char const *argv[])
 	}
 }
 
-void sendPosition(int clientFD, int id, int xPos, int yPos)
+void sendPosition(int clientFD, size_t id, int xPos, int yPos)
 {
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
-		"UPDATE id: %d, pos: (%d, %d)",
+		"UPDATE id: %lu, pos: (%d, %d)",
 		id, xPos, yPos);
 	if (status < 0)
 	{
