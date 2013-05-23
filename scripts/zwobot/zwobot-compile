@@ -14,4 +14,4 @@ BINARY=$4
 mkdir -p $(dirname $BINARY)
 
 clang $SOURCE_FILES $STATIC_LIBS $LIB_ARGS -o $BINARY \
-	-Isource -Werror -Weverything -Wno-unused-parameter -g
+	-Isource -Werror -Weverything -Wno-unused-parameter -Wno-padded -g
