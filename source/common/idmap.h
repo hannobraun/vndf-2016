@@ -12,6 +12,8 @@ map.cap = capacity; \
 map.elems = malloc(idmap_memSize(type, capacity)); \
 memset(map.elems, 0, idmap_memSize(type, capacity));
 
+#define idmap_get(map, k) map.elems[k].value
+
 #define idmap_put(map, k, v) \
 if (k >= map.cap) \
 { \
