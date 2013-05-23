@@ -23,7 +23,7 @@ typedef struct {
 typedef idmap(client) clientMap;
 
 
-void sendPosition(int clientFD, size_t id, int xPos, int yPos);
+int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
 	}
 }
 
-void sendPosition(int clientFD, size_t id, int xPos, int yPos)
+int sendPosition(int clientFD, size_t id, int xPos, int yPos)
 {
 	char message[256];
 	int status = snprintf(
@@ -123,5 +123,5 @@ void sendPosition(int clientFD, size_t id, int xPos, int yPos)
 		exit(1);
 	}
 
-	net_send(clientFD, message, strlen(message));
+	return net_send(clientFD, message, strlen(message));
 }
