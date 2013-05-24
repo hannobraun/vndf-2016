@@ -89,11 +89,19 @@ int main(int argc, char const *argv[])
 
 		idmap_each(clients, i,
 			idmap_each(clients, j,
-				sendPosition(
+				int status = sendPosition(
 					idmap_get(clients, i).socketFD,
 					idmap_get(clients, j).id,
 					idmap_get(clients, j).xPos,
 					idmap_get(clients, j).yPos);
+
+				if (status < 0)
+				{
+					idmap_remove(clients, i);
+
+					idPool[idIndex] = i;
+					idIndex += 1;
+				}
 			)
 		)
 	}
