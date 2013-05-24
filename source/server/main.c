@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <limits.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -51,11 +52,7 @@ int main(int argc, char const *argv[])
 		#define MAX_EVENTS 1024
 		struct epoll_event events[MAX_EVENTS];
 		int numberOfEvents = epoll_wait(net.pollerFD, events, MAX_EVENTS, 500);
-		if (numberOfEvents == -1)
-		{
-			perror("Error waiting for socket events");
-			exit(1);
-		}
+		assert(numberOfEvents != -1);
 
 		for (int i = 0; i < numberOfEvents; i += 1)
 		{
@@ -64,11 +61,7 @@ int main(int argc, char const *argv[])
 			if (idIndex == 0)
 			{
 				int status = close(clientFD);
-				if (status != 0)
-				{
-					perror("Error rejecting client connection.");
-					exit(1);
-				}
+				assert(status == 0);
 			}
 			else
 			{
@@ -114,29 +107,12 @@ int sendPosition(int clientFD, size_t id, int xPos, int yPos)
 		message + 1, sizeof message - 1,
 		"UPDATE id: %lu, pos: (%d, %d)",
 		id, xPos, yPos);
-	if (status < 0)
-	{
-		printf("Error encoding message.\n");
-		exit(1);
-	}
-	if ((size_t)status > sizeof message)
-	{
-		printf("Message did not fit into buffer.\n");
-		exit(1);
-	}
+	assert(status >= 0);
+	assert((size_t)status <= sizeof message);
 
 	size_t messageLength = strlen(message + 1) + 1;
-	if (messageLength <= CHAR_MAX)
-	{
-		message[0] = (char)messageLength;
-	}
-	else
-	{
-		printf(
-			"Message size cannot be encoded. Message: \"%s\", size: %lu\n",
-			message + 1, messageLength);
-		exit(1);
-	}
+	assert(messageLength <= CHAR_MAX);
+	message[0] = (char)messageLength;
 
 	return net_send(clientFD, message, strlen(message));
 }
