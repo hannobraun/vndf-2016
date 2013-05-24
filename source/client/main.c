@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -78,24 +79,14 @@ void receivePosition(conn *c, posMap positions)
 
 	while (c->bufferPos > 0 && c->buffer[0] <= c->bufferPos)
 	{
-		if (c->buffer[0] < 0)
-		{
-			printf("Invalid message length: %d", c->buffer[0]);
-			exit(1);
-		}
+		assert(c->buffer[0] >= 0);
 
 		size_t id;
 		pos position;
 		int status = sscanf(c->buffer + 1,
 			"UPDATE id: %lu, pos: (%f, %f)\n",
 			&id, &position.x, &position.y);
-		if (status != 3)
-		{
-			printf(
-				"Error reading from socket. Only %d item(s) matched.\n",
-				status);
-			exit(1);
-		}
+		assert(status == 3);
 
 		idmap_put(positions, id, position);
 
@@ -108,22 +99,15 @@ void receivePosition(conn *c, posMap positions)
 
 void initRendering()
 {
-	if (!glfwInit())
-	{
-		printf("Error initializing GLFW.\n");
-		exit(1);
-	}
+	int status = glfwInit();
+	assert(status);
 
-	if (
-		!glfwOpenWindow(
-			screenWidth, screenHeight,
-			8, 8, 8, 8,
-			0, 0,
-			GLFW_WINDOW))
-	{
-		printf("Error opening GLFW window.\n");
-		exit(1);
-	}
+	status = glfwOpenWindow(
+		screenWidth, screenHeight,
+		8, 8, 8, 8,
+		0, 0,
+		GLFW_WINDOW);
+	assert(status);
 
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
