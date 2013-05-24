@@ -34,10 +34,17 @@ int main(int argc, char const *argv[])
 
 	net net = net_init("34481");
 
-	clientMap clients;
-	idmap_init(client, clients, 4);
+	const int maxClients = 4;
 
-	size_t nextClientId = 0;
+	size_t *idPool = malloc(sizeof(size_t) * maxClients);
+	for (size_t i = 0; i < maxClients; i += 1)
+	{
+		idPool[i] = maxClients - i - 1;
+	}
+	size_t idIndex = maxClients;
+
+	clientMap clients;
+	idmap_init(client, clients, maxClients);
 
 	while (true)
 	{
@@ -54,7 +61,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (nextClientId == clients.cap)
+			if (idIndex == 0)
 			{
 				int status = close(clientFD);
 				if (status != 0)
@@ -68,10 +75,10 @@ int main(int argc, char const *argv[])
 				int xPos = rand() % 600 - 300;
 				int yPos = rand() % 400 - 200;
 
-				client client = {clientFD, nextClientId, xPos, yPos};
-				idmap_put(clients, nextClientId, client);
-
-				nextClientId += 1;
+				idIndex -= 1;
+				size_t clientId = idPool[idIndex];
+				client client = {clientFD, clientId, xPos, yPos};
+				idmap_put(clients, clientId, client);
 			}
 		}
 
