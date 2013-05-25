@@ -32,7 +32,7 @@ typedef struct {
 typedef idmap(pos) posMap;
 
 
-void receivePosition(conn *c, posMap positions);
+void receivePositions(conn *c, posMap positions);
 
 void initRendering(void);
 void render(posMap positions);
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
-		receivePosition(&c, positions);
+		receivePositions(&c, positions);
 
 		render(positions);
 	}
@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 
-void receivePosition(conn *c, posMap positions)
+void receivePositions(conn *c, posMap positions)
 {
 	ssize_t bytesReceived = net_receive(
 		c->socketFD,
