@@ -81,14 +81,30 @@ void receivePositions(conn *c, posMap positions)
 	{
 		assert(c->buffer[0] >= 0);
 
-		size_t id;
-		pos position;
-		int status = sscanf(c->buffer + 1,
-			"UPDATE id: %lu, pos: (%f, %f)\n",
-			&id, &position.x, &position.y);
-		assert(status == 3);
+		int offset = 1;
 
-		idmap_put(positions, id, position);
+		const int msgTypeLen = 32;
+		char msgType[msgTypeLen];
+		int readLen;
+		int status = sscanf(c->buffer + offset, "%s%n", msgType, &readLen);
+		assert(status == 1);
+		assert(readLen < msgTypeLen);
+
+		if (strcmp(msgType, "UPDATE") == 0)
+		{
+			size_t id;
+			pos position;
+			status = sscanf(c->buffer + 1,
+				"UPDATE id: %lu, pos: (%f, %f)\n",
+				&id, &position.x, &position.y);
+			assert(status == 3);
+
+			idmap_put(positions, id, position);
+		}
+		else
+		{
+			printf("Unknown message type: %s\n", msgType);
+		}
 
 		size_t messageSize = (size_t)c->buffer[0];
 
