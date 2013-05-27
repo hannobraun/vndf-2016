@@ -5,4 +5,7 @@ typedef struct {
 	int    yPos;
 } client;
 
-typedef idmap(client) clientMap;
+typedef struct {
+	idmap(client) clients;
+	stack(size_t) idPool;
+} clientMap;

@@ -29,16 +29,14 @@ int main(int argc, char const *argv[])
 
 	const int maxClients = 4;
 
-	stack(size_t) idPool;
-	stack_init(idPool, maxClients);
+	clientMap clientMap;
+	idmap_init(clientMap.clients, maxClients);
+	stack_init(clientMap.idPool, maxClients);
 
 	for (size_t i = maxClients; i > 0; i -= 1)
 	{
-		stack_push(idPool, i - 1)
+		stack_push(clientMap.idPool, i - 1)
 	}
-
-	clientMap clients;
-	idmap_init(clients, maxClients);
 
 	while (true)
 	{
@@ -51,7 +49,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (idPool.size == 0)
+			if (clientMap.idPool.size == 0)
 			{
 				int status = close(clientFD);
 				assert(status == 0);
@@ -62,30 +60,30 @@ int main(int argc, char const *argv[])
 				int yPos = rand() % 400 - 200;
 
 				size_t clientId;
-				stack_pop(idPool, &clientId);
+				stack_pop(clientMap.idPool, &clientId);
 
 				client client = {clientFD, clientId, xPos, yPos};
-				idmap_put(clients, clientId, client);
+				idmap_put(clientMap.clients, clientId, client);
 			}
 		}
 
-		idmap_each(clients, i,
-			idmap_get(clients, i).xPos += 5;
-			idmap_get(clients, i).yPos += 0;
+		idmap_each(clientMap.clients, i,
+			idmap_get(clientMap.clients, i).xPos += 5;
+			idmap_get(clientMap.clients, i).yPos += 0;
 		)
 
-		idmap_each(clients, i,
-			idmap_each(clients, j,
+		idmap_each(clientMap.clients, i,
+			idmap_each(clientMap.clients, j,
 				int status = sendPosition(
-					idmap_get(clients, i).socketFD,
-					idmap_get(clients, j).id,
-					idmap_get(clients, j).xPos,
-					idmap_get(clients, j).yPos);
+					idmap_get(clientMap.clients, i).socketFD,
+					idmap_get(clientMap.clients, j).id,
+					idmap_get(clientMap.clients, j).xPos,
+					idmap_get(clientMap.clients, j).yPos);
 
 				if (status < 0)
 				{
-					idmap_remove(clients, i);
-					stack_push(idPool, i);
+					idmap_remove(clientMap.clients, i);
+					stack_push(clientMap.idPool, i);
 				}
 			)
 		)
