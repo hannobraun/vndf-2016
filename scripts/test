@@ -2,9 +2,14 @@
 
 source project.conf
 
-SOURCE_FILES="tests/common/rbuf.c"
-BINARY=$OUTPUT_DIR/rbuf-test
+SOURCE_FILES="tests/common/rbuf.c tests/common/stack.c"
 
-./scripts/zwobot/zwobot-compile \
-	"$SOURCE_FILES" "" "" $BINARY &&
-	./$BINARY $@
+for SPEC_FILE in $SOURCE_FILES
+do
+	SPEC_NAME="${SPEC_FILE%.*}"
+	BINARY=$OUTPUT_DIR/$SPEC_NAME-test
+
+	./scripts/zwobot/zwobot-compile \
+		"$SPEC_FILE" "" "" $BINARY &&
+		./$BINARY $@
+done
