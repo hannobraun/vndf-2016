@@ -12,17 +12,8 @@
 
 #include <common/idmap.h>
 #include <common/stack.h>
+#include "clients.h"
 #include "net.h"
-
-
-typedef struct {
-	int    socketFD;
-	size_t id;
-	int    xPos;
-	int    yPos;
-} client;
-
-typedef idmap(client) clientMap;
 
 
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
