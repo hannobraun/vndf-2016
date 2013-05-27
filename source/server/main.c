@@ -27,16 +27,8 @@ int main(int argc, char const *argv[])
 
 	net net = net_init("34481");
 
-	const int maxClients = 4;
-
 	clientMap clientMap;
-	idmap_init(clientMap.clients, maxClients);
-	stack_init(clientMap.idPool, maxClients);
-
-	for (size_t i = maxClients; i > 0; i -= 1)
-	{
-		stack_push(clientMap.idPool, i - 1)
-	}
+	clients_initClientMap(&clientMap, 4);
 
 	while (true)
 	{
