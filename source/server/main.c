@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include <common/idmap.h>
+#include <common/stack.h>
 #include "net.h"
 
 
@@ -37,10 +38,12 @@ int main(int argc, char const *argv[])
 
 	const int maxClients = 4;
 
-	size_t *idPool = malloc(sizeof(size_t) * maxClients);
+	stack(size_t) idPool;
+	stack_init(idPool, maxClients);
+
 	for (size_t i = 0; i < maxClients; i += 1)
 	{
-		idPool[i] = maxClients - i - 1;
+		idPool.elems[i] = maxClients - i - 1;
 	}
 	size_t idIndex = maxClients;
 
@@ -69,7 +72,7 @@ int main(int argc, char const *argv[])
 				int yPos = rand() % 400 - 200;
 
 				idIndex -= 1;
-				size_t clientId = idPool[idIndex];
+				size_t clientId = idPool.elems[idIndex];
 				client client = {clientFD, clientId, xPos, yPos};
 				idmap_put(clients, clientId, client);
 			}
@@ -92,7 +95,7 @@ int main(int argc, char const *argv[])
 				{
 					idmap_remove(clients, i);
 
-					idPool[idIndex] = i;
+					idPool.elems[idIndex] = i;
 					idIndex += 1;
 				}
 			)
