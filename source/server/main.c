@@ -51,11 +51,7 @@ int main(int argc, char const *argv[])
 				int xPos = rand() % 600 - 300;
 				int yPos = rand() % 400 - 200;
 
-				size_t clientId;
-				stack_pop(clientMap.idPool, &clientId);
-
-				client client = {clientFD, clientId, xPos, yPos};
-				idmap_put(clientMap.clients, clientId, client);
+				clients_add(&clientMap, clientFD, xPos, yPos);
 			}
 		}
 
