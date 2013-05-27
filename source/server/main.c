@@ -41,11 +41,10 @@ int main(int argc, char const *argv[])
 	stack(size_t) idPool;
 	stack_init(idPool, maxClients);
 
-	for (size_t i = 0; i < maxClients; i += 1)
+	for (size_t i = maxClients; i > 0; i -= 1)
 	{
-		idPool.elems[i] = maxClients - i - 1;
+		stack_push(idPool, i - 1)
 	}
-	size_t idIndex = maxClients;
 
 	clientMap clients;
 	idmap_init(clients, maxClients);
@@ -61,7 +60,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (idIndex == 0)
+			if (idPool.size == 0)
 			{
 				int status = close(clientFD);
 				assert(status == 0);
@@ -71,8 +70,9 @@ int main(int argc, char const *argv[])
 				int xPos = rand() % 600 - 300;
 				int yPos = rand() % 400 - 200;
 
-				idIndex -= 1;
-				size_t clientId = idPool.elems[idIndex];
+				size_t clientId;
+				stack_pop(idPool, &clientId);
+
 				client client = {clientFD, clientId, xPos, yPos};
 				idmap_put(clients, clientId, client);
 			}
@@ -94,9 +94,7 @@ int main(int argc, char const *argv[])
 				if (status < 0)
 				{
 					idmap_remove(clients, i);
-
-					idPool.elems[idIndex] = i;
-					idIndex += 1;
+					stack_push(idPool, i);
 				}
 			)
 		)
