@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
 	size_t idIndex = maxClients;
 
 	clientMap clients;
-	idmap_init(client, clients, maxClients);
+	idmap_init(clients, maxClients);
 
 	while (true)
 	{

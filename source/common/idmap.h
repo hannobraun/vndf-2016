@@ -7,7 +7,7 @@ struct { \
 	idmap_entry(type) *elems; \
 }
 
-#define idmap_init(type, map, capacity) \
+#define idmap_init(map, capacity) \
 map.cap = capacity; \
 map.elems = malloc(idmap_memSize(map)); \
 memset(map.elems, 0, idmap_memSize(map));
