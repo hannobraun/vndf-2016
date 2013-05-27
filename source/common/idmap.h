@@ -15,12 +15,7 @@ memset(map.elems, 0, idmap_memSize(map));
 #define idmap_get(map, k) map.elems[k].value
 
 #define idmap_put(map, k, v) \
-if (k >= map.cap) \
-{ \
-	printf("Can't add id (%lu). Value too high. Largest possible id: %lu\n", \
-		k, map.cap - 1); \
-	exit(1); \
-} \
+assert(k < map.cap); \
 map.elems[k].isOccupied = 1; \
 map.elems[k].value = v;
 
