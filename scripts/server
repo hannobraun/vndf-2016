@@ -2,7 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES="source/server/main.c source/server/net.c"
+SOURCE_FILES="source/server/main.c source/server/net.c source/server/clients.c"
 BINARY=$OUTPUT_DIR/vndf-server
 
 UPSTART_JOB=source/upstart/vndf-server.conf
