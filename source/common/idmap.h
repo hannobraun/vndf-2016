@@ -1,5 +1,5 @@
 #define idmap_entry(type) struct { int isOccupied; type value; }
-#define idmap_memSize(type, cap) cap * sizeof(idmap_entry(type))
+#define idmap_memSize(map) (map.cap * sizeof map.elems[0])
 
 #define idmap(type) \
 struct { \
@@ -9,8 +9,8 @@ struct { \
 
 #define idmap_init(type, map, capacity) \
 map.cap = capacity; \
-map.elems = malloc(idmap_memSize(type, capacity)); \
-memset(map.elems, 0, idmap_memSize(type, capacity));
+map.elems = malloc(idmap_memSize(map)); \
+memset(map.elems, 0, idmap_memSize(map));
 
 #define idmap_get(map, k) map.elems[k].value
 
