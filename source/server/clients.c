@@ -1,5 +1,6 @@
 #include "clients.h"
 
+
 void clients_initClientMap(clientMap *c, size_t cap)
 {
 	idmap_init(c->clients, cap);
