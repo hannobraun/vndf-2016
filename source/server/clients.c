@@ -7,6 +7,11 @@ void clients_initClientMap(clientMap *c, size_t cap)
 
 	for (size_t i = cap; i > 0; i -= 1)
 	{
-		stack_push(c->idPool, i - 1)
+		stack_push(c->idPool, i - 1);
 	}
+}
+
+bool clients_canAdd(clientMap *c)
+{
+	return c->idPool.size == 0;
 }

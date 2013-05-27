@@ -41,7 +41,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (clientMap.idPool.size == 0)
+			if (clients_canAdd(&clientMap))
 			{
 				int status = close(clientFD);
 				assert(status == 0);

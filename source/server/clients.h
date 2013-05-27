@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -19,3 +20,4 @@ typedef struct {
 
 
 void clients_initClientMap(clientMap *c, size_t cap);
+bool clients_canAdd(clientMap *c);
