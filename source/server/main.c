@@ -70,8 +70,7 @@ int main(int argc, char const *argv[])
 
 				if (status < 0)
 				{
-					idmap_remove(clientMap.clients, i);
-					stack_push(clientMap.idPool, i);
+					clients_remove(&clientMap, i);
 				}
 			)
 		)
