@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+SOURCE_FILES="tests/common/rbuf.c"
+BINARY=$OUTPUT_DIR/rbuf-test
+
+./scripts/zwobot/zwobot-compile \
+	"$SOURCE_FILES" "" "" $BINARY &&
+	./$BINARY $@
