@@ -2,7 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES="tests/common/rbuf.c tests/common/stack.c"
+SOURCE_FILES=$(find tests/ -name "*.c")
 
 for SPEC_FILE in $SOURCE_FILES
 do
