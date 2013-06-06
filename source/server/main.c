@@ -16,7 +16,7 @@
 #include "net.h"
 
 
-void update(clientMap *clientMap);
+void onUpdate(clientMap *clientMap);
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
 
@@ -56,11 +56,11 @@ int main(int argc, char const *argv[])
 			}
 		}
 
-		update(&clientMap);
+		onUpdate(&clientMap);
 	}
 }
 
-void update(clientMap *clientMap)
+void onUpdate(clientMap *clientMap)
 {
 	idmap_each(clientMap->clients, i,
 		idmap_get(clientMap->clients, i).xPos += 5;
