@@ -18,7 +18,7 @@
 #include "net.h"
 
 
-void onConnected(int clientFD, clientMap *clientMap);
+void onConnect(int clientFD, clientMap *clientMap);
 void onUpdate(clientMap *clientMap);
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			onConnected(clientFD, &clientMap);
+			onConnect(clientFD, &clientMap);
 		}
 
 		event updateEvent;
@@ -69,7 +69,7 @@ int main(int argc, char const *argv[])
 	}
 }
 
-void onConnected(int clientFD, clientMap *clientMap)
+void onConnect(int clientFD, clientMap *clientMap)
 {
 	if (clients_canAdd(clientMap))
 	{
