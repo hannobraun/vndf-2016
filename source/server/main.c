@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include <common/idmap.h>
+#include <common/rbuf.h>
 #include <common/stack.h>
 #include "clients.h"
 #include "net.h"
@@ -28,6 +29,9 @@ int main(int argc, char const *argv[])
 	srand((unsigned int)time(NULL));
 
 	net net = net_init("34481");
+
+	rbuf(int) events;
+	rbuf_init(events, 16);
 
 	clientMap clientMap;
 	clients_initClientMap(&clientMap, 4);
@@ -51,7 +55,15 @@ int main(int argc, char const *argv[])
 			onConnected(clientFD, &clientMap);
 		}
 
-		onUpdate(&clientMap);
+		rbuf_put(events, 1);
+
+		while (rbuf_size(events) > 0)
+		{
+			int event;
+			rbuf_get(events, &event);
+
+			onUpdate(&clientMap);
+		}
 	}
 }
 
