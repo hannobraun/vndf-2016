@@ -16,6 +16,7 @@
 #include "net.h"
 
 
+void onConnected(int clientFD, clientMap *clientMap);
 void onUpdate(clientMap *clientMap);
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
@@ -42,21 +43,26 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			if (clients_canAdd(&clientMap))
-			{
-				int status = close(clientFD);
-				assert(status == 0);
-			}
-			else
-			{
-				int xPos = rand() % 600 - 300;
-				int yPos = rand() % 400 - 200;
-
-				clients_add(&clientMap, clientFD, xPos, yPos);
-			}
+			onConnected(clientFD, &clientMap);
 		}
 
 		onUpdate(&clientMap);
+	}
+}
+
+void onConnected(int clientFD, clientMap *clientMap)
+{
+	if (clients_canAdd(clientMap))
+	{
+		int status = close(clientFD);
+		assert(status == 0);
+	}
+	else
+	{
+		int xPos = rand() % 600 - 300;
+		int yPos = rand() % 400 - 200;
+
+		clients_add(clientMap, clientFD, xPos, yPos);
 	}
 }
 
