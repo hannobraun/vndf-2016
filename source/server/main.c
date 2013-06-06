@@ -14,6 +14,7 @@
 #include <common/rbuf.h>
 #include <common/stack.h>
 #include "clients.h"
+#include "events.h"
 #include "net.h"
 
 
@@ -30,7 +31,7 @@ int main(int argc, char const *argv[])
 
 	net net = net_init("34481");
 
-	rbuf(int) events;
+	rbuf(event) events;
 	rbuf_init(events, 16);
 
 	clientMap clientMap;
@@ -55,11 +56,12 @@ int main(int argc, char const *argv[])
 			onConnected(clientFD, &clientMap);
 		}
 
-		rbuf_put(events, 1);
+		event updateEvent;
+		rbuf_put(events, updateEvent);
 
 		while (rbuf_size(events) > 0)
 		{
-			int event;
+			event event;
 			rbuf_get(events, &event);
 
 			onUpdate(&clientMap);
