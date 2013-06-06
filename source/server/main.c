@@ -83,8 +83,6 @@ int main(int argc, char const *argv[])
 				default:
 					assert(false);
 			}
-
-			onUpdate(&clientMap);
 		}
 	}
 }
