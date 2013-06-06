@@ -15,4 +15,4 @@ mkdir -p $(dirname $BINARY)
 
 clang $SOURCE_FILES $STATIC_LIBS $LIB_ARGS -o $BINARY \
 	-Isource -std=c1x -D_POSIX_SOURCE -g \
-	-Werror -Weverything -Wno-unused-parameter -Wno-padded
+	-Werror -Weverything -Wno-unused-parameter -Wno-padded -Wno-c++-compat
