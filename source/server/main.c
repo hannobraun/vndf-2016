@@ -19,7 +19,8 @@
 
 
 void onConnect(int clientFD, clientMap *clientMap);
-void onUpdate(clientMap *clientMap);
+void onDisconnect(size_t clientId, clientMap *clientMap);
+void onUpdate(clientMap *clientMap, events *events);
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
 
@@ -31,7 +32,7 @@ int main(int argc, char const *argv[])
 
 	net net = net_init("34481");
 
-	rbuf(event) events;
+	events events;
 	rbuf_init(events, 16);
 
 	clientMap clientMap;
@@ -76,8 +77,12 @@ int main(int argc, char const *argv[])
 					onConnect(event.ev.onConnect.clientFD, &clientMap);
 					break;
 
+				case ON_DISCONNECT:
+					onDisconnect(event.ev.onDisconnect.clientId, &clientMap);
+					break;
+
 				case ON_UPDATE:
-					onUpdate(&clientMap);
+					onUpdate(&clientMap, &events);
 					break;
 
 				default:
@@ -103,7 +108,12 @@ void onConnect(int clientFD, clientMap *clientMap)
 	}
 }
 
-void onUpdate(clientMap *clientMap)
+void onDisconnect(size_t clientId, clientMap *clientMap)
+{
+	clients_remove(clientMap, clientId);
+}
+
+void onUpdate(clientMap *clientMap, events *events)
 {
 	idmap_each(clientMap->clients, i,
 		idmap_get(clientMap->clients, i).xPos += 5;
@@ -120,7 +130,11 @@ void onUpdate(clientMap *clientMap)
 
 			if (status < 0)
 			{
-				clients_remove(clientMap, i);
+				event disconnectEvent;
+				disconnectEvent.type = ON_DISCONNECT;
+				disconnectEvent.ev.onDisconnect.clientId = i;
+
+				rbuf_put((*events), disconnectEvent);
 			}
 		)
 	)
