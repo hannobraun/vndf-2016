@@ -16,6 +16,7 @@
 #include "net.h"
 
 
+void update(clientMap *clientMap);
 int sendPosition(int clientFD, size_t id, int xPos, int yPos);
 
 
@@ -55,26 +56,31 @@ int main(int argc, char const *argv[])
 			}
 		}
 
-		idmap_each(clientMap.clients, i,
-			idmap_get(clientMap.clients, i).xPos += 5;
-			idmap_get(clientMap.clients, i).yPos += 0;
-		)
-
-		idmap_each(clientMap.clients, i,
-			idmap_each(clientMap.clients, j,
-				int status = sendPosition(
-					idmap_get(clientMap.clients, i).socketFD,
-					idmap_get(clientMap.clients, j).id,
-					idmap_get(clientMap.clients, j).xPos,
-					idmap_get(clientMap.clients, j).yPos);
-
-				if (status < 0)
-				{
-					clients_remove(&clientMap, i);
-				}
-			)
-		)
+		update(&clientMap);
 	}
+}
+
+void update(clientMap *clientMap)
+{
+	idmap_each(clientMap->clients, i,
+		idmap_get(clientMap->clients, i).xPos += 5;
+		idmap_get(clientMap->clients, i).yPos += 0;
+	)
+
+	idmap_each(clientMap->clients, i,
+		idmap_each(clientMap->clients, j,
+			int status = sendPosition(
+				idmap_get(clientMap->clients, i).socketFD,
+				idmap_get(clientMap->clients, j).id,
+				idmap_get(clientMap->clients, j).xPos,
+				idmap_get(clientMap->clients, j).yPos);
+
+			if (status < 0)
+			{
+				clients_remove(clientMap, i);
+			}
+		)
+	)
 }
 
 int sendPosition(int clientFD, size_t id, int xPos, int yPos)
