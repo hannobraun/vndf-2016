@@ -35,8 +35,13 @@ int main(int argc, char const *argv[])
 	while (true)
 	{
 		const int maxEvents = 1024;
-		struct epoll_event events[maxEvents];
-		int numberOfEvents = epoll_wait(net.pollerFD, events, maxEvents, 500);
+		struct epoll_event pollEvents[maxEvents];
+
+		int numberOfEvents = epoll_wait(
+			net.pollerFD,
+			pollEvents,
+			maxEvents,
+			500);
 		assert(numberOfEvents != -1);
 
 		for (int i = 0; i < numberOfEvents; i += 1)
