@@ -53,16 +53,36 @@ int main(int argc, char const *argv[])
 		{
 			int clientFD = net_acceptClient(net.serverFD);
 
-			onConnect(clientFD, &clientMap);
+			event connectEvent;
+			connectEvent.type = ON_CONNECT;
+			connectEvent.ev.onConnect.clientFD = clientFD;
+
+			rbuf_put(events, connectEvent);
 		}
 
 		event updateEvent;
+		updateEvent.type = ON_UPDATE;
+
 		rbuf_put(events, updateEvent);
 
 		while (rbuf_size(events) > 0)
 		{
 			event event;
 			rbuf_get(events, &event);
+
+			switch (event.type)
+			{
+				case ON_CONNECT:
+					onConnect(event.ev.onConnect.clientFD, &clientMap);
+					break;
+
+				case ON_UPDATE:
+					onUpdate(&clientMap);
+					break;
+
+				default:
+					assert(false);
+			}
 
 			onUpdate(&clientMap);
 		}
