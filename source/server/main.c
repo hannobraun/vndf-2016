@@ -21,7 +21,7 @@
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap);
 void onUpdate(clientMap *clientMap, events *events);
-int sendPosition(int clientFD, size_t id, int xPos, int yPos);
+int sendUpdate(int clientFD, size_t id, int xPos, int yPos);
 
 
 int main(int argc, char const *argv[])
@@ -122,7 +122,7 @@ void onUpdate(clientMap *clientMap, events *events)
 
 	idmap_each(clientMap->clients, i,
 		idmap_each(clientMap->clients, j,
-			int status = sendPosition(
+			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
 				idmap_get(clientMap->clients, j).xPos,
@@ -140,7 +140,7 @@ void onUpdate(clientMap *clientMap, events *events)
 	)
 }
 
-int sendPosition(int clientFD, size_t id, int xPos, int yPos)
+int sendUpdate(int clientFD, size_t id, int xPos, int yPos)
 {
 	char message[256];
 	int status = snprintf(
