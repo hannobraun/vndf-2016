@@ -1,3 +1,7 @@
+#include <assert.h>
+#include <string.h>
+
+
 #define idmap_entry(type) struct { int isOccupied; type value; }
 #define idmap_memSize(map) (map.cap * sizeof map.elems[0])
 
