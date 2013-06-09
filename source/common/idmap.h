@@ -23,6 +23,8 @@ assert(k < map.cap); \
 map.elems[k].isOccupied = 1; \
 map.elems[k].value = v;
 
+#define idmap_contains(map, k) map.elems[k].isOccupied
+
 #define idmap_remove(map, k) map.elems[k].isOccupied = 0;
 
 #define idmap_each(map, i, body) \
