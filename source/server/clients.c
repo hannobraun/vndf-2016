@@ -28,6 +28,9 @@ void clients_add(clientMap *c, int socketFD, int xPos, int yPos)
 
 void clients_remove(clientMap *c, size_t id)
 {
-	idmap_remove(c->clients, id);
-	stack_push(c->idPool, id);
+	if (idmap_contains(c->clients, id))
+	{
+		idmap_remove(c->clients, id);
+		stack_push(c->idPool, id);
+	}
 }
