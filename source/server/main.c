@@ -154,5 +154,5 @@ int sendUpdate(int clientFD, size_t id, int xPos, int yPos)
 	assert(messageLength <= CHAR_MAX);
 	message[0] = (char)messageLength;
 
-	return net_send(clientFD, message, strlen(message));
+	return net_send(clientFD, message, messageLength);
 }
