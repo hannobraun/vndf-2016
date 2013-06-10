@@ -19,9 +19,10 @@
 
 
 void onConnect(int clientFD, clientMap *clientMap);
-void onDisconnect(size_t clientId, clientMap *clientMap);
+void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events);
 int sendUpdate(int clientFD, size_t id, int xPos, int yPos);
+int sendRemove(int clientFD, size_t id);
 
 
 int main(int argc, char const *argv[])
@@ -78,7 +79,10 @@ int main(int argc, char const *argv[])
 					break;
 
 				case ON_DISCONNECT:
-					onDisconnect(event.ev.onDisconnect.clientId, &clientMap);
+					onDisconnect(
+						event.ev.onDisconnect.clientId,
+						&clientMap,
+						&events);
 					break;
 
 				case ON_UPDATE:
@@ -108,9 +112,24 @@ void onConnect(int clientFD, clientMap *clientMap)
 	}
 }
 
-void onDisconnect(size_t clientId, clientMap *clientMap)
+void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
 {
 	clients_remove(clientMap, clientId);
+
+	idmap_each(clientMap->clients, i,
+		int status = sendRemove(
+			idmap_get(clientMap->clients, i).socketFD,
+			clientId);
+
+		if (status < 0)
+		{
+			event disconnectEvent;
+			disconnectEvent.type = ON_DISCONNECT;
+			disconnectEvent.ev.onDisconnect.clientId = i;
+
+			rbuf_put((*events), disconnectEvent);
+		}
+	)
 }
 
 void onUpdate(clientMap *clientMap, events *events)
@@ -147,6 +166,23 @@ int sendUpdate(int clientFD, size_t id, int xPos, int yPos)
 		message + 1, sizeof message - 1,
 		"UPDATE id: %lu, pos: (%d, %d)",
 		id, xPos, yPos);
+	assert(status >= 0);
+	assert((size_t)status <= sizeof message);
+
+	size_t messageLength = strlen(message + 1) + 1;
+	assert(messageLength <= CHAR_MAX);
+	message[0] = (char)messageLength;
+
+	return net_send(clientFD, message, messageLength);
+}
+
+int sendRemove(int clientFD, size_t id)
+{
+	char message[256];
+	int status = snprintf(
+		message + 1, sizeof message - 1,
+		"REMOVE id: %lu",
+		id);
 	assert(status >= 0);
 	assert((size_t)status <= sizeof message);
 
