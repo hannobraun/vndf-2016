@@ -18,6 +18,8 @@
 #include "net.h"
 
 
+void log(char *s);
+
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events);
@@ -27,7 +29,7 @@ int sendRemove(int clientFD, size_t id);
 
 int main(int argc, char const *argv[])
 {
-	printf("Server started.\n");
+	log("Server started.\n");
 
 	srand((unsigned int)time(NULL));
 
@@ -94,6 +96,15 @@ int main(int argc, char const *argv[])
 			}
 		}
 	}
+}
+
+void log(char *s)
+{
+	time_t t = time(NULL);
+	char *ts = ctime(&t);
+	ts[strlen(ts) - 1] = '\0';
+
+	printf("%s  %s", ts, s);
 }
 
 void onConnect(int clientFD, clientMap *clientMap)
