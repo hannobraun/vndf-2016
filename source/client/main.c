@@ -79,7 +79,8 @@ void receivePositions(conn *c, posMap positions)
 
 	while (c->bufferPos > 0 && c->buffer[0] < c->bufferPos)
 	{
-		assert(c->buffer[0] >= 0);
+		size_t messageSize = (size_t)c->buffer[0];
+		assert(messageSize >= 0);
 
 		const int msgTypeLen = 32;
 		char msgType[msgTypeLen];
@@ -104,8 +105,6 @@ void receivePositions(conn *c, posMap positions)
 			printf("Unknown message type: %s\n", msgType);
 			assert(false);
 		}
-
-		size_t messageSize = (size_t)c->buffer[0];
 
 		memcpy(c->buffer, c->buffer + messageSize, messageSize);
 		c->bufferPos -= messageSize;
