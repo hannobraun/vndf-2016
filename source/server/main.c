@@ -96,15 +96,15 @@ void onConnect(int clientFD, clientMap *clientMap)
 {
 	if (clients_canAdd(clientMap))
 	{
-		int status = close(clientFD);
-		assert(status == 0);
-	}
-	else
-	{
 		int xPos = rand() % 600 - 300;
 		int yPos = rand() % 400 - 200;
 
 		clients_add(clientMap, clientFD, xPos, yPos);
+	}
+	else
+	{
+		int status = close(clientFD);
+		assert(status == 0);
 	}
 }
 

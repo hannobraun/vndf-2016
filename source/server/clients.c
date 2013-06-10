@@ -14,7 +14,7 @@ void clients_initClientMap(clientMap *c, size_t cap)
 
 bool clients_canAdd(clientMap *c)
 {
-	return c->idPool.size == 0;
+	return c->idPool.size > 0;
 }
 
 void clients_add(clientMap *c, int socketFD, int xPos, int yPos)
