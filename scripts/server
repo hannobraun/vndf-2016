@@ -5,25 +5,20 @@ source project.conf
 SOURCE_FILES="source/server/main.c source/server/net.c source/server/clients.c"
 BINARY=$OUTPUT_DIR/vndf-server
 
-UPSTART_JOB=source/upstart/vndf-server.conf
-DEPLOY_DIR=/opt/vndf
 BINARY_NAME=$(basename $BINARY)
 
-function deployServer() {
-	echo "Deploying server..."
+function updateServer() {
+	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY
 
-	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY &&
-		./scripts/nomad/nomad-scp root "$BINARY $UPSTART_JOB" "~/" &&
-		./scripts/nomad/nomad-ssh root \
-			"mkdir -p $DEPLOY_DIR; mv -f $BINARY_NAME $DEPLOY_DIR;
-			mv $(basename $UPSTART_JOB) /etc/init;
-			killall $BINARY_NAME; restart $BINARY_NAME" &&
-		echo "$(date "+%F %T"): Server deployed."
+	killall $BINARY_NAME
+
+	./$BINARY &
+	PID=$!
 }
 
-deployServer
+updateServer
 
 while inotifywait -qq -e modify $SOURCE_FILES $UPSTART_JOB; do
 	echo "Change detected."
-	deployServer
+	updateServer
 done
