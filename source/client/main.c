@@ -84,7 +84,7 @@ void receivePositions(conn *c, posMap positions)
 
 		const int msgTypeLen = 32;
 		char msgType[msgTypeLen];
-		size_t readLen;
+		size_t readLen = 0;
 		int status = sscanf(c->buffer + 1, "%s%n", msgType, &readLen);
 		assert(status == 1);
 		assert(readLen < msgTypeLen);
