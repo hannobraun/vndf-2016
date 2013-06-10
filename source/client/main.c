@@ -103,7 +103,15 @@ void receivePositions(conn *c, posMap positions)
 		}
 		else if (strcmp(msgType, "REMOVE") == 0)
 		{
-			printf("REMOVE message received. Not implemented.\n");
+			size_t id;
+
+			status = sscanf(c->buffer + 1,
+				"REMOVE id: %lu%n",
+				&id, &readLen);
+			assert(status == 1);
+			assert(readLen == messageSize - 1);
+
+			idmap_remove(positions, id);
 		}
 		else
 		{
