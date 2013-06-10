@@ -17,7 +17,6 @@ function updateServer() {
 }
 
 updateServer
-
 while inotifywait -qq -e modify $SOURCE_FILES $UPSTART_JOB; do
 	echo "Change detected."
 	updateServer
