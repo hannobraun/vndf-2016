@@ -77,7 +77,7 @@ void receivePositions(conn *c, posMap positions)
 
 	c->bufferPos += bytesReceived;
 
-	while (c->bufferPos > 0 && c->buffer[0] < c->bufferPos)
+	while (c->bufferPos > 0 && c->buffer[0] <= c->bufferPos)
 	{
 		size_t messageSize = (size_t)c->buffer[0];
 		assert(messageSize >= 0);
