@@ -104,6 +104,7 @@ void receivePositions(conn *c, posMap positions)
 		else
 		{
 			printf("Unknown message type: %s\n", msgType);
+			assert(false);
 		}
 
 		size_t messageSize = (size_t)c->buffer[0];
