@@ -84,7 +84,7 @@ void receivePositions(conn *c, posMap positions)
 
 		const int msgTypeLen = 32;
 		char msgType[msgTypeLen];
-		int readLen;
+		size_t readLen;
 		int status = sscanf(c->buffer + 1, "%s%n", msgType, &readLen);
 		assert(status == 1);
 		assert(readLen < msgTypeLen);
@@ -94,9 +94,10 @@ void receivePositions(conn *c, posMap positions)
 			size_t id;
 			pos position;
 			status = sscanf(c->buffer + 1,
-				"UPDATE id: %lu, pos: (%f, %f)\n",
-				&id, &position.x, &position.y);
+				"UPDATE id: %lu, pos: (%f, %f)%n\n",
+				&id, &position.x, &position.y, &readLen);
 			assert(status == 3);
+			assert(readLen == messageSize - 1);
 
 			idmap_put(positions, id, position);
 		}
