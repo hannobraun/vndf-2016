@@ -107,7 +107,7 @@ void receivePositions(conn *c, posMap positions)
 			assert(false);
 		}
 
-		memcpy(c->buffer, c->buffer + messageSize, messageSize);
+		memcpy(c->buffer, c->buffer + messageSize, BUFFER_SIZE - messageSize);
 		c->bufferPos -= messageSize;
 	}
 }
