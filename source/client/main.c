@@ -54,7 +54,7 @@ int main(int argc, char const *argv[])
 	c.bufferPos = 0;
 
 	posMap positions;
-	idmap_init(positions, 2);
+	idmap_init(positions, 4);
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
