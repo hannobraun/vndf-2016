@@ -40,13 +40,21 @@ void render(posMap positions);
 
 int main(int argc, char const *argv[])
 {
+	const char *serverAddress;
 	if (argc != 2)
 	{
-		fprintf(stderr, "Usage: %s serverHostname\n", argv[0]);
-		exit(1);
+		fprintf(
+			stderr,
+			"No server address provided. Defaulting to localhost.\n");
+		serverAddress = "localhost";
+	}
+	else
+	{
+		serverAddress = argv[1];
 	}
 
-	int socketFD = net_connect(argv[1], "34481");
+
+	int socketFD = net_connect(serverAddress, "34481");
 	initRendering();
 
 	conn c;
