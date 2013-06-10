@@ -101,6 +101,10 @@ void receivePositions(conn *c, posMap positions)
 
 			idmap_put(positions, id, position);
 		}
+		else if (strcmp(msgType, "REMOVE") == 0)
+		{
+			printf("REMOVE message received. Not implemented.\n");
+		}
 		else
 		{
 			printf("Unknown message type: %s\n", msgType);
