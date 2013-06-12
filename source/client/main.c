@@ -151,10 +151,12 @@ void render(posMap positions)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
-	glOrtho(
+	glFrustum(
 		-screenWidth/2, screenWidth/2,
 		-screenHeight/2, screenHeight/2,
-		-1, 1);
+		0.1f, 1.0f);
+
+	glTranslatef(0.0f,0.0f,-0.1f);
 
 	idmap_each(positions, i,
 		glPushMatrix();
