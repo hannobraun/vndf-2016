@@ -156,7 +156,7 @@ void render(posMap positions)
 		-screenHeight/2, screenHeight/2,
 		0.1f, 1.0f);
 
-	glTranslatef(0.0f,0.0f,-0.1f);
+	glTranslatef(0.0f, 0.0f, -0.1f);
 
 	idmap_each(positions, i,
 		glPushMatrix();
