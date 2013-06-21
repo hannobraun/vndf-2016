@@ -14,6 +14,8 @@ Core goals:
 * Players that drive everything that is meaningful about the game.
 * As few arbitrary limitations as possible. Players should only be limited by
   the physics of the game world.
+* No menial tasks. Rule of thumb: If an activity could be performed by a bot,
+  it should be automatic.
 
 
 Next Step
