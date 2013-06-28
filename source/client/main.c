@@ -154,10 +154,10 @@ void render(posMap positions)
 	glLoadIdentity();
 
 	double pi = atan(1) * 4;
-	GLdouble zNear = 0.1f;
-	GLdouble fovAngleY = 45.0f;
-	GLdouble halfHeight = tan( fovAngleY / 360.0f * pi ) * zNear;
-	GLdouble halfWidth = halfHeight * screenWidth / screenHeight;
+	GLfloat zNear = 0.1f;
+	GLfloat fovAngleY = 45.0f;
+	GLfloat halfHeight = (float)tan( fovAngleY / 360.0f * pi ) * zNear;
+	GLfloat halfWidth = halfHeight * screenWidth / screenHeight;
 	glFrustum(
 		-halfWidth, halfWidth,
 		-halfHeight, halfHeight,
