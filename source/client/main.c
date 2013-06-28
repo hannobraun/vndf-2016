@@ -163,6 +163,7 @@ void render(posMap positions)
 		-halfHeight, halfHeight,
 		zNear, 1000.0f);
 
+	glRotatef(20.0f, 0.0f, 0.0f, 1.0f);
 	glTranslatef(0.0f, 0.0f, -900.0f);
 
 	idmap_each(positions, i,
