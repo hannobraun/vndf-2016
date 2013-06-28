@@ -163,7 +163,7 @@ void render(posMap positions)
 		-halfHeight, halfHeight,
 		zNear, 1000.0f);
 
-	glTranslatef(0.0f, 0.0f, -0.1f);
+	glTranslatef(0.0f, 0.0f, -zNear);
 
 	idmap_each(positions, i,
 		glPushMatrix();
