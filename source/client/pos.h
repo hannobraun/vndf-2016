@@ -1,5 +1,8 @@
-#include <common/idmap.h>
+#ifndef POS_H
+#define POS_H
 
+
+#include <common/idmap.h>
 
 typedef struct {
 	float x;
@@ -7,3 +10,6 @@ typedef struct {
 } pos;
 
 typedef idmap(pos) posMap;
+
+
+#endif
