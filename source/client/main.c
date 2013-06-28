@@ -10,6 +10,7 @@
 
 #include <GL/glfw.h>
 
+#include "display.h"
 #include "net.h"
 #include <common/idmap.h>
 
@@ -35,7 +36,6 @@ typedef idmap(pos) posMap;
 
 void receivePositions(conn *c, posMap positions);
 
-void initRendering(void);
 void render(posMap positions);
 
 
@@ -56,7 +56,7 @@ int main(int argc, char const *argv[])
 
 
 	int socketFD = net_connect(serverAddress, "34481");
-	initRendering();
+	display_init();
 
 	conn c;
 	c.socketFD  = socketFD;
@@ -131,21 +131,6 @@ void receivePositions(conn *c, posMap positions)
 		memcpy(c->buffer, c->buffer + messageSize, BUFFER_SIZE - messageSize);
 		c->bufferPos -= messageSize;
 	}
-}
-
-void initRendering()
-{
-	int status = glfwInit();
-	assert(status);
-
-	status = glfwOpenWindow(
-		screenWidth, screenHeight,
-		8, 8, 8, 8,
-		0, 0,
-		GLFW_WINDOW);
-	assert(status);
-
-	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
 void render(posMap positions)
