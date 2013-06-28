@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <errno.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -151,10 +152,16 @@ void render(posMap positions)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
+
+	double pi = atan(1) * 4;
+	GLdouble zNear = 0.1f;
+	GLdouble fovAngleY = 45.0f;
+	GLdouble halfHeight = tan( fovAngleY / 360.0f * pi ) * zNear;
+	GLdouble halfWidth = halfHeight * screenWidth / screenHeight;
 	glFrustum(
-		-screenWidth/2, screenWidth/2,
-		-screenHeight/2, screenHeight/2,
-		0.1f, 1.0f);
+		-halfWidth, halfWidth,
+		-halfHeight, halfHeight,
+		zNear, 1000.0f);
 
 	glTranslatef(0.0f, 0.0f, -0.1f);
 
@@ -164,7 +171,7 @@ void render(posMap positions)
 		glTranslatef(
 			idmap_get(positions, i).x,
 			idmap_get(positions, i).y,
-			0.0f);
+			-999.0f);
 
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glBegin(GL_TRIANGLE_STRIP);
