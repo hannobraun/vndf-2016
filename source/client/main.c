@@ -163,7 +163,7 @@ void render(posMap positions)
 		-halfHeight, halfHeight,
 		zNear, 1000.0f);
 
-	glTranslatef(0.0f, 0.0f, -zNear);
+	glTranslatef(0.0f, 0.0f, -900.0f);
 
 	idmap_each(positions, i,
 		glPushMatrix();
@@ -171,7 +171,7 @@ void render(posMap positions)
 		glTranslatef(
 			idmap_get(positions, i).x,
 			idmap_get(positions, i).y,
-			-999.0f);
+			0.0f);
 
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glBegin(GL_TRIANGLE_STRIP);
