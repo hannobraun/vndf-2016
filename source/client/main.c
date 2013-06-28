@@ -12,6 +12,7 @@
 
 #include "display.h"
 #include "net.h"
+#include "pos.h"
 #include <common/idmap.h>
 
 
@@ -25,13 +26,6 @@ typedef struct {
 	char buffer[BUFFER_SIZE];
 	int  bufferPos;
 } conn;
-
-typedef struct {
-	float x;
-	float y;
-} pos;
-
-typedef idmap(pos) posMap;
 
 
 void receivePositions(conn *c, posMap positions);
