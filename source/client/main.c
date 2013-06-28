@@ -15,10 +15,6 @@
 #include <common/idmap.h>
 
 
-const int screenWidth  = 800;
-const int screenHeight = 600;
-
-
 #define BUFFER_SIZE 256
 typedef struct {
 	int  socketFD;
