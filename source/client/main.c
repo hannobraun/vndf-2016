@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
 	// Camera
 	float cameraSpeed = 1.0f;
 	float h = 0.0f;
-	float v = 45.0f;
+	float v = 0.0f;
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
