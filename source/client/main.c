@@ -70,6 +70,14 @@ int main(int argc, char const *argv[])
 		{
 			h += 0.5f;
 		}
+		if (glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS)
+		{
+			v += 0.5f;
+		}
+		if (glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
+		{
+			v -= 0.5f;
+		}
 
 		display_render(h, v, positions);
 	}
