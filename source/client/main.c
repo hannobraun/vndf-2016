@@ -53,6 +53,7 @@ int main(int argc, char const *argv[])
 	idmap_init(positions, 4);
 
 	// Camera
+	float cameraSpeed = 0.5f;
 	float h = 0.0f;
 	float v = 45.0f;
 
@@ -64,19 +65,19 @@ int main(int argc, char const *argv[])
 
 		if (glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			h -= 0.5f;
+			h -= cameraSpeed;
 		}
 		if (glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
-			h += 0.5f;
+			h += cameraSpeed;
 		}
 		if (glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS)
 		{
-			v += 0.5f;
+			v += cameraSpeed;
 		}
 		if (glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
-			v -= 0.5f;
+			v -= cameraSpeed;
 		}
 
 		if (v >= 90.0f)
