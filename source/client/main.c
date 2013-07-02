@@ -62,9 +62,16 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 
-		display_render(h, v, positions);
+		if (glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
+		{
+			h -= 0.5f;
+		}
+		if (glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
+		{
+			h += 0.5f;
+		}
 
-		h += 0.5f;
+		display_render(h, v, positions);
 	}
 
 	return 0;
