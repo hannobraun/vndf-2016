@@ -2,4 +2,4 @@
 
 
 void display_init(void);
-void display_render(posMap positions);
+void display_render(GLfloat h, GLfloat v, posMap positions);

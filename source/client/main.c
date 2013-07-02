@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 
-		display_render(positions);
+		display_render(45.0f, 45.0f, positions);
 	}
 
 	return 0;

@@ -25,7 +25,7 @@ void display_init()
 	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
-void display_render(posMap positions)
+void display_render(GLfloat h, GLfloat v, posMap positions)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -40,8 +40,9 @@ void display_render(posMap positions)
 		-halfHeight, halfHeight,
 		zNear, 1000.0f);
 
-	glRotatef(20.0f, 0.0f, 0.0f, 1.0f);
-	glTranslatef(0.0f, 0.0f, -900.0f);
+	glTranslatef(0.0f, 0.0f, -500.0f);
+	glRotatef(h, 1.0f, 0.0f, 0.0f);
+	glRotatef(v, 0.0f, 1.0f, 0.0f);
 
 	idmap_each(positions, i,
 		glPushMatrix();
