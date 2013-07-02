@@ -79,6 +79,15 @@ int main(int argc, char const *argv[])
 			v -= 0.5f;
 		}
 
+		if (v >= 90.0f)
+		{
+			v = 90.0f;
+		}
+		if (v <= -90.0f)
+		{
+			v = -90.0f;
+		}
+
 		display_render(h, v, positions);
 	}
 
