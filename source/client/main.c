@@ -53,7 +53,7 @@ int main(int argc, char const *argv[])
 	idmap_init(positions, 4);
 
 	// Camera
-	float cameraSpeed = 0.5f;
+	float cameraSpeed = 1.0f;
 	float h = 0.0f;
 	float v = 45.0f;
 
