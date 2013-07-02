@@ -41,8 +41,8 @@ void display_render(GLfloat h, GLfloat v, posMap positions)
 		zNear, 1000.0f);
 
 	glTranslatef(0.0f, 0.0f, -500.0f);
-	glRotatef(h, 1.0f, 0.0f, 0.0f);
-	glRotatef(v, 0.0f, 1.0f, 0.0f);
+	glRotatef(h, 0.0f, 1.0f, 0.0f);
+	glRotatef(v, 1.0f, 0.0f, 0.0f);
 
 	idmap_each(positions, i,
 		glPushMatrix();
