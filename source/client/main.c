@@ -10,6 +10,7 @@
 #include <GL/glfw.h>
 
 #include "display.h"
+#include "input.h"
 #include "net.h"
 #include "pos.h"
 #include <common/idmap.h>
@@ -53,7 +54,6 @@ int main(int argc, char const *argv[])
 	idmap_init(positions, 4);
 
 	// Camera
-	float cameraSpeed = 1.0f;
 	float h = 0.0f;
 	float v = 0.0f;
 
@@ -62,33 +62,7 @@ int main(int argc, char const *argv[])
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
 		receivePositions(&c, positions);
-
-		if (glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
-		{
-			h -= cameraSpeed;
-		}
-		if (glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
-		{
-			h += cameraSpeed;
-		}
-		if (glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS)
-		{
-			v += cameraSpeed;
-		}
-		if (glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
-		{
-			v -= cameraSpeed;
-		}
-
-		if (v >= 90.0f)
-		{
-			v = 90.0f;
-		}
-		if (v <= -90.0f)
-		{
-			v = -90.0f;
-		}
-
+		input_apply(&h, &v);
 		display_render(h, v, positions);
 	}
 
