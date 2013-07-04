@@ -9,6 +9,8 @@ typedef int64_t fix;
 #define INT_BITS 52
 #define FRAC_BITS sizeof(int64_t) * 8 - INT_BITS
 
+#define PI 0x3243
+
 
 fix math_fromInt(int i);
 long math_toLong(fix f);
