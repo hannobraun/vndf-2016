@@ -17,10 +17,13 @@ spec
 
 		it("should implement conversion to long")
 		{
-			fix f = 0x5800; // 5.5
-			int i = 5;
+			fix f1 = 0x5800; // 5.5
+			fix f2 = math_fromInt(-5);
+			int i1 = 5;
+			int i2 = -5;
 
-			expectEqual(i, math_toLong(f));
+			expectEqual(i1, math_toLong(f1));
+			expectEqual(i2, math_toLong(f2));
 		}
 
 		it("should implement addition")
