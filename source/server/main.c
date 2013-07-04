@@ -11,6 +11,7 @@
 #include <unistd.h>
 
 #include <common/idmap.h>
+#include <common/math.h>
 #include <common/rbuf.h>
 #include <common/stack.h>
 #include "clients.h"
@@ -23,7 +24,7 @@ void log(char *s);
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events);
-int sendUpdate(int clientFD, size_t id, int xPos, int yPos);
+int sendUpdate(int clientFD, size_t id, fix xPos, fix yPos);
 int sendRemove(int clientFD, size_t id);
 
 
@@ -155,8 +156,8 @@ void onUpdate(clientMap *clientMap, events *events)
 			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
-				idmap_get(clientMap->clients, j).xPos,
-				idmap_get(clientMap->clients, j).yPos);
+				math_fromInt(idmap_get(clientMap->clients, j).xPos),
+				math_fromInt(idmap_get(clientMap->clients, j).yPos));
 
 			if (status < 0)
 			{
@@ -170,13 +171,13 @@ void onUpdate(clientMap *clientMap, events *events)
 	)
 }
 
-int sendUpdate(int clientFD, size_t id, int xPos, int yPos)
+int sendUpdate(int clientFD, size_t id, fix xPos, fix yPos)
 {
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
-		"UPDATE id: %lu, pos: (%d, %d)",
-		id, xPos, yPos);
+		"UPDATE id: %lu, pos: (%ld, %ld)",
+		id, math_toLong(xPos), math_toLong(yPos));
 	assert(status >= 0);
 	assert((size_t)status <= sizeof message);
 
