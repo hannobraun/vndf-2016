@@ -112,8 +112,8 @@ void onConnect(int clientFD, clientMap *clientMap)
 {
 	if (clients_canAdd(clientMap))
 	{
-		int xPos = rand() % 600 - 300;
-		int yPos = rand() % 400 - 200;
+		fix xPos = math_fromInt(rand() % 600 - 300);
+		fix yPos = math_fromInt(rand() % 400 - 200);
 
 		clients_add(clientMap, clientFD, xPos, yPos);
 	}
