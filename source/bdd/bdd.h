@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,15 +18,15 @@ void fail(char *message)
 	printf("%s %s: %s\n", currentSpec, currentExample, message);
 }
 
-void expectEqual(int expected, int actual);
-void expectEqual(int expected, int actual)
+void expectEqual(int64_t expected, int64_t actual);
+void expectEqual(int64_t expected, int64_t actual)
 {
 	if (expected != actual)
 	{
 		char buffer[1024];
 		int status = snprintf(
 			buffer, sizeof buffer,
-			"Expected %d but was %d.",
+			"Expected %ld but was %ld.",
 			expected, actual);
 		if (status < 0)
 		{
