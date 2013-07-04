@@ -3,7 +3,7 @@
 
 fix math_fromInt(int i)
 {
-	return i << 12;
+	return i << FRAC_BITS;
 }
 
 fix math_add(fix a, fix b)
