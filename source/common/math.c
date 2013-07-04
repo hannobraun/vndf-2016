@@ -6,6 +6,11 @@ fix math_fromInt(int i)
 	return i << FRAC_BITS;
 }
 
+long math_toLong(fix f)
+{
+	return f >> FRAC_BITS;
+}
+
 fix math_add(fix a, fix b)
 {
 	return a + b;

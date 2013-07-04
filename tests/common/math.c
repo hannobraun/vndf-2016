@@ -15,6 +15,14 @@ spec
 			expectEqual(f, math_fromInt(i));
 		}
 
+		it("should implement conversion to long")
+		{
+			fix f = 0x5800; // 5.5
+			int i = 5;
+
+			expectEqual(i, math_toLong(f));
+		}
+
 		it("should implement addition")
 		{
 			fix a = 0x1800; // 1.5

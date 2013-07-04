@@ -11,6 +11,7 @@ typedef int64_t fix;
 
 
 fix math_fromInt(int i);
+long math_toLong(fix f);
 
 fix math_add(fix a, fix b);
 fix math_sub(fix a, fix b);
