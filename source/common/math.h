@@ -17,6 +17,7 @@ long math_toLong(fix f);
 
 fix math_add(fix a, fix b);
 fix math_sub(fix a, fix b);
+fix math_mul(fix a, fix b);
 fix math_mod(fix a, fix b);
 
 #endif

@@ -44,6 +44,15 @@ spec
 			expectEqual(c, math_sub(a, b));
 		}
 
+		it("should implement multiplication")
+		{
+			fix a = 0x0800; // 0.5
+			fix b = 0x3000; // 3.0
+			fix c = 0x1800; // 1.5
+
+			expectEqual(c, math_mul(a, b));
+		}
+
 		it("should implement modulo")
 		{
 			fix a = 0x1800; // 1.5
