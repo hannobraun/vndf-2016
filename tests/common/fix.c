@@ -12,18 +12,18 @@ spec
 			int i = 5;
 			fix f = 0x5000; // 5.0
 
-			expectEqual(f, math_fromInt(i));
+			expectEqual(f, fix_fromInt(i));
 		}
 
 		it("should implement conversion to long")
 		{
 			fix f1 = 0x5800; // 5.5
-			fix f2 = math_fromInt(-5);
+			fix f2 = fix_fromInt(-5);
 			int i1 = 5;
 			int i2 = -5;
 
-			expectEqual(i1, math_toLong(f1));
-			expectEqual(i2, math_toLong(f2));
+			expectEqual(i1, fix_toLong(f1));
+			expectEqual(i2, fix_toLong(f2));
 		}
 
 		it("should implement addition")
@@ -32,7 +32,7 @@ spec
 			fix b = 0x1000; // 1.0
 			fix c = 0x2800; // 2.5
 
-			expectEqual(c, math_add(a, b));
+			expectEqual(c, fix_add(a, b));
 		}
 
 		it("should implement subtraction")
@@ -41,7 +41,7 @@ spec
 			fix b = 0x1000; // 1.0
 			fix c = 0x1800; // 1.5
 
-			expectEqual(c, math_sub(a, b));
+			expectEqual(c, fix_sub(a, b));
 		}
 
 		it("should implement multiplication")
@@ -50,7 +50,7 @@ spec
 			fix b = 0x3000; // 3.0
 			fix c = 0x1800; // 1.5
 
-			expectEqual(c, math_mul(a, b));
+			expectEqual(c, fix_mul(a, b));
 		}
 
 		it("should implement division")
@@ -59,7 +59,7 @@ spec
 			fix b = 0x3000; // 3.0
 			fix c = 0x0800; // 0.5
 
-			expectEqual(c, math_div(a, b));
+			expectEqual(c, fix_div(a, b));
 		}
 
 		it("should implement modulo")
@@ -68,7 +68,7 @@ spec
 			fix b = 0x1000; // 1.0
 			fix c = 0x0800; // 0.5
 
-			expectEqual(c, math_mod(a, b));
+			expectEqual(c, fix_mod(a, b));
 		}
 	}
 }

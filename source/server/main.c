@@ -112,8 +112,8 @@ void onConnect(int clientFD, clientMap *clientMap)
 {
 	if (clients_canAdd(clientMap))
 	{
-		fix xPos = math_fromInt(rand() % 600 - 300);
-		fix yPos = math_fromInt(rand() % 400 - 200);
+		fix xPos = fix_fromInt(rand() % 600 - 300);
+		fix yPos = fix_fromInt(rand() % 400 - 200);
 
 		clients_add(clientMap, clientFD, xPos, yPos);
 	}
@@ -148,8 +148,8 @@ void onUpdate(clientMap *clientMap, events *events)
 {
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
-		client->xPos = math_add(client->xPos, math_fromInt(5));
-		client->yPos = math_add(client->yPos, math_fromInt(0));
+		client->xPos = fix_add(client->xPos, fix_fromInt(5));
+		client->yPos = fix_add(client->yPos, fix_fromInt(0));
 	)
 
 	idmap_each(clientMap->clients, i,
@@ -178,7 +178,7 @@ int sendUpdate(int clientFD, size_t id, fix xPos, fix yPos)
 	int status = snprintf(
 		message + 1, sizeof message - 1,
 		"UPDATE id: %lu, pos: (%ld, %ld)",
-		id, math_toLong(xPos), math_toLong(yPos));
+		id, fix_toLong(xPos), fix_toLong(yPos));
 	assert(status >= 0);
 	assert((size_t)status <= sizeof message);
 

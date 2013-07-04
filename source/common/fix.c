@@ -1,37 +1,37 @@
 #include "fix.h"
 
 
-fix math_fromInt(int i)
+fix fix_fromInt(int i)
 {
 	return i << FRAC_BITS;
 }
 
-long math_toLong(fix f)
+long fix_toLong(fix f)
 {
 	return f >> FRAC_BITS;
 }
 
-fix math_add(fix a, fix b)
+fix fix_add(fix a, fix b)
 {
 	return a + b;
 }
 
-fix math_sub(fix a, fix b)
+fix fix_sub(fix a, fix b)
 {
 	return a - b;
 }
 
-fix math_mul(fix a, fix b)
+fix fix_mul(fix a, fix b)
 {
 	return a * b >> FRAC_BITS;
 }
 
-fix math_div(fix a, fix b)
+fix fix_div(fix a, fix b)
 {
 	return (a << FRAC_BITS) / b;
 }
 
-fix math_mod(fix a, fix b)
+fix fix_mod(fix a, fix b)
 {
 	return a % b;
 }

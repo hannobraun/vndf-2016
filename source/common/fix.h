@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-#ifndef COMMON_MATH_H
-#define COMMON_MATH_H
+#ifndef COMMON_fix_H
+#define COMMON_fix_H
 
 typedef int64_t fix;
 
@@ -12,13 +12,13 @@ typedef int64_t fix;
 #define PI 0x3243
 
 
-fix math_fromInt(int i);
-long math_toLong(fix f);
+fix fix_fromInt(int i);
+long fix_toLong(fix f);
 
-fix math_add(fix a, fix b);
-fix math_sub(fix a, fix b);
-fix math_mul(fix a, fix b);
-fix math_div(fix a, fix b);
-fix math_mod(fix a, fix b);
+fix fix_add(fix a, fix b);
+fix fix_sub(fix a, fix b);
+fix fix_mul(fix a, fix b);
+fix fix_div(fix a, fix b);
+fix fix_mod(fix a, fix b);
 
 #endif
