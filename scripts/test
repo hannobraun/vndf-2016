@@ -2,14 +2,15 @@
 
 source project.conf
 
-SOURCE_FILES=$(find tests/ -name "*.c")
+SPEC_FILES=$(find tests/ -name "*.c")
+SOURCE_FILES="source/common/math.c"
 
-for SPEC_FILE in $SOURCE_FILES
+for SPEC_FILE in $SPEC_FILES
 do
 	SPEC_NAME="${SPEC_FILE%.*}"
 	BINARY=$OUTPUT_DIR/$SPEC_NAME-test
 
 	./scripts/zwobot/zwobot-compile \
-		"$SPEC_FILE" "" "" $BINARY &&
+		"$SPEC_FILE $SOURCE_FILES" "" "" $BINARY &&
 		./$BINARY $@
 done
