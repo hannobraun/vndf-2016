@@ -1,6 +1,11 @@
 #include "math.h"
 
 
+fix52_12 math_fromInt(int i)
+{
+	return i << 12;
+}
+
 fix52_12 math_add(fix52_12 a, fix52_12 b)
 {
 	return a + b;

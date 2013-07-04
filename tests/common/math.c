@@ -7,6 +7,14 @@ spec
 {
 	describe("math module")
 	{
+		it("should implement conversion from int")
+		{
+			int i = 5;
+			fix52_12 f = 0x5000; // 5.0
+
+			expectEqual(f, math_fromInt(i));
+		}
+
 		it("should implement addition")
 		{
 			fix52_12 a = 0x1800; // 1.5
