@@ -1,22 +1,22 @@
 #include "math.h"
 
 
-fix52_12 math_fromInt(int i)
+fix math_fromInt(int i)
 {
 	return i << 12;
 }
 
-fix52_12 math_add(fix52_12 a, fix52_12 b)
+fix math_add(fix a, fix b)
 {
 	return a + b;
 }
 
-fix52_12 math_sub(fix52_12 a, fix52_12 b)
+fix math_sub(fix a, fix b)
 {
 	return a - b;
 }
 
-fix52_12 math_mod(fix52_12 a, fix52_12 b)
+fix math_mod(fix a, fix b)
 {
 	return a % b;
 }
