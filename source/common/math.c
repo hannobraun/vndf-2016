@@ -26,6 +26,11 @@ fix math_mul(fix a, fix b)
 	return a * b >> FRAC_BITS;
 }
 
+fix math_div(fix a, fix b)
+{
+	return (a << FRAC_BITS) / b;
+}
+
 fix math_mod(fix a, fix b)
 {
 	return a % b;

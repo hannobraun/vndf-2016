@@ -53,6 +53,15 @@ spec
 			expectEqual(c, math_mul(a, b));
 		}
 
+		it("should implement division")
+		{
+			fix a = 0x1800; // 1.5
+			fix b = 0x3000; // 3.0
+			fix c = 0x0800; // 0.5
+
+			expectEqual(c, math_div(a, b));
+		}
+
 		it("should implement modulo")
 		{
 			fix a = 0x1800; // 1.5
