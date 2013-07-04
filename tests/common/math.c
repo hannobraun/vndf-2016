@@ -7,7 +7,7 @@ spec
 {
 	describe("math module")
 	{
-		it("should implement add")
+		it("should implement addition")
 		{
 			fix52_12 a = 0x1800; // 1.5
 			fix52_12 b = 0x1000; // 1.0
