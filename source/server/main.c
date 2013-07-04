@@ -10,8 +10,8 @@
 #include <sys/epoll.h>
 #include <unistd.h>
 
+#include <common/fix.h>
 #include <common/idmap.h>
-#include <common/math.h>
 #include <common/rbuf.h>
 #include <common/stack.h>
 #include "clients.h"

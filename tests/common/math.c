@@ -1,6 +1,6 @@
 #include <bdd/bdd.h>
 
-#include <common/math.h>
+#include <common/fix.h>
 
 
 spec

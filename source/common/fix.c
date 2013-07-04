@@ -1,4 +1,4 @@
-#include "math.h"
+#include "fix.h"
 
 
 fix math_fromInt(int i)
