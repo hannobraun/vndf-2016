@@ -3,14 +3,15 @@
 #include <string.h>
 
 #include <common/idmap.h>
+#include <common/math.h>
 #include <common/stack.h>
 
 
 typedef struct {
 	int    socketFD;
 	size_t id;
-	int    xPos;
-	int    yPos;
+	fix    xPos;
+	fix    yPos;
 } client;
 
 typedef struct {

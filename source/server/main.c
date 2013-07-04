@@ -147,8 +147,9 @@ void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
 void onUpdate(clientMap *clientMap, events *events)
 {
 	idmap_each(clientMap->clients, i,
-		idmap_get(clientMap->clients, i).xPos += 5;
-		idmap_get(clientMap->clients, i).yPos += 0;
+		client *client = &idmap_get(clientMap->clients, i);
+		client->xPos = math_add(client->xPos, math_fromInt(5));
+		client->yPos = math_add(client->yPos, math_fromInt(0));
 	)
 
 	idmap_each(clientMap->clients, i,
@@ -156,8 +157,8 @@ void onUpdate(clientMap *clientMap, events *events)
 			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
-				math_fromInt(idmap_get(clientMap->clients, j).xPos),
-				math_fromInt(idmap_get(clientMap->clients, j).yPos));
+				idmap_get(clientMap->clients, j).xPos,
+				idmap_get(clientMap->clients, j).yPos);
 
 			if (status < 0)
 			{
