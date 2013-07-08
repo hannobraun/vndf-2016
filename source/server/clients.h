@@ -21,5 +21,5 @@ typedef struct {
 
 void clients_initClientMap(clientMap *c, size_t cap);
 bool clients_canAdd(clientMap *c);
-void clients_add(clientMap *c, int socketFD, long xPos, long yPos);
+void clients_add(clientMap *c, int socketFD, double xPos, double yPos);
 void clients_remove(clientMap *c, size_t id);
