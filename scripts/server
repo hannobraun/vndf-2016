@@ -2,8 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES="source/server/main.c source/server/net.c source/server/clients.c
-source/common/fix.c"
+SOURCE_FILES="source/server/main.c source/server/net.c source/server/clients.c"
 BINARY=$OUTPUT_DIR/vndf-server
 
 BINARY_NAME=$(basename $BINARY)
