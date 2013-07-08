@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <limits.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +17,9 @@
 #include "clients.h"
 #include "events.h"
 #include "net.h"
+
+
+#define PI 3.141592653589793238462
 
 
 void logOutput(char *s);
@@ -111,8 +115,12 @@ void onConnect(int clientFD, clientMap *clientMap)
 {
 	if (clients_canAdd(clientMap))
 	{
-		double xPos = rand() % 600 - 300;
-		double yPos = rand() % 400 - 200;
+		double distance = 100.0;
+
+		double alpha = (double)(rand() % 360) / 180 * PI;
+
+		double xPos = distance * cos(alpha);
+		double yPos = distance * sin(alpha);
 
 		clients_add(clientMap, clientFD, xPos, yPos);
 	}
