@@ -24,7 +24,7 @@ void log(char *s);
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events);
-int sendUpdate(int clientFD, size_t id, fix xPos, fix yPos);
+int sendUpdate(int clientFD, size_t id, long xPos, long yPos);
 int sendRemove(int clientFD, size_t id);
 
 
