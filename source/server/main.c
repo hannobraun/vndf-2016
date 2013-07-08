@@ -157,8 +157,8 @@ void onUpdate(clientMap *clientMap, events *events)
 			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
-				idmap_get(clientMap->clients, j).xPos,
-				idmap_get(clientMap->clients, j).yPos);
+				fix_toLong(idmap_get(clientMap->clients, j).xPos),
+				fix_toLong(idmap_get(clientMap->clients, j).yPos));
 
 			if (status < 0)
 			{
@@ -172,13 +172,13 @@ void onUpdate(clientMap *clientMap, events *events)
 	)
 }
 
-int sendUpdate(int clientFD, size_t id, fix xPos, fix yPos)
+int sendUpdate(int clientFD, size_t id, long xPos, long yPos)
 {
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
 		"UPDATE id: %lu, pos: (%ld, %ld)",
-		id, fix_toLong(xPos), fix_toLong(yPos));
+		id, xPos, yPos);
 	assert(status >= 0);
 	assert((size_t)status <= sizeof message);
 
