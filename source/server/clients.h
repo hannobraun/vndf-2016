@@ -9,8 +9,8 @@
 typedef struct {
 	int    socketFD;
 	size_t id;
-	long   xPos;
-	long   yPos;
+	double xPos;
+	double yPos;
 } client;
 
 typedef struct {
