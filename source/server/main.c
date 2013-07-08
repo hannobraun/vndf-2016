@@ -23,7 +23,7 @@ void log(char *s);
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events);
-int sendUpdate(int clientFD, size_t id, long xPos, long yPos);
+int sendUpdate(int clientFD, size_t id, double xPos, double yPos);
 int sendRemove(int clientFD, size_t id);
 
 
@@ -171,12 +171,12 @@ void onUpdate(clientMap *clientMap, events *events)
 	)
 }
 
-int sendUpdate(int clientFD, size_t id, long xPos, long yPos)
+int sendUpdate(int clientFD, size_t id, double xPos, double yPos)
 {
 	char message[256];
 	int status = snprintf(
 		message + 1, sizeof message - 1,
-		"UPDATE id: %lu, pos: (%ld, %ld)",
+		"UPDATE id: %lu, pos: (%f, %f)",
 		id, xPos, yPos);
 	assert(status >= 0);
 	assert((size_t)status <= sizeof message);
