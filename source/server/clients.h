@@ -10,8 +10,8 @@
 typedef struct {
 	int    socketFD;
 	size_t id;
-	fix    xPos;
-	fix    yPos;
+	long   xPos;
+	long   yPos;
 } client;
 
 typedef struct {
