@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <common/fix.h>
 #include <common/idmap.h>
 #include <common/stack.h>
 
