@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +28,27 @@ void expectEqualInt(int64_t expected, int64_t actual)
 		int status = snprintf(
 			buffer, sizeof buffer,
 			"Expected %ld but was %ld.",
+			expected, actual);
+		if (status < 0)
+		{
+			printf("Error writing error message.\n");
+			exit(1);
+		}
+
+		fail(buffer);
+	}
+}
+
+void expectEqualDouble(double expected, double actual);
+void expectEqualDouble(double expected, double actual)
+{
+	#define EPSILON 0.0001
+	if (fabs(expected - actual) > EPSILON)
+	{
+		char buffer[1024];
+		int status = snprintf(
+			buffer, sizeof buffer,
+			"Expected %f but was %f.",
 			expected, actual);
 		if (status < 0)
 		{
