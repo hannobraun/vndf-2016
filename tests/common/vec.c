@@ -52,6 +52,18 @@ spec
 
 			expectEqualDouble(m, vec_magnitude(v));
 		}
+
+		it("should normalize a vector")
+		{
+			vec2 a = {3, 0};
+			vec2 b = {0, 4};
+
+			vec2 u1 = {1, 0};
+			vec2 u2 = {0, 1};
+
+			expectEqualVec(u1, vec_normalize(a));
+			expectEqualVec(u2, vec_normalize(b));
+		}
 	}
 }
 
