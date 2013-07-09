@@ -3,7 +3,7 @@
 source project.conf
 
 SPEC_FILES=$(find tests/ -name "*.c")
-SOURCE_FILES=""
+SOURCE_FILES="source/common/vec.c"
 
 for SPEC_FILE in $SPEC_FILES
 do
