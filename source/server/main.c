@@ -159,7 +159,11 @@ void onUpdate(clientMap *clientMap, events *events)
 		client *client = &idmap_get(clientMap->clients, i);
 		body *ship = &client->ship;
 
+		double gMag = 100 / vec_magnitude(ship->pos);
+		vec2 g = vec_scale(vec_normalize(ship->pos), -gMag);
+
 		ship->pos = vec_add(ship->pos, ship->vel);
+		ship->vel = vec_add(ship->vel, g);
 	)
 
 	idmap_each(clientMap->clients, i,
