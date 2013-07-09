@@ -155,8 +155,8 @@ void onUpdate(clientMap *clientMap, events *events)
 {
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
-		client->xPos += 5;
-		client->yPos += 0;
+		client->pos.x += 5;
+		client->pos.y += 0;
 	)
 
 	idmap_each(clientMap->clients, i,
@@ -164,8 +164,8 @@ void onUpdate(clientMap *clientMap, events *events)
 			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
-				idmap_get(clientMap->clients, j).xPos,
-				idmap_get(clientMap->clients, j).yPos);
+				idmap_get(clientMap->clients, j).pos.x,
+				idmap_get(clientMap->clients, j).pos.y);
 
 			if (status < 0)
 			{
