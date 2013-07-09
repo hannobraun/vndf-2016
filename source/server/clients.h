@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <common/dynamics.h>
+#include <common/vec.h>
 #include <common/idmap.h>
 #include <common/stack.h>
 
