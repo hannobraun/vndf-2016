@@ -122,7 +122,7 @@ void onConnect(int clientFD, clientMap *clientMap)
 		double xPos = distance * cos(alpha);
 		double yPos = distance * sin(alpha);
 
-		clients_add(clientMap, clientFD, (vec2){xPos, yPos});
+		clients_add(clientMap, clientFD, (vec2){xPos, yPos}, (vec2){5, 0});
 	}
 	else
 	{

@@ -17,12 +17,12 @@ bool clients_canAdd(clientMap *c)
 	return c->idPool.size > 0;
 }
 
-void clients_add(clientMap *c, int socketFD, vec2 pos)
+void clients_add(clientMap *c, int socketFD, vec2 pos, vec2 vel)
 {
 	size_t clientId;
 	stack_pop(c->idPool, &clientId);
 
-	body body = {pos, {5, 0}};
+	body body = {pos, vel};
 
 	client client = {socketFD, clientId, body};
 	idmap_put(c->clients, clientId, client);
