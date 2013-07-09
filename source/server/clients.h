@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <common/vec.h>
+#include <common/dynamics.h>
 #include <common/idmap.h>
 #include <common/stack.h>
 
@@ -10,7 +10,7 @@
 typedef struct {
 	int    socketFD;
 	size_t id;
-	vec2   pos;
+	body   ship;
 } client;
 
 typedef struct {

@@ -157,7 +157,7 @@ void onUpdate(clientMap *clientMap, events *events)
 
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
-		client->pos = vec_add(client->pos, velocity);
+		client->ship.pos = vec_add(client->ship.pos, velocity);
 	)
 
 	idmap_each(clientMap->clients, i,
@@ -165,8 +165,8 @@ void onUpdate(clientMap *clientMap, events *events)
 			int status = sendUpdate(
 				idmap_get(clientMap->clients, i).socketFD,
 				idmap_get(clientMap->clients, j).id,
-				idmap_get(clientMap->clients, j).pos.x,
-				idmap_get(clientMap->clients, j).pos.y);
+				idmap_get(clientMap->clients, j).ship.pos.x,
+				idmap_get(clientMap->clients, j).ship.pos.y);
 
 			if (status < 0)
 			{
