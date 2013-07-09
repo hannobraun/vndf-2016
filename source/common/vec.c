@@ -10,3 +10,8 @@ vec2 vec_sub(vec2 a, vec2 b)
 {
 	return (vec2){a.x - b.x, a.y - b.y};
 }
+
+vec2 vec_scale(vec2 v, double s)
+{
+	return (vec2){v.x * s, v.y * s};
+}

@@ -34,6 +34,16 @@ spec
 
 			expectEqualVec(c, vec_sub(a, b));
 		}
+
+		it("should scale a vector with a scalar")
+		{
+			vec2 a   = {2, 3};
+			double s = 2;
+
+			vec2 b = {4, 6};
+
+			expectEqualVec(b, vec_scale(a, s));
+		}
 	}
 }
 
