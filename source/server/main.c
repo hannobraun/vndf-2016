@@ -158,8 +158,7 @@ void onUpdate(clientMap *clientMap, events *events)
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
 
-		client->pos.x += velocity.x;
-		client->pos.y += velocity.y;
+		client->pos = vec_add(client->pos, velocity);
 	)
 
 	idmap_each(clientMap->clients, i,
