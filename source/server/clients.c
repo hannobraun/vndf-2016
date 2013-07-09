@@ -22,7 +22,9 @@ void clients_add(clientMap *c, int socketFD, double xPos, double yPos)
 	size_t clientId;
 	stack_pop(c->idPool, &clientId);
 
-	client client = {socketFD, clientId, {{xPos, yPos}}};
+	body body = {{xPos, yPos}, {5, 0}};
+
+	client client = {socketFD, clientId, body};
 	idmap_put(c->clients, clientId, client);
 }
 
