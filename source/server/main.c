@@ -153,10 +153,13 @@ void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
 
 void onUpdate(clientMap *clientMap, events *events)
 {
+	vec2 velocity = {5, 0};
+
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
-		client->pos.x += 5;
-		client->pos.y += 0;
+
+		client->pos.x += velocity.x;
+		client->pos.y += velocity.y;
 	)
 
 	idmap_each(clientMap->clients, i,
