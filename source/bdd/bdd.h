@@ -18,8 +18,8 @@ void fail(char *message)
 	printf("%s %s: %s\n", currentSpec, currentExample, message);
 }
 
-void expectEqual(int64_t expected, int64_t actual);
-void expectEqual(int64_t expected, int64_t actual)
+void expectEqualInt(int64_t expected, int64_t actual);
+void expectEqualInt(int64_t expected, int64_t actual)
 {
 	if (expected != actual)
 	{

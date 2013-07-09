@@ -24,9 +24,9 @@ spec
 			rbuf_get(buf, &y);
 			rbuf_get(buf, &z);
 
-			expectEqual(1, x);
-			expectEqual(2, y);
-			expectEqual(3, z);
+			expectEqualInt(1, x);
+			expectEqualInt(2, y);
+			expectEqualInt(3, z);
 		}
 
 		it("should return the number of values in the buffer")
@@ -34,12 +34,12 @@ spec
 			rbuf(int) buf;
 			rbuf_init(buf, 2);
 
-			expectEqual(0, (int)rbuf_size(buf));
+			expectEqualInt(0, (int)rbuf_size(buf));
 
 			rbuf_put(buf, 1);
 			rbuf_put(buf, 2);
 
-			expectEqual(2, (int)rbuf_size(buf));
+			expectEqualInt(2, (int)rbuf_size(buf));
 		}
 
 		it("should return the number of available cells")
@@ -47,12 +47,12 @@ spec
 			rbuf(int) buf;
 			rbuf_init(buf, 2);
 
-			expectEqual(2, (int)rbuf_available(buf));
+			expectEqualInt(2, (int)rbuf_available(buf));
 
 			rbuf_put(buf, 1);
 			rbuf_put(buf, 2);
 
-			expectEqual(0, (int)rbuf_available(buf));
+			expectEqualInt(0, (int)rbuf_available(buf));
 		}
 
 		// The following requirements are not tested here (cause I don't know

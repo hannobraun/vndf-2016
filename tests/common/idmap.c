@@ -17,8 +17,8 @@ spec
 
 			idmap_put(m, 0, 1);
 
-			expectEqual(1, idmap_contains(m, 0));
-			expectEqual(0, idmap_contains(m, 1));
+			expectEqualInt(1, idmap_contains(m, 0));
+			expectEqualInt(0, idmap_contains(m, 1));
 		}
 	}
 }

@@ -20,8 +20,8 @@ spec
 			stack_pop(s, &x);
 			stack_pop(s, &y);
 
-			expectEqual(2, x);
-			expectEqual(1, y);
+			expectEqualInt(2, x);
+			expectEqualInt(1, y);
 		}
 
 		// The following behavior has been implemented, but is not specified
