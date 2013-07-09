@@ -24,6 +24,16 @@ spec
 
 			expectEqualVec(c, vec_add(a, b));
 		}
+
+		it("should subtract a vector from another")
+		{
+			vec2 a = {2, 3};
+			vec2 b = {1, 2};
+
+			vec2 c = {1, 1};
+
+			expectEqualVec(c, vec_sub(a, b));
+		}
 	}
 }
 
