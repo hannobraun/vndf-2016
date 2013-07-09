@@ -44,6 +44,14 @@ spec
 
 			expectEqualVec(b, vec_scale(a, s));
 		}
+
+		it("should compute the magnitude of a vector")
+		{
+			vec2   v = {3, 4};
+			double m = 5;
+
+			expectEqualDouble(m, vec_magnitude(v));
+		}
 	}
 }
 
