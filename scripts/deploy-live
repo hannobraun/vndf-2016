@@ -17,6 +17,6 @@ mkdir -p /opt/vndf
 mv -f vndf-server /opt/vndf
 mv -f vndf-server.conf /etc/init
 mv -f vndf-client /srv/http/default
-restart vndf-server"
+restart --quiet vndf-server"
 
 ./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
