@@ -19,4 +19,4 @@ mv -f vndf-server.conf /etc/init
 mv -f vndf-client /srv/http/default
 restart vndf-server"
 
-./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" reineke.vndf.de
+./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS

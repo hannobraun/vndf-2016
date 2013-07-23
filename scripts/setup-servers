@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source project.conf
+
 HOSTNAME="reineke"
 
 COMMANDS="
@@ -22,4 +24,4 @@ service nginx restart
 
 FILES="source/nginx/default"
 
-./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" reineke.vndf.de
+./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
