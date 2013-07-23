@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+HOSTNAME="reineke"
+
+COMMANDS="
+hostname $HOSTNAME
+echo $HOSTNAME > /etc/hosts
+
+apt-get --yes update
+apt-get --yes upgrade
+
+# Make sure apache is not included in the default install, as it conflicts with
+# nginx.
+apt-get --yes purge apache2 apache2-doc apache2-mpm-prefork apache2-utils \
+	apache2.2-bin apache2.2-common
+
+apt-get --yes install nginx
+mv -f default /etc/nginx/sites-available/default
+mkdir -p /srv/http/default
+service nginx restart
+"
+
+FILES="source/nginx/default"
+
+./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" reineke.vndf.de
