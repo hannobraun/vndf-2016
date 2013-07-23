@@ -1,0 +1,11 @@
+server {
+	listen		80 default;
+	server_name	reineke.vndf.de;
+
+	access_log	/var/log/nginx/default.access.log;
+
+	location / {
+		root	/srv/http/default;
+		index	index.html index.htm;
+	}
+}
