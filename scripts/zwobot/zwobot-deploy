@@ -21,7 +21,14 @@ fi
 
 DEPLOY_DIR="~/deploy-$RANDOM"
 
-rsync -e "ssh -p $PORT" $FILES root@$SERVER:$DEPLOY_DIR
+# This is needed in case only one file is to be copied. In that case rsync will
+# interpret the target argument as a file name, not a directory name.
+ssh root@$SERVER \
+	-o "BatchMode yes" \
+	-p $PORT \
+	"mkdir -p $DEPLOY_DIR"
+
+rsync -e "ssh -p $PORT" "$FILES" root@$SERVER:$DEPLOY_DIR
 
 ssh root@$SERVER \
 	-o "BatchMode yes" \
