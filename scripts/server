@@ -7,6 +7,9 @@ source/server/main.c \
 source/server/net.c \
 source/server/clients.c \
 source/common/vec.c"
+
+HEADER_FILES=$(find source/server source/common -name "*.h")
+
 BINARY=$OUTPUT_DIR/vndf-server
 
 BINARY_NAME=$(basename $BINARY)
@@ -21,7 +24,7 @@ function updateServer() {
 }
 
 updateServer
-while inotifywait -qq -e modify $SOURCE_FILES; do
+while inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES; do
 	echo "Change detected."
 	updateServer
 done
