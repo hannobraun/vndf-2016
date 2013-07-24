@@ -26,7 +26,7 @@ void logOutput(char *s);
 
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
-void onUpdate(clientMap *clientMap, events *events);
+void onUpdate(clientMap *clientMap, events *events, double dTimeInS);
 int sendUpdate(int clientFD, size_t id, double xPos, double yPos);
 int sendRemove(int clientFD, size_t id);
 
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[])
 					break;
 
 				case ON_UPDATE:
-					onUpdate(&clientMap, &events);
+					onUpdate(&clientMap, &events, 1.0);
 					break;
 
 				default:
@@ -153,7 +153,7 @@ void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
 	)
 }
 
-void onUpdate(clientMap *clientMap, events *events)
+void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
 {
 	idmap_each(clientMap->clients, i,
 		client *client = &idmap_get(clientMap->clients, i);
@@ -162,8 +162,8 @@ void onUpdate(clientMap *clientMap, events *events)
 		double gMag = 100 / vec_magnitude(ship->pos);
 		vec2 g = vec_scale(vec_normalize(ship->pos), -gMag);
 
-		ship->pos = vec_add(ship->pos, ship->vel);
-		ship->vel = vec_add(ship->vel, g);
+		ship->pos = vec_add(ship->pos, vec_scale(ship->vel, dTimeInS));
+		ship->vel = vec_add(ship->vel, vec_scale(g, dTimeInS));
 	)
 
 	idmap_each(clientMap->clients, i,
