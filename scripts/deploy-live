@@ -10,13 +10,15 @@ read
 FILES="\
 source/upstart/vndf-server.conf \
 $OUTPUT_DIR/vndf-server \
-$OUTPUT_DIR/vndf-client"
+$OUTPUT_DIR/vndf-client \
+source/vndf.de/index.html"
 
 COMMANDS="
 mkdir -p /opt/vndf
 mv -f vndf-server /opt/vndf
 mv -f vndf-server.conf /etc/init
 mv -f vndf-client /srv/http/default
+mv -f index.html /srv/http/default
 restart --quiet vndf-server"
 
 ./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
