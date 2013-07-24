@@ -10,14 +10,12 @@ source/common/vec.c"
 
 HEADER_FILES=$(find source/server source/common -name "*.h")
 
-BINARY=$OUTPUT_DIR/$CORE_SERVICE
-
 function updateServer() {
-	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $BINARY
+	./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $CORE_SERVICE_BINARY
 
 	killall $CORE_SERVICE
 
-	./$BINARY &
+	./$CORE_SERVICE_BINARY &
 	PID=$!
 }
 
