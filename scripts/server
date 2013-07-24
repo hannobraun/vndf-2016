@@ -24,7 +24,9 @@ function updateServer() {
 }
 
 updateServer
-while inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES; do
+while true
+do
+	inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES
 	echo "Change detected."
 	updateServer
 done
