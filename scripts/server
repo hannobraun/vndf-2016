@@ -2,12 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES="\
-source/server/main.c \
-source/server/net.c \
-source/server/clients.c \
-source/common/vec.c"
-
+SOURCE_FILES=$(find source/server source/common -name "*.c")
 HEADER_FILES=$(find source/server source/common -name "*.h")
 
 function updateServer() {
