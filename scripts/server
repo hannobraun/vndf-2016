@@ -6,7 +6,7 @@ SOURCE_FILES=$(find $CORE_SERVICE_SOURCE -name "*.c")
 HEADER_FILES=$(find $CORE_SERVICE_SOURCE -name "*.h")
 
 function updateServer() {
-	./scripts/zwobot-tasks/build-core-service
+	./scripts/tasks/build-core-service
 
 	killall $CORE_SERVICE_NAME
 
