@@ -47,6 +47,8 @@ int main(int argc, char const *argv[])
 
 	while (true)
 	{
+		const int frameTimeInMs = 500;
+
 		const int maxEvents = 1024;
 		struct epoll_event pollEvents[maxEvents];
 
@@ -54,7 +56,7 @@ int main(int argc, char const *argv[])
 			net.pollerFD,
 			pollEvents,
 			maxEvents,
-			500);
+			frameTimeInMs);
 		assert(numberOfEvents != -1);
 
 		for (int i = 0; i < numberOfEvents; i += 1)
@@ -92,7 +94,10 @@ int main(int argc, char const *argv[])
 					break;
 
 				case ON_UPDATE:
-					onUpdate(&clientMap, &events, 1.0);
+					onUpdate(
+						&clientMap,
+						&events,
+						(double)frameTimeInMs / 1000.0);
 					break;
 
 				default:
