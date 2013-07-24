@@ -127,7 +127,7 @@ void onConnect(int clientFD, clientMap *clientMap)
 		double xPos = distance * cos(alpha);
 		double yPos = distance * sin(alpha);
 
-		double speed = 10;
+		double speed = 30;
 
 		clients_add(clientMap, clientFD, (vec2){xPos, yPos}, (vec2){speed, 0});
 	}
@@ -164,7 +164,7 @@ void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
 		client *client = &idmap_get(clientMap->clients, i);
 		body *ship = &client->ship;
 
-		double gMag = 100 / vec_magnitude(ship->pos);
+		double gMag = 3000 / vec_magnitude(ship->pos);
 		vec2 g = vec_scale(vec_normalize(ship->pos), -gMag);
 
 		ship->pos = vec_add(ship->pos, vec_scale(ship->vel, dTimeInS));
