@@ -2,8 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES="source/client/main.c source/client/net.c source/client/display.c
-	source/client/input.c"
+SOURCE_FILES=$(find $CLIENT_SOURCE -name "*.c")
 STATIC_LIBS=output/lib/libglfw.a
 LIB_ARGS=-lGL
 BINARY=$OUTPUT_DIR/vndf-client
