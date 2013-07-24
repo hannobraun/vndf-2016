@@ -5,8 +5,7 @@ source project.conf
 SOURCE_FILES=$(find $CLIENT_SOURCE -name "*.c")
 STATIC_LIBS=output/lib/libglfw.a
 LIB_ARGS=-lGL
-BINARY=$OUTPUT_DIR/vndf-client
 
 ./scripts/zwobot/zwobot-compile \
-	"$SOURCE_FILES" $STATIC_LIBS $LIB_ARGS $BINARY &&
-	./$BINARY $@
+	"$SOURCE_FILES" $STATIC_LIBS $LIB_ARGS $CLIENT_BINARY &&
+	./$CLIENT_BINARY $@
