@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+SOURCE_FILES=$(find $CLIENT_SOURCE -name "*.c")
+STATIC_LIBS=output/lib/libglfw.a
+LIB_ARGS=-lGL
+
+./scripts/zwobot/zwobot-compile \
+	"$SOURCE_FILES" $STATIC_LIBS $LIB_ARGS $CLIENT_BINARY
