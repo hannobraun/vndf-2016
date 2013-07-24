@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+SOURCE_FILES=$(find source/server source/common -name "*.c")
+
+./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $CORE_SERVICE_BINARY
