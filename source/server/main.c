@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
 
 	while (true)
 	{
-		const int frameTimeInMs = 500;
+		const int frameTimeInMs = 50;
 
 		const int maxEvents = 1024;
 		struct epoll_event pollEvents[maxEvents];
