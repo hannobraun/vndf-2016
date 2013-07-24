@@ -4,17 +4,17 @@ source project.conf
 
 FILES="\
 source/upstart/vndf-server.conf \
-$OUTPUT_DIR/vndf-server \
-$OUTPUT_DIR/vndf-client \
+$CORE_SERVICE_BINARY \
+$CLIENT_BINARY \
 source/vndf.de/index.html"
 
 COMMANDS="
 mkdir -p /opt/vndf
-mv -f vndf-server /opt/vndf
+mv -f $CORE_SERVICE_NAME /opt/vndf
 mv -f vndf-server.conf /etc/init
-mv -f vndf-client /srv/http/default
+mv -f $CLIENT_NAME /srv/http/default
 mv -f index.html /srv/http/default
-restart --quiet vndf-server"
+restart --quiet $CORE_SERVICE_NAME"
 
 ./scripts/tasks/build-core-service
 ./scripts/tasks/build-client
