@@ -2,11 +2,6 @@
 
 source project.conf
 
-echo "This script deploys the server and client to the live server."
-echo "Please make sure that you have compiled the latest versions of both."
-echo "[Press Enter to continue.]"
-read
-
 FILES="\
 source/upstart/vndf-server.conf \
 $OUTPUT_DIR/vndf-server \
@@ -21,4 +16,6 @@ mv -f vndf-client /srv/http/default
 mv -f index.html /srv/http/default
 restart --quiet vndf-server"
 
+./scripts/tasks/build-core-service
+./scripts/tasks/build-client
 ./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
