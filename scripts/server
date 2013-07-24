@@ -2,7 +2,10 @@
 
 source project.conf
 
-SOURCE_FILES="source/server/main.c source/server/net.c source/server/clients.c
+SOURCE_FILES="\
+source/server/main.c \
+source/server/net.c \
+source/server/clients.c \
 source/common/vec.c"
 BINARY=$OUTPUT_DIR/vndf-server
 
