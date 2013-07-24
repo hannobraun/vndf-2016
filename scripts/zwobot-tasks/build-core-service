@@ -2,6 +2,6 @@
 
 source project.conf
 
-SOURCE_FILES=$(find source/server source/common -name "*.c")
+SOURCE_FILES=$(find $CORE_SERVICE_SOURCE -name "*.c")
 
 ./scripts/zwobot/zwobot-compile "$SOURCE_FILES" "" "" $CORE_SERVICE_BINARY
