@@ -16,7 +16,6 @@ function updateServer() {
 	killall $CORE_SERVICE
 
 	./$CORE_SERVICE_BINARY &
-	PID=$!
 }
 
 updateServer
