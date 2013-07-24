@@ -117,12 +117,12 @@ void onConnect(int clientFD, clientMap *clientMap)
 	{
 		double distance = 100.0;
 
-		double alpha = (double)(rand() % 360) / 180 * PI;
+		double alpha = 90.0 / 180.0 * PI;
 
 		double xPos = distance * cos(alpha);
 		double yPos = distance * sin(alpha);
 
-		double speed = rand() % 15;
+		double speed = 10;
 
 		clients_add(clientMap, clientFD, (vec2){xPos, yPos}, (vec2){speed, 0});
 	}
