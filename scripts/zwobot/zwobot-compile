@@ -2,14 +2,16 @@
 
 if [ $# -ne 4 ]
 then
-	echo "Usage: $(basename $0) sourceFiles staticLibs libArgs binary"
+	echo "Usage: $(basename $0) sourceDirs staticLibs libArgs binary"
 	exit 1
 fi
 
-SOURCE_FILES=$1
+SOURCE_DIRS=$1
 STATIC_LIBS=$2
 LIB_ARGS=$3
 BINARY=$4
+
+SOURCE_FILES=$(find $SOURCE_DIRS -name "*.c")
 
 mkdir -p $(dirname $BINARY)
 
