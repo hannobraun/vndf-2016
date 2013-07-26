@@ -2,8 +2,8 @@
 
 source project.conf
 
-STATIC_LIBS=output/lib/libglfw.a
+STATIC_LIBS="$OUTPUT_LIB/libglfw.a $OUTPUT_LIB/stb_image.o"
 LIB_ARGS=-lGL
 
 ./scripts/zwobot/zwobot-compile \
-	"$CLIENT_SOURCE" $STATIC_LIBS $LIB_ARGS $CLIENT_BINARY
+	"$CLIENT_SOURCE" "$STATIC_LIBS" $LIB_ARGS $CLIENT_BINARY
