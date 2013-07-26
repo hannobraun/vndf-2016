@@ -7,9 +7,7 @@ HEADER_FILES=$(find $CORE_SERVICE_SOURCE -name "*.h")
 
 function updateServer() {
 	./scripts/tasks/build-core-service
-
 	killall $CORE_SERVICE_NAME
-
 	./$CORE_SERVICE_BINARY &
 }
 
