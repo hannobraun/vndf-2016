@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-LIB_DIR=output/lib
+source project.conf
 
 CURRENT_DIR=$(pwd)
 
-mkdir -p $LIB_DIR
+mkdir -p $OUTPUT_LIB
 
 cd vendor/glfw
 
 make x11
-cp lib/x11/libglfw.a $CURRENT_DIR/$LIB_DIR
+cp lib/x11/libglfw.a $CURRENT_DIR/$OUTPUT_LIB
 make x11-clean
 
 cd $CURRENT_DIR
