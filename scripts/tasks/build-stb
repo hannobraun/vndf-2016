@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+clang vendor/stb/image.c -c -o $OUTPUT_LIB/stb_image.o
