@@ -2,5 +2,7 @@
 
 source project.conf
 
+ARCHIVE=$(pwd)/$OUTPUT_DIR/$CLIENT_NAME.tar.gz
+
 cd $OUTPUT_DIR
-tar -chzf $CLIENT_NAME.tar.gz $(basename $CLIENT_DIST_DIR)
+tar -chzf $ARCHIVE $(basename $CLIENT_DIST_DIR)
