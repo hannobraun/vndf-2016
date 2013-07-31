@@ -44,7 +44,7 @@ int main(int argc, char const *argv[])
 
 
 	int socketFD = net_connect(serverAddress, "34481");
-	display_init();
+	GLuint textureName = display_init();
 
 	conn c;
 	c.socketFD  = socketFD;
@@ -63,7 +63,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 		input_apply(&h, &v);
-		display_render(h, v, positions);
+		display_render(h, v, positions, textureName);
 	}
 
 	return 0;

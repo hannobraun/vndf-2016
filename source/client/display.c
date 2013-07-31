@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include <GL/glfw.h>
+#include <stb/image.h>
 
 #include "display.h"
 
@@ -10,7 +11,7 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
-void display_init()
+GLuint display_init()
 {
 	int status = glfwInit();
 	assert(status);
@@ -23,9 +24,49 @@ void display_init()
 	assert(status);
 
 	glfwSetWindowTitle("Von Neumann Defense Force");
+
+	int xSize, ySize, numberOfComponents;
+
+	unsigned char *imageData = stbi_load(
+		"source/images/spaceship.png",
+		&xSize, &ySize,
+		&numberOfComponents,
+		0 );
+	assert(imageData != NULL);
+	assert(numberOfComponents == 4);
+
+	glEnable(GL_TEXTURE_2D);
+
+	// Generate texture names.
+	GLuint textureName;
+	glGenTextures(1, &textureName);
+
+	glBindTexture(
+		GL_TEXTURE_2D,
+		textureName);
+
+	// Configure texture.
+	glTexParameteri(
+		GL_TEXTURE_2D,
+		GL_TEXTURE_MIN_FILTER,
+		GL_NEAREST);
+
+	// Bind image data to texture name.
+	glTexImage2D(
+		GL_TEXTURE_2D,
+		0,
+		GL_RGBA8,
+		xSize,
+		ySize,
+		0,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		imageData);
+
+	return textureName;
 }
 
-void display_render(GLfloat h, GLfloat v, posMap positions)
+void display_render(GLfloat h, GLfloat v, posMap positions, GLuint textureName)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -44,6 +85,12 @@ void display_render(GLfloat h, GLfloat v, posMap positions)
 	glRotatef(v, 1.0f, 0.0f, 0.0f);
 	glRotatef(h, 0.0f, 1.0f, 0.0f);
 
+	glBindTexture(
+		GL_TEXTURE_2D,
+		textureName);
+
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
 	idmap_each(positions, i,
 		glPushMatrix();
 
@@ -52,11 +99,18 @@ void display_render(GLfloat h, GLfloat v, posMap positions)
 			idmap_get(positions, i).y,
 			0.0f);
 
-		glColor3f(0.0f, 0.0f, 1.0f);
 		glBegin(GL_TRIANGLE_STRIP);
-			glVertex3f(  0.0f, 20.0f, 0.0f);
-			glVertex3f(-20.0f,-10.0f, 0.0f);
-			glVertex3f( 20.0f,-10.0f, 0.0f);
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex3f(20.0f, 20.0f, 0.0f);
+
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex3f(20.0f, -20.0f, 0.0f);
+
+			glTexCoord2f(0.0f, 0.0f);
+			glVertex3f(-20.0f, 20.0f, 0.0f);
+
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex3f(-20.0f, -20.0f, 0.0f);
 		glEnd();
 
 		glPopMatrix();
