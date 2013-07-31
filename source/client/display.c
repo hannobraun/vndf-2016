@@ -28,7 +28,7 @@ GLuint display_init()
 	int xSize, ySize, numberOfComponents;
 
 	unsigned char *imageData = stbi_load(
-		"source/images/spaceship.png",
+		"images/spaceship.png",
 		&xSize, &ySize,
 		&numberOfComponents,
 		0 );

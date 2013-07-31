@@ -2,4 +2,6 @@
 
 source project.conf
 
-./scripts/tasks/build-client && ./$CLIENT_BINARY $@
+BINARY=$(pwd)/$CLIENT_BINARY
+
+./scripts/tasks/build-client && cd $CLIENT_DIST_DIR && $BINARY $@
