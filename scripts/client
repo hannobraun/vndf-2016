@@ -4,4 +4,4 @@ source project.conf
 
 BINARY=$(pwd)/$CLIENT_BINARY
 
-./scripts/tasks/build-client && cd $CLIENT_DIST_DIR && $BINARY $@
+./scripts/tasks/build-client && cd $CLIENT_DIST_DIR && $BINARY localhost
