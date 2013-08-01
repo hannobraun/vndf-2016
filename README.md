@@ -6,7 +6,7 @@
 
 ## Start the core service recompilation loop
 
-./scripts/server
+./scripts/core-service
 
 
 ## Start the client
