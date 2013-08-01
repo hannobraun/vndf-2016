@@ -53,17 +53,15 @@ int main(int argc, char const *argv[])
 	posMap positions;
 	idmap_init(positions, 4);
 
-	// Camera
-	float h = 0.0f;
-	float v = 0.0f;
+	camera cam = {0.0f, 0.0f};
 
 	while (
 		glfwGetWindowParam(GLFW_OPENED) &&
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
 		receivePositions(&c, positions);
-		input_apply(&h, &v);
-		display_render(h, v, positions, textureName);
+		input_apply(&cam.h, &cam.v);
+		display_render(cam.h, cam.v, positions, textureName);
 	}
 
 	return 0;
