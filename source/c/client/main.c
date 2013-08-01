@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 		input_apply(&cam);
-		display_render(cam.h, cam.v, positions, textureName);
+		display_render(cam, positions, textureName);
 	}
 
 	return 0;

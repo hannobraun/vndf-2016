@@ -66,7 +66,7 @@ GLuint display_init()
 	return textureName;
 }
 
-void display_render(GLfloat h, GLfloat v, posMap positions, GLuint textureName)
+void display_render(camera cam, posMap positions, GLuint textureName)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -82,8 +82,8 @@ void display_render(GLfloat h, GLfloat v, posMap positions, GLuint textureName)
 		zNear, 1000.0f);
 
 	glTranslatef(0.0f, 0.0f, -500.0f);
-	glRotatef(v, 1.0f, 0.0f, 0.0f);
-	glRotatef(h, 0.0f, 1.0f, 0.0f);
+	glRotatef(cam.v, 1.0f, 0.0f, 0.0f);
+	glRotatef(cam.h, 0.0f, 1.0f, 0.0f);
 
 	glBindTexture(
 		GL_TEXTURE_2D,
