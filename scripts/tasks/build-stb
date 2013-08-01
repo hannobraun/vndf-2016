@@ -3,3 +3,4 @@
 source project.conf
 
 clang vendor/stb/image.c -c -o $OUTPUT_LIB/stb_image.o
+clang source/c/stb/truetype.c -c -o $OUTPUT_LIB/stb_truetype.o

@@ -2,7 +2,11 @@
 
 source project.conf
 
-STATIC_LIBS="$OUTPUT_LIB/libglfw.a $OUTPUT_LIB/stb_image.o"
+STATIC_LIBS="\
+$OUTPUT_LIB/libglfw.a \
+$OUTPUT_LIB/stb_image.o \
+$OUTPUT_LIB/stb_truetype.o"
+
 LIB_ARGS=-lGL
 
 ./scripts/zwobot/zwobot-compile \
