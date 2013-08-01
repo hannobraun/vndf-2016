@@ -30,17 +30,30 @@ void receivePositions(conn *c, posMap positions);
 
 int main(int argc, char const *argv[])
 {
-	const char *serverAddress;
-	if (argc != 2)
+	char serverAddress[100];
+	if (argc == 2)
+	{
+		strcpy(serverAddress, argv[1]);
+	}
+	else if (argc > 2)
 	{
 		fprintf(
 			stderr,
-			"No server address provided. Defaulting to localhost.\n");
-		serverAddress = "localhost";
+			"Usage: %s serverAddress\n",
+			argv[0]);
 	}
 	else
 	{
-		serverAddress = argv[1];
+		FILE *serverFile = fopen("server", "r");
+		assert(serverFile != NULL);
+
+		char *ret = fgets(serverAddress, sizeof serverAddress, serverFile);
+		assert(ret != NULL);
+
+		if (serverAddress[strlen(serverAddress) - 1] == '\n')
+		{
+			serverAddress[strlen(serverAddress) - 1] = '\0';
+		}
 	}
 
 
