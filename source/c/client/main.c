@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
 		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
 	{
 		receivePositions(&c, positions);
-		input_apply(&cam.h, &cam.v);
+		input_apply(&cam);
 		display_render(cam.h, cam.v, positions, textureName);
 	}
 

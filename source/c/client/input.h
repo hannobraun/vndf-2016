@@ -1,1 +1,3 @@
-void input_apply(float *h, float *v);
+#include "camera.h"
+
+void input_apply(camera *cam);
