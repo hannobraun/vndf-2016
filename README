@@ -1,2 +1,14 @@
-* Build dependencies: ./scripts/build-glfw
-* Build and run vndf: ./scripts/run
+## Build the client's dependencies
+
+./scripts/tasks/build-glfw
+./scripts/tasks/build-stb
+
+
+## Start the core service recompilation loop
+
+./scripts/server
+
+
+## Start the client
+
+./scripts/client
