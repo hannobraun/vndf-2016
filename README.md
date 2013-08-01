@@ -1,7 +1,7 @@
 ## Build the client's dependencies
 
-./scripts/tasks/build-glfw
-./scripts/tasks/build-stb
+* ./scripts/tasks/build-glfw
+* ./scripts/tasks/build-stb
 
 
 ## Start the core service recompilation loop
