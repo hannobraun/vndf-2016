@@ -31,7 +31,7 @@ GLuint display_init()
 		"images/spaceship.png",
 		&xSize, &ySize,
 		&numberOfComponents,
-		0 );
+		0);
 	assert(imageData != NULL);
 	assert(numberOfComponents == 4);
 
