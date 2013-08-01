@@ -9,6 +9,7 @@
 
 #include <GL/glfw.h>
 
+#include "camera.h"
 #include "display.h"
 #include "input.h"
 #include "net.h"
