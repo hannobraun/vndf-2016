@@ -18,4 +18,5 @@ restart --quiet $CORE_SERVICE_NAME"
 
 ./scripts/tasks/build-core-service
 ./scripts/tasks/build-client
+./scripts/tasks/package-client
 ./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
