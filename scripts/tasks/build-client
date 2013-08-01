@@ -9,3 +9,5 @@ LIB_ARGS=-lGL
 	"$CLIENT_SOURCE" "$STATIC_LIBS" $LIB_ARGS $CLIENT_BINARY
 
 rm $CLIENT_DIST_DIR/images && ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images
+
+cp -r source/config/server $CLIENT_DIST_DIR
