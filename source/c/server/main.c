@@ -33,7 +33,7 @@ int sendRemove(int clientFD, size_t id);
 
 int main(int argc, char const *argv[])
 {
-	logOutput("Server started.\n");
+	logOutput("Core Service started.\n");
 
 	srand((unsigned int)time(NULL));
 
