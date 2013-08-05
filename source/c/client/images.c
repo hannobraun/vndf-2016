@@ -7,14 +7,16 @@
 
 GLuint images_load()
 {
-	int xSize, ySize, numberOfComponents;
+	int numberOfComponents;
 
-	unsigned char *imageData = stbi_load(
+	image image;
+
+	image.data = stbi_load(
 		"images/spaceship.png",
-		&xSize, &ySize,
+		&image.xSize, &image.ySize,
 		&numberOfComponents,
 		0);
-	assert(imageData != NULL);
+	assert(image.data != NULL);
 	assert(numberOfComponents == 4);
 
 	// Generate texture names.
@@ -36,12 +38,12 @@ GLuint images_load()
 		GL_TEXTURE_2D,
 		0,
 		GL_RGBA8,
-		xSize,
-		ySize,
+		image.xSize,
+		image.ySize,
 		0,
 		GL_RGBA,
 		GL_UNSIGNED_BYTE,
-		imageData);
+		image.data);
 
 	return textureName;
 }
