@@ -17,6 +17,7 @@ void createWindow(void);
 GLuint display_init()
 {
 	createWindow();
+	glEnable(GL_TEXTURE_2D);
 
 	int xSize, ySize, numberOfComponents;
 
@@ -27,8 +28,6 @@ GLuint display_init()
 		0);
 	assert(imageData != NULL);
 	assert(numberOfComponents == 4);
-
-	glEnable(GL_TEXTURE_2D);
 
 	// Generate texture names.
 	GLuint textureName;
