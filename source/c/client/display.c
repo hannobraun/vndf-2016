@@ -11,19 +11,12 @@ const int screenWidth  = 800;
 const int screenHeight = 600;
 
 
+void createWindow(void);
+
+
 GLuint display_init()
 {
-	int status = glfwInit();
-	assert(status);
-
-	status = glfwOpenWindow(
-		screenWidth, screenHeight,
-		8, 8, 8, 8,
-		0, 0,
-		GLFW_WINDOW);
-	assert(status);
-
-	glfwSetWindowTitle("Von Neumann Defense Force");
+	createWindow();
 
 	int xSize, ySize, numberOfComponents;
 
@@ -64,6 +57,21 @@ GLuint display_init()
 		imageData);
 
 	return textureName;
+}
+
+void createWindow()
+{
+	int status = glfwInit();
+	assert(status);
+
+	status = glfwOpenWindow(
+		screenWidth, screenHeight,
+		8, 8, 8, 8,
+		0, 0,
+		GLFW_WINDOW);
+	assert(status);
+
+	glfwSetWindowTitle("Von Neumann Defense Force");
 }
 
 void display_render(camera cam, posMap positions, GLuint textureName)
