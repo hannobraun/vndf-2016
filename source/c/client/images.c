@@ -5,19 +5,12 @@
 #include "images.h"
 
 
+image loadImage(void);
+
+
 GLuint images_load()
 {
-	int numberOfComponents;
-
-	image image;
-
-	image.data = stbi_load(
-		"images/spaceship.png",
-		&image.xSize, &image.ySize,
-		&numberOfComponents,
-		0);
-	assert(image.data != NULL);
-	assert(numberOfComponents == 4);
+	image image = loadImage();
 
 	// Generate texture names.
 	GLuint textureName;
@@ -46,4 +39,21 @@ GLuint images_load()
 		image.data);
 
 	return textureName;
+}
+
+image loadImage()
+{
+	image image;
+	int numberOfComponents;
+
+	image.data = stbi_load(
+		"images/spaceship.png",
+		&image.xSize, &image.ySize,
+		&numberOfComponents,
+		0);
+
+	assert(image.data != NULL);
+	assert(numberOfComponents == 4);
+
+	return image;
 }
