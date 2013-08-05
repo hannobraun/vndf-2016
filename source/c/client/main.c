@@ -11,6 +11,7 @@
 
 #include "camera.h"
 #include "display.h"
+#include "images.h"
 #include "input.h"
 #include "net.h"
 #include "pos.h"
@@ -56,9 +57,9 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-
+	display_init();
+	GLuint textureName = images_load();
 	int socketFD = net_connect(serverAddress, "34481");
-	GLuint textureName = display_init();
 
 	conn c;
 	c.socketFD  = socketFD;
