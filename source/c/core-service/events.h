@@ -2,7 +2,9 @@
 #define ON_DISCONNECT 1
 #define ON_UPDATE     2
 
-typedef struct {} events_update;
+typedef struct {
+	int dummy; // Empty structs are not supported by standard C.
+} events_update;
 typedef struct {
 	int clientFD;
 } events_connect;
