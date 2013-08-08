@@ -3,7 +3,7 @@
 #include <GL/glfw.h>
 
 
-const float cameraSpeed = 1.0f;
+const static float cameraSpeed = 1.0f;
 
 
 void input_apply(camera *cam)

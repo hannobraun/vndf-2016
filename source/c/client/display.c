@@ -6,8 +6,8 @@
 #include "display.h"
 
 
-const int screenWidth  = 800;
-const int screenHeight = 600;
+const static int screenWidth  = 800;
+const static int screenHeight = 600;
 
 
 void createWindow(void);
