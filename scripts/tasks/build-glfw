@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# This script requires the following dependencies to work:
+# - cmake
+# - xorg-dev
+
+
 source project.conf
 
 CURRENT_DIR=$(pwd)
@@ -8,8 +13,8 @@ mkdir -p $OUTPUT_LIB
 
 cd vendor/glfw
 
-make x11
-cp lib/x11/libglfw.a $CURRENT_DIR/$OUTPUT_LIB
-make x11-clean
+cmake .
+make
+cp src/libglfw3.a $CURRENT_DIR/$OUTPUT_LIB
 
 cd $CURRENT_DIR
