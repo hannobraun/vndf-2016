@@ -1,5 +1,0 @@
-glfw/config.log
-glfw/examples/Makefile.x11
-glfw/lib/x11/Makefile.x11
-glfw/lib/x11/libglfw.pc.in
-glfw/tests/Makefile.x11
