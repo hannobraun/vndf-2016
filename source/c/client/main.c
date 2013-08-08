@@ -7,7 +7,7 @@
 
 #include <sys/socket.h>
 
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 
 #include "camera.h"
 #include "display.h"
@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-	display_init();
+	GLFWwindow *window = display_init();
 	GLuint textureName = images_load();
 	int socketFD = net_connect(serverAddress, "34481");
 
@@ -71,12 +71,12 @@ int main(int argc, char const *argv[])
 	camera cam = {0.0f, 0.0f};
 
 	while (
-		glfwGetWindowParam(GLFW_OPENED) &&
-		glfwGetKey(GLFW_KEY_ESC) == GLFW_RELEASE)
+		!glfwWindowShouldClose(window) &&
+		glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE)
 	{
 		receivePositions(&c, positions);
-		input_apply(&cam);
-		display_render(cam, positions, textureName);
+		input_apply(window, &cam);
+		display_render(window, cam, positions, textureName);
 	}
 
 	return 0;

@@ -1,26 +1,24 @@
 #include "input.h"
 
-#include <GL/glfw.h>
-
 
 const static float cameraSpeed = 1.0f;
 
 
-void input_apply(camera *cam)
+void input_apply(GLFWwindow *window, camera *cam)
 {
-	if (glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
 		cam->h -= cameraSpeed;
 	}
-	if (glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
 		cam->h += cameraSpeed;
 	}
-	if (glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
 		cam->v += cameraSpeed;
 	}
-	if (glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
 		cam->v -= cameraSpeed;
 	}

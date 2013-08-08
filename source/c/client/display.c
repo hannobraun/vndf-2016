@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <math.h>
 
-#include <GL/glfw.h>
+#include <GLFW/glfw3.h>
 
 #include "display.h"
 
@@ -10,31 +10,36 @@ const static int screenWidth  = 800;
 const static int screenHeight = 600;
 
 
-void createWindow(void);
+GLFWwindow *createWindow(void);
 
 
-void display_init()
+GLFWwindow *display_init()
 {
-	createWindow();
+	GLFWwindow * window = createWindow();
 	glEnable(GL_TEXTURE_2D);
+
+	return window;
 }
 
-void createWindow()
+GLFWwindow *createWindow()
 {
 	int status = glfwInit();
 	assert(status);
 
-	status = glfwOpenWindow(
+	GLFWwindow *window = glfwCreateWindow(
 		screenWidth, screenHeight,
-		8, 8, 8, 8,
-		0, 0,
-		GLFW_WINDOW);
-	assert(status);
+		"Von Neumann Defense Force",
+		NULL, NULL);
+	assert(window);
 
-	glfwSetWindowTitle("Von Neumann Defense Force");
+	return window;
 }
 
-void display_render(camera cam, posMap positions, GLuint textureName)
+void display_render(
+	GLFWwindow *window,
+	camera cam,
+	posMap positions,
+	GLuint textureName)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
@@ -84,5 +89,5 @@ void display_render(camera cam, posMap positions, GLuint textureName)
 		glPopMatrix();
 	)
 
-	glfwSwapBuffers();
+	glfwSwapBuffers(window);
 }
