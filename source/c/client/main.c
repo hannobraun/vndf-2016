@@ -93,12 +93,12 @@ void receivePositions(conn *c, posMap positions)
 
 	while (c->bufferPos > 0 && c->buffer[0] <= c->bufferPos)
 	{
-		size_t messageSize = (size_t)c->buffer[0];
+		int messageSize = c->buffer[0];
 		assert(messageSize >= 0);
 
 		const int msgTypeLen = 32;
 		char msgType[msgTypeLen];
-		size_t readLen = 0;
+		int readLen = 0;
 		int status = sscanf(c->buffer + 1, "%s%n", msgType, &readLen);
 		assert(status == 1);
 		assert(readLen < msgTypeLen);
@@ -133,7 +133,10 @@ void receivePositions(conn *c, posMap positions)
 			assert(false);
 		}
 
-		memcpy(c->buffer, c->buffer + messageSize, BUFFER_SIZE - messageSize);
+		memcpy(
+			c->buffer,
+			c->buffer + messageSize,
+			(size_t)(BUFFER_SIZE - messageSize));
 		c->bufferPos -= messageSize;
 	}
 }
