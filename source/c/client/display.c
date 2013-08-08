@@ -92,4 +92,5 @@ void display_render(
 	)
 
 	glfwSwapBuffers(window);
+	glfwPollEvents();
 }
