@@ -17,4 +17,5 @@ mkdir -p $(dirname $BINARY)
 
 clang $SOURCE_FILES $STATIC_LIBS $LIB_ARGS -o $BINARY \
 	-Isource/c -std=c1x -D_POSIX_SOURCE -g -lm \
-	-Werror -Weverything -Wno-unused-parameter -Wno-padded -Wno-c++-compat
+	-Werror -Weverything -Wno-unused-parameter -Wno-padded -Wno-c++-compat \
+	-Wno-disabled-macro-expansion
