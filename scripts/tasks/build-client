@@ -7,10 +7,10 @@ $OUTPUT_LIB/libglfw3.a \
 $OUTPUT_LIB/stb_image.o \
 $OUTPUT_LIB/stb_truetype.o"
 
-LIB_ARGS=-lGL
+LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi"
 
 ./scripts/zwobot/zwobot-compile \
-	"$CLIENT_SOURCE" "$STATIC_LIBS" $LIB_ARGS $CLIENT_BINARY
+	"$CLIENT_SOURCE" "$STATIC_LIBS" "$LIB_ARGS" $CLIENT_BINARY
 
 rm $CLIENT_DIST_DIR/images; ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images
 
