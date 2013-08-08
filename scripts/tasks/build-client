@@ -3,7 +3,7 @@
 source project.conf
 
 STATIC_LIBS="\
-$OUTPUT_LIB/libglfw.a \
+$OUTPUT_LIB/libglfw3.a \
 $OUTPUT_LIB/stb_image.o \
 $OUTPUT_LIB/stb_truetype.o"
 
