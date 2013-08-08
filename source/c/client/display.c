@@ -32,6 +32,8 @@ GLFWwindow *createWindow()
 		NULL, NULL);
 	assert(window);
 
+	glfwMakeContextCurrent(window);
+
 	return window;
 }
 
