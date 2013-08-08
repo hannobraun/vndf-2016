@@ -133,7 +133,7 @@ void receivePositions(conn *c, posMap positions)
 			assert(false);
 		}
 
-		memcpy(
+		memmove(
 			c->buffer,
 			c->buffer + messageSize,
 			(size_t)(BUFFER_SIZE - messageSize));
