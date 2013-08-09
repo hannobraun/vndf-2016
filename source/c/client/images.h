@@ -4,8 +4,8 @@
 typedef struct {
 	unsigned char *data;
 
-	int xSize;
-	int ySize;
+	int width;
+	int height;
 } image;
 
 

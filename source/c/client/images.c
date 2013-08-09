@@ -24,7 +24,7 @@ image loadImage()
 
 	image.data = stbi_load(
 		"images/spaceship.png",
-		&image.xSize, &image.ySize,
+		&image.width, &image.height,
 		&numberOfComponents,
 		0);
 
@@ -55,8 +55,8 @@ GLuint createTexture(image image)
 		GL_TEXTURE_2D,
 		0,
 		GL_RGBA8,
-		image.xSize,
-		image.ySize,
+		image.width,
+		image.height,
 		0,
 		GL_RGBA,
 		GL_UNSIGNED_BYTE,
