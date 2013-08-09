@@ -1,6 +1,7 @@
 #include <assert.h>
 
 #include <stb/image.h>
+#include <stb/truetype.h>
 
 #include "images.h"
 
@@ -11,8 +12,8 @@ GLuint createTexture(image image);
 
 GLuint images_load()
 {
-	image  image       = loadImage();
-	GLuint textureName = createTexture(image);
+	image  img         = loadImage();
+	GLuint textureName = createTexture(img);
 
 	return textureName;
 }
