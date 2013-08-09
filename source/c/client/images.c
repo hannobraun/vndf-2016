@@ -1,7 +1,6 @@
 #include <assert.h>
 
 #include <stb/image.h>
-#include <stb/truetype.h>
 
 #include "images.h"
 
