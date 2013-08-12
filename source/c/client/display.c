@@ -14,6 +14,9 @@ GLFWwindow *display_init(int screenWidth, int screenHeight)
 	GLFWwindow * window = createWindow(screenWidth, screenHeight);
 	glEnable(GL_TEXTURE_2D);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	glLoadIdentity();
 
 	double pi = atan(1) * 4;
