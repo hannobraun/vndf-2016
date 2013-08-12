@@ -11,3 +11,4 @@ cd vendor/freetype
 ./configure --without-png
 make
 cp objs/.libs/libfreetype.a $CURRENT_DIR/$OUTPUT_LIB
+make clean
