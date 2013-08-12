@@ -6,14 +6,10 @@
 #include "display.h"
 
 
-const static int screenWidth  = 800;
-const static int screenHeight = 600;
-
-
 GLFWwindow *createWindow(int width, int height);
 
 
-GLFWwindow *display_init()
+GLFWwindow *display_init(int screenWidth, int screenHeight)
 {
 	GLFWwindow * window = createWindow(screenWidth, screenHeight);
 	glEnable(GL_TEXTURE_2D);

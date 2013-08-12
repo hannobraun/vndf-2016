@@ -29,6 +29,10 @@ typedef struct {
 void receivePositions(conn *c, posMap positions);
 
 
+const static int screenWidth  = 800;
+const static int screenHeight = 600;
+
+
 int main(int argc, char const *argv[])
 {
 	char serverAddress[100];
@@ -57,7 +61,7 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-	GLFWwindow *window = display_init();
+	GLFWwindow *window = display_init(screenWidth, screenHeight);
 	GLuint textureName = images_load();
 	int socketFD = net_connect(serverAddress, "34481");
 

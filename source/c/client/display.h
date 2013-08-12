@@ -2,7 +2,7 @@
 #include "pos.h"
 
 
-GLFWwindow *display_init(void);
+GLFWwindow *display_init(int screenWidth, int screenHeight);
 void display_render(
 	GLFWwindow *window,
 	camera cam,
