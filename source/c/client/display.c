@@ -18,6 +18,18 @@ GLFWwindow *display_init()
 	GLFWwindow * window = createWindow();
 	glEnable(GL_TEXTURE_2D);
 
+	glLoadIdentity();
+
+	double pi = atan(1) * 4;
+	GLfloat zNear = 0.1f;
+	GLfloat fovAngleY = 45.0f;
+	GLfloat halfHeight = (float)tan( fovAngleY / 360.0f * pi ) * zNear;
+	GLfloat halfWidth = halfHeight * screenWidth / screenHeight;
+	glFrustum(
+		-halfWidth, halfWidth,
+		-halfHeight, halfHeight,
+		zNear, 1000.0f);
+
 	return window;
 }
 
@@ -44,17 +56,8 @@ void display_render(
 	GLuint textureName)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glLoadIdentity();
 
-	double pi = atan(1) * 4;
-	GLfloat zNear = 0.1f;
-	GLfloat fovAngleY = 45.0f;
-	GLfloat halfHeight = (float)tan( fovAngleY / 360.0f * pi ) * zNear;
-	GLfloat halfWidth = halfHeight * screenWidth / screenHeight;
-	glFrustum(
-		-halfWidth, halfWidth,
-		-halfHeight, halfHeight,
-		zNear, 1000.0f);
+	glPushMatrix();
 
 	glTranslatef(0.0f, 0.0f, -500.0f);
 	glRotatef(cam.v, 1.0f, 0.0f, 0.0f);
@@ -90,6 +93,8 @@ void display_render(
 
 		glPopMatrix();
 	)
+
+	glPopMatrix();
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
