@@ -10,12 +10,12 @@ const static int screenWidth  = 800;
 const static int screenHeight = 600;
 
 
-GLFWwindow *createWindow(void);
+GLFWwindow *createWindow(int width, int height);
 
 
 GLFWwindow *display_init()
 {
-	GLFWwindow * window = createWindow();
+	GLFWwindow * window = createWindow(screenWidth, screenHeight);
 	glEnable(GL_TEXTURE_2D);
 
 	glLoadIdentity();
@@ -33,13 +33,13 @@ GLFWwindow *display_init()
 	return window;
 }
 
-GLFWwindow *createWindow()
+GLFWwindow *createWindow(int width, int height)
 {
 	int status = glfwInit();
 	assert(status);
 
 	GLFWwindow *window = glfwCreateWindow(
-		screenWidth, screenHeight,
+		width, height,
 		"Von Neumann Defense Force",
 		NULL, NULL);
 	assert(window);
