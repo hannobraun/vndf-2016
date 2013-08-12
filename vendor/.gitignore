@@ -1,0 +1,13 @@
+#FreeType
+freetype/config.mk
+freetype/builds/unix/config.log
+freetype/builds/unix/config.status
+freetype/builds/unix/freetype-config
+freetype/builds/unix/freetype2.pc
+freetype/builds/unix/ftconfig.h
+freetype/builds/unix/libtool
+freetype/builds/unix/unix-cc.mk
+freetype/builds/unix/unix-def.mk
+freetype/objs/.libs/
+freetype/objs/ftmodule.h
+freetype/objs/libfreetype.la
