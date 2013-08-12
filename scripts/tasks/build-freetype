@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+mkdir -p $OUTPUT_LIB
+
+CURRENT_DIR=$(pwd)
+
+cd vendor/freetype
+
+./configure --without-png
+make
+cp objs/.libs/libfreetype.a $CURRENT_DIR/$OUTPUT_LIB
