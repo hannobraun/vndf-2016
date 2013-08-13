@@ -1,9 +1,7 @@
+#include "display.h"
+
 #include <assert.h>
 #include <math.h>
-
-#include <GLFW/glfw3.h>
-
-#include "display.h"
 
 
 GLFWwindow *createWindow(int width, int height);
@@ -56,9 +54,9 @@ GLFWwindow *createWindow(int width, int height)
 
 void display_render(
 	GLFWwindow *window,
-	camera cam,
-	posMap positions,
-	GLuint textureName)
+	camera     cam,
+	posMap     positions,
+	Texture    texture)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -70,7 +68,7 @@ void display_render(
 
 	glBindTexture(
 		GL_TEXTURE_2D,
-		textureName);
+		texture.name);
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 

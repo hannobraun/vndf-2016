@@ -80,7 +80,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 		input_apply(window, &cam);
-		display_render(window, cam, positions, triangle.name);
+		display_render(window, cam, positions, triangle);
 	}
 
 	return 0;
