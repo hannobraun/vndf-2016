@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "textures.h"
 
 
 typedef struct {
@@ -9,4 +9,4 @@ typedef struct {
 } image;
 
 
-GLuint images_load(void);
+Texture images_load(void);

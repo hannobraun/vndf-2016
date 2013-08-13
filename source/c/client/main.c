@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
 	}
 
 	GLFWwindow *window = display_init(screenWidth, screenHeight);
-	GLuint textureName = images_load();
+	Texture triangle = images_load();
 	int socketFD = net_connect(serverAddress, "34481");
 
 	conn c;
@@ -80,7 +80,7 @@ int main(int argc, char const *argv[])
 	{
 		receivePositions(&c, positions);
 		input_apply(window, &cam);
-		display_render(window, cam, positions, textureName);
+		display_render(window, cam, positions, triangle.name);
 	}
 
 	return 0;

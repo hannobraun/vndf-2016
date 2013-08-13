@@ -1,20 +1,22 @@
+#include "images.h"
+
 #include <assert.h>
 
 #include <stb/image.h>
-
-#include "images.h"
 
 
 image  loadImage(void);
 GLuint createTexture(image image);
 
 
-GLuint images_load()
+Texture images_load()
 {
 	image  img         = loadImage();
 	GLuint textureName = createTexture(img);
 
-	return textureName;
+	Texture texture = {textureName, img.width, img.height};
+
+	return texture;
 }
 
 image loadImage()
