@@ -1,4 +1,4 @@
 #include <GL/gl.h>
 
 
-GLuint text_loadA(void);
+GLuint text_loadCharAsTexture(unsigned long c);

@@ -6,7 +6,7 @@
 #include FT_FREETYPE_H
 
 
-GLuint text_loadA()
+GLuint text_loadCharAsTexture(unsigned long c)
 {
 	FT_Library freeType;
 	FT_Face    fontFace;
@@ -27,7 +27,7 @@ GLuint text_loadA()
 		16);
 	assert(!error);
 
-	unsigned int glyphIndex = FT_Get_Char_Index(fontFace, 'A');
+	unsigned int glyphIndex = FT_Get_Char_Index(fontFace, c);
 
 	error = FT_Load_Glyph(
 		fontFace,
