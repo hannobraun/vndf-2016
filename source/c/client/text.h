@@ -1,4 +1,4 @@
-#include <GL/gl.h>
+#include "textures.h"
 
 
-GLuint text_loadCharAsTexture(unsigned long c);
+Texture text_loadCharAsTexture(unsigned long c);

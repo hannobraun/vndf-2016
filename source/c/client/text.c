@@ -6,7 +6,7 @@
 #include FT_FREETYPE_H
 
 
-GLuint text_loadCharAsTexture(unsigned long c)
+Texture text_loadCharAsTexture(unsigned long c)
 {
 	FT_Library freeType;
 	FT_Face    fontFace;
@@ -66,5 +66,10 @@ GLuint text_loadCharAsTexture(unsigned long c)
 		GL_UNSIGNED_BYTE,
 		fontFace->glyph->bitmap.buffer);
 
-	return textureName;
+	Texture texture = {
+		textureName,
+		fontFace->glyph->bitmap.width,
+		fontFace->glyph->bitmap.rows};
+
+	return texture;
 }
