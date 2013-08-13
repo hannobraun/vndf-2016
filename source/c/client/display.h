@@ -10,4 +10,4 @@ void display_render(
 	GLFWwindow *window,
 	camera     cam,
 	posMap     positions,
-	Texture    textureName);
+	Texture    texture);
