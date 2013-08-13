@@ -76,22 +76,22 @@ void display_render(
 		glPushMatrix();
 
 		glTranslatef(
-			idmap_get(positions, i).x,
-			idmap_get(positions, i).y,
+			idmap_get(positions, i).x - 20,
+			idmap_get(positions, i).y - 20,
 			0.0f);
 
 		glBegin(GL_TRIANGLE_STRIP);
 			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f(20.0f, 20.0f, 0.0f);
+			glVertex3f(40.0f, 40.0f, 0.0f);
 
 			glTexCoord2f(1.0f, 1.0f);
-			glVertex3f(20.0f, -20.0f, 0.0f);
+			glVertex3f(40.0f, 0.0f, 0.0f);
 
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex3f(-20.0f, 20.0f, 0.0f);
+			glVertex3f(0.0f, 40.0f, 0.0f);
 
 			glTexCoord2f(0.0f, 1.0f);
-			glVertex3f(-20.0f, -20.0f, 0.0f);
+			glVertex3f(0.0f, 0.0f, 0.0f);
 		glEnd();
 
 		glPopMatrix();
