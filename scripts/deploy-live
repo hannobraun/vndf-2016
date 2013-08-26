@@ -6,14 +6,23 @@ FILES="\
 source/upstart/$CORE_SERVICE_NAME.conf \
 $CORE_SERVICE_BINARY \
 $CLIENT_ARCHIVE \
+source/nginx/vndf.de \
 source/vndf.de/index.html"
 
 COMMANDS="
 mkdir -p /opt/vndf
 mv -f $CORE_SERVICE_NAME /opt/vndf
 mv -f $CORE_SERVICE_NAME.conf /etc/init
-mv -f $(basename $CLIENT_ARCHIVE) /srv/http/default
-mv -f index.html /srv/http/default
+
+mv -f vndf.de /etc/nginx/sites-available
+rm -f /etc/nginx/sites-enabled/vndf.de
+ln -s /etc/nginx/sites-available/vndf.de /etc/nginx/sites-enabled/vndf.de
+
+mkdir -p /srv/http/vndf.de
+
+mv -f $(basename $CLIENT_ARCHIVE) /srv/http/vndf.de
+mv -f index.html /srv/http/vndf.de
+
 restart --quiet $CORE_SERVICE_NAME"
 
 ./scripts/tasks/build-core-service
