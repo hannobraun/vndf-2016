@@ -1,5 +1,5 @@
 server {
-	listen		80 default;
+	listen		80;
 	server_name	www.vndf.de;
 
 	access_log	/var/log/nginx/$server_name.access.log;
@@ -11,7 +11,7 @@ server {
 }
 
 server {
-	listen		80 default;
+	listen		80;
 	server_name	vndf.de;
 	return		301 $scheme://www.test.com$request_uri;
 }
