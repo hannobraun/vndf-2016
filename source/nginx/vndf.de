@@ -13,5 +13,5 @@ server {
 server {
 	listen		80;
 	server_name	vndf.de;
-	return		301 $scheme://www.test.com$request_uri;
+	return		301 $scheme://www.$server_name$request_uri;
 }
