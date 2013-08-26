@@ -4,6 +4,8 @@ source project.conf
 
 HOSTNAME="reineke"
 
+FILES="source/nginx/default"
+
 COMMANDS="
 hostname $HOSTNAME
 echo $HOSTNAME > /etc/hosts
@@ -21,7 +23,5 @@ mv -f default /etc/nginx/sites-available/default
 mkdir -p /srv/http/default
 service nginx restart
 "
-
-FILES="source/nginx/default"
 
 ./scripts/zwobot/zwobot-deploy "$FILES" "$COMMANDS" $SERVER_ADDRESS
