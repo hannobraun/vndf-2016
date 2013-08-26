@@ -23,6 +23,7 @@ mkdir -p /srv/http/vndf.de
 mv -f $(basename $CLIENT_ARCHIVE) /srv/http/vndf.de
 mv -f index.html /srv/http/vndf.de
 
+service nginx restart
 restart --quiet $CORE_SERVICE_NAME"
 
 ./scripts/tasks/build-core-service
