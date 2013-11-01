@@ -2,5 +2,6 @@
 
 source project.conf
 
+rustc -c -o output/lib/vec.o source/rust/common/vec.rs
 ./scripts/zwobot/zwobot-compile \
-	"$CORE_SERVICE_SOURCE" "" "" $CORE_SERVICE_BINARY
+	"$CORE_SERVICE_SOURCE" "$OUTPUT_LIB/vec.o" "" $CORE_SERVICE_BINARY

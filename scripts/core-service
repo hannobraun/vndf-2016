@@ -4,6 +4,7 @@ source project.conf
 
 SOURCE_FILES=$(find $CORE_SERVICE_SOURCE -name "*.c")
 HEADER_FILES=$(find $CORE_SERVICE_SOURCE -name "*.h")
+RUST_FILES=$(find $CORE_SERVICE_SOURCE -name "*.rs")
 
 function updateServer() {
 	./scripts/tasks/build-core-service
@@ -14,7 +15,7 @@ function updateServer() {
 updateServer
 while true
 do
-	inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES
+	inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES $RUST_FILES
 	echo "Change detected."
 	updateServer
 done
