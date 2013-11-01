@@ -34,3 +34,9 @@ extern fn vec_magnitude(v: Vec2) -> f64 {
 		sqrt(v.x*v.x + v.y*v.y)
 	}
 }
+
+#[no_mangle]
+extern fn vec_normalize(v: Vec2) -> Vec2 {
+	let m = vec_magnitude(v);
+	vec_scale(v, 1.0/m)
+}
