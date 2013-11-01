@@ -4,11 +4,6 @@
 #include <math.h>
 
 
-vec2 vec_scale(vec2 v, double s)
-{
-	return (vec2){v.x * s, v.y * s};
-}
-
 double vec_magnitude(vec2 v)
 {
 	return sqrt(v.x*v.x + v.y*v.y);

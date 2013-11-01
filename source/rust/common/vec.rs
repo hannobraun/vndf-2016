@@ -15,3 +15,10 @@ pub extern fn vec_add(a: Vec2, b: Vec2) -> Vec2 {
 		x: a.x + b.x,
 		y: a.y + b.y }
 }
+
+#[no_mangle]
+pub extern fn vec_scale(v: Vec2, s: f64) -> Vec2 {
+	Vec2 {
+		x: v.x * s,
+		y: v.y * s }
+}
