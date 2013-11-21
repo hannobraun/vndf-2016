@@ -1,5 +1,7 @@
 server {
-	listen		80;
+	listen	80;
+	listen	[::]:80;
+
 	server_name	www.vndf.de;
 
 	access_log	/var/log/nginx/vndf.de.access.log;
@@ -11,7 +13,10 @@ server {
 }
 
 server {
-	listen		80;
+	listen	80;
+	listen	[::]:80;
+
 	server_name	vndf.de;
-	return		301 $scheme://www.$server_name$request_uri;
+
+	return	301 $scheme://www.$server_name$request_uri;
 }
