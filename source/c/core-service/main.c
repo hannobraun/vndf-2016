@@ -49,13 +49,13 @@ int main(int argc, char const *argv[])
 	{
 		const int frameTimeInMs = 50;
 
-		const int maxEvents = 1024;
-		struct epoll_event pollEvents[maxEvents];
+		#define MAX_EVENTS 1024
+		struct epoll_event pollEvents[MAX_EVENTS];
 
 		int numberOfEvents = epoll_wait(
 			net.pollerFD,
 			pollEvents,
-			maxEvents,
+			MAX_EVENTS,
 			frameTimeInMs);
 		assert(numberOfEvents != -1);
 

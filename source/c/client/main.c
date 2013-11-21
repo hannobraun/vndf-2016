@@ -100,12 +100,12 @@ void receivePositions(conn *c, posMap positions)
 		int messageSize = c->buffer[0];
 		assert(messageSize >= 0);
 
-		const int msgTypeLen = 32;
-		char msgType[msgTypeLen];
+		#define MSG_TYPE_LEN 32
+		char msgType[MSG_TYPE_LEN];
 		int readLen = 0;
 		int status = sscanf(c->buffer + 1, "%s%n", msgType, &readLen);
 		assert(status == 1);
-		assert(readLen < msgTypeLen);
+		assert(readLen < MSG_TYPE_LEN);
 
 		if (strcmp(msgType, "UPDATE") == 0)
 		{
