@@ -7,5 +7,5 @@ extern mod vec;
 
 pub struct Body {
 	pos: vec::Vec2,
-	vec: vec::Vec2
+	vel: vec::Vec2
 }
