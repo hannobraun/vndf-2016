@@ -1,6 +1,5 @@
-#[crate_type = "lib"];
+#[crate_type = "rlib"];
 #[link(name = "dynamics", vers = "0.0")];
-#[no_std];
 
 
 extern mod vec;

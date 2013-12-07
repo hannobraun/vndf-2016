@@ -2,10 +2,11 @@
 
 source project.conf
 
-rustc -c -o output/lib/o/vec.o source/rust/common/vec.rs
-rustc -o output/lib/so/vec source/rust/common/vec.rs
-
-rustc -o output/lib/so/dynamics -L output/lib/so source/rust/common/dynamics.rs
+rustc --staticlib -o output/lib/vec source/rust/common/vec.rs
+rustc -L output/lib -o output/lib/dynamics source/rust/common/dynamics.rs
 
 ./scripts/zwobot/zwobot-compile \
-	"$CORE_SERVICE_SOURCE" "$OUTPUT_LIB/o/vec.o" "" $CORE_SERVICE_BINARY
+	"$CORE_SERVICE_SOURCE" \
+	"$OUTPUT_LIB/libvec-fd759dd993d7dc3-0.0.a" \
+	"-lm -lrt -ldl -lpthread -lstdc++" \
+	$CORE_SERVICE_BINARY
