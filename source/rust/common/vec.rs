@@ -1,5 +1,5 @@
 #[crate_type = "lib"];
-#[link(name = "vec", vers = "0.0")];
+#[link(name = "vec", package_id = "vec", vers = "0.0")];
 #[no_std];
 
 
