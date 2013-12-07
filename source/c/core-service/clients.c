@@ -1,11 +1,6 @@
 #include "clients.h"
 
 
-bool clients_canAdd(clientMap *c)
-{
-	return c->idPool.size > 0;
-}
-
 void clients_add(clientMap *c, int socketFD, vec2 pos, vec2 vel)
 {
 	size_t clientId;

@@ -59,3 +59,8 @@ pub extern fn clients_initClientMap(c: &mut ClientMap, cap: std::libc::size_t) {
 		i += 1;
 	}
 }
+
+#[no_mangle]
+pub extern fn clients_canAdd(c: &ClientMap) -> bool {
+	c.idPool.size > 0
+}
