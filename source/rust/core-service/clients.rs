@@ -55,7 +55,7 @@ pub extern fn clients_initClientMap(c: &mut ClientMap, cap: std::libc::size_t) {
 	while i < cap as int {
 		unsafe {
 			let ptr = std::ptr::mut_offset(c.idPool.elems, i);
-			*ptr = (cap as int - i) as std::libc::size_t; };
+			*ptr = (cap as int - i - 1) as std::libc::size_t; };
 		i += 1;
 	}
 }
