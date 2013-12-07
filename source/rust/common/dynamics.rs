@@ -1,5 +1,5 @@
 #[crate_type = "rlib"];
-#[link(name = "dynamics", vers = "0.0")];
+#[link(name = "dynamics", package_id = "dynamics", vers = "0.0")];
 
 
 extern mod vec;
