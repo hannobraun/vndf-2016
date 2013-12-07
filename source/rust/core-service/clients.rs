@@ -86,3 +86,22 @@ pub extern fn clients_add(c: &mut ClientMap, socketFD: int, pos: vec::Vec2, vel:
 		(*ptr).value = client;
 	};
 }
+
+#[no_mangle]
+pub extern fn clients_remove(c: &mut ClientMap, id: std::libc::size_t) {
+	unsafe {
+		let clientPtr = std::ptr::mut_offset(c.clients.elems, id as int);
+		let containsClient = (*clientPtr).isOccupied == 1;
+
+		if containsClient {
+			// Remove client
+			(*clientPtr).isOccupied = 0;
+
+			// Add id back to pool
+			let idPtr =
+				std::ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
+			(*idPtr) = id;
+			c.idPool.size += 1;
+		}
+	}
+}
