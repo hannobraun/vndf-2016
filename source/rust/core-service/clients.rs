@@ -64,3 +64,25 @@ pub extern fn clients_initClientMap(c: &mut ClientMap, cap: std::libc::size_t) {
 pub extern fn clients_canAdd(c: &ClientMap) -> bool {
 	c.idPool.size > 0
 }
+
+#[no_mangle]
+pub extern fn clients_add(c: &mut ClientMap, socketFD: int, pos: vec::Vec2, vel: vec::Vec2) {
+	// Get id from pool.
+	let clientId = unsafe {
+		let ptr = std::ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
+		*ptr };
+	c.idPool.size -= 1;
+
+	// Construct client
+	let client = Client {
+		socketFD: socketFD,
+		id      : clientId,
+		ship    : dynamics::Body { pos: pos, vel: vel } };
+
+	// Add client to map
+	unsafe {
+		let ptr = std::ptr::mut_offset(c.clients.elems, clientId as int);
+		(*ptr).isOccupied = 1;
+		(*ptr).value = client;
+	};
+}
