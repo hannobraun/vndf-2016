@@ -1,6 +1,5 @@
-#[crate_type = "lib"];
+#[crate_type = "staticlib"];
 #[link(name = "vec", package_id = "vec", vers = "0.0")];
-#[no_std];
 
 
 extern {
