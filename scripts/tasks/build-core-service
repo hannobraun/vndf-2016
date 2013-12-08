@@ -5,10 +5,12 @@ source project.conf
 rustc --staticlib -o output/lib/vec source/rust/common/vec.rs
 rustc -L output/lib -o output/lib/dynamics source/rust/common/dynamics.rs
 rustc -L output/lib --staticlib -o output/lib/clients source/rust/core-service/clients.rs
+rustc -L output/lib --staticlib -o output/lib/clients source/rust/core-service/net.rs
 
 RUST_LIBS="\
 $OUTPUT_LIB/libvec-fd759dd993d7dc3-0.0.a \
-$OUTPUT_LIB/libclients-3d6eda8c7da0a45b-0.0.a"
+$OUTPUT_LIB/libclients-3d6eda8c7da0a45b-0.0.a \
+$OUTPUT_LIB/libnet-bbcbeb9443f6fe-0.0.a"
 
 ./scripts/zwobot/zwobot-compile \
 	"$CORE_SERVICE_SOURCE" \

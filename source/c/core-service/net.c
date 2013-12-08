@@ -84,18 +84,6 @@ int net_initSocket(char *port)
 	return socketFD;
 }
 
-int initPoller()
-{
-	int pollerFD = epoll_create(1);
-	if (pollerFD < 0)
-	{
-		perror("Error initiating epoll");
-		exit(1);
-	}
-
-	return pollerFD;
-}
-
 void registerAccept(int pollerFD, int serverFD)
 {
 	struct epoll_event event;
