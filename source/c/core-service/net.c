@@ -84,19 +84,6 @@ int net_initSocket(char *port)
 	return socketFD;
 }
 
-void registerAccept(int pollerFD, int serverFD)
-{
-	struct epoll_event event;
-	memset(&event, 0, sizeof event);
-	event.events = EPOLLIN;
-	int status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, &event);
-	if (status != 0)
-	{
-		perror("Error registering server socket with epoll");
-		exit(1);
-	}
-}
-
 int net_acceptClient(int serverFD)
 {
 	struct sockaddr_storage remote_address;
