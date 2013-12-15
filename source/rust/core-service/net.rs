@@ -5,6 +5,12 @@
 extern {
 	fn epoll_create(size: std::libc::c_int) -> std::libc::c_int;
 	fn epoll_ctl(epfd: std::libc::c_int, op: std::libc::c_int, fd: std::libc::c_int, event: *EpollEvent) -> std::libc::c_int;
+	fn getaddrinfo(name: *std::libc::c_char, service: *std::libc::c_char, req: *AddrInfo, pai: **AddrInfo) -> std::libc::c_int;
+	fn socket(domain: std::libc::c_int, theType: std::libc::c_int, protocol: std::libc::c_int) -> std::libc::c_int;
+	fn setsockopt(sockfd: std::libc::c_int, level: std::libc::c_int, optname: std::libc::c_int, optval: *std::libc::c_void, optlen: std::libc::c_uint) -> std::libc::c_int;
+	fn bind(sockfd: std::libc::c_int, addr: *SockAddr, addrlen: std::libc::c_uint) -> std::libc::c_int;
+	fn listen(sockfd: std::libc::c_int, backlog: std::libc::c_int) -> std::libc::c_int;
+	fn freeaddrinfo(res: *AddrInfo);
 }
 
 
@@ -13,11 +19,129 @@ struct Net {
 	serverFD: std::libc::c_int
 }
 
+struct AddrInfo {
+	ai_flags    : std::libc::c_int,
+	ai_family   : std::libc::c_int,
+	ai_socktype : std::libc::c_int,
+	ai_protocol : std::libc::c_int,
+	ai_addrlen  : u32,
+	ai_addr     : *SockAddr,
+	ai_canonname: *std::libc::c_char,
+	ai_next     : *AddrInfo
+}
+
+struct SockAddr {
+	sa_family: std::libc::c_ushort,
+	sa_data  : [std::libc::c_char, ..14]
+}
+
 struct EpollEvent {
 	events: u32,
 	data  : u64
 }
 
+
+#[no_mangle]
+pub extern fn net_initSocket(port: *std::libc::c_char) -> std::libc::c_int {
+	let AI_PASSIVE  = 1;
+	let AF_UNSPEC   = 0;
+	let SOCK_STREAM = 1;
+
+	let hints = AddrInfo {
+		ai_flags    : AI_PASSIVE,
+		ai_family   : AF_UNSPEC,
+		ai_socktype : SOCK_STREAM,
+		ai_protocol : 0,
+		ai_addrlen  : 0,
+		ai_addr     : std::ptr::null(),
+		ai_canonname: std::ptr::null(),
+		ai_next     : std::ptr::null() };
+
+	let servinfo = std::ptr::null::<AddrInfo>();
+
+	unsafe {
+		let status = getaddrinfo(
+			std::ptr::null(),
+			port,
+			&hints,
+			&servinfo);
+
+		if status != 0 {
+			"Error getting address info".to_c_str().with_ref(|c_str| {
+				std::libc::perror(c_str);
+			});
+			std::libc::exit(1);
+		}
+
+	};
+
+	let socketFD = unsafe{
+		let socketFD = socket(
+			(*servinfo).ai_family,
+			(*servinfo).ai_socktype,
+			(*servinfo).ai_protocol);
+
+		if (socketFD == -1) {
+			"Error creating socket".to_c_str().with_ref(|c_str| {
+				std::libc::perror(c_str);
+			});
+			std::libc::exit(1);
+		}
+
+		socketFD };
+
+	let SOL_SOCKET   = 1;
+	let SO_REUSEADDR = 2;
+
+	unsafe {
+		let yes = 1;
+		let status = setsockopt(
+			socketFD,
+			SOL_SOCKET,
+			SO_REUSEADDR,
+			std::ptr::to_unsafe_ptr(&yes) as *std::libc::c_void,
+			std::mem::size_of::<std::libc::c_int>() as u32);
+
+		if status == -1 {
+			"Error setting socket option".to_c_str().with_ref(|c_str| {
+				std::libc::perror(c_str);
+			});
+			std::libc::exit(1);
+		}
+	}
+
+	unsafe {
+		let status = bind(
+			socketFD,
+			(*servinfo).ai_addr,
+			(*servinfo).ai_addrlen);
+
+		if status != 0 {
+			"Error binding socket".to_c_str().with_ref(|c_str| {
+				std::libc::perror(c_str);
+			});
+			std::libc::exit(1);
+		}
+	}
+
+	unsafe {
+		let status = listen(
+			socketFD,
+			1024);
+		if status != 0 {
+			"Error listening on socket".to_c_str().with_ref(|c_str| {
+				std::libc::perror(c_str);
+			});
+			std::libc::exit(1);
+		}
+	}
+
+	unsafe {
+		freeaddrinfo(servinfo);
+	}
+
+	socketFD
+}
 
 #[no_mangle]
 pub extern fn initPoller() -> std::libc::c_int {

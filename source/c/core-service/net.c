@@ -8,9 +8,6 @@
 #include "net.h"
 
 
-#define CLIENT_ACCEPT_BACKLOG 1024
-
-
 int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
@@ -25,63 +22,6 @@ net net_init(char *port)
 	net net = {pollerFD, serverFD};
 
 	return net;
-}
-
-int net_initSocket(char *port)
-{
-	int status;
-
-	struct addrinfo hints;
-	memset(&hints, 0, sizeof hints);
-	hints.ai_family   = AF_UNSPEC;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags    = AI_PASSIVE;
-
-	struct addrinfo *servinfo;
-
-	status = getaddrinfo(NULL, port, &hints, &servinfo);
-
-	if (status != 0)
-	{
-		perror("Error getting address info");
-		exit(1);
-	}
-
-	int socketFD = socket(
-		servinfo->ai_family,
-		servinfo->ai_socktype,
-		servinfo->ai_protocol);
-
-	if (socketFD == -1)
-	{
-		perror("Error creating socket");
-		exit(1);
-	}
-
-	int yes=1;
-	if (setsockopt(socketFD,SOL_SOCKET,SO_REUSEADDR,&yes,sizeof(int)) == -1)
-	{
-		perror("Error setting socket option");
-		exit(1);
-	}
-
-	status = bind(socketFD, servinfo->ai_addr, servinfo->ai_addrlen);
-	if (status != 0)
-	{
-		perror("Error binding socket");
-		exit(1);
-	}
-
-	status = listen(socketFD, CLIENT_ACCEPT_BACKLOG);
-	if (status != 0)
-	{
-		perror("Error listening on socket");
-		exit(1);
-	}
-
-	freeaddrinfo(servinfo);
-
-	return socketFD;
 }
 
 int net_acceptClient(int serverFD)
