@@ -11,6 +11,7 @@ extern {
 	fn bind(sockfd: std::libc::c_int, addr: *SockAddr, addrlen: std::libc::c_uint) -> std::libc::c_int;
 	fn listen(sockfd: std::libc::c_int, backlog: std::libc::c_int) -> std::libc::c_int;
 	fn freeaddrinfo(res: *AddrInfo);
+	fn accept(sockfd: std::libc::c_int, addr: *SockAddr, addrlen: *std::libc::c_uint) -> std::libc::c_int;
 }
 
 
@@ -186,5 +187,15 @@ pub extern fn registerAccept(pollerFD: std::libc::c_int, serverFD: std::libc::c_
 				std::libc::exit(1);
 			})
 		}
+	}
+}
+
+#[no_mangle]
+pub extern fn net_acceptClient(serverFD: std::libc::c_int) -> std::libc::c_int {
+	unsafe {
+		accept(
+			serverFD,
+			std::ptr::null(),
+			std::ptr::null())
 	}
 }

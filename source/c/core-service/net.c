@@ -8,19 +8,6 @@
 #include "net.h"
 
 
-int net_acceptClient(int serverFD)
-{
-	struct sockaddr_storage remote_address;
-	socklen_t address_size = sizeof remote_address;
-
-	int clientFD = accept(
-		serverFD,
-		(struct sockaddr *)&remote_address,
-		&address_size);
-
-	return clientFD;
-}
-
 int net_send(int clientFD, char *message, size_t messageLength)
 {
 	ssize_t bytesSent = send(clientFD, message, messageLength, MSG_NOSIGNAL);
