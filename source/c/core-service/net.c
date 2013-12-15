@@ -8,10 +8,6 @@
 #include "net.h"
 
 
-int initPoller(void);
-void registerAccept(int pollerFD, int serverFD);
-
-
 int net_acceptClient(int serverFD)
 {
 	struct sockaddr_storage remote_address;
