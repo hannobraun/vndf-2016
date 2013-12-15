@@ -12,6 +12,7 @@ extern {
 	fn listen(sockfd: std::libc::c_int, backlog: std::libc::c_int) -> std::libc::c_int;
 	fn freeaddrinfo(res: *AddrInfo);
 	fn accept(sockfd: std::libc::c_int, addr: *SockAddr, addrlen: *std::libc::c_uint) -> std::libc::c_int;
+	fn send(sockfd: std::libc::c_int, buf: *std::libc::c_void, len: std::libc::size_t, flags: std::libc::c_int) -> std::libc::ssize_t;
 }
 
 
@@ -197,5 +198,33 @@ pub extern fn net_acceptClient(serverFD: std::libc::c_int) -> std::libc::c_int {
 			serverFD,
 			std::ptr::null(),
 			std::ptr::null())
+	}
+}
+
+#[no_mangle]
+pub extern fn net_send(clientFD: std::libc::c_int, message: *std::libc::c_char, messageLength: std::libc::size_t) -> std::libc::c_int {
+	let MSG_NOSIGNAL = 0x4000;
+
+	unsafe {
+		let bytesSent = send(
+			clientFD,
+			message as *std::libc::c_void,
+			messageLength,
+			MSG_NOSIGNAL);
+
+		if bytesSent < 0 {
+			-1
+		}
+		else if bytesSent as u64 != messageLength {
+			format!(
+				"Only sent {:d} of {:u} bytes.\n",
+				bytesSent,
+				messageLength);
+			std::libc::exit(1)
+
+		}
+		else {
+			0
+		}
 	}
 }
