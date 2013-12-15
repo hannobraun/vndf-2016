@@ -42,6 +42,19 @@ struct EpollEvent {
 
 
 #[no_mangle]
+pub extern fn net_init(port: *std::libc::c_char) -> Net {
+	let serverFD = net_initSocket(port);
+	let pollerFD = initPoller();
+
+	registerAccept(pollerFD, serverFD);
+
+	Net {
+		pollerFD: pollerFD,
+		serverFD: serverFD }
+}
+
+
+#[no_mangle]
 pub extern fn net_initSocket(port: *std::libc::c_char) -> std::libc::c_int {
 	let AI_PASSIVE  = 1;
 	let AF_UNSPEC   = 0;

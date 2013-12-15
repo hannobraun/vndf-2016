@@ -12,18 +12,6 @@ int initPoller(void);
 void registerAccept(int pollerFD, int serverFD);
 
 
-net net_init(char *port)
-{
-	int serverFD = net_initSocket(port);
-	int pollerFD = initPoller();
-
-	registerAccept(pollerFD, serverFD);
-
-	net net = {pollerFD, serverFD};
-
-	return net;
-}
-
 int net_acceptClient(int serverFD)
 {
 	struct sockaddr_storage remote_address;
