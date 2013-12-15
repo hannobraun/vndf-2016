@@ -184,8 +184,8 @@ pub extern fn registerAccept(pollerFD: std::libc::c_int, serverFD: std::libc::c_
 		if status != 0 {
 			"Error registering server socket with epoll".to_c_str().with_ref(|c_str| {
 				std::libc::perror(c_str);
-				std::libc::exit(1);
-			})
+			});
+			std::libc::exit(1);
 		}
 	}
 }
