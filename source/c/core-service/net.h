@@ -6,7 +6,3 @@ typedef struct {
 net net_init(char *port);
 int net_acceptClient(int serverFD);
 int net_send(int clientFD, char *message, size_t messageLength);
-
-// The following functions are usually not needed, but are exposed for test
-// code.
-int net_initSocket(char *port);
