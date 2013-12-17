@@ -190,20 +190,3 @@ void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
 		)
 	)
 }
-
-int sendUpdate(int clientFD, size_t id, double xPos, double yPos)
-{
-	char message[256];
-	int status = snprintf(
-		message + 1, sizeof message - 1,
-		"UPDATE id: %lu, pos: (%f, %f)",
-		id, xPos, yPos);
-	assert(status >= 0);
-	assert((size_t)status <= sizeof message);
-
-	size_t messageLength = strlen(message + 1) + 1;
-	assert(messageLength <= CHAR_MAX);
-	message[0] = (char)messageLength;
-
-	return net_send(clientFD, message, messageLength);
-}
