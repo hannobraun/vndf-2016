@@ -6,11 +6,13 @@ rustc -L output/lib -o output/lib/vec      source/rust/common/vec.rs
 rustc -L output/lib -o output/lib/dynamics source/rust/common/dynamics.rs
 rustc -L output/lib -o output/lib/clients  source/rust/core-service/clients.rs
 rustc -L output/lib -o output/lib/net      source/rust/core-service/net.rs
+rustc -L output/lib -o output/lib/protocol source/rust/core-service/protocol.rs
 
 RUST_LIBS="\
 $OUTPUT_LIB/libvec-f9967a31-0.0.a \
 $OUTPUT_LIB/libclients-9b872434-0.0.a \
-$OUTPUT_LIB/libnet-5aef3837-0.0.a"
+$OUTPUT_LIB/libnet-5aef3837-0.0.a \
+$OUTPUT_LIB/libprotocol-40062327-0.0.a"
 
 ./scripts/zwobot/zwobot-compile \
 	"$CORE_SERVICE_SOURCE" \

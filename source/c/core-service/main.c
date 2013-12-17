@@ -207,20 +207,3 @@ int sendUpdate(int clientFD, size_t id, double xPos, double yPos)
 
 	return net_send(clientFD, message, messageLength);
 }
-
-int sendRemove(int clientFD, size_t id)
-{
-	char message[256];
-	int status = snprintf(
-		message + 1, sizeof message - 1,
-		"REMOVE id: %lu",
-		id);
-	assert(status >= 0);
-	assert((size_t)status <= sizeof message);
-
-	size_t messageLength = strlen(message + 1) + 1;
-	assert(messageLength <= CHAR_MAX);
-	message[0] = (char)messageLength;
-
-	return net_send(clientFD, message, messageLength);
-}
