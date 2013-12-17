@@ -19,9 +19,6 @@
 #include "net.h"
 
 
-#define PI 3.141592653589793238462
-
-
 void logOutput(char *s);
 
 void onConnect(int clientFD, clientMap *clientMap);
@@ -114,28 +111,6 @@ void logOutput(char *s)
 	ts[strlen(ts) - 1] = '\0';
 
 	printf("%s  %s", ts, s);
-}
-
-void onConnect(int clientFD, clientMap *clientMap)
-{
-	if (clients_canAdd(clientMap))
-	{
-		double distance = 100.0;
-
-		double alpha = 90.0 / 180.0 * PI;
-
-		double xPos = distance * cos(alpha);
-		double yPos = distance * sin(alpha);
-
-		double speed = 30;
-
-		clients_add(clientMap, clientFD, (vec2){xPos, yPos}, (vec2){speed, 0});
-	}
-	else
-	{
-		int status = close(clientFD);
-		assert(status == 0);
-	}
 }
 
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
