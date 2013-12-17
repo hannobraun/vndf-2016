@@ -29,7 +29,6 @@ pub extern fn sendUpdate(clientFD: std::libc::c_int, id: std::libc::size_t, xPos
 	}
 }
 
-
 #[no_mangle]
 pub extern fn sendRemove(clientFD: std::libc::c_int, id: std::libc::size_t) -> std::libc::c_int {
 	unsafe {
