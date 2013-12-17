@@ -7,7 +7,7 @@ extern mod vec;
 extern mod dynamics;
 
 
-struct ClientMap {
+pub struct ClientMap {
 	clients: IdMap,
 	idPool : Stack
 }
