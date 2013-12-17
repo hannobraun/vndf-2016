@@ -1,4 +1,5 @@
 #[crate_type = "rlib"];
+#[crate_type = "staticlib"];
 #[link(name = "vec", package_id = "vec", vers = "0.0")];
 
 
