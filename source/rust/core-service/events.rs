@@ -99,3 +99,57 @@ pub extern fn onDisconnect(clientId: std::libc::size_t, clientMap: &mut clients:
 		}
 	}
 }
+
+#[no_mangle]
+pub extern fn onUpdate(clientMap: &mut clients::ClientMap, events: &mut Events, dTimeInS: f64) {
+	unsafe {
+		let mut i = 0;
+		while (i < clientMap.clients.cap) {
+			if (*std::ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
+				let client = &mut (*std::ptr::mut_offset(clientMap.clients.elems, i as int)).value;
+				let ship = &mut client.ship;
+
+				let gMag = 3000.0 / vec::vec_magnitude(ship.pos);
+				let g = vec::vec_scale(vec::vec_normalize(ship.pos), -gMag);
+
+				ship.pos = vec::vec_add(ship.pos, vec::vec_scale(ship.vel, dTimeInS));
+				ship.vel = vec::vec_add(ship.vel, vec::vec_scale(g, dTimeInS));
+			}
+
+			i += 1;
+		}
+
+		i = 0;
+		while (i < clientMap.clients.cap) {
+			if (*std::ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
+				let mut j = 0;
+				while (j < clientMap.clients.cap) {
+					if (*std::ptr::mut_offset(clientMap.clients.elems, j as int)).isOccupied == 1 {
+						let status = protocol::sendUpdate(
+							(*std::ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
+							(*std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.id,
+							(*std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.x,
+							(*std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.y);
+
+						if (status < 0) {
+							let disconnectEvent = Event {
+								theType: ON_DISCONNECT,
+								onDisconnect: DisconnectEvent {
+									clientId: i },
+								onConnect: ConnectEvent { clientFD: 0 },
+								onUpdate: UpdateEvent { dummy: 0 } };
+
+							let ptr = std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
+							*ptr = disconnectEvent;
+							events.last += 1;
+						}
+					}
+
+					j += 1;
+				}
+			}
+
+			i += 1;
+		}
+	}
+}

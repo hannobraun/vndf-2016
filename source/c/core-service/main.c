@@ -112,36 +112,3 @@ void logOutput(char *s)
 
 	printf("%s  %s", ts, s);
 }
-
-void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
-{
-	idmap_each(clientMap->clients, i,
-		client *client = &idmap_get(clientMap->clients, i);
-		body *ship = &client->ship;
-
-		double gMag = 3000 / vec_magnitude(ship->pos);
-		vec2 g = vec_scale(vec_normalize(ship->pos), -gMag);
-
-		ship->pos = vec_add(ship->pos, vec_scale(ship->vel, dTimeInS));
-		ship->vel = vec_add(ship->vel, vec_scale(g, dTimeInS));
-	)
-
-	idmap_each(clientMap->clients, i,
-		idmap_each(clientMap->clients, j,
-			int status = sendUpdate(
-				idmap_get(clientMap->clients, i).socketFD,
-				idmap_get(clientMap->clients, j).id,
-				idmap_get(clientMap->clients, j).ship.pos.x,
-				idmap_get(clientMap->clients, j).ship.pos.y);
-
-			if (status < 0)
-			{
-				event disconnectEvent;
-				disconnectEvent.type = ON_DISCONNECT;
-				disconnectEvent.onDisconnect.clientId = i;
-
-				rbuf_put((*events), disconnectEvent);
-			}
-		)
-	)
-}
