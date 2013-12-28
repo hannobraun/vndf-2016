@@ -13,7 +13,6 @@
 
 #include <common/idmap.h>
 #include <common/rbuf.h>
-#include <common/stack.h>
 #include "clients.h"
 #include "events.h"
 #include "net.h"
