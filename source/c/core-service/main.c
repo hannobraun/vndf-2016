@@ -113,26 +113,6 @@ void logOutput(char *s)
 	printf("%s  %s", ts, s);
 }
 
-void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
-{
-	clients_remove(clientMap, clientId);
-
-	idmap_each(clientMap->clients, i,
-		int status = sendRemove(
-			idmap_get(clientMap->clients, i).socketFD,
-			clientId);
-
-		if (status < 0)
-		{
-			event disconnectEvent;
-			disconnectEvent.type = ON_DISCONNECT;
-			disconnectEvent.onDisconnect.clientId = i;
-
-			rbuf_put((*events), disconnectEvent);
-		}
-	)
-}
-
 void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
 {
 	idmap_each(clientMap->clients, i,
