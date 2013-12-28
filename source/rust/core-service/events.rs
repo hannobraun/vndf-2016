@@ -92,6 +92,7 @@ pub extern fn onDisconnect(clientId: std::libc::size_t, clientMap: &mut clients:
 
 				let ptr = std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
 				*ptr = disconnectEvent;
+				events.last += 1;
 			}
 
 			i += 1;
