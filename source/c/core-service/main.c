@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
 
 			event connectEvent;
 			connectEvent.type = ON_CONNECT;
-			connectEvent.ev.onConnect.clientFD = clientFD;
+			connectEvent.onConnect.clientFD = clientFD;
 
 			rbuf_put(events, connectEvent);
 		}
@@ -80,12 +80,12 @@ int main(int argc, char const *argv[])
 			switch (event.type)
 			{
 				case ON_CONNECT:
-					onConnect(event.ev.onConnect.clientFD, &clientMap);
+					onConnect(event.onConnect.clientFD, &clientMap);
 					break;
 
 				case ON_DISCONNECT:
 					onDisconnect(
-						event.ev.onDisconnect.clientId,
+						event.onDisconnect.clientId,
 						&clientMap,
 						&events);
 					break;
@@ -126,7 +126,7 @@ void onDisconnect(size_t clientId, clientMap *clientMap, events *events)
 		{
 			event disconnectEvent;
 			disconnectEvent.type = ON_DISCONNECT;
-			disconnectEvent.ev.onDisconnect.clientId = i;
+			disconnectEvent.onDisconnect.clientId = i;
 
 			rbuf_put((*events), disconnectEvent);
 		}
@@ -158,7 +158,7 @@ void onUpdate(clientMap *clientMap, events *events, double dTimeInS)
 			{
 				event disconnectEvent;
 				disconnectEvent.type = ON_DISCONNECT;
-				disconnectEvent.ev.onDisconnect.clientId = i;
+				disconnectEvent.onDisconnect.clientId = i;
 
 				rbuf_put((*events), disconnectEvent);
 			}

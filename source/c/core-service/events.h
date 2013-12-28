@@ -14,11 +14,10 @@ typedef struct {
 
 typedef struct {
 	int type;
-	union ev {
-		events_connect    onConnect;
-		events_disconnect onDisconnect;
-		events_update     onUpdate;
-	} ev;
+
+	events_connect    onConnect;
+	events_disconnect onDisconnect;
+	events_update     onUpdate;
 } event;
 
 typedef rbuf(event) events;
