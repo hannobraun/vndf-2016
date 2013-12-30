@@ -10,7 +10,6 @@ rustc -L output/lib -o output/lib/protocol source/rust/core-service/protocol.rs
 rustc -L output/lib -o output/lib/events   source/rust/core-service/events.rs
 
 RUST_LIBS="\
-$OUTPUT_LIB/libvec-f9967a31-0.0.a \
 $OUTPUT_LIB/libclients-9b872434-0.0.a \
 $OUTPUT_LIB/libnet-5aef3837-0.0.a \
 $OUTPUT_LIB/libprotocol-40062327-0.0.a \
