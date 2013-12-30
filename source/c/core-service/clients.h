@@ -2,10 +2,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <common/dynamics.h>
 #include <common/idmap.h>
 #include <common/stack.h>
 
+
+typedef struct {
+	double x;
+	double y;
+} vec2;
+
+typedef struct {
+	vec2 pos;
+	vec2 vel;
+} body;
 
 typedef struct {
 	int    socketFD;
