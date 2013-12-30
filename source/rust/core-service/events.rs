@@ -4,8 +4,8 @@
 
 
 extern mod clients;
+extern mod common;
 extern mod protocol;
-extern mod vec;
 
 
 extern {
@@ -52,11 +52,11 @@ pub extern fn onConnect(clientFD: std::libc::c_int, clientMap: &mut clients::Cli
 
 		let alpha = 90.0 / 180.0 * std::f64::consts::PI;
 
-		let pos = vec::Vec2 {
+		let pos = common::vec::Vec2 {
 			x: distance * std::f64::cos(alpha),
 			y: distance * std::f64::sin(alpha) };
 
-		let vel = vec::Vec2 {
+		let vel = common::vec::Vec2 {
 			x: 30.0,
 			y: 0.0 };
 
@@ -109,11 +109,11 @@ pub extern fn onUpdate(clientMap: &mut clients::ClientMap, events: &mut Events, 
 				let client = &mut (*std::ptr::mut_offset(clientMap.clients.elems, i as int)).value;
 				let ship = &mut client.ship;
 
-				let gMag = 3000.0 / vec::vec_magnitude(ship.pos);
-				let g = vec::vec_scale(vec::vec_normalize(ship.pos), -gMag);
+				let gMag = 3000.0 / common::vec::vec_magnitude(ship.pos);
+				let g = common::vec::vec_scale(common::vec::vec_normalize(ship.pos), -gMag);
 
-				ship.pos = vec::vec_add(ship.pos, vec::vec_scale(ship.vel, dTimeInS));
-				ship.vel = vec::vec_add(ship.vel, vec::vec_scale(g, dTimeInS));
+				ship.pos = common::vec::vec_add(ship.pos, common::vec::vec_scale(ship.vel, dTimeInS));
+				ship.vel = common::vec::vec_add(ship.vel, common::vec::vec_scale(g, dTimeInS));
 			}
 
 			i += 1;

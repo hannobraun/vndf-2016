@@ -1,8 +1,3 @@
-#[crate_type = "rlib"];
-#[crate_type = "staticlib"];
-#[link(name = "vec", package_id = "vec", vers = "0.0")];
-
-
 pub struct Vec2 {
 	x: f64,
 	y: f64
@@ -25,7 +20,7 @@ pub extern fn vec_scale(v: Vec2, s: f64) -> Vec2 {
 
 #[no_mangle]
 pub extern fn vec_magnitude(v: Vec2) -> f64 {
-	std::num::sqrt(v.x*v.x + v.y*v.y)
+	::std::num::sqrt(v.x*v.x + v.y*v.y)
 }
 
 #[no_mangle]

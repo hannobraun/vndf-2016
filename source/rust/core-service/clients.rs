@@ -3,7 +3,7 @@
 #[link(name = "clients", package_id = "clients", vers = "0.0")];
 
 
-extern mod vec;
+extern mod common;
 extern mod dynamics;
 
 
@@ -67,7 +67,7 @@ pub extern fn clients_canAdd(c: &ClientMap) -> bool {
 }
 
 #[no_mangle]
-pub extern fn clients_add(c: &mut ClientMap, socketFD: std::libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
+pub extern fn clients_add(c: &mut ClientMap, socketFD: std::libc::c_int, pos: common::vec::Vec2, vel: common::vec::Vec2) {
 	// Get id from pool.
 	let clientId = unsafe {
 		let ptr = std::ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
