@@ -31,7 +31,7 @@ struct Stack {
 struct Client {
 	socketFD: std::libc::c_int,
 	id:       std::libc::size_t,
-	ship:     dynamics::Body
+	ship:     common::dynamics::Body
 }
 
 
@@ -78,7 +78,7 @@ pub extern fn clients_add(c: &mut ClientMap, socketFD: std::libc::c_int, pos: co
 	let client = Client {
 		socketFD: socketFD,
 		id      : clientId,
-		ship    : dynamics::Body { pos: pos, vel: vel } };
+		ship    : common::dynamics::Body { pos: pos, vel: vel } };
 
 	// Add client to map
 	unsafe {

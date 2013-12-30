@@ -3,7 +3,6 @@
 source project.conf
 
 rustc -L output/lib -o output/lib/common   source/rust/common/main.rs
-rustc -L output/lib -o output/lib/dynamics source/rust/common/dynamics.rs
 rustc -L output/lib -o output/lib/clients  source/rust/core-service/clients.rs
 rustc -L output/lib -o output/lib/net      source/rust/core-service/net.rs
 rustc -L output/lib -o output/lib/protocol source/rust/core-service/protocol.rs
