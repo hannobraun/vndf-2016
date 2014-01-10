@@ -2,12 +2,14 @@
 
 source project.conf
 
-mkdir -p $OUTPUT_LIB
+OUTPUT_LIB_RUST=$OUTPUT_LIB
+
+mkdir -p $OUTPUT_LIB_RUST
 
 function build-rust() {
 	RUST_SOURCE=$1
 
-	rustc -L $OUTPUT_LIB -o $OUTPUT_LIB/lib $RUST_SOURCE
+	rustc -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
 }
 
 build-rust source/rust/common/main.rs
@@ -17,10 +19,10 @@ build-rust source/rust/core-service/protocol.rs
 build-rust source/rust/core-service/events.rs
 
 RUST_LIBS="\
-$OUTPUT_LIB/libclients-9b872434-0.0.a \
-$OUTPUT_LIB/libnet-5aef3837-0.0.a \
-$OUTPUT_LIB/libprotocol-40062327-0.0.a \
-$OUTPUT_LIB/libevents-d4a7d967-0.0.a"
+$OUTPUT_LIB_RUST/libclients-9b872434-0.0.a \
+$OUTPUT_LIB_RUST/libnet-5aef3837-0.0.a \
+$OUTPUT_LIB_RUST/libprotocol-40062327-0.0.a \
+$OUTPUT_LIB_RUST/libevents-d4a7d967-0.0.a"
 
 ./scripts/zwobot/zwobot-compile \
 	"$CORE_SERVICE_SOURCE" \
