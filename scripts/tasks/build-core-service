@@ -2,6 +2,8 @@
 
 source project.conf
 
+mkdir -p $OUTPUT_LIB
+
 rustc -L output/lib -o output/lib/common   source/rust/common/main.rs
 rustc -L output/lib -o output/lib/clients  source/rust/core-service/clients.rs
 rustc -L output/lib -o output/lib/net      source/rust/core-service/net.rs
