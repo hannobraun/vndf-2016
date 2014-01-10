@@ -18,7 +18,6 @@ function build-rust() {
 
 build-rust source/rust/common/main.rs &&
 	build-rust source/rust/core-service/net.rs &&
-	build-rust source/rust/core-service/protocol.rs &&
 	build-rust source/rust/core-service/main.rs &&
 	RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)" &&
 	./scripts/zwobot/zwobot-compile \

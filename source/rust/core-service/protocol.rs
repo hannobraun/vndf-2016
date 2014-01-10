@@ -1,53 +1,45 @@
-#[crate_type = "rlib"];
-#[crate_type = "staticlib"];
-#[crate_id = "protocol"];
-
-
-extern mod net;
-
-
 #[no_mangle]
-pub extern fn sendUpdate(clientFD: std::libc::c_int, id: std::libc::size_t, xPos: std::libc::c_double, yPos: std::libc::c_double) -> std::libc::c_int {
+pub extern fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
 	unsafe {
-		let mut message: [std::libc::c_char, ..256] = [0, ..256];
+		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 
 		("UPDATE id: " +id.to_str()+ ", pos: (" +xPos.to_str()+ ", " +yPos.to_str()+ ")").to_c_str().with_ref(|c_str| {
-			let messageLength = std::libc::strlen(c_str);
+			let messageLength = ::std::libc::strlen(c_str);
 
-			std::ptr::set_memory(
+			::std::ptr::set_memory(
 				message.as_mut_ptr(),
 				(messageLength + 1) as u8,
 				1);
 
-			std::ptr::copy_memory(
-				std::ptr::mut_offset(message.as_mut_ptr(), 1),
+			::std::ptr::copy_memory(
+				::std::ptr::mut_offset(message.as_mut_ptr(), 1),
 				c_str,
 				messageLength as uint);
 
-			net::net_send(clientFD, message.as_ptr(), messageLength + 1)
+			::net::net_send(clientFD, message.as_ptr(), messageLength + 1)
 		})
 	}
 }
 
 #[no_mangle]
-pub extern fn sendRemove(clientFD: std::libc::c_int, id: std::libc::size_t) -> std::libc::c_int {
+pub extern fn sendRemove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
 	unsafe {
-		let mut message: [std::libc::c_char, ..256] = [0, ..256];
+		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 
 		("REMOVE id: " + id.to_str()).to_c_str().with_ref(|c_str| {
-			let messageLength = std::libc::strlen(c_str);
+			let messageLength = ::std::libc::strlen(c_str);
 
-			std::ptr::set_memory(
+			::std::ptr::set_memory(
 				message.as_mut_ptr(),
 				(messageLength + 1) as u8,
 				1);
 
-			std::ptr::copy_memory(
-				std::ptr::mut_offset(message.as_mut_ptr(), 1),
+			::std::ptr::copy_memory(
+				::std::ptr::mut_offset(message.as_mut_ptr(), 1),
 				c_str,
 				messageLength as uint);
 
-			net::net_send(clientFD, message.as_ptr(), messageLength + 1)
+			::net::net_send(clientFD, message.as_ptr(), messageLength + 1)
 		})
 	}
 }

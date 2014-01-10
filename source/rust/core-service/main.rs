@@ -3,7 +3,8 @@
 #[crate_id = "core-service"];
 
 extern mod common;
-extern mod protocol;
+extern mod net;
 
 pub mod clients;
 pub mod events;
+pub mod protocol;
