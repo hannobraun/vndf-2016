@@ -20,12 +20,10 @@ build-rust source/rust/common/main.rs &&
 	build-rust source/rust/core-service/clients.rs &&
 	build-rust source/rust/core-service/net.rs &&
 	build-rust source/rust/core-service/protocol.rs &&
-	build-rust source/rust/core-service/events.rs
-
-RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)"
-
-./scripts/zwobot/zwobot-compile \
-	"$CORE_SERVICE_SOURCE" \
-	"$RUST_LIBS" \
-	"-lm -lrt -ldl -lpthread -lstdc++" \
-	$CORE_SERVICE_BINARY
+	build-rust source/rust/core-service/main.rs &&
+	RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)" &&
+	./scripts/zwobot/zwobot-compile \
+		"$CORE_SERVICE_SOURCE" \
+		"$RUST_LIBS" \
+		"-lm -lrt -ldl -lpthread -lstdc++" \
+		$CORE_SERVICE_BINARY
