@@ -1,7 +1,6 @@
 #[cfg(test)]
 mod test {
-	use vec;
-	use vec::{Vec2};
+	use vec::Vec2;
 
 	#[test]
 	fn it_should_add_two_vectors() {
