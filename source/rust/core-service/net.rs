@@ -1,6 +1,6 @@
 #[crate_type = "rlib"];
 #[crate_type = "staticlib"];
-#[link(name = "net", package_id = "net", vers = "0.0")];
+#[crate_id = "net"];
 
 
 extern {
