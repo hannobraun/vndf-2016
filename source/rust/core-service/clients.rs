@@ -52,13 +52,11 @@ pub extern fn clients_initClientMap(c: &mut ClientMap, cap: ::std::libc::size_t)
 	}
 }
 
-#[no_mangle]
-pub extern fn clients_canAdd(c: &ClientMap) -> bool {
+pub fn clients_canAdd(c: &ClientMap) -> bool {
 	c.idPool.size > 0
 }
 
-#[no_mangle]
-pub extern fn clients_add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::Vec2, vel: ::common::vec::Vec2) {
+pub fn clients_add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::Vec2, vel: ::common::vec::Vec2) {
 	// Get id from pool.
 	let clientId = unsafe {
 		let ptr = ::std::ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
@@ -79,8 +77,7 @@ pub extern fn clients_add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: 
 	};
 }
 
-#[no_mangle]
-pub extern fn clients_remove(c: &mut ClientMap, id: ::std::libc::size_t) {
+pub fn clients_remove(c: &mut ClientMap, id: ::std::libc::size_t) {
 	unsafe {
 		let clientPtr = ::std::ptr::mut_offset(c.clients.elems, id as int);
 		let containsClient = (*clientPtr).isOccupied == 1;
