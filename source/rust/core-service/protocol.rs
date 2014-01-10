@@ -1,5 +1,4 @@
-#[no_mangle]
-pub extern fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
+pub fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
 	unsafe {
 		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 
@@ -21,8 +20,7 @@ pub extern fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, 
 	}
 }
 
-#[no_mangle]
-pub extern fn sendRemove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
+pub fn sendRemove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
 	unsafe {
 		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 
