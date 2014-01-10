@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
 	use vec;
-	use vec::{Vec2, vec_scale, vec_magnitude, vec_normalize};
+	use vec::{Vec2, vec_magnitude, vec_normalize};
 
 	#[test]
 	fn it_should_add_two_vectors() {
@@ -16,7 +16,7 @@ mod test {
 		let v = Vec2 { x: 1.0, y: 2.0 };
 		let s = 2.0;
 
-		assert!(vec_scale(v, s) == Vec2 { x: 2.0, y: 4.0 });
+		assert!(vec::scale(v, s) == Vec2 { x: 2.0, y: 4.0 });
 	}
 
 	#[test]
@@ -56,7 +56,7 @@ pub extern fn add(a: Vec2, b: Vec2) -> Vec2 {
 		y: a.y + b.y }
 }
 
-pub extern fn vec_scale(v: Vec2, s: f64) -> Vec2 {
+pub extern fn scale(v: Vec2, s: f64) -> Vec2 {
 	Vec2 {
 		x: v.x * s,
 		y: v.y * s }
@@ -68,5 +68,5 @@ pub extern fn vec_magnitude(v: Vec2) -> f64 {
 
 pub extern fn vec_normalize(v: Vec2) -> Vec2 {
 	let m = vec_magnitude(v);
-	vec_scale(v, 1.0/m)
+	scale(v, 1.0/m)
 }
