@@ -33,8 +33,8 @@ mod test {
 		let a = Vec2 { x: 3.0, y: 0.0 };
 		let b = Vec2 { x: 0.0, y: 4.0 };
 
-		assert!(vec::normalize(a) == Vec2 { x: 1.0, y: 0.0 });
-		assert!(vec::normalize(b) == Vec2 { x: 0.0, y: 1.0 });
+		assert!(a.normalize() == Vec2 { x: 1.0, y: 0.0 });
+		assert!(b.normalize() == Vec2 { x: 0.0, y: 1.0 });
 	}
 }
 
@@ -70,9 +70,9 @@ impl Vec2 {
 	pub fn magnitude(self) -> f64 {
 		::std::num::sqrt(self.x*self.x + self.y*self.y)
 	}
-}
 
-pub fn normalize(v: Vec2) -> Vec2 {
-	let m = v.magnitude();
-	v * (1.0/m)
+	pub fn normalize(self) -> Vec2 {
+		let m = self.magnitude();
+		self * (1.0/m)
+	}
 }
