@@ -10,7 +10,7 @@ mod test {
 
 		let c = Vec2 { x: 3.0, y: 3.0 };
 
-		assert!(vec::add(a, b) == c);
+		assert!(a + b == c);
 	}
 
 	#[test]
@@ -51,11 +51,12 @@ impl Eq for Vec2 {
 	}
 }
 
-
-pub extern fn add(a: Vec2, b: Vec2) -> Vec2 {
-	Vec2 {
-		x: a.x + b.x,
-		y: a.y + b.y }
+impl Add<Vec2, Vec2> for Vec2 {
+	fn add(&self, other: &Vec2) -> Vec2 {
+		Vec2 {
+			x: self.x + other.x,
+			y: self.y + other.y }
+	}
 }
 
 pub extern fn scale(v: Vec2, s: f64) -> Vec2 {
