@@ -17,7 +17,6 @@ function build-rust() {
 }
 
 build-rust source/rust/common/main.rs &&
-	build-rust source/rust/core-service/clients.rs &&
 	build-rust source/rust/core-service/net.rs &&
 	build-rust source/rust/core-service/protocol.rs &&
 	build-rust source/rust/core-service/main.rs &&
