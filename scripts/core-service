@@ -16,6 +16,6 @@ updateServer
 while true
 do
 	inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES $RUST_FILES
-	echo "Change detected."
+	echo -e "Change detected.\n\n\n"
 	updateServer
 done
