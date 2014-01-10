@@ -2,7 +2,7 @@
 
 source project.conf
 
-OUTPUT_LIB_RUST=$OUTPUT_LIB
+OUTPUT_LIB_RUST=$OUTPUT_LIB/rust
 
 mkdir -p $OUTPUT_LIB_RUST
 
