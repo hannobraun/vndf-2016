@@ -8,7 +8,9 @@ mod test {
 		let a = Vec2 { x: 1.0, y: 2.0 };
 		let b = Vec2 { x: 2.0, y: 1.0 };
 
-		assert!(vec::add(a, b) == Vec2 { x: 3.0, y: 3.0 });
+		let c = Vec2 { x: 3.0, y: 3.0 };
+
+		assert!(vec::add(a, b) == c);
 	}
 
 	#[test]
