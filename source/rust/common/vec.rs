@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
 	use vec;
-	use vec::{Vec2, vec_normalize};
+	use vec::{Vec2};
 
 	#[test]
 	fn it_should_add_two_vectors() {
@@ -32,8 +32,8 @@ mod test {
 		let a = Vec2 { x: 3.0, y: 0.0 };
 		let b = Vec2 { x: 0.0, y: 4.0 };
 
-		assert!(vec_normalize(a) == Vec2 { x: 1.0, y: 0.0 });
-		assert!(vec_normalize(b) == Vec2 { x: 0.0, y: 1.0 });
+		assert!(vec::normalize(a) == Vec2 { x: 1.0, y: 0.0 });
+		assert!(vec::normalize(b) == Vec2 { x: 0.0, y: 1.0 });
 	}
 }
 
@@ -66,7 +66,7 @@ pub extern fn magnitude(v: Vec2) -> f64 {
 	::std::num::sqrt(v.x*v.x + v.y*v.y)
 }
 
-pub extern fn vec_normalize(v: Vec2) -> Vec2 {
+pub extern fn normalize(v: Vec2) -> Vec2 {
 	let m = magnitude(v);
 	scale(v, 1.0/m)
 }
