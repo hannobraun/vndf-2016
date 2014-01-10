@@ -44,7 +44,7 @@ pub extern fn net_init(port: *::std::libc::c_char) -> Net {
 	let serverFD = init_socket(port);
 	let pollerFD = init_poller();
 
-	registerAccept(pollerFD, serverFD);
+	register_accept(pollerFD, serverFD);
 
 	Net {
 		pollerFD: pollerFD,
@@ -167,7 +167,7 @@ fn init_poller() -> ::std::libc::c_int {
 	}
 }
 
-fn registerAccept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
+fn register_accept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
 	let EPOLLIN = 1;
 	let EPOLL_CTL_ADD = 1;
 
