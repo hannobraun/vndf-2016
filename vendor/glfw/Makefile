@@ -464,6 +464,19 @@ windows/fast:
 	$(MAKE) -f tests/CMakeFiles/windows.dir/build.make tests/CMakeFiles/windows.dir/build
 .PHONY : windows/fast
 
+#=============================================================================
+# Target rules for targets named docs
+
+# Build rule for target.
+docs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 docs
+.PHONY : docs
+
+# fast build rule for target.
+docs/fast:
+	$(MAKE) -f docs/CMakeFiles/docs.dir/build.make docs/CMakeFiles/docs.dir/build
+.PHONY : docs/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -501,6 +514,7 @@ help:
 	@echo "... threads"
 	@echo "... title"
 	@echo "... windows"
+	@echo "... docs"
 .PHONY : help
 
 
