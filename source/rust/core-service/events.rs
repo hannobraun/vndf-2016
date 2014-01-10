@@ -50,7 +50,7 @@ pub extern fn onConnect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients:
 			x: 30.0,
 			y: 0.0 };
 
-		::clients::clients_add(clientMap, clientFD, pos, vel);
+		::clients::add(clientMap, clientFD, pos, vel);
 	}
 	else
 	{

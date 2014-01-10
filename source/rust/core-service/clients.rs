@@ -56,7 +56,7 @@ pub fn can_add(c: &ClientMap) -> bool {
 	c.idPool.size > 0
 }
 
-pub fn clients_add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::Vec2, vel: ::common::vec::Vec2) {
+pub fn add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::Vec2, vel: ::common::vec::Vec2) {
 	// Get id from pool.
 	let clientId = unsafe {
 		let ptr = ::std::ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
