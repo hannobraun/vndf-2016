@@ -112,8 +112,8 @@ pub extern fn onUpdate(clientMap: &mut clients::ClientMap, events: &mut Events, 
 				let gMag = 3000.0 / common::vec::vec_magnitude(ship.pos);
 				let g = common::vec::vec_scale(common::vec::vec_normalize(ship.pos), -gMag);
 
-				ship.pos = common::vec::vec_add(ship.pos, common::vec::vec_scale(ship.vel, dTimeInS));
-				ship.vel = common::vec::vec_add(ship.vel, common::vec::vec_scale(g, dTimeInS));
+				ship.pos = common::vec::add(ship.pos, common::vec::vec_scale(ship.vel, dTimeInS));
+				ship.vel = common::vec::add(ship.vel, common::vec::vec_scale(g, dTimeInS));
 			}
 
 			i += 1;

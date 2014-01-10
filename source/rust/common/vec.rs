@@ -1,13 +1,14 @@
 #[cfg(test)]
 mod test {
-	use vec::{Vec2, vec_add, vec_scale, vec_magnitude, vec_normalize};
+	use vec;
+	use vec::{Vec2, vec_scale, vec_magnitude, vec_normalize};
 
 	#[test]
 	fn it_should_add_two_vectors() {
 		let a = Vec2 { x: 1.0, y: 2.0 };
 		let b = Vec2 { x: 2.0, y: 1.0 };
 
-		assert!(vec_add(a, b) == Vec2 { x: 3.0, y: 3.0 });
+		assert!(vec::add(a, b) == Vec2 { x: 3.0, y: 3.0 });
 	}
 
 	#[test]
@@ -49,7 +50,7 @@ impl Eq for Vec2 {
 }
 
 
-pub extern fn vec_add(a: Vec2, b: Vec2) -> Vec2 {
+pub extern fn add(a: Vec2, b: Vec2) -> Vec2 {
 	Vec2 {
 		x: a.x + b.x,
 		y: a.y + b.y }
