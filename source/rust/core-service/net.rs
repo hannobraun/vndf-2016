@@ -194,7 +194,7 @@ pub extern fn net_acceptClient(serverFD: ::std::libc::c_int) -> ::std::libc::c_i
 	}
 }
 
-pub fn net_send(clientFD: ::std::libc::c_int, message: *::std::libc::c_char, messageLength: ::std::libc::size_t) -> ::std::libc::c_int {
+pub fn send_message(clientFD: ::std::libc::c_int, message: *::std::libc::c_char, messageLength: ::std::libc::size_t) -> ::std::libc::c_int {
 	let MSG_NOSIGNAL = 0x4000;
 
 	unsafe {

@@ -16,7 +16,7 @@ pub extern fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, 
 				c_str,
 				messageLength as uint);
 
-			::net::net_send(clientFD, message.as_ptr(), messageLength + 1)
+			::net::send_message(clientFD, message.as_ptr(), messageLength + 1)
 		})
 	}
 }
@@ -39,7 +39,7 @@ pub extern fn sendRemove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) 
 				c_str,
 				messageLength as uint);
 
-			::net::net_send(clientFD, message.as_ptr(), messageLength + 1)
+			::net::send_message(clientFD, message.as_ptr(), messageLength + 1)
 		})
 	}
 }
