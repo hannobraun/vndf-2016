@@ -1,6 +1,6 @@
 #[crate_type = "rlib"];
 #[crate_type = "staticlib"];
-#[link(name = "protocol", package_id = "protocol", vers = "0.0")];
+#[crate_id = "protocol"];
 
 
 extern mod net;
