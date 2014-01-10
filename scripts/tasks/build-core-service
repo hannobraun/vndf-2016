@@ -8,7 +8,7 @@ function build-rust() {
 	RUST_OUTPUT=$1
 	RUST_SOURCE=$2
 
-	rustc -L output/lib -o $RUST_OUTPUT $RUST_SOURCE
+	rustc -L $OUTPUT_LIB -o $RUST_OUTPUT $RUST_SOURCE
 }
 
 build-rust output/lib/common   source/rust/common/main.rs
