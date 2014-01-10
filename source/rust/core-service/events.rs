@@ -36,6 +36,24 @@ struct Events {
 
 
 #[no_mangle]
+pub extern fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: ::std::libc::c_int) {
+	unsafe {
+		while (events.last - events.first > 0) {
+			let event = *(::std::ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
+			events.first += 1;
+
+			match event.theType {
+				ON_CONNECT    => onConnect(event.onConnect.clientFD, clientMap),
+				ON_DISCONNECT => onDisconnect(event.onDisconnect.clientId, clientMap, events),
+				ON_UPDATE     => onUpdate(clientMap, events, frameTimeInMs as f64 / 1000.0),
+
+				_ => assert!(false)
+			}
+		}
+	}
+}
+
+#[no_mangle]
 pub extern fn onConnect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
