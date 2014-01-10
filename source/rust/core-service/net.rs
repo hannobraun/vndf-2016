@@ -52,8 +52,7 @@ pub extern fn net_init(port: *::std::libc::c_char) -> Net {
 }
 
 
-#[no_mangle]
-pub extern fn net_initSocket(port: *::std::libc::c_char) -> ::std::libc::c_int {
+pub fn net_initSocket(port: *::std::libc::c_char) -> ::std::libc::c_int {
 	let AI_PASSIVE  = 1;
 	let AF_UNSPEC   = 0;
 	let SOCK_STREAM = 1;
@@ -154,8 +153,7 @@ pub extern fn net_initSocket(port: *::std::libc::c_char) -> ::std::libc::c_int {
 	socketFD
 }
 
-#[no_mangle]
-pub extern fn initPoller() -> ::std::libc::c_int {
+fn initPoller() -> ::std::libc::c_int {
 	unsafe {
 		let pollerFD = epoll_create(1);
 		if pollerFD < 0 {
@@ -169,8 +167,7 @@ pub extern fn initPoller() -> ::std::libc::c_int {
 	}
 }
 
-#[no_mangle]
-pub extern fn registerAccept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
+fn registerAccept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
 	let EPOLLIN = 1;
 	let EPOLL_CTL_ADD = 1;
 
@@ -197,8 +194,7 @@ pub extern fn net_acceptClient(serverFD: ::std::libc::c_int) -> ::std::libc::c_i
 	}
 }
 
-#[no_mangle]
-pub extern fn net_send(clientFD: ::std::libc::c_int, message: *::std::libc::c_char, messageLength: ::std::libc::size_t) -> ::std::libc::c_int {
+pub fn net_send(clientFD: ::std::libc::c_int, message: *::std::libc::c_char, messageLength: ::std::libc::size_t) -> ::std::libc::c_int {
 	let MSG_NOSIGNAL = 0x4000;
 
 	unsafe {
