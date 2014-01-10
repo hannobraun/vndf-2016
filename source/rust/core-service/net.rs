@@ -42,7 +42,7 @@ struct EpollEvent {
 #[no_mangle]
 pub extern fn net_init(port: *::std::libc::c_char) -> Net {
 	let serverFD = init_socket(port);
-	let pollerFD = initPoller();
+	let pollerFD = init_poller();
 
 	registerAccept(pollerFD, serverFD);
 
@@ -153,7 +153,7 @@ fn init_socket(port: *::std::libc::c_char) -> ::std::libc::c_int {
 	socketFD
 }
 
-fn initPoller() -> ::std::libc::c_int {
+fn init_poller() -> ::std::libc::c_int {
 	unsafe {
 		let pollerFD = epoll_create(1);
 		if pollerFD < 0 {
