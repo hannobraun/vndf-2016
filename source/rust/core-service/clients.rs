@@ -1,6 +1,6 @@
 #[crate_type = "rlib"];
 #[crate_type = "staticlib"];
-#[link(name = "clients", package_id = "clients", vers = "0.0")];
+#[crate_id = "clients"];
 
 
 extern mod common;
