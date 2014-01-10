@@ -4,11 +4,18 @@ source project.conf
 
 mkdir -p $OUTPUT_LIB
 
-rustc -L output/lib -o output/lib/common   source/rust/common/main.rs
-rustc -L output/lib -o output/lib/clients  source/rust/core-service/clients.rs
-rustc -L output/lib -o output/lib/net      source/rust/core-service/net.rs
-rustc -L output/lib -o output/lib/protocol source/rust/core-service/protocol.rs
-rustc -L output/lib -o output/lib/events   source/rust/core-service/events.rs
+function build-rust() {
+	RUST_OUTPUT=$1
+	RUST_SOURCE=$2
+
+	rustc -L output/lib -o $RUST_OUTPUT $RUST_SOURCE
+}
+
+build-rust output/lib/common   source/rust/common/main.rs
+build-rust output/lib/clients  source/rust/core-service/clients.rs
+build-rust output/lib/net      source/rust/core-service/net.rs
+build-rust output/lib/protocol source/rust/core-service/protocol.rs
+build-rust output/lib/events   source/rust/core-service/events.rs
 
 RUST_LIBS="\
 $OUTPUT_LIB/libclients-9b872434-0.0.a \
