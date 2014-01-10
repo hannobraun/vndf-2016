@@ -67,11 +67,11 @@ impl Mul<f64, Vec2> for Vec2 {
 	}
 }
 
-pub extern fn magnitude(v: Vec2) -> f64 {
+pub fn magnitude(v: Vec2) -> f64 {
 	::std::num::sqrt(v.x*v.x + v.y*v.y)
 }
 
-pub extern fn normalize(v: Vec2) -> Vec2 {
+pub fn normalize(v: Vec2) -> Vec2 {
 	let m = magnitude(v);
 	v * (1.0/m)
 }
