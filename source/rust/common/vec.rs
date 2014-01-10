@@ -1,6 +1,26 @@
+#[cfg(test)]
+mod test {
+	use vec::{Vec2, vec_add};
+
+	#[test]
+	fn it_should_add_two_vectors() {
+		let a = Vec2 {x: 1.0, y: 2.0};
+		let b = Vec2 {x: 2.0, y: 1.0};
+
+		assert!(vec_add(a, b) == Vec2 {x: 3.0, y: 3.0});
+	}
+}
+
+
 pub struct Vec2 {
 	x: f64,
 	y: f64
+}
+
+impl Eq for Vec2 {
+	fn eq(&self, other: &Vec2) -> bool {
+		self.x == other.x && self.y == other.y
+	}
 }
 
 
