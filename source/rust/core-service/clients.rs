@@ -77,7 +77,7 @@ pub fn add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::
 	};
 }
 
-pub fn clients_remove(c: &mut ClientMap, id: ::std::libc::size_t) {
+pub fn remove(c: &mut ClientMap, id: ::std::libc::size_t) {
 	unsafe {
 		let clientPtr = ::std::ptr::mut_offset(c.clients.elems, id as int);
 		let containsClient = (*clientPtr).isOccupied == 1;

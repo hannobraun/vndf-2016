@@ -62,7 +62,7 @@ pub extern fn onConnect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients:
 
 #[no_mangle]
 pub extern fn onDisconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
-	::clients::clients_remove(clientMap, clientId);
+	::clients::remove(clientMap, clientId);
 
 	unsafe {
 		let mut i = 0;
