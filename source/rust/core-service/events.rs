@@ -68,7 +68,7 @@ pub extern fn onDisconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clie
 		let mut i = 0;
 		while i < clientMap.clients.cap {
 			let client = (*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).value;
-			let status = ::protocol::sendRemove(
+			let status = ::protocol::send_remove(
 				client.socketFD,
 				clientId);
 

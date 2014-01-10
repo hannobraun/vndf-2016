@@ -20,7 +20,7 @@ pub fn send_update(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: 
 	}
 }
 
-pub fn sendRemove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
+pub fn send_remove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
 	unsafe {
 		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 
