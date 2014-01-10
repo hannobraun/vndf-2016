@@ -24,9 +24,8 @@ mod test {
 	#[test]
 	fn it_should_compute_a_vectors_magnitude() {
 		let v = Vec2 { x: 3.0, y: 4.0 };
-		let m = 5.0;
 
-		assert!(vec::magnitude(v) == m);
+		assert!(v.magnitude() == 5.0);
 	}
 
 	#[test]
@@ -67,11 +66,13 @@ impl Mul<f64, Vec2> for Vec2 {
 	}
 }
 
-pub fn magnitude(v: Vec2) -> f64 {
-	::std::num::sqrt(v.x*v.x + v.y*v.y)
+impl Vec2 {
+	pub fn magnitude(self) -> f64 {
+		::std::num::sqrt(self.x*self.x + self.y*self.y)
+	}
 }
 
 pub fn normalize(v: Vec2) -> Vec2 {
-	let m = magnitude(v);
+	let m = v.magnitude();
 	v * (1.0/m)
 }

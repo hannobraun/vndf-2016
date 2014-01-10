@@ -109,7 +109,7 @@ pub extern fn onUpdate(clientMap: &mut clients::ClientMap, events: &mut Events, 
 				let client = &mut (*std::ptr::mut_offset(clientMap.clients.elems, i as int)).value;
 				let ship = &mut client.ship;
 
-				let gMag = 3000.0 / common::vec::magnitude(ship.pos);
+				let gMag = 3000.0 / ship.pos.magnitude();
 				let g = common::vec::normalize(ship.pos) * -gMag;
 
 				ship.pos = ship.pos + ship.vel * dTimeInS;
