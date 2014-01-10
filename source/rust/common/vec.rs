@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod test {
-	use vec::{Vec2, vec_add, vec_scale};
+	use vec::{Vec2, vec_add, vec_scale, vec_magnitude};
 
 	#[test]
 	fn it_should_add_two_vectors() {
@@ -16,6 +16,14 @@ mod test {
 		let s = 2.0;
 
 		assert!(vec_scale(v, s) == Vec2 {x: 2.0, y: 4.0});
+	}
+
+	#[test]
+	fn it_should_compute_a_vectors_magnitude() {
+		let v = Vec2 {x: 3.0, y: 4.0};
+		let m = 5.0;
+
+		assert!(vec_magnitude(v) == m);
 	}
 }
 
