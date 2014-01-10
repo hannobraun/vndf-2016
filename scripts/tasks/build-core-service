@@ -16,11 +16,11 @@ function build-rust() {
 		rustc -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
 }
 
-build-rust source/rust/common/main.rs
-build-rust source/rust/core-service/clients.rs
-build-rust source/rust/core-service/net.rs
-build-rust source/rust/core-service/protocol.rs
-build-rust source/rust/core-service/events.rs
+build-rust source/rust/common/main.rs &&
+	build-rust source/rust/core-service/clients.rs &&
+	build-rust source/rust/core-service/net.rs &&
+	build-rust source/rust/core-service/protocol.rs &&
+	build-rust source/rust/core-service/events.rs
 
 RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)"
 
