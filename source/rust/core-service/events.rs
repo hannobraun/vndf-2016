@@ -37,7 +37,7 @@ struct Events {
 
 #[no_mangle]
 pub extern fn onConnect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap) {
-	if (::clients::clients_canAdd(clientMap)) {
+	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
 
 		let alpha = 90.0 / 180.0 * ::std::f64::consts::PI;

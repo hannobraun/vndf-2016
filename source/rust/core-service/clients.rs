@@ -52,7 +52,7 @@ pub extern fn clients_initClientMap(c: &mut ClientMap, cap: ::std::libc::size_t)
 	}
 }
 
-pub fn clients_canAdd(c: &ClientMap) -> bool {
+pub fn can_add(c: &ClientMap) -> bool {
 	c.idPool.size > 0
 }
 
