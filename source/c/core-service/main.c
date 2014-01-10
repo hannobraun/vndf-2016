@@ -23,8 +23,6 @@ void logOutput(char *s);
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
 void onUpdate(clientMap *clientMap, events *events, double dTimeInS);
-int sendUpdate(int clientFD, size_t id, double xPos, double yPos);
-int sendRemove(int clientFD, size_t id);
 
 
 int main(int argc, char const *argv[])
