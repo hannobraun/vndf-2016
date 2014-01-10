@@ -17,11 +17,7 @@ build-rust source/rust/core-service/net.rs
 build-rust source/rust/core-service/protocol.rs
 build-rust source/rust/core-service/events.rs
 
-RUST_LIBS="\
-$OUTPUT_LIB_RUST/libclients-9b872434-0.0.a \
-$OUTPUT_LIB_RUST/libnet-5aef3837-0.0.a \
-$OUTPUT_LIB_RUST/libprotocol-40062327-0.0.a \
-$OUTPUT_LIB_RUST/libevents-d4a7d967-0.0.a"
+RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)"
 
 ./scripts/zwobot/zwobot-compile \
 	"$CORE_SERVICE_SOURCE" \
