@@ -1,4 +1,4 @@
-pub fn sendUpdate(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
+pub fn send_update(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
 	unsafe {
 		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
 

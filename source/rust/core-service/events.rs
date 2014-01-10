@@ -115,7 +115,7 @@ pub extern fn onUpdate(clientMap: &mut ::clients::ClientMap, events: &mut Events
 				let mut j = 0;
 				while (j < clientMap.clients.cap) {
 					if (*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).isOccupied == 1 {
-						let status = ::protocol::sendUpdate(
+						let status = ::protocol::send_update(
 							(*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
 							(*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.id,
 							(*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.x,
