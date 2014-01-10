@@ -100,12 +100,3 @@ int main(int argc, char const *argv[])
 		}
 	}
 }
-
-void logOutput(char *s)
-{
-	time_t t = time(NULL);
-	char *ts = ctime(&t);
-	ts[strlen(ts) - 1] = '\0';
-
-	printf("%s  %s", ts, s);
-}
