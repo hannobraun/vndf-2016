@@ -5,10 +5,15 @@ source project.conf
 OUTPUT_LIB_RUST=$OUTPUT_LIB/rust
 mkdir -p $OUTPUT_LIB_RUST
 
+mkdir -p $OUTPUT_TEST
+
 function build-rust() {
 	RUST_SOURCE=$1
+	RUST_TEST=$OUTPUT_TEST/rust-test
 
-	rustc -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
+	rustc -L $OUTPUT_LIB_RUST --test -o $RUST_TEST $RUST_SOURCE &&
+		$RUST_TEST &&
+		rustc -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
 }
 
 build-rust source/rust/common/main.rs
