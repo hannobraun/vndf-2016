@@ -18,7 +18,7 @@ mod test {
 		let v = Vec2 { x: 1.0, y: 2.0 };
 		let s = 2.0;
 
-		assert!(vec::scale(v, s) == Vec2 { x: 2.0, y: 4.0 });
+		assert!(v * s == Vec2 { x: 2.0, y: 4.0 });
 	}
 
 	#[test]
@@ -59,10 +59,12 @@ impl Add<Vec2, Vec2> for Vec2 {
 	}
 }
 
-pub extern fn scale(v: Vec2, s: f64) -> Vec2 {
-	Vec2 {
-		x: v.x * s,
-		y: v.y * s }
+impl Mul<f64, Vec2> for Vec2 {
+	fn mul(&self, s: &f64) -> Vec2 {
+		Vec2 {
+			x: self.x * *s,
+			y: self.y * *s }
+	}
 }
 
 pub extern fn magnitude(v: Vec2) -> f64 {
@@ -71,5 +73,5 @@ pub extern fn magnitude(v: Vec2) -> f64 {
 
 pub extern fn normalize(v: Vec2) -> Vec2 {
 	let m = magnitude(v);
-	scale(v, 1.0/m)
+	v * (1.0/m)
 }
