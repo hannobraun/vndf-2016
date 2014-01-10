@@ -13,7 +13,7 @@ function build-rust() {
 
 	rustc -L $OUTPUT_LIB_RUST --test -o $RUST_TEST $RUST_SOURCE &&
 		$RUST_TEST &&
-		rustc -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
+		rustc -Z debug-info -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
 }
 
 build-rust source/rust/common/main.rs &&
