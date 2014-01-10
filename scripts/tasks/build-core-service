@@ -3,7 +3,6 @@
 source project.conf
 
 OUTPUT_LIB_RUST=$OUTPUT_LIB/rust
-
 mkdir -p $OUTPUT_LIB_RUST
 
 function build-rust() {
