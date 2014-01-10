@@ -4,23 +4,23 @@ mod test {
 
 	#[test]
 	fn it_should_add_two_vectors() {
-		let a = Vec2 {x: 1.0, y: 2.0};
-		let b = Vec2 {x: 2.0, y: 1.0};
+		let a = Vec2 { x: 1.0, y: 2.0 };
+		let b = Vec2 { x: 2.0, y: 1.0 };
 
-		assert!(vec_add(a, b) == Vec2 {x: 3.0, y: 3.0});
+		assert!(vec_add(a, b) == Vec2 { x: 3.0, y: 3.0 });
 	}
 
 	#[test]
 	fn it_should_scale_a_vector() {
-		let v = Vec2 {x: 1.0, y: 2.0};
+		let v = Vec2 { x: 1.0, y: 2.0 };
 		let s = 2.0;
 
-		assert!(vec_scale(v, s) == Vec2 {x: 2.0, y: 4.0});
+		assert!(vec_scale(v, s) == Vec2 { x: 2.0, y: 4.0 });
 	}
 
 	#[test]
 	fn it_should_compute_a_vectors_magnitude() {
-		let v = Vec2 {x: 3.0, y: 4.0};
+		let v = Vec2 { x: 3.0, y: 4.0 };
 		let m = 5.0;
 
 		assert!(vec_magnitude(v) == m);
@@ -28,11 +28,11 @@ mod test {
 
 	#[test]
 	fn it_should_normalize_a_vector() {
-		let a = Vec2 {x: 3.0, y: 0.0};
-		let b = Vec2 {x: 0.0, y: 4.0};
+		let a = Vec2 { x: 3.0, y: 0.0 };
+		let b = Vec2 { x: 0.0, y: 4.0 };
 
-		assert!(vec_normalize(a) == Vec2 {x: 1.0, y: 0.0});
-		assert!(vec_normalize(b) == Vec2 {x: 0.0, y: 1.0});
+		assert!(vec_normalize(a) == Vec2 { x: 1.0, y: 0.0 });
+		assert!(vec_normalize(b) == Vec2 { x: 0.0, y: 1.0 });
 	}
 }
 
