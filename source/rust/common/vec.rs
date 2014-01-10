@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod test {
-	use vec::{Vec2, vec_add, vec_scale, vec_magnitude};
+	use vec::{Vec2, vec_add, vec_scale, vec_magnitude, vec_normalize};
 
 	#[test]
 	fn it_should_add_two_vectors() {
@@ -24,6 +24,15 @@ mod test {
 		let m = 5.0;
 
 		assert!(vec_magnitude(v) == m);
+	}
+
+	#[test]
+	fn it_should_normalize_a_vector() {
+		let a = Vec2 {x: 3.0, y: 0.0};
+		let b = Vec2 {x: 0.0, y: 4.0};
+
+		assert!(vec_normalize(a) == Vec2 {x: 1.0, y: 0.0});
+		assert!(vec_normalize(b) == Vec2 {x: 0.0, y: 1.0});
 	}
 }
 
