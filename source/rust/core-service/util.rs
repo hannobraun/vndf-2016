@@ -1,5 +1,4 @@
-#[no_mangle]
-pub extern fn logOutput(c_chars: *::std::libc::c_char) {
+pub fn logOutput(c_chars: *::std::libc::c_char) {
 	unsafe {
 		let c_str = ::std::c_str::CString::new(c_chars, false);
 		match c_str.as_str() {
