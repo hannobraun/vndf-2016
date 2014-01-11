@@ -1,6 +1,7 @@
 extern {
 	fn epoll_create(size: ::std::libc::c_int) -> ::std::libc::c_int;
 	fn epoll_ctl(epfd: ::std::libc::c_int, op: ::std::libc::c_int, fd: ::std::libc::c_int, event: *EpollEvent) -> ::std::libc::c_int;
+	fn epoll_wait(epfd: ::std::libc::c_int, events: *EpollEvent, maxevents: ::std::libc::c_int, timeout: ::std::libc::c_int) -> ::std::libc::c_int;
 	fn getaddrinfo(name: *::std::libc::c_char, service: *::std::libc::c_char, req: *AddrInfo, pai: **AddrInfo) -> ::std::libc::c_int;
 	fn socket(domain: ::std::libc::c_int, theType: ::std::libc::c_int, protocol: ::std::libc::c_int) -> ::std::libc::c_int;
 	fn setsockopt(sockfd: ::std::libc::c_int, level: ::std::libc::c_int, optname: ::std::libc::c_int, optval: *::std::libc::c_void, optlen: ::std::libc::c_uint) -> ::std::libc::c_int;
@@ -181,6 +182,26 @@ fn register_accept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
 			});
 			::std::libc::exit(1);
 		}
+	}
+}
+
+#[no_mangle]
+pub extern fn net_number_of_events(net: &Net, frameTimeInMs: ::std::libc::c_int) -> ::std::libc::c_int {
+	let emptyEvent = EpollEvent {
+		events: 0,
+		data  : 0 };
+	let pollEvents: [EpollEvent, ..1024] = [emptyEvent, ..1024];
+
+	unsafe {
+		let numberOfEvents = epoll_wait(
+			net.pollerFD,
+			pollEvents.as_ptr(),
+			1024,
+			frameTimeInMs);
+
+		assert!(numberOfEvents != -1);
+
+		numberOfEvents
 	}
 }
 

@@ -20,6 +20,7 @@
 
 void logOutput(char *s);
 
+int net_number_of_events(net *net, int frameTimeInMs);
 void handle_connects(int numberOfEvents, int serverFD, events *events);
 void schedule_update(events *events);
 void handle_events(events *events, clientMap *clientMap, int frameTimeInMs);
@@ -43,16 +44,7 @@ int main(int argc, char const *argv[])
 	{
 		const int frameTimeInMs = 50;
 
-		#define MAX_EVENTS 1024
-		struct epoll_event pollEvents[MAX_EVENTS];
-
-		int numberOfEvents = epoll_wait(
-			net.pollerFD,
-			pollEvents,
-			MAX_EVENTS,
-			frameTimeInMs);
-		assert(numberOfEvents != -1);
-
+		int numberOfEvents = net_number_of_events(&net, frameTimeInMs);
 		handle_connects(numberOfEvents, net.serverFD, &events);
 		schedule_update(&events);
 		handle_events(&events, &clientMap, frameTimeInMs);
