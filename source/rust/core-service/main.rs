@@ -17,7 +17,7 @@ pub mod util;
 pub extern fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &mut events::Events) {
 	let mut i = 0;
 	while i < numberOfEvents {
-		let clientFD = net::net_acceptClient(serverFD);
+		let clientFD = net::accept_client(serverFD);
 
 		let event = events::Event {
 			theType: events::ON_CONNECT,
