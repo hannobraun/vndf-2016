@@ -4,4 +4,3 @@ typedef struct {
 } net;
 
 net net_init(char *port);
-int net_acceptClient(int serverFD);
