@@ -1,8 +1,3 @@
-#[crate_type = "rlib"];
-#[crate_type = "staticlib"];
-#[crate_id = "core-service"];
-
-
 extern mod common;
 extern mod extra;
 
@@ -12,6 +7,50 @@ pub mod net;
 pub mod protocol;
 pub mod util;
 
+
+extern {
+	fn time(timer: ::std::libc::c_uint) -> ::std::libc::c_uint;
+	fn srand(seed: ::std::libc::c_uint);
+}
+
+
+fn main() {
+	"Core Service started.\n".to_c_str().with_ref(|c_str| {
+		util::logOutput(c_str);
+	});
+
+	unsafe {
+		srand(time(0));
+
+		let net = "34481".to_c_str().with_ref(|c_str| {
+			net::net_init(c_str)
+		});
+
+		let mut events = events::Events {
+			first : 0,
+			last  : 0,
+			cap   : 16,
+			buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<events::Event>() as u64) as *mut events::Event};
+
+		let mut clientMap = clients::ClientMap {
+			clients: clients::IdMap {
+				cap  : 0,
+				elems: ::std::ptr::null::<clients::IdMapEntry>() as *mut clients::IdMapEntry },
+			idPool: clients::Stack {
+				cap  : 0,
+				size : 0,
+				elems: ::std::ptr::null::<u64>() as *mut u64 } };
+		clients::clients_initClientMap(&mut clientMap, 4);
+
+		loop {
+			let frameTimeInMs = 50;
+			let numberOfEvents= net::net_number_of_events(&net, frameTimeInMs) as int;
+			handle_connects(numberOfEvents, net.serverFD, &mut events);
+			schedule_update(&mut events);
+			events::handle_events(&mut events, &mut clientMap, frameTimeInMs);
+		}
+	}
+}
 
 #[no_mangle]
 pub extern fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &mut events::Events) {

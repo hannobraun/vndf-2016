@@ -3,24 +3,20 @@
 source project.conf
 
 OUTPUT_LIB_RUST=$OUTPUT_LIB/rust
-mkdir -p $OUTPUT_LIB_RUST
 
+mkdir -p $OUTPUT_LIB_RUST
+mkdir -p $OUTPUT_BIN
 mkdir -p $OUTPUT_TEST
 
 function build-rust() {
 	RUST_SOURCE=$1
+	RUST_OUTPUT=$2
 	RUST_TEST=$OUTPUT_TEST/rust-test
 
 	rustc -L $OUTPUT_LIB_RUST --test -o $RUST_TEST $RUST_SOURCE &&
 		$RUST_TEST &&
-		rustc -Z debug-info -L $OUTPUT_LIB_RUST -o $OUTPUT_LIB_RUST/lib $RUST_SOURCE
+		rustc -Z debug-info -L $OUTPUT_LIB_RUST -o $RUST_OUTPUT $RUST_SOURCE
 }
 
-build-rust source/rust/common/main.rs &&
-	build-rust source/rust/core-service/main.rs &&
-	RUST_LIBS="$(find $OUTPUT_LIB_RUST -name *.a)" &&
-	./scripts/zwobot/zwobot-compile \
-		"$CORE_SERVICE_SOURCE" \
-		"$RUST_LIBS" \
-		"-lm -lrt -ldl -lpthread -lstdc++" \
-		$CORE_SERVICE_BINARY
+build-rust source/rust/common/main.rs $OUTPUT_LIB_RUST/lib &&
+	build-rust source/rust/core-service/main.rs $CORE_SERVICE_BINARY
