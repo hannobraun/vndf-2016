@@ -43,7 +43,7 @@ pub extern fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clie
 			events.first += 1;
 
 			match event.theType {
-				ON_CONNECT    => onConnect(event.onConnect.clientFD, clientMap),
+				ON_CONNECT    => on_connect(event.onConnect.clientFD, clientMap),
 				ON_DISCONNECT => onDisconnect(event.onDisconnect.clientId, clientMap, events),
 				ON_UPDATE     => onUpdate(clientMap, events, frameTimeInMs as f64 / 1000.0),
 
@@ -53,8 +53,7 @@ pub extern fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clie
 	}
 }
 
-#[no_mangle]
-pub extern fn onConnect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap) {
+fn on_connect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
 
