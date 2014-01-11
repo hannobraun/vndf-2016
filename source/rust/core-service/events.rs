@@ -45,7 +45,7 @@ pub extern fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clie
 			match event.theType {
 				ON_CONNECT    => on_connect(event.onConnect.clientFD, clientMap),
 				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId, clientMap, events),
-				ON_UPDATE     => onUpdate(clientMap, events, frameTimeInMs as f64 / 1000.0),
+				ON_UPDATE     => on_update(clientMap, events, frameTimeInMs as f64 / 1000.0),
 
 				_ => assert!(false)
 			}
@@ -106,8 +106,7 @@ fn on_disconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::Clien
 	}
 }
 
-#[no_mangle]
-pub extern fn onUpdate(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS: f64) {
+fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS: f64) {
 	unsafe {
 		let mut i = 0;
 		while (i < clientMap.clients.cap) {
