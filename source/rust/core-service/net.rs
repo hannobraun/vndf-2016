@@ -85,9 +85,7 @@ struct EpollEvent {
 
 
 pub fn init(port: &str) -> Net {
-	let serverFD = port.to_c_str().with_ref(|c_str| {
-		init_socket(c_str)
-	});
+	let serverFD = init_socket(port);
 	let pollerFD = init_poller();
 
 	register_accept(pollerFD, serverFD);
@@ -98,7 +96,7 @@ pub fn init(port: &str) -> Net {
 }
 
 
-fn init_socket(port: *libc::c_char) -> libc::c_int {
+fn init_socket(port: &str) -> libc::c_int {
 	let AI_PASSIVE  = 1;
 	let AF_UNSPEC   = 0;
 	let SOCK_STREAM = 1;
@@ -116,11 +114,13 @@ fn init_socket(port: *libc::c_char) -> libc::c_int {
 	let servinfo = ::std::ptr::null::<AddrInfo>();
 
 	unsafe {
-		let status = getaddrinfo(
-			::std::ptr::null(),
-			port,
-			&hints,
-			&servinfo);
+		let status = port.to_c_str().with_ref(|c_str| {
+			getaddrinfo(
+				::std::ptr::null(),
+				c_str,
+				&hints,
+				&servinfo)
+		});
 
 		if status != 0 {
 			"Error getting address info".to_c_str().with_ref(|c_str| {
