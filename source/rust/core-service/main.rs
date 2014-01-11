@@ -15,7 +15,7 @@ extern {
 
 
 fn main() {
-	util::logOutput("Core Service started.\n");
+	util::log("Core Service started.\n");
 
 	unsafe {
 		srand(time(0));

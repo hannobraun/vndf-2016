@@ -1,4 +1,4 @@
-pub fn logOutput(message: &str) {
+pub fn log(message: &str) {
 	let time = ::extra::time::now().rfc822();
 	print(format!("{:s}  {:s}", time, message));
 }
