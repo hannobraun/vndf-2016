@@ -21,7 +21,7 @@ fn main() {
 		srand(time(0));
 
 		let net = "34481".to_c_str().with_ref(|c_str| {
-			net::net_init(c_str)
+			net::init(c_str)
 		});
 
 		let mut events = events::Events {
