@@ -3,11 +3,11 @@ extern {
 }
 
 
-static ON_CONNECT: ::std::libc::c_int    = 0;
-static ON_DISCONNECT: ::std::libc::c_int = 1;
-static ON_UPDATE: ::std::libc::c_int     = 2;
+pub static ON_CONNECT: ::std::libc::c_int    = 0;
+pub static ON_DISCONNECT: ::std::libc::c_int = 1;
+pub static ON_UPDATE: ::std::libc::c_int     = 2;
 
-struct Event {
+pub struct Event {
 	theType: ::std::libc::c_int,
 
 	onConnect   : ConnectEvent,
@@ -15,19 +15,19 @@ struct Event {
 	onUpdate    : UpdateEvent
 }
 
-struct ConnectEvent {
+pub struct ConnectEvent {
 	clientFD: ::std::libc::c_int
 }
 
-struct DisconnectEvent {
+pub struct DisconnectEvent {
 	clientId: ::std::libc::size_t
 }
 
-struct UpdateEvent {
+pub struct UpdateEvent {
 	dummy: ::std::libc::c_int
 }
 
-struct Events {
+pub struct Events {
 	first : u64,
 	last  : u64,
 	cap   : ::std::libc::size_t,
