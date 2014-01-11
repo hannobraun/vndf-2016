@@ -129,9 +129,6 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-	};
-
-	let socketFD = unsafe{
 		let socketFD = socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
@@ -144,12 +141,9 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		socketFD };
+		let SOL_SOCKET   = 1;
+		let SO_REUSEADDR = 2;
 
-	let SOL_SOCKET   = 1;
-	let SO_REUSEADDR = 2;
-
-	unsafe {
 		let yes = 1;
 		let status = setsockopt(
 			socketFD,
@@ -164,9 +158,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			});
 			libc::exit(1);
 		}
-	}
 
-	unsafe {
 		let status = bind(
 			socketFD,
 			(*servinfo).ai_addr,
@@ -178,9 +170,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			});
 			libc::exit(1);
 		}
-	}
 
-	unsafe {
 		let status = listen(
 			socketFD,
 			1024);
@@ -190,13 +180,11 @@ fn init_socket(port: &str) -> libc::c_int {
 			});
 			libc::exit(1);
 		}
-	}
 
-	unsafe {
 		freeaddrinfo(servinfo);
-	}
 
-	socketFD
+		socketFD
+	}
 }
 
 fn init_poller() -> libc::c_int {
