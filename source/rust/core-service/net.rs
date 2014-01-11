@@ -223,7 +223,7 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 	}
 }
 
-pub fn net_number_of_events(net: &Net, frameTimeInMs: libc::c_int) -> libc::c_int {
+pub fn number_of_events(net: &Net, frameTimeInMs: libc::c_int) -> libc::c_int {
 	let emptyEvent = EpollEvent {
 		events: 0,
 		data  : 0 };

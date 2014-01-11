@@ -40,7 +40,7 @@ fn main() {
 
 		loop {
 			let frameTimeInMs = 50;
-			let numberOfEvents= net::net_number_of_events(&net, frameTimeInMs) as int;
+			let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
 			handle_connects(numberOfEvents, net.serverFD, &mut events);
 			schedule_update(&mut events);
 			events::handle_events(&mut events, &mut clientMap, frameTimeInMs);
