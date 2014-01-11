@@ -3,17 +3,17 @@ pub struct ClientMap {
 	idPool : Stack
 }
 
-struct IdMap {
+pub struct IdMap {
 	cap  : ::std::libc::size_t,
 	elems: *mut IdMapEntry
 }
 
-struct IdMapEntry {
+pub struct IdMapEntry {
 	isOccupied: int,
 	value     : Client
 }
 
-struct Stack {
+pub struct Stack {
 	cap  : ::std::libc::size_t,
 	size : ::std::libc::size_t,
 	elems: *mut ::std::libc::size_t
