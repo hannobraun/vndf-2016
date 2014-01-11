@@ -22,9 +22,6 @@ void logOutput(char *s);
 
 void schedule_update(events *events);
 void handle_events(events *events, clientMap *clientMap, int frameTimeInMs);
-void onConnect(int clientFD, clientMap *clientMap);
-void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
-void onUpdate(clientMap *clientMap, events *events, double dTimeInS);
 
 
 int main(int argc, char const *argv[])
