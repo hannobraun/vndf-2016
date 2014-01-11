@@ -184,8 +184,7 @@ fn register_accept(pollerFD: ::std::libc::c_int, serverFD: ::std::libc::c_int) {
 	}
 }
 
-#[no_mangle]
-pub extern fn net_acceptClient(serverFD: ::std::libc::c_int) -> ::std::libc::c_int {
+pub fn net_acceptClient(serverFD: ::std::libc::c_int) -> ::std::libc::c_int {
 	unsafe {
 		accept(
 			serverFD,
