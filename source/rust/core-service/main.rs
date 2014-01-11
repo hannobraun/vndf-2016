@@ -15,9 +15,7 @@ extern {
 
 
 fn main() {
-	"Core Service started.\n".to_c_str().with_ref(|c_str| {
-		util::logOutput(c_str);
-	});
+	util::logOutput("Core Service started.\n");
 
 	unsafe {
 		srand(time(0));
