@@ -14,6 +14,31 @@ pub mod util;
 
 
 #[no_mangle]
+pub extern fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &mut events::Events) {
+	let mut i = 0;
+	while i < numberOfEvents {
+		let clientFD = net::net_acceptClient(serverFD);
+
+		let event = events::Event {
+			theType: events::ON_CONNECT,
+
+			onConnect: events::ConnectEvent {
+				clientFD: clientFD },
+			onDisconnect: events::DisconnectEvent {
+				clientId: 0 },
+			onUpdate: events::UpdateEvent {
+				dummy: 0 } };
+
+		unsafe {
+			*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = event;
+			events.last += 1;
+		}
+
+		i += 1;
+	}
+}
+
+#[no_mangle]
 pub extern fn schedule_update(events: &mut events::Events) {
 	let event = events::Event {
 		theType: events::ON_UPDATE,

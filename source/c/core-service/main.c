@@ -20,6 +20,7 @@
 
 void logOutput(char *s);
 
+void handle_connects(int numberOfEvents, int serverFD, events *events);
 void schedule_update(events *events);
 void handle_events(events *events, clientMap *clientMap, int frameTimeInMs);
 
@@ -52,17 +53,7 @@ int main(int argc, char const *argv[])
 			frameTimeInMs);
 		assert(numberOfEvents != -1);
 
-		for (int i = 0; i < numberOfEvents; i += 1)
-		{
-			int clientFD = net_acceptClient(net.serverFD);
-
-			event connectEvent;
-			connectEvent.type = ON_CONNECT;
-			connectEvent.onConnect.clientFD = clientFD;
-
-			rbuf_put(events, connectEvent);
-		}
-
+		handle_connects(numberOfEvents, net.serverFD, &events);
 		schedule_update(&events);
 		handle_events(&events, &clientMap, frameTimeInMs);
 	}
