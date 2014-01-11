@@ -20,6 +20,7 @@
 
 void logOutput(char *s);
 
+void schedule_update(events *events);
 void handle_events(events *events, clientMap *clientMap, int frameTimeInMs);
 void onConnect(int clientFD, clientMap *clientMap);
 void onDisconnect(size_t clientId, clientMap *clientMap, events *events);
@@ -65,11 +66,7 @@ int main(int argc, char const *argv[])
 			rbuf_put(events, connectEvent);
 		}
 
-		event updateEvent;
-		updateEvent.type = ON_UPDATE;
-
-		rbuf_put(events, updateEvent);
-
+		schedule_update(&events);
 		handle_events(&events, &clientMap, frameTimeInMs);
 	}
 }
