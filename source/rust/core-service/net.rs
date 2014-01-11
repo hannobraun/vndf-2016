@@ -251,7 +251,11 @@ pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 	}
 }
 
-pub fn send_message(clientFD: libc::c_int, message: *libc::c_char, messageLength: libc::size_t) -> libc::c_int {
+pub fn send_message(
+	clientFD     : libc::c_int,
+	message      : *libc::c_char,
+	messageLength: libc::size_t) -> libc::c_int {
+
 	let MSG_NOSIGNAL = 0x4000;
 
 	unsafe {
