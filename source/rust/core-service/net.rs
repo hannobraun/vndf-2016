@@ -84,8 +84,10 @@ struct EpollEvent {
 }
 
 
-pub fn init(port: *libc::c_char) -> Net {
-	let serverFD = init_socket(port);
+pub fn init(port: &str) -> Net {
+	let serverFD = port.to_c_str().with_ref(|c_str| {
+		init_socket(c_str)
+	});
 	let pollerFD = init_poller();
 
 	register_accept(pollerFD, serverFD);

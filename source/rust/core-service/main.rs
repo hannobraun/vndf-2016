@@ -20,9 +20,7 @@ fn main() {
 	unsafe {
 		srand(time(0));
 
-		let net = "34481".to_c_str().with_ref(|c_str| {
-			net::init(c_str)
-		});
+		let net = net::init("34481");
 
 		let mut events = events::Events {
 			first : 0,
