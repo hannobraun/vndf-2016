@@ -208,7 +208,12 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 	let event = EpollEvent { events: EPOLLIN, data: 0 };
 
 	unsafe {
-		let status = epoll_ctl(pollerFD, EPOLL_CTL_ADD, serverFD, ::std::ptr::to_unsafe_ptr(&event));
+		let status = epoll_ctl(
+			pollerFD,
+			EPOLL_CTL_ADD,
+			serverFD,
+			::std::ptr::to_unsafe_ptr(&event));
+
 		if status != 0 {
 			"Error registering server socket with epoll".to_c_str().with_ref(|c_str| {
 				libc::perror(c_str);
