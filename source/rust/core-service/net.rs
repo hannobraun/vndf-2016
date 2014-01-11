@@ -2,16 +2,58 @@ use std::libc;
 
 extern {
 	fn epoll_create(size: libc::c_int) -> libc::c_int;
-	fn epoll_ctl(epfd: libc::c_int, op: libc::c_int, fd: libc::c_int, event: *EpollEvent) -> libc::c_int;
-	fn epoll_wait(epfd: libc::c_int, events: *EpollEvent, maxevents: libc::c_int, timeout: libc::c_int) -> libc::c_int;
-	fn getaddrinfo(name: *libc::c_char, service: *libc::c_char, req: *AddrInfo, pai: **AddrInfo) -> libc::c_int;
-	fn socket(domain: libc::c_int, theType: libc::c_int, protocol: libc::c_int) -> libc::c_int;
-	fn setsockopt(sockfd: libc::c_int, level: libc::c_int, optname: libc::c_int, optval: *libc::c_void, optlen: libc::c_uint) -> libc::c_int;
-	fn bind(sockfd: libc::c_int, addr: *SockAddr, addrlen: libc::c_uint) -> libc::c_int;
-	fn listen(sockfd: libc::c_int, backlog: libc::c_int) -> libc::c_int;
+
+	fn epoll_ctl(
+		epfd : libc::c_int,
+		op   : libc::c_int,
+		fd   : libc::c_int,
+		event: *EpollEvent) -> libc::c_int;
+
+	fn epoll_wait(
+		epfd     : libc::c_int,
+		events   : *EpollEvent,
+		maxevents: libc::c_int,
+		timeout  : libc::c_int) -> libc::c_int;
+
+	fn getaddrinfo(
+		name   : *libc::c_char,
+		service: *libc::c_char,
+		req    : *AddrInfo,
+		pai    : **AddrInfo) -> libc::c_int;
+
+	fn socket(
+		domain  : libc::c_int,
+		theType : libc::c_int,
+		protocol: libc::c_int) -> libc::c_int;
+
+	fn setsockopt(
+		sockfd : libc::c_int,
+		level  : libc::c_int,
+		optname: libc::c_int,
+		optval : *libc::c_void,
+		optlen : libc::c_uint) -> libc::c_int;
+
+	fn bind(
+		sockfd : libc::c_int,
+		addr   : *SockAddr,
+		addrlen: libc::c_uint) -> libc::c_int;
+
+	fn listen(
+		sockfd : libc::c_int,
+		backlog: libc::c_int) -> libc::c_int;
+
 	fn freeaddrinfo(res: *AddrInfo);
-	fn accept(sockfd: libc::c_int, addr: *SockAddr, addrlen: *libc::c_uint) -> libc::c_int;
-	fn send(sockfd: libc::c_int, buf: *libc::c_void, len: libc::size_t, flags: libc::c_int) -> libc::ssize_t;
+
+	fn accept(
+		sockfd : libc::c_int,
+		addr   : *SockAddr,
+		addrlen: *libc::c_uint) -> libc::c_int;
+
+	fn send(
+		sockfd: libc::c_int,
+		buf   : *libc::c_void,
+		len   : libc::size_t,
+		flags : libc::c_int) -> libc::ssize_t;
 }
 
 
