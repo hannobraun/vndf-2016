@@ -72,8 +72,7 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 	}
 }
 
-#[no_mangle]
-pub extern fn schedule_update(events: &mut events::Events) {
+fn schedule_update(events: &mut events::Events) {
 	let event = events::Event {
 		theType: events::ON_UPDATE,
 
