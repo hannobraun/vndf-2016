@@ -38,14 +38,10 @@ impl Stack {
 			capacity * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
 
 		let mut stack = Stack {
-			cap  : 0,
+			cap  : capacity,
 			size : 0,
-			elems: ::std::ptr::null::<u64>() as *mut u64 };
-
-		stack.cap = capacity;
-		stack.size = 0;
-		stack.elems = unsafe {
-			libc::malloc(idPoolSize) as *mut libc::size_t };
+			elems: unsafe {
+				libc::malloc(idPoolSize) as *mut libc::size_t } };
 
 		while stack.size < capacity {
 			unsafe {
