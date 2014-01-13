@@ -32,6 +32,18 @@ struct Client {
 	ship    : dynamics::Body
 }
 
+impl Stack {
+	fn init(&mut self, capacity: libc::size_t) {
+		let idPoolSize =
+			capacity * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
+
+		self.cap = capacity;
+		self.size = 0;
+		self.elems = unsafe {
+			libc::malloc(idPoolSize) as *mut libc::size_t };
+	}
+}
+
 
 pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 	let mut c = ClientMap {
@@ -49,13 +61,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 	c.clients.elems = unsafe { libc::malloc(memSize) as *mut IdMapEntry };
 	unsafe { ptr::set_memory(c.clients.elems, 0, cap as uint) };
 
-	// Init Stack
-	c.idPool.cap = cap;
-	c.idPool.size = 0;
-	let idPoolSize =
-		cap * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
-	c.idPool.elems = unsafe {
-		libc::malloc(idPoolSize) as *mut libc::size_t };
+	c.idPool.init(cap);
 
 	// Init ids
 	let mut i: int = 0;
