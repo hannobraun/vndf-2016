@@ -33,7 +33,7 @@ struct Client {
 }
 
 
-pub fn init_client_map(cap: libc::size_t) -> ~ClientMap {
+pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 	let mut c = ClientMap {
 		clients: IdMap {
 			cap  : 0,

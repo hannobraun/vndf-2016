@@ -28,7 +28,7 @@ fn main() {
 			cap   : 16,
 			buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<events::Event>() as u64) as *mut events::Event};
 
-		let mut clientMap = clients::init_client_map(4);
+		let mut clientMap = clients::new_client_map(4);
 
 		loop {
 			let frameTimeInMs = 50;
