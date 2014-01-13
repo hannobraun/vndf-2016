@@ -35,8 +35,7 @@ pub struct Events {
 }
 
 
-#[no_mangle]
-pub extern fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: ::std::libc::c_int) {
+pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: ::std::libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
 			let event = *(::std::ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
