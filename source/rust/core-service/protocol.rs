@@ -36,7 +36,9 @@ pub fn send_remove(clientFD: libc::c_int, id: libc::size_t) -> libc::c_int {
 	unsafe {
 		let mut buffer: [libc::c_char, ..256] = [0, ..256];
 
-		("REMOVE id: " + id.to_str()).to_c_str().with_ref(|c_str| {
+		let message = format!("REMOVE id: {:u}", id);
+
+		message.to_c_str().with_ref(|c_str| {
 			let messageLength = libc::strlen(c_str);
 
 			ptr::set_memory(
