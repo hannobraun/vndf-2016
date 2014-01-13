@@ -24,8 +24,8 @@ pub struct Stack {
 
 struct Client {
 	socketFD: ::std::libc::c_int,
-	id:       ::std::libc::size_t,
-	ship:     dynamics::Body
+	id      : ::std::libc::size_t,
+	ship    : dynamics::Body
 }
 
 
