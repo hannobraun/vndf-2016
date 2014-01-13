@@ -1,6 +1,11 @@
 use std::libc;
 
-pub fn send_update(clientFD: libc::c_int, id: libc::size_t, xPos: libc::c_double, yPos: libc::c_double) -> libc::c_int {
+pub fn send_update(
+	clientFD: libc::c_int,
+	id      : libc::size_t,
+	xPos    : libc::c_double,
+	yPos    : libc::c_double) -> libc::c_int {
+
 	unsafe {
 		let mut message: [libc::c_char, ..256] = [0, ..256];
 
