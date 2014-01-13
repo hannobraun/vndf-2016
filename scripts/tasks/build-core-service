@@ -13,7 +13,7 @@ function build-rust() {
 	RUST_OUTPUT=$2
 	RUST_TEST=$OUTPUT_TEST/rust-test
 
-	rustc -L $OUTPUT_LIB_RUST --test -o $RUST_TEST $RUST_SOURCE &&
+	rustc -L $OUTPUT_LIB_RUST --test --allow dead_code -o $RUST_TEST $RUST_SOURCE &&
 		$RUST_TEST &&
 		rustc -Z debug-info -L $OUTPUT_LIB_RUST -o $RUST_OUTPUT $RUST_SOURCE
 }
