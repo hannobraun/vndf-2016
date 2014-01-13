@@ -41,6 +41,14 @@ impl Stack {
 		self.size = 0;
 		self.elems = unsafe {
 			libc::malloc(idPoolSize) as *mut libc::size_t };
+
+		while self.size < capacity {
+			unsafe {
+				let ptr = ptr::mut_offset(self.elems, self.size as int);
+				*ptr = (capacity - self.size - 1) as libc::size_t; };
+
+			self.size += 1;
+		}
 	}
 }
 
@@ -62,16 +70,6 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 	unsafe { ptr::set_memory(c.clients.elems, 0, cap as uint) };
 
 	c.idPool.init(cap);
-
-	// Init ids
-	let mut i: int = 0;
-	while i < cap as int {
-		unsafe {
-			let ptr = ptr::mut_offset(c.idPool.elems, i);
-			*ptr = (cap as int - i - 1) as libc::size_t; };
-		c.idPool.size += 1;
-		i += 1;
-	}
 
 	~c
 }
