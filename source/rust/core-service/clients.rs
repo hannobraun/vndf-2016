@@ -58,6 +58,13 @@ impl Stack {
 		self.size == 0
 	}
 
+	fn push(&mut self, id: libc::size_t) {
+		unsafe {
+			let idPtr = ptr::mut_offset(self.elems, self.size as int);
+			(*idPtr) = id; };
+		self.size += 1;
+	}
+
 	fn pop(&mut self) -> libc::size_t {
 		let element = unsafe {
 			let ptr = ptr::mut_offset(self.elems, (self.size - 1) as int);
@@ -116,11 +123,7 @@ pub fn remove(c: &mut ClientMap, id: libc::size_t) {
 			// Remove client
 			(*clientPtr).isOccupied = 0;
 
-			// Add id back to pool
-			let idPtr =
-				ptr::mut_offset(c.idPool.elems, c.idPool.size as int);
-			(*idPtr) = id;
-			c.idPool.size += 1;
+			c.idPool.push(id);
 		}
 	}
 }
