@@ -53,6 +53,10 @@ impl Stack {
 
 		stack
 	}
+
+	fn is_full(&self) -> bool {
+		self.size == 0
+	}
 }
 
 
@@ -73,7 +77,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 }
 
 pub fn can_add(c: &ClientMap) -> bool {
-	c.idPool.size > 0
+	!c.idPool.is_full()
 }
 
 pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
