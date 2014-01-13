@@ -57,6 +57,15 @@ impl Stack {
 	fn is_full(&self) -> bool {
 		self.size == 0
 	}
+
+	fn pop(&mut self) -> libc::size_t {
+		let element = unsafe {
+			let ptr = ptr::mut_offset(self.elems, (self.size - 1) as int);
+			*ptr };
+		self.size -= 1;
+
+		element
+	}
 }
 
 
@@ -82,10 +91,7 @@ pub fn can_add(c: &ClientMap) -> bool {
 
 pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
 	// Get id from pool.
-	let clientId = unsafe {
-		let ptr = ptr::mut_offset(c.idPool.elems, (c.idPool.size - 1) as int);
-		*ptr };
-	c.idPool.size -= 1;
+	let clientId = c.idPool.pop();
 
 	// Construct client
 	let client = Client {
