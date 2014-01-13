@@ -1,9 +1,11 @@
-pub fn send_update(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: ::std::libc::c_double, yPos: ::std::libc::c_double) -> ::std::libc::c_int {
+use std::libc;
+
+pub fn send_update(clientFD: libc::c_int, id: libc::size_t, xPos: libc::c_double, yPos: libc::c_double) -> libc::c_int {
 	unsafe {
-		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
+		let mut message: [libc::c_char, ..256] = [0, ..256];
 
 		("UPDATE id: " +id.to_str()+ ", pos: (" +xPos.to_str()+ ", " +yPos.to_str()+ ")").to_c_str().with_ref(|c_str| {
-			let messageLength = ::std::libc::strlen(c_str);
+			let messageLength = libc::strlen(c_str);
 
 			::std::ptr::set_memory(
 				message.as_mut_ptr(),
@@ -20,12 +22,12 @@ pub fn send_update(clientFD: ::std::libc::c_int, id: ::std::libc::size_t, xPos: 
 	}
 }
 
-pub fn send_remove(clientFD: ::std::libc::c_int, id: ::std::libc::size_t) -> ::std::libc::c_int {
+pub fn send_remove(clientFD: libc::c_int, id: libc::size_t) -> libc::c_int {
 	unsafe {
-		let mut message: [::std::libc::c_char, ..256] = [0, ..256];
+		let mut message: [libc::c_char, ..256] = [0, ..256];
 
 		("REMOVE id: " + id.to_str()).to_c_str().with_ref(|c_str| {
-			let messageLength = ::std::libc::strlen(c_str);
+			let messageLength = libc::strlen(c_str);
 
 			::std::ptr::set_memory(
 				message.as_mut_ptr(),
