@@ -1,4 +1,5 @@
 use std::libc;
+use std::ptr;
 
 extern {
 	fn epoll_create(size: libc::c_int) -> libc::c_int;
@@ -114,17 +115,17 @@ fn init_socket(port: &str) -> libc::c_int {
 	let servinfo = ::std::ptr::null::<AddrInfo>();
 
 	unsafe {
-		let status = port.to_c_str().with_ref(|c_str| {
+		let status = port.to_c_str().with_ref(|c_message| {
 			getaddrinfo(
 				::std::ptr::null(),
-				c_str,
+				c_message,
 				&hints,
 				&servinfo)
 		});
 
 		if status != 0 {
-			"Error getting address info".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error getting address info".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -135,8 +136,8 @@ fn init_socket(port: &str) -> libc::c_int {
 			(*servinfo).ai_protocol);
 
 		if (socketFD == -1) {
-			"Error creating socket".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error creating socket".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -153,8 +154,8 @@ fn init_socket(port: &str) -> libc::c_int {
 			::std::mem::size_of::<libc::c_int>() as u32);
 
 		if status == -1 {
-			"Error setting socket option".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error setting socket option".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -165,8 +166,8 @@ fn init_socket(port: &str) -> libc::c_int {
 			(*servinfo).ai_addrlen);
 
 		if status != 0 {
-			"Error binding socket".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error binding socket".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -175,8 +176,8 @@ fn init_socket(port: &str) -> libc::c_int {
 			socketFD,
 			1024);
 		if status != 0 {
-			"Error listening on socket".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error listening on socket".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -191,8 +192,8 @@ fn init_poller() -> libc::c_int {
 	unsafe {
 		let pollerFD = epoll_create(1);
 		if pollerFD < 0 {
-			"Error initiating epoll".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error initiating epoll".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -215,8 +216,8 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 			::std::ptr::to_unsafe_ptr(&event));
 
 		if status != 0 {
-			"Error registering server socket with epoll".to_c_str().with_ref(|c_str| {
-				libc::perror(c_str);
+			"Error registering server socket with epoll".to_c_str().with_ref(|c_message| {
+				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
@@ -251,33 +252,48 @@ pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 	}
 }
 
-pub fn send_message(
-	clientFD     : libc::c_int,
-	message      : *libc::c_char,
-	messageLength: libc::size_t) -> libc::c_int {
+pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 
 	let MSG_NOSIGNAL = 0x4000;
 
+	let mut buffer: [libc::c_char, ..256] = [0, ..256];
+
 	unsafe {
-		let bytesSent = send(
-			clientFD,
-			message as *libc::c_void,
-			messageLength,
-			MSG_NOSIGNAL);
+		message.to_c_str().with_ref(|c_message| {
+			let messageLength = libc::strlen(c_message);
 
-		if bytesSent < 0 {
-			-1
-		}
-		else if bytesSent as u64 != messageLength {
-			format!(
-				"Only sent {:d} of {:u} bytes.\n",
-				bytesSent,
-				messageLength);
-			libc::exit(1)
+			ptr::set_memory(
+				buffer.as_mut_ptr(),
+				(messageLength + 1) as u8,
+				1);
 
-		}
-		else {
-			0
-		}
+			ptr::copy_memory(
+				ptr::mut_offset(buffer.as_mut_ptr(), 1),
+				c_message,
+				messageLength as uint);
+
+			let buffer_length = messageLength + 1;
+
+			let bytesSent = send(
+				clientFD,
+				buffer.as_ptr() as *libc::c_void,
+				buffer_length,
+				MSG_NOSIGNAL);
+
+			if bytesSent < 0 {
+				-1
+			}
+			else if bytesSent as u64 != buffer_length {
+				format!(
+					"Only sent {:d} of {:u} bytes.\n",
+					bytesSent,
+					buffer_length);
+				libc::exit(1)
+
+			}
+			else {
+				0
+			}
+		})
 	}
 }
