@@ -1,3 +1,6 @@
+use common::dynamics;
+
+
 pub struct ClientMap {
 	clients: IdMap,
 	idPool : Stack
@@ -22,7 +25,7 @@ pub struct Stack {
 struct Client {
 	socketFD: ::std::libc::c_int,
 	id:       ::std::libc::size_t,
-	ship:     ::common::dynamics::Body
+	ship:     dynamics::Body
 }
 
 
@@ -66,7 +69,7 @@ pub fn add(c: &mut ClientMap, socketFD: ::std::libc::c_int, pos: ::common::vec::
 	let client = Client {
 		socketFD: socketFD,
 		id      : clientId,
-		ship    : ::common::dynamics::Body { pos: pos, vel: vel } };
+		ship    : dynamics::Body { pos: pos, vel: vel } };
 
 	// Add client to map
 	unsafe {
