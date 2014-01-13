@@ -36,7 +36,7 @@ fn main() {
 				cap  : 0,
 				size : 0,
 				elems: ::std::ptr::null::<u64>() as *mut u64 } };
-		clients::clients_initClientMap(&mut clientMap, 4);
+		clients::init_client_map(&mut clientMap, 4);
 
 		loop {
 			let frameTimeInMs = 50;
