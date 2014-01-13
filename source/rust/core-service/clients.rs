@@ -7,7 +7,7 @@ use common::vec;
 
 pub struct ClientMap {
 	clients: IdMap,
-	idPool : Stack
+	idPool : IdPool
 }
 
 pub struct IdMap {
@@ -20,7 +20,7 @@ pub struct IdMapEntry {
 	value     : Client
 }
 
-pub struct Stack {
+pub struct IdPool {
 	cap  : libc::size_t,
 	size : libc::size_t,
 	elems: *mut libc::size_t
@@ -32,12 +32,12 @@ struct Client {
 	ship    : dynamics::Body
 }
 
-impl Stack {
-	fn new(capacity: libc::size_t) -> Stack {
+impl IdPool {
+	fn new(capacity: libc::size_t) -> IdPool {
 		let idPoolSize =
 			capacity * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
 
-		let mut stack = Stack {
+		let mut stack = IdPool {
 			cap  : capacity,
 			size : 0,
 			elems: unsafe {
@@ -81,7 +81,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 		clients: IdMap {
 			cap  : 0,
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
-		idPool: Stack::new(cap) };
+		idPool: IdPool::new(cap) };
 
 	// Init IdMap
 	c.clients.cap = cap;
