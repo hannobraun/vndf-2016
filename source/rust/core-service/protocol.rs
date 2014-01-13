@@ -11,7 +11,10 @@ pub fn send_update(
 	unsafe {
 		let mut buffer: [libc::c_char, ..256] = [0, ..256];
 
-		("UPDATE id: " +id.to_str()+ ", pos: (" +xPos.to_str()+ ", " +yPos.to_str()+ ")").to_c_str().with_ref(|c_str| {
+		let message =
+			format!("UPDATE id: {:u}, pos: ({:f}, {:f})", id, xPos, yPos);
+
+		message.to_c_str().with_ref(|c_str| {
 			let messageLength = libc::strlen(c_str);
 
 			ptr::set_memory(
