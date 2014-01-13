@@ -33,7 +33,16 @@ struct Client {
 }
 
 
-pub fn init_client_map(c: &mut ClientMap, cap: libc::size_t) {
+pub fn init_client_map(cap: libc::size_t) -> ~ClientMap {
+	let mut c = ClientMap {
+		clients: IdMap {
+			cap  : 0,
+			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
+		idPool: Stack {
+			cap  : 0,
+			size : 0,
+			elems: ::std::ptr::null::<u64>() as *mut u64 } };
+
 	// Init IdMap
 	c.clients.cap = cap;
 	let memSize = cap * ::std::mem::size_of::<IdMapEntry>() as libc::size_t;
@@ -56,6 +65,8 @@ pub fn init_client_map(c: &mut ClientMap, cap: libc::size_t) {
 			*ptr = (cap as int - i - 1) as libc::size_t; };
 		i += 1;
 	}
+
+	~c
 }
 
 pub fn can_add(c: &ClientMap) -> bool {

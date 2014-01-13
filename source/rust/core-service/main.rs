@@ -28,22 +28,14 @@ fn main() {
 			cap   : 16,
 			buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<events::Event>() as u64) as *mut events::Event};
 
-		let mut clientMap = clients::ClientMap {
-			clients: clients::IdMap {
-				cap  : 0,
-				elems: ::std::ptr::null::<clients::IdMapEntry>() as *mut clients::IdMapEntry },
-			idPool: clients::Stack {
-				cap  : 0,
-				size : 0,
-				elems: ::std::ptr::null::<u64>() as *mut u64 } };
-		clients::init_client_map(&mut clientMap, 4);
+		let mut clientMap = clients::init_client_map(4);
 
 		loop {
 			let frameTimeInMs = 50;
 			let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
 			handle_connects(numberOfEvents, net.serverFD, &mut events);
 			schedule_update(&mut events);
-			events::handle_events(&mut events, &mut clientMap, frameTimeInMs);
+			events::handle_events(&mut events, clientMap, frameTimeInMs);
 		}
 	}
 }
