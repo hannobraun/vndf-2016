@@ -51,7 +51,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 
 	// Init Stack
 	c.idPool.cap = cap;
-	c.idPool.size = cap;
+	c.idPool.size = 0;
 	let idPoolSize =
 		cap * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
 	c.idPool.elems = unsafe {
@@ -63,6 +63,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 		unsafe {
 			let ptr = ptr::mut_offset(c.idPool.elems, i);
 			*ptr = (cap as int - i - 1) as libc::size_t; };
+		c.idPool.size += 1;
 		i += 1;
 	}
 
