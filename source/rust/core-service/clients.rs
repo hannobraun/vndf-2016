@@ -2,6 +2,7 @@ use std::libc;
 use std::ptr;
 
 use common::dynamics;
+use common::vec;
 
 
 pub struct ClientMap {
@@ -61,7 +62,7 @@ pub fn can_add(c: &ClientMap) -> bool {
 	c.idPool.size > 0
 }
 
-pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: ::common::vec::Vec2, vel: ::common::vec::Vec2) {
+pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
 	// Get id from pool.
 	let clientId = unsafe {
 		let ptr = ptr::mut_offset(c.idPool.elems, (c.idPool.size - 1) as int);
