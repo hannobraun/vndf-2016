@@ -26,8 +26,7 @@ struct Client {
 }
 
 
-#[no_mangle]
-pub extern fn clients_initClientMap(c: &mut ClientMap, cap: ::std::libc::size_t) {
+pub fn clients_initClientMap(c: &mut ClientMap, cap: ::std::libc::size_t) {
 	// Init IdMap
 	c.clients.cap = cap;
 	let memSize = cap * ::std::mem::size_of::<IdMapEntry>() as ::std::libc::size_t;
