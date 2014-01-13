@@ -1,4 +1,6 @@
 use std::libc;
+use std::ptr;
+
 
 pub fn send_update(
 	clientFD: libc::c_int,
@@ -12,13 +14,13 @@ pub fn send_update(
 		("UPDATE id: " +id.to_str()+ ", pos: (" +xPos.to_str()+ ", " +yPos.to_str()+ ")").to_c_str().with_ref(|c_str| {
 			let messageLength = libc::strlen(c_str);
 
-			::std::ptr::set_memory(
+			ptr::set_memory(
 				message.as_mut_ptr(),
 				(messageLength + 1) as u8,
 				1);
 
-			::std::ptr::copy_memory(
-				::std::ptr::mut_offset(message.as_mut_ptr(), 1),
+			ptr::copy_memory(
+				ptr::mut_offset(message.as_mut_ptr(), 1),
 				c_str,
 				messageLength as uint);
 
@@ -34,13 +36,13 @@ pub fn send_remove(clientFD: libc::c_int, id: libc::size_t) -> libc::c_int {
 		("REMOVE id: " + id.to_str()).to_c_str().with_ref(|c_str| {
 			let messageLength = libc::strlen(c_str);
 
-			::std::ptr::set_memory(
+			ptr::set_memory(
 				message.as_mut_ptr(),
 				(messageLength + 1) as u8,
 				1);
 
-			::std::ptr::copy_memory(
-				::std::ptr::mut_offset(message.as_mut_ptr(), 1),
+			ptr::copy_memory(
+				ptr::mut_offset(message.as_mut_ptr(), 1),
 				c_str,
 				messageLength as uint);
 
