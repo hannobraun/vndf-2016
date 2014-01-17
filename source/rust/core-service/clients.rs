@@ -33,17 +33,17 @@ struct Client {
 
 impl IdPool {
 	fn new(capacity: uint) -> ~IdPool {
-		let mut stack = ~IdPool {
+		let mut idPool = ~IdPool {
 			capacity: capacity,
 			pool    : ~[] };
 
 		let mut i = 0;
 		while i < capacity {
-			stack.pool.push(capacity - i);
+			idPool.pool.push(capacity - i);
 			i += 1
 		}
 
-		stack
+		idPool
 	}
 
 	fn has_ids(&self) -> bool {
