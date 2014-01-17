@@ -22,7 +22,7 @@ pub struct IdMapEntry {
 
 struct Client {
 	socketFD: libc::c_int,
-	id      : libc::size_t,
+	id      : uint,
 	ship    : dynamics::Body
 }
 
@@ -124,7 +124,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 
 	let client = Client {
 		socketFD: socketFD,
-		id      : clientId as u64,
+		id      : clientId,
 		ship    : dynamics::Body { pos: pos, vel: vel } };
 
 	c.clients.add(client);

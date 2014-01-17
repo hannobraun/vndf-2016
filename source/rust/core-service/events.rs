@@ -92,7 +92,7 @@ fn on_disconnect(clientId: uint, clientMap: &mut ::clients::ClientMap, events: &
 			let disconnectEvent = Event {
 				theType: ON_DISCONNECT,
 				onDisconnect: DisconnectEvent {
-					clientId: client.id },
+					clientId: client.id as u64 },
 				onConnect: ConnectEvent { clientFD: 0 },
 				onUpdate: UpdateEvent { dummy: 0 } };
 
@@ -118,7 +118,7 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 		clientMap.clients.each(|clientB| {
 			let status = ::protocol::send_update(
 				clientA.socketFD,
-				clientB.id,
+				clientB.id as u64,
 				clientB.ship.pos.x,
 				clientB.ship.pos.y);
 
@@ -126,7 +126,7 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 				let disconnectEvent = Event {
 					theType: ON_DISCONNECT,
 					onDisconnect: DisconnectEvent {
-						clientId: clientA.id },
+						clientId: clientA.id as u64 },
 					onConnect: ConnectEvent { clientFD: 0 },
 					onUpdate: UpdateEvent { dummy: 0 } };
 
