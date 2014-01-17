@@ -23,6 +23,16 @@ pub enum Event {
 }
 
 impl Events {
+	pub fn new() -> ~Events {
+		unsafe {
+			~Events {
+				first : 0,
+				last  : 0,
+				cap   : 16,
+				buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<Event>() as u64) as *mut Event }
+		}
+	}
+
 	pub fn push(&mut self, event: Event) {
 		unsafe {
 			let ptr = ptr::mut_offset(self.buffer, (self.last % self.cap) as int);

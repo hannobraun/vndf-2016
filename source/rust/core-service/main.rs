@@ -2,6 +2,7 @@ extern mod common;
 extern mod extra;
 
 use clients::Clients;
+use events::Events;
 
 pub mod clients;
 pub mod events;
@@ -13,24 +14,17 @@ pub mod util;
 fn main() {
 	util::log("Core Service started.");
 
-	unsafe {
-		let net = net::init("34481");
+	let net = net::init("34481");
 
-		let mut events = events::Events {
-			first : 0,
-			last  : 0,
-			cap   : 16,
-			buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<events::Event>() as u64) as *mut events::Event};
+	let mut events    = Events::new();
+	let mut clientMap = Clients::new(4);
 
-		let mut clientMap = Clients::new(4);
-
-		loop {
-			let frameTimeInMs = 50;
-			let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
-			handle_connects(numberOfEvents, net.serverFD, &mut events);
-			events.push(events::Update);
-			events::handle_events(&mut events, clientMap, frameTimeInMs);
-		}
+	loop {
+		let frameTimeInMs = 50;
+		let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
+		handle_connects(numberOfEvents, net.serverFD, events);
+		events.push(events::Update);
+		events::handle_events(events, clientMap, frameTimeInMs);
 	}
 }
 
