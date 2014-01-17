@@ -39,7 +39,7 @@ pub struct Events {
 }
 
 
-pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: libc::c_int) {
+pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clients, frameTimeInMs: libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
 			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
@@ -56,7 +56,7 @@ pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, 
 	}
 }
 
-fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::ClientMap) {
+fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
 	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
 
@@ -80,7 +80,7 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	}
 }
 
-fn on_disconnect(clientId: uint, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
+fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mut Events) {
 	::clients::remove(clientMap, clientId);
 
 	clientMap.clients.each(|client| {
@@ -105,7 +105,7 @@ fn on_disconnect(clientId: uint, clientMap: &mut ::clients::ClientMap, events: &
 	})
 }
 
-fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS: f64) {
+fn on_update(clientMap: &mut ::clients::Clients, events: &mut Events, dTimeInS: f64) {
 	clientMap.clients.each(|client| {
 		let gMag = 3000.0 / client.ship.pos.magnitude();
 		let g = client.ship.pos.normalize() * -gMag;

@@ -5,7 +5,7 @@ use common::dynamics;
 use common::vec;
 
 
-pub struct ClientMap {
+pub struct Clients {
 	clients: IdMap,
 	idPool : ~IdPool
 }
@@ -103,8 +103,8 @@ impl IdPool {
 }
 
 
-pub fn new_client_map(cap: uint) -> ~ClientMap {
-	let mut c = ~ClientMap {
+pub fn new_client_map(cap: uint) -> ~Clients {
+	let mut c = ~Clients {
 		clients: IdMap {
 			cap  : 0,
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
@@ -115,11 +115,11 @@ pub fn new_client_map(cap: uint) -> ~ClientMap {
 	c
 }
 
-pub fn can_add(c: &ClientMap) -> bool {
+pub fn can_add(c: &Clients) -> bool {
 	c.idPool.has_ids()
 }
 
-pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
+pub fn add(c: &mut Clients, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
 	let clientId = c.idPool.pop();
 
 	let client = Client {
@@ -130,7 +130,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 	c.clients.add(client);
 }
 
-pub fn remove(c: &mut ClientMap, id: uint) {
+pub fn remove(c: &mut Clients, id: uint) {
 	if c.clients.remove(id) {
 		c.idPool.push(id);
 	}
