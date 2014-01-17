@@ -24,7 +24,7 @@ pub struct ConnectEvent {
 }
 
 pub struct DisconnectEvent {
-	clientId: libc::size_t
+	clientId: uint
 }
 
 pub struct UpdateEvent {
@@ -92,7 +92,7 @@ fn on_disconnect(clientId: uint, clientMap: &mut ::clients::ClientMap, events: &
 			let disconnectEvent = Event {
 				theType: ON_DISCONNECT,
 				onDisconnect: DisconnectEvent {
-					clientId: client.id as u64 },
+					clientId: client.id },
 				onConnect: ConnectEvent { clientFD: 0 },
 				onUpdate: UpdateEvent { dummy: 0 } };
 
@@ -126,7 +126,7 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 				let disconnectEvent = Event {
 					theType: ON_DISCONNECT,
 					onDisconnect: DisconnectEvent {
-						clientId: clientA.id as u64 },
+						clientId: clientA.id },
 					onConnect: ConnectEvent { clientFD: 0 },
 					onUpdate: UpdateEvent { dummy: 0 } };
 
