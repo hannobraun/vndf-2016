@@ -33,6 +33,14 @@ impl IdMap {
 		self.elems = unsafe { libc::malloc(memSize as u64) as *mut IdMapEntry };
 		unsafe { ptr::set_memory(self.elems, 0, capacity as uint) };
 	}
+
+	fn add(&mut self, client: Client) {
+		unsafe {
+			let ptr = ptr::mut_offset(self.elems, client.id as int);
+			(*ptr).isOccupied = 1;
+			(*ptr).value = client;
+		};
+	}
 }
 
 pub struct IdPool {
@@ -95,12 +103,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 		id      : clientId as u64,
 		ship    : dynamics::Body { pos: pos, vel: vel } };
 
-	// Add client to map
-	unsafe {
-		let ptr = ptr::mut_offset(c.clients.elems, clientId as int);
-		(*ptr).isOccupied = 1;
-		(*ptr).value = client;
-	};
+	c.clients.add(client);
 }
 
 pub fn remove(c: &mut ClientMap, id: uint) {
