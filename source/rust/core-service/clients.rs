@@ -10,6 +10,12 @@ pub struct Clients {
 	idPool: ~IdPool
 }
 
+struct Client {
+	socketFD: libc::c_int,
+	id      : uint,
+	ship    : dynamics::Body
+}
+
 impl Clients {
 	pub fn new(capacity: uint) -> ~Clients {
 		~Clients {
@@ -52,12 +58,6 @@ impl Clients {
 			f(client);
 		}
 	}
-}
-
-struct Client {
-	socketFD: libc::c_int,
-	id      : uint,
-	ship    : dynamics::Body
 }
 
 
