@@ -46,8 +46,7 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 				clientFD: clientFD },
 			onDisconnect: events::DisconnectEvent {
 				clientId: 0 },
-			onUpdate: events::UpdateEvent {
-				dummy: 0 } };
+			onUpdate: events::UpdateEvent };
 
 		unsafe {
 			*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = event;
@@ -66,8 +65,7 @@ fn schedule_update(events: &mut events::Events) {
 			clientFD: 0 },
 		onDisconnect: events::DisconnectEvent {
 			clientId: 0 },
-		onUpdate: events::UpdateEvent {
-			dummy: 0 } };
+		onUpdate: events::UpdateEvent };
 
 	unsafe {
 		*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = event;

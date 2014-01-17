@@ -29,9 +29,7 @@ pub struct DisconnectEvent {
 	clientId: uint
 }
 
-pub struct UpdateEvent {
-	dummy: libc::c_int
-}
+pub struct UpdateEvent;
 
 pub struct Events {
 	first : u64,
@@ -92,7 +90,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 				onDisconnect: DisconnectEvent {
 					clientId: client.id },
 				onConnect: ConnectEvent { clientFD: 0 },
-				onUpdate: UpdateEvent { dummy: 0 } };
+				onUpdate: UpdateEvent };
 
 			unsafe {
 				let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
@@ -126,7 +124,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 					onDisconnect: DisconnectEvent {
 						clientId: clientA.id },
 					onConnect: ConnectEvent { clientFD: 0 },
-					onUpdate: UpdateEvent { dummy: 0 } };
+					onUpdate: UpdateEvent };
 
 				unsafe {
 					let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
