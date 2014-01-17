@@ -2,6 +2,8 @@ use std::f64;
 use std::libc;
 use std::ptr;
 
+use clients::Clients;
+
 extern {
 	fn close(fd: libc::c_int) -> libc::c_int;
 }
@@ -39,7 +41,7 @@ pub struct Events {
 }
 
 
-pub fn handle_events(events: &mut Events, clients: &mut ::clients::Clients, frameTimeInMs: libc::c_int) {
+pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
 			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
@@ -56,7 +58,7 @@ pub fn handle_events(events: &mut Events, clients: &mut ::clients::Clients, fram
 	}
 }
 
-fn on_connect(clientFD: libc::c_int, clients: &mut ::clients::Clients) {
+fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
 	let distance = 100.0;
 
 	let alpha = 90.0 / 180.0 * f64::consts::PI;
@@ -76,7 +78,7 @@ fn on_connect(clientFD: libc::c_int, clients: &mut ::clients::Clients) {
 	}
 }
 
-fn on_disconnect(clientId: uint, clients: &mut ::clients::Clients, events: &mut Events) {
+fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 	clients.remove(clientId);
 
 	clients.each(|client| {
@@ -101,7 +103,7 @@ fn on_disconnect(clientId: uint, clients: &mut ::clients::Clients, events: &mut 
 	})
 }
 
-fn on_update(clients: &mut ::clients::Clients, events: &mut Events, dTimeInS: f64) {
+fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.each(|client| {
 		let gMag = 3000.0 / client.ship.pos.magnitude();
 		let g = client.ship.pos.normalize() * -gMag;
