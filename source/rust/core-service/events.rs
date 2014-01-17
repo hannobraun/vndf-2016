@@ -47,7 +47,7 @@ pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, 
 
 			match event.theType {
 				ON_CONNECT    => on_connect(event.onConnect.clientFD, clientMap),
-				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId, clientMap, events),
+				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId as uint, clientMap, events),
 				ON_UPDATE     => on_update(clientMap, events, frameTimeInMs as f64 / 1000.0),
 
 				_ => assert!(false)
@@ -80,13 +80,13 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	}
 }
 
-fn on_disconnect(clientId: libc::size_t, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
-	::clients::remove(clientMap, clientId as uint);
+fn on_disconnect(clientId: uint, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
+	::clients::remove(clientMap, clientId);
 
 	clientMap.clients.each(|client| {
 		let status = ::protocol::send_remove(
 			client.socketFD,
-			clientId);
+			clientId as u64);
 
 		if (status < 0) {
 			let disconnectEvent = Event {
