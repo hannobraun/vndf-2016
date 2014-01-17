@@ -36,7 +36,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 			match event {
 				Connect(clientFD)    => on_connect(clientFD, clients),
 				Disconnect(clientId) => on_disconnect(clientId, clients, events),
-				Update              => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
+				Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 			}
 		}
 	}
