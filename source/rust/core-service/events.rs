@@ -77,7 +77,7 @@ fn on_connect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap
 }
 
 fn on_disconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
-	::clients::remove(clientMap, clientId);
+	::clients::remove(clientMap, clientId as uint);
 
 	unsafe {
 		let mut i = 0;

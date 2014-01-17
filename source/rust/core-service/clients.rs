@@ -98,7 +98,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 	};
 }
 
-pub fn remove(c: &mut ClientMap, id: libc::size_t) {
+pub fn remove(c: &mut ClientMap, id: uint) {
 	unsafe {
 		let clientPtr = ptr::mut_offset(c.clients.elems, id as int);
 		let containsClient = (*clientPtr).isOccupied == 1;
