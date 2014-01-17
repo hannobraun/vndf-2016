@@ -30,20 +30,34 @@ impl Events {
 			self.last += 1;
 		}
 	}
+
+	pub fn pull(&mut self) -> Option<Event> {
+		unsafe {
+			if self.last - self.first > 0 {
+				let event = *(ptr::mut_offset(self.buffer, (self.first % self.cap) as int));
+				self.first += 1;
+
+				Some(event)
+			}
+			else {
+				None
+			}
+		}
+	}
 }
 
 
 pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: libc::c_int) {
-	unsafe {
-		while (events.last - events.first > 0) {
-			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
-			events.first += 1;
+	loop {
+		match events.pull() {
+			Some(event) =>
+				match event {
+					Connect(clientFD)    => on_connect(clientFD, clients),
+					Disconnect(clientId) => on_disconnect(clientId, clients, events),
+					Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
+				},
 
-			match event {
-				Connect(clientFD)    => on_connect(clientFD, clients),
-				Disconnect(clientId) => on_disconnect(clientId, clients, events),
-				Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
-			}
+			None => break
 		}
 	}
 }
