@@ -26,6 +26,15 @@ struct Client {
 	ship    : dynamics::Body
 }
 
+impl IdMap {
+	fn init(&mut self, capacity: uint) {
+		self.cap = capacity as u64;
+		let memSize = capacity * ::std::mem::size_of::<IdMapEntry>();
+		self.elems = unsafe { libc::malloc(memSize as u64) as *mut IdMapEntry };
+		unsafe { ptr::set_memory(self.elems, 0, capacity as uint) };
+	}
+}
+
 pub struct IdPool {
 	capacity: uint,
 	pool    : ~[uint]
@@ -67,11 +76,7 @@ pub fn new_client_map(cap: uint) -> ~ClientMap {
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
 		idPool: IdPool::new(cap as uint) };
 
-	// Init IdMap
-	c.clients.cap = cap as u64;
-	let memSize = cap * ::std::mem::size_of::<IdMapEntry>();
-	c.clients.elems = unsafe { libc::malloc(memSize as u64) as *mut IdMapEntry };
-	unsafe { ptr::set_memory(c.clients.elems, 0, cap as uint) };
+	c.clients.init(cap);
 
 	c
 }
