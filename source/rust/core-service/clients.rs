@@ -46,6 +46,10 @@ impl Clients {
 			self.idPool.push(id);
 		}
 	}
+
+	pub fn each(&self, f: |&mut Client|) {
+		self.clients.each(f);
+	}
 }
 
 struct IdMap {
