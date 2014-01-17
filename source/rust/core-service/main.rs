@@ -28,7 +28,7 @@ fn main() {
 			let frameTimeInMs = 50;
 			let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
 			handle_connects(numberOfEvents, net.serverFD, &mut events);
-			schedule_update(&mut events);
+			events.push(events::Update);
 			events::handle_events(&mut events, clientMap, frameTimeInMs);
 		}
 	}
@@ -43,8 +43,4 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 
 		i += 1;
 	}
-}
-
-fn schedule_update(events: &mut events::Events) {
-	events.push(events::Update);
 }
