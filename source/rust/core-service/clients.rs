@@ -94,10 +94,8 @@ pub fn can_add(c: &ClientMap) -> bool {
 }
 
 pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
-	// Get id from pool.
 	let clientId = c.idPool.pop();
 
-	// Construct client
 	let client = Client {
 		socketFD: socketFD,
 		id      : clientId as u64,
