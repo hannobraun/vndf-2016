@@ -118,31 +118,26 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 		let mut i = 0;
 		while (i < clientMap.clients.cap) {
 			if (*ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
-				let mut j = 0;
-				while (j < clientMap.clients.cap) {
-					if (*ptr::mut_offset(clientMap.clients.elems, j as int)).isOccupied == 1 {
-						let status = ::protocol::send_update(
-							(*ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
-							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.id,
-							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.x,
-							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.y);
+				clientMap.clients.each(|client| {
+					let status = ::protocol::send_update(
+						(*ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
+						(*ptr::mut_offset(clientMap.clients.elems, client.id as int)).value.id,
+						(*ptr::mut_offset(clientMap.clients.elems, client.id as int)).value.ship.pos.x,
+						(*ptr::mut_offset(clientMap.clients.elems, client.id as int)).value.ship.pos.y);
 
-						if (status < 0) {
-							let disconnectEvent = Event {
-								theType: ON_DISCONNECT,
-								onDisconnect: DisconnectEvent {
-									clientId: i },
-								onConnect: ConnectEvent { clientFD: 0 },
-								onUpdate: UpdateEvent { dummy: 0 } };
+					if (status < 0) {
+						let disconnectEvent = Event {
+							theType: ON_DISCONNECT,
+							onDisconnect: DisconnectEvent {
+								clientId: i },
+							onConnect: ConnectEvent { clientFD: 0 },
+							onUpdate: UpdateEvent { dummy: 0 } };
 
-							let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
-							*ptr = disconnectEvent;
-							events.last += 1;
-						}
+						let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
+						*ptr = disconnectEvent;
+						events.last += 1;
 					}
-
-					j += 1;
-				}
+				})
 			}
 
 			i += 1;
