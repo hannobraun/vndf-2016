@@ -21,9 +21,8 @@ pub struct IdMapEntry {
 }
 
 pub struct IdPool {
-	cap  : libc::size_t,
-	size : libc::size_t,
-	elems: *mut libc::size_t
+	capacity: uint,
+	pool    : ~[uint]
 }
 
 struct Client {
@@ -33,45 +32,30 @@ struct Client {
 }
 
 impl IdPool {
-	fn new(capacity: libc::size_t) -> IdPool {
-		let idPoolSize =
-			capacity * ::std::mem::size_of::<libc::size_t>() as libc::size_t;
-
+	fn new(capacity: uint) -> IdPool {
 		let mut stack = IdPool {
-			cap  : capacity,
-			size : 0,
-			elems: unsafe {
-				libc::malloc(idPoolSize) as *mut libc::size_t } };
+			capacity: capacity,
+			pool    : ~[] };
 
-		while stack.size < capacity {
-			unsafe {
-				let ptr = ptr::mut_offset(stack.elems, stack.size as int);
-				*ptr = (capacity - stack.size - 1) as libc::size_t; };
-
-			stack.size += 1;
+		let mut i = 0;
+		while i < capacity {
+			stack.pool.push(capacity - i);
+			i += 1
 		}
 
 		stack
 	}
 
 	fn is_full(&self) -> bool {
-		self.size == 0
+		self.pool.len() == 0
 	}
 
-	fn push(&mut self, id: libc::size_t) {
-		unsafe {
-			let idPtr = ptr::mut_offset(self.elems, self.size as int);
-			(*idPtr) = id; };
-		self.size += 1;
+	fn push(&mut self, id: uint) {
+		self.pool.push(id);
 	}
 
-	fn pop(&mut self) -> libc::size_t {
-		let element = unsafe {
-			let ptr = ptr::mut_offset(self.elems, (self.size - 1) as int);
-			*ptr };
-		self.size -= 1;
-
-		element
+	fn pop(&mut self) -> uint {
+		self.pool.pop()
 	}
 }
 
@@ -81,7 +65,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 		clients: IdMap {
 			cap  : 0,
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
-		idPool: IdPool::new(cap) };
+		idPool: IdPool::new(cap as uint) };
 
 	// Init IdMap
 	c.clients.cap = cap;
@@ -103,7 +87,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 	// Construct client
 	let client = Client {
 		socketFD: socketFD,
-		id      : clientId,
+		id      : clientId as u64,
 		ship    : dynamics::Body { pos: pos, vel: vel } };
 
 	// Add client to map
@@ -123,7 +107,7 @@ pub fn remove(c: &mut ClientMap, id: libc::size_t) {
 			// Remove client
 			(*clientPtr).isOccupied = 0;
 
-			c.idPool.push(id);
+			c.idPool.push(id as uint);
 		}
 	}
 }
