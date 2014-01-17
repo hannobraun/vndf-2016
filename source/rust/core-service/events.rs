@@ -79,7 +79,7 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
 fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mut Events) {
 	clientMap.remove(clientId);
 
-	clientMap.clients.each(|client| {
+	clientMap.each(|client| {
 		let status = ::protocol::send_remove(
 			client.socketFD,
 			clientId as u64);
@@ -102,7 +102,7 @@ fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mu
 }
 
 fn on_update(clientMap: &mut ::clients::Clients, events: &mut Events, dTimeInS: f64) {
-	clientMap.clients.each(|client| {
+	clientMap.each(|client| {
 		let gMag = 3000.0 / client.ship.pos.magnitude();
 		let g = client.ship.pos.normalize() * -gMag;
 
@@ -110,8 +110,8 @@ fn on_update(clientMap: &mut ::clients::Clients, events: &mut Events, dTimeInS: 
 		client.ship.vel = client.ship.vel + g * dTimeInS;
 	});
 
-	clientMap.clients.each(|clientA| {
-		clientMap.clients.each(|clientB| {
+	clientMap.each(|clientA| {
+		clientMap.each(|clientB| {
 			let status = ::protocol::send_update(
 				clientA.socketFD,
 				clientB.id as u64,
