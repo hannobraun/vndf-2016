@@ -10,7 +10,7 @@ pub struct ClientMap {
 	idPool : ~IdPool
 }
 
-pub struct IdMap {
+struct IdMap {
 	cap  : libc::size_t,
 	elems: *mut IdMapEntry
 }
