@@ -114,28 +114,28 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 		client.ship.vel = client.ship.vel + g * dTimeInS;
 	});
 
-	unsafe {
-		clientMap.clients.each(|clientA| {
-			clientMap.clients.each(|clientB| {
-				let status = ::protocol::send_update(
-					clientA.socketFD,
-					clientB.id,
-					clientB.ship.pos.x,
-					clientB.ship.pos.y);
+	clientMap.clients.each(|clientA| {
+		clientMap.clients.each(|clientB| {
+			let status = ::protocol::send_update(
+				clientA.socketFD,
+				clientB.id,
+				clientB.ship.pos.x,
+				clientB.ship.pos.y);
 
-				if (status < 0) {
-					let disconnectEvent = Event {
-						theType: ON_DISCONNECT,
-						onDisconnect: DisconnectEvent {
-							clientId: clientA.id },
-						onConnect: ConnectEvent { clientFD: 0 },
-						onUpdate: UpdateEvent { dummy: 0 } };
+			if (status < 0) {
+				let disconnectEvent = Event {
+					theType: ON_DISCONNECT,
+					onDisconnect: DisconnectEvent {
+						clientId: clientA.id },
+					onConnect: ConnectEvent { clientFD: 0 },
+					onUpdate: UpdateEvent { dummy: 0 } };
 
+				unsafe {
 					let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
 					*ptr = disconnectEvent;
-					events.last += 1;
 				}
-			})
-		});
-	}
+				events.last += 1;
+			}
+		})
+	});
 }
