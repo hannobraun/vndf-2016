@@ -1,3 +1,4 @@
+use std::f64;
 use std::libc;
 use std::ptr;
 
@@ -59,11 +60,11 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
 
-		let alpha = 90.0 / 180.0 * ::std::f64::consts::PI;
+		let alpha = 90.0 / 180.0 * f64::consts::PI;
 
 		let pos = ::common::vec::Vec2 {
-			x: distance * ::std::f64::cos(alpha),
-			y: distance * ::std::f64::sin(alpha) };
+			x: distance * f64::cos(alpha),
+			y: distance * f64::sin(alpha) };
 
 		let vel = ::common::vec::Vec2 {
 			x: 30.0,
