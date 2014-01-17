@@ -84,7 +84,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 	clients.each(|client| {
 		let status = ::protocol::send_remove(
 			client.socketFD,
-			clientId as u64);
+			clientId);
 
 		if (status < 0) {
 			let disconnectEvent = Event {
@@ -116,7 +116,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 		clients.each(|clientB| {
 			let status = ::protocol::send_update(
 				clientA.socketFD,
-				clientB.id as u64,
+				clientB.id,
 				clientB.ship.pos.x,
 				clientB.ship.pos.y);
 
