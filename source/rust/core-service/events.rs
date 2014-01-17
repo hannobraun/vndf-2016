@@ -102,24 +102,16 @@ fn on_disconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::Clien
 }
 
 fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS: f64) {
+	clientMap.clients.each(|client| {
+		let gMag = 3000.0 / client.ship.pos.magnitude();
+		let g = client.ship.pos.normalize() * -gMag;
+
+		client.ship.pos = client.ship.pos + client.ship.vel * dTimeInS;
+		client.ship.vel = client.ship.vel + g * dTimeInS;
+	});
+
 	unsafe {
 		let mut i = 0;
-		while (i < clientMap.clients.cap) {
-			if (*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
-				let client = &mut (*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).value;
-				let ship = &mut client.ship;
-
-				let gMag = 3000.0 / ship.pos.magnitude();
-				let g = ship.pos.normalize() * -gMag;
-
-				ship.pos = ship.pos + ship.vel * dTimeInS;
-				ship.vel = ship.vel + g * dTimeInS;
-			}
-
-			i += 1;
-		}
-
-		i = 0;
 		while (i < clientMap.clients.cap) {
 			if (*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
 				let mut j = 0;
