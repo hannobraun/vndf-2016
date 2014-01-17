@@ -20,8 +20,8 @@ fn main() {
 	let mut clientMap = Clients::new(4);
 
 	loop {
-		let frameTimeInMs = 50;
-		let numberOfEvents= net::number_of_events(&net, frameTimeInMs) as int;
+		let frameTimeInMs: uint = 50;
+		let numberOfEvents = net::number_of_events(&net, frameTimeInMs as i32) as int;
 		handle_connects(numberOfEvents, net.serverFD, events);
 		events.push(events::Update);
 		events::handle_events(events, clientMap, frameTimeInMs);

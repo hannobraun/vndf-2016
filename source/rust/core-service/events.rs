@@ -36,7 +36,7 @@ impl Events {
 }
 
 
-pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: libc::c_int) {
+pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: uint) {
 	loop {
 		match events.pull() {
 			Some(event) =>
