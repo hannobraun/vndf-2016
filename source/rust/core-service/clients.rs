@@ -20,15 +20,15 @@ pub struct IdMapEntry {
 	value     : Client
 }
 
-pub struct IdPool {
-	capacity: uint,
-	pool    : ~[uint]
-}
-
 struct Client {
 	socketFD: libc::c_int,
 	id      : libc::size_t,
 	ship    : dynamics::Body
+}
+
+pub struct IdPool {
+	capacity: uint,
+	pool    : ~[uint]
 }
 
 impl IdPool {
