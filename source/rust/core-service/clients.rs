@@ -54,6 +54,20 @@ impl IdMap {
 			containsClient
 		}
 	}
+
+	pub fn each(&self, f: |Client|) {
+		unsafe {
+			let mut i = 0;
+			while i < self.cap {
+				if (*::std::ptr::mut_offset(self.elems, i as int)).isOccupied == 1 {
+					let client = (*::std::ptr::mut_offset(self.elems, i as int)).value;
+					f(client);
+				}
+
+				i += 1;
+			}
+		}
+	}
 }
 
 pub struct IdPool {
