@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 3 ]
+then
+	echo "Usage: $(basename $0) libDirectory sourceFile outputFile"
+	exit 1
+fi
+
+LIB_DIRECTORY=$1
+SOURCE_FILE=$2
+OUTPUT_FILE=$3
+
+RUST_TEST=/tmp/rust-test-$RANDOM
+
+mkdir -p $(dirname $OUTPUT_FILE)
+mkdir -p $(dirname $RUST_TEST)
+
+rustc -L $LIB_DIRECTORY --test --allow dead_code -o $RUST_TEST $SOURCE_FILE &&
+	$RUST_TEST &&
+	rustc -Z debug-info -L $LIB_DIRECTORY -o $OUTPUT_FILE $SOURCE_FILE
