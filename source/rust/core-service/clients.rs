@@ -15,7 +15,7 @@ pub struct IdMap {
 	elems: *mut IdMapEntry
 }
 
-pub struct IdMapEntry {
+struct IdMapEntry {
 	isOccupied: int,
 	value     : Client
 }
