@@ -69,7 +69,7 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
 		x: 30.0,
 		y: 0.0 };
 
-	if !::clients::add(clientMap, clientFD, pos, vel) {
+	if !clientMap.add(clientFD, pos, vel) {
 		unsafe {
 			close(clientFD);
 		}

@@ -22,6 +22,24 @@ impl Clients {
 
 		c
 	}
+
+	pub fn add(&mut self, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) -> bool {
+		if self.idPool.has_ids() {
+			let clientId = self.idPool.pop();
+
+			let client = Client {
+				socketFD: socketFD,
+				id      : clientId,
+				ship    : dynamics::Body { pos: pos, vel: vel } };
+
+			self.clients.add(client);
+
+			true
+		}
+		else {
+			false
+		}
+	}
 }
 
 struct IdMap {
@@ -116,23 +134,6 @@ impl IdPool {
 	}
 }
 
-pub fn add(c: &mut Clients, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) -> bool {
-	if c.idPool.has_ids() {
-		let clientId = c.idPool.pop();
-
-		let client = Client {
-			socketFD: socketFD,
-			id      : clientId,
-			ship    : dynamics::Body { pos: pos, vel: vel } };
-
-		c.clients.add(client);
-
-		true
-	}
-	else {
-		false
-	}
-}
 
 pub fn remove(c: &mut Clients, id: uint) {
 	if c.clients.remove(id) {
