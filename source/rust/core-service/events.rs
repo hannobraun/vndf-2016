@@ -39,16 +39,16 @@ pub struct Events {
 }
 
 
-pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clients, frameTimeInMs: libc::c_int) {
+pub fn handle_events(events: &mut Events, clients: &mut ::clients::Clients, frameTimeInMs: libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
 			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
 			events.first += 1;
 
 			match event.theType {
-				ON_CONNECT    => on_connect(event.onConnect.clientFD, clientMap),
-				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId as uint, clientMap, events),
-				ON_UPDATE     => on_update(clientMap, events, frameTimeInMs as f64 / 1000.0),
+				ON_CONNECT    => on_connect(event.onConnect.clientFD, clients),
+				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId as uint, clients, events),
+				ON_UPDATE     => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
 
 				_ => assert!(false)
 			}
@@ -56,7 +56,7 @@ pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clients, fr
 	}
 }
 
-fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
+fn on_connect(clientFD: libc::c_int, clients: &mut ::clients::Clients) {
 	let distance = 100.0;
 
 	let alpha = 90.0 / 180.0 * f64::consts::PI;
@@ -69,17 +69,17 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
 		x: 30.0,
 		y: 0.0 };
 
-	if !clientMap.add(clientFD, pos, vel) {
+	if !clients.add(clientFD, pos, vel) {
 		unsafe {
 			close(clientFD);
 		}
 	}
 }
 
-fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mut Events) {
-	clientMap.remove(clientId);
+fn on_disconnect(clientId: uint, clients: &mut ::clients::Clients, events: &mut Events) {
+	clients.remove(clientId);
 
-	clientMap.each(|client| {
+	clients.each(|client| {
 		let status = ::protocol::send_remove(
 			client.socketFD,
 			clientId as u64);
@@ -101,8 +101,8 @@ fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mu
 	})
 }
 
-fn on_update(clientMap: &mut ::clients::Clients, events: &mut Events, dTimeInS: f64) {
-	clientMap.each(|client| {
+fn on_update(clients: &mut ::clients::Clients, events: &mut Events, dTimeInS: f64) {
+	clients.each(|client| {
 		let gMag = 3000.0 / client.ship.pos.magnitude();
 		let g = client.ship.pos.normalize() * -gMag;
 
@@ -110,8 +110,8 @@ fn on_update(clientMap: &mut ::clients::Clients, events: &mut Events, dTimeInS: 
 		client.ship.vel = client.ship.vel + g * dTimeInS;
 	});
 
-	clientMap.each(|clientA| {
-		clientMap.each(|clientB| {
+	clients.each(|clientA| {
+		clients.each(|clientB| {
 			let status = ::protocol::send_update(
 				clientA.socketFD,
 				clientB.id as u64,
