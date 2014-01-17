@@ -61,7 +61,7 @@ impl IdPool {
 
 
 pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
-	let mut c = ClientMap {
+	let mut c = ~ClientMap {
 		clients: IdMap {
 			cap  : 0,
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
@@ -73,7 +73,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 	c.clients.elems = unsafe { libc::malloc(memSize) as *mut IdMapEntry };
 	unsafe { ptr::set_memory(c.clients.elems, 0, cap as uint) };
 
-	~c
+	c
 }
 
 pub fn can_add(c: &ClientMap) -> bool {
