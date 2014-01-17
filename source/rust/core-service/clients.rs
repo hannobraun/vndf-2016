@@ -10,6 +10,20 @@ pub struct Clients {
 	idPool : ~IdPool
 }
 
+impl Clients {
+	pub fn new(capacity: uint) -> ~Clients {
+		let mut c = ~Clients {
+			clients: IdMap {
+				cap  : 0,
+				elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
+			idPool: IdPool::new(capacity) };
+
+		c.clients.init(capacity);
+
+		c
+	}
+}
+
 struct IdMap {
 	cap  : libc::size_t,
 	elems: *mut IdMapEntry
@@ -100,19 +114,6 @@ impl IdPool {
 	fn pop(&mut self) -> uint {
 		self.pool.pop()
 	}
-}
-
-
-pub fn new_client_map(cap: uint) -> ~Clients {
-	let mut c = ~Clients {
-		clients: IdMap {
-			cap  : 0,
-			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
-		idPool: IdPool::new(cap) };
-
-	c.clients.init(cap);
-
-	c
 }
 
 pub fn can_add(c: &Clients) -> bool {
