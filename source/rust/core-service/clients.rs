@@ -60,7 +60,7 @@ impl IdPool {
 }
 
 
-pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
+pub fn new_client_map(cap: uint) -> ~ClientMap {
 	let mut c = ~ClientMap {
 		clients: IdMap {
 			cap  : 0,
@@ -68,9 +68,9 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 		idPool: IdPool::new(cap as uint) };
 
 	// Init IdMap
-	c.clients.cap = cap;
-	let memSize = cap * ::std::mem::size_of::<IdMapEntry>() as libc::size_t;
-	c.clients.elems = unsafe { libc::malloc(memSize) as *mut IdMapEntry };
+	c.clients.cap = cap as u64;
+	let memSize = cap * ::std::mem::size_of::<IdMapEntry>();
+	c.clients.elems = unsafe { libc::malloc(memSize as u64) as *mut IdMapEntry };
 	unsafe { ptr::set_memory(c.clients.elems, 0, cap as uint) };
 
 	c
