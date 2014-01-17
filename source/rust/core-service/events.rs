@@ -22,6 +22,16 @@ pub enum Event {
 	Update
 }
 
+impl Events {
+	pub fn push(&mut self, event: Event) {
+		unsafe {
+			let ptr = ptr::mut_offset(self.buffer, (self.last % self.cap) as int);
+			*ptr = event;
+			self.last += 1;
+		}
+	}
+}
+
 
 pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: libc::c_int) {
 	unsafe {
@@ -67,11 +77,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			clientId);
 
 		if (status < 0) {
-			unsafe {
-				let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
-				*ptr = Disconnect(client.id);
-				events.last += 1;
-			}
+			events.push(Disconnect(client.id));
 		}
 	})
 }
@@ -94,11 +100,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				clientB.ship.pos.y);
 
 			if (status < 0) {
-				unsafe {
-					let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
-					*ptr = Disconnect(clientA.id);
-				}
-				events.last += 1;
+				events.push(Disconnect(clientA.id));
 			}
 		})
 	});

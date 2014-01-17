@@ -39,18 +39,12 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 	while i < numberOfEvents {
 		let clientFD = net::accept_client(serverFD);
 
-		unsafe {
-			*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = events::Connect(clientFD);
-			events.last += 1;
-		}
+		events.push(events::Connect(clientFD));
 
 		i += 1;
 	}
 }
 
 fn schedule_update(events: &mut events::Events) {
-	unsafe {
-		*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = events::Update;
-		events.last += 1;
-	}
+	events.push(events::Update);
 }
