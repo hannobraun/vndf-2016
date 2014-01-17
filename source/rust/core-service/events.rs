@@ -1,3 +1,5 @@
+use std::ptr;
+
 extern {
 	fn close(fd: ::std::libc::c_int) -> ::std::libc::c_int;
 }
@@ -38,7 +40,7 @@ pub struct Events {
 pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: ::std::libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
-			let event = *(::std::ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
+			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
 			events.first += 1;
 
 			match event.theType {
@@ -93,7 +95,7 @@ fn on_disconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::Clien
 				onUpdate: UpdateEvent { dummy: 0 } };
 
 			unsafe {
-				let ptr = ::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
+				let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
 				*ptr = disconnectEvent;
 				events.last += 1;
 			}
@@ -113,15 +115,15 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 	unsafe {
 		let mut i = 0;
 		while (i < clientMap.clients.cap) {
-			if (*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
+			if (*ptr::mut_offset(clientMap.clients.elems, i as int)).isOccupied == 1 {
 				let mut j = 0;
 				while (j < clientMap.clients.cap) {
-					if (*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).isOccupied == 1 {
+					if (*ptr::mut_offset(clientMap.clients.elems, j as int)).isOccupied == 1 {
 						let status = ::protocol::send_update(
-							(*::std::ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
-							(*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.id,
-							(*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.x,
-							(*::std::ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.y);
+							(*ptr::mut_offset(clientMap.clients.elems, i as int)).value.socketFD,
+							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.id,
+							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.x,
+							(*ptr::mut_offset(clientMap.clients.elems, j as int)).value.ship.pos.y);
 
 						if (status < 0) {
 							let disconnectEvent = Event {
@@ -131,7 +133,7 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 								onConnect: ConnectEvent { clientFD: 0 },
 								onUpdate: UpdateEvent { dummy: 0 } };
 
-							let ptr = ::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
+							let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
 							*ptr = disconnectEvent;
 							events.last += 1;
 						}
