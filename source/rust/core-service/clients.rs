@@ -31,7 +31,7 @@ impl IdMap {
 		self.cap = capacity as u64;
 		let memSize = capacity * ::std::mem::size_of::<IdMapEntry>();
 		self.elems = unsafe { libc::malloc(memSize as u64) as *mut IdMapEntry };
-		unsafe { ptr::set_memory(self.elems, 0, capacity as uint) };
+		unsafe { ptr::set_memory(self.elems, 0, capacity) };
 	}
 
 	fn add(&mut self, client: Client) {
@@ -108,7 +108,7 @@ pub fn new_client_map(cap: uint) -> ~ClientMap {
 		clients: IdMap {
 			cap  : 0,
 			elems: ::std::ptr::null::<IdMapEntry>() as *mut IdMapEntry },
-		idPool: IdPool::new(cap as uint) };
+		idPool: IdPool::new(cap) };
 
 	c.clients.init(cap);
 
@@ -132,6 +132,6 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 
 pub fn remove(c: &mut ClientMap, id: uint) {
 	if c.clients.remove(id) {
-		c.idPool.push(id as uint);
+		c.idPool.push(id);
 	}
 }
