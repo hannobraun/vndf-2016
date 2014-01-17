@@ -46,8 +46,8 @@ impl IdPool {
 		stack
 	}
 
-	fn is_full(&self) -> bool {
-		self.pool.len() == 0
+	fn has_ids(&self) -> bool {
+		self.pool.len() > 0
 	}
 
 	fn push(&mut self, id: uint) {
@@ -77,7 +77,7 @@ pub fn new_client_map(cap: libc::size_t) -> ~ClientMap {
 }
 
 pub fn can_add(c: &ClientMap) -> bool {
-	!c.idPool.is_full()
+	c.idPool.has_ids()
 }
 
 pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
