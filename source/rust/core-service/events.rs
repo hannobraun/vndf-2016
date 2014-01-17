@@ -118,10 +118,10 @@ fn on_update(clientMap: &mut ::clients::ClientMap, events: &mut Events, dTimeInS
 		clientMap.clients.each(|clientA| {
 			clientMap.clients.each(|clientB| {
 				let status = ::protocol::send_update(
-					(*ptr::mut_offset(clientMap.clients.elems, clientA.id as int)).value.socketFD,
-					(*ptr::mut_offset(clientMap.clients.elems, clientB.id as int)).value.id,
-					(*ptr::mut_offset(clientMap.clients.elems, clientB.id as int)).value.ship.pos.x,
-					(*ptr::mut_offset(clientMap.clients.elems, clientB.id as int)).value.ship.pos.y);
+					clientA.socketFD,
+					clientB.id,
+					clientB.ship.pos.x,
+					clientB.ship.pos.y);
 
 				if (status < 0) {
 					let disconnectEvent = Event {
