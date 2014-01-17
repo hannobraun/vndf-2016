@@ -57,23 +57,19 @@ pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::Clients, fr
 }
 
 fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
-	if (::clients::can_add(clientMap)) {
-		let distance = 100.0;
+	let distance = 100.0;
 
-		let alpha = 90.0 / 180.0 * f64::consts::PI;
+	let alpha = 90.0 / 180.0 * f64::consts::PI;
 
-		let pos = ::common::vec::Vec2 {
-			x: distance * f64::cos(alpha),
-			y: distance * f64::sin(alpha) };
+	let pos = ::common::vec::Vec2 {
+		x: distance * f64::cos(alpha),
+		y: distance * f64::sin(alpha) };
 
-		let vel = ::common::vec::Vec2 {
-			x: 30.0,
-			y: 0.0 };
+	let vel = ::common::vec::Vec2 {
+		x: 30.0,
+		y: 0.0 };
 
-		::clients::add(clientMap, clientFD, pos, vel);
-	}
-	else
-	{
+	if !::clients::add(clientMap, clientFD, pos, vel) {
 		unsafe {
 			close(clientFD);
 		}
