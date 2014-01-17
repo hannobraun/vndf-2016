@@ -9,10 +9,6 @@ extern {
 }
 
 
-pub static ON_CONNECT   : uint = 0;
-pub static ON_DISCONNECT: uint = 1;
-pub static ON_UPDATE    : uint = 2;
-
 pub struct Events {
 	first : u64,
 	last  : u64,
