@@ -97,7 +97,7 @@ impl IdMap {
 		}
 	}
 
-	pub fn each(&self, f: |&mut Client|) {
+	fn each(&self, f: |&mut Client|) {
 		unsafe {
 			let mut i = 0;
 			while i < self.cap {
