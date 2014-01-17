@@ -10,6 +10,14 @@ $OUTPUT_LIB/stb_truetype.o"
 
 LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi"
 
+./scripts/zwobot/zwobot-compile-rust \
+	$OUTPUT_LIB_RUST \
+	source/rust/common/main.rs \
+	$OUTPUT_LIB_RUST/lib &&
+./scripts/zwobot/zwobot-compile-rust \
+	$OUTPUT_LIB_RUST \
+	source/rust/client/main.rs \
+	$OUTPUT_LIB_RUST/lib &&
 ./scripts/zwobot/zwobot-compile \
 	"$CLIENT_SOURCE" "$STATIC_LIBS" "$LIB_ARGS" $CLIENT_BINARY
 
