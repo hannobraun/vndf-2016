@@ -77,7 +77,7 @@ fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::Clients) {
 }
 
 fn on_disconnect(clientId: uint, clientMap: &mut ::clients::Clients, events: &mut Events) {
-	::clients::remove(clientMap, clientId);
+	clientMap.remove(clientId);
 
 	clientMap.clients.each(|client| {
 		let status = ::protocol::send_remove(

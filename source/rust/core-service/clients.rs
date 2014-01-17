@@ -40,6 +40,12 @@ impl Clients {
 			false
 		}
 	}
+
+	pub fn remove(&mut self, id: uint) {
+		if self.clients.remove(id) {
+			self.idPool.push(id);
+		}
+	}
 }
 
 struct IdMap {
@@ -131,12 +137,5 @@ impl IdPool {
 
 	fn pop(&mut self) -> uint {
 		self.pool.pop()
-	}
-}
-
-
-pub fn remove(c: &mut Clients, id: uint) {
-	if c.clients.remove(id) {
-		c.idPool.push(id);
 	}
 }
