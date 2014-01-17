@@ -60,7 +60,7 @@ impl IdMap {
 			let mut i = 0;
 			while i < self.cap {
 				if (*::std::ptr::mut_offset(self.elems, i as int)).isOccupied == 1 {
-					let mut client = (*::std::ptr::mut_offset(self.elems, i as int)).value;
+					let mut client = (*ptr::mut_offset(self.elems, i as int)).value;
 					f(&mut client);
 				}
 
