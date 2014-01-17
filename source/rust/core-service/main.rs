@@ -1,6 +1,8 @@
 extern mod common;
 extern mod extra;
 
+use std::libc;
+
 use clients::Clients;
 use events::Events;
 
@@ -28,7 +30,7 @@ fn main() {
 	}
 }
 
-fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &mut events::Events) {
+fn handle_connects(numberOfEvents: int, serverFD: libc::c_int, events: &mut events::Events) {
 	let mut i = 0;
 	while i < numberOfEvents {
 		let clientFD = net::accept_client(serverFD);
