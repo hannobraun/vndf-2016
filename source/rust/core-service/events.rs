@@ -1,16 +1,17 @@
+use std::libc;
 use std::ptr;
 
 extern {
-	fn close(fd: ::std::libc::c_int) -> ::std::libc::c_int;
+	fn close(fd: libc::c_int) -> libc::c_int;
 }
 
 
-pub static ON_CONNECT: ::std::libc::c_int    = 0;
-pub static ON_DISCONNECT: ::std::libc::c_int = 1;
-pub static ON_UPDATE: ::std::libc::c_int     = 2;
+pub static ON_CONNECT: libc::c_int    = 0;
+pub static ON_DISCONNECT: libc::c_int = 1;
+pub static ON_UPDATE: libc::c_int     = 2;
 
 pub struct Event {
-	theType: ::std::libc::c_int,
+	theType: libc::c_int,
 
 	onConnect   : ConnectEvent,
 	onDisconnect: DisconnectEvent,
@@ -18,26 +19,26 @@ pub struct Event {
 }
 
 pub struct ConnectEvent {
-	clientFD: ::std::libc::c_int
+	clientFD: libc::c_int
 }
 
 pub struct DisconnectEvent {
-	clientId: ::std::libc::size_t
+	clientId: libc::size_t
 }
 
 pub struct UpdateEvent {
-	dummy: ::std::libc::c_int
+	dummy: libc::c_int
 }
 
 pub struct Events {
 	first : u64,
 	last  : u64,
-	cap   : ::std::libc::size_t,
+	cap   : libc::size_t,
 	buffer: *mut Event
 }
 
 
-pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: ::std::libc::c_int) {
+pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, frameTimeInMs: libc::c_int) {
 	unsafe {
 		while (events.last - events.first > 0) {
 			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
@@ -54,7 +55,7 @@ pub fn handle_events(events: &mut Events, clientMap: &mut ::clients::ClientMap, 
 	}
 }
 
-fn on_connect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap) {
+fn on_connect(clientFD: libc::c_int, clientMap: &mut ::clients::ClientMap) {
 	if (::clients::can_add(clientMap)) {
 		let distance = 100.0;
 
@@ -78,7 +79,7 @@ fn on_connect(clientFD: ::std::libc::c_int, clientMap: &mut ::clients::ClientMap
 	}
 }
 
-fn on_disconnect(clientId: ::std::libc::size_t, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
+fn on_disconnect(clientId: libc::size_t, clientMap: &mut ::clients::ClientMap, events: &mut Events) {
 	::clients::remove(clientMap, clientId as uint);
 
 	clientMap.clients.each(|client| {
