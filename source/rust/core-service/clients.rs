@@ -41,6 +41,19 @@ impl IdMap {
 			(*ptr).value = client;
 		};
 	}
+
+	fn remove(&mut self, id: uint) -> bool {
+		unsafe {
+			let clientPtr = ptr::mut_offset(self.elems, id as int);
+			let containsClient = (*clientPtr).isOccupied == 1;
+
+			if containsClient {
+				(*clientPtr).isOccupied = 0;
+			}
+
+			containsClient
+		}
+	}
 }
 
 pub struct IdPool {
@@ -105,15 +118,7 @@ pub fn add(c: &mut ClientMap, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::V
 }
 
 pub fn remove(c: &mut ClientMap, id: uint) {
-	unsafe {
-		let clientPtr = ptr::mut_offset(c.clients.elems, id as int);
-		let containsClient = (*clientPtr).isOccupied == 1;
-
-		if containsClient {
-			// Remove client
-			(*clientPtr).isOccupied = 0;
-
-			c.idPool.push(id as uint);
-		}
+	if c.clients.remove(id) {
+		c.idPool.push(id as uint);
 	}
 }
