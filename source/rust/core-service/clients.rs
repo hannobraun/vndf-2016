@@ -111,7 +111,7 @@ impl IdMap {
 	}
 }
 
-pub struct IdPool {
+struct IdPool {
 	capacity: uint,
 	pool    : ~[uint]
 }
