@@ -7,7 +7,7 @@ use common::vec;
 
 pub struct ClientMap {
 	clients: IdMap,
-	idPool : IdPool
+	idPool : ~IdPool
 }
 
 pub struct IdMap {
@@ -32,8 +32,8 @@ struct Client {
 }
 
 impl IdPool {
-	fn new(capacity: uint) -> IdPool {
-		let mut stack = IdPool {
+	fn new(capacity: uint) -> ~IdPool {
+		let mut stack = ~IdPool {
 			capacity: capacity,
 			pool    : ~[] };
 
