@@ -9,12 +9,12 @@ extern {
 }
 
 
-pub static ON_CONNECT: libc::c_int    = 0;
-pub static ON_DISCONNECT: libc::c_int = 1;
-pub static ON_UPDATE: libc::c_int     = 2;
+pub static ON_CONNECT   : uint = 0;
+pub static ON_DISCONNECT: uint = 1;
+pub static ON_UPDATE    : uint = 2;
 
 pub struct Event {
-	theType: libc::c_int,
+	theType: uint,
 
 	onConnect   : ConnectEvent,
 	onDisconnect: DisconnectEvent,
