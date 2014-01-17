@@ -46,30 +46,3 @@ int net_connect(const char *hostname, char *port)
 
 	return socketFD;
 }
-
-ssize_t net_receive(int socketFD, char *buffer, size_t bufferSize)
-{
-	ssize_t bytesReceived = recv(
-		socketFD,
-		buffer,
-		bufferSize,
-		MSG_DONTWAIT);
-
-	if (bytesReceived == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
-	{
-		return 0;
-	}
-
-	if (bytesReceived == -1)
-	{
-		perror("Error receiving message");
-		exit(1);
-	}
-	if (bytesReceived == 0)
-	{
-		printf("Connection closed while receiving.\n");
-		exit(1);
-	}
-
-	return bytesReceived;
-}
