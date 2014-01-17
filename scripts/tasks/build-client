@@ -2,14 +2,6 @@
 
 source project.conf
 
-STATIC_LIBS="\
-$OUTPUT_LIB/libglfw3.a \
-$OUTPUT_LIB/libfreetype.a \
-$OUTPUT_LIB/stb_image.o \
-$OUTPUT_LIB/stb_truetype.o"
-
-LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi"
-
 ./scripts/zwobot/zwobot-compile-rust \
 	$OUTPUT_LIB_RUST \
 	source/rust/common/main.rs \
@@ -17,7 +9,23 @@ LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi"
 ./scripts/zwobot/zwobot-compile-rust \
 	$OUTPUT_LIB_RUST \
 	source/rust/client/main.rs \
-	$OUTPUT_LIB_RUST/lib &&
+	$OUTPUT_LIB_RUST/lib
+
+if [ $? -ne 0 ]; then
+	exit 1
+fi
+
+RUST_LIBS=$(find $OUTPUT_LIB_RUST -name *.a)
+
+STATIC_LIBS="\
+$OUTPUT_LIB/libglfw3.a \
+$OUTPUT_LIB/libfreetype.a \
+$OUTPUT_LIB/stb_image.o \
+$OUTPUT_LIB/stb_truetype.o \
+$RUST_LIBS"
+
+LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi -ldl"
+
 ./scripts/zwobot/zwobot-compile \
 	"$CLIENT_SOURCE" "$STATIC_LIBS" "$LIB_ARGS" $CLIENT_BINARY &&
 (rm $CLIENT_DIST_DIR/fonts; ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
