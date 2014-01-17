@@ -116,10 +116,6 @@ impl IdPool {
 	}
 }
 
-pub fn can_add(c: &Clients) -> bool {
-	c.idPool.has_ids()
-}
-
 pub fn add(c: &mut Clients, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) -> bool {
 	if c.idPool.has_ids() {
 		let clientId = c.idPool.pop();
