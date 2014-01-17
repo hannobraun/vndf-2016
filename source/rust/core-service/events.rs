@@ -1,6 +1,7 @@
 use std::f64;
 use std::libc;
-use std::ptr;
+use extra::container::Deque;
+use extra::ringbuf::RingBuf;
 
 use clients::Clients;
 
@@ -10,10 +11,7 @@ extern {
 
 
 pub struct Events {
-	first : u64,
-	last  : u64,
-	cap   : libc::size_t,
-	buffer: *mut Event
+	buffer: ~Deque<Event>
 }
 
 pub enum Event {
@@ -24,35 +22,16 @@ pub enum Event {
 
 impl Events {
 	pub fn new() -> ~Events {
-		unsafe {
-			~Events {
-				first : 0,
-				last  : 0,
-				cap   : 16,
-				buffer: ::std::libc::malloc(16 * ::std::mem::size_of::<Event>() as u64) as *mut Event }
-		}
+		~Events {
+			buffer: ~RingBuf::<Event>::new() }
 	}
 
 	pub fn push(&mut self, event: Event) {
-		unsafe {
-			let ptr = ptr::mut_offset(self.buffer, (self.last % self.cap) as int);
-			*ptr = event;
-			self.last += 1;
-		}
+		self.buffer.push_back(event)
 	}
 
 	pub fn pull(&mut self) -> Option<Event> {
-		unsafe {
-			if self.last - self.first > 0 {
-				let event = *(ptr::mut_offset(self.buffer, (self.first % self.cap) as int));
-				self.first += 1;
-
-				Some(event)
-			}
-			else {
-				None
-			}
-		}
+		self.buffer.pop_front()
 	}
 }
 
