@@ -55,13 +55,13 @@ impl IdMap {
 		}
 	}
 
-	pub fn each(&self, f: |Client|) {
+	pub fn each(&self, f: |&mut Client|) {
 		unsafe {
 			let mut i = 0;
 			while i < self.cap {
 				if (*::std::ptr::mut_offset(self.elems, i as int)).isOccupied == 1 {
-					let client = (*::std::ptr::mut_offset(self.elems, i as int)).value;
-					f(client);
+					let mut client = (*::std::ptr::mut_offset(self.elems, i as int)).value;
+					f(&mut client);
 				}
 
 				i += 1;
