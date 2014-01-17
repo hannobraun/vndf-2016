@@ -13,23 +13,11 @@ pub static ON_CONNECT   : uint = 0;
 pub static ON_DISCONNECT: uint = 1;
 pub static ON_UPDATE    : uint = 2;
 
-pub struct Event {
-	theType: uint,
-
-	onConnect   : ConnectEvent,
-	onDisconnect: DisconnectEvent,
-	onUpdate    : UpdateEvent
+pub enum Event {
+	Connect(libc::c_int),
+	Disconnect(uint),
+	Update
 }
-
-pub struct ConnectEvent {
-	clientFD: libc::c_int
-}
-
-pub struct DisconnectEvent {
-	clientId: uint
-}
-
-pub struct UpdateEvent;
 
 pub struct Events {
 	first : u64,
@@ -45,12 +33,10 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 			let event = *(ptr::mut_offset(events.buffer, (events.first % events.cap) as int));
 			events.first += 1;
 
-			match event.theType {
-				ON_CONNECT    => on_connect(event.onConnect.clientFD, clients),
-				ON_DISCONNECT => on_disconnect(event.onDisconnect.clientId as uint, clients, events),
-				ON_UPDATE     => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
-
-				_ => assert!(false)
+			match event {
+				Connect(clientFD)    => on_connect(clientFD, clients),
+				Disconnect(clientId) => on_disconnect(clientId, clients, events),
+				Update              => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
 			}
 		}
 	}
@@ -85,16 +71,9 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			clientId);
 
 		if (status < 0) {
-			let disconnectEvent = Event {
-				theType: ON_DISCONNECT,
-				onDisconnect: DisconnectEvent {
-					clientId: client.id },
-				onConnect: ConnectEvent { clientFD: 0 },
-				onUpdate: UpdateEvent };
-
 			unsafe {
 				let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
-				*ptr = disconnectEvent;
+				*ptr = Disconnect(client.id);
 				events.last += 1;
 			}
 		}
@@ -119,16 +98,9 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				clientB.ship.pos.y);
 
 			if (status < 0) {
-				let disconnectEvent = Event {
-					theType: ON_DISCONNECT,
-					onDisconnect: DisconnectEvent {
-						clientId: clientA.id },
-					onConnect: ConnectEvent { clientFD: 0 },
-					onUpdate: UpdateEvent };
-
 				unsafe {
 					let ptr = ptr::mut_offset(events.buffer, (events.last % events.cap) as int);
-					*ptr = disconnectEvent;
+					*ptr = Disconnect(clientA.id);
 				}
 				events.last += 1;
 			}

@@ -39,17 +39,8 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 	while i < numberOfEvents {
 		let clientFD = net::accept_client(serverFD);
 
-		let event = events::Event {
-			theType: events::ON_CONNECT,
-
-			onConnect: events::ConnectEvent {
-				clientFD: clientFD },
-			onDisconnect: events::DisconnectEvent {
-				clientId: 0 },
-			onUpdate: events::UpdateEvent };
-
 		unsafe {
-			*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = event;
+			*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = events::Connect(clientFD);
 			events.last += 1;
 		}
 
@@ -58,17 +49,8 @@ fn handle_connects(numberOfEvents: int, serverFD: ::std::libc::c_int, events: &m
 }
 
 fn schedule_update(events: &mut events::Events) {
-	let event = events::Event {
-		theType: events::ON_UPDATE,
-
-		onConnect: events::ConnectEvent {
-			clientFD: 0 },
-		onDisconnect: events::DisconnectEvent {
-			clientId: 0 },
-		onUpdate: events::UpdateEvent };
-
 	unsafe {
-		*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = event;
+		*(::std::ptr::mut_offset(events.buffer, (events.last % events.cap) as int)) = events::Update;
 		events.last += 1;
 	}
 }
