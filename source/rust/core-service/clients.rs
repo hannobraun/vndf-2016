@@ -120,15 +120,22 @@ pub fn can_add(c: &Clients) -> bool {
 	c.idPool.has_ids()
 }
 
-pub fn add(c: &mut Clients, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) {
-	let clientId = c.idPool.pop();
+pub fn add(c: &mut Clients, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) -> bool {
+	if c.idPool.has_ids() {
+		let clientId = c.idPool.pop();
 
-	let client = Client {
-		socketFD: socketFD,
-		id      : clientId,
-		ship    : dynamics::Body { pos: pos, vel: vel } };
+		let client = Client {
+			socketFD: socketFD,
+			id      : clientId,
+			ship    : dynamics::Body { pos: pos, vel: vel } };
 
-	c.clients.add(client);
+		c.clients.add(client);
+
+		true
+	}
+	else {
+		false
+	}
 }
 
 pub fn remove(c: &mut Clients, id: uint) {
