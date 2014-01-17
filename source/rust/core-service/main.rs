@@ -10,18 +10,10 @@ pub mod protocol;
 pub mod util;
 
 
-extern {
-	fn time(timer: ::std::libc::c_uint) -> ::std::libc::c_uint;
-	fn srand(seed: ::std::libc::c_uint);
-}
-
-
 fn main() {
 	util::log("Core Service started.");
 
 	unsafe {
-		srand(time(0));
-
 		let net = net::init("34481");
 
 		let mut events = events::Events {
