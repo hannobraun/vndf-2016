@@ -2,8 +2,6 @@
 
 source project.conf
 
-OUTPUT_LIB_RUST=$OUTPUT_LIB/rust
-
 ./scripts/zwobot/zwobot-compile-rust \
 	$OUTPUT_LIB_RUST \
 	source/rust/common/main.rs \
