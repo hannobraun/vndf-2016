@@ -85,16 +85,16 @@ fn init_socket(port: &str) -> libc::c_int {
 		ai_socktype : net::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
-		ai_addr     : ::std::ptr::null(),
-		ai_canonname: ::std::ptr::null(),
-		ai_next     : ::std::ptr::null() };
+		ai_addr     : ptr::null(),
+		ai_canonname: ptr::null(),
+		ai_next     : ptr::null() };
 
-	let servinfo = ::std::ptr::null::<net::AddrInfo>();
+	let servinfo = ptr::null::<net::AddrInfo>();
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
 			net::getaddrinfo(
-				::std::ptr::null(),
+				ptr::null(),
 				c_message,
 				&hints,
 				&servinfo)
@@ -127,7 +127,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			socketFD,
 			SOL_SOCKET,
 			SO_REUSEADDR,
-			::std::ptr::to_unsafe_ptr(&yes) as *libc::c_void,
+			ptr::to_unsafe_ptr(&yes) as *libc::c_void,
 			::std::mem::size_of::<libc::c_int>() as u32);
 
 		if status == -1 {
@@ -190,7 +190,7 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 			pollerFD,
 			EPOLL_CTL_ADD,
 			serverFD,
-			::std::ptr::to_unsafe_ptr(&event));
+			ptr::to_unsafe_ptr(&event));
 
 		if status != 0 {
 			"Error registering server socket with epoll".to_c_str().with_ref(|c_message| {
@@ -224,8 +224,8 @@ pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 	unsafe {
 		accept(
 			serverFD,
-			::std::ptr::null(),
-			::std::ptr::null())
+			ptr::null(),
+			ptr::null())
 	}
 }
 
