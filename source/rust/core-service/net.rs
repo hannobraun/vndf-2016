@@ -85,14 +85,10 @@ pub fn init(port: &str) -> Net {
 
 
 fn init_socket(port: &str) -> libc::c_int {
-	let AI_PASSIVE  = 1;
-	let AF_UNSPEC   = 0;
-	let SOCK_STREAM = 1;
-
 	let hints = net::AddrInfo {
-		ai_flags    : AI_PASSIVE,
-		ai_family   : AF_UNSPEC,
-		ai_socktype : SOCK_STREAM,
+		ai_flags    : net::AI_PASSIVE,
+		ai_family   : net::AF_UNSPEC,
+		ai_socktype : net::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
 		ai_addr     : ::std::ptr::null(),

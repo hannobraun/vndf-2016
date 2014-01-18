@@ -1,6 +1,11 @@
 use std::libc;
 
 
+pub static AI_PASSIVE : libc::c_int = 1;
+pub static AF_UNSPEC  : libc::c_int = 0;
+pub static SOCK_STREAM: libc::c_int = 1;
+
+
 pub struct AddrInfo {
 	ai_flags    : libc::c_int,
 	ai_family   : libc::c_int,
