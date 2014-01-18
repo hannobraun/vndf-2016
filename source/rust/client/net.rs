@@ -96,7 +96,7 @@ pub extern fn net_receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSi
 			})
 		}
 		if bytesReceived == 0 {
-			print("Connection closed while receiving.\n");
+			print!("Connection closed while receiving.\n");
 			libc::exit(1);
 		}
 
