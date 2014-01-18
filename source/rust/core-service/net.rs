@@ -35,8 +35,6 @@ extern {
 		sockfd : libc::c_int,
 		backlog: libc::c_int) -> libc::c_int;
 
-	fn freeaddrinfo(res: *net::AddrInfo);
-
 	fn accept(
 		sockfd : libc::c_int,
 		addr   : *net::SockAddr,
@@ -154,7 +152,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		freeaddrinfo(servinfo);
+		net::freeaddrinfo(servinfo);
 
 		socketFD
 	}

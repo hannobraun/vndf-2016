@@ -30,6 +30,8 @@ extern {
 		req    : *AddrInfo,
 		pai    : **AddrInfo) -> libc::c_int;
 
+	pub fn freeaddrinfo(res: *AddrInfo);
+
 	pub fn socket(
 		domain  : libc::c_int,
 		theType : libc::c_int,
