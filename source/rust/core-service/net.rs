@@ -1,6 +1,9 @@
 use std::libc;
 use std::ptr;
 
+use common::net;
+
+
 extern {
 	fn epoll_create(size: libc::c_int) -> libc::c_int;
 
@@ -19,8 +22,8 @@ extern {
 	fn getaddrinfo(
 		name   : *libc::c_char,
 		service: *libc::c_char,
-		req    : *AddrInfo,
-		pai    : **AddrInfo) -> libc::c_int;
+		req    : *net::AddrInfo,
+		pai    : **net::AddrInfo) -> libc::c_int;
 
 	fn socket(
 		domain  : libc::c_int,
@@ -36,18 +39,18 @@ extern {
 
 	fn bind(
 		sockfd : libc::c_int,
-		addr   : *SockAddr,
+		addr   : *net::SockAddr,
 		addrlen: libc::c_uint) -> libc::c_int;
 
 	fn listen(
 		sockfd : libc::c_int,
 		backlog: libc::c_int) -> libc::c_int;
 
-	fn freeaddrinfo(res: *AddrInfo);
+	fn freeaddrinfo(res: *net::AddrInfo);
 
 	fn accept(
 		sockfd : libc::c_int,
-		addr   : *SockAddr,
+		addr   : *net::SockAddr,
 		addrlen: *libc::c_uint) -> libc::c_int;
 
 	fn send(
@@ -61,22 +64,6 @@ extern {
 struct Net {
 	pollerFD: libc::c_int,
 	serverFD: libc::c_int
-}
-
-struct AddrInfo {
-	ai_flags    : libc::c_int,
-	ai_family   : libc::c_int,
-	ai_socktype : libc::c_int,
-	ai_protocol : libc::c_int,
-	ai_addrlen  : u32,
-	ai_addr     : *SockAddr,
-	ai_canonname: *libc::c_char,
-	ai_next     : *AddrInfo
-}
-
-struct SockAddr {
-	sa_family: libc::c_ushort,
-	sa_data  : [libc::c_char, ..14]
 }
 
 struct EpollEvent {
@@ -102,7 +89,7 @@ fn init_socket(port: &str) -> libc::c_int {
 	let AF_UNSPEC   = 0;
 	let SOCK_STREAM = 1;
 
-	let hints = AddrInfo {
+	let hints = net::AddrInfo {
 		ai_flags    : AI_PASSIVE,
 		ai_family   : AF_UNSPEC,
 		ai_socktype : SOCK_STREAM,
@@ -112,7 +99,7 @@ fn init_socket(port: &str) -> libc::c_int {
 		ai_canonname: ::std::ptr::null(),
 		ai_next     : ::std::ptr::null() };
 
-	let servinfo = ::std::ptr::null::<AddrInfo>();
+	let servinfo = ::std::ptr::null::<net::AddrInfo>();
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
