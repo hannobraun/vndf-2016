@@ -13,7 +13,6 @@
 #include "display.h"
 #include "images.h"
 #include "input.h"
-#include "net.h"
 #include "pos.h"
 #include <common/idmap.h>
 
@@ -26,6 +25,8 @@ typedef struct {
 } conn;
 
 
+int net_connect(const char *hostname, char *port);
+ssize_t net_receive(int socketFD, char *buffer, size_t bufferSize);
 void receivePositions(conn *c, posMap positions);
 
 
