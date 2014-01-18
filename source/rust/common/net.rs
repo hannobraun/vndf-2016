@@ -29,4 +29,9 @@ extern {
 		service: *libc::c_char,
 		req    : *AddrInfo,
 		pai    : **AddrInfo) -> libc::c_int;
+
+	pub fn socket(
+		domain  : libc::c_int,
+		theType : libc::c_int,
+		protocol: libc::c_int) -> libc::c_int;
 }

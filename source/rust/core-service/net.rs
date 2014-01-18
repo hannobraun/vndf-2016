@@ -19,11 +19,6 @@ extern {
 		maxevents: libc::c_int,
 		timeout  : libc::c_int) -> libc::c_int;
 
-	fn socket(
-		domain  : libc::c_int,
-		theType : libc::c_int,
-		protocol: libc::c_int) -> libc::c_int;
-
 	fn setsockopt(
 		sockfd : libc::c_int,
 		level  : libc::c_int,
@@ -107,7 +102,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let socketFD = socket(
+		let socketFD = net::socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);
