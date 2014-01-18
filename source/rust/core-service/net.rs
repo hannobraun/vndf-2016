@@ -19,12 +19,6 @@ extern {
 		maxevents: libc::c_int,
 		timeout  : libc::c_int) -> libc::c_int;
 
-	fn getaddrinfo(
-		name   : *libc::c_char,
-		service: *libc::c_char,
-		req    : *net::AddrInfo,
-		pai    : **net::AddrInfo) -> libc::c_int;
-
 	fn socket(
 		domain  : libc::c_int,
 		theType : libc::c_int,
@@ -99,7 +93,7 @@ fn init_socket(port: &str) -> libc::c_int {
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
-			getaddrinfo(
+			net::getaddrinfo(
 				::std::ptr::null(),
 				c_message,
 				&hints,

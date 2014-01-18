@@ -21,3 +21,12 @@ pub struct SockAddr {
 	sa_family: libc::c_ushort,
 	sa_data  : [libc::c_char, ..14]
 }
+
+
+extern {
+	pub fn getaddrinfo(
+		name   : *libc::c_char,
+		service: *libc::c_char,
+		req    : *AddrInfo,
+		pai    : **AddrInfo) -> libc::c_int;
+}
