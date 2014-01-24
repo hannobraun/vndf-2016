@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-rustc --out-dir $OUTPUT_LIB_RUST vendor/glfw-rs/src/lib.rs
