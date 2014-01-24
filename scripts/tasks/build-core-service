@@ -3,10 +3,10 @@
 source project.conf
 
 ./scripts/zwobot/zwobot-compile-rust \
-	$OUTPUT_LIB_RUST \
-	source/rust/common/main.rs \
-	$OUTPUT_LIB_RUST/lib &&
+	"-L $OUTPUT_LIB_RUST" \
+	"--out-dir $OUTPUT_LIB_RUST" \
+	source/rust/common/main.rs &&
 ./scripts/zwobot/zwobot-compile-rust \
-	$OUTPUT_LIB_RUST \
-	source/rust/core-service/main.rs \
-	$CORE_SERVICE_BINARY
+	"-L $OUTPUT_LIB_RUST" \
+	"-o $CORE_SERVICE_BINARY" \
+	source/rust/core-service/main.rs

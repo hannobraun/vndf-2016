@@ -3,13 +3,13 @@
 source project.conf
 
 ./scripts/zwobot/zwobot-compile-rust \
-	$OUTPUT_LIB_RUST \
-	source/rust/common/main.rs \
-	$OUTPUT_LIB_RUST/lib &&
+	"-L $OUTPUT_LIB_RUST" \
+	"--out-dir $OUTPUT_LIB_RUST" \
+	source/rust/common/main.rs &&
 ./scripts/zwobot/zwobot-compile-rust \
-	$OUTPUT_LIB_RUST \
-	source/rust/client/main.rs \
-	$OUTPUT_LIB_RUST/lib
+	"-L $OUTPUT_LIB_RUST" \
+	"--out-dir $OUTPUT_LIB_RUST" \
+	source/rust/client/main.rs
 
 if [ $? -ne 0 ]; then
 	exit 1
