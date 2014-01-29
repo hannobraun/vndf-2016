@@ -2,6 +2,9 @@
 
 source project.conf
 
+mkdir -p $OUTPUT_LIB_RUST
+mkdir -p $(dirname $CORE_SERVICE_BINARY)
+
 ./scripts/zwobot/zwobot-compile-rust \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
