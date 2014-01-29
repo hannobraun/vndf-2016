@@ -10,7 +10,7 @@ pub struct Clients {
 	idPool: ~IdPool
 }
 
-struct Client {
+pub struct Client {
 	socketFD: libc::c_int,
 	id      : uint,
 	ship    : dynamics::Body
@@ -90,6 +90,9 @@ impl IdPool {
 	}
 
 	fn pop(&mut self) -> uint {
-		self.pool.pop()
+		match self.pool.pop() {
+			Some(id) => id,
+			None     => fail!("No id available.")
+		}
 	}
 }

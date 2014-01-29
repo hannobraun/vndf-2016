@@ -48,7 +48,7 @@ extern {
 }
 
 
-struct Net {
+pub struct Net {
 	pollerFD: libc::c_int,
 	serverFD: libc::c_int
 }
