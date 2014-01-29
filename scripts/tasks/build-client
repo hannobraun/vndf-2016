@@ -7,7 +7,7 @@ source project.conf
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/common/main.rs &&
 ./scripts/zwobot/zwobot-compile-rust \
-	"-L $OUTPUT_LIB_RUST" \
+	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/client/main.rs
 
