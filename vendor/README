@@ -1,0 +1,8 @@
+This file is supposed to document what the source of the dependencies here in
+vendor is. Right now it's incomplete. Please update as you update the
+dependencies.
+
+glfw-rs
+Repository: https://github.com/hannobraun/glfw-rs
+Branch:     master
+Commit:     9739e3ad6cbc9359d61aea146591898675ffac1d
