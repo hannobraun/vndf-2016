@@ -1,9 +1,5 @@
 #include "images.h"
 
-#include <assert.h>
-
-#include <stb/image.h>
-
 
 image  loadImage(void);
 GLuint createTexture(image image);
