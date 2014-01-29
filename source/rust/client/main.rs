@@ -3,4 +3,7 @@
 
 extern mod common;
 
+extern mod glfw;
+
+pub mod input;
 pub mod net;
