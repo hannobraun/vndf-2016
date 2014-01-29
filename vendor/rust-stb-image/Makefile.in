@@ -1,0 +1,39 @@
+VPATH=%VPATH%
+
+CC ?= gcc
+CXX ?= g++
+CXXFLAGS ?=
+AR ?= ar
+RUSTC ?= rustc
+RUSTFLAGS ?=
+
+STB_IMAGE_C_SRC=stb_image.c
+STB_IMAGE_OBJS=$(STB_IMAGE_C_SRC:%.c=%.o)
+
+RUST_SRC=$(shell find $(VPATH)/. -type f -name '*.rs')
+
+CFLAGS += -fPIC
+
+.PHONY: all
+all:	libstb-image.dummy
+
+%.o:	%.c
+	$(CC) $< -o $@ -c $(CFLAGS)
+
+libstb-image.dummy: lib.rs $(RUST_SRC) ./libstb-image.a
+	$(RUSTC) $(RUSTFLAGS) $< --out-dir .
+	touch $@
+
+stb-image-test: lib.rs $(RUST_SRC) ./libstb-image.a
+	$(RUSTC) $(RUSTFLAGS) $< -o $@ --test
+
+./libstb-image.a: $(STB_IMAGE_OBJS)
+	$(AR) rcs $@ $^
+
+check: stb-image-test
+	./stb-image-test
+
+.PHONY: clean
+clean:
+	rm -f *.o *.a *.so *.dylib *.dll *.dummy *-test
+
