@@ -5,11 +5,11 @@ source project.conf
 mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $(dirname $CORE_SERVICE_BINARY)
 
-./scripts/zwobot/zwobot-compile-rust \
+./scripts/tools/compile-rust \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/common/main.rs &&
-./scripts/zwobot/zwobot-compile-rust \
+./scripts/tools/compile-rust \
 	"-L $OUTPUT_LIB_RUST" \
 	"-o $CORE_SERVICE_BINARY" \
 	source/rust/core-service/main.rs

@@ -2,11 +2,11 @@
 
 source project.conf
 
-./scripts/zwobot/zwobot-compile-rust \
+./scripts/tools/compile-rust \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/common/main.rs &&
-./scripts/zwobot/zwobot-compile-rust \
+./scripts/tools/compile-rust \
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/client/main.rs
@@ -26,7 +26,7 @@ $RUST_LIBS"
 
 LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi -ldl"
 
-./scripts/zwobot/zwobot-compile \
+./scripts/tools/compile-c \
 	"$CLIENT_SOURCE" "$STATIC_LIBS" "$LIB_ARGS" $CLIENT_BINARY &&
 (rm $CLIENT_DIST_DIR/fonts; ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
 (rm $CLIENT_DIST_DIR/images; ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&

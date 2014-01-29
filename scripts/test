@@ -10,7 +10,7 @@ do
 	SPEC_NAME="${SPEC_FILE%.*}"
 	BINARY=$OUTPUT_DIR/$SPEC_NAME-test
 
-	./scripts/zwobot/zwobot-compile \
+	./scripts/tools/compile \
 		"$SPEC_FILE $SOURCE_FILES" "" "" $BINARY &&
 		./$BINARY $@
 done
