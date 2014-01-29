@@ -4,5 +4,10 @@ dependencies.
 
 glfw-rs
 Repository: https://github.com/hannobraun/glfw-rs
-Branch:     master
+Branch/Tag: master
 Commit:     9739e3ad6cbc9359d61aea146591898675ffac1d
+
+rust-stb-image
+Repository: https://github.com/hannobraun/rust-stb-image
+Branch/Tag: master
+Commit:     406b6f38890dd5503474b870e053db10b2dc804b
