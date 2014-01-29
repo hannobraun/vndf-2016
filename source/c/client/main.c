@@ -12,7 +12,6 @@
 #include "camera.h"
 #include "display.h"
 #include "images.h"
-#include "input.h"
 #include "pos.h"
 #include <common/idmap.h>
 
@@ -24,6 +23,8 @@ typedef struct {
 	int  bufferPos;
 } conn;
 
+
+void input_apply(GLFWwindow *window, camera *cam);
 
 int net_connect(const char *hostname, char *port);
 ssize_t net_receive(int socketFD, char *buffer, size_t bufferSize);
