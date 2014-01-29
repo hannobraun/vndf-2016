@@ -1,5 +1,4 @@
 use std::libc;
-use std::ptr;
 
 use stb_image::image;
 
@@ -21,7 +20,7 @@ pub extern fn loadImage() -> Image {
 				height: image.height as libc::c_int }
 		},
 
-		image::ImageF32(image) => fail!("Unexpected image type."),
-		image::Error(message)  => fail!(message)
+		image::ImageF32(_)    => fail!("Unexpected image type: ImageF32"),
+		image::Error(message) => fail!(message)
 	}
 }
