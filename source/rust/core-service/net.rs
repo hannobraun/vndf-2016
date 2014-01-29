@@ -105,7 +105,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);
 
-		if (socketFD == -1) {
+		if socketFD == -1 {
 			"Error creating socket".to_c_str().with_ref(|c_message| {
 				libc::perror(c_message);
 			});

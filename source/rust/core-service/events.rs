@@ -79,7 +79,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			client.socketFD,
 			clientId);
 
-		if (status < 0) {
+		if status < 0 {
 			events.push(Disconnect(client.id));
 		}
 	})
@@ -102,7 +102,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				clientB.ship.pos.x,
 				clientB.ship.pos.y);
 
-			if (status < 0) {
+			if status < 0 {
 				events.push(Disconnect(clientA.id));
 			}
 		})
