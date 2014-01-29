@@ -19,23 +19,6 @@ Texture images_load()
 	return texture;
 }
 
-image loadImage()
-{
-	image image;
-	int numberOfComponents;
-
-	image.data = stbi_load(
-		"images/spaceship.png",
-		&image.width, &image.height,
-		&numberOfComponents,
-		0);
-
-	assert(image.data != NULL);
-	assert(numberOfComponents == 4);
-
-	return image;
-}
-
 GLuint createTexture(image image)
 {
 	// Generate texture names.
