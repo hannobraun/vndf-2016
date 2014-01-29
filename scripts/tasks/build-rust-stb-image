@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(cd vendor/rust-stb-image; ./configure && make)
+cp vendor/rust-stb-image/*.rlib $OUTPUT_LIB_RUST
+cp vendor/rust-stb-image/libstb-image.a $OUTPUT_LIB
