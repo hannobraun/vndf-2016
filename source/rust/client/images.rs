@@ -6,7 +6,7 @@ use stb_image::image;
 
 
 struct Image {
-	data  : *libc::c_uchar,
+	data  : ~[libc::c_uchar],
 	width : libc::c_int,
 	height: libc::c_int
 }
@@ -21,7 +21,7 @@ struct Texture {
 #[no_mangle]
 pub extern fn images_load() -> Texture {
 	let image       = load_image();
-	let textureName = create_texture(image);
+	let textureName = create_texture(&image);
 
 	Texture {
 		name  : textureName,
@@ -32,10 +32,13 @@ pub extern fn images_load() -> Texture {
 fn load_image() -> Image {
 	match image::load(~"images/spaceship.png") {
 		image::ImageU8(image) => {
+			let width  = image.width;
+			let height = image.height;
+
 			Image {
-				data  : image.data.as_ptr(),
-				width : image.width  as libc::c_int,
-				height: image.height as libc::c_int }
+				data  : image.data,
+				width : width  as libc::c_int,
+				height: height as libc::c_int }
 		},
 
 		image::ImageF32(_)    => fail!("Unexpected image type: ImageF32"),
@@ -43,7 +46,7 @@ fn load_image() -> Image {
 	}
 }
 
-fn create_texture(image: Image) -> gl::types::GLuint {
+fn create_texture(image: &Image) -> gl::types::GLuint {
 	gl::load_with(glfw::get_proc_address);
 
 	let mut textureName: gl::types::GLuint = 0;
@@ -71,7 +74,7 @@ fn create_texture(image: Image) -> gl::types::GLuint {
 			0,
 			gl::RGBA,
 			gl::UNSIGNED_BYTE,
-			image.data as *libc::c_void);
+			image.data.as_ptr() as *libc::c_void);
 	}
 
 	textureName
