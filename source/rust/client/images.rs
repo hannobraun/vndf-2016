@@ -43,8 +43,7 @@ fn load_image() -> Image {
 	}
 }
 
-#[no_mangle]
-pub extern fn createTexture(image: Image) -> gl::types::GLuint {
+fn createTexture(image: Image) -> gl::types::GLuint {
 	gl::load_with(glfw::get_proc_address);
 
 	let mut textureName: gl::types::GLuint = 0;
