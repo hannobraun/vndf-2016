@@ -21,7 +21,7 @@ struct Texture {
 #[no_mangle]
 pub extern fn images_load() -> Texture {
 	let image       = load_image();
-	let textureName = createTexture(image);
+	let textureName = create_texture(image);
 
 	Texture {
 		name  : textureName,
@@ -43,7 +43,7 @@ fn load_image() -> Image {
 	}
 }
 
-fn createTexture(image: Image) -> gl::types::GLuint {
+fn create_texture(image: Image) -> gl::types::GLuint {
 	gl::load_with(glfw::get_proc_address);
 
 	let mut textureName: gl::types::GLuint = 0;
