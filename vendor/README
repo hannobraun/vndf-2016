@@ -2,6 +2,11 @@ This file is supposed to document what the source of the dependencies here in
 vendor is. Right now it's incomplete. Please update as you update the
 dependencies.
 
+gl-rf
+Repository: https://github.com/bjz/gl-rs
+Branch/Tag: master
+Commit:     658f90ef890106fb369d47420ef31e7bafce6c10
+
 glfw-rs
 Repository: https://github.com/hannobraun/glfw-rs
 Branch/Tag: master
