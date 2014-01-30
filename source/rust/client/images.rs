@@ -20,7 +20,7 @@ struct Texture {
 
 #[no_mangle]
 pub extern fn images_load() -> Texture {
-	let image       = loadImage();
+	let image       = load_image();
 	let textureName = createTexture(image);
 
 	Texture {
@@ -29,7 +29,7 @@ pub extern fn images_load() -> Texture {
 		height: image.height }
 }
 
-fn loadImage() -> Image {
+fn load_image() -> Image {
 	match image::load(~"images/spaceship.png") {
 		image::ImageU8(image) => {
 			Image {
