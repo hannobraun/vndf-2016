@@ -29,8 +29,7 @@ pub extern fn images_load() -> Texture {
 		height: image.height }
 }
 
-#[no_mangle]
-pub extern fn loadImage() -> Image {
+fn loadImage() -> Image {
 	match image::load(~"images/spaceship.png") {
 		image::ImageU8(image) => {
 			Image {
