@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(cd vendor/gl-rs; rustpkg build gl)
+cp $(find vendor/gl-rs/build -name *.rlib) $OUTPUT_LIB_RUST
