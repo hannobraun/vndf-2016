@@ -11,7 +11,6 @@
 
 #include "camera.h"
 #include "display.h"
-#include "images.h"
 #include "pos.h"
 #include <common/idmap.h>
 
@@ -23,6 +22,15 @@ typedef struct {
 	int  bufferPos;
 } conn;
 
+typedef struct {
+	unsigned char *data;
+
+	int width;
+	int height;
+} image;
+
+
+Texture images_load(void);
 
 void input_apply(GLFWwindow *window, camera *cam);
 
