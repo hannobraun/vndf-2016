@@ -3,6 +3,7 @@
 
 extern mod common;
 
+extern mod gl;
 extern mod glfw;
 extern mod stb_image;
 
