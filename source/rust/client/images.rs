@@ -11,6 +11,23 @@ struct Image {
 	height: libc::c_int
 }
 
+struct Texture {
+	name  : gl::types::GLuint,
+	width : libc::c_int,
+	height: libc::c_int
+}
+
+
+#[no_mangle]
+pub extern fn images_load() -> Texture {
+	let image       = loadImage();
+	let textureName = createTexture(image);
+
+	Texture {
+		name  : textureName,
+		width : image.width,
+		height: image.height }
+}
 
 #[no_mangle]
 pub extern fn loadImage() -> Image {
