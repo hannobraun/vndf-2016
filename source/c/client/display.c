@@ -36,22 +36,6 @@ GLFWwindow *display_init(int screenWidth, int screenHeight)
 	return window;
 }
 
-GLFWwindow *createWindow(int width, int height)
-{
-	int status = glfwInit();
-	assert(status);
-
-	GLFWwindow *window = glfwCreateWindow(
-		width, height,
-		"Von Neumann Defense Force",
-		NULL, NULL);
-	assert(window);
-
-	glfwMakeContextCurrent(window);
-
-	return window;
-}
-
 void display_render(
 	GLFWwindow *window,
 	camera     cam,
