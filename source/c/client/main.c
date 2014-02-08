@@ -10,9 +10,18 @@
 #include <GLFW/glfw3.h>
 
 #include "camera.h"
-#include "display.h"
 #include "pos.h"
+#include "textures.h"
 #include <common/idmap.h>
+
+
+GLFWwindow *display_init(int screenWidth, int screenHeight);
+void display_render(
+	GLFWwindow *window,
+	camera     cam,
+	posMap     positions,
+	Texture    texture);
+
 
 
 #define BUFFER_SIZE 256
