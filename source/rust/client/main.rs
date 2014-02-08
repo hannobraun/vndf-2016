@@ -11,3 +11,6 @@ pub mod display;
 pub mod images;
 pub mod input;
 pub mod net;
+
+#[link(name = "stb-image", kind = "static")]
+extern {}
