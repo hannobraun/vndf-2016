@@ -4,9 +4,6 @@
 #include <math.h>
 
 
-GLFWwindow *createWindow(int width, int height);
-
-
 void display_render(
 	GLFWwindow *window,
 	camera     cam,
