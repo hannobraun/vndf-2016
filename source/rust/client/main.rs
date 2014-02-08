@@ -12,6 +12,7 @@ pub mod display;
 pub mod images;
 pub mod input;
 pub mod net;
+pub mod texture;
 
 #[link(name = "stb-image", kind = "static")]
 extern {}

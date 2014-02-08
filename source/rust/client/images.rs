@@ -3,6 +3,8 @@ use std::libc;
 use gl;
 use stb_image::image;
 
+use texture;
+
 
 struct Image {
 	data  : ~[libc::c_uchar],
@@ -10,19 +12,13 @@ struct Image {
 	height: libc::c_int
 }
 
-struct Texture {
-	name  : gl::types::GLuint,
-	width : libc::c_int,
-	height: libc::c_int
-}
-
 
 #[no_mangle]
-pub extern fn images_load() -> Texture {
+pub extern fn images_load() -> texture::Texture {
 	let image       = load_image();
 	let textureName = create_texture(&image);
 
-	Texture {
+	texture::Texture {
 		name  : textureName,
 		width : image.width,
 		height: image.height }
