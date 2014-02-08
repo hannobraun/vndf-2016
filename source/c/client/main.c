@@ -9,10 +9,15 @@
 
 #include <GLFW/glfw3.h>
 
-#include "camera.h"
 #include "pos.h"
 #include "textures.h"
 #include <common/idmap.h>
+
+
+typedef struct {
+	float h;
+	float v;
+} camera;
 
 
 GLFWwindow *display_init(int screenWidth, int screenHeight);
