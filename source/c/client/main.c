@@ -9,9 +9,16 @@
 
 #include <GLFW/glfw3.h>
 
-#include "pos.h"
 #include "textures.h"
 #include <common/idmap.h>
+
+
+typedef struct {
+	float x;
+	float y;
+} pos;
+
+typedef idmap(pos) posMap;
 
 
 typedef struct {
