@@ -1,7 +1,6 @@
 use std::libc;
 
 use gl;
-use glfw;
 use stb_image::image;
 
 
@@ -47,8 +46,6 @@ fn load_image() -> Image {
 }
 
 fn create_texture(image: &Image) -> gl::types::GLuint {
-	gl::load_with(glfw::get_proc_address);
-
 	let mut textureName: gl::types::GLuint = 0;
 	unsafe {
 		// Generate texture names.

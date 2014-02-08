@@ -7,35 +7,6 @@
 GLFWwindow *createWindow(int width, int height);
 
 
-GLFWwindow *display_init(int screenWidth, int screenHeight)
-{
-	GLFWwindow * window = createWindow(screenWidth, screenHeight);
-	glEnable(GL_TEXTURE_2D);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glLoadIdentity();
-
-	// I'm not a 100% sure what this does, but it has to do with using textures
-	// that are not power of two. Before I added this call, glTexture2D wouldn't
-	// work correctly on an 11x11 texture, causing memory access errors and not
-	// displaying it correctly.
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-	double pi = atan(1) * 4;
-	GLfloat zNear = 0.1f;
-	GLfloat fovAngleY = 45.0f;
-	GLfloat halfHeight = (float)tan( fovAngleY / 360.0f * pi ) * zNear;
-	GLfloat halfWidth = halfHeight * screenWidth / screenHeight;
-	glFrustum(
-		-halfWidth, halfWidth,
-		-halfHeight, halfHeight,
-		zNear, 1000.0f);
-
-	return window;
-}
-
 void display_render(
 	GLFWwindow *window,
 	camera     cam,
