@@ -22,8 +22,7 @@ RUST_LIBS=$(find $OUTPUT_LIB_RUST -name *.a)
 STATIC_LIBS="\
 $OUTPUT_LIB/libglfw3.a \
 $OUTPUT_LIB/libfreetype.a \
-$OUTPUT_LIB/stb_image.o \
-$OUTPUT_LIB/stb_truetype.o \
+$OUTPUT_LIB/libstb-image.a \
 $RUST_LIBS"
 
 LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi -ldl"
