@@ -5,6 +5,25 @@ use std::ptr;
 use gl;
 use glfw;
 
+use camera;
+use texture;
+
+
+struct PosMap {
+	cap: libc::size_t,
+	elems: *PosMapEntry
+}
+
+struct PosMapEntry {
+	isOccupied: libc::c_int,
+	value     : Pos
+}
+
+struct Pos {
+	x: f32,
+	y: f32
+}
+
 
 #[no_mangle]
 pub extern fn display_init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::GLFWwindow {
@@ -57,5 +76,62 @@ pub extern fn createWindow(width: libc::c_int, height: libc::c_int) -> *glfw::ff
 		glfw::ffi::glfwMakeContextCurrent(window);
 
 		window
+	}
+}
+
+#[no_mangle]
+pub extern fn display_render(window: *glfw::ffi::GLFWwindow, camera: camera::Camera, positions: PosMap, texture: texture::Texture) {
+	gl::Clear(gl::COLOR_BUFFER_BIT);
+
+	gl::PushMatrix();
+
+	gl::Translatef(0.0f32, 0.0f32, -500.0f32);
+	gl::Rotatef(camera.v, 1.0f32, 0.0f32, 0.0f32);
+	gl::Rotatef(camera.h, 0.0f32, 1.0f32, 0.0f32);
+
+	gl::BindTexture(
+		gl::TEXTURE_2D,
+		texture.name);
+
+	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
+
+	unsafe {
+		let mut i: int = 0;
+		while i < positions.cap as int {
+
+			if (*ptr::offset(positions.elems, i)).isOccupied > 0 {
+				gl::PushMatrix();
+
+				gl::Translatef(
+					(*ptr::offset(positions.elems, i)).value.x - texture.width as f32 / 2f32,
+					(*ptr::offset(positions.elems, i)).value.y - texture.height as f32 / 2f32,
+					0.0f32);
+
+				gl::Begin(gl::TRIANGLE_STRIP);
+					gl::TexCoord2f(1.0f32, 0.0f32);
+					gl::Vertex3f(
+						texture.width as f32,
+						texture.height as f32,
+						0.0f32);
+
+					gl::TexCoord2f(1.0f32, 1.0f32);
+					gl::Vertex3f(texture.width as f32, 0.0f32, 0.0f32);
+
+					gl::TexCoord2f(0.0f32, 0.0f32);
+					gl::Vertex3f(0.0f32, texture.height as f32, 0.0f32);
+
+					gl::TexCoord2f(0.0f32, 1.0f32);
+					gl::Vertex3f(0.0f32, 0.0f32, 0.0f32);
+				gl::End();
+
+				gl::PopMatrix();
+			}
+			i += 1
+		}
+
+		gl::PopMatrix();
+
+		glfw::ffi::glfwSwapBuffers(window);
+		glfw::ffi::glfwPollEvents();
 	}
 }
