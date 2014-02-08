@@ -2,5 +2,5 @@
 
 source project.conf
 
-(cd vendor/gl-rs; rustpkg build gl)
+(cd vendor/gl-rs; mkdir -p build; rustc --out-dir build src/gl/gl21.rs)
 cp $(find vendor/gl-rs/build -name *.rlib) $OUTPUT_LIB_RUST
