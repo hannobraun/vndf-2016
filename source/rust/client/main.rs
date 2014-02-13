@@ -5,7 +5,6 @@ extern mod glfw;
 extern mod stb_image;
 
 
-use std::from_str;
 use std::io;
 use std::libc;
 use std::mem;
@@ -14,27 +13,20 @@ use std::path;
 use std::ptr;
 use std::str;
 
+use protocol::Connection;
+
 
 mod camera;
 mod display;
 mod images;
 mod input;
 mod net;
+mod protocol;
 mod texture;
 
 
 #[link(name = "stb-image", kind = "static")]
 extern {}
-
-
-static BUFFER_SIZE : libc::c_int = 256;
-
-
-struct Connection {
-	socketFD : libc::c_int,
-	buffer   : [libc::c_char, ..BUFFER_SIZE],
-	bufferPos: libc::c_int
-}
 
 
 fn main() {
@@ -82,7 +74,7 @@ fn main() {
 
 	let mut c = Connection {
 		socketFD : socketFD,
-		buffer   : [0, ..BUFFER_SIZE],
+		buffer   : [0, ..protocol::BUFFER_SIZE],
 		bufferPos: 0 };
 
 	unsafe {
@@ -97,67 +89,11 @@ fn main() {
 
 		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
 			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
-			receive_positions(&mut c, positions);
+			protocol::receive_positions(&mut c, positions);
 			input::apply(&window, &mut cam);
 			display::render(&window, cam, positions, texture);
 
 			glfw::ffi::glfwPollEvents();
 		}
 	};
-}
-
-pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
-	unsafe {
-		let bytesReceived = net::net_receive(
-			(*c).socketFD,
-			ptr::offset((*c).buffer.as_ptr(), (*c).bufferPos as int),
-			(BUFFER_SIZE - (*c).bufferPos) as u64);
-
-		(*c).bufferPos += bytesReceived as i32;
-
-		while (*c).bufferPos > 0 && (*c).buffer[0] as i32 <= (*c).bufferPos {
-			let messageSize = (*c).buffer[0];
-			assert!(messageSize >= 0);
-
-			let message = str::raw::from_buf_len(
-				ptr::offset((*c).buffer.as_ptr() as *u8, 1),
-				(messageSize - 1) as uint);
-
-			if message.starts_with("UPDATE") {
-				let parts: ~[&str] = message.words().collect();
-
-				let id_str = parts[2].trim_chars(&',');
-				let x_str  = parts[4].trim_chars(&',').trim_chars(&'(');
-				let y_str  = parts[5].trim_chars(&')');
-
-				let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
-
-				let x: f32 = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
-				let y: f32 = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
-
-
-				(*ptr::mut_offset(positions.elems, id)).isOccupied = 1;
-				(*ptr::mut_offset(positions.elems, id)).value = display::Position { x: x, y: y };
-			}
-			else if message.starts_with("REMOVE") {
-				let parts: ~[&str] = message.words().collect();
-
-				let id_str = parts[2];
-
-				let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
-
-				(*ptr::mut_offset(positions.elems, id)).isOccupied = 0;
-			}
-			else {
-				print!("Unknown message type in message: {:s}\n", message);
-				fail!();
-			}
-
-			ptr::copy_memory(
-				(*c).buffer.as_mut_ptr(),
-				ptr::offset((*c).buffer.as_ptr(), messageSize as int),
-				(BUFFER_SIZE - messageSize as i32) as uint);
-			(*c).bufferPos -= messageSize as i32;
-		}
-	}
 }
