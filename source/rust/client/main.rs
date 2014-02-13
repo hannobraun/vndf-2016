@@ -71,9 +71,7 @@ fn main() {
 		str::from_utf8(contents).unwrap_or_else(|| { fail!() }).to_owned()
 	};
 
-	let window = glfw::Window {
-		ptr      : display::init(screenWidth, screenHeight),
-		is_shared: true };
+	let window  = display::init(screenWidth, screenHeight);
 	let texture = images::load();
 
 	let socketFD = serverAddress.to_c_str().with_ref(|c_address| {

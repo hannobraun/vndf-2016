@@ -4,6 +4,7 @@ use std::ptr;
 
 use gl;
 use glfw;
+use glfw::Window;
 
 use camera;
 use texture;
@@ -25,8 +26,10 @@ pub struct Pos {
 }
 
 
-pub fn init(screenWidth: u32, screenHeight: u32) -> *glfw::ffi::GLFWwindow {
-	let window = create_window(screenWidth, screenHeight);
+pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
+	let window = glfw::Window {
+		ptr      : create_window(screenWidth, screenHeight),
+		is_shared: true };
 
 	gl::load_with(glfw::get_proc_address);
 
