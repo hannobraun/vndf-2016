@@ -26,7 +26,7 @@ pub struct Pos {
 
 
 pub fn init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::GLFWwindow {
-	let window = create_window(screenWidth, screenHeight);
+	let window = create_window(screenWidth as u32, screenHeight as u32);
 
 	gl::load_with(glfw::get_proc_address);
 
@@ -55,7 +55,7 @@ pub fn init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::
 	window
 }
 
-fn create_window(width: libc::c_int, height: libc::c_int) -> *glfw::ffi::GLFWwindow {
+fn create_window(width: u32, height: u32) -> *glfw::ffi::GLFWwindow {
 	match glfw::init() {
 		Err(_) => fail!("Could not initialize GLFW."),
 		_      => ()
@@ -65,7 +65,7 @@ fn create_window(width: libc::c_int, height: libc::c_int) -> *glfw::ffi::GLFWwin
 	unsafe {
 		let window = "Von Neumann Defense Force".with_c_str(|c_str| {
 			glfw::ffi::glfwCreateWindow(
-				width, height,
+				width as i32, height as i32,
 				c_str,
 				ptr::null(), ptr::null())
 		});
