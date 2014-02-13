@@ -7,7 +7,7 @@ use texture::Texture;
 
 
 struct Image {
-	data  : ~[libc::c_uchar],
+	data  : ~[u8],
 	width : libc::c_int,
 	height: libc::c_int
 }
