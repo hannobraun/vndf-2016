@@ -17,10 +17,10 @@ pub struct PosMap {
 
 pub struct PosMapEntry {
 	isOccupied: libc::c_int,
-	value     : Pos
+	value     : Position
 }
 
-pub struct Pos {
+pub struct Position {
 	x: f32,
 	y: f32
 }

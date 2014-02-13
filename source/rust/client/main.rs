@@ -138,7 +138,7 @@ pub extern fn receivePositions(c: *mut Connection, positions: display::PosMap) {
 
 
 				(*ptr::mut_offset(positions.elems, id)).isOccupied = 1;
-				(*ptr::mut_offset(positions.elems, id)).value = display::Pos { x: x, y: y };
+				(*ptr::mut_offset(positions.elems, id)).value = display::Position { x: x, y: y };
 			}
 			else if message.starts_with("REMOVE") {
 				let parts: ~[&str] = message.words().collect();
