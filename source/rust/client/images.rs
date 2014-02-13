@@ -19,8 +19,8 @@ pub fn load() -> Texture {
 
 	Texture {
 		name  : textureName,
-		width : image.width,
-		height: image.height }
+		width : image.width as uint,
+		height: image.height as uint }
 }
 
 fn load_image() -> Image {
