@@ -11,7 +11,7 @@ use texture;
 
 pub struct PosMap {
 	cap: libc::size_t,
-	elems: *PosMapEntry
+	elems: *mut PosMapEntry
 }
 
 pub struct PosMapEntry {
@@ -99,12 +99,12 @@ pub extern fn display_render(window: *glfw::ffi::GLFWwindow, camera: camera::Cam
 		let mut i: int = 0;
 		while i < positions.cap as int {
 
-			if (*ptr::offset(positions.elems, i)).isOccupied > 0 {
+			if (*ptr::mut_offset(positions.elems, i)).isOccupied > 0 {
 				gl::PushMatrix();
 
 				gl::Translatef(
-					(*ptr::offset(positions.elems, i)).value.x - texture.width as f32 / 2f32,
-					(*ptr::offset(positions.elems, i)).value.y - texture.height as f32 / 2f32,
+					(*ptr::mut_offset(positions.elems, i)).value.x - texture.width as f32 / 2f32,
+					(*ptr::mut_offset(positions.elems, i)).value.y - texture.height as f32 / 2f32,
 					0.0f32);
 
 				gl::Begin(gl::TRIANGLE_STRIP);
