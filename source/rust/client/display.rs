@@ -46,7 +46,7 @@ fn create_window(width: u32, height: u32) -> Window {
 
 	let window = match windowOption {
 		Some(window) => window,
-		None         => fail!("Could not create window.")
+		None         => fail!("Failed to create window.")
 	};
 
 	window.make_context_current();
