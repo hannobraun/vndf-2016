@@ -99,7 +99,7 @@ fn main() {
 			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
 			receivePositions(&mut c, positions);
 			input::apply(&window, &mut cam);
-			display::display_render(window.ptr, cam, positions, texture);
+			display::render(window.ptr, cam, positions, texture);
 		}
 	};
 }

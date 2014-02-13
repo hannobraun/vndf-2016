@@ -80,7 +80,7 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 		zNear, 1000.0);
 }
 
-pub fn display_render(window: *glfw::ffi::GLFWwindow, camera: camera::Camera, positions: PosMap, texture: texture::Texture) {
+pub fn render(window: *glfw::ffi::GLFWwindow, camera: camera::Camera, positions: PosMap, texture: texture::Texture) {
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
 	gl::PushMatrix();
