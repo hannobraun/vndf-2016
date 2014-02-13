@@ -1,4 +1,5 @@
 use std::f64;
+use std::iter::Iterator;
 use std::libc;
 use std::ptr;
 
@@ -23,6 +24,47 @@ pub struct PosMapEntry {
 pub struct Position {
 	x: f32,
 	y: f32
+}
+
+struct PosMapIter {
+	map: PosMap,
+	i  : int
+}
+
+
+impl PosMap {
+	fn iter(&self) -> ~Iterator<Position> {
+		let iter = ~PosMapIter {
+			map: *self,
+			i  : 0 };
+
+		iter as ~Iterator<Position>
+	}
+}
+
+impl Iterator<Position> for PosMapIter {
+	fn next(&mut self) -> Option<Position> {
+		unsafe {
+			while (*ptr::mut_offset(self.map.elems, self.i)).isOccupied == 0 {
+				if self.i as u64 >= self.map.cap {
+					return None
+				}
+
+				self.i += 1
+			}
+
+			let r = if (self.i as u64) < self.map.cap {
+				Some((*ptr::mut_offset(self.map.elems, self.i)).value)
+			}
+			else {
+				None
+			};
+
+			self.i += 1;
+
+			r
+		}
+	}
 }
 
 
