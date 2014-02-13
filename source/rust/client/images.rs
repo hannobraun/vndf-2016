@@ -42,6 +42,7 @@ fn load_image() -> Image {
 
 fn create_texture(image: &Image) -> gl::types::GLuint {
 	let mut textureName: gl::types::GLuint = 0;
+
 	unsafe {
 		// Generate texture names.
 		gl::GenTextures(1, &mut textureName);
