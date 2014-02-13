@@ -6,11 +6,7 @@ use camera;
 static cameraSpeed: f32 = 1.0;
 
 
-pub fn apply(ffiWindow: *glfw::ffi::GLFWwindow, camera: &mut camera::Camera) {
-	let window = glfw::Window {
-		ptr      : ffiWindow,
-		is_shared: true };
-
+pub fn apply(window: &glfw::Window, camera: &mut camera::Camera) {
 	if window.get_key(glfw::KeyRight) == glfw::Press {
 		camera.h -= cameraSpeed;
 	}
