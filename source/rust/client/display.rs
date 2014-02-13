@@ -80,7 +80,12 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 		zNear, 1000.0);
 }
 
-pub fn render(window: &Window, camera: Camera, positions: PosMap, texture: Texture) {
+pub fn render(
+	window   : &Window,
+	camera   : Camera,
+	positions: PosMap,
+	texture  : Texture) {
+
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
 	gl::PushMatrix();
