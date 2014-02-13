@@ -15,12 +15,12 @@ use std::ptr;
 use std::str;
 
 
-pub mod camera;
-pub mod display;
-pub mod images;
-pub mod input;
-pub mod net;
-pub mod texture;
+mod camera;
+mod display;
+mod images;
+mod input;
+mod net;
+mod texture;
 
 
 #[link(name = "stb-image", kind = "static")]
