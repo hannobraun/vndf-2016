@@ -16,4 +16,4 @@ mkdir -p $(dirname $RUST_TEST)
 
 rustc $LIB_ARGS --test --allow dead_code -o $RUST_TEST $SOURCE_FILE &&
 	$RUST_TEST &&
-	rustc -Z debug-info $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
+	rustc --debuginfo $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
