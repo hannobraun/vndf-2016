@@ -55,8 +55,7 @@ pub fn init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::
 	window
 }
 
-#[no_mangle]
-pub extern fn createWindow(width: libc::c_int, height: libc::c_int) -> *glfw::ffi::GLFWwindow {
+pub fn createWindow(width: libc::c_int, height: libc::c_int) -> *glfw::ffi::GLFWwindow {
 	match glfw::init() {
 		Err(_) => fail!("Could not initialize GLFW."),
 		_      => ()
