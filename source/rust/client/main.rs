@@ -100,6 +100,8 @@ fn main() {
 			receivePositions(&mut c, positions);
 			input::apply(&window, &mut cam);
 			display::render(&window, cam, positions, texture);
+
+			glfw::ffi::glfwPollEvents();
 		}
 	};
 }

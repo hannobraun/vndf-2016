@@ -132,6 +132,5 @@ pub fn render(window: &Window, camera: Camera, positions: PosMap, texture: Textu
 		gl::PopMatrix();
 
 		glfw::ffi::glfwSwapBuffers(window.ptr);
-		glfw::ffi::glfwPollEvents();
 	}
 }
