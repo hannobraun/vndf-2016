@@ -142,42 +142,34 @@ pub fn render(
 
 	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
 
-	unsafe {
-		let mut i: int = 0;
-		while i < positions.cap as int {
+	for position in positions.iter() {
+		gl::PushMatrix();
 
-			if (*ptr::mut_offset(positions.elems, i)).isOccupied > 0 {
-				gl::PushMatrix();
+		gl::Translatef(
+			position.x - texture.width as f32 / 2f32,
+			position.y - texture.height as f32 / 2f32,
+			0.0f32);
 
-				gl::Translatef(
-					(*ptr::mut_offset(positions.elems, i)).value.x - texture.width as f32 / 2f32,
-					(*ptr::mut_offset(positions.elems, i)).value.y - texture.height as f32 / 2f32,
-					0.0f32);
+		gl::Begin(gl::TRIANGLE_STRIP);
+			gl::TexCoord2f(1.0f32, 0.0f32);
+			gl::Vertex3f(
+				texture.width as f32,
+				texture.height as f32,
+				0.0f32);
 
-				gl::Begin(gl::TRIANGLE_STRIP);
-					gl::TexCoord2f(1.0f32, 0.0f32);
-					gl::Vertex3f(
-						texture.width as f32,
-						texture.height as f32,
-						0.0f32);
+			gl::TexCoord2f(1.0f32, 1.0f32);
+			gl::Vertex3f(texture.width as f32, 0.0f32, 0.0f32);
 
-					gl::TexCoord2f(1.0f32, 1.0f32);
-					gl::Vertex3f(texture.width as f32, 0.0f32, 0.0f32);
+			gl::TexCoord2f(0.0f32, 0.0f32);
+			gl::Vertex3f(0.0f32, texture.height as f32, 0.0f32);
 
-					gl::TexCoord2f(0.0f32, 0.0f32);
-					gl::Vertex3f(0.0f32, texture.height as f32, 0.0f32);
-
-					gl::TexCoord2f(0.0f32, 1.0f32);
-					gl::Vertex3f(0.0f32, 0.0f32, 0.0f32);
-				gl::End();
-
-				gl::PopMatrix();
-			}
-			i += 1
-		}
+			gl::TexCoord2f(0.0f32, 1.0f32);
+			gl::Vertex3f(0.0f32, 0.0f32, 0.0f32);
+		gl::End();
 
 		gl::PopMatrix();
-
-		window.swap_buffers();
 	}
+
+	gl::PopMatrix();
+	window.swap_buffers();
 }
