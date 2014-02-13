@@ -74,7 +74,7 @@ fn main() {
 	let window = glfw::Window {
 		ptr      : display::display_init(screenWidth, screenHeight),
 		is_shared: true };
-	let texture = images::images_load();
+	let texture = images::load();
 
 	let socketFD = serverAddress.to_c_str().with_ref(|c_address| {
 		"34481".to_c_str().with_ref(|c_port| {

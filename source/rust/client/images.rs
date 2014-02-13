@@ -13,7 +13,7 @@ struct Image {
 }
 
 
-pub fn images_load() -> texture::Texture {
+pub fn load() -> texture::Texture {
 	let image       = load_image();
 	let textureName = create_texture(&image);
 
