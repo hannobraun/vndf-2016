@@ -97,7 +97,7 @@ fn main() {
 
 		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
 			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
-			receivePositions(&mut c, positions);
+			receive_positions(&mut c, positions);
 			input::apply(&window, &mut cam);
 			display::render(&window, cam, positions, texture);
 
@@ -106,7 +106,7 @@ fn main() {
 	};
 }
 
-pub fn receivePositions(c: *mut Connection, positions: display::PosMap) {
+pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 	unsafe {
 		let bytesReceived = net::net_receive(
 			(*c).socketFD,
