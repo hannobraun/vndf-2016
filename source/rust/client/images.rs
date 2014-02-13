@@ -3,7 +3,7 @@ use std::libc;
 use gl;
 use stb_image::image;
 
-use texture;
+use texture::Texture;
 
 
 struct Image {
@@ -13,11 +13,11 @@ struct Image {
 }
 
 
-pub fn load() -> texture::Texture {
+pub fn load() -> Texture {
 	let image       = load_image();
 	let textureName = create_texture(&image);
 
-	texture::Texture {
+	Texture {
 		name  : textureName,
 		width : image.width,
 		height: image.height }
