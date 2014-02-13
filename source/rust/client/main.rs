@@ -71,7 +71,9 @@ fn main() {
 		str::from_utf8(contents).unwrap_or_else(|| { fail!() }).to_owned()
 	};
 
-	let window  = display::display_init(screenWidth, screenHeight);
+	let window = glfw::Window {
+		ptr      : display::display_init(screenWidth, screenHeight),
+		is_shared: true };
 	let texture = images::images_load();
 
 	let socketFD = serverAddress.to_c_str().with_ref(|c_address| {
@@ -95,11 +97,11 @@ fn main() {
 			v: 0.0f32,
 			h: 0.0f32 };
 
-		while glfw::ffi::glfwWindowShouldClose(window) == 0 &&
-			glfw::ffi::glfwGetKey(window, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
+		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
+			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
 			receivePositions(&mut c, positions);
-			input::apply(window, &mut cam);
-			display::display_render(window, cam, positions, texture);
+			input::apply(window.ptr, &mut cam);
+			display::display_render(window.ptr, cam, positions, texture);
 		}
 	};
 }
