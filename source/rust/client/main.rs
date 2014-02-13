@@ -72,7 +72,7 @@ fn main() {
 	};
 
 	let window = glfw::Window {
-		ptr      : display::display_init(screenWidth, screenHeight),
+		ptr      : display::init(screenWidth, screenHeight),
 		is_shared: true };
 	let texture = images::load();
 
