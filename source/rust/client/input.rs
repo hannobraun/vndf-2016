@@ -1,12 +1,12 @@
 use glfw;
 
-use camera;
+use camera::Camera;
 
 
 static cameraSpeed: f32 = 1.0;
 
 
-pub fn apply(window: &glfw::Window, camera: &mut camera::Camera) {
+pub fn apply(window: &glfw::Window, camera: &mut Camera) {
 	if window.get_key(glfw::KeyRight) == glfw::Press {
 		camera.h -= cameraSpeed;
 	}
