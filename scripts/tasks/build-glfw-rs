@@ -5,5 +5,5 @@ source project.conf
 rustc \
 	--out-dir $OUTPUT_LIB_RUST \
 	-L $OUTPUT_LIB \
-	-Z debug-info \
+	--debuginfo \
 	vendor/glfw-rs/src/lib.rs
