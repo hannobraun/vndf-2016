@@ -29,29 +29,7 @@ pub struct Pos {
 pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
 	let window = create_window(screenWidth, screenHeight);
 
-	gl::load_with(glfw::get_proc_address);
-
-	gl::Enable(gl::TEXTURE_2D);
-
-	gl::Enable(gl::BLEND);
-	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
-
-	gl::LoadIdentity();
-
-	// I'm not a 100% sure what this does, but it has to do with using textures
-	// that are not power of two. Before I added this call, glTexture2D wouldn't
-	// work correctly on an 11x11 texture, causing memory access errors and not
-	// displaying it correctly.
-	gl::PixelStorei(gl::UNPACK_ALIGNMENT, 1);
-
-	let zNear = 0.1;
-	let fovAngleY = 45.0;
-	let halfHeight = f64::tan( fovAngleY / 360.0 * f64::consts::PI ) * zNear;
-	let halfWidth = halfHeight * screenWidth as f64 / screenHeight as f64;
-	gl::Frustum(
-		-halfWidth, halfWidth,
-		-halfHeight, halfHeight,
-		zNear, 1000.0);
+	init_gl(screenWidth, screenHeight);
 
 	window
 }
@@ -75,6 +53,32 @@ fn create_window(width: u32, height: u32) -> Window {
 	window.make_context_current();
 
 	window
+}
+
+fn init_gl(screenWidth: u32, screenHeight: u32) {
+	gl::load_with(glfw::get_proc_address);
+
+	gl::Enable(gl::TEXTURE_2D);
+
+	gl::Enable(gl::BLEND);
+	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
+
+	gl::LoadIdentity();
+
+	// I'm not a 100% sure what this does, but it has to do with using textures
+	// that are not power of two. Before I added this call, glTexture2D wouldn't
+	// work correctly on an 11x11 texture, causing memory access errors and not
+	// displaying it correctly.
+	gl::PixelStorei(gl::UNPACK_ALIGNMENT, 1);
+
+	let zNear = 0.1;
+	let fovAngleY = 45.0;
+	let halfHeight = f64::tan( fovAngleY / 360.0 * f64::consts::PI ) * zNear;
+	let halfWidth = halfHeight * screenWidth as f64 / screenHeight as f64;
+	gl::Frustum(
+		-halfWidth, halfWidth,
+		-halfHeight, halfHeight,
+		zNear, 1000.0);
 }
 
 #[no_mangle]
