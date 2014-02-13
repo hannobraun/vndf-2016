@@ -13,8 +13,7 @@ struct Image {
 }
 
 
-#[no_mangle]
-pub extern fn images_load() -> texture::Texture {
+pub fn images_load() -> texture::Texture {
 	let image       = load_image();
 	let textureName = create_texture(&image);
 
