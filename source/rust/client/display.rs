@@ -6,7 +6,7 @@ use gl;
 use glfw;
 use glfw::Window;
 
-use camera;
+use camera::Camera;
 use texture;
 
 
@@ -80,7 +80,7 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 		zNear, 1000.0);
 }
 
-pub fn render(window: &Window, camera: camera::Camera, positions: PosMap, texture: texture::Texture) {
+pub fn render(window: &Window, camera: Camera, positions: PosMap, texture: texture::Texture) {
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
 	gl::PushMatrix();
