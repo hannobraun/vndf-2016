@@ -106,8 +106,7 @@ fn main() {
 	};
 }
 
-#[no_mangle]
-pub extern fn receivePositions(c: *mut Connection, positions: display::PosMap) {
+pub fn receivePositions(c: *mut Connection, positions: display::PosMap) {
 	unsafe {
 		let bytesReceived = net::net_receive(
 			(*c).socketFD,
