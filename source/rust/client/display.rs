@@ -27,9 +27,7 @@ pub struct Pos {
 
 
 pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
-	let window = glfw::Window {
-		ptr      : create_window(screenWidth, screenHeight),
-		is_shared: true };
+	let window = create_window(screenWidth, screenHeight);
 
 	gl::load_with(glfw::get_proc_address);
 
@@ -58,26 +56,25 @@ pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
 	window
 }
 
-fn create_window(width: u32, height: u32) -> *glfw::ffi::GLFWwindow {
+fn create_window(width: u32, height: u32) -> Window {
 	match glfw::init() {
 		Err(_) => fail!("Could not initialize GLFW."),
 		_      => ()
 	}
 
+	let windowOption = Window::create(
+		width, height,
+		"Von Neumann Defense Force",
+		glfw::Windowed);
 
-	unsafe {
-		let window = "Von Neumann Defense Force".with_c_str(|c_str| {
-			glfw::ffi::glfwCreateWindow(
-				width as i32, height as i32,
-				c_str,
-				ptr::null(), ptr::null())
-		});
-		assert!(window != ptr::null());
+	let window = match windowOption {
+		Some(window) => window,
+		None         => fail!("Could not create window.")
+	};
 
-		glfw::ffi::glfwMakeContextCurrent(window);
+	window.make_context_current();
 
-		window
-	}
+	window
 }
 
 #[no_mangle]
