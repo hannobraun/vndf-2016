@@ -1,3 +1,4 @@
+extern mod collections;
 extern mod common;
 extern mod extra;
 

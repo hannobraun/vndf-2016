@@ -1,7 +1,7 @@
+use collections::Deque;
+use collections::RingBuf;
 use std::f64;
 use std::libc;
-use extra::container::Deque;
-use extra::ringbuf::RingBuf;
 
 use clients::Clients;
 
