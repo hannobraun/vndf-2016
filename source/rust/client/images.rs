@@ -8,8 +8,8 @@ use texture::Texture;
 
 struct Image {
 	data  : ~[u8],
-	width : libc::c_int,
-	height: libc::c_int
+	width : uint,
+	height: uint
 }
 
 
@@ -19,8 +19,8 @@ pub fn load() -> Texture {
 
 	Texture {
 		name  : textureName,
-		width : image.width as uint,
-		height: image.height as uint }
+		width : image.width,
+		height: image.height }
 }
 
 fn load_image() -> Image {
@@ -31,8 +31,8 @@ fn load_image() -> Image {
 
 			Image {
 				data  : image.data,
-				width : width  as libc::c_int,
-				height: height as libc::c_int }
+				width : width,
+				height: height }
 		},
 
 		image::ImageF32(_)    => fail!("Unexpected image type: ImageF32"),
@@ -61,8 +61,8 @@ fn create_texture(image: &Image) -> gl::types::GLuint {
 			gl::TEXTURE_2D,
 			0,
 			gl::RGBA8 as i32,
-			image.width,
-			image.height,
+			image.width as i32,
+			image.height as i32,
 			0,
 			gl::RGBA,
 			gl::UNSIGNED_BYTE,
