@@ -2,6 +2,7 @@
 
 source project.conf
 
+mkdir -p $CLIENT_DIST_DIR
 mkdir -p $OUTPUT_LIB_RUST
 
 ./scripts/tools/compile-rust \
@@ -10,7 +11,7 @@ mkdir -p $OUTPUT_LIB_RUST
 	source/rust/common/main.rs &&
 ./scripts/tools/compile-rust \
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
-	"--out-dir $OUTPUT_LIB_RUST" \
+	"-o $CLIENT_BINARY" \
 	source/rust/client/main.rs
 
 if [ $? -ne 0 ]; then
@@ -19,16 +20,6 @@ fi
 
 RUST_LIBS=$(find $OUTPUT_LIB_RUST -name *.a)
 
-STATIC_LIBS="\
-$OUTPUT_LIB/libglfw3.a \
-$OUTPUT_LIB/libfreetype.a \
-$OUTPUT_LIB/libstb-image.a \
-$RUST_LIBS"
-
-LIB_ARGS="-lGL -lX11 -lXxf86vm -lpthread -lXrandr -lXi -ldl"
-
-./scripts/tools/compile-c \
-	"$CLIENT_SOURCE" "$STATIC_LIBS" "$LIB_ARGS" $CLIENT_BINARY &&
 (rm $CLIENT_DIST_DIR/fonts; ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
 (rm $CLIENT_DIST_DIR/images; ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
 cp -r source/config/server $CLIENT_DIST_DIR
