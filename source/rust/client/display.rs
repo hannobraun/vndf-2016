@@ -25,8 +25,7 @@ pub struct Pos {
 }
 
 
-#[no_mangle]
-pub extern fn display_init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::GLFWwindow {
+pub fn display_init(screenWidth: libc::c_int, screenHeight: libc::c_int) -> *glfw::ffi::GLFWwindow {
 	let window = createWindow(screenWidth, screenHeight);
 
 	gl::load_with(glfw::get_proc_address);
