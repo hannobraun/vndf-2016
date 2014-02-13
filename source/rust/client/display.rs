@@ -7,7 +7,7 @@ use glfw;
 use glfw::Window;
 
 use camera::Camera;
-use texture;
+use texture::Texture;
 
 
 pub struct PosMap {
@@ -80,7 +80,7 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 		zNear, 1000.0);
 }
 
-pub fn render(window: &Window, camera: Camera, positions: PosMap, texture: texture::Texture) {
+pub fn render(window: &Window, camera: Camera, positions: PosMap, texture: Texture) {
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
 	gl::PushMatrix();
