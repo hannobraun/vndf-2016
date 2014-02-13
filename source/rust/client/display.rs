@@ -27,19 +27,18 @@ pub struct Pos {
 
 
 pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
-	let window = create_window(screenWidth, screenHeight);
+	match glfw::init() {
+		Err(_) => fail!("Failed to initialize GLFW."),
+		_      => ()
+	}
 
+	let window = create_window(screenWidth, screenHeight);
 	init_gl(screenWidth, screenHeight);
 
 	window
 }
 
 fn create_window(width: u32, height: u32) -> Window {
-	match glfw::init() {
-		Err(_) => fail!("Could not initialize GLFW."),
-		_      => ()
-	}
-
 	let windowOption = Window::create(
 		width, height,
 		"Von Neumann Defense Force",
