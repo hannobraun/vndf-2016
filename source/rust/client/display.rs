@@ -9,17 +9,17 @@ use camera;
 use texture;
 
 
-struct PosMap {
+pub struct PosMap {
 	cap: libc::size_t,
 	elems: *PosMapEntry
 }
 
-struct PosMapEntry {
+pub struct PosMapEntry {
 	isOccupied: libc::c_int,
 	value     : Pos
 }
 
-struct Pos {
+pub struct Pos {
 	x: f32,
 	y: f32
 }
