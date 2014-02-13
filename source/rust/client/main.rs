@@ -98,7 +98,7 @@ fn main() {
 		while glfw::ffi::glfwWindowShouldClose(window) == 0 &&
 			glfw::ffi::glfwGetKey(window, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
 			receivePositions(&mut c, positions);
-			input::input_apply(window, &mut cam);
+			input::apply(window, &mut cam);
 			display::display_render(window, cam, positions, texture);
 		}
 	};

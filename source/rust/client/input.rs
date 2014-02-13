@@ -6,7 +6,7 @@ use camera;
 static cameraSpeed: f32 = 1.0;
 
 
-pub fn input_apply(ffiWindow: *glfw::ffi::GLFWwindow, camera: &mut camera::Camera) {
+pub fn apply(ffiWindow: *glfw::ffi::GLFWwindow, camera: &mut camera::Camera) {
 	let window = glfw::Window {
 		ptr      : ffiWindow,
 		is_shared: true };
