@@ -12,7 +12,7 @@
 
 #[feature(globs)];
 
-extern mod std;
+extern crate std;
 
 pub mod stb_image;
 pub mod image;

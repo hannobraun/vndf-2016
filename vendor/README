@@ -15,4 +15,8 @@ Commit:     9739e3ad6cbc9359d61aea146591898675ffac1d
 rust-stb-image
 Repository: https://github.com/hannobraun/rust-stb-image
 Branch/Tag: master
-Commit:     406b6f38890dd5503474b870e053db10b2dc804b
+Commit:     6ffdf48a9869285c08c328222de04f571f4346fa
+Note:       This is a temporary fork. We can go back to upstream
+            (https://github.com/mozilla-servo/rust-stb-image) once the update
+            to the latest Rust version is merged
+            (https://github.com/mozilla-servo/rust-stb-image/pull/24).
