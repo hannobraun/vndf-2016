@@ -1,6 +1,6 @@
-extern mod collections;
-extern mod common;
-extern mod extra;
+extern crate collections;
+extern crate common;
+extern crate extra;
 
 use std::libc;
 

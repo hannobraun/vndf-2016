@@ -115,12 +115,12 @@ fn init_socket(port: &str) -> libc::c_int {
 		let SOL_SOCKET   = 1;
 		let SO_REUSEADDR = 2;
 
-		let yes = 1;
+		let yes= 1;
 		let status = setsockopt(
 			socketFD,
 			SOL_SOCKET,
 			SO_REUSEADDR,
-			ptr::to_unsafe_ptr(&yes) as *libc::c_void,
+			&yes as *int as *libc::c_void,
 			::std::mem::size_of::<libc::c_int>() as u32);
 
 		if status == -1 {
@@ -183,7 +183,7 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 			pollerFD,
 			EPOLL_CTL_ADD,
 			serverFD,
-			ptr::to_unsafe_ptr(&event));
+			&event);
 
 		if status != 0 {
 			"Error registering server socket with epoll".to_c_str().with_ref(|c_message| {
@@ -238,7 +238,7 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 				1);
 
 			ptr::copy_memory(
-				ptr::mut_offset(buffer.as_mut_ptr(), 1),
+				buffer.as_mut_ptr().offset(1),
 				c_message,
 				messageLength as uint);
 
