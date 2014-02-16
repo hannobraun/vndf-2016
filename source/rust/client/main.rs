@@ -1,8 +1,8 @@
-extern mod common;
+extern crate common;
 
-extern mod gl;
-extern mod glfw;
-extern mod stb_image;
+extern crate gl;
+extern crate glfw;
+extern crate stb_image;
 
 
 use std::io;

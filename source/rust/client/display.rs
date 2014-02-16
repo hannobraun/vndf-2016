@@ -1,7 +1,6 @@
 use std::f64;
 use std::iter::Iterator;
 use std::libc;
-use std::ptr;
 
 use gl;
 use glfw;
@@ -45,7 +44,7 @@ impl PosMap {
 impl Iterator<Position> for PosMapIter {
 	fn next(&mut self) -> Option<Position> {
 		unsafe {
-			while (*ptr::mut_offset(self.map.elems, self.i)).isOccupied == 0 {
+			while (*self.map.elems.offset(self.i)).isOccupied == 0 {
 				if self.i as u64 >= self.map.cap {
 					return None
 				}
@@ -54,7 +53,7 @@ impl Iterator<Position> for PosMapIter {
 			}
 
 			let r = if (self.i as u64) < self.map.cap {
-				Some((*ptr::mut_offset(self.map.elems, self.i)).value)
+				Some((*self.map.elems.offset(self.i)).value)
 			}
 			else {
 				None

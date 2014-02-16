@@ -21,7 +21,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 	unsafe {
 		let bytesReceived = net::net_receive(
 			(*c).socketFD,
-			ptr::offset((*c).buffer.as_ptr(), (*c).bufferPos as int),
+			(*c).buffer.as_ptr().offset((*c).bufferPos as int),
 			(BUFFER_SIZE - (*c).bufferPos) as u64);
 
 		(*c).bufferPos += bytesReceived as i32;
@@ -31,7 +31,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 			assert!(messageSize >= 0);
 
 			let message = str::raw::from_buf_len(
-				ptr::offset((*c).buffer.as_ptr() as *u8, 1),
+				((*c).buffer.as_ptr() as *u8).offset(1),
 				(messageSize - 1) as uint);
 
 			if message.starts_with("UPDATE") {
@@ -47,8 +47,8 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 				let y: f32 = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
 
-				(*ptr::mut_offset(positions.elems, id)).isOccupied = 1;
-				(*ptr::mut_offset(positions.elems, id)).value = display::Position { x: x, y: y };
+				(*positions.elems.offset(id)).isOccupied = 1;
+				(*positions.elems.offset(id)).value = display::Position { x: x, y: y };
 			}
 			else if message.starts_with("REMOVE") {
 				let parts: ~[&str] = message.words().collect();
@@ -57,7 +57,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 
 				let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-				(*ptr::mut_offset(positions.elems, id)).isOccupied = 0;
+				(*positions.elems.offset(id)).isOccupied = 0;
 			}
 			else {
 				print!("Unknown message type in message: {:s}\n", message);
@@ -66,7 +66,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 
 			ptr::copy_memory(
 				(*c).buffer.as_mut_ptr(),
-				ptr::offset((*c).buffer.as_ptr(), messageSize as int),
+				(*c).buffer.as_ptr().offset(messageSize as int),
 				(BUFFER_SIZE - messageSize as i32) as uint);
 			(*c).bufferPos -= messageSize as i32;
 		}
