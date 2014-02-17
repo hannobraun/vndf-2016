@@ -46,14 +46,14 @@ impl PosMap {
 		}
 	}
 
-	pub fn add(&self, id: int, pos: Position) {
+	pub fn add(&mut self, id: int, pos: Position) {
 		unsafe {
 			(*self.elems.offset(id)).isOccupied = 1;
 			(*self.elems.offset(id)).value      = pos;
 		}
 	}
 
-	pub fn remove(&self, id: int) {
+	pub fn remove(&mut self, id: int) {
 		unsafe {
 			(*self.elems.offset(id)).isOccupied = 0;
 		}

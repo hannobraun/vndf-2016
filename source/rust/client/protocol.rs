@@ -17,7 +17,7 @@ pub struct Connection {
 }
 
 
-pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
+pub fn receive_positions(c: *mut Connection, mut positions: display::PosMap) {
 	unsafe {
 		let bytesReceived = net::net_receive(
 			(*c).socketFD,
