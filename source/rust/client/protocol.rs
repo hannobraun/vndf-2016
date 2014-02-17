@@ -46,9 +46,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 				let x: f32 = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 				let y: f32 = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-
-				(*positions.elems.offset(id)).isOccupied = 1;
-				(*positions.elems.offset(id)).value = display::Position { x: x, y: y };
+				positions.add(id, display::Position { x: x, y: y });
 			}
 			else if message.starts_with("REMOVE") {
 				let parts: ~[&str] = message.words().collect();

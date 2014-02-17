@@ -32,6 +32,13 @@ struct PosMapIter {
 
 
 impl PosMap {
+	pub fn add(&self, id: int, pos: Position) {
+		unsafe {
+			(*self.elems.offset(id)).isOccupied = 1;
+			(*self.elems.offset(id)).value      = pos;
+		}
+	}
+
 	fn iter(&self) -> ~Iterator<Position> {
 		let iter = ~PosMapIter {
 			map: *self,
