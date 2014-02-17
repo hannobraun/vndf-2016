@@ -21,8 +21,7 @@ pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
 	unsafe {
 		let bytesReceived = net::receive(
 			(*c).socket_fd,
-			(*c).buffer.as_ptr().offset((*c).bufferPos as int),
-			(BUFFER_SIZE - (*c).bufferPos) as u64);
+			(*c).buffer.slice_from((*c).bufferPos as uint));
 
 		(*c).bufferPos += bytesReceived as i32;
 

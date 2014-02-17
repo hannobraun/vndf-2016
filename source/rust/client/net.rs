@@ -76,7 +76,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	}
 }
 
-pub fn receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSize: libc::size_t) -> libc::ssize_t {
+pub fn receive(socketFD: libc::c_int, buffer: &[libc::c_char]) -> libc::ssize_t {
 	let MSG_DONTWAIT = 0x40;
 	let EAGAIN       = 11;
 	let EWOULDBLOCK  = 140;
@@ -84,8 +84,8 @@ pub fn receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSize: libc::s
 	unsafe {
 		let bytesReceived = bsd43::recv(
 			socketFD,
-			buffer as *mut libc::c_void,
-			bufferSize,
+			buffer.as_ptr() as *mut libc::c_void,
+			buffer.len() as u64,
 			MSG_DONTWAIT);
 
 		if bytesReceived == -1 && (errno() == EAGAIN || errno() == EWOULDBLOCK) {
