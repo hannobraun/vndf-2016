@@ -75,7 +75,7 @@ fn main() {
 		bufferPos: 0 };
 
 	unsafe {
-		let positions = display::PosMap::new(4);
+		let mut positions = display::PosMap::new(4);
 
 		let mut cam = camera::Camera {
 			v: 0.0f32,

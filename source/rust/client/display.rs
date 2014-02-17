@@ -34,9 +34,9 @@ struct PosMapIter {
 
 
 impl PosMap {
-	pub fn new(size: libc::size_t) -> PosMap {
+	pub fn new(size: libc::size_t) -> ~PosMap {
 		unsafe {
-			let map = PosMap {
+			let map = ~PosMap {
 				cap  : size,
 				elems: libc::malloc(size * mem::size_of::<PosMapEntry>() as u64) as *mut PosMapEntry };
 
@@ -152,7 +152,7 @@ fn init_gl(screen_width: u32, screen_height: u32) {
 pub fn render(
 	window   : &Window,
 	camera   : Camera,
-	positions: PosMap,
+	positions: &PosMap,
 	texture  : Texture) {
 
 	gl::Clear(gl::COLOR_BUFFER_BIT);
