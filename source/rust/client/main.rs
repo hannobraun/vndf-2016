@@ -73,7 +73,7 @@ fn main() {
 			h: 0.0f32 };
 
 		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
-			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
+			window.get_key(glfw::KeyEscape) == glfw::Release {
 
 			protocol::receive_positions(&mut c, &mut positions);
 			input::apply(&window, &mut cam);
