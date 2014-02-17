@@ -139,8 +139,8 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 	gl::PixelStorei(gl::UNPACK_ALIGNMENT, 1);
 
 	let z_near = 0.1;
-	let fovAngleY = 45.0;
-	let halfHeight = f64::tan( fovAngleY / 360.0 * f64::consts::PI ) * z_near;
+	let fov_angle_y = 45.0;
+	let halfHeight = f64::tan( fov_angle_y / 360.0 * f64::consts::PI ) * z_near;
 	let halfWidth = halfHeight * screenWidth as f64 / screenHeight as f64;
 	gl::Frustum(
 		-halfWidth, halfWidth,
