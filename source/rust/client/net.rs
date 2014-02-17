@@ -17,7 +17,7 @@ fn errno() -> libc::c_int {
 }
 
 
-pub fn connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
+pub fn connect(hostname: *libc::c_char, port: ~str) -> libc::c_int {
 	let hints = bsd44::addrinfo {
 		ai_flags    : net::AI_PASSIVE,
 		ai_family   : net::AF_UNSPEC,
@@ -31,11 +31,13 @@ pub fn connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
 	let servinfo = ptr::null::<bsd44::addrinfo>();
 
 	unsafe {
-		let mut status = net::getaddrinfo(
-			hostname,
-			port,
-			&hints,
-			&servinfo);
+		let mut status = port.to_c_str().with_ref(|c_port| {
+			net::getaddrinfo(
+				hostname,
+				c_port,
+				&hints,
+				&servinfo)
+		});
 
 		if status != 0 {
 			"Error getting address info".to_c_str().with_ref(|c_message| {

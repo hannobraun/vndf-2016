@@ -65,9 +65,7 @@ fn main() {
 	let texture = images::load();
 
 	let socket_fd = serverAddress.to_c_str().with_ref(|c_address| {
-		"34481".to_c_str().with_ref(|c_port| {
-			net::connect(c_address, c_port)
-		})
+		net::connect(c_address, ~"34481")
 	});
 
 	let mut c = Connection {
