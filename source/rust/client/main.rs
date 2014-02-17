@@ -68,8 +68,8 @@ fn main() {
 
 	let mut c = Connection {
 		socket_fd : socket_fd,
-		buffer   : [0, ..protocol::BUFFER_SIZE],
-		bufferPos: 0 };
+		buffer    : [0, ..protocol::BUFFER_SIZE],
+		buffer_pos: 0 };
 
 	unsafe {
 		let mut positions = HashMap::new();
