@@ -72,8 +72,7 @@ pub fn connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
 	}
 }
 
-#[no_mangle]
-pub extern fn net_receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSize: libc::size_t) -> libc::ssize_t {
+pub fn net_receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSize: libc::size_t) -> libc::ssize_t {
 	let MSG_DONTWAIT = 0x40;
 	let EAGAIN       = 11;
 	let EWOULDBLOCK  = 140;
