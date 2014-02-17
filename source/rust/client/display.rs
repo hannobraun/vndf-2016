@@ -142,9 +142,9 @@ fn init_gl(screenWidth: u32, screenHeight: u32) {
 	let fov_angle_y = 45.0;
 	let half_height =
 		f64::tan( fov_angle_y / 360.0 * f64::consts::PI ) * z_near;
-	let halfWidth = half_height * screenWidth as f64 / screenHeight as f64;
+	let half_width = half_height * screenWidth as f64 / screenHeight as f64;
 	gl::Frustum(
-		-halfWidth, halfWidth,
+		-half_width, half_width,
 		-half_height, half_height,
 		z_near, 1000.0);
 }
