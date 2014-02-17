@@ -17,6 +17,13 @@ pub struct Connection {
 }
 
 
+pub fn init(socket_fd: libc::c_int) -> Connection {
+	Connection {
+		socket_fd : socket_fd,
+		buffer    : [0, ..BUFFER_SIZE],
+		buffer_pos: 0 }
+}
+
 pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 	let bytes_received = net::receive(
 		c.socket_fd,

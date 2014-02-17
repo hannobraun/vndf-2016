@@ -11,8 +11,6 @@ use std::os;
 use std::path;
 use std::str;
 
-use protocol::Connection;
-
 
 mod camera;
 mod display;
@@ -64,12 +62,8 @@ fn main() {
 	let window  = display::init(screen_width, screen_height);
 	let texture = images::load();
 
-	let socket_fd = net::connect(serverAddress, ~"34481");
-
-	let mut c = Connection {
-		socket_fd : socket_fd,
-		buffer    : [0, ..protocol::BUFFER_SIZE],
-		buffer_pos: 0 };
+	let     socket_fd = net::connect(serverAddress, ~"34481");
+	let mut c         = protocol::init(socket_fd);
 
 	unsafe {
 		let mut positions = HashMap::new();
