@@ -17,8 +17,7 @@ fn errno() -> libc::c_int {
 }
 
 
-#[no_mangle]
-pub extern fn net_connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
+pub fn net_connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
 	let hints = net::AddrInfo {
 		ai_flags    : net::AI_PASSIVE,
 		ai_family   : net::AF_UNSPEC,
