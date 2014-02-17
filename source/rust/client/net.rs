@@ -17,7 +17,7 @@ fn errno() -> libc::c_int {
 }
 
 
-pub fn net_connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
+pub fn connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int {
 	let hints = bsd44::addrinfo {
 		ai_flags    : net::AI_PASSIVE,
 		ai_family   : net::AF_UNSPEC,
