@@ -1,4 +1,5 @@
 use std::libc;
+use std::libc::funcs::bsd43;
 use std::libc::types::os::common::bsd44;
 use std::ptr;
 
@@ -101,7 +102,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let socketFD = net::socket(
+		let socketFD = bsd43::socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);

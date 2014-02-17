@@ -15,9 +15,4 @@ extern {
 		pai    : **bsd44::addrinfo) -> libc::c_int;
 
 	pub fn freeaddrinfo(res: *bsd44::addrinfo);
-
-	pub fn socket(
-		domain  : libc::c_int,
-		theType : libc::c_int,
-		protocol: libc::c_int) -> libc::c_int;
 }
