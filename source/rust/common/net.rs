@@ -1,4 +1,5 @@
 use std::libc;
+use std::libc::types::os::common::bsd44;
 
 
 pub static AI_PASSIVE : libc::c_int = 1;
@@ -12,14 +13,9 @@ pub struct AddrInfo {
 	ai_socktype : libc::c_int,
 	ai_protocol : libc::c_int,
 	ai_addrlen  : u32,
-	ai_addr     : *SockAddr,
+	ai_addr     : *bsd44::sockaddr,
 	ai_canonname: *libc::c_char,
 	ai_next     : *AddrInfo
-}
-
-pub struct SockAddr {
-	sa_family: libc::c_ushort,
-	sa_data  : [libc::c_char, ..14]
 }
 
 

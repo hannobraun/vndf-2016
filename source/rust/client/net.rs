@@ -1,4 +1,5 @@
 use std::libc;
+use std::libc::types::os::common::bsd44;
 use std::ptr;
 
 use common::net;
@@ -7,7 +8,7 @@ use common::net;
 extern {
 	fn __errno_location() -> *libc::c_int;
 	fn recv(sockfd: libc::c_int, buf: *libc::c_void, len: libc::size_t, flags: libc::c_int) -> libc::ssize_t;
-	fn connect(sockfd: libc::c_int, addr: *net::SockAddr, addrlen: libc::c_uint) -> libc::c_int;
+	fn connect(sockfd: libc::c_int, addr: *bsd44::sockaddr, addrlen: libc::c_uint) -> libc::c_int;
 }
 
 fn errno() -> libc::c_int {

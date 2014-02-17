@@ -1,4 +1,5 @@
 use std::libc;
+use std::libc::types::os::common::bsd44;
 use std::ptr;
 
 use common::net;
@@ -28,7 +29,7 @@ extern {
 
 	fn bind(
 		sockfd : libc::c_int,
-		addr   : *net::SockAddr,
+		addr   : *bsd44::sockaddr,
 		addrlen: libc::c_uint) -> libc::c_int;
 
 	fn listen(
@@ -37,7 +38,7 @@ extern {
 
 	fn accept(
 		sockfd : libc::c_int,
-		addr   : *net::SockAddr,
+		addr   : *bsd44::sockaddr,
 		addrlen: *libc::c_uint) -> libc::c_int;
 
 	fn send(
