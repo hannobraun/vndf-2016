@@ -17,20 +17,20 @@ pub struct Connection {
 }
 
 
-pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
+pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 	unsafe {
 		let bytesReceived = net::receive(
-			(*c).socket_fd,
-			(*c).buffer.slice_from((*c).bufferPos as uint));
+			c.socket_fd,
+			c.buffer.slice_from(c.bufferPos as uint));
 
-		(*c).bufferPos += bytesReceived as i32;
+		c.bufferPos += bytesReceived as i32;
 
-		while (*c).bufferPos > 0 && (*c).buffer[0] as i32 <= (*c).bufferPos {
-			let messageSize = (*c).buffer[0];
+		while c.bufferPos > 0 && c.buffer[0] as i32 <= c.bufferPos {
+			let messageSize = c.buffer[0];
 			assert!(messageSize >= 0);
 
 			let message = str::raw::from_buf_len(
-				((*c).buffer.as_ptr() as *u8).offset(1),
+				(c.buffer.as_ptr() as *u8).offset(1),
 				(messageSize - 1) as uint);
 
 			if message.starts_with("UPDATE") {
@@ -62,10 +62,10 @@ pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
 			}
 
 			ptr::copy_memory(
-				(*c).buffer.as_mut_ptr(),
-				(*c).buffer.as_ptr().offset(messageSize as int),
+				c.buffer.as_mut_ptr(),
+				c.buffer.as_ptr().offset(messageSize as int),
 				(BUFFER_SIZE - messageSize as i32) as uint);
-			(*c).bufferPos -= messageSize as i32;
+			c.bufferPos -= messageSize as i32;
 		}
 	}
 }
