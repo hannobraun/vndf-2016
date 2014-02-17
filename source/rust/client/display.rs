@@ -39,6 +39,12 @@ impl PosMap {
 		}
 	}
 
+	pub fn remove(&self, id: int) {
+		unsafe {
+			(*self.elems.offset(id)).isOccupied = 0;
+		}
+	}
+
 	pub fn iter(&self) -> ~Iterator<Position> {
 		let iter = ~PosMapIter {
 			map: *self,

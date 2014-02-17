@@ -55,7 +55,7 @@ pub fn receive_positions(c: *mut Connection, positions: display::PosMap) {
 
 				let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-				(*positions.elems.offset(id)).isOccupied = 0;
+				positions.remove(id);
 			}
 			else {
 				print!("Unknown message type in message: {:s}\n", message);
