@@ -107,12 +107,12 @@ pub fn init(screenWidth: u32, screenHeight: u32) -> Window {
 }
 
 fn create_window(width: u32, height: u32) -> Window {
-	let windowOption = Window::create(
+	let window_opt = Window::create(
 		width, height,
 		"Von Neumann Defense Force",
 		glfw::Windowed);
 
-	let window = match windowOption {
+	let window = match window_opt {
 		Some(window) => window,
 		None         => fail!("Failed to create window.")
 	};
