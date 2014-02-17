@@ -8,7 +8,6 @@ use common::net;
 
 extern {
 	fn __errno_location() -> *libc::c_int;
-	fn recv(sockfd: libc::c_int, buf: *libc::c_void, len: libc::size_t, flags: libc::c_int) -> libc::ssize_t;
 	fn connect(sockfd: libc::c_int, addr: *bsd44::sockaddr, addrlen: libc::c_uint) -> libc::c_int;
 }
 
@@ -81,9 +80,9 @@ pub extern fn net_receive(socketFD: libc::c_int, buffer: *libc::c_char, bufferSi
 	let EWOULDBLOCK  = 140;
 
 	unsafe {
-		let bytesReceived = recv(
+		let bytesReceived = bsd43::recv(
 			socketFD,
-			buffer as *libc::c_void,
+			buffer as *mut libc::c_void,
 			bufferSize,
 			MSG_DONTWAIT);
 
