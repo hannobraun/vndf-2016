@@ -3,21 +3,21 @@ use glfw;
 use camera::Camera;
 
 
-static cameraSpeed: f32 = 1.0;
+static CAMERA_SPEED: f32 = 1.0;
 
 
 pub fn apply(window: &glfw::Window, camera: &mut Camera) {
 	if window.get_key(glfw::KeyRight) == glfw::Press {
-		camera.h -= cameraSpeed;
+		camera.h -= CAMERA_SPEED;
 	}
 	if window.get_key(glfw::KeyLeft) == glfw::Press {
-		camera.h += cameraSpeed;
+		camera.h += CAMERA_SPEED;
 	}
 	if window.get_key(glfw::KeyUp) == glfw::Press {
-		camera.v += cameraSpeed;
+		camera.v += CAMERA_SPEED;
 	}
 	if window.get_key(glfw::KeyDown) == glfw::Press {
-		camera.v -= cameraSpeed;
+		camera.v -= CAMERA_SPEED;
 	}
 
 	if camera.v >= 90.0 {
