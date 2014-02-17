@@ -46,7 +46,7 @@ pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
 				let x: f32 = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 				let y: f32 = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-				positions.add(id, display::Position { x: x, y: y });
+				positions.insert(id, display::Position { x: x, y: y });
 			}
 			else if message.starts_with("REMOVE") {
 				let parts: ~[&str] = message.words().collect();
@@ -55,7 +55,7 @@ pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
 
 				let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-				positions.remove(id);
+				positions.remove(&id);
 			}
 			else {
 				print!("Unknown message type in message: {:s}\n", message);

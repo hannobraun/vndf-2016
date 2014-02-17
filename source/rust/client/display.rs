@@ -1,8 +1,6 @@
 use std::f64;
+use std::hashmap::HashMap;
 use std::iter::Iterator;
-use std::libc;
-use std::mem;
-use std::ptr;
 
 use gl;
 use glfw;
@@ -12,85 +10,11 @@ use camera::Camera;
 use texture::Texture;
 
 
-pub struct PosMap {
-	cap: libc::size_t,
-	elems: *mut PosMapEntry
-}
-
-pub struct PosMapEntry {
-	isOccupied: libc::c_int,
-	value     : Position
-}
+pub type PosMap = HashMap<int, Position>;
 
 pub struct Position {
 	x: f32,
 	y: f32
-}
-
-struct PosMapIter {
-	map: PosMap,
-	i  : int
-}
-
-
-impl PosMap {
-	pub fn new(size: libc::size_t) -> ~PosMap {
-		unsafe {
-			let map = ~PosMap {
-				cap  : size,
-				elems: libc::malloc(size * mem::size_of::<PosMapEntry>() as u64) as *mut PosMapEntry };
-
-			ptr::zero_memory(map.elems, size as uint);
-
-			map
-		}
-	}
-
-	pub fn add(&mut self, id: int, pos: Position) {
-		unsafe {
-			(*self.elems.offset(id)).isOccupied = 1;
-			(*self.elems.offset(id)).value      = pos;
-		}
-	}
-
-	pub fn remove(&mut self, id: int) {
-		unsafe {
-			(*self.elems.offset(id)).isOccupied = 0;
-		}
-	}
-
-	pub fn iter(&self) -> ~Iterator<Position> {
-		let iter = ~PosMapIter {
-			map: *self,
-			i  : 0 };
-
-		iter as ~Iterator<Position>
-	}
-}
-
-impl Iterator<Position> for PosMapIter {
-	fn next(&mut self) -> Option<Position> {
-		unsafe {
-			while (*self.map.elems.offset(self.i)).isOccupied == 0 {
-				if self.i as u64 >= self.map.cap {
-					return None
-				}
-
-				self.i += 1
-			}
-
-			let r = if (self.i as u64) < self.map.cap {
-				Some((*self.map.elems.offset(self.i)).value)
-			}
-			else {
-				None
-			};
-
-			self.i += 1;
-
-			r
-		}
-	}
 }
 
 
@@ -169,7 +93,7 @@ pub fn render(
 
 	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
 
-	for position in positions.iter() {
+	for (_, position) in positions.iter() {
 		gl::PushMatrix();
 
 		gl::Translatef(

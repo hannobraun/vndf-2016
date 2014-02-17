@@ -5,6 +5,7 @@ extern crate glfw;
 extern crate stb_image;
 
 
+use std::hashmap::HashMap;
 use std::io;
 use std::os;
 use std::path;
@@ -75,7 +76,7 @@ fn main() {
 		bufferPos: 0 };
 
 	unsafe {
-		let mut positions = display::PosMap::new(4);
+		let mut positions = HashMap::new();
 
 		let mut cam = camera::Camera {
 			v: 0.0f32,
@@ -83,9 +84,9 @@ fn main() {
 
 		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
 			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
-			protocol::receive_positions(&mut c, positions);
+			protocol::receive_positions(&mut c, &mut positions);
 			input::apply(&window, &mut cam);
-			display::render(&window, cam, positions, texture);
+			display::render(&window, cam, &positions, texture);
 
 			glfw::ffi::glfwPollEvents();
 		}
