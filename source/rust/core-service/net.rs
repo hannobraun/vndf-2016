@@ -73,7 +73,7 @@ pub fn init(port: &str) -> Net {
 
 
 fn init_socket(port: &str) -> libc::c_int {
-	let hints = net::AddrInfo {
+	let hints = bsd44::addrinfo {
 		ai_flags    : net::AI_PASSIVE,
 		ai_family   : net::AF_UNSPEC,
 		ai_socktype : net::SOCK_STREAM,
@@ -83,7 +83,7 @@ fn init_socket(port: &str) -> libc::c_int {
 		ai_canonname: ptr::null(),
 		ai_next     : ptr::null() };
 
-	let servinfo = ptr::null::<net::AddrInfo>();
+	let servinfo = ptr::null::<bsd44::addrinfo>();
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
