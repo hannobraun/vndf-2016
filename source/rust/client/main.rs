@@ -64,9 +64,7 @@ fn main() {
 	let window  = display::init(screenWidth, screenHeight);
 	let texture = images::load();
 
-	let socket_fd = serverAddress.to_c_str().with_ref(|c_address| {
-		net::connect(c_address, ~"34481")
-	});
+	let socket_fd = net::connect(serverAddress, ~"34481");
 
 	let mut c = Connection {
 		socket_fd : socket_fd,
