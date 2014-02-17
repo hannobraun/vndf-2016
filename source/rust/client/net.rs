@@ -8,7 +8,6 @@ use common::net;
 
 extern {
 	fn __errno_location() -> *libc::c_int;
-	fn connect(sockfd: libc::c_int, addr: *bsd44::sockaddr, addrlen: libc::c_uint) -> libc::c_int;
 }
 
 fn errno() -> libc::c_int {
@@ -56,7 +55,7 @@ pub fn net_connect(hostname: *libc::c_char, port: *libc::c_char) -> libc::c_int 
 			libc::exit(1);
 		}
 
-		status = connect(
+		status = bsd43::connect(
 			socketFD,
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
