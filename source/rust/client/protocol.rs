@@ -13,7 +13,7 @@ pub static BUFFER_SIZE : libc::c_int = 256;
 pub struct Connection {
 	socket_fd: libc::c_int,
 	buffer   : [libc::c_char, ..BUFFER_SIZE],
-	bufferPos: libc::c_int
+	bufferPos: uint
 }
 
 
@@ -21,11 +21,11 @@ pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 	unsafe {
 		let bytesReceived = net::receive(
 			c.socket_fd,
-			c.buffer.slice_from(c.bufferPos as uint));
+			c.buffer.slice_from(c.bufferPos));
 
-		c.bufferPos += bytesReceived as i32;
+		c.bufferPos += bytesReceived as uint;
 
-		while c.bufferPos > 0 && c.buffer[0] as i32 <= c.bufferPos {
+		while c.bufferPos > 0 && c.buffer[0] as uint <= c.bufferPos {
 			let messageSize = c.buffer[0];
 			assert!(messageSize >= 0);
 
@@ -65,7 +65,7 @@ pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 				c.buffer.as_mut_ptr(),
 				c.buffer.as_ptr().offset(messageSize as int),
 				(BUFFER_SIZE - messageSize as i32) as uint);
-			c.bufferPos -= messageSize as i32;
+			c.bufferPos -= messageSize as uint;
 		}
 	}
 }
