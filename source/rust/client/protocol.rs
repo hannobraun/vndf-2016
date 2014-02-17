@@ -18,11 +18,11 @@ pub struct Connection {
 
 
 pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
-	let bytesReceived = net::receive(
+	let bytes_received = net::receive(
 		c.socket_fd,
 		c.buffer.slice_from(c.bufferPos));
 
-	c.bufferPos += bytesReceived as uint;
+	c.bufferPos += bytes_received as uint;
 
 	while c.bufferPos > 0 && c.buffer[0] as uint <= c.bufferPos {
 		let messageSize = c.buffer[0];
