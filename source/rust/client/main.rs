@@ -6,11 +6,8 @@ extern crate stb_image;
 
 
 use std::io;
-use std::libc;
-use std::mem;
 use std::os;
 use std::path;
-use std::ptr;
 use std::str;
 
 use protocol::Connection;
@@ -78,10 +75,7 @@ fn main() {
 		bufferPos: 0 };
 
 	unsafe {
-		let positions = display::PosMap {
-			cap  : 4,
-			elems: libc::malloc(4 * mem::size_of::<display::PosMapEntry>() as u64) as *mut display::PosMapEntry };
-		ptr::zero_memory(positions.elems, 4);
+		let positions = display::PosMap::new(4);
 
 		let mut cam = camera::Camera {
 			v: 0.0f32,

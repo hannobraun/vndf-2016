@@ -1,6 +1,8 @@
 use std::f64;
 use std::iter::Iterator;
 use std::libc;
+use std::mem;
+use std::ptr;
 
 use gl;
 use glfw;
@@ -32,6 +34,18 @@ struct PosMapIter {
 
 
 impl PosMap {
+	pub fn new(size: libc::size_t) -> PosMap {
+		unsafe {
+			let map = PosMap {
+				cap  : size,
+				elems: libc::malloc(size * mem::size_of::<PosMapEntry>() as u64) as *mut PosMapEntry };
+
+			ptr::zero_memory(map.elems, size as uint);
+
+			map
+		}
+	}
+
 	pub fn add(&self, id: int, pos: Position) {
 		unsafe {
 			(*self.elems.offset(id)).isOccupied = 1;
