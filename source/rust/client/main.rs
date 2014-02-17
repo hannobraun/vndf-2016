@@ -65,21 +65,19 @@ fn main() {
 	let     socket_fd = net::connect(serverAddress, ~"34481");
 	let mut c         = protocol::init(socket_fd);
 
-	unsafe {
-		let mut positions = HashMap::new();
+	let mut positions = HashMap::new();
 
-		let mut cam = camera::Camera {
-			v: 0.0f32,
-			h: 0.0f32 };
+	let mut cam = camera::Camera {
+		v: 0.0f32,
+		h: 0.0f32 };
 
-		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
-			window.get_key(glfw::KeyEscape) == glfw::Release {
+	while !window.should_close() &&
+		window.get_key(glfw::KeyEscape) == glfw::Release {
 
-			protocol::receive_positions(&mut c, &mut positions);
-			input::apply(&window, &mut cam);
-			display::render(&window, cam, &positions, texture);
+		protocol::receive_positions(&mut c, &mut positions);
+		input::apply(&window, &mut cam);
+		display::render(&window, cam, &positions, texture);
 
-			glfw::poll_events();
-		}
-	};
+		glfw::poll_events();
+	}
 }
