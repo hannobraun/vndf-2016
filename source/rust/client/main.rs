@@ -28,7 +28,7 @@ extern {}
 
 
 fn main() {
-	let screenWidth  = 800;
+	let screen_width  = 800;
 	let screenHeight = 600;
 
 	let args = os::args();
@@ -61,7 +61,7 @@ fn main() {
 		str::from_utf8(contents).unwrap_or_else(|| { fail!() }).to_owned()
 	};
 
-	let window  = display::init(screenWidth, screenHeight);
+	let window  = display::init(screen_width, screenHeight);
 	let texture = images::load();
 
 	let socket_fd = net::connect(serverAddress, ~"34481");
