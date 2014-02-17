@@ -39,7 +39,7 @@ impl PosMap {
 		}
 	}
 
-	fn iter(&self) -> ~Iterator<Position> {
+	pub fn iter(&self) -> ~Iterator<Position> {
 		let iter = ~PosMapIter {
 			map: *self,
 			i  : 0 };
