@@ -19,7 +19,7 @@ pub struct Connection {
 
 pub fn receive_positions(c: *mut Connection, positions: &mut display::PosMap) {
 	unsafe {
-		let bytesReceived = net::net_receive(
+		let bytesReceived = net::receive(
 			(*c).socket_fd,
 			(*c).buffer.as_ptr().offset((*c).bufferPos as int),
 			(BUFFER_SIZE - (*c).bufferPos) as u64);
