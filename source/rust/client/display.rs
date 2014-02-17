@@ -94,14 +94,14 @@ impl Iterator<Position> for PosMapIter {
 }
 
 
-pub fn init(screen_width: u32, screenHeight: u32) -> Window {
+pub fn init(screen_width: u32, screen_height: u32) -> Window {
 	match glfw::init() {
 		Err(_) => fail!("Failed to initialize GLFW."),
 		_      => ()
 	}
 
-	let window = create_window(screen_width, screenHeight);
-	init_gl(screen_width, screenHeight);
+	let window = create_window(screen_width, screen_height);
+	init_gl(screen_width, screen_height);
 
 	window
 }
@@ -122,7 +122,7 @@ fn create_window(width: u32, height: u32) -> Window {
 	window
 }
 
-fn init_gl(screen_width: u32, screenHeight: u32) {
+fn init_gl(screen_width: u32, screen_height: u32) {
 	gl::load_with(glfw::get_proc_address);
 
 	gl::Enable(gl::TEXTURE_2D);
@@ -142,7 +142,7 @@ fn init_gl(screen_width: u32, screenHeight: u32) {
 	let fov_angle_y = 45.0;
 	let half_height =
 		f64::tan( fov_angle_y / 360.0 * f64::consts::PI ) * z_near;
-	let half_width = half_height * screen_width as f64 / screenHeight as f64;
+	let half_width = half_height * screen_width as f64 / screen_height as f64;
 	gl::Frustum(
 		-half_width, half_width,
 		-half_height, half_height,
