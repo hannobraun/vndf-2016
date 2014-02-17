@@ -7,7 +7,7 @@ use display;
 use net;
 
 
-pub static BUFFER_SIZE : libc::c_int = 256;
+static BUFFER_SIZE : libc::c_int = 256;
 
 
 pub struct Connection {
