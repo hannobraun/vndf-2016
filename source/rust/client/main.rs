@@ -80,6 +80,7 @@ fn main() {
 
 		while glfw::ffi::glfwWindowShouldClose(window.ptr) == 0 &&
 			glfw::ffi::glfwGetKey(window.ptr, glfw::ffi::KEY_ESCAPE) == glfw::ffi::RELEASE {
+
 			protocol::receive_positions(&mut c, &mut positions);
 			input::apply(&window, &mut cam);
 			display::render(&window, cam, &positions, texture);
