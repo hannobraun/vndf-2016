@@ -15,10 +15,10 @@ struct Image {
 
 pub fn load() -> Texture {
 	let image       = load_image();
-	let textureName = create_texture(&image);
+	let texture_name = create_texture(&image);
 
 	Texture {
-		name  : textureName,
+		name  : texture_name,
 		width : image.width,
 		height: image.height }
 }
@@ -41,15 +41,15 @@ fn load_image() -> Image {
 }
 
 fn create_texture(image: &Image) -> gl::types::GLuint {
-	let mut textureName: gl::types::GLuint = 0;
+	let mut texture_name: gl::types::GLuint = 0;
 
 	unsafe {
 		// Generate texture names.
-		gl::GenTextures(1, &mut textureName);
+		gl::GenTextures(1, &mut texture_name);
 
 		gl::BindTexture(
 			gl::TEXTURE_2D,
-			textureName);
+			texture_name);
 
 		// Configure texture.
 		gl::TexParameteri(
@@ -70,5 +70,5 @@ fn create_texture(image: &Image) -> gl::types::GLuint {
 			image.data.as_ptr() as *libc::c_void);
 	}
 
-	textureName
+	texture_name
 }
