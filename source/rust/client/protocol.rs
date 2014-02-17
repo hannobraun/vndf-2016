@@ -25,13 +25,13 @@ pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 	c.buffer_pos += bytes_received as uint;
 
 	while c.buffer_pos > 0 && c.buffer[0] as uint <= c.buffer_pos {
-		let messageSize = c.buffer[0];
-		assert!(messageSize >= 0);
+		let message_size = c.buffer[0];
+		assert!(message_size >= 0);
 
 		let message = unsafe {
 			str::raw::from_buf_len(
 				(c.buffer.as_ptr() as *u8).offset(1),
-				(messageSize - 1) as uint)
+				(message_size - 1) as uint)
 		};
 
 		if message.starts_with("UPDATE") {
@@ -65,9 +65,9 @@ pub fn receive_positions(c: &mut Connection, positions: &mut display::PosMap) {
 		unsafe {
 			ptr::copy_memory(
 				c.buffer.as_mut_ptr(),
-				c.buffer.as_ptr().offset(messageSize as int),
-				(BUFFER_SIZE - messageSize as i32) as uint);
-			c.buffer_pos -= messageSize as uint;
+				c.buffer.as_ptr().offset(message_size as int),
+				(BUFFER_SIZE - message_size as i32) as uint);
+			c.buffer_pos -= message_size as uint;
 		}
 	}
 }
