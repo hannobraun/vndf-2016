@@ -79,7 +79,7 @@ fn main() {
 			input::apply(&window, &mut cam);
 			display::render(&window, cam, &positions, texture);
 
-			glfw::ffi::glfwPollEvents();
+			glfw::poll_events();
 		}
 	};
 }
