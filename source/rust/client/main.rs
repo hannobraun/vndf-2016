@@ -64,14 +64,14 @@ fn main() {
 	let window  = display::init(screenWidth, screenHeight);
 	let texture = images::load();
 
-	let socketFD = serverAddress.to_c_str().with_ref(|c_address| {
+	let socket_fd = serverAddress.to_c_str().with_ref(|c_address| {
 		"34481".to_c_str().with_ref(|c_port| {
 			net::net_connect(c_address, c_port)
 		})
 	});
 
 	let mut c = Connection {
-		socketFD : socketFD,
+		socket_fd : socket_fd,
 		buffer   : [0, ..protocol::BUFFER_SIZE],
 		bufferPos: 0 };
 
