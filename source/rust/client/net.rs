@@ -76,7 +76,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	}
 }
 
-pub fn receive(socketFD: libc::c_int, buffer: &[libc::c_char]) -> libc::ssize_t {
+pub fn receive(socketFD: libc::c_int, buffer: &[i8]) -> libc::ssize_t {
 	let MSG_DONTWAIT = 0x40;
 	let EAGAIN       = 11;
 	let EWOULDBLOCK  = 140;
