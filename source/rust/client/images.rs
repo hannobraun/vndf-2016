@@ -14,7 +14,7 @@ struct Image {
 
 
 pub fn load() -> Texture {
-	let image       = load_image();
+	let image        = load_image(~"images/spaceship.png");
 	let texture_name = create_texture(&image);
 
 	Texture {
@@ -23,8 +23,8 @@ pub fn load() -> Texture {
 		height: image.height }
 }
 
-fn load_image() -> Image {
-	match image::load(~"images/spaceship.png") {
+fn load_image(name: ~str) -> Image {
+	match image::load(name) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;
