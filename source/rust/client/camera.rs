@@ -1,4 +1,4 @@
 pub struct Camera {
-	h: f32,
-	v: f32
+	h: f64,
+	v: f64
 }

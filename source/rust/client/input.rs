@@ -3,7 +3,7 @@ use glfw;
 use camera::Camera;
 
 
-static CAMERA_SPEED: f32 = 1.0;
+static CAMERA_SPEED: f64 = 1.0;
 
 
 pub fn apply(window: &glfw::Window, camera: &mut Camera) {

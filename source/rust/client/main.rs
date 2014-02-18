@@ -71,8 +71,8 @@ fn main() {
 	let mut entities = Entities::new();
 
 	let mut cam = camera::Camera {
-		v: 0.0f32,
-		h: 0.0f32 };
+		v: 0.0,
+		h: 0.0 };
 
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
