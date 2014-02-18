@@ -64,8 +64,8 @@ fn main() {
 	let window  = display::init(screen_width, screen_height);
 	let texture = images::load();
 
-	let     socket_fd = net::connect(serverAddress, ~"34481");
-	let mut c         = protocol::init(socket_fd);
+	let     socket_fd  = net::connect(serverAddress, ~"34481");
+	let mut connection = protocol::init(socket_fd);
 
 	let mut entities = Entities::new();
 
@@ -76,7 +76,7 @@ fn main() {
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
-		protocol::receive_positions(&mut c, entities);
+		protocol::receive_positions(&mut connection, entities);
 		input::apply(&window, &mut cam);
 		display::render(&window, cam, &entities.positions, texture);
 
