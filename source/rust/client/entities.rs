@@ -5,12 +5,13 @@ use common::vec::Vec2;
 use visual::Visual;
 
 
-pub type Id = int;
+pub type Id            = int;
+pub type Components<T> = HashMap<Id, T>;
 
 
 pub struct Entities {
-	positions: HashMap<Id, Vec2>,
-	visuals  : HashMap<Id, Visual>
+	positions: Components<Vec2>,
+	visuals  : Components<Visual>
 }
 
 impl Entities {
