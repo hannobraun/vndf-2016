@@ -76,7 +76,7 @@ fn main() {
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
-		protocol::receive_positions(&mut c, &mut entities.positions);
+		protocol::receive_positions(&mut c, entities);
 		input::apply(&window, &mut cam);
 		display::render(&window, cam, &entities.positions, texture);
 

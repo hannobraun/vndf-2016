@@ -5,7 +5,7 @@ use std::str;
 
 use common::vec::Vec2;
 
-use display;
+use entities::Entities;
 use net;
 
 
@@ -28,7 +28,7 @@ pub fn init(socket_fd: libc::c_int) -> Connection {
 
 pub fn receive_positions(
 	connection: &mut Connection,
-	positions : &mut display::PosMap) {
+	entities  : &mut Entities) {
 
 	let bytes_received = net::receive(
 		connection.socket_fd,
@@ -58,7 +58,7 @@ pub fn receive_positions(
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-			positions.insert(id, Vec2 { x: x, y: y });
+			entities.positions.insert(id, Vec2 { x: x, y: y });
 		}
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
@@ -67,7 +67,7 @@ pub fn receive_positions(
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-			positions.remove(&id);
+			entities.positions.remove(&id);
 		}
 		else {
 			print!("Unknown message type in message: {:s}\n", message);
