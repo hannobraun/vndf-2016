@@ -74,7 +74,7 @@ pub fn render(
 	camera   : Camera,
 	positions: &Components<Vec2>,
 	visuals  : &Components<Visual>,
-	images   : &HashMap<~str, Texture>) {
+	textures : &HashMap<~str, Texture>) {
 
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
@@ -87,7 +87,7 @@ pub fn render(
 	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
 
 	for (id, position) in positions.iter() {
-		let texture = images.get(&visuals.get(id).texture);
+		let texture = textures.get(&visuals.get(id).texture);
 		gl::BindTexture(
 			gl::TEXTURE_2D,
 			texture.name);
