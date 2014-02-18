@@ -1,8 +1,11 @@
 use gl;
 
 
+type Name = gl::types::GLuint;
+
+
 pub struct Texture {
-	name  : gl::types::GLuint,
+	name  : Name,
 	width : uint,
 	height: uint
 }
