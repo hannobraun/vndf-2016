@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(cd vendor/rust-freetype; ./configure && make)
+cp vendor/rust-freetype/*.rlib $OUTPUT_LIB_RUST
