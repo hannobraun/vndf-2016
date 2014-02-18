@@ -31,8 +31,8 @@ pub fn load() -> HashMap<~str, Texture> {
 	images
 }
 
-fn load_image(name: &str) -> Image {
-	match image::load(name.into_owned()) {
+fn load_image(image_path: &str) -> Image {
+	match image::load(image_path.into_owned()) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;
