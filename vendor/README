@@ -12,6 +12,11 @@ Repository: https://github.com/hannobraun/glfw-rs
 Branch/Tag: master
 Commit:     9739e3ad6cbc9359d61aea146591898675ffac1d
 
+rust-freetype
+Repository: https://github.com/mozilla-servo/rust-freetype.git
+Branch/Tag: master
+Commit    : 8fbf9cb1805a69b788307fc1b362eeb9805a9a0a
+
 rust-stb-image
 Repository: https://github.com/hannobraun/rust-stb-image
 Branch/Tag: master
