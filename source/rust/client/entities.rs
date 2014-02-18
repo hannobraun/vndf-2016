@@ -19,4 +19,8 @@ impl Entities {
 	pub fn update(&mut self, id: Id, x: f64, y: f64) {
 		self.positions.insert(id, Vec2 { x: x, y: y });
 	}
+
+	pub fn remove(&mut self, id: Id) {
+		self.positions.remove(&id);
+	}
 }
