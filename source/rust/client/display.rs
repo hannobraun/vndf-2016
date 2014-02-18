@@ -9,6 +9,7 @@ use glfw::Window;
 use common::vec::Vec2;
 
 use camera::Camera;
+use texture;
 use texture::Texture;
 
 
@@ -74,7 +75,7 @@ pub fn render(
 	window   : &Window,
 	camera   : Camera,
 	positions: &PosMap,
-	texture  : Texture) {
+	textures : &HashMap<texture::Name, Texture>) {
 
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 
@@ -84,6 +85,7 @@ pub fn render(
 	gl::Rotatef(camera.v, 1.0f32, 0.0f32, 0.0f32);
 	gl::Rotatef(camera.h, 0.0f32, 1.0f32, 0.0f32);
 
+	let texture = textures.get(&1);
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture.name);
