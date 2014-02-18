@@ -53,7 +53,7 @@ pub fn receive_positions(
 			let x_str  = parts[4].trim_chars(&',').trim_chars(&'(');
 			let y_str  = parts[5].trim_chars(&')');
 
-			let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
+			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
