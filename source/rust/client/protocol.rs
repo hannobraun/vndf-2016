@@ -65,7 +65,7 @@ pub fn receive_positions(
 
 			let id_str = parts[2];
 
-			let id: int = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
+			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
 			positions.remove(&id);
 		}
