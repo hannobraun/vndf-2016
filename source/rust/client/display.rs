@@ -6,16 +6,13 @@ use gl;
 use glfw;
 use glfw::Window;
 
+use common::vec::Vec2;
+
 use camera::Camera;
 use texture::Texture;
 
 
-pub type PosMap = HashMap<int, Position>;
-
-pub struct Position {
-	x: f32,
-	y: f32
-}
+pub type PosMap = HashMap<int, Vec2>;
 
 
 pub fn init(screen_width: u32, screen_height: u32) -> Window {
@@ -96,10 +93,10 @@ pub fn render(
 	for (_, position) in positions.iter() {
 		gl::PushMatrix();
 
-		gl::Translatef(
-			position.x - texture.width as f32 / 2f32,
-			position.y - texture.height as f32 / 2f32,
-			0.0f32);
+		gl::Translated(
+			position.x - texture.width as f64 / 2.0,
+			position.y - texture.height as f64 / 2.0,
+			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
 			gl::TexCoord2f(1.0f32, 0.0f32);
