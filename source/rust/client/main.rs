@@ -10,6 +10,7 @@ use std::os;
 use std::path;
 use std::str;
 
+use camera::Camera;
 use entities::Entities;
 
 
@@ -70,15 +71,13 @@ fn main() {
 
 	let mut entities = Entities::new();
 
-	let mut cam = camera::Camera {
-		v: 0.0,
-		h: 0.0 };
+	let mut cam = Camera::new();
 
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
 		protocol::receive_positions(&mut connection, entities);
-		input::apply(&window, &mut cam);
+		input::apply(&window, cam);
 		display::render(
 			&window,
 			cam,

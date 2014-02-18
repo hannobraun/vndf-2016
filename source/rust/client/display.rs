@@ -71,7 +71,7 @@ fn init_gl(screen_width: u32, screen_height: u32) {
 
 pub fn render(
 	window   : &Window,
-	camera   : Camera,
+	camera   : &Camera,
 	positions: &Components<Vec2>,
 	visuals  : &Components<Visual>,
 	textures : &HashMap<~str, Texture>) {
