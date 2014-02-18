@@ -84,7 +84,7 @@ pub fn render(
 	gl::Rotatef(camera.v, 1.0f32, 0.0f32, 0.0f32);
 	gl::Rotatef(camera.h, 0.0f32, 1.0f32, 0.0f32);
 
-	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
+	gl::Color4d(1.0, 1.0, 1.0, 1.0);
 
 	for (id, position) in positions.iter() {
 		let texture = textures.get(&visuals.get(id).texture);
