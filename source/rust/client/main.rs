@@ -5,15 +5,17 @@ extern crate glfw;
 extern crate stb_image;
 
 
-use std::hashmap::HashMap;
 use std::io;
 use std::os;
 use std::path;
 use std::str;
 
+use entities::Entities;
+
 
 mod camera;
 mod display;
+mod entities;
 mod images;
 mod input;
 mod net;
@@ -65,7 +67,7 @@ fn main() {
 	let     socket_fd = net::connect(serverAddress, ~"34481");
 	let mut c         = protocol::init(socket_fd);
 
-	let mut positions = HashMap::new();
+	let mut entities = Entities::new();
 
 	let mut cam = camera::Camera {
 		v: 0.0f32,
@@ -74,9 +76,9 @@ fn main() {
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
-		protocol::receive_positions(&mut c, &mut positions);
+		protocol::receive_positions(&mut c, &mut entities.positions);
 		input::apply(&window, &mut cam);
-		display::render(&window, cam, &positions, texture);
+		display::render(&window, cam, &entities.positions, texture);
 
 		glfw::poll_events();
 	}
