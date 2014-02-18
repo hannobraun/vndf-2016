@@ -9,10 +9,8 @@ use glfw::Window;
 use common::vec::Vec2;
 
 use camera::Camera;
+use entities::Components;
 use texture::Texture;
-
-
-pub type PosMap = HashMap<int, Vec2>;
 
 
 pub fn init(screen_width: u32, screen_height: u32) -> Window {
@@ -73,7 +71,7 @@ fn init_gl(screen_width: u32, screen_height: u32) {
 pub fn render(
 	window   : &Window,
 	camera   : Camera,
-	positions: &PosMap,
+	positions: &Components<Vec2>,
 	images   : &HashMap<~str, Texture>) {
 
 	gl::Clear(gl::COLOR_BUFFER_BIT);
