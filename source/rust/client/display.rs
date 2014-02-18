@@ -87,7 +87,7 @@ pub fn render(
 	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
 
 	for (id, position) in positions.iter() {
-		let texture = images.get(&visuals.get(id).image);
+		let texture = images.get(&visuals.get(id).texture);
 		gl::BindTexture(
 			gl::TEXTURE_2D,
 			texture.name);
