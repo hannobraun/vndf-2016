@@ -21,6 +21,7 @@ mod input;
 mod net;
 mod protocol;
 mod texture;
+mod visual;
 
 
 #[link(name = "stb-image", kind = "static")]
