@@ -80,7 +80,7 @@ pub fn render(
 
 	gl::PushMatrix();
 
-	gl::Translatef(0.0f32, 0.0f32, -500.0f32);
+	gl::Translated(0.0, 0.0, -500.0);
 	gl::Rotatef(camera.v, 1.0f32, 0.0f32, 0.0f32);
 	gl::Rotatef(camera.h, 0.0f32, 1.0f32, 0.0f32);
 
