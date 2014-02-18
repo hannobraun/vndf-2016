@@ -3,8 +3,11 @@ use std::hashmap::HashMap;
 use common::vec::Vec2;
 
 
+pub type Id = int;
+
+
 pub struct Entities {
-	positions: HashMap<int, Vec2>
+	positions: HashMap<Id, Vec2>
 }
 
 impl Entities {
