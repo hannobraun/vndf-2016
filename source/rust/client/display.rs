@@ -100,7 +100,7 @@ pub fn render(
 			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
-			gl::TexCoord2f(1.0f32, 0.0f32);
+			gl::TexCoord2d(1.0, 0.0);
 			gl::Vertex3f(
 				texture.width as f32,
 				texture.height as f32,
