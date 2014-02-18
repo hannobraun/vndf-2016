@@ -1,3 +1,4 @@
+use std::hashmap::HashMap;
 use std::libc;
 
 use gl;
@@ -13,14 +14,21 @@ struct Image {
 }
 
 
-pub fn load() -> Texture {
-	let image        = load_image(~"images/spaceship.png");
+pub fn load() -> HashMap<~str, Texture> {
+	let image_path = ~"images/spaceship.png";
+
+	let image        = load_image(image_path.clone());
 	let texture_name = create_texture(&image);
 
-	Texture {
+	let texture = Texture {
 		name  : texture_name,
 		width : image.width,
-		height: image.height }
+		height: image.height };
+
+	let mut images = HashMap::new();
+	images.insert(image_path, texture);
+
+	images
 }
 
 fn load_image(name: ~str) -> Image {
