@@ -11,6 +11,7 @@ use common::vec::Vec2;
 use camera::Camera;
 use entities::Components;
 use texture::Texture;
+use visual::Visual;
 
 
 pub fn init(screen_width: u32, screen_height: u32) -> Window {
@@ -72,6 +73,7 @@ pub fn render(
 	window   : &Window,
 	camera   : Camera,
 	positions: &Components<Vec2>,
+	visuals  : &Components<Visual>,
 	images   : &HashMap<~str, Texture>) {
 
 	gl::Clear(gl::COLOR_BUFFER_BIT);
@@ -82,14 +84,14 @@ pub fn render(
 	gl::Rotatef(camera.v, 1.0f32, 0.0f32, 0.0f32);
 	gl::Rotatef(camera.h, 0.0f32, 1.0f32, 0.0f32);
 
-	let texture = images.get(&~"images/spaceship.png");
-	gl::BindTexture(
-		gl::TEXTURE_2D,
-		texture.name);
-
 	gl::Color4f(1.0f32, 1.0f32, 1.0f32, 1.0f32);
 
-	for (_, position) in positions.iter() {
+	for (id, position) in positions.iter() {
+		let texture = images.get(&visuals.get(id).image);
+		gl::BindTexture(
+			gl::TEXTURE_2D,
+			texture.name);
+
 		gl::PushMatrix();
 
 		gl::Translated(

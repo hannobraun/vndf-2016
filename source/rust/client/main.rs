@@ -79,7 +79,12 @@ fn main() {
 
 		protocol::receive_positions(&mut connection, entities);
 		input::apply(&window, &mut cam);
-		display::render(&window, cam, &entities.positions, &images);
+		display::render(
+			&window,
+			cam,
+			&entities.positions,
+			&entities.visuals,
+			&images);
 
 		glfw::poll_events();
 	}
