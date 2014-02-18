@@ -1,7 +1,7 @@
 use gl;
 
 
-type Name = gl::types::GLuint;
+pub type Name = gl::types::GLuint;
 
 
 pub struct Texture {
