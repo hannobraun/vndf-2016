@@ -118,8 +118,11 @@ pub fn render(
 				texture.height as f64,
 				0.0);
 
-			gl::TexCoord2f(0.0f32, 1.0f32);
-			gl::Vertex3f(0.0f32, 0.0f32, 0.0f32);
+			gl::TexCoord2d(0.0, 1.0);
+			gl::Vertex3d(
+				0.0,
+				0.0,
+				0.0);
 		gl::End();
 
 		gl::PopMatrix();
