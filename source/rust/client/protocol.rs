@@ -3,8 +3,6 @@ use std::libc;
 use std::ptr;
 use std::str;
 
-use common::vec::Vec2;
-
 use entities::Entities;
 use net;
 
@@ -58,7 +56,7 @@ pub fn receive_positions(
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-			entities.positions.insert(id, Vec2 { x: x, y: y });
+			entities.update(id, x, y);
 		}
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
