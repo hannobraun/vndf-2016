@@ -1,5 +1,6 @@
 extern crate common;
 
+extern crate freetype;
 extern crate gl;
 extern crate glfw;
 extern crate stb_image;
@@ -21,6 +22,7 @@ mod images;
 mod input;
 mod net;
 mod protocol;
+mod text;
 mod texture;
 mod visual;
 
