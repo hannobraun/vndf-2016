@@ -17,7 +17,7 @@ struct Image {
 pub fn load() -> HashMap<~str, Texture> {
 	let image_path = ~"images/spaceship.png";
 
-	let image        = load_image(image_path.clone());
+	let image        = load_image(image_path);
 	let texture_name = create_texture(&image);
 
 	let texture = Texture {
@@ -31,8 +31,8 @@ pub fn load() -> HashMap<~str, Texture> {
 	images
 }
 
-fn load_image(name: ~str) -> Image {
-	match image::load(name) {
+fn load_image(name: &str) -> Image {
+	match image::load(name.into_owned()) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;
