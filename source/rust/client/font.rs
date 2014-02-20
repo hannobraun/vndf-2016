@@ -1,7 +1,7 @@
 use std::hashmap::HashMap;
-use std::libc;
 use std::ptr;
 use std::str;
+use std::vec;
 
 use freetype::freetype::{
 	FT_Face,
@@ -16,7 +16,6 @@ use freetype::freetype::{
 	FT_RENDER_MODE_NORMAL,
 	FT_Set_Pixel_Sizes,
 	struct_FT_GlyphSlotRec_};
-use gl;
 
 use texture::Texture;
 
@@ -65,38 +64,14 @@ fn load_char(c: char) -> Texture {
 			FT_RENDER_MODE_NORMAL);
 		assert!(render_error == 0);
 
-		// Generate texture names.
-		let mut texture_name: gl::types::GLuint = 0;
-		gl::GenTextures(1, &mut texture_name);
-
-		gl::BindTexture(
-			gl::TEXTURE_2D,
-			texture_name);
-
-		// Configure texture.
-		gl::TexParameteri(
-			gl::TEXTURE_2D,
-			gl::TEXTURE_MIN_FILTER,
-			gl::NEAREST as i32);
-
 		let bitmap =
 			(*(((*font_face).glyph) as *struct_FT_GlyphSlotRec_)).bitmap;
 
-		// Bind image data to texture name.
-		gl::TexImage2D(
-			gl::TEXTURE_2D,
-			0,
-			gl::ALPHA8 as i32,
-			bitmap.width,
-			bitmap.rows,
-			0,
-			gl::ALPHA,
-			gl::UNSIGNED_BYTE,
-			bitmap.buffer as *libc::c_void);
-
-		Texture {
-			name  : texture_name,
-			width : bitmap.width as uint,
-			height: bitmap.rows as uint}
+		Texture::new_alpha(
+			vec::from_buf(
+				bitmap.buffer,
+				(bitmap.width * bitmap.rows) as uint),
+			bitmap.width as uint,
+			bitmap.rows as uint)
 	}
 }

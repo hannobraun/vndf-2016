@@ -13,6 +13,10 @@ pub struct Texture {
 }
 
 impl Texture {
+	pub fn new_alpha(data: &[u8], width: uint, height: uint) -> Texture {
+		create_texture(data, width, height, gl::ALPHA, gl::ALPHA8)
+	}
+
 	pub fn new_rgb(data: &[u8], width: uint, height: uint) -> Texture {
 		create_texture(data, width, height, gl::RGBA, gl::RGBA8)
 	}
