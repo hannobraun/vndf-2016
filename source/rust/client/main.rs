@@ -6,6 +6,7 @@ extern crate glfw;
 extern crate stb_image;
 
 
+use std::hashmap::HashMap;
 use std::io;
 use std::os;
 use std::path;
@@ -67,6 +68,15 @@ fn main() {
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
+	let font   = text::load_font();
+
+	let mut textures = HashMap::new();
+	for (id, &texture) in images.iter() {
+		textures.insert(id.clone(), texture);
+	}
+	for (id, &texture) in font.iter() {
+		textures.insert(id.clone(), texture);
+	}
 
 	let     socket_fd  = net::connect(serverAddress, ~"34481");
 	let mut connection = protocol::init(socket_fd);
@@ -89,7 +99,7 @@ fn main() {
 			cam,
 			&entities.positions,
 			&entities.visuals,
-			&images);
+			&textures);
 
 		glfw::poll_events();
 	}
