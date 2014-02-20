@@ -68,7 +68,7 @@ fn main() {
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
-	let font   = font::load_font();
+	let font   = font::load();
 
 	let mut textures = HashMap::new();
 	for (id, &texture) in images.iter() {

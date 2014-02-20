@@ -21,7 +21,7 @@ use gl;
 use texture::Texture;
 
 
-pub fn load_font() -> HashMap<~str, Texture> {
+pub fn load() -> HashMap<~str, Texture> {
 	let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	let mut font = HashMap::new();
