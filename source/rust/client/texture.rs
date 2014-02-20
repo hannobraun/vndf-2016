@@ -14,12 +14,19 @@ pub struct Texture {
 
 impl Texture {
 	pub fn new_rgb(data: &[u8], width: uint, height: uint) -> Texture {
-		create_texture(data, width, height)
+		create_texture(data, width, height, gl::RGBA, gl::RGBA8)
 	}
 }
 
 
-fn create_texture(data: &[u8], width: uint, height: uint) -> Texture {
+fn create_texture(
+	data           : &[u8],
+	width          : uint,
+	height         : uint,
+	format         : gl::types::GLenum,
+	internal_format: gl::types::GLenum
+	) -> Texture {
+
 	let mut texture_name: gl::types::GLuint = 0;
 
 	unsafe {
@@ -40,11 +47,11 @@ fn create_texture(data: &[u8], width: uint, height: uint) -> Texture {
 		gl::TexImage2D(
 			gl::TEXTURE_2D,
 			0,
-			gl::RGBA8 as i32,
+			internal_format as i32,
 			width as i32,
 			height as i32,
 			0,
-			gl::RGBA,
+			format,
 			gl::UNSIGNED_BYTE,
 			data.as_ptr() as *libc::c_void);
 	}
