@@ -32,7 +32,7 @@ pub fn load() -> HashMap<~str, Texture> {
 	font
 }
 
-pub fn load_char(c: char) -> Texture {
+fn load_char(c: char) -> Texture {
 	unsafe {
 		let freetype: FT_Library = ptr::null();
 		let init_error = FT_Init_FreeType(&freetype);
