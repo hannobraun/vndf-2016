@@ -1,7 +1,5 @@
 use std::hashmap::HashMap;
-use std::libc;
 
-use gl;
 use stb_image::image;
 
 use texture::Texture;
@@ -18,7 +16,7 @@ pub fn load() -> HashMap<~str, Texture> {
 	let image_path = ~"images/spaceship.png";
 
 	let image   = load_image(image_path);
-	let texture = create_texture(
+	let texture = Texture::new(
 		image.data,
 		image.width,
 		image.height);
@@ -44,40 +42,4 @@ fn load_image(image_path: &str) -> Image {
 		image::ImageF32(_)    => fail!("Unexpected image type: ImageF32"),
 		image::Error(message) => fail!(message)
 	}
-}
-
-fn create_texture(data: &[u8], width: uint, height: uint) -> Texture {
-	let mut texture_name: gl::types::GLuint = 0;
-
-	unsafe {
-		// Generate texture names.
-		gl::GenTextures(1, &mut texture_name);
-
-		gl::BindTexture(
-			gl::TEXTURE_2D,
-			texture_name);
-
-		// Configure texture.
-		gl::TexParameteri(
-			gl::TEXTURE_2D,
-			gl::TEXTURE_MIN_FILTER,
-			gl::NEAREST as i32);
-
-		// Bind image data to texture name.
-		gl::TexImage2D(
-			gl::TEXTURE_2D,
-			0,
-			gl::RGBA8 as i32,
-			width as i32,
-			height as i32,
-			0,
-			gl::RGBA,
-			gl::UNSIGNED_BYTE,
-			data.as_ptr() as *libc::c_void);
-	}
-
-	Texture {
-		name  : texture_name,
-		width : width,
-		height: height }
 }
