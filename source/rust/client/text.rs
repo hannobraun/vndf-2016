@@ -22,62 +22,10 @@ use texture::Texture;
 
 
 pub fn load_font() -> HashMap<~str, Texture> {
-	let chars = [
-		'a',
-		'b',
-		'c',
-		'd',
-		'e',
-		'f',
-		'g',
-		'h',
-		'i',
-		'j',
-		'k',
-		'l',
-		'm',
-		'n',
-		'o',
-		'p',
-		'q',
-		'r',
-		's',
-		't',
-		'u',
-		'v',
-		'w',
-		'x',
-		'y',
-		'z',
-		'A',
-		'B',
-		'C',
-		'D',
-		'E',
-		'F',
-		'G',
-		'H',
-		'I',
-		'J',
-		'K',
-		'L',
-		'M',
-		'N',
-		'O',
-		'P',
-		'Q',
-		'R',
-		'S',
-		'T',
-		'U',
-		'V',
-		'W',
-		'X',
-		'Y',
-		'Z' ];
+	let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	let mut font = HashMap::new();
-	for &c in chars.iter() {
+	for c in chars.chars() {
 		font.insert(str::from_char(c), load_char_as_texture(c));
 	}
 
