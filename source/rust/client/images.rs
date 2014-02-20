@@ -18,7 +18,10 @@ pub fn load() -> HashMap<~str, Texture> {
 	let image_path = ~"images/spaceship.png";
 
 	let image   = load_image(image_path);
-	let texture = create_texture(&image);
+	let texture = create_texture(
+		image.data,
+		image.width,
+		image.height);
 
 	let mut images = HashMap::new();
 	images.insert(image_path, texture);
@@ -43,7 +46,7 @@ fn load_image(image_path: &str) -> Image {
 	}
 }
 
-fn create_texture(image: &Image) -> Texture {
+fn create_texture(data: &[u8], width: uint, height: uint) -> Texture {
 	let mut texture_name: gl::types::GLuint = 0;
 
 	unsafe {
@@ -65,16 +68,16 @@ fn create_texture(image: &Image) -> Texture {
 			gl::TEXTURE_2D,
 			0,
 			gl::RGBA8 as i32,
-			image.width as i32,
-			image.height as i32,
+			width as i32,
+			height as i32,
 			0,
 			gl::RGBA,
 			gl::UNSIGNED_BYTE,
-			image.data.as_ptr() as *libc::c_void);
+			data.as_ptr() as *libc::c_void);
 	}
 
 	Texture {
 		name  : texture_name,
-		width : image.width,
-		height: image.height }
+		width : width,
+		height: height }
 }
