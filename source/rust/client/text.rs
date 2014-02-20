@@ -26,13 +26,13 @@ pub fn load_font() -> HashMap<~str, Texture> {
 
 	let mut font = HashMap::new();
 	for c in chars.chars() {
-		font.insert(str::from_char(c), load_char_as_texture(c));
+		font.insert(str::from_char(c), load_char(c));
 	}
 
 	font
 }
 
-pub fn load_char_as_texture(c: char) -> Texture {
+pub fn load_char(c: char) -> Texture {
 	unsafe {
 		let freetype: FT_Library = ptr::null();
 		let init_error = FT_Init_FreeType(&freetype);
