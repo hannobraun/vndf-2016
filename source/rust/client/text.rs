@@ -1,5 +1,7 @@
+use std::hashmap::HashMap;
 use std::libc;
 use std::ptr;
+use std::str;
 
 use freetype::freetype::{
 	FT_Face,
@@ -18,6 +20,69 @@ use gl;
 
 use texture::Texture;
 
+
+pub fn load_font() -> HashMap<~str, Texture> {
+	let chars = [
+		'a',
+		'b',
+		'c',
+		'd',
+		'e',
+		'f',
+		'g',
+		'h',
+		'i',
+		'j',
+		'k',
+		'l',
+		'm',
+		'n',
+		'o',
+		'p',
+		'q',
+		'r',
+		's',
+		't',
+		'u',
+		'v',
+		'w',
+		'x',
+		'y',
+		'z',
+		'A',
+		'B',
+		'C',
+		'D',
+		'E',
+		'F',
+		'G',
+		'H',
+		'I',
+		'J',
+		'K',
+		'L',
+		'M',
+		'N',
+		'O',
+		'P',
+		'Q',
+		'R',
+		'S',
+		'T',
+		'U',
+		'V',
+		'W',
+		'X',
+		'Y',
+		'Z' ];
+
+	let mut font = HashMap::new();
+	for &c in chars.iter() {
+		font.insert(str::from_char(c), load_char_as_texture(c));
+	}
+
+	font
+}
 
 pub fn load_char_as_texture(c: char) -> Texture {
 	unsafe {
