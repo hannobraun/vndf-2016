@@ -36,17 +36,19 @@ fn create_texture(
 	unsafe {
 		// Generate texture names.
 		gl::GenTextures(1, &mut texture_name);
+	}
 
-		gl::BindTexture(
-			gl::TEXTURE_2D,
-			texture_name);
+	gl::BindTexture(
+		gl::TEXTURE_2D,
+		texture_name);
 
-		// Configure texture.
-		gl::TexParameteri(
-			gl::TEXTURE_2D,
-			gl::TEXTURE_MIN_FILTER,
-			gl::NEAREST as i32);
+	// Configure texture.
+	gl::TexParameteri(
+		gl::TEXTURE_2D,
+		gl::TEXTURE_MIN_FILTER,
+		gl::NEAREST as i32);
 
+	unsafe {
 		// Bind image data to texture name.
 		gl::TexImage2D(
 			gl::TEXTURE_2D,
