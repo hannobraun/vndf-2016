@@ -47,6 +47,19 @@ fn create_texture(
 		gl::TEXTURE_MIN_FILTER,
 		gl::NEAREST as i32);
 
+	// By default, textures are configured to repeat. Since our textures fill
+	// the complete shapes they're rendered on, they won't repeat. However, the
+	// setting leads to visual artifacts around the texture border. The
+	// following configuration prevents that.
+	gl::TexParameteri(
+		gl::TEXTURE_2D,
+		gl::TEXTURE_WRAP_S,
+		gl::CLAMP_TO_EDGE as i32);
+	gl::TexParameteri(
+		gl::TEXTURE_2D,
+		gl::TEXTURE_WRAP_T,
+		gl::CLAMP_TO_EDGE as i32);
+
 	// Bind image data to texture name.
 	unsafe {
 		gl::TexImage2D(
