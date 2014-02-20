@@ -19,11 +19,11 @@ use entities::Entities;
 mod camera;
 mod display;
 mod entities;
+mod font;
 mod images;
 mod input;
 mod net;
 mod protocol;
-mod text;
 mod texture;
 mod visual;
 
@@ -68,7 +68,7 @@ fn main() {
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
-	let font   = text::load_font();
+	let font   = font::load_font();
 
 	let mut textures = HashMap::new();
 	for (id, &texture) in images.iter() {
