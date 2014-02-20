@@ -71,10 +71,7 @@ fn main() {
 	let font   = font::load();
 
 	let mut textures = HashMap::new();
-	for (id, &texture) in images.iter() {
-		textures.insert(id.clone(), texture);
-	}
-	for (id, &texture) in font.iter() {
+	for (id, &texture) in images.iter().chain(font.iter()) {
 		textures.insert(id.clone(), texture);
 	}
 
