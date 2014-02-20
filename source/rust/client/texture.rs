@@ -38,7 +38,7 @@ fn create_texture(
 		gl::GenTextures(1, &mut texture_name);
 	}
 
-	// Configure texture.
+	// Not sure what these to do, but they're required.
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture_name);
