@@ -16,7 +16,7 @@ pub fn load() -> HashMap<~str, Texture> {
 	let image_path = ~"images/spaceship.png";
 
 	let image   = load_image(image_path);
-	let texture = Texture::new(
+	let texture = Texture::new_rgb(
 		image.data,
 		image.width,
 		image.height);

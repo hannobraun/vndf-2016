@@ -13,7 +13,7 @@ pub struct Texture {
 }
 
 impl Texture {
-	pub fn new(data: &[u8], width: uint, height: uint) -> Texture {
+	pub fn new_rgb(data: &[u8], width: uint, height: uint) -> Texture {
 		create_texture(data, width, height)
 	}
 }
