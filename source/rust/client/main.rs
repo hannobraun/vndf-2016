@@ -80,6 +80,8 @@ fn main() {
 
 	let mut entities = Entities::new();
 
+	entities.update_asteroid(999, 0.0, 0.0);
+
 	let mut cam = Camera::new();
 
 	while !window.should_close() &&
