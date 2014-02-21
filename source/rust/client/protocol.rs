@@ -65,7 +65,7 @@ pub fn receive_positions(
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-			entities.remove(id);
+			entities.remove_ship(id);
 		}
 		else {
 			print!("Unknown message type in message: {:s}\n", message);

@@ -26,7 +26,7 @@ impl Entities {
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 
-	pub fn remove(&mut self, id: Id) {
+	pub fn remove_ship(&mut self, id: Id) {
 		self.positions.remove(&id);
 		self.visuals.remove(&id);
 	}
