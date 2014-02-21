@@ -2,15 +2,6 @@
 
 source project.conf
 
-SPEC_FILES=$(find tests/ -name "*.c")
-SOURCE_FILES="source/c/common/vec.c"
-
-for SPEC_FILE in $SPEC_FILES
-do
-	SPEC_NAME="${SPEC_FILE%.*}"
-	BINARY=$OUTPUT_DIR/$SPEC_NAME-test
-
-	./scripts/tools/compile \
-		"$SPEC_FILE $SOURCE_FILES" "" "" $BINARY &&
-		./$BINARY $@
-done
+./scripts/tools/test-rust \
+	"-L $OUTPUT_LIB_RUST" \
+	tests/acceptance/main.rs
