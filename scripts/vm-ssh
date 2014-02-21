@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-./scripts/nomad/nomad-ssh root
