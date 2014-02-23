@@ -45,8 +45,7 @@ fn main() {
 		textures.insert(id.clone(), texture);
 	}
 
-	let     socket_fd  = net::connect(core.server_address, ~"34481");
-	let mut connection = protocol::init(socket_fd);
+	let mut connection = protocol::init(core.socket_fd);
 
 	let mut entities = Entities::new();
 

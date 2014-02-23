@@ -1,17 +1,22 @@
 use std::io;
+use std::libc;
 use std::os;
 use std::path;
 use std::str;
 
+use net;
+
 
 pub struct Core {
-	server_address: ~str
+	socket_fd: libc::c_int
 }
 
 impl Core {
 	pub fn start() -> ~Core {
+		let server_address = get_server_address();
+
 		~Core {
-			server_address: get_server_address() }
+			socket_fd: net::connect(server_address, ~"34481") }
 	}
 }
 
