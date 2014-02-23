@@ -36,35 +36,7 @@ fn main() {
 	let screen_width  = 800;
 	let screen_height = 600;
 
-	let args = os::args();
-
-	if args.len() > 2 {
-		print!("Usage: {:s} serverAddress\n", args[0]);
-		return
-	}
-
-	let serverAddress = if args.len() == 2 {
-		args[1]
-	}
-	else {
-		let mut file = match io::File::open(&path::posix::Path::new("server")) {
-			Ok(file) => file,
-			Err(e)   => {
-				print!("ERROR {}\n", e);
-				fail!();
-			}
-		};
-
-		let contents = match file.read_to_end() {
-			Ok(contents) => contents,
-			Err(e)       => {
-				print!("ERROR {}\n", e);
-				fail!();
-			}
-		};
-
-		str::from_utf8(contents).unwrap_or_else(|| { fail!() }).to_owned()
-	};
+	let server_address = get_server_address();
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
@@ -75,7 +47,7 @@ fn main() {
 		textures.insert(id.clone(), texture);
 	}
 
-	let     socket_fd  = net::connect(serverAddress, ~"34481");
+	let     socket_fd  = net::connect(server_address, ~"34481");
 	let mut connection = protocol::init(socket_fd);
 
 	let mut entities = Entities::new();
@@ -101,5 +73,36 @@ fn main() {
 			&textures);
 
 		glfw::poll_events();
+	}
+}
+
+fn get_server_address() -> ~str {
+	let args = os::args();
+
+	if args.len() > 2 {
+		fail!("Usage: {:s} serverAddress\n", args[0]);
+	}
+
+	if args.len() == 2 {
+		args[1]
+	}
+	else {
+		let mut file = match io::File::open(&path::posix::Path::new("server")) {
+			Ok(file) => file,
+			Err(e)   => {
+				print!("ERROR {}\n", e);
+				fail!();
+			}
+		};
+
+		let contents = match file.read_to_end() {
+			Ok(contents) => contents,
+			Err(e)       => {
+				print!("ERROR {}\n", e);
+				fail!();
+			}
+		};
+
+		str::from_utf8(contents).unwrap_or_else(|| { fail!() }).to_owned()
 	}
 }
