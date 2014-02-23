@@ -13,10 +13,12 @@ use std::path;
 use std::str;
 
 use camera::Camera;
+use core::Core;
 use entities::Entities;
 
 
 mod camera;
+mod core;
 mod display;
 mod entities;
 mod font;
@@ -35,6 +37,8 @@ extern {}
 fn main() {
 	let screen_width  = 800;
 	let screen_height = 600;
+
+	let core = Core::start();
 
 	let server_address = get_server_address();
 
