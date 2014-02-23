@@ -34,7 +34,7 @@ fn main() {
 	let screen_width  = 800;
 	let screen_height = 600;
 
-	let core = Core::start();
+	let mut core = Core::start();
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
@@ -44,8 +44,6 @@ fn main() {
 	for (id, &texture) in images.iter().chain(font.iter()) {
 		textures.insert(id.clone(), texture);
 	}
-
-	let mut connection = protocol::init(core.socket_fd);
 
 	let mut entities = Entities::new();
 
@@ -57,7 +55,7 @@ fn main() {
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
 		protocol::receive_positions(
-			&mut connection,
+			&mut core.connection,
 			entities);
 		input::apply(
 			&window,
