@@ -3,5 +3,6 @@
 source project.conf
 
 ./scripts/tools/test-rust \
+	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	tests/acceptance/main.rs

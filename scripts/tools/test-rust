@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
 then
-	echo "Usage: $(basename $0) libArgs sourceFile"
+	echo "Usage: $(basename $0) rustc libArgs sourceFile"
 	exit 1
 fi
 
-LIB_ARGS=$1
-SOURCE_FILE=$2
+RUSTC=$1
+LIB_ARGS=$2
+SOURCE_FILE=$3
 
 RUST_TEST=/tmp/rust-test-$RANDOM
 
 mkdir -p $(dirname $RUST_TEST)
 
-rustc $LIB_ARGS --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST
+$RUSTC $LIB_ARGS --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST
