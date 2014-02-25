@@ -2,7 +2,7 @@
 
 source project.conf
 
-rustc \
+$RUSTC \
 	--out-dir $OUTPUT_LIB_RUST \
 	-L $OUTPUT_LIB \
 	--debuginfo \
