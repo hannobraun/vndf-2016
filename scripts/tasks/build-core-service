@@ -6,10 +6,12 @@ mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $(dirname $CORE_SERVICE_BINARY)
 
 ./scripts/tools/compile-rust \
+	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/common/main.rs &&
 ./scripts/tools/compile-rust \
+	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"-o $CORE_SERVICE_BINARY" \
 	source/rust/core-service/main.rs

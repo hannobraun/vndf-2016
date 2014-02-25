@@ -6,10 +6,12 @@ mkdir -p $CLIENT_DIST_DIR
 mkdir -p $OUTPUT_LIB_RUST
 
 ./scripts/tools/compile-rust \
+	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/common/main.rs &&
 ./scripts/tools/compile-rust \
+	$RUSTC \
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
 	"-o $CLIENT_BINARY" \
 	source/rust/client/main.rs
