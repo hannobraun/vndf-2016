@@ -1,6 +1,6 @@
 extern crate freetype;
 extern crate gl;
-extern crate glfw;
+extern crate glfw = "glfw-rs";
 extern crate stb_image;
 
 extern crate common;
