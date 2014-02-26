@@ -1,4 +1,4 @@
-use std::hashmap::HashMap;
+use collections::HashMap;
 use std::ptr;
 use std::str;
 use std::vec;

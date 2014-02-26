@@ -1,3 +1,5 @@
+extern crate collections;
+
 extern crate freetype;
 extern crate gl;
 extern crate glfw = "glfw-rs";
@@ -5,7 +7,7 @@ extern crate stb_image;
 
 extern crate common;
 
-use std::hashmap::HashMap;
+use collections::HashMap;
 
 use camera::Camera;
 use core::Core;

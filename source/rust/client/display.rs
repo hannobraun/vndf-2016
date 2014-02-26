@@ -1,5 +1,5 @@
+use collections::HashMap;
 use std::f64;
-use std::hashmap::HashMap;
 use std::iter::Iterator;
 
 use gl;

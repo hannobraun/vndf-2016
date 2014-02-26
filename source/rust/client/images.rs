@@ -1,4 +1,4 @@
-use std::hashmap::HashMap;
+use collections::HashMap;
 
 use stb_image::image;
 
