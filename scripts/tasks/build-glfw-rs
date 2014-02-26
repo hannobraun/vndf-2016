@@ -6,4 +6,4 @@ $RUSTC \
 	--out-dir $OUTPUT_LIB_RUST \
 	-L $OUTPUT_LIB \
 	--debuginfo \
-	vendor/glfw-rs/src/lib.rs
+	vendor/glfw-rs/src/lib/lib.rs

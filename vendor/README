@@ -1,16 +1,11 @@
-This file is supposed to document what the source of the dependencies here in
-vendor is. Right now it's incomplete. Please update as you update the
-dependencies.
+This file used to document what the source of the dependencies here in vendor
+is, although it was always incomplete. I've since decided to switch to
+submodules. I'm leaving this file until all the dependencies have been upgraded.
 
 gl-rs
 Repository: https://github.com/bjz/gl-rs
 Branch/Tag: master
 Commit:     fcef2e1b56b03293a06e7eb8456a2af5c74451ab
-
-glfw-rs
-Repository: https://github.com/hannobraun/glfw-rs
-Branch/Tag: master
-Commit:     9739e3ad6cbc9359d61aea146591898675ffac1d
 
 rust-freetype
 Repository: https://github.com/mozilla-servo/rust-freetype.git

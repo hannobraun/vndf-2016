@@ -1,3 +1,6 @@
 [submodule "vendor/rust"]
 	path = vendor/rust
 	url = https://github.com/mozilla/rust.git
+[submodule "vendor/glfw-rs"]
+	path = vendor/glfw-rs
+	url = https://github.com/bjz/glfw-rs.git
