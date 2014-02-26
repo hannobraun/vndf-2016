@@ -1,10 +1,9 @@
-extern crate common;
-
 extern crate freetype;
 extern crate gl;
 extern crate glfw;
 extern crate stb_image;
 
+extern crate common;
 
 use std::hashmap::HashMap;
 
