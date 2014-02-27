@@ -1,8 +1,8 @@
 use collections::HashMap;
 
+use ccore::protocol::Handler;
 use common::vec::Vec2;
 
-use protocol::Handler;
 use visual::Visual;
 
 

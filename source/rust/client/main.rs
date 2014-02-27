@@ -22,7 +22,6 @@ mod entities;
 mod font;
 mod images;
 mod input;
-mod protocol;
 mod texture;
 mod visual;
 

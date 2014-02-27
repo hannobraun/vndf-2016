@@ -4,10 +4,10 @@ use std::path;
 use std::str;
 
 use ccore::net;
+use ccore::protocol;
+use ccore::protocol::Connection;
 
 use entities::Entities;
-use protocol;
-use protocol::Connection;
 
 
 pub struct Core {

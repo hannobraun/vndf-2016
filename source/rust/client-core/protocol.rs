@@ -3,7 +3,7 @@ use std::libc;
 use std::ptr;
 use std::str;
 
-use ccore::net;
+use net;
 
 
 static BUFFER_SIZE : libc::c_int = 256;
