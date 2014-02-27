@@ -3,4 +3,4 @@
 	url = https://github.com/mozilla/rust.git
 [submodule "vendor/glfw-rs"]
 	path = vendor/glfw-rs
-	url = https://github.com/bjz/glfw-rs.git
+	url = https://github.com/hannobraun/glfw-rs.git
