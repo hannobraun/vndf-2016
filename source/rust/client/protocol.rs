@@ -5,8 +5,6 @@ use std::str;
 
 use ccore::net;
 
-use entities::Entities;
-
 
 static BUFFER_SIZE : libc::c_int = 256;
 
@@ -32,7 +30,7 @@ pub fn init(socket_fd: libc::c_int) -> Connection {
 
 pub fn receive_positions(
 	connection: &mut Connection,
-	entities  : &mut Entities) {
+	handler   : &mut Handler) {
 
 	let bytes_received = net::receive(
 		connection.socket_fd,
@@ -62,7 +60,7 @@ pub fn receive_positions(
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-			entities.update_ship(id, x, y);
+			handler.update_ship(id, x, y);
 		}
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
@@ -71,7 +69,7 @@ pub fn receive_positions(
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
-			entities.remove_ship(id);
+			handler.remove_ship(id);
 		}
 		else {
 			print!("Unknown message type in message: {:s}\n", message);
