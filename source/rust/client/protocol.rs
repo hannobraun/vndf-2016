@@ -12,8 +12,8 @@ static BUFFER_SIZE : libc::c_int = 256;
 
 
 pub struct Connection {
-	socket_fd: libc::c_int,
-	buffer   : [i8, ..BUFFER_SIZE],
+	socket_fd : libc::c_int,
+	buffer    : [i8, ..BUFFER_SIZE],
 	buffer_pos: uint
 }
 
