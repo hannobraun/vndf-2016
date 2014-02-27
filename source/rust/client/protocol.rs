@@ -17,6 +17,11 @@ pub struct Connection {
 	buffer_pos: uint
 }
 
+pub trait Handler {
+	fn update_ship(&mut self, id: int, x: f64, y: f64);
+	fn remove_ship(&mut self, id: int);
+}
+
 
 pub fn init(socket_fd: libc::c_int) -> Connection {
 	Connection {
