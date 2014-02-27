@@ -55,9 +55,7 @@ fn main() {
 	while !window.should_close() &&
 		window.get_key(glfw::KeyEscape) == glfw::Release {
 
-		protocol::receive_positions(
-			&mut core.connection,
-			entities);
+		core.update_positions(entities);
 		input::apply(
 			&window,
 			cam);

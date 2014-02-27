@@ -3,8 +3,10 @@ use std::os;
 use std::path;
 use std::str;
 
+use entities::Entities;
 use net;
 use protocol;
+use protocol::Connection;
 
 
 pub struct Core {
@@ -18,6 +20,13 @@ impl Core {
 
 		~Core {
 			connection: protocol::init(socket_fd) }
+	}
+
+	pub fn update_positions(&mut self, entities: &mut Entities) {
+
+		protocol::receive_positions(
+			&mut self.connection,
+			entities);
 	}
 }
 
