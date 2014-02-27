@@ -3,8 +3,9 @@ use std::os;
 use std::path;
 use std::str;
 
+use ccore::net;
+
 use entities::Entities;
-use net;
 use protocol;
 use protocol::Connection;
 

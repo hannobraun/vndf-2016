@@ -6,6 +6,7 @@ extern crate glfw = "glfw-rs";
 extern crate stb_image;
 
 extern crate common;
+extern crate ccore = "client-core";
 
 use collections::HashMap;
 
@@ -21,7 +22,6 @@ mod entities;
 mod font;
 mod images;
 mod input;
-mod net;
 mod protocol;
 mod texture;
 mod visual;
