@@ -2,6 +2,7 @@ use collections::HashMap;
 
 use common::vec::Vec2;
 
+use protocol::Handler;
 use visual::Visual;
 
 
@@ -21,18 +22,20 @@ impl Entities {
 			visuals  : HashMap::new() }
 	}
 
-	pub fn update_ship(&mut self, id: Id, x: f64, y: f64) {
+	pub fn update_asteroid(&mut self, id: Id, x: f64, y: f64) {
+		self.positions.insert(id, Vec2 { x: x, y: y });
+		self.visuals.insert(id, Visual { texture: ~"A" });
+	}
+}
+
+impl Handler for Entities {
+	fn update_ship(&mut self, id: Id, x: f64, y: f64) {
 		self.positions.insert(id, Vec2 { x: x, y: y });
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 
-	pub fn remove_ship(&mut self, id: Id) {
+	fn remove_ship(&mut self, id: Id) {
 		self.positions.remove(&id);
 		self.visuals.remove(&id);
-	}
-
-	pub fn update_asteroid(&mut self, id: Id, x: f64, y: f64) {
-		self.positions.insert(id, Vec2 { x: x, y: y });
-		self.visuals.insert(id, Visual { texture: ~"A" });
 	}
 }
