@@ -20,8 +20,26 @@ impl Core {
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
+		let mut handler = ProtocolHandler {
+			entities: entities };
+
 		protocol::receive_positions(
 			&mut self.connection,
-			entities);
+			&mut handler);
+	}
+}
+
+
+struct ProtocolHandler<'a> {
+	entities: &'a mut Entities
+}
+
+impl<'a> protocol::Handler for ProtocolHandler<'a> {
+	fn update_ship(&mut self, id: int, x: f64, y: f64) {
+		self.entities.update_ship(id, x, y);
+	}
+
+	fn remove_ship(&mut self, id: int) {
+		self.entities.remove_ship(id);
 	}
 }
