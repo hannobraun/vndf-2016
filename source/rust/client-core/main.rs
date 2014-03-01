@@ -3,5 +3,6 @@
 
 extern crate common;
 
+pub mod args;
 pub mod net;
 pub mod protocol;
