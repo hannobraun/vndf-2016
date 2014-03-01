@@ -24,7 +24,6 @@ impl Core {
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-
 		protocol::receive_positions(
 			&mut self.connection,
 			entities);
