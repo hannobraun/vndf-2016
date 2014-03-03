@@ -1,45 +1,71 @@
-use ccore::args;
-use ccore::net;
-use ccore::protocol;
-use ccore::protocol::Connection;
+use std::from_str;
+use std::io::{BufferedReader, Process};
+use std::os;
 
 use entities::Entities;
 
 
+// This module starts the vndf-core executable and reads its messages, updating
+// the ships. The approach used here to do this is certainly not ideal:
+// - The I/O used to read the messages is blocking.
+// - We're reading this without the use of any tasks or anything else that would
+//   introduce asynchronicity.
+// - Ergo, we're binding the rendering rate to the rate of messages received
+//   from vndf-core.
+// I've tried to prevent just that by reading from vndf-core in a task and
+// reading from the task without blocking. This didn't work. There were a lot of
+// timing issues that I was unable to track down.
+// For now, this ghetto solution works well enough. However, this code should be
+// revisited, once task support is more solid, or, if it is already solid, I've
+// learned how to use it correctly, or until Rust grows asynch I/O.
+
+
 pub struct Core {
-	connection: protocol::Connection
+	process: Process
 }
 
 impl Core {
 	pub fn start() -> ~Core {
-		let server_address = args::get_server_address();
-		let socket_fd      = net::connect(server_address, ~"34481");
+		let mut path = match os::self_exe_path() {
+			Some(path) => path,
+			None       => fail!("Failed to get executable path.")
+		};
+
+		path.push("client-core");
+		let process = match Process::new(path.as_str().unwrap(),[~"localhost"]) {
+			Ok(process) => process,
+			Err(error)  => fail!("Failed to create process: {}", error)
+		};
 
 		~Core {
-			connection: protocol::init(socket_fd) }
+			process: process }
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-		let mut handler = ProtocolHandler {
-			entities: entities };
+		let     stdout = self.process.stdout.clone().unwrap();
+		let mut reader = BufferedReader::new(stdout);
 
-		protocol::receive_positions(
-			&mut self.connection,
-			&mut handler);
-	}
-}
+		let message = match reader.read_line() {
+			Ok(message) => message,
+			Err(error)  => fail!(error)
+		};
 
+		let words = message.words().to_owned_vec();
+		if words[0] == "UPDATE" {
+			let id = from_str::from_str(
+				words[1]).unwrap_or_else(|| { fail!() });
+			let x = from_str::from_str(
+				words[2]).unwrap_or_else(|| { fail!() });
+			let y = from_str::from_str(
+				words[3]).unwrap_or_else(|| { fail!() });
 
-struct ProtocolHandler<'a> {
-	entities: &'a mut Entities
-}
+			entities.update_ship(id, x, y);
+		}
+		if words[0] == "REMOVE" {
+			let id = from_str::from_str(
+				words[1]).unwrap_or_else(|| { fail!() });
 
-impl<'a> protocol::Handler for ProtocolHandler<'a> {
-	fn update_ship(&mut self, id: int, x: f64, y: f64) {
-		self.entities.update_ship(id, x, y);
-	}
-
-	fn remove_ship(&mut self, id: int) {
-		self.entities.remove_ship(id);
+			entities.remove_ship(id);
+		}
 	}
 }

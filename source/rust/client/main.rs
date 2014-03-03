@@ -6,7 +6,6 @@ extern crate glfw = "glfw-rs";
 extern crate stb_image;
 
 extern crate common;
-extern crate ccore = "client-core";
 
 use collections::HashMap;
 
