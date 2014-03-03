@@ -61,7 +61,7 @@ impl Clients {
 }
 
 
-struct IdPool {
+pub struct IdPool {
 	capacity: uint,
 	pool    : ~[uint]
 }
