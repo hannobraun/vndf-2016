@@ -7,4 +7,5 @@ source project.conf
 (rm -f $CLIENT_DIST_DIR/images;
 	ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
 cp -r source/config/server $CLIENT_DIST_DIR &&
-cp $CLIENT_CORE_BINARY $CLIENT_DIST_DIR
+cp $CLIENT_CORE_BINARY $CLIENT_DIST_DIR &&
+cp $CLIENT_UI_BINARY $CLIENT_DIST_DIR
