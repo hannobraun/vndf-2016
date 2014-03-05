@@ -26,4 +26,6 @@ if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
     ./scripts/tasks/build-rust-stb-image
 fi
 
-./scripts/tasks/build-client && cd $CLIENT_DIST_DIR && $BINARY localhost
+./scripts/tasks/build-client &&
+./scripts/tasks/arrange-client &&
+(cd $CLIENT_DIST_DIR && $BINARY localhost)

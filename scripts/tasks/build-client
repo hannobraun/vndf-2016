@@ -20,13 +20,3 @@ mkdir -p $OUTPUT_LIB_RUST
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
 	"-o $CLIENT_BINARY" \
 	source/rust/client/main.rs
-
-if [ $? -ne 0 ]; then
-	exit 1
-fi
-
-(rm -f $CLIENT_DIST_DIR/fonts;
-	ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
-(rm -f $CLIENT_DIST_DIR/images;
-	ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
-cp -r source/config/server $CLIENT_DIST_DIR
