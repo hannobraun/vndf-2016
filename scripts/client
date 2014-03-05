@@ -10,7 +10,7 @@ if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
     ./scripts/tasks/build-rust-freetype
 fi
 
-if [ ! -f $OUTPUT_LIB_RUST/libgl* ]; then
+if [ ! -f $OUTPUT_LIB_RUST/libgl-* ]; then
     ./scripts/tasks/build-gl-rs
 fi
 
