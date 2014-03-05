@@ -4,6 +4,7 @@ source project.conf
 
 mkdir -p $CLIENT_DIST_DIR
 mkdir -p $OUTPUT_LIB_RUST
+mkdir -p $OUTPUT_BIN
 
 ./scripts/tools/compile-rust \
 	$RUSTC \
