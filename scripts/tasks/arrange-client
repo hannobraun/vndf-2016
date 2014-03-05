@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 
+if [ $# -ne 1 ]
+then
+	echo "Usage: $(basename $0) <dist-dir>"
+	exit 1
+fi
+
+DIST_DIR=$1
+
+
+
 source project.conf
 
-(rm -f $CLIENT_DIST_DIR/fonts;
-	ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
-(rm -f $CLIENT_DIST_DIR/images;
-	ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
-cp -r source/config/server $CLIENT_DIST_DIR &&
-cp $CLIENT_CORE_BINARY $CLIENT_DIST_DIR &&
-cp $CLIENT_UI_BINARY $CLIENT_DIST_DIR
+(rm -f $DIST_DIR/fonts;
+	ln -s $(pwd)/source/fonts $DIST_DIR/fonts) &&
+(rm -f $DIST_DIR/images;
+	ln -s $(pwd)/source/images $DIST_DIR/images) &&
+cp -r source/config/server $DIST_DIR &&
+cp $CLIENT_CORE_BINARY $DIST_DIR &&
+cp $CLIENT_UI_BINARY $DIST_DIR

@@ -27,5 +27,5 @@ if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
 fi
 
 ./scripts/tasks/build-client &&
-./scripts/tasks/arrange-client &&
+./scripts/tasks/arrange-client $CLIENT_DIST_DIR &&
 (cd $CLIENT_DIST_DIR && $BINARY localhost)
