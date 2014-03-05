@@ -18,5 +18,5 @@ mkdir -p $OUTPUT_LIB_RUST
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
-	"-o $CLIENT_BINARY" \
+	"-o $CLIENT_UI_BINARY" \
 	source/rust/client/main.rs
