@@ -27,6 +27,8 @@ fi
 
 RUST_LIBS=$(find $OUTPUT_LIB_RUST -name *.a)
 
-(rm $CLIENT_DIST_DIR/fonts; ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
-(rm $CLIENT_DIST_DIR/images; ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
+(rm -f $CLIENT_DIST_DIR/fonts;
+	ln -s $(pwd)/source/fonts $CLIENT_DIST_DIR/fonts) &&
+(rm -f $CLIENT_DIST_DIR/images;
+	ln -s $(pwd)/source/images $CLIENT_DIST_DIR/images) &&
 cp -r source/config/server $CLIENT_DIST_DIR
