@@ -6,17 +6,3 @@ gl-rs
 Repository: https://github.com/bjz/gl-rs
 Branch/Tag: master
 Commit:     fcef2e1b56b03293a06e7eb8456a2af5c74451ab
-
-rust-freetype
-Repository: https://github.com/mozilla-servo/rust-freetype.git
-Branch/Tag: master
-Commit    : 8fbf9cb1805a69b788307fc1b362eeb9805a9a0a
-
-rust-stb-image
-Repository: https://github.com/hannobraun/rust-stb-image
-Branch/Tag: master
-Commit:     6ffdf48a9869285c08c328222de04f571f4346fa
-Note:       This is a temporary fork. We can go back to upstream
-            (https://github.com/mozilla-servo/rust-stb-image) once the update
-            to the latest Rust version is merged
-            (https://github.com/mozilla-servo/rust-stb-image/pull/24).
