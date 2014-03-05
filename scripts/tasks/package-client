@@ -5,4 +5,4 @@ source project.conf
 ARCHIVE=$(pwd)/$CLIENT_ARCHIVE
 
 cd $OUTPUT_DIR
-tar -chzf $ARCHIVE $(basename $CLIENT_DIST_DIR)
+tar -chzf $ARCHIVE $(basename $DIST_DEV)
