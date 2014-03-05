@@ -31,7 +31,7 @@ impl Core {
 			None       => fail!("Failed to get executable path.")
 		};
 
-		path.push("client-core");
+		path.push("vndf-client-core");
 		let process = match Process::new(path.as_str().unwrap(),[~"localhost"]) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to create process: {}", error)

@@ -13,7 +13,7 @@ mkdir -p $OUTPUT_LIB_RUST
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
-	"-o $CLIENT_DIST_DIR/client-core" \
+	"-o $CLIENT_DIST_DIR/vndf-client-core" \
 	source/rust/client-core/main.rs &&
 ./scripts/tools/compile-rust \
 	$RUSTC \
