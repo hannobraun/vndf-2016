@@ -7,3 +7,6 @@
 [submodule "vendor/rust-freetype"]
 	path = vendor/rust-freetype
 	url = https://github.com/hannobraun/rust-freetype.git
+[submodule "vendor/rust-stb-image"]
+	path = vendor/rust-stb-image
+	url = https://github.com/hannobraun/rust-stb-image.git

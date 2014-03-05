@@ -1,7 +1,0 @@
-*.dylib
-*.dSYM
-*.a
-*.dummy
-*.o
-*.rlib
-Makefile
