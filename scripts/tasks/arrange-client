@@ -8,9 +8,9 @@ fi
 
 DIST_DIR=$1
 
-
-
 source project.conf
+
+mkdir -p $DIST_DIR
 
 cp -rf source/fonts $DIST_DIR &&
 cp -rf source/images $DIST_DIR &&
