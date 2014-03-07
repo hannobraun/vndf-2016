@@ -17,12 +17,12 @@ use entities::Entities;
 mod args;
 mod camera;
 mod core;
-mod display;
 mod entities;
 mod font;
 mod images;
 mod input;
 mod texture;
+mod ui;
 mod visual;
 
 
@@ -36,7 +36,7 @@ fn main() {
 
 	let mut core = Core::start(args::get_server_address());
 
-	let window = display::init(screen_width, screen_height);
+	let window = ui::init(screen_width, screen_height);
 	let images = images::load();
 	let font   = font::load();
 
@@ -56,7 +56,7 @@ fn main() {
 		input::apply(
 			&window.glfw_window,
 			cam);
-		display::render(
+		ui::render(
 			window,
 			cam,
 			&entities.positions,
