@@ -108,6 +108,7 @@ fn draw_texture(position: &Vec2, texture: &Texture) {
 		0.0);
 
 	gl::Begin(gl::TRIANGLE_STRIP);
+	{
 		gl::TexCoord2d(
 			1.0,
 			0.0);
@@ -139,6 +140,7 @@ fn draw_texture(position: &Vec2, texture: &Texture) {
 			0.0,
 			0.0,
 			0.0);
+	}
 	gl::End();
 
 	gl::PopMatrix();
