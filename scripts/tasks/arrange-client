@@ -22,6 +22,5 @@ echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
 chmod a+x $START_SCRIPT &&
 cp -rf source/fonts $DIST_DIR &&
 cp -rf source/images $DIST_DIR &&
-cp -rf source/config/server $DIST_DIR &&
 cp $CLIENT_CORE_BINARY $DIST_DIR &&
 cp $CLIENT_UI_BINARY $DIST_DIR
