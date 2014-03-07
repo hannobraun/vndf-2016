@@ -26,9 +26,7 @@ pub fn init(screen_width: u32, screen_height: u32) -> ~window::Window {
 	let window = window::Window::create(screen_width, screen_height);
 	init_gl(screen_width, screen_height);
 
-	~window::Window {
-		glfw_window: window
-	}
+	window
 }
 
 fn init_gl(screen_width: u32, screen_height: u32) {

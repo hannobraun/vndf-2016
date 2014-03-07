@@ -6,7 +6,7 @@ pub struct Window {
 }
 
 impl Window {
-	pub fn create(width: u32, height: u32) -> glfw::Window {
+	pub fn create(width: u32, height: u32) -> ~Window {
 		let window_opt = glfw::Window::create(
 			width, height,
 			"Von Neumann Defense Force",
@@ -19,7 +19,9 @@ impl Window {
 
 		window.make_context_current();
 
-		window
+		~Window {
+			glfw_window: window
+		}
 	}
 
 	pub fn should_close(&self) -> bool {
