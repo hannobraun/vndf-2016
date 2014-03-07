@@ -11,10 +11,4 @@ LIB_ARGS=$2
 OUTPUT_ARGS=$3
 SOURCE_FILE=$4
 
-RUST_TEST=/tmp/rust-test-$RANDOM
-
-mkdir -p $(dirname $RUST_TEST)
-
-$RUSTC $LIB_ARGS --test --allow dead_code -o $RUST_TEST $SOURCE_FILE &&
-	$RUST_TEST &&
-	$RUSTC --debuginfo $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
+$RUSTC --debuginfo $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
