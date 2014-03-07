@@ -57,7 +57,7 @@ fn main() {
 			&window.glfw_window,
 			cam);
 		display::render(
-			&window.glfw_window,
+			window,
 			cam,
 			&entities.positions,
 			&entities.visuals,

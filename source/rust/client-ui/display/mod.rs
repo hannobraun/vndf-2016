@@ -57,7 +57,7 @@ fn init_gl(screen_width: u32, screen_height: u32) {
 }
 
 pub fn render(
-	window   : &Window,
+	window   : &window::Window,
 	camera   : &Camera,
 	positions: &Components<Vec2>,
 	visuals  : &Components<Visual>,
@@ -79,7 +79,7 @@ pub fn render(
 	}
 
 	gl::PopMatrix();
-	window.swap_buffers();
+	window.glfw_window.swap_buffers();
 }
 
 fn draw_texture(x: f64, y: f64, texture: &Texture) {
