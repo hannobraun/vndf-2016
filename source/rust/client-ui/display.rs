@@ -88,54 +88,58 @@ pub fn render(
 
 	for (id, position) in positions.iter() {
 		let texture = textures.get(&visuals.get(id).texture);
-		gl::BindTexture(
-			gl::TEXTURE_2D,
-			texture.name);
-
-		gl::PushMatrix();
-
-		gl::Translated(
-			position.x - texture.width as f64 / 2.0,
-			position.y - texture.height as f64 / 2.0,
-			0.0);
-
-		gl::Begin(gl::TRIANGLE_STRIP);
-			gl::TexCoord2d(
-				1.0,
-				0.0);
-			gl::Vertex3d(
-				texture.width as f64,
-				texture.height as f64,
-				0.0);
-
-			gl::TexCoord2d(
-				1.0,
-				1.0);
-			gl::Vertex3d(
-				texture.width as f64,
-				0.0,
-				0.0);
-
-			gl::TexCoord2d(
-				0.0,
-				0.0);
-			gl::Vertex3d(
-				0.0,
-				texture.height as f64,
-				0.0);
-
-			gl::TexCoord2d(
-				0.0,
-				1.0);
-			gl::Vertex3d(
-				0.0,
-				0.0,
-				0.0);
-		gl::End();
-
-		gl::PopMatrix();
+		draw_texture(position, texture);
 	}
 
 	gl::PopMatrix();
 	window.swap_buffers();
+}
+
+fn draw_texture(position: &Vec2, texture: &Texture) {
+	gl::BindTexture(
+		gl::TEXTURE_2D,
+		texture.name);
+
+	gl::PushMatrix();
+
+	gl::Translated(
+		position.x - texture.width as f64 / 2.0,
+		position.y - texture.height as f64 / 2.0,
+		0.0);
+
+	gl::Begin(gl::TRIANGLE_STRIP);
+		gl::TexCoord2d(
+			1.0,
+			0.0);
+		gl::Vertex3d(
+			texture.width as f64,
+			texture.height as f64,
+			0.0);
+
+		gl::TexCoord2d(
+			1.0,
+			1.0);
+		gl::Vertex3d(
+			texture.width as f64,
+			0.0,
+			0.0);
+
+		gl::TexCoord2d(
+			0.0,
+			0.0);
+		gl::Vertex3d(
+			0.0,
+			texture.height as f64,
+			0.0);
+
+		gl::TexCoord2d(
+			0.0,
+			1.0);
+		gl::Vertex3d(
+			0.0,
+			0.0,
+			0.0);
+	gl::End();
+
+	gl::PopMatrix();
 }
