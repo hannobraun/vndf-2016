@@ -1,6 +1,7 @@
 use std::from_str;
-use std::io::{BufferedReader, Process};
+use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
+use std::str;
 
 use entities::Entities;
 
@@ -44,11 +45,15 @@ impl Core {
 	pub fn update_positions(&mut self, entities: &mut Entities) {
 		let mut stdout = BufferedReader::new(
 			self.process.stdout.clone().unwrap());
+		let stderr = BufferedReader::new(
+			self.process.stderr.clone().unwrap());
 
 		let message = match stdout.read_line() {
 			Ok(message) => message,
-			Err(error)  =>
-				fail!("Failed to read message from client-core: {}", error)
+			Err(error)  => {
+				print!("Failed to read message from client-core: {}\n", error);
+				handle_error(stdout, stderr)
+			}
 		};
 
 		let words = message.words().to_owned_vec();
@@ -69,4 +74,18 @@ impl Core {
 			entities.remove_ship(id);
 		}
 	}
+}
+
+fn handle_error(
+	stdout: BufferedReader<PipeStream>,
+	stderr: BufferedReader<PipeStream>) -> ! {
+
+	print!("Outputs of core:\n");
+	print!("stdout:\n{}\n", reader_to_string(stdout));
+	print!("stderr:\n{}\n", reader_to_string(stderr));
+	fail!();
+}
+
+fn reader_to_string(mut reader: BufferedReader<PipeStream>) -> ~str {
+	str::from_utf8(reader.read_to_end().unwrap()).unwrap().to_owned()
 }
