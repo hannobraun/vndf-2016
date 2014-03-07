@@ -14,7 +14,7 @@ mkdir -p $(dirname $CORE_SERVICE_BINARY)
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"-o $CORE_SERVICE_BINARY" \
-	source/rust/core-service/main.rs &&
+	source/rust/game-service/main.rs &&
 ./scripts/tools/test-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
