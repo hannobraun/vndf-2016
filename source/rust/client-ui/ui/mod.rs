@@ -18,11 +18,8 @@ mod window;
 
 
 
-pub fn init(screen_width: u32, screen_height: u32) -> ~Window {
-	let window = Window::create(screen_width, screen_height);
+pub fn init(screen_width: u32, screen_height: u32) {
 	init_gl(screen_width, screen_height);
-
-	window
 }
 
 fn init_gl(screen_width: u32, screen_height: u32) {

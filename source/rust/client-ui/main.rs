@@ -12,6 +12,7 @@ use collections::HashMap;
 use camera::Camera;
 use core::Core;
 use entities::Entities;
+use ui::Window;
 
 
 mod args;
@@ -36,7 +37,8 @@ fn main() {
 
 	let mut core = Core::start(args::get_server_address());
 
-	let window = ui::init(screen_width, screen_height);
+	let window = Window::create(screen_width, screen_height);
+	ui::init(screen_width, screen_height);
 	let images = images::load();
 	let font   = font::load();
 
