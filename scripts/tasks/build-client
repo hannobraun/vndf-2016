@@ -5,6 +5,22 @@ source project.conf
 mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $OUTPUT_BIN
 
+if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
+    ./scripts/tasks/build-rust-freetype
+fi
+if [ ! -f $OUTPUT_LIB_RUST/libgl-* ]; then
+    ./scripts/tasks/build-gl-rs
+fi
+if [ ! -f $OUTPUT_LIB/libglfw* ]; then
+    ./scripts/tasks/build-glfw
+fi
+if [ ! -f $OUTPUT_LIB_RUST/libglfw* ]; then
+    ./scripts/tasks/build-glfw-rs
+fi
+if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
+    ./scripts/tasks/build-rust-stb-image
+fi
+
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
