@@ -42,10 +42,10 @@ impl Core {
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-		let     stdout = self.process.stdout.clone().unwrap();
-		let mut reader = BufferedReader::new(stdout);
+		let mut stdout = BufferedReader::new(
+			self.process.stdout.clone().unwrap());
 
-		let message = match reader.read_line() {
+		let message = match stdout.read_line() {
 			Ok(message) => message,
 			Err(error)  =>
 				fail!("Failed to read message from client-core: {}", error)
