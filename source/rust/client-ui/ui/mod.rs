@@ -4,7 +4,6 @@ use std::iter::Iterator;
 
 use gl;
 use glfw;
-use glfw::Window;
 
 use common::vec::Vec2;
 
