@@ -7,7 +7,7 @@ source/upstart/$CORE_SERVICE_NAME.conf \
 $CORE_SERVICE_BINARY \
 $CLIENT_ARCHIVE \
 source/nginx/vndf.de \
-source/vndf.de/index.html"
+source/http/index.html"
 
 COMMANDS="
 mkdir -p /opt/vndf
