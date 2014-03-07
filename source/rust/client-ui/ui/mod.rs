@@ -79,7 +79,7 @@ pub fn render(
 	}
 
 	gl::PopMatrix();
-	window.glfw_window.swap_buffers();
+	window.swap_buffers();
 }
 
 fn draw_texture(x: f64, y: f64, texture: &Texture) {

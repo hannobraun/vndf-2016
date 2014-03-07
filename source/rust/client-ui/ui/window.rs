@@ -28,4 +28,8 @@ impl Window {
 		self.glfw_window.should_close() ||
 			self.glfw_window.get_key(glfw::KeyEscape) == glfw::Press
 	}
+
+	pub fn swap_buffers(&self) {
+		self.glfw_window.swap_buffers()
+	}
 }
