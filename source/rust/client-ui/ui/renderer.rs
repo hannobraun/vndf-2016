@@ -13,7 +13,10 @@ use ui::Window;
 use visual::Visual;
 
 
-pub struct Renderer;
+pub struct Renderer {
+	screen_width : f64,
+	screen_height: f64
+}
 
 impl Renderer {
 	pub fn init(window: &Window) -> ~Renderer {
@@ -43,7 +46,10 @@ impl Renderer {
 			-half_height, half_height,
 			z_near, 1000.0);
 
-		~Renderer
+		~Renderer {
+			screen_width : window.width as f64,
+			screen_height: window.height as f64
+		}
 	}
 
 	pub fn render(&self,
