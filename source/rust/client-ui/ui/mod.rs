@@ -17,11 +17,6 @@ mod renderer;
 mod window;
 
 
-
-pub fn init(screen_width: u32, screen_height: u32) {
-	Renderer::init(screen_width, screen_height);
-}
-
 pub fn render(
 	window   : &Window,
 	camera   : &Camera,
