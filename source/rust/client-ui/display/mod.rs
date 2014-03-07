@@ -23,28 +23,12 @@ pub fn init(screen_width: u32, screen_height: u32) -> ~window::Window {
 		_      => ()
 	}
 
-	let window = create_window(screen_width, screen_height);
+	let window = window::Window::create(screen_width, screen_height);
 	init_gl(screen_width, screen_height);
 
 	~window::Window {
 		glfw_window: window
 	}
-}
-
-fn create_window(width: u32, height: u32) -> Window {
-	let window_opt = Window::create(
-		width, height,
-		"Von Neumann Defense Force",
-		glfw::Windowed);
-
-	let window = match window_opt {
-		Some(window) => window,
-		None         => fail!("Failed to create window.")
-	};
-
-	window.make_context_current();
-
-	window
 }
 
 fn init_gl(screen_width: u32, screen_height: u32) {
