@@ -4,7 +4,7 @@ source project.conf
 
 START_SCRIPT_CONTENTS="\
 #!/usr/bin/env bash
-./$(basename $CLIENT_UI_BINARY) $SERVER_ADDRESS"
+./bin/$(basename $CLIENT_UI_BINARY) $SERVER_ADDRESS"
 START_SCRIPT=$DIST_DIR/vndf
 
 mkdir -p $DIST_DIR
