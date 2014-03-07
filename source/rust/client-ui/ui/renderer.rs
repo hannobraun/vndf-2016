@@ -60,14 +60,13 @@ impl Renderer {
 		textures : &HashMap<~str, Texture>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
+		gl::Color4d(1.0, 1.0, 1.0, 1.0);
 
 		gl::PushMatrix();
 		{
 			gl::Translated(0.0, 0.0, -500.0);
 			gl::Rotated(camera.v, 1.0, 0.0, 0.0);
 			gl::Rotated(camera.h, 0.0, 1.0, 0.0);
-
-			gl::Color4d(1.0, 1.0, 1.0, 1.0);
 
 			for (id, position) in positions.iter() {
 				let texture = textures.get(&visuals.get(id).texture);
