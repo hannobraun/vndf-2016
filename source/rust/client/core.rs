@@ -25,14 +25,14 @@ pub struct Core {
 }
 
 impl Core {
-	pub fn start() -> ~Core {
+	pub fn start(server: ~str) -> ~Core {
 		let mut path = match os::self_exe_path() {
 			Some(path) => path,
 			None       => fail!("Failed to get executable path.")
 		};
 
 		path.push("vndf-client-core");
-		let process = match Process::new(path.as_str().unwrap(),[~"localhost"]) {
+		let process = match Process::new(path.as_str().unwrap(),[server]) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to create process: {}", error)
 		};
