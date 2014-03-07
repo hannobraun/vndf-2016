@@ -19,11 +19,6 @@ mod window;
 
 
 pub fn init(screen_width: u32, screen_height: u32) -> ~Window {
-	match glfw::init() {
-		Err(_) => fail!("Failed to initialize GLFW."),
-		_      => ()
-	}
-
 	let window = Window::create(screen_width, screen_height);
 	init_gl(screen_width, screen_height);
 

@@ -7,6 +7,11 @@ pub struct Window {
 
 impl Window {
 	pub fn create(width: u32, height: u32) -> ~Window {
+		match glfw::init() {
+			Err(_) => fail!("Failed to initialize GLFW."),
+			_      => ()
+		}
+
 		let window_opt = glfw::Window::create(
 			width, height,
 			"Von Neumann Defense Force",
