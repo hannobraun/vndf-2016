@@ -14,6 +14,7 @@ use core::Core;
 use entities::Entities;
 
 
+mod args;
 mod camera;
 mod core;
 mod display;
@@ -33,7 +34,7 @@ fn main() {
 	let screen_width  = 800;
 	let screen_height = 600;
 
-	let mut core = Core::start(~"localhost");
+	let mut core = Core::start(args::get_server_address());
 
 	let window = display::init(screen_width, screen_height);
 	let images = images::load();
