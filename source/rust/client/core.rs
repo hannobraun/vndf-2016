@@ -47,7 +47,8 @@ impl Core {
 
 		let message = match reader.read_line() {
 			Ok(message) => message,
-			Err(error)  => fail!(error)
+			Err(error)  =>
+				fail!("Failed to read message from client-core: {}", error)
 		};
 
 		let words = message.words().to_owned_vec();
