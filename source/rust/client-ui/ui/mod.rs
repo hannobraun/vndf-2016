@@ -12,17 +12,19 @@ use entities::Components;
 use texture::Texture;
 use visual::Visual;
 
+pub use ui::window::Window;
 
 mod window;
 
 
-pub fn init(screen_width: u32, screen_height: u32) -> ~window::Window {
+
+pub fn init(screen_width: u32, screen_height: u32) -> ~Window {
 	match glfw::init() {
 		Err(_) => fail!("Failed to initialize GLFW."),
 		_      => ()
 	}
 
-	let window = window::Window::create(screen_width, screen_height);
+	let window = Window::create(screen_width, screen_height);
 	init_gl(screen_width, screen_height);
 
 	window
@@ -56,7 +58,7 @@ fn init_gl(screen_width: u32, screen_height: u32) {
 }
 
 pub fn render(
-	window   : &window::Window,
+	window   : &Window,
 	camera   : &Camera,
 	positions: &Components<Vec2>,
 	visuals  : &Components<Visual>,
