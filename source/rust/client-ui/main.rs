@@ -51,9 +51,7 @@ fn main() {
 
 	let mut cam = Camera::new();
 
-	while !window.glfw_window.should_close() &&
-		window.glfw_window.get_key(glfw::KeyEscape) == glfw::Release {
-
+	while !window.should_close() {
 		core.update_positions(entities);
 		input::apply(
 			&window.glfw_window,
