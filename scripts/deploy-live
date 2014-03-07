@@ -2,6 +2,8 @@
 
 source project.conf
 
+CORE_SERVICE_NAME=$(basename $CORE_SERVICE_BINARY)
+
 FILES="\
 source/upstart/$CORE_SERVICE_NAME.conf \
 $CORE_SERVICE_BINARY \

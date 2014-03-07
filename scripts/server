@@ -8,7 +8,7 @@ RUST_FILES=$(find $CORE_SERVICE_SOURCE -name "*.rs")
 
 function updateServer() {
 	./scripts/tasks/build-core-service
-	killall $CORE_SERVICE_NAME
+	killall $(basename $CORE_SERVICE_BINARY)
 	./$CORE_SERVICE_BINARY &
 }
 
