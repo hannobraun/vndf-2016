@@ -1,5 +1,6 @@
 use collections::HashMap;
 use std::f64;
+use std::str;
 
 use gl;
 use glfw;
@@ -74,7 +75,35 @@ impl Renderer {
 			}
 		}
 		gl::PopMatrix();
+
+		self.draw_instructions(textures);
+
 		window.swap_buffers();
+	}
+
+	fn draw_instructions(&self, textures : &HashMap<~str, Texture>) {
+		gl::PushMatrix();
+		{
+			gl::LoadIdentity();
+			gl::Ortho(
+				0.0,
+				self.screen_width,
+				0.0,
+				self.screen_height,
+				-1.0,
+				1.0);
+
+			let text = "Use cursor keys to control camera";
+
+			let mut x = 10.0;
+			for c in text.chars() {
+				if c != ' ' {
+					draw_texture(x, 10.0, textures.get(&str::from_char(c)));
+				}
+				x += 12.0;
+			}
+		}
+		gl::PopMatrix();
 	}
 }
 
