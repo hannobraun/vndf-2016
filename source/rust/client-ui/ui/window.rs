@@ -2,6 +2,9 @@ use glfw;
 
 
 pub struct Window {
+	width : u32,
+	height: u32,
+
 	glfw_window: glfw::Window
 }
 
@@ -25,6 +28,9 @@ impl Window {
 		window.make_context_current();
 
 		~Window {
+			width  : width,
+			height: height,
+
 			glfw_window: window
 		}
 	}
