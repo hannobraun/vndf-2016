@@ -2,5 +2,10 @@
 
 source project.conf
 
-(cd vendor/rust-freetype; ./configure && make clean && make RUSTC=$RUSTC)
+RUSTFLAGS="-L $(pwd)/$OUTPUT_LIB"
+
+(cd vendor/rust-freetype;
+	./configure &&
+	make clean &&
+	make RUSTC=$RUSTC RUSTFLAGS="$RUSTFLAGS")
 cp vendor/rust-freetype/*.rlib $OUTPUT_LIB_RUST
