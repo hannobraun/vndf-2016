@@ -88,14 +88,14 @@ pub fn render(
 
 	for (id, position) in positions.iter() {
 		let texture = textures.get(&visuals.get(id).texture);
-		draw_texture(position, texture);
+		draw_texture(position.x, position.y, texture);
 	}
 
 	gl::PopMatrix();
 	window.swap_buffers();
 }
 
-fn draw_texture(position: &Vec2, texture: &Texture) {
+fn draw_texture(x: f64, y: f64, texture: &Texture) {
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture.name);
@@ -103,8 +103,8 @@ fn draw_texture(position: &Vec2, texture: &Texture) {
 	gl::PushMatrix();
 
 	gl::Translated(
-		position.x - texture.width as f64 / 2.0,
-		position.y - texture.height as f64 / 2.0,
+		x - texture.width as f64 / 2.0,
+		y - texture.height as f64 / 2.0,
 		0.0);
 
 	gl::Begin(gl::TRIANGLE_STRIP);
