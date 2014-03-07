@@ -5,6 +5,9 @@ source project.conf
 mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $OUTPUT_BIN
 
+if [ ! -f $OUTPUT_LIB/libfreetype.a ]; then
+    ./scripts/tasks/build-freetype
+fi
 if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
     ./scripts/tasks/build-rust-freetype
 fi
