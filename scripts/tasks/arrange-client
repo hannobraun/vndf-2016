@@ -12,6 +12,14 @@ source project.conf
 
 mkdir -p $DIST_DIR
 
+START_SCRIPT_CONTENTS="\
+#!/usr/bin/env bash
+./$(basename $CLIENT_UI_BINARY) $SERVER_ADDRESS"
+
+START_SCRIPT=$DIST_DIR/vndf
+
+echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
+chmod a+x $START_SCRIPT &&
 cp -rf source/fonts $DIST_DIR &&
 cp -rf source/images $DIST_DIR &&
 cp -rf source/config/server $DIST_DIR &&
