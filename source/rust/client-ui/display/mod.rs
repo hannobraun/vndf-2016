@@ -14,7 +14,10 @@ use texture::Texture;
 use visual::Visual;
 
 
-pub fn init(screen_width: u32, screen_height: u32) -> Window {
+mod window;
+
+
+pub fn init(screen_width: u32, screen_height: u32) -> ~window::Window {
 	match glfw::init() {
 		Err(_) => fail!("Failed to initialize GLFW."),
 		_      => ()
@@ -23,7 +26,9 @@ pub fn init(screen_width: u32, screen_height: u32) -> Window {
 	let window = create_window(screen_width, screen_height);
 	init_gl(screen_width, screen_height);
 
-	window
+	~window::Window {
+		glfw_window: window
+	}
 }
 
 fn create_window(width: u32, height: u32) -> Window {
