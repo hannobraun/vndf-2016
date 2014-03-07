@@ -4,7 +4,7 @@ source project.conf
 
 mkdir -p $OUTPUT_LIB_RUST
 
-BINARY=$(pwd)/$DIST_DIR/$(basename $CLIENT_UI_BINARY)
+BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_UI_BINARY)
 
 if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
     ./scripts/tasks/build-rust-freetype
