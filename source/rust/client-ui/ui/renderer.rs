@@ -3,11 +3,13 @@ use std::f64;
 use gl;
 use glfw;
 
+use ui::Window;
+
 
 pub struct Renderer;
 
 impl Renderer {
-	pub fn init(screen_width: u32, screen_height: u32) -> ~Renderer {
+	pub fn init(window: &Window) -> ~Renderer {
 		gl::load_with(glfw::get_proc_address);
 
 		gl::Enable(gl::TEXTURE_2D);
@@ -28,7 +30,7 @@ impl Renderer {
 		let half_height =
 			f64::tan( fov_angle_y / 360.0 * f64::consts::PI ) * z_near;
 		let half_width =
-			half_height * screen_width as f64 / screen_height as f64;
+			half_height * window.width as f64 / window.height as f64;
 		gl::Frustum(
 			-half_width, half_width,
 			-half_height, half_height,

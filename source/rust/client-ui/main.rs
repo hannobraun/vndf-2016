@@ -38,7 +38,7 @@ fn main() {
 	let mut core = Core::start(args::get_server_address());
 
 	let window   = Window::create(screen_width, screen_height);
-	Renderer::init(screen_width, screen_height);
+	Renderer::init(window);
 	let images   = images::load();
 	let font     = font::load();
 
