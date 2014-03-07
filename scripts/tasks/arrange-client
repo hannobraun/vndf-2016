@@ -2,13 +2,12 @@
 
 source project.conf
 
-mkdir -p $DIST_DIR
-
 START_SCRIPT_CONTENTS="\
 #!/usr/bin/env bash
 ./$(basename $CLIENT_UI_BINARY) $SERVER_ADDRESS"
-
 START_SCRIPT=$DIST_DIR/vndf
+
+mkdir -p $DIST_DIR
 
 echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
 chmod a+x $START_SCRIPT &&
