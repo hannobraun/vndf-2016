@@ -3,7 +3,6 @@ use control::{ClientCore, GameService};
 
 #[test]
 fn it_should_connect_and_receive_updates() {
-	#[allow(unused_variable)];
 	let     game_service = GameService::start();
 	let mut client_core  = ClientCore::start(game_service.port);
 
@@ -12,7 +11,6 @@ fn it_should_connect_and_receive_updates() {
 
 #[test]
 fn the_ship_should_move_on_a_straight_line() {
-	#[allow(unused_variable)];
 	let     game_service = GameService::start();
 	let mut client_core  = ClientCore::start(game_service.port);
 
