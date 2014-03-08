@@ -16,7 +16,7 @@ pub mod util;
 
 
 fn main() {
-	util::log("Core Service started.");
+	util::log("Game Service started.");
 
 	let net = net::init("34481");
 
