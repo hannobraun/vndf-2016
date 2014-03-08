@@ -4,7 +4,7 @@ use std::io::{BufferedReader, Process};
 fn it_should_connect_and_receive_updates() {
 	let mut core_service = start_process("output/bin/vndf-core-service", []);
 	let mut client_core  = start_process(
-		"output/vndf-client/vndf-client-core",
+		"output/bin/vndf-client-core",
 		[~"localhost"]);
 
 	let     stdout = client_core.stdout.clone().unwrap();
