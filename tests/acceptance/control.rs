@@ -12,10 +12,13 @@ impl GameService {
 	pub fn start() -> GameService {
 		let port = rand::random::<uint>() % 10000 + 40000;
 
+		let mut process = Process::start(
+			"output/bin/vndf-game-service", [port.to_str()]);
+		process.read_stdout_line(); // Make sure it's ready.
+
 		GameService {
 			port   : port,
-			process: Process::start(
-				"output/bin/vndf-game-service", [port.to_str()])
+			process: process
 		}
 	}
 }
