@@ -22,6 +22,15 @@ impl Add<Vec3, Vec3> for Vec3 {
 	}
 }
 
+impl Sub<Vec3, Vec3> for Vec3 {
+	fn sub(&self, other: &Vec3) -> Vec3 {
+		Vec3 {
+			x: self.x - other.x,
+			y: self.y - other.y,
+			z: self.z - other.z }
+	}
+}
+
 impl Mul<f64, Vec3> for Vec3 {
 	fn mul(&self, s: &f64) -> Vec3 {
 		Vec3 {

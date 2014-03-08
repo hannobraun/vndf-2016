@@ -10,6 +10,14 @@ fn it_should_add_two_vectors() {
 }
 
 #[test]
+fn it_should_subtract_a_vector_from_another() {
+	let a = Vec3 { x: 2.0, y: 4.0, z: 6.0 };
+	let b = Vec3 { x: 1.0, y: 2.0, z: 3.0 };
+
+	assert!(a - b == Vec3 { x: 1.0, y: 2.0, z: 3.0 });
+}
+
+#[test]
 fn it_should_scale_a_vector() {
 	let v = Vec3 { x: 1.0, y: 2.0, z: 3.0 };
 	let s = 2.0;
