@@ -1,36 +1,36 @@
-pub struct Vec2 {
+pub struct Vec3 {
 	x: f64,
 	y: f64
 }
 
-impl Eq for Vec2 {
-	fn eq(&self, other: &Vec2) -> bool {
+impl Eq for Vec3 {
+	fn eq(&self, other: &Vec3) -> bool {
 		self.x == other.x && self.y == other.y
 	}
 }
 
-impl Add<Vec2, Vec2> for Vec2 {
-	fn add(&self, other: &Vec2) -> Vec2 {
-		Vec2 {
+impl Add<Vec3, Vec3> for Vec3 {
+	fn add(&self, other: &Vec3) -> Vec3 {
+		Vec3 {
 			x: self.x + other.x,
 			y: self.y + other.y }
 	}
 }
 
-impl Mul<f64, Vec2> for Vec2 {
-	fn mul(&self, s: &f64) -> Vec2 {
-		Vec2 {
+impl Mul<f64, Vec3> for Vec3 {
+	fn mul(&self, s: &f64) -> Vec3 {
+		Vec3 {
 			x: self.x * *s,
 			y: self.y * *s }
 	}
 }
 
-impl Vec2 {
+impl Vec3 {
 	pub fn magnitude(self) -> f64 {
 		::std::num::sqrt(self.x*self.x + self.y*self.y)
 	}
 
-	pub fn normalize(self) -> Vec2 {
+	pub fn normalize(self) -> Vec3 {
 		let m = self.magnitude();
 		self * (1.0/m)
 	}

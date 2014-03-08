@@ -23,7 +23,7 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add(&mut self, socketFD: libc::c_int, pos: vec::Vec2, vel: vec::Vec2) -> bool {
+	pub fn add(&mut self, socketFD: libc::c_int, pos: vec::Vec3, vel: vec::Vec3) -> bool {
 		if self.idPool.has_ids() {
 			let clientId = self.idPool.pop();
 

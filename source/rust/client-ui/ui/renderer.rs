@@ -5,7 +5,7 @@ use std::str;
 use gl;
 use glfw;
 
-use common::vec::Vec2;
+use common::vec::Vec3;
 
 use camera::Camera;
 use entities::Components;
@@ -56,7 +56,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : &Camera,
-		positions: &Components<Vec2>,
+		positions: &Components<Vec3>,
 		visuals  : &Components<Visual>,
 		textures : &HashMap<~str, Texture>) {
 
