@@ -2,6 +2,8 @@
 
 source project.conf
 
+export RUST_TEST_TASKS=1
+
 ./scripts/tasks/build-game-service &&
 ./scripts/tasks/build-client &&
 ./scripts/tools/test-rust \
