@@ -30,6 +30,6 @@ fn it_should_connect_and_receive_updates() {
 	assert!(y != None);
 	assert!(z != None);
 
-	Process::kill(&mut core_service.process);
-	Process::kill(&mut client_core.process);
+	core_service.kill();
+	client_core.kill();
 }
