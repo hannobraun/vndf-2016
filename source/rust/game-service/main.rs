@@ -8,11 +8,11 @@ use std::libc;
 use clients::Clients;
 use events::Events;
 
-pub mod clients;
-pub mod events;
-pub mod net;
-pub mod protocol;
-pub mod util;
+mod clients;
+mod events;
+mod net;
+mod protocol;
+mod util;
 
 
 fn main() {
