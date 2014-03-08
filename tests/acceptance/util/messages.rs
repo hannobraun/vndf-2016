@@ -1,12 +1,12 @@
 use std::from_str;
 
+use common::vec::Vec3;
+
 
 #[deriving(Eq)]
 pub struct Update {
-	id: uint,
-	x : f64,
-	y : f64,
-	z : f64
+	id : uint,
+	pos: Vec3
 }
 
 impl Update {
@@ -21,10 +21,12 @@ impl Update {
 		let z : Option<f64>  = from_str::from_str(words[4]);
 
 		Some(Update {
-			id: id.unwrap(),
-			x : x.unwrap(),
-			y : y.unwrap(),
-			z : z.unwrap()
+			id : id.unwrap(),
+			pos: Vec3 {
+				x : x.unwrap(),
+				y : y.unwrap(),
+				z : z.unwrap()
+			}
 		})
 	}
 }
