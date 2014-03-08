@@ -1,3 +1,4 @@
+use std::from_str;
 use std::io::{BufferedReader, Process};
 
 #[test]
@@ -10,10 +11,15 @@ fn it_should_connect_and_receive_updates() {
 	let     stdout = client_core.stdout.clone().unwrap();
 	let mut reader = BufferedReader::new(stdout);
 
-	let message = reader.read_line().unwrap();
-	if !message.starts_with("UPDATE ") {
-		fail!("Unpexected message: {}", message);
-	}
+	let message        = reader.read_line().unwrap();
+	let words: ~[&str] = message.words().collect();
+
+	assert!(words[0] == "UPDATE");
+
+	let x: Option<f64> = from_str::from_str(words[1]);
+	let y: Option<f64> = from_str::from_str(words[2]);
+	assert!(x != None);
+	assert!(y != None);
 
 	kill_process(&mut core_service);
 	kill_process(&mut client_core);
