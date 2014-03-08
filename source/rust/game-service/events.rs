@@ -91,11 +91,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.mut_each(|client| {
-		let gMag = 3000.0 / client.ship.pos.magnitude();
-		let g = client.ship.pos.normalize() * -gMag;
-
 		client.ship.pos = client.ship.pos + client.ship.vel * dTimeInS;
-		client.ship.vel = client.ship.vel + g * dTimeInS;
 	});
 
 	clients.each(|clientA| {
