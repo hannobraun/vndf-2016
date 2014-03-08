@@ -28,7 +28,7 @@ mv -f index.html /srv/http/vndf.de
 service nginx restart
 restart --quiet $CORE_SERVICE_NAME"
 
-./scripts/tasks/build-core-service &&
+./scripts/tasks/build-game-service &&
 ./scripts/tasks/build-client &&
 ./scripts/tasks/arrange-client &&
 ./scripts/tasks/package-client &&
