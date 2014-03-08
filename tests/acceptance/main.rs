@@ -11,7 +11,14 @@ fn it_should_connect_and_receive_updates() {
 	let mut client_core  = Process::start(
 		"output/bin/vndf-client-core", [~"localhost"]);
 
-	let message        = client_core.read_stdout_line();
+	let message = client_core.read_stdout_line();
+	assert_is_update(message);
+
+	core_service.kill();
+	client_core.kill();
+}
+
+fn assert_is_update(message: ~str) {
 	let words: ~[&str] = message.words().collect();
 
 	assert!(words[0] == "UPDATE");
@@ -24,7 +31,4 @@ fn it_should_connect_and_receive_updates() {
 	assert!(x != None);
 	assert!(y != None);
 	assert!(z != None);
-
-	core_service.kill();
-	client_core.kill();
 }
