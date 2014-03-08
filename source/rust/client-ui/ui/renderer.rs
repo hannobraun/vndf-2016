@@ -45,7 +45,7 @@ impl Renderer {
 		gl::Frustum(
 			-half_width, half_width,
 			-half_height, half_height,
-			z_near, 1000.0);
+			z_near, 2000.0);
 
 		~Renderer {
 			screen_width : window.width as f64,
