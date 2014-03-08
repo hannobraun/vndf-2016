@@ -1,8 +1,10 @@
 use std::io;
+use std::io::{BufferedReader, PipeStream};
 
 
 pub struct Process {
-	process: io::Process
+	process: io::Process,
+	stdout : BufferedReader<PipeStream>
 }
 
 impl Process {
@@ -12,8 +14,12 @@ impl Process {
 			Err(error)  => fail!("Failed to start process {}: {}", path, error)
 		};
 
+		let stdout = BufferedReader::new(
+			process.stdout.clone().unwrap());
+
 		Process {
-			process: process
+			process: process,
+			stdout : stdout
 		}
 	}
 

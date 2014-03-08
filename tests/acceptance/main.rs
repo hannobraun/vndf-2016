@@ -1,5 +1,4 @@
 use std::from_str;
-use std::io::BufferedReader;
 
 use util::Process;
 
@@ -12,10 +11,7 @@ fn it_should_connect_and_receive_updates() {
 	let mut client_core  = Process::start(
 		"output/bin/vndf-client-core", [~"localhost"]);
 
-	let     stdout = client_core.process.stdout.clone().unwrap();
-	let mut reader = BufferedReader::new(stdout);
-
-	let message        = reader.read_line().unwrap();
+	let message        = client_core.stdout.read_line().unwrap();
 	let words: ~[&str] = message.words().collect();
 
 	assert!(words[0] == "UPDATE");
