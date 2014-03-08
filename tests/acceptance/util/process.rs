@@ -25,6 +25,13 @@ impl Process {
 		}
 	}
 
+	pub fn read_stdout_line(&mut self) -> ~str {
+		match self.stdout.read_line() {
+			Ok(line)   => line,
+			Err(error) => fail!("Failed to read line from stdout: {}", error)
+		}
+	}
+
 	pub fn kill(&mut self) {
 		match self.process.signal_kill() {
 			Ok(_)      => (), // nothing to do

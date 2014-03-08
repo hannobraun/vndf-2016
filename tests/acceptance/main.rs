@@ -11,7 +11,7 @@ fn it_should_connect_and_receive_updates() {
 	let mut client_core  = Process::start(
 		"output/bin/vndf-client-core", [~"localhost"]);
 
-	let message        = client_core.stdout.read_line().unwrap();
+	let message        = client_core.read_stdout_line();
 	let words: ~[&str] = message.words().collect();
 
 	assert!(words[0] == "UPDATE");
