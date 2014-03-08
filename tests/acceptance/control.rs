@@ -11,10 +11,6 @@ impl GameService {
 			process: Process::start("output/bin/vndf-game-service", [])
 		}
 	}
-
-	pub fn stop(&mut self) {
-		self.process.kill();
-	}
 }
 
 
