@@ -1,6 +1,5 @@
 use collections::Deque;
 use collections::RingBuf;
-use std::f64;
 use std::libc;
 
 use common::vec::Vec3;
@@ -54,19 +53,15 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 }
 
 fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
-	let distance = 100.0;
-
-	let alpha = 90.0 / 180.0 * f64::consts::PI;
-
 	let pos = Vec3 {
-		x: distance * f64::cos(alpha),
-		y: distance * f64::sin(alpha),
+		x: 0.0,
+		y: 0.0,
 		z: 0.0 };
 
 	let vel = Vec3 {
 		x: 30.0,
-		y: 0.0,
-		z: 0.0 };
+		y: 10.0,
+		z: 10.0 };
 
 	if !clients.add(clientFD, pos, vel) {
 		unsafe {
