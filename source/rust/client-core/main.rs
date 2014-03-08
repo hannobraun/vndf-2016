@@ -19,9 +19,10 @@ impl protocol::Handler for ProtocolHandler {
 
 
 fn main() {
-	let     server_address = args::server_address();
-	let     socket_fd      = net::connect(server_address, ~"34481");
-	let mut connection     = protocol::init(socket_fd);
+	let (address, port) = args::address_and_port();
+
+	let     socket_fd  = net::connect(address, port);
+	let mut connection = protocol::init(socket_fd);
 
 	let mut handler = ProtocolHandler;
 

@@ -33,7 +33,9 @@ impl Core {
 		};
 
 		path.push("vndf-client-core");
-		let process = match Process::new(path.as_str().unwrap(),[server]) {
+		let args = [server, ~"34481"];
+
+		let process = match Process::new(path.as_str().unwrap(), args) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to create process: {}", error)
 		};

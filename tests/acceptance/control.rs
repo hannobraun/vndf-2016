@@ -22,7 +22,7 @@ impl ClientCore {
 	pub fn start() -> ClientCore {
 		ClientCore {
 			process: Process::start(
-				"output/bin/vndf-client-core", [~"localhost"])
+				"output/bin/vndf-client-core", [~"localhost", ~"34481"])
 		}
 	}
 
