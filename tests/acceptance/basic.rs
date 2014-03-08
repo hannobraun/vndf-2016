@@ -4,7 +4,7 @@ use util::{Process, Update};
 #[test]
 fn it_should_connect_and_receive_updates() {
 	let mut core_service = Process::start(
-		"output/bin/vndf-core-service", []);
+		"output/bin/vndf-game-service", []);
 	let mut client_core  = Process::start(
 		"output/bin/vndf-client-core", [~"localhost"]);
 
