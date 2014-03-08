@@ -8,6 +8,7 @@ use std::libc;
 use clients::Clients;
 use events::Events;
 
+mod args;
 mod clients;
 mod events;
 mod net;
@@ -18,7 +19,7 @@ mod util;
 fn main() {
 	util::log("Game Service started.");
 
-	let net = net::init("34481");
+	let net = net::init(args::port());
 
 	let mut events    = Events::new();
 	let mut clientMap = Clients::new(4);

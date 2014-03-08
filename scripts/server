@@ -9,7 +9,7 @@ RUST_FILES=$(find $CORE_SERVICE_SOURCE -name "*.rs")
 function updateServer() {
 	./scripts/tasks/build-game-service
 	killall $(basename $CORE_SERVICE_BINARY)
-	./$CORE_SERVICE_BINARY &
+	./$CORE_SERVICE_BINARY 34481 &
 }
 
 updateServer
