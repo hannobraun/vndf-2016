@@ -1,5 +1,4 @@
 use control::{ClientCore, GameService};
-use util::Update;
 
 
 #[test]
@@ -8,6 +7,5 @@ fn it_should_connect_and_receive_updates() {
 	let     game_service = GameService::start();
 	let mut client_core  = ClientCore::start();
 
-	let update = Update::from_str(client_core.message());
-	assert!(update != None);
+	client_core.expect_update();
 }

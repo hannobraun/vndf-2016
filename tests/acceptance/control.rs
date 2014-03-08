@@ -1,4 +1,4 @@
-use util::Process;
+use util::{Process, Update};
 
 
 pub struct GameService {
@@ -26,7 +26,12 @@ impl ClientCore {
 		}
 	}
 
-	pub fn message(&mut self) -> ~str {
-		self.process.read_stdout_line()
+	pub fn expect_update(&mut self) -> Update {
+		let message = self.process.read_stdout_line();
+
+		match Update::from_str(message) {
+			Some(update) => update,
+			None         => fail!("Expected UPDATE but got: {}", message)
+		}
 	}
 }
