@@ -12,6 +12,6 @@ fn it_should_connect_and_receive_updates() {
 	let update = Update::from_str(message);
 	assert!(update != None);
 
-	core_service.process.kill();
+	core_service.stop();
 	client_core.kill();
 }
