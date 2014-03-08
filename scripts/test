@@ -2,6 +2,8 @@
 
 source project.conf
 
+./scripts/tasks/build-game-service &&
+./scripts/tasks/build-client &&
 ./scripts/tools/test-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
