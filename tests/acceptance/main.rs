@@ -16,8 +16,10 @@ fn it_should_connect_and_receive_updates() {
 
 	assert!(words[0] == "UPDATE");
 
-	let x: Option<f64> = from_str::from_str(words[1]);
-	let y: Option<f64> = from_str::from_str(words[2]);
+	let id: Option<uint> = from_str::from_str(words[1]);
+	let x : Option<f64>  = from_str::from_str(words[2]);
+	let y : Option<f64>  = from_str::from_str(words[3]);
+	assert!(id != None);
 	assert!(x != None);
 	assert!(y != None);
 
