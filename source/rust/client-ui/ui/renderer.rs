@@ -69,6 +69,8 @@ impl Renderer {
 			gl::Rotated(camera.v, 1.0, 0.0, 0.0);
 			gl::Rotated(camera.h, 0.0, 1.0, 0.0);
 
+			draw_grid();
+
 			for (id, position) in positions.iter() {
 				let texture = textures.get(&visuals.get(id).texture);
 				draw_texture(position.x, position.y, texture);
@@ -105,6 +107,112 @@ impl Renderer {
 		}
 		gl::PopMatrix();
 	}
+}
+
+fn draw_grid() {
+	gl::PushMatrix();
+	{
+		gl::Begin(gl::LINES);
+		{
+			for &z in [-500.0, 500.0].iter() {
+				let mut x = -500.0;
+				while x <= 500.0 {
+					gl::Vertex3d(
+						x,
+						500.0,
+						z);
+					gl::Vertex3d(
+						x,
+						-500.0,
+						z);
+
+					x += 100.0;
+				}
+			}
+
+			for &x in [-500.0, 500.0].iter() {
+				let mut z = -500.0;
+				while z <= 500.0 {
+					gl::Vertex3d(
+						x,
+						500.0,
+						z);
+					gl::Vertex3d(
+						x,
+						-500.0,
+						z);
+
+					z += 100.0;
+				}
+			}
+
+			for &x in [-500.0, 500.0].iter() {
+				let mut y = -500.0;
+				while y <= 500.0 {
+					gl::Vertex3d(
+						x,
+						y,
+						-500.0);
+					gl::Vertex3d(
+						x,
+						y,
+						500.0);
+
+					y += 100.0;
+				}
+			}
+
+			for &y in [-500.0, 500.0].iter() {
+				let mut x = -500.0;
+				while x <= 500.0 {
+					gl::Vertex3d(
+						x,
+						y,
+						-500.0);
+					gl::Vertex3d(
+						x,
+						y,
+						500.0);
+
+					x += 100.0;
+				}
+			}
+
+			for &y in [-500.0, 500.0].iter() {
+				let mut z = -500.0;
+				while z <= 500.0 {
+					gl::Vertex3d(
+						-500.0,
+						y,
+						z);
+					gl::Vertex3d(
+						500.0,
+						y,
+						z);
+
+					z += 100.0;
+				}
+			}
+
+			for &z in [-500.0, 500.0].iter() {
+				let mut y = -500.0;
+				while y <= 500.0 {
+					gl::Vertex3d(
+						-500.0,
+						y,
+						z);
+					gl::Vertex3d(
+						500.0,
+						y,
+						z);
+
+					y += 100.0;
+				}
+			}
+		}
+		gl::End();
+	}
+	gl::PopMatrix();
 }
 
 fn draw_texture(x: f64, y: f64, texture: &Texture) {
