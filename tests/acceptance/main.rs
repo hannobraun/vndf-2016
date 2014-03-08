@@ -13,7 +13,7 @@ fn it_should_connect_and_receive_updates() {
 		"output/bin/vndf-client-core",
 		[~"localhost"]);
 
-	let     stdout = client_core.stdout.clone().unwrap();
+	let     stdout = client_core.process.stdout.clone().unwrap();
 	let mut reader = BufferedReader::new(stdout);
 
 	let message        = reader.read_line().unwrap();
@@ -30,6 +30,6 @@ fn it_should_connect_and_receive_updates() {
 	assert!(y != None);
 	assert!(z != None);
 
-	Process::kill(&mut core_service);
-	Process::kill(&mut client_core);
+	Process::kill(&mut core_service.process);
+	Process::kill(&mut client_core.process);
 }
