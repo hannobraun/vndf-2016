@@ -14,12 +14,11 @@ impl Process {
 			Err(error)  => fail!("Failed to start process {}: {}", path, error)
 		};
 
-		let stdout = BufferedReader::new(
-			process.stdout.clone().unwrap());
+		let stdout_opt = process.stdout.clone();
 
 		Process {
 			process: process,
-			stdout : stdout
+			stdout : to_reader(stdout_opt)
 		}
 	}
 
@@ -36,4 +35,13 @@ impl Process {
 			"stderr: {}\n",
 			self.process.stderr.clone().unwrap().read_to_str().unwrap());
 	}
+}
+
+fn to_reader(pipe_opt: Option<PipeStream>) -> BufferedReader<PipeStream> {
+	let pipe = match pipe_opt {
+		Some(pipe) => pipe,
+		None       => fail!()
+	};
+
+	BufferedReader::new(pipe)
 }
