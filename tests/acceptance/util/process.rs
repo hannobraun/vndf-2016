@@ -4,7 +4,8 @@ use std::io::{BufferedReader, PipeStream};
 
 pub struct Process {
 	process: io::Process,
-	stdout : BufferedReader<PipeStream>
+	stdout : BufferedReader<PipeStream>,
+	stderr : BufferedReader<PipeStream>
 }
 
 impl Process {
@@ -15,10 +16,12 @@ impl Process {
 		};
 
 		let stdout_opt = process.stdout.clone();
+		let stderr_opt = process.stderr.clone();
 
 		Process {
 			process: process,
-			stdout : to_reader(stdout_opt)
+			stdout : to_reader(stdout_opt),
+			stderr : to_reader(stderr_opt)
 		}
 	}
 
