@@ -3,6 +3,8 @@ use collections::RingBuf;
 use std::f64;
 use std::libc;
 
+use common::vec::Vec2;
+
 use clients::Clients;
 
 extern {
@@ -56,11 +58,11 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
 
 	let alpha = 90.0 / 180.0 * f64::consts::PI;
 
-	let pos = ::common::vec::Vec2 {
+	let pos = Vec2 {
 		x: distance * f64::cos(alpha),
 		y: distance * f64::sin(alpha) };
 
-	let vel = ::common::vec::Vec2 {
+	let vel = Vec2 {
 		x: 30.0,
 		y: 0.0 };
 
