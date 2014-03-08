@@ -1,13 +1,15 @@
 use std::from_str;
 use std::io::BufferedReader;
 
+use util::Process;
+
 mod util;
 
 #[test]
 fn it_should_connect_and_receive_updates() {
-	let mut core_service = util::Process::start(
+	let mut core_service = Process::start(
 		"output/bin/vndf-core-service", []);
-	let mut client_core  = util::Process::start(
+	let mut client_core  = Process::start(
 		"output/bin/vndf-client-core",
 		[~"localhost"]);
 
@@ -28,6 +30,6 @@ fn it_should_connect_and_receive_updates() {
 	assert!(y != None);
 	assert!(z != None);
 
-	util::Process::kill(&mut core_service);
-	util::Process::kill(&mut client_core);
+	Process::kill(&mut core_service);
+	Process::kill(&mut client_core);
 }
