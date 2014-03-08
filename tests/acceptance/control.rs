@@ -1,14 +1,21 @@
+use std::rand;
+
 use util::{Process, Update};
 
 
 pub struct GameService {
+	port   : uint,
 	process: Process
 }
 
 impl GameService {
 	pub fn start() -> GameService {
+		let port = rand::random::<uint>() % 10000 + 40000;
+
 		GameService {
-			process: Process::start("output/bin/vndf-game-service", [~"34481"])
+			port   : port,
+			process: Process::start(
+				"output/bin/vndf-game-service", [port.to_str()])
 		}
 	}
 }
@@ -19,10 +26,10 @@ pub struct ClientCore {
 }
 
 impl ClientCore {
-	pub fn start() -> ClientCore {
+	pub fn start(port: uint) -> ClientCore {
 		ClientCore {
 			process: Process::start(
-				"output/bin/vndf-client-core", [~"localhost", ~"34481"])
+				"output/bin/vndf-client-core", [~"localhost", port.to_str()])
 		}
 	}
 
