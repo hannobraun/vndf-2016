@@ -8,7 +8,6 @@ fn it_should_connect_and_receive_updates() {
 	let     game_service = GameService::start();
 	let mut client_core  = ClientCore::start();
 
-	let message = client_core.process.read_stdout_line();
-	let update = Update::from_str(message);
+	let update = Update::from_str(client_core.message());
 	assert!(update != None);
 }

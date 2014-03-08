@@ -25,4 +25,8 @@ impl ClientCore {
 				"output/bin/vndf-client-core", [~"localhost"])
 		}
 	}
+
+	pub fn message(&mut self) -> ~str {
+		self.process.read_stdout_line()
+	}
 }
