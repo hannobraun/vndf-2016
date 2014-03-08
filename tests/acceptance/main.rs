@@ -1,6 +1,4 @@
-use std::from_str;
-
-use util::Process;
+use util::{Process, Update};
 
 mod util;
 
@@ -19,16 +17,6 @@ fn it_should_connect_and_receive_updates() {
 }
 
 fn assert_is_update(message: ~str) {
-	let words: ~[&str] = message.words().collect();
-
-	assert!(words[0] == "UPDATE");
-
-	let id: Option<uint> = from_str::from_str(words[1]);
-	let x : Option<f64>  = from_str::from_str(words[2]);
-	let y : Option<f64>  = from_str::from_str(words[3]);
-	let z : Option<f64>  = from_str::from_str(words[4]);
-	assert!(id != None);
-	assert!(x != None);
-	assert!(y != None);
-	assert!(z != None);
+	let update = Update::from_str(message);
+	assert!(update != None);
 }
