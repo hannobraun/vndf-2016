@@ -10,8 +10,7 @@ fn it_should_connect_and_receive_updates() {
 	let mut core_service = Process::start(
 		"output/bin/vndf-core-service", []);
 	let mut client_core  = Process::start(
-		"output/bin/vndf-client-core",
-		[~"localhost"]);
+		"output/bin/vndf-client-core", [~"localhost"]);
 
 	let     stdout = client_core.process.stdout.clone().unwrap();
 	let mut reader = BufferedReader::new(stdout);
