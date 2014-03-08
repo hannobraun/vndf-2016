@@ -1,6 +1,7 @@
 use std::num;
 
 
+#[deriving(Show)]
 pub struct Vec3 {
 	x: f64,
 	y: f64,
