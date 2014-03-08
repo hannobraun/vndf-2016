@@ -1,5 +1,5 @@
 use std::from_str;
-use std::io::{BufferedReader, Process};
+use std::io::BufferedReader;
 
 mod util;
 
@@ -28,18 +28,6 @@ fn it_should_connect_and_receive_updates() {
 	assert!(y != None);
 	assert!(z != None);
 
-	kill_process(&mut core_service);
-	kill_process(&mut client_core);
-}
-
-fn kill_process(process: &mut Process) {
-	match process.signal_kill() {
-		Ok(_)      => (), // nothing to do
-		Err(error) => print!("ERROR Failed to kill process: {}\n", error)
-	}
-
-	print!(
-		"stdout: {}\n", process.stdout.clone().unwrap().read_to_str().unwrap());
-	print!(
-		"stderr: {}\n", process.stderr.clone().unwrap().read_to_str().unwrap());
+	util::Process::kill(&mut core_service);
+	util::Process::kill(&mut client_core);
 }
