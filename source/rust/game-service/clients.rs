@@ -2,7 +2,7 @@ use collections::HashMap;
 use std::libc;
 
 use common::dynamics;
-use common::vec;
+use common::vec::Vec3;
 
 
 pub struct Clients {
@@ -23,7 +23,7 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add(&mut self, socketFD: libc::c_int, pos: vec::Vec3, vel: vec::Vec3) -> bool {
+	pub fn add(&mut self, socketFD: libc::c_int, pos: Vec3, vel: Vec3) -> bool {
 		if self.idPool.has_ids() {
 			let clientId = self.idPool.pop();
 
