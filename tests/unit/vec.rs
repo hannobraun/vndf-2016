@@ -6,9 +6,7 @@ fn it_should_add_two_vectors() {
 	let a = Vec3 { x: 1.0, y: 2.0, z: 3.0 };
 	let b = Vec3 { x: 3.0, y: 2.0, z: 1.0 };
 
-	let c = Vec3 { x: 4.0, y: 4.0, z: 4.0 };
-
-	assert!(a + b == c);
+	assert!(a + b == Vec3 { x: 4.0, y: 4.0, z: 4.0 });
 }
 
 #[test]
