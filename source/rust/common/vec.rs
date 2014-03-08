@@ -1,3 +1,6 @@
+use std::num;
+
+
 pub struct Vec3 {
 	x: f64,
 	y: f64,
@@ -30,7 +33,7 @@ impl Mul<f64, Vec3> for Vec3 {
 
 impl Vec3 {
 	pub fn magnitude(self) -> f64 {
-		::std::num::sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
+		num::sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
 	}
 
 	pub fn normalize(self) -> Vec3 {
