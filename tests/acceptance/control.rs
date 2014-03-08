@@ -16,3 +16,17 @@ impl GameService {
 		self.process.kill();
 	}
 }
+
+
+pub struct ClientCore {
+	process: Process
+}
+
+impl ClientCore {
+	pub fn start() -> ClientCore {
+		ClientCore {
+			process: Process::start(
+				"output/bin/vndf-client-core", [~"localhost"])
+		}
+	}
+}

@@ -1,17 +1,16 @@
-use control::GameService;
-use util::{Process, Update};
+use control::{ClientCore, GameService};
+use util::Update;
 
 
 #[test]
 fn it_should_connect_and_receive_updates() {
 	let mut game_service = GameService::start();
-	let mut client_core  = Process::start(
-		"output/bin/vndf-client-core", [~"localhost"]);
+	let mut client_core  = ClientCore::start();
 
-	let message = client_core.read_stdout_line();
+	let message = client_core.process.read_stdout_line();
 	let update = Update::from_str(message);
 	assert!(update != None);
 
 	game_service.stop();
-	client_core.kill();
+	client_core.process.kill();
 }
