@@ -19,9 +19,11 @@ fn it_should_connect_and_receive_updates() {
 	let id: Option<uint> = from_str::from_str(words[1]);
 	let x : Option<f64>  = from_str::from_str(words[2]);
 	let y : Option<f64>  = from_str::from_str(words[3]);
+	let z : Option<f64>  = from_str::from_str(words[4]);
 	assert!(id != None);
 	assert!(x != None);
 	assert!(y != None);
+	assert!(z != None);
 
 	kill_process(&mut core_service);
 	kill_process(&mut client_core);

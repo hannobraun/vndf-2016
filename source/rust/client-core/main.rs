@@ -9,7 +9,7 @@ struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
 	fn update_ship(&mut self, id: int, x: f64, y: f64) {
-		print!("UPDATE {} {} {}\n", id, x, y);
+		print!("UPDATE {} {} {} {}\n", id, x, y, 0.0);
 	}
 
 	fn remove_ship(&mut self, id: int) {
