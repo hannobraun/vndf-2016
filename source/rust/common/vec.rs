@@ -1,6 +1,7 @@
 pub struct Vec3 {
 	x: f64,
-	y: f64
+	y: f64,
+	z: f64
 }
 
 impl Eq for Vec3 {
@@ -13,7 +14,8 @@ impl Add<Vec3, Vec3> for Vec3 {
 	fn add(&self, other: &Vec3) -> Vec3 {
 		Vec3 {
 			x: self.x + other.x,
-			y: self.y + other.y }
+			y: self.y + other.y,
+			z: self.z + other.z }
 	}
 }
 
@@ -21,13 +23,14 @@ impl Mul<f64, Vec3> for Vec3 {
 	fn mul(&self, s: &f64) -> Vec3 {
 		Vec3 {
 			x: self.x * *s,
-			y: self.y * *s }
+			y: self.y * *s,
+			z: self.z * *s }
 	}
 }
 
 impl Vec3 {
 	pub fn magnitude(self) -> f64 {
-		::std::num::sqrt(self.x*self.x + self.y*self.y)
+		::std::num::sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
 	}
 
 	pub fn normalize(self) -> Vec3 {

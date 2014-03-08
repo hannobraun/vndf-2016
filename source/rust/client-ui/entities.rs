@@ -22,7 +22,7 @@ impl Entities {
 	}
 
 	pub fn update_ship(&mut self, id: Id, x: f64, y: f64) {
-		self.positions.insert(id, Vec3 { x: x, y: y });
+		self.positions.insert(id, Vec3 { x: x, y: y, z: 0.0 });
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 
@@ -32,7 +32,7 @@ impl Entities {
 	}
 
 	pub fn update_asteroid(&mut self, id: Id, x: f64, y: f64) {
-		self.positions.insert(id, Vec3 { x: x, y: y });
+		self.positions.insert(id, Vec3 { x: x, y: y, z: 0.0 });
 		self.visuals.insert(id, Visual { texture: ~"A" });
 	}
 }

@@ -60,11 +60,13 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
 
 	let pos = Vec3 {
 		x: distance * f64::cos(alpha),
-		y: distance * f64::sin(alpha) };
+		y: distance * f64::sin(alpha),
+		z: 0.0 };
 
 	let vel = Vec3 {
 		x: 30.0,
-		y: 0.0 };
+		y: 0.0,
+		z: 0.0 };
 
 	if !clients.add(clientFD, pos, vel) {
 		unsafe {
