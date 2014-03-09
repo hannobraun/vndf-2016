@@ -2,9 +2,7 @@
 
 source project.conf
 
-SOURCE_FILES=$(find $GAME_SERVICE_SOURCE -name "*.c")
-HEADER_FILES=$(find $GAME_SERVICE_SOURCE -name "*.h")
-RUST_FILES=$(find $GAME_SERVICE_SOURCE -name "*.rs")
+SOURCE_FILES=$(find $GAME_SERVICE_SOURCE -name "*.rs")
 
 function updateServer() {
 	./scripts/tasks/build-game-service
@@ -15,7 +13,7 @@ function updateServer() {
 updateServer
 while true
 do
-	inotifywait -qq -e modify $SOURCE_FILES $HEADER_FILES $RUST_FILES
+	inotifywait -qq -e modify $SOURCE_FILES
 	echo -e "Change detected.\n\n\n"
 	updateServer
 done
