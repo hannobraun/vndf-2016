@@ -53,14 +53,16 @@ pub fn receive_positions(
 
 			let id_str = parts[2].trim_chars(&',');
 			let x_str  = parts[4].trim_chars(&',').trim_chars(&'(');
-			let y_str  = parts[5].trim_chars(&')');
+			let y_str  = parts[5].trim_chars(&',');
+			let z_str  = parts[6].trim_chars(&')');
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
+			let z = from_str::from_str(z_str).unwrap_or_else(|| { fail!() });
 
-			handler.update_ship(id, x, y, 0.0);
+			handler.update_ship(id, x, y, z);
 		}
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
