@@ -2,9 +2,9 @@
 
 source project.conf
 
-SOURCE_FILES=$(find $CORE_SERVICE_SOURCE -name "*.c")
-HEADER_FILES=$(find $CORE_SERVICE_SOURCE -name "*.h")
-RUST_FILES=$(find $CORE_SERVICE_SOURCE -name "*.rs")
+SOURCE_FILES=$(find $GAME_SERVICE_SOURCE -name "*.c")
+HEADER_FILES=$(find $GAME_SERVICE_SOURCE -name "*.h")
+RUST_FILES=$(find $GAME_SERVICE_SOURCE -name "*.rs")
 
 function updateServer() {
 	./scripts/tasks/build-game-service
