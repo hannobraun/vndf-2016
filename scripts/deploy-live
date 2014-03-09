@@ -2,11 +2,11 @@
 
 source project.conf
 
-CORE_SERVICE_NAME=$(basename $CORE_SERVICE_BINARY)
+CORE_SERVICE_NAME=$(basename $GAME_SERVICE_BINARY)
 
 FILES="\
 source/upstart/$CORE_SERVICE_NAME.conf \
-$CORE_SERVICE_BINARY \
+$GAME_SERVICE_BINARY \
 $CLIENT_ARCHIVE \
 source/nginx/vndf.de \
 source/http/index.html"
