@@ -95,7 +95,8 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				clientA.socketFD,
 				clientB.id,
 				clientB.ship.pos.x,
-				clientB.ship.pos.y);
+				clientB.ship.pos.y,
+				clientB.ship.pos.z);
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
