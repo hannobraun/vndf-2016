@@ -16,7 +16,7 @@ pub struct Connection {
 }
 
 pub trait Handler {
-	fn update_ship(&mut self, id: int, x: f64, y: f64);
+	fn update_ship(&mut self, id: int, x: f64, y: f64, z: f64);
 	fn remove_ship(&mut self, id: int);
 }
 
@@ -60,7 +60,7 @@ pub fn receive_positions(
 			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
 
-			handler.update_ship(id, x, y);
+			handler.update_ship(id, x, y, 0.0);
 		}
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
