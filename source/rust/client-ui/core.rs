@@ -66,8 +66,10 @@ impl Core {
 				words[2]).unwrap_or_else(|| { fail!() });
 			let y = from_str::from_str(
 				words[3]).unwrap_or_else(|| { fail!() });
+			let z = from_str::from_str(
+				words[4]).unwrap_or_else(|| { fail!() });
 
-			entities.update_ship(id, x, y, 0.0);
+			entities.update_ship(id, x, y, z);
 		}
 		if words[0] == "REMOVE" {
 			let id = from_str::from_str(
