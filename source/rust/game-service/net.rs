@@ -67,6 +67,8 @@ pub fn init(port: &str) -> Net {
 
 	register_accept(pollerFD, serverFD);
 
+	print!("Listening on port {}\n", port);
+
 	Net {
 		pollerFD: pollerFD,
 		serverFD: serverFD }
