@@ -13,11 +13,10 @@ mod clients;
 mod events;
 mod net;
 mod protocol;
-mod util;
 
 
 fn main() {
-	util::log("Game Service started.");
+	print!("Game Service started.\n");
 
 	let net = net::init(args::port());
 
