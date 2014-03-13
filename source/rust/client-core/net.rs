@@ -64,7 +64,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
 		if status != 0 {
-			"Error connecting to server".to_c_str().with_ref(|c_message| {
+			(format!("Error connecting to server ({}:{})", hostname, port)).to_c_str().with_ref(|c_message| {
 				libc::perror(c_message);
 			});
 			libc::exit(1);
