@@ -1,6 +1,5 @@
 extern crate collections;
 extern crate common;
-extern crate extra;
 extern crate time;
 
 use std::libc;

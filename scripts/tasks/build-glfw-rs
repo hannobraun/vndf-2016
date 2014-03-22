@@ -2,8 +2,10 @@
 
 source project.conf
 
-$RUSTC \
-	--out-dir $OUTPUT_LIB_RUST \
-	-L $OUTPUT_LIB \
-	--debuginfo \
-	vendor/glfw-rs/src/lib/lib.rs
+RUSTC_ARGS="-L $(pwd)/$OUTPUT_LIB"
+
+(cd vendor/glfw-rs;
+	make clean &&
+	make RUSTC="$RUSTC $RUSTC_ARGS" RUSTDOC="$RUSTDOC")
+
+cp vendor/glfw-rs/lib/*.rlib $OUTPUT_LIB_RUST

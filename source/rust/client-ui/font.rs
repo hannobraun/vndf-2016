@@ -1,7 +1,7 @@
 use collections::HashMap;
 use std::ptr;
+use std::slice;
 use std::str;
-use std::vec;
 
 use freetype::freetype::{
 	FT_Face,
@@ -68,7 +68,7 @@ fn load_char(c: char) -> Texture {
 			(*(((*font_face).glyph) as *struct_FT_GlyphSlotRec_)).bitmap;
 
 		Texture::new_alpha(
-			vec::from_buf(
+			slice::from_buf(
 				bitmap.buffer,
 				(bitmap.width * bitmap.rows) as uint),
 			bitmap.width as uint,
