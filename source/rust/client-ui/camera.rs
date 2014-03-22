@@ -1,3 +1,4 @@
+#[deriving(Show)]
 pub struct Camera {
 	x: f64,
 	y: f64,
