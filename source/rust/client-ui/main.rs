@@ -53,13 +53,15 @@ fn main() {
 
 	let mut cam = Camera::new();
 
+	let self_id = core.get_self_id();
+
 	while !window.should_close() {
 		core.update_positions(entities);
 		input::apply(
 			&window.glfw_window,
 			cam);
 
-		match entities.positions.find(&1) {
+		match entities.positions.find(&self_id) {
 			Some(ship_position) => {
 				cam.x = ship_position.x;
 				cam.y = ship_position.y;
