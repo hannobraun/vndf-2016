@@ -47,14 +47,14 @@ impl Core {
 	pub fn update_positions(&mut self, entities: &mut Entities) {
 		let mut stdout = BufferedReader::new(
 			self.process.stdout.clone().unwrap());
-		let stderr = BufferedReader::new(
+		let mut stderr = BufferedReader::new(
 			self.process.stderr.clone().unwrap());
 
 		let message = match stdout.read_line() {
 			Ok(message) => message,
 			Err(error)  => {
 				print!("Failed to read message from client-core: {}\n", error);
-				handle_error(stdout, stderr)
+				handle_error(&mut stdout, &mut stderr)
 			}
 		};
 
@@ -81,12 +81,12 @@ impl Core {
 }
 
 fn handle_error(
-	mut stdout: BufferedReader<PipeStream>,
-	mut stderr: BufferedReader<PipeStream>) -> ! {
+	stdout: &mut BufferedReader<PipeStream>,
+	stderr: &mut BufferedReader<PipeStream>) -> ! {
 
 	print!("Outputs of core:\n");
-	print!("stdout:\n{}\n", reader_to_string(&mut stdout));
-	print!("stderr:\n{}\n", reader_to_string(&mut stderr));
+	print!("stdout:\n{}\n", reader_to_string(stdout));
+	print!("stderr:\n{}\n", reader_to_string(stderr));
 	fail!();
 }
 
