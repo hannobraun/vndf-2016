@@ -5,7 +5,8 @@ source project.conf
 SOURCE_FILES=$(find $GAME_SERVICE_SOURCE -name "*.rs")
 
 function updateServer() {
-	./scripts/tasks/build-game-service
+	./scripts/tasks/build-common &&
+	./scripts/tasks/build-game-service &&
 	killall $(basename $GAME_SERVICE_BINARY)
 	./$GAME_SERVICE_BINARY 34481 &
 }
