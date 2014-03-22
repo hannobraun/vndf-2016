@@ -51,6 +51,25 @@ impl Core {
 			stderr : stderr }
 	}
 
+	pub fn get_self_id(&mut self) -> int {
+		let message = match self.stdout.read_line() {
+			Ok(message) => message,
+			Err(error)  => {
+				print!("Failed to read message from client-core: {}\n", error);
+				self.handle_error()
+			}
+		};
+
+		let words = message.words().to_owned_vec();
+		if words[0] == "SELF_ID" {
+			from_str::from_str(
+				words[1]).unwrap_or_else(|| { fail!() })
+		}
+		else {
+			fail!("expected self id");
+		}
+	}
+
 	pub fn update_positions(&mut self, entities: &mut Entities) {
 		let message = match self.stdout.read_line() {
 			Ok(message) => message,
