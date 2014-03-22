@@ -1,14 +1,5 @@
 use control::{ClientCore, GameService};
 
-
-#[test]
-fn it_should_connect_and_receive_updates() {
-	let     game_service = GameService::start();
-	let mut client_core  = ClientCore::start(game_service.port);
-
-	client_core.expect_update();
-}
-
 #[test]
 fn the_ship_should_move_on_a_straight_line() {
 	let     game_service = GameService::start();
