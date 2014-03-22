@@ -1,3 +1,5 @@
+extern crate rand;
+
 extern crate common;
 
 mod basic;

@@ -1,4 +1,4 @@
-use std::rand;
+use rand;
 
 use util::{Process, Update};
 
