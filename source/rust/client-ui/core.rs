@@ -80,6 +80,21 @@ impl Core {
 	}
 }
 
+impl Drop for Core {
+	fn drop(&mut self) {
+		// Make sure the process is killed, when Core drops out of scope.
+		// Sometimes client-core is killed automatically on exit, sometimes it
+		// hangs around and prevents the process from exiting. This seems to
+		// depend on what I do with the PipeStreams. What exactly causes this
+		// behavior is beyond my current understanding and killing it
+		// explicitely works fine, so there.
+		match self.process.signal_kill() {
+			Ok(_)      => (),
+			Err(error) => fail!("error killing core process: {}", error)
+		}
+	}
+}
+
 fn handle_error(
 	stdout: &mut BufferedReader<PipeStream>,
 	stderr: &mut BufferedReader<PipeStream>) -> ! {
