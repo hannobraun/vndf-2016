@@ -2,7 +2,7 @@ use collections::HashMap;
 
 use common::vec::Vec3;
 
-use visual::Visual;
+use components::Visual;
 
 
 pub type Id            = int;

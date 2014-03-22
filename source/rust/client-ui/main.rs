@@ -17,6 +17,7 @@ use ui::{Renderer, Window};
 
 mod args;
 mod camera;
+mod components;
 mod core;
 mod entities;
 mod font;
@@ -24,7 +25,6 @@ mod images;
 mod input;
 mod texture;
 mod ui;
-mod visual;
 
 
 #[link(name = "stb-image", kind = "static")]

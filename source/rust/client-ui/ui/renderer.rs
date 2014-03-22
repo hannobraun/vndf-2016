@@ -8,10 +8,10 @@ use glfw;
 use common::vec::Vec3;
 
 use camera::Camera;
+use components::Visual;
 use entities::Components;
 use texture::Texture;
 use ui::Window;
-use visual::Visual;
 
 
 pub struct Renderer {
