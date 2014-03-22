@@ -1,6 +1,6 @@
 use std::from_str;
 
-use common::vec::Vec3;
+use vec::Vec3;
 
 
 #[deriving(Eq)]

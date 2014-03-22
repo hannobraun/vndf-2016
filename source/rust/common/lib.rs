@@ -3,4 +3,5 @@
 
 pub mod dynamics;
 pub mod net;
+pub mod protocol;
 pub mod vec;

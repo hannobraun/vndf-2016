@@ -1,6 +1,8 @@
 use rand;
 
-use util::{Process, Update};
+use common::protocol::Update;
+
+use util::Process;
 
 
 pub struct GameService {
