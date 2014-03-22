@@ -22,7 +22,8 @@ use entities::Entities;
 
 
 pub struct Core {
-	process: Process
+	process: Process,
+	stdout : BufferedReader<PipeStream>
 }
 
 impl Core {
@@ -35,26 +36,27 @@ impl Core {
 		path.push("vndf-client-core");
 		let args = [server, ~"34481"];
 
-		let process = match Process::new(path.as_str().unwrap(), args) {
+		let mut process = match Process::new(path.as_str().unwrap(), args) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to create process: {}", error)
 		};
 
+		let stdout = BufferedReader::new(process.stdout.take().unwrap());
+
 		~Core {
-			process: process }
+			process: process,
+			stdout : stdout }
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-		let mut stdout = BufferedReader::new(
-			self.process.stdout.clone().unwrap());
 		let mut stderr = BufferedReader::new(
 			self.process.stderr.clone().unwrap());
 
-		let message = match stdout.read_line() {
+		let message = match self.stdout.read_line() {
 			Ok(message) => message,
 			Err(error)  => {
 				print!("Failed to read message from client-core: {}\n", error);
-				handle_error(&mut stdout, &mut stderr)
+				handle_error(&mut self.stdout, &mut stderr)
 			}
 		};
 
