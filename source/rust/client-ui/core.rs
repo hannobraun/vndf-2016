@@ -23,7 +23,8 @@ use entities::Entities;
 
 pub struct Core {
 	process: Process,
-	stdout : BufferedReader<PipeStream>
+	stdout : BufferedReader<PipeStream>,
+	stderr : BufferedReader<PipeStream>
 }
 
 impl Core {
@@ -42,21 +43,20 @@ impl Core {
 		};
 
 		let stdout = BufferedReader::new(process.stdout.take().unwrap());
+		let stderr = BufferedReader::new(process.stderr.take().unwrap());
 
 		~Core {
 			process: process,
-			stdout : stdout }
+			stdout : stdout,
+			stderr : stderr }
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-		let mut stderr = BufferedReader::new(
-			self.process.stderr.clone().unwrap());
-
 		let message = match self.stdout.read_line() {
 			Ok(message) => message,
 			Err(error)  => {
 				print!("Failed to read message from client-core: {}\n", error);
-				handle_error(&mut self.stdout, &mut stderr)
+				handle_error(&mut self.stdout, &mut self.stderr)
 			}
 		};
 
