@@ -81,15 +81,15 @@ impl Core {
 }
 
 fn handle_error(
-	stdout: BufferedReader<PipeStream>,
-	stderr: BufferedReader<PipeStream>) -> ! {
+	mut stdout: BufferedReader<PipeStream>,
+	mut stderr: BufferedReader<PipeStream>) -> ! {
 
 	print!("Outputs of core:\n");
-	print!("stdout:\n{}\n", reader_to_string(stdout));
-	print!("stderr:\n{}\n", reader_to_string(stderr));
+	print!("stdout:\n{}\n", reader_to_string(&mut stdout));
+	print!("stderr:\n{}\n", reader_to_string(&mut stderr));
 	fail!();
 }
 
-fn reader_to_string(mut reader: BufferedReader<PipeStream>) -> ~str {
+fn reader_to_string(reader: &mut BufferedReader<PipeStream>) -> ~str {
 	str::from_utf8(reader.read_to_end().unwrap()).unwrap().to_owned()
 }
