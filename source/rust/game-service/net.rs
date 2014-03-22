@@ -6,6 +6,13 @@ use std::ptr;
 use common::net;
 
 
+static SOL_SOCKET   : i32 = 1;
+static SO_REUSEADDR : i32 = 2;
+static EPOLLIN      : u32 = 1;
+static EPOLL_CTL_ADD: i32 = 1;
+static MSG_NOSIGNAL : i32 = 0x4000;
+
+
 extern {
 	fn epoll_create(size: libc::c_int) -> libc::c_int;
 
@@ -116,9 +123,6 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let SOL_SOCKET   = 1;
-		let SO_REUSEADDR = 2;
-
 		let yes= 1;
 		let status = setsockopt(
 			socketFD,
@@ -177,9 +181,6 @@ fn init_poller() -> libc::c_int {
 }
 
 fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
-	let EPOLLIN = 1;
-	let EPOLL_CTL_ADD = 1;
-
 	let event = EpollEvent { events: EPOLLIN, data: 0 };
 
 	unsafe {
@@ -227,9 +228,6 @@ pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 }
 
 pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
-
-	let MSG_NOSIGNAL = 0x4000;
-
 	let mut buffer: [libc::c_char, ..256] = [0, ..256];
 
 	unsafe {
