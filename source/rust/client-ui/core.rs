@@ -56,7 +56,7 @@ impl Core {
 			Ok(message) => message,
 			Err(error)  => {
 				print!("Failed to read message from client-core: {}\n", error);
-				handle_error(&mut self.stdout, &mut self.stderr)
+				self.handle_error()
 			}
 		};
 
@@ -80,6 +80,13 @@ impl Core {
 			entities.remove_ship(id);
 		}
 	}
+
+	fn handle_error(&mut self) -> ! {
+		print!("Outputs of core:\n");
+		print!("stdout:\n{}\n", reader_to_string(&mut self.stdout));
+		print!("stderr:\n{}\n", reader_to_string(&mut self.stderr));
+		fail!();
+	}
 }
 
 impl Drop for Core {
@@ -95,16 +102,6 @@ impl Drop for Core {
 			Err(error) => fail!("error killing core process: {}", error)
 		}
 	}
-}
-
-fn handle_error(
-	stdout: &mut BufferedReader<PipeStream>,
-	stderr: &mut BufferedReader<PipeStream>) -> ! {
-
-	print!("Outputs of core:\n");
-	print!("stdout:\n{}\n", reader_to_string(stdout));
-	print!("stderr:\n{}\n", reader_to_string(stderr));
-	fail!();
 }
 
 fn reader_to_string(reader: &mut BufferedReader<PipeStream>) -> ~str {
