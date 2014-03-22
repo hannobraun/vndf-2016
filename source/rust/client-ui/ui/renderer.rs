@@ -68,6 +68,7 @@ impl Renderer {
 			gl::Translated(0.0, 0.0, -500.0);
 			gl::Rotated(camera.v, 1.0, 0.0, 0.0);
 			gl::Rotated(camera.h, 0.0, 1.0, 0.0);
+			gl::Translated(camera.x, camera.y, camera.z);
 
 			draw_grid();
 
