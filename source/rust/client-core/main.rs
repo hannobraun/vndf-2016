@@ -26,6 +26,8 @@ fn main() {
 
 	let mut handler = ProtocolHandler;
 
+	print!("SELF_ID {}\n", 1);
+
 	loop {
 		protocol::receive_positions(
 			&mut connection,

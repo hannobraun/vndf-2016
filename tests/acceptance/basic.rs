@@ -5,6 +5,8 @@ fn the_ship_should_move_on_a_straight_line() {
 	let     game_service = GameService::start();
 	let mut client_core  = ClientCore::start(game_service.port);
 
+	client_core.ignore_message(); // self id
+
 	let update1 = client_core.expect_update();
 	let update2 = client_core.expect_update();
 	let update3 = client_core.expect_update();
