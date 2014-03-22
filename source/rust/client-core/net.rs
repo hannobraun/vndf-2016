@@ -17,6 +17,11 @@ fn errno() -> libc::c_int {
 }
 
 
+static MSG_DONTWAIT: i32 = 0x40;
+static EAGAIN      : i32 = 11;
+static EWOULDBLOCK : i32 = 140;
+
+
 pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	let hints = bsd44::addrinfo {
 		ai_flags    : net::AI_PASSIVE,
@@ -77,10 +82,6 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 }
 
 pub fn receive(socketFD: libc::c_int, buffer: &[i8]) -> libc::ssize_t {
-	let MSG_DONTWAIT = 0x40;
-	let EAGAIN       = 11;
-	let EWOULDBLOCK  = 140;
-
 	unsafe {
 		let bytesReceived = bsd43::recv(
 			socketFD,
