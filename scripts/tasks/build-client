@@ -33,11 +33,6 @@ fi
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
-	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/common/main.rs &&
-./scripts/tools/compile-rust \
-	$RUSTC \
-	"-L $OUTPUT_LIB_RUST" \
 	"-o $CLIENT_CORE_BINARY" \
 	source/rust/client-core/main.rs &&
 ./scripts/tools/compile-rust \
