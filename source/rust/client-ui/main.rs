@@ -58,6 +58,17 @@ fn main() {
 		input::apply(
 			&window.glfw_window,
 			cam);
+
+		match entities.positions.find(&1) {
+			Some(ship_position) => {
+				cam.x = ship_position.x;
+				cam.y = ship_position.y;
+				cam.z = ship_position.z;
+			},
+
+			_ => ()
+		}
+
 		renderer.render(
 			window,
 			cam,
