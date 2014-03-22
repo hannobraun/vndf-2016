@@ -36,6 +36,10 @@ impl ClientCore {
 		}
 	}
 
+	pub fn ignore_message(&mut self) {
+		self.process.read_stdout_line();
+	}
+
 	pub fn expect_update(&mut self) -> Update {
 		let message = self.process.read_stdout_line();
 
