@@ -13,7 +13,7 @@ pub fn send_update(
 	net::send_message(
 		clientFD,
 		format!(
-			"UPDATE id: {:u}, pos: ({:f}, {:f} {:f})",
+			"UPDATE {:u} {:f} {:f} {:f}",
 			id, xPos, yPos, zPos))
 }
 

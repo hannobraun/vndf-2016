@@ -51,10 +51,10 @@ pub fn receive_positions(
 		if message.starts_with("UPDATE") {
 			let parts: ~[&str] = message.words().collect();
 
-			let id_str = parts[2].trim_chars(&',');
-			let x_str  = parts[4].trim_chars(&',').trim_chars(&'(');
-			let y_str  = parts[5].trim_chars(&',');
-			let z_str  = parts[6].trim_chars(&')');
+			let id_str = parts[1];
+			let x_str  = parts[2];
+			let y_str  = parts[3];
+			let z_str  = parts[4];
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 
