@@ -8,11 +8,11 @@ pub mod protocol;
 struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
-	fn update_ship(&mut self, id: int, x: f64, y: f64, z: f64) {
+	fn update_ship(&mut self, id: uint, x: f64, y: f64, z: f64) {
 		print!("UPDATE {} {} {} {}\n", id, x, y, z);
 	}
 
-	fn remove_ship(&mut self, id: int) {
+	fn remove_ship(&mut self, id: uint) {
 		print!("REMOVE {}\n", id);
 	}
 }

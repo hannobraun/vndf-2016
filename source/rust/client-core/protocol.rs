@@ -16,8 +16,8 @@ pub struct Connection {
 }
 
 pub trait Handler {
-	fn update_ship(&mut self, id: int, x: f64, y: f64, z: f64);
-	fn remove_ship(&mut self, id: int);
+	fn update_ship(&mut self, id: uint, x: f64, y: f64, z: f64);
+	fn remove_ship(&mut self, id: uint);
 }
 
 
