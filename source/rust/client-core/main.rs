@@ -1,6 +1,6 @@
 extern crate common;
 
-use common::protocol::Update;
+use common::protocol::{Remove, Update};
 
 pub mod args;
 pub mod net;
@@ -19,8 +19,8 @@ impl protocol::Handler for ProtocolHandler {
 			message.pos.z);
 	}
 
-	fn remove_ship(&mut self, id: uint) {
-		print!("REMOVE {}\n", id);
+	fn remove_ship(&mut self, message: Remove) {
+		print!("REMOVE {}\n", message.id);
 	}
 }
 

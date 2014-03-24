@@ -18,7 +18,7 @@ pub struct Connection {
 
 pub trait Handler {
 	fn update_ship(&mut self, message: Update);
-	fn remove_ship(&mut self, id: uint);
+	fn remove_ship(&mut self, message: Remove);
 }
 
 
@@ -54,8 +54,7 @@ pub fn receive_positions(
 				handler.update_ship(update),
 
 			Remove(remove) =>
-				handler.remove_ship(
-					remove.id),
+				handler.remove_ship(remove),
 
 			_ =>
 				fail!("invalid message ({})\n", message)
