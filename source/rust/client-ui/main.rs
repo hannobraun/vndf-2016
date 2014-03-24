@@ -12,7 +12,7 @@ use collections::HashMap;
 use camera::Camera;
 use core::Core;
 use entities::Entities;
-use ui::{Renderer, Window};
+use ui::{Renderer, Textures, Window};
 
 
 mod args;
@@ -41,9 +41,9 @@ fn main() {
 	let images   = images::load();
 	let font     = font::load();
 
-	let mut textures = HashMap::new();
+	let mut textures = Textures { map: HashMap::new() };
 	for (id, &texture) in images.iter().chain(font.iter()) {
-		textures.insert(id.clone(), texture);
+		textures.map.insert(id.clone(), texture);
 	}
 
 	let mut entities = Entities::new();

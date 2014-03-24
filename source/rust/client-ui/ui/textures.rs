@@ -4,7 +4,9 @@ use std::libc;
 use gl;
 
 
-pub type Textures = HashMap<~str, Texture>;
+pub struct Textures {
+	map: HashMap<~str, Texture>
+}
 
 pub struct Texture {
 	name  : Name,
