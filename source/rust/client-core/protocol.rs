@@ -17,7 +17,7 @@ pub struct Connection {
 }
 
 pub trait Handler {
-	fn update_ship(&mut self, update: Update);
+	fn update_ship(&mut self, message: Update);
 	fn remove_ship(&mut self, id: uint);
 }
 
