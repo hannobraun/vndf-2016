@@ -3,7 +3,7 @@ use collections::RingBuf;
 use std::libc;
 
 use common::dynamics::Body;
-use common::protocol::{Remove, Update};
+use common::protocol::{Remove, SelfInfo, Update};
 use common::vec::Vec3;
 
 use clients::Clients;
@@ -45,7 +45,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 		match events.pull() {
 			Some(event) =>
 				match event {
-					Connect(clientFD)    => on_connect(clientFD, clients),
+					Connect(clientFD)    => on_connect(clientFD, clients, events),
 					Disconnect(clientId) => on_disconnect(clientId, clients, events),
 					Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 				},
@@ -55,7 +55,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 	}
 }
 
-fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
+fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events) {
 	let ship = Body {
 		pos: Vec3 {
 			x: 0.0,
@@ -70,8 +70,16 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
 	};
 
 	match clients.add(clientFD, ship) {
-		Some(_) =>
-			(),
+		Some(client) => {
+			let message = SelfInfo {
+				id: client.id
+			};
+
+			let status = net::send_message(client.socketFD, message.to_str());
+			if status < 0 {
+				events.push(Disconnect(client.id));
+			}
+		},
 
 		None =>
 			unsafe {

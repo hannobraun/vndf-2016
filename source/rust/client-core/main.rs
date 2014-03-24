@@ -10,6 +10,10 @@ pub mod protocol;
 struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
+	fn set_self_id(&self, message: SelfInfo) {
+		print!("{}\n", message.to_str());
+	}
+
 	fn update_ship(&self, message: Update) {
 		print!("{}\n", message.to_str());
 	}
@@ -27,11 +31,6 @@ fn main() {
 	let mut connection = protocol::init(socket_fd);
 
 	let mut handler = ProtocolHandler;
-
-	let self_info = SelfInfo {
-		id: 0
-	};
-	print!("{}\n", self_info.to_str());
 
 	loop {
 		protocol::receive_positions(

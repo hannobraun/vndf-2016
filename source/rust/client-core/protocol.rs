@@ -2,7 +2,7 @@ use std::libc;
 use std::ptr;
 use std::str;
 
-use common::protocol::{Message, Remove, Update};
+use common::protocol::{Message, Remove, SelfInfo, Update};
 
 use net;
 
@@ -17,6 +17,7 @@ pub struct Connection {
 }
 
 pub trait Handler {
+	fn set_self_id(&self, message: SelfInfo);
 	fn update_ship(&self, message: Update);
 	fn remove_ship(&self, message: Remove);
 }
@@ -50,6 +51,9 @@ pub fn receive_positions(
 		};
 
 		match Message::from_str(message) {
+			SelfInfo(self_info) =>
+				handler.set_self_id(self_info),
+
 			Update(update) =>
 				handler.update_ship(update),
 
