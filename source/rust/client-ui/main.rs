@@ -7,8 +7,6 @@ extern crate stb_image;
 
 extern crate common;
 
-use collections::HashMap;
-
 use camera::Camera;
 use core::Core;
 use entities::Entities;
@@ -41,7 +39,7 @@ fn main() {
 	let images   = images::load();
 	let font     = font::load();
 
-	let mut textures = Textures { map: HashMap::new() };
+	let mut textures = Textures::init();
 	for (id, &texture) in images.iter().chain(font.iter()) {
 		textures.map.insert(id.clone(), texture);
 	}

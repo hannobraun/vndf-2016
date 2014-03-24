@@ -17,6 +17,15 @@ pub struct Texture {
 pub type Name = gl::types::GLuint;
 
 
+impl Textures {
+	pub fn init() -> Textures {
+		Textures {
+			map: HashMap::new()
+		}
+	}
+}
+
+
 impl Texture {
 	pub fn new_alpha(data: &[u8], width: uint, height: uint) -> Texture {
 		create_texture(data, width, height, gl::ALPHA, gl::ALPHA8)
