@@ -2,6 +2,7 @@ use collections::Deque;
 use collections::RingBuf;
 use std::libc;
 
+use common::protocol::Update;
 use common::vec::Vec3;
 
 use clients::Clients;
@@ -91,12 +92,12 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 
 	clients.each(|clientA| {
 		clients.each(|clientB| {
-			let status = ::protocol::send_update(
-				clientA.socketFD,
-				clientB.id,
-				clientB.ship.pos.x,
-				clientB.ship.pos.y,
-				clientB.ship.pos.z);
+			let update = Update {
+				id : clientB.id,
+				pos: clientB.ship.pos
+			};
+
+			let status = ::protocol::send_update(clientA.socketFD, update);
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
