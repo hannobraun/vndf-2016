@@ -67,7 +67,7 @@ pub fn receive_positions(
 		else if message.starts_with("REMOVE") {
 			let parts: ~[&str] = message.words().collect();
 
-			let id_str = parts[2];
+			let id_str = parts[1];
 
 			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
 

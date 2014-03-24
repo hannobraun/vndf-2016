@@ -20,5 +20,5 @@ pub fn send_update(
 pub fn send_remove(clientFD: libc::c_int, id: uint) -> libc::c_int {
 	net::send_message(
 		clientFD,
-		format!("REMOVE id: {:u}", id))
+		format!("REMOVE {:u}", id))
 }
