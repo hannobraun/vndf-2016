@@ -11,7 +11,7 @@ pub struct Window {
 impl Window {
 	pub fn create(width: u32, height: u32) -> ~Window {
 		match glfw::init() {
-			Err(_) => fail!("Failed to initialize GLFW."),
+			Err(_) => fail!("failed to initialize GLFW"),
 			_      => ()
 		}
 
@@ -22,7 +22,7 @@ impl Window {
 
 		let window = match window_opt {
 			Some(window) => window,
-			None         => fail!("Failed to create window.")
+			None         => fail!("failed to create window")
 		};
 
 		window.make_context_current();
