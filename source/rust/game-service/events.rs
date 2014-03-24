@@ -93,12 +93,12 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 
 	clients.each(|clientA| {
 		clients.each(|clientB| {
-			let update = Update {
+			let message = Update {
 				id : clientB.id,
 				pos: clientB.ship.pos
 			};
 
-			let status = net::send_message(clientA.socketFD, update.to_str());
+			let status = net::send_message(clientA.socketFD, message.to_str());
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
