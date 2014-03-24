@@ -2,7 +2,7 @@ use collections::Deque;
 use collections::RingBuf;
 use std::libc;
 
-use common::protocol::Update;
+use common::protocol::{Remove, Update};
 use common::vec::Vec3;
 
 use clients::Clients;
@@ -76,9 +76,11 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 	clients.remove(clientId);
 
 	clients.each(|client| {
-		let status = net::send_message(
-			client.socketFD,
-			format!("REMOVE {:u}", clientId));
+		let message = Remove {
+			id: clientId
+		};
+
+		let status = net::send_message(client.socketFD, message.to_str());
 
 		if status < 0 {
 			events.push(Disconnect(client.id));
