@@ -1,8 +1,6 @@
-use collections::HashMap;
-
 use stb_image::image;
 
-use ui::Texture;
+use ui::{Texture, Textures};
 
 
 struct Image {
@@ -12,7 +10,7 @@ struct Image {
 }
 
 
-pub fn load() -> HashMap<~str, Texture> {
+pub fn load(textures: &mut Textures) {
 	let image_path = ~"images/spaceship.png";
 
 	let image   = load_image(image_path);
@@ -21,10 +19,7 @@ pub fn load() -> HashMap<~str, Texture> {
 		image.width,
 		image.height);
 
-	let mut images = HashMap::new();
-	images.insert(image_path, texture);
-
-	images
+	textures.add(image_path, texture);
 }
 
 fn load_image(image_path: &str) -> Image {

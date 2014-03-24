@@ -34,13 +34,15 @@ fn main() {
 
 	let mut core = Core::start(args::get_server_address());
 
-	let window   = Window::create(screen_width, screen_height);
-	let renderer = Renderer::init(window);
+	let     window   = Window::create(screen_width, screen_height);
 	let mut textures = Textures::init(window);
-	let images   = images::load();
-	let font     = font::load();
 
-	for (id, &texture) in images.iter().chain(font.iter()) {
+	images::load(&mut textures);
+	let     font     = font::load();
+
+	let renderer = Renderer::init(window);
+
+	for (id, &texture) in font.iter() {
 		textures.add(id.clone(), texture);
 	}
 
