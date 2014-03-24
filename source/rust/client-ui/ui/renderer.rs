@@ -66,12 +66,12 @@ impl Renderer {
 		}
 		gl::PopMatrix();
 
-		self.draw_instructions(&self.textures);
+		self.draw_instructions();
 
 		window.swap_buffers();
 	}
 
-	fn draw_instructions(&self, textures: &Textures) {
+	fn draw_instructions(&self) {
 		gl::PushMatrix();
 		{
 			gl::LoadIdentity();
@@ -89,7 +89,7 @@ impl Renderer {
 			for c in text.chars() {
 				if c != ' ' {
 					draw_texture(x, 10.0, 0.0,
-						textures.get(&str::from_char(c)));
+						self.textures.get(&str::from_char(c)));
 				}
 				x += 12.0;
 			}
