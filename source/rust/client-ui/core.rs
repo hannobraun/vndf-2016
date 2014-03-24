@@ -51,7 +51,7 @@ impl Core {
 			stderr : stderr }
 	}
 
-	pub fn get_self_id(&mut self) -> int {
+	pub fn get_self_id(&mut self) -> uint {
 		let message = match self.stdout.read_line() {
 			Ok(message) => message,
 			Err(error)  => {

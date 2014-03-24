@@ -5,7 +5,7 @@ use common::vec::Vec3;
 use components::Visual;
 
 
-pub type Id            = int;
+pub type Id            = uint;
 pub type Components<T> = HashMap<Id, T>;
 
 
