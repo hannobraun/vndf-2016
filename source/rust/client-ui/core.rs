@@ -54,13 +54,7 @@ impl Core {
 	}
 
 	pub fn get_self_id(&mut self) -> uint {
-		let message = match self.stdout.read_line() {
-			Ok(message) => message,
-			Err(error)  => {
-				print!("Failed to read message from client-core: {}\n", error);
-				self.handle_error()
-			}
-		};
+		let message = self.read_message();
 
 		let words = message.words().to_owned_vec();
 		if words[0] == "SELF_ID" {
@@ -73,13 +67,7 @@ impl Core {
 	}
 
 	pub fn update_positions(&mut self, entities: &mut Entities) {
-		let message = match self.stdout.read_line() {
-			Ok(message) => message,
-			Err(error)  => {
-				print!("Failed to read message from client-core: {}\n", error);
-				self.handle_error()
-			}
-		};
+		let message = self.read_message();
 
 		match Message::from_str(message) {
 			Update(update) =>
@@ -94,6 +82,16 @@ impl Core {
 					remove.id),
 
 			_ => fail!("unexpected message ({})", message)
+		}
+	}
+
+	fn read_message(&mut self) -> ~str {
+		match self.stdout.read_line() {
+			Ok(message) => message,
+			Err(error)  => {
+				print!("Failed to read message from client-core: {}\n", error);
+				self.handle_error()
+			}
 		}
 	}
 
