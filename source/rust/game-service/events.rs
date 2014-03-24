@@ -6,6 +6,7 @@ use common::protocol::Update;
 use common::vec::Vec3;
 
 use clients::Clients;
+use net;
 
 extern {
 	fn close(fd: libc::c_int) -> libc::c_int;
@@ -97,7 +98,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				pos: clientB.ship.pos
 			};
 
-			let status = ::protocol::send_update(clientA.socketFD, update);
+			let status = net::send_message(clientA.socketFD, update.to_str());
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
