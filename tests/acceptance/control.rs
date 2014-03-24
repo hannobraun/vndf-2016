@@ -1,6 +1,6 @@
 use rand;
 
-use common::protocol::{Message, Update, Invalid};
+use common::protocol::{Message, Update};
 
 use util::Process;
 
@@ -47,7 +47,7 @@ impl ClientCore {
 
 		match Message::from_str(message) {
 			Update(update) => update,
-			Invalid        => fail!("Expected UPDATE but got: {}", message)
+			_              => fail!("Expected UPDATE but got: {}", message)
 		}
 	}
 }
