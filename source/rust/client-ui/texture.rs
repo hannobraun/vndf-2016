@@ -1,9 +1,12 @@
+use collections::HashMap;
 use std::libc;
 
 use gl;
 
 
 pub type Name = gl::types::GLuint;
+
+pub type Textures = HashMap<~str, Texture>;
 
 
 pub struct Texture {

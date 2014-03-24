@@ -1,4 +1,3 @@
-use collections::HashMap;
 use std::f64;
 use std::str;
 
@@ -10,7 +9,7 @@ use common::vec::Vec3;
 use camera::Camera;
 use components::Visual;
 use entities::Components;
-use texture::Texture;
+use texture::{Texture, Textures};
 use ui::Window;
 
 
@@ -58,7 +57,7 @@ impl Renderer {
 		camera   : &Camera,
 		positions: &Components<Vec3>,
 		visuals  : &Components<Visual>,
-		textures : &HashMap<~str, Texture>) {
+		textures : &Textures) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
@@ -84,7 +83,7 @@ impl Renderer {
 		window.swap_buffers();
 	}
 
-	fn draw_instructions(&self, textures: &HashMap<~str, Texture>) {
+	fn draw_instructions(&self, textures: &Textures) {
 		gl::PushMatrix();
 		{
 			gl::LoadIdentity();
