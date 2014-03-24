@@ -13,11 +13,13 @@ use ui::{Texture, Textures, Window};
 
 pub struct Renderer {
 	screen_width : f64,
-	screen_height: f64
+	screen_height: f64,
+
+	textures: Textures
 }
 
 impl Renderer {
-	pub fn init(window: &Window) -> ~Renderer {
+	pub fn init(window: &Window, textures: Textures) -> ~Renderer {
 		gl::LoadIdentity();
 
 		let z_near = 0.1;
@@ -33,7 +35,9 @@ impl Renderer {
 
 		~Renderer {
 			screen_width : window.width as f64,
-			screen_height: window.height as f64
+			screen_height: window.height as f64,
+
+			textures: textures
 		}
 	}
 
@@ -41,8 +45,7 @@ impl Renderer {
 		window   : &Window,
 		camera   : &Camera,
 		positions: &Components<Vec3>,
-		visuals  : &Components<Visual>,
-		textures : &Textures) {
+		visuals  : &Components<Visual>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
@@ -57,13 +60,13 @@ impl Renderer {
 			draw_grid();
 
 			for (id, position) in positions.iter() {
-				let texture = textures.get(&visuals.get(id).texture);
+				let texture = self.textures.get(&visuals.get(id).texture);
 				draw_texture(position.x, position.y, position.z, texture);
 			}
 		}
 		gl::PopMatrix();
 
-		self.draw_instructions(textures);
+		self.draw_instructions(&self.textures);
 
 		window.swap_buffers();
 	}

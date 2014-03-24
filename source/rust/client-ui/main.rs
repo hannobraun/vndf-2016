@@ -40,7 +40,7 @@ fn main() {
 	images::load(&mut textures);
 	font::load(&mut textures);
 
-	let renderer = Renderer::init(window);
+	let renderer = Renderer::init(window, textures);
 
 	let mut entities = Entities::new();
 
@@ -70,8 +70,7 @@ fn main() {
 			window,
 			cam,
 			&entities.positions,
-			&entities.visuals,
-			&textures);
+			&entities.visuals);
 
 		glfw::poll_events();
 	}
