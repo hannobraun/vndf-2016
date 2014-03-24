@@ -47,7 +47,7 @@ impl ClientCore {
 
 		match Message::from_str(message) {
 			Update(update) => update,
-			_              => fail!("Expected UPDATE but got: {}", message)
+			_              => fail!("unexpected message ({})", message)
 		}
 	}
 }
