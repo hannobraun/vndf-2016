@@ -74,7 +74,7 @@ impl IdPool {
 
 		let mut i = 0;
 		while i < capacity {
-			idPool.pool.push(capacity - i);
+			idPool.pool.push(capacity - i - 1);
 			i += 1
 		}
 

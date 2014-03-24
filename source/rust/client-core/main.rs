@@ -29,7 +29,7 @@ fn main() {
 	let mut handler = ProtocolHandler;
 
 	let self_info = SelfInfo {
-		id: 1
+		id: 0
 	};
 	print!("{}\n", self_info.to_str());
 
