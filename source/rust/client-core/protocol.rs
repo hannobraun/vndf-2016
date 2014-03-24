@@ -1,7 +1,8 @@
-use std::from_str;
 use std::libc;
 use std::ptr;
 use std::str;
+
+use common::protocol::{Message, Remove, Update};
 
 use net;
 
@@ -48,34 +49,20 @@ pub fn receive_positions(
 				(message_size - 1) as uint)
 		};
 
-		if message.starts_with("UPDATE") {
-			let parts: ~[&str] = message.words().collect();
+		match Message::from_str(message) {
+			Update(update) =>
+				handler.update_ship(
+					update.id,
+					update.pos.x,
+					update.pos.y,
+					update.pos.z),
 
-			let id_str = parts[1];
-			let x_str  = parts[2];
-			let y_str  = parts[3];
-			let z_str  = parts[4];
+			Remove(remove) =>
+				handler.remove_ship(
+					remove.id),
 
-			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
-
-			let x = from_str::from_str(x_str).unwrap_or_else(|| { fail!() });
-			let y = from_str::from_str(y_str).unwrap_or_else(|| { fail!() });
-			let z = from_str::from_str(z_str).unwrap_or_else(|| { fail!() });
-
-			handler.update_ship(id, x, y, z);
-		}
-		else if message.starts_with("REMOVE") {
-			let parts: ~[&str] = message.words().collect();
-
-			let id_str = parts[1];
-
-			let id = from_str::from_str(id_str).unwrap_or_else(|| { fail!() });
-
-			handler.remove_ship(id);
-		}
-		else {
-			print!("Unknown message type in message: {:s}\n", message);
-			fail!();
+			_ =>
+				fail!("invalid message ({})\n", message)
 		}
 
 		unsafe {
