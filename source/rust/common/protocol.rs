@@ -4,6 +4,7 @@ use vec::Vec3;
 
 
 pub enum Message {
+	SelfId(SelfId),
 	Update(Update),
 	Remove(Remove),
 	Invalid
@@ -14,6 +15,12 @@ impl Message {
 		let words: ~[&str] = s.words().collect();
 
 		match words[0] {
+			"SELF_ID" => {
+				let id: Option<uint> = from_str::from_str(words[1]);
+
+				SelfId(id.unwrap())
+			},
+
 			"UPDATE" => {
 				let id: Option<uint> = from_str::from_str(words[1]);
 				let x : Option<f64>  = from_str::from_str(words[2]);
@@ -42,6 +49,9 @@ impl Message {
 		}
 	}
 }
+
+
+pub type SelfId = uint;
 
 
 #[deriving(Eq)]

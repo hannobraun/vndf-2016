@@ -1,9 +1,8 @@
-use std::from_str;
 use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
 use std::str;
 
-use common::protocol::{Message, Remove, Update};
+use common::protocol::{Message, Remove, SelfId, Update};
 
 use entities::Entities;
 
@@ -56,13 +55,10 @@ impl Core {
 	pub fn get_self_id(&mut self) -> uint {
 		let message = self.read_message();
 
-		let words = message.words().to_owned_vec();
-		if words[0] == "SELF_ID" {
-			from_str::from_str(
-				words[1]).unwrap_or_else(|| { fail!() })
-		}
-		else {
-			fail!("expected self id");
+		match Message::from_str(message) {
+			SelfId(id) => id,
+
+			_  => fail!("unexpected message ({})", message)
 		}
 	}
 
