@@ -1,3 +1,4 @@
+use gl;
 use glfw;
 
 
@@ -26,6 +27,7 @@ impl Window {
 		};
 
 		window.make_context_current();
+		gl::load_with(glfw::get_proc_address);
 
 		~Window {
 			width  : width,

@@ -2,7 +2,6 @@ use std::f64;
 use std::str;
 
 use gl;
-use glfw;
 
 use common::vec::Vec3;
 
@@ -20,8 +19,6 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn init(window: &Window) -> ~Renderer {
-		gl::load_with(glfw::get_proc_address);
-
 		gl::Enable(gl::TEXTURE_2D);
 
 		gl::Enable(gl::BLEND);
