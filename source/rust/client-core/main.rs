@@ -1,6 +1,6 @@
 extern crate common;
 
-use common::protocol::{Remove, Update};
+use common::protocol::{Remove, SelfInfo, Update};
 
 pub mod args;
 pub mod net;
@@ -28,7 +28,10 @@ fn main() {
 
 	let mut handler = ProtocolHandler;
 
-	print!("SELF_ID {}\n", 1);
+	let self_info = SelfInfo {
+		id: 1
+	};
+	print!("{}\n", self_info.to_str());
 
 	loop {
 		protocol::receive_positions(

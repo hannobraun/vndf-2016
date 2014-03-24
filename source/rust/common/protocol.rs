@@ -57,6 +57,14 @@ pub struct SelfInfo {
 	id: uint
 }
 
+impl SelfInfo {
+	pub fn to_str(&self) -> ~str {
+		format!(
+			"SELF_ID {}",
+			self.id)
+	}
+}
+
 
 #[deriving(Eq)]
 pub struct Update {
