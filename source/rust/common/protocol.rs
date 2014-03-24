@@ -9,9 +9,14 @@ pub struct Update {
 	pos: Vec3
 }
 
+pub struct Remove {
+	id: uint
+}
+
 
 pub enum Message {
 	Update(Update),
+	Remove(Remove),
 	Invalid
 }
 
@@ -33,6 +38,14 @@ impl Message {
 						y : y.unwrap(),
 						z : z.unwrap()
 					}
+				})
+			},
+
+			"REMOVE" => {
+				let id: Option<uint> = from_str::from_str(words[1]);
+
+				Remove(Remove {
+					id: id.unwrap()
 				})
 			},
 

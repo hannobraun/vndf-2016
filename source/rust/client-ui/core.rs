@@ -3,6 +3,8 @@ use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
 use std::str;
 
+use common::protocol::{Message, Remove, Update};
+
 use entities::Entities;
 
 
@@ -79,24 +81,19 @@ impl Core {
 			}
 		};
 
-		let words = message.words().to_owned_vec();
-		if words[0] == "UPDATE" {
-			let id = from_str::from_str(
-				words[1]).unwrap_or_else(|| { fail!() });
-			let x = from_str::from_str(
-				words[2]).unwrap_or_else(|| { fail!() });
-			let y = from_str::from_str(
-				words[3]).unwrap_or_else(|| { fail!() });
-			let z = from_str::from_str(
-				words[4]).unwrap_or_else(|| { fail!() });
+		match Message::from_str(message) {
+			Update(update) =>
+				entities.update_ship(
+					update.id,
+					update.pos.x,
+					update.pos.y,
+					update.pos.z),
 
-			entities.update_ship(id, x, y, z);
-		}
-		if words[0] == "REMOVE" {
-			let id = from_str::from_str(
-				words[1]).unwrap_or_else(|| { fail!() });
+			Remove(remove) =>
+				entities.remove_ship(
+					remove.id),
 
-			entities.remove_ship(id);
+			_ => fail!("unknown message ({})", message)
 		}
 	}
 
