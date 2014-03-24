@@ -41,7 +41,7 @@ fn main() {
 	let font     = font::load();
 
 	for (id, &texture) in images.iter().chain(font.iter()) {
-		textures.map.insert(id.clone(), texture);
+		textures.add(id.clone(), texture);
 	}
 
 	let mut entities = Entities::new();

@@ -44,6 +44,14 @@ impl Textures {
 	pub fn get<'a>(&'a self, key: &~str) -> &'a Texture {
 		self.map.get(key)
 	}
+
+	pub fn add(&mut self, key: ~str, texture: Texture) {
+		if self.map.contains_key(&key) {
+			fail!("texture already present ({})", key);
+		}
+
+		self.map.insert(key, texture);
+	}
 }
 
 
