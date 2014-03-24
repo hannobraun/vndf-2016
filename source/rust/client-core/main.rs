@@ -10,13 +10,13 @@ pub mod protocol;
 struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
-	fn update_ship(&mut self, update: Update) {
+	fn update_ship(&mut self, message: Update) {
 		print!(
 			"UPDATE {} {} {} {}\n",
-			update.id,
-			update.pos.x,
-			update.pos.y,
-			update.pos.z);
+			message.id,
+			message.pos.x,
+			message.pos.y,
+			message.pos.z);
 	}
 
 	fn remove_ship(&mut self, id: uint) {
