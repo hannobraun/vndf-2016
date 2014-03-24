@@ -24,11 +24,11 @@ impl Clients {
 
 	pub fn add(&mut self, socketFD: libc::c_int, ship: Body) -> Option<uint> {
 		if self.idPool.has_ids() {
-			let clientId = self.idPool.pop();
+			let client_id = self.idPool.pop();
 
 			let client = Client {
 				socketFD: socketFD,
-				id      : clientId,
+				id      : client_id,
 				ship    : ship };
 
 			self.map.insert(client.id, client);
