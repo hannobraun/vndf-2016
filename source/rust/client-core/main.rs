@@ -10,11 +10,11 @@ pub mod protocol;
 struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
-	fn update_ship(&mut self, message: Update) {
+	fn update_ship(&self, message: Update) {
 		print!("{}\n", message.to_str());
 	}
 
-	fn remove_ship(&mut self, message: Remove) {
+	fn remove_ship(&self, message: Remove) {
 		print!("{}\n", message.to_str());
 	}
 }
