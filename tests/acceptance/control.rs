@@ -1,6 +1,6 @@
 use rand;
 
-use common::protocol::{Message, Update};
+use common::protocol::{Message, SelfInfo, Update};
 
 use util::Process;
 
@@ -40,6 +40,15 @@ impl ClientCore {
 
 	pub fn ignore_message(&mut self) {
 		self.process.read_stdout_line();
+	}
+
+	pub fn expect_self_id(&mut self) -> uint {
+		let message = self.process.read_stdout_line();
+
+		match Message::from_str(message) {
+			SelfInfo(self_info) => self_info.id,
+			_                   => fail!("unexpected message ({})", message)
+		}
 	}
 
 	pub fn expect_update(&mut self) -> Update {
