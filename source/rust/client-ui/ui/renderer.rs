@@ -19,7 +19,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn init(window: &Window, textures: Textures) -> ~Renderer {
+	pub fn init(window: &Window, textures: Textures) -> Renderer {
 		gl::LoadIdentity();
 
 		let z_near = 0.1;
@@ -33,7 +33,7 @@ impl Renderer {
 			-half_height, half_height,
 			z_near, 2000.0);
 
-		~Renderer {
+		Renderer {
 			screen_width : window.width as f64,
 			screen_height: window.height as f64,
 
