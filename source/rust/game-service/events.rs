@@ -2,6 +2,7 @@ use collections::Deque;
 use collections::RingBuf;
 use std::libc;
 
+use common::dynamics::Body;
 use common::protocol::{Remove, Update};
 use common::vec::Vec3;
 
@@ -55,17 +56,20 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 }
 
 fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
-	let pos = Vec3 {
-		x: 0.0,
-		y: 0.0,
-		z: 0.0 };
+	let ship = Body {
+		pos: Vec3 {
+			x: 0.0,
+			y: 0.0,
+			z: 0.0
+		},
+		vel: Vec3 {
+			x: 30.0,
+			y: 10.0,
+			z: 10.0
+		}
+	};
 
-	let vel = Vec3 {
-		x: 30.0,
-		y: 10.0,
-		z: 10.0 };
-
-	if !clients.add(clientFD, pos, vel) {
+	if !clients.add(clientFD, ship) {
 		unsafe {
 			close(clientFD);
 		}
