@@ -1,5 +1,7 @@
 extern crate common;
 
+use common::protocol::Update;
+
 pub mod args;
 pub mod net;
 pub mod protocol;
@@ -8,8 +10,13 @@ pub mod protocol;
 struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
-	fn update_ship(&mut self, id: uint, x: f64, y: f64, z: f64) {
-		print!("UPDATE {} {} {} {}\n", id, x, y, z);
+	fn update_ship(&mut self, update: Update) {
+		print!(
+			"UPDATE {} {} {} {}\n",
+			update.id,
+			update.pos.x,
+			update.pos.y,
+			update.pos.z);
 	}
 
 	fn remove_ship(&mut self, id: uint) {
