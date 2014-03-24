@@ -2,7 +2,7 @@ use collections::HashMap;
 
 use stb_image::image;
 
-use texture::Texture;
+use ui::Texture;
 
 
 struct Image {

@@ -17,7 +17,7 @@ use freetype::freetype::{
 	FT_Set_Pixel_Sizes,
 	struct_FT_GlyphSlotRec_};
 
-use texture::Texture;
+use ui::Texture;
 
 
 pub fn load() -> HashMap<~str, Texture> {

@@ -8,8 +8,7 @@ use common::vec::Vec3;
 use camera::Camera;
 use components::Visual;
 use entities::Components;
-use texture::{Texture, Textures};
-use ui::Window;
+use ui::{Texture, Textures, Window};
 
 
 pub struct Renderer {
