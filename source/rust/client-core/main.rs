@@ -11,12 +11,7 @@ struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
 	fn update_ship(&mut self, message: Update) {
-		print!(
-			"UPDATE {} {} {} {}\n",
-			message.id,
-			message.pos.x,
-			message.pos.y,
-			message.pos.z);
+		print!("{}\n", message.to_str());
 	}
 
 	fn remove_ship(&mut self, message: Remove) {

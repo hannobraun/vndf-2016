@@ -50,6 +50,17 @@ pub struct Update {
 	pos: Vec3
 }
 
+impl Update {
+	pub fn to_str(&self) -> ~str {
+		format!(
+			"UPDATE {} {} {} {}",
+			self.id,
+			self.pos.x,
+			self.pos.y,
+			self.pos.z)
+	}
+}
+
 
 pub struct Remove {
 	id: uint
