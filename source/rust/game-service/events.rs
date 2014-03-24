@@ -69,10 +69,14 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients) {
 		}
 	};
 
-	if !clients.add(clientFD, ship) {
-		unsafe {
-			close(clientFD);
-		}
+	match clients.add(clientFD, ship) {
+		Some(_) =>
+			(),
+
+		None =>
+			unsafe {
+				close(clientFD);
+			}
 	}
 }
 

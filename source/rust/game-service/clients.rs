@@ -22,7 +22,7 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add(&mut self, socketFD: libc::c_int, ship: Body) -> bool {
+	pub fn add(&mut self, socketFD: libc::c_int, ship: Body) -> Option<uint> {
 		if self.idPool.has_ids() {
 			let clientId = self.idPool.pop();
 
@@ -33,10 +33,10 @@ impl Clients {
 
 			self.map.insert(client.id, client);
 
-			true
+			Some(client.id)
 		}
 		else {
-			false
+			None
 		}
 	}
 
