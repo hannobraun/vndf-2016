@@ -83,18 +83,22 @@ impl Renderer {
 				-1.0,
 				1.0);
 
-			let text = "Use cursor keys to control camera";
-
-			let mut x = 10.0;
-			for c in text.chars() {
-				if c != ' ' {
-					draw_texture(x, 10.0, 0.0,
-						self.textures.get(&str::from_char(c)));
-				}
-				x += 12.0;
-			}
+			self.draw_text(
+				10.0,
+				10.0,
+				"Use cursor keys to control camera");
 		}
 		gl::PopMatrix();
+	}
+
+	fn draw_text(&self, mut x: f64, y: f64, text: &str) {
+		for c in text.chars() {
+			if c != ' ' {
+				draw_texture(x, y, 0.0,
+					self.textures.get(&str::from_char(c)));
+			}
+			x += 12.0;
+		}
 	}
 }
 
