@@ -3,17 +3,6 @@ use std::from_str;
 use vec::Vec3;
 
 
-#[deriving(Eq)]
-pub struct Update {
-	id : uint,
-	pos: Vec3
-}
-
-pub struct Remove {
-	id: uint
-}
-
-
 pub enum Message {
 	Update(Update),
 	Remove(Remove),
@@ -52,4 +41,16 @@ impl Message {
 			_ => Invalid
 		}
 	}
+}
+
+
+#[deriving(Eq)]
+pub struct Update {
+	id : uint,
+	pos: Vec3
+}
+
+
+pub struct Remove {
+	id: uint
 }
