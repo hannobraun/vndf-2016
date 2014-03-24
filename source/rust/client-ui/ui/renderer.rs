@@ -84,7 +84,7 @@ impl Renderer {
 		window.swap_buffers();
 	}
 
-	fn draw_instructions(&self, textures : &HashMap<~str, Texture>) {
+	fn draw_instructions(&self, textures: &HashMap<~str, Texture>) {
 		gl::PushMatrix();
 		{
 			gl::LoadIdentity();
