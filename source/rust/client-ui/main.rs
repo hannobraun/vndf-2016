@@ -38,13 +38,9 @@ fn main() {
 	let mut textures = Textures::init(window);
 
 	images::load(&mut textures);
-	let     font     = font::load();
+	font::load(&mut textures);
 
 	let renderer = Renderer::init(window);
-
-	for (id, &texture) in font.iter() {
-		textures.add(id.clone(), texture);
-	}
 
 	let mut entities = Entities::new();
 

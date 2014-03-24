@@ -1,4 +1,3 @@
-use collections::HashMap;
 use std::ptr;
 use std::slice;
 use std::str;
@@ -17,18 +16,15 @@ use freetype::freetype::{
 	FT_Set_Pixel_Sizes,
 	struct_FT_GlyphSlotRec_};
 
-use ui::Texture;
+use ui::{Texture, Textures};
 
 
-pub fn load() -> HashMap<~str, Texture> {
+pub fn load(textures: &mut Textures) {
 	let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-	let mut font = HashMap::new();
 	for c in chars.chars() {
-		font.insert(str::from_char(c), load_char(c));
+		textures.add(str::from_char(c), load_char(c));
 	}
-
-	font
 }
 
 fn load_char(c: char) -> Texture {
