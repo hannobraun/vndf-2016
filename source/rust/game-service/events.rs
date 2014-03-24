@@ -76,9 +76,9 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 	clients.remove(clientId);
 
 	clients.each(|client| {
-		let status = ::protocol::send_remove(
+		let status = net::send_message(
 			client.socketFD,
-			clientId);
+			format!("REMOVE {:u}", clientId));
 
 		if status < 0 {
 			events.push(Disconnect(client.id));

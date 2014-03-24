@@ -11,7 +11,6 @@ mod args;
 mod clients;
 mod events;
 mod net;
-mod protocol;
 
 
 fn main() {
