@@ -93,7 +93,7 @@ impl Core {
 				entities.remove_ship(
 					remove.id),
 
-			_ => fail!("unknown message ({})", message)
+			_ => fail!("unexpected message ({})", message)
 		}
 	}
 
