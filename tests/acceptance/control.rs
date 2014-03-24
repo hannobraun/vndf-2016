@@ -1,6 +1,6 @@
 use rand;
 
-use common::protocol::Update;
+use common::protocol::{Message, Update, Invalid};
 
 use util::Process;
 
@@ -45,9 +45,9 @@ impl ClientCore {
 	pub fn expect_update(&mut self) -> Update {
 		let message = self.process.read_stdout_line();
 
-		match Update::from_str(message) {
-			Some(update) => update,
-			None         => fail!("Expected UPDATE but got: {}", message)
+		match Message::from_str(message) {
+			Update(update) => update,
+			Invalid(m)     => fail!("Expected UPDATE but got: {}", m)
 		}
 	}
 }

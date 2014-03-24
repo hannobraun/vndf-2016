@@ -9,8 +9,14 @@ pub struct Update {
 	pos: Vec3
 }
 
-impl Update {
-	pub fn from_str(s: &str) -> Option<Update> {
+
+pub enum Message {
+	Update(Update),
+	Invalid(~str)
+}
+
+impl Message {
+	pub fn from_str(s: &str) -> Message {
 		let words: ~[&str] = s.words().collect();
 
 		if words[0] == "UPDATE" {
@@ -19,7 +25,7 @@ impl Update {
 			let y : Option<f64>  = from_str::from_str(words[3]);
 			let z : Option<f64>  = from_str::from_str(words[4]);
 
-			Some(Update {
+			Update(Update {
 				id : id.unwrap(),
 				pos: Vec3 {
 					x : x.unwrap(),
@@ -29,7 +35,7 @@ impl Update {
 			})
 		}
 		else {
-			None
+			Invalid(s.to_owned())
 		}
 	}
 }
