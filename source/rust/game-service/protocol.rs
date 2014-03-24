@@ -10,11 +10,15 @@ pub fn send_update(
 	yPos    : f64,
 	zPos    : f64) -> libc::c_int {
 
-	net::send_message(clientFD,
-		format!("UPDATE id: {:u}, pos: ({:f}, {:f} {:f})",
+	net::send_message(
+		clientFD,
+		format!(
+			"UPDATE id: {:u}, pos: ({:f}, {:f} {:f})",
 			id, xPos, yPos, zPos))
 }
 
 pub fn send_remove(clientFD: libc::c_int, id: uint) -> libc::c_int {
-	net::send_message(clientFD, format!("REMOVE id: {:u}", id))
+	net::send_message(
+		clientFD,
+		format!("REMOVE id: {:u}", id))
 }
