@@ -3,6 +3,8 @@ use std::libc;
 
 use gl;
 
+use ui::Window;
+
 
 pub struct Textures {
 	map: HashMap<~str, Texture>
@@ -18,7 +20,22 @@ pub type Name = gl::types::GLuint;
 
 
 impl Textures {
-	pub fn init() -> Textures {
+	pub fn init(_: &Window) -> Textures {
+		// The window argument isn't actually used. It's here to document this
+		// function's dependence on an OpenGL context, which is implied by
+		// Window.
+
+		gl::Enable(gl::TEXTURE_2D);
+
+		gl::Enable(gl::BLEND);
+		gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
+
+		// I'm not a 100% sure what this does, but it has to do with using
+		// textures that are not power of two. Before I added this call,
+		// glTexture2D wouldn't work correctly on an 11x11 texture, causing
+		// memory access errors and not displaying it correctly.
+		gl::PixelStorei(gl::UNPACK_ALIGNMENT, 1);
+
 		Textures {
 			map: HashMap::new()
 		}
