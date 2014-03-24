@@ -12,7 +12,7 @@ pub struct Update {
 
 pub enum Message {
 	Update(Update),
-	Invalid(~str)
+	Invalid
 }
 
 impl Message {
@@ -35,7 +35,7 @@ impl Message {
 			})
 		}
 		else {
-			Invalid(s.to_owned())
+			Invalid
 		}
 	}
 }
