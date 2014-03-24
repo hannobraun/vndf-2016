@@ -4,7 +4,7 @@ use vec::Vec3;
 
 
 pub enum Message {
-	SelfId(SelfId),
+	SelfInfo(SelfInfo),
 	Update(Update),
 	Remove(Remove),
 	Invalid
@@ -18,7 +18,9 @@ impl Message {
 			"SELF_ID" => {
 				let id: Option<uint> = from_str::from_str(words[1]);
 
-				SelfId(id.unwrap())
+				SelfInfo(SelfInfo {
+					id: id.unwrap()
+				})
 			},
 
 			"UPDATE" => {
@@ -51,7 +53,9 @@ impl Message {
 }
 
 
-pub type SelfId = uint;
+pub struct SelfInfo {
+	id: uint
+}
 
 
 #[deriving(Eq)]

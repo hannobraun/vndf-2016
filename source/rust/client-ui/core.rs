@@ -2,7 +2,7 @@ use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
 use std::str;
 
-use common::protocol::{Message, Remove, SelfId, Update};
+use common::protocol::{Message, Remove, SelfInfo, Update};
 
 use entities::Entities;
 
@@ -56,7 +56,7 @@ impl Core {
 		let message = self.read_message();
 
 		match Message::from_str(message) {
-			SelfId(id) => id,
+			SelfInfo(self_info) => self_info.id,
 
 			_  => fail!("unexpected message ({})", message)
 		}
