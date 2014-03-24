@@ -15,7 +15,7 @@ impl protocol::Handler for ProtocolHandler {
 	}
 
 	fn remove_ship(&mut self, message: Remove) {
-		print!("REMOVE {}\n", message.id);
+		print!("{}\n", message.to_str());
 	}
 }
 

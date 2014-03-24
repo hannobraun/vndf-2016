@@ -65,3 +65,11 @@ impl Update {
 pub struct Remove {
 	id: uint
 }
+
+impl Remove {
+	pub fn to_str(&self) -> ~str {
+		format!(
+			"REMOVE {}",
+			self.id)
+	}
+}
