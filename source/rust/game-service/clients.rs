@@ -1,7 +1,7 @@
 use collections::HashMap;
 use std::libc;
 
-use common::dynamics;
+use common::dynamics::Body;
 use common::vec::Vec3;
 
 
@@ -13,7 +13,7 @@ pub struct Clients {
 pub struct Client {
 	socketFD: libc::c_int,
 	id      : uint,
-	ship    : dynamics::Body
+	ship    : Body
 }
 
 impl Clients {
@@ -30,7 +30,7 @@ impl Clients {
 			let client = Client {
 				socketFD: socketFD,
 				id      : clientId,
-				ship    : dynamics::Body { pos: pos, vel: vel } };
+				ship    : Body { pos: pos, vel: vel } };
 
 			self.map.insert(client.id, client);
 
