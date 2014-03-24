@@ -4,16 +4,16 @@ use std::libc;
 use gl;
 
 
-pub type Name = gl::types::GLuint;
-
 pub type Textures = HashMap<~str, Texture>;
-
 
 pub struct Texture {
 	name  : Name,
 	width : uint,
 	height: uint
 }
+
+pub type Name = gl::types::GLuint;
+
 
 impl Texture {
 	pub fn new_alpha(data: &[u8], width: uint, height: uint) -> Texture {
