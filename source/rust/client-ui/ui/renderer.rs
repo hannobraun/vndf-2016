@@ -57,7 +57,7 @@ impl Renderer {
 			draw_grid();
 
 			for (id, position) in positions.iter() {
-				let texture = textures.map.get(&visuals.get(id).texture);
+				let texture = textures.get(&visuals.get(id).texture);
 				draw_texture(position.x, position.y, position.z, texture);
 			}
 		}
@@ -86,7 +86,7 @@ impl Renderer {
 			for c in text.chars() {
 				if c != ' ' {
 					draw_texture(x, 10.0, 0.0,
-						textures.map.get(&str::from_char(c)));
+						textures.get(&str::from_char(c)));
 				}
 				x += 12.0;
 			}

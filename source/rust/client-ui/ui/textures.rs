@@ -40,6 +40,10 @@ impl Textures {
 			map: HashMap::new()
 		}
 	}
+
+	pub fn get<'a>(&'a self, key: &~str) -> &'a Texture {
+		self.map.get(key)
+	}
 }
 
 
