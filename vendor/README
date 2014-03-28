@@ -1,8 +1,0 @@
-This file used to document what the source of the dependencies here in vendor
-is, although it was always incomplete. I've since decided to switch to
-submodules. I'm leaving this file until all the dependencies have been upgraded.
-
-gl-rs
-Repository: https://github.com/bjz/gl-rs
-Branch/Tag: master
-Commit:     fcef2e1b56b03293a06e7eb8456a2af5c74451ab
