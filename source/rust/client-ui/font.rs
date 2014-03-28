@@ -1,3 +1,4 @@
+use std::char;
 use std::ptr;
 use std::slice;
 use std::str;
@@ -20,9 +21,8 @@ use ui::{Texture, Textures};
 
 
 pub fn load(textures: &mut Textures) {
-	let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-	for c in chars.chars() {
+	for n in range(32, 127) {
+		let c = char::from_u32(n as u32).unwrap();
 		textures.add(str::from_char(c), load_char(c));
 	}
 }
