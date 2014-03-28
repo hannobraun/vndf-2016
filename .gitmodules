@@ -10,3 +10,6 @@
 [submodule "vendor/rust-stb-image"]
 	path = vendor/rust-stb-image
 	url = https://github.com/hannobraun/rust-stb-image.git
+[submodule "vendor/gl-rs"]
+	path = vendor/gl-rs
+	url = https://github.com/hannobraun/gl-rs.git
