@@ -69,6 +69,11 @@ impl Renderer {
 		self.draw_ui_overlay();
 
 		window.swap_buffers();
+
+		match gl::GetError() {
+			gl::NO_ERROR => (),
+			error @ _    => fail!("OpenGL error ({})", error)
+		}
 	}
 
 	fn draw_ui_overlay(&self) {
