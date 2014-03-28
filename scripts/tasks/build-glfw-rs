@@ -6,6 +6,5 @@ RUSTC_ARGS="-L $(pwd)/$OUTPUT_LIB"
 
 (cd vendor/glfw-rs;
 	make clean &&
-	make RUSTC="$RUSTC $RUSTC_ARGS" RUSTDOC="$RUSTDOC")
-
+	make RUSTC="$RUSTC $RUSTC_ARGS" RUSTDOC="$RUSTDOC") &&
 cp vendor/glfw-rs/lib/*.rlib $OUTPUT_LIB_RUST
