@@ -108,109 +108,105 @@ impl Renderer {
 }
 
 fn draw_grid() {
-	gl::PushMatrix();
+	gl::Begin(gl::LINES);
 	{
-		gl::Begin(gl::LINES);
-		{
-			for &z in [-500.0, 500.0].iter() {
-				let mut x = -500.0;
-				while x <= 500.0 {
-					gl::Vertex3d(
-						x,
-						500.0,
-						z);
-					gl::Vertex3d(
-						x,
-						-500.0,
-						z);
+		for &z in [-500.0, 500.0].iter() {
+			let mut x = -500.0;
+			while x <= 500.0 {
+				gl::Vertex3d(
+					x,
+					500.0,
+					z);
+				gl::Vertex3d(
+					x,
+					-500.0,
+					z);
 
-					x += 100.0;
-				}
-			}
-
-			for &x in [-500.0, 500.0].iter() {
-				let mut z = -500.0;
-				while z <= 500.0 {
-					gl::Vertex3d(
-						x,
-						500.0,
-						z);
-					gl::Vertex3d(
-						x,
-						-500.0,
-						z);
-
-					z += 100.0;
-				}
-			}
-
-			for &x in [-500.0, 500.0].iter() {
-				let mut y = -500.0;
-				while y <= 500.0 {
-					gl::Vertex3d(
-						x,
-						y,
-						-500.0);
-					gl::Vertex3d(
-						x,
-						y,
-						500.0);
-
-					y += 100.0;
-				}
-			}
-
-			for &y in [-500.0, 500.0].iter() {
-				let mut x = -500.0;
-				while x <= 500.0 {
-					gl::Vertex3d(
-						x,
-						y,
-						-500.0);
-					gl::Vertex3d(
-						x,
-						y,
-						500.0);
-
-					x += 100.0;
-				}
-			}
-
-			for &y in [-500.0, 500.0].iter() {
-				let mut z = -500.0;
-				while z <= 500.0 {
-					gl::Vertex3d(
-						-500.0,
-						y,
-						z);
-					gl::Vertex3d(
-						500.0,
-						y,
-						z);
-
-					z += 100.0;
-				}
-			}
-
-			for &z in [-500.0, 500.0].iter() {
-				let mut y = -500.0;
-				while y <= 500.0 {
-					gl::Vertex3d(
-						-500.0,
-						y,
-						z);
-					gl::Vertex3d(
-						500.0,
-						y,
-						z);
-
-					y += 100.0;
-				}
+				x += 100.0;
 			}
 		}
-		gl::End();
+
+		for &x in [-500.0, 500.0].iter() {
+			let mut z = -500.0;
+			while z <= 500.0 {
+				gl::Vertex3d(
+					x,
+					500.0,
+					z);
+				gl::Vertex3d(
+					x,
+					-500.0,
+					z);
+
+				z += 100.0;
+			}
+		}
+
+		for &x in [-500.0, 500.0].iter() {
+			let mut y = -500.0;
+			while y <= 500.0 {
+				gl::Vertex3d(
+					x,
+					y,
+					-500.0);
+				gl::Vertex3d(
+					x,
+					y,
+					500.0);
+
+				y += 100.0;
+			}
+		}
+
+		for &y in [-500.0, 500.0].iter() {
+			let mut x = -500.0;
+			while x <= 500.0 {
+				gl::Vertex3d(
+					x,
+					y,
+					-500.0);
+				gl::Vertex3d(
+					x,
+					y,
+					500.0);
+
+				x += 100.0;
+			}
+		}
+
+		for &y in [-500.0, 500.0].iter() {
+			let mut z = -500.0;
+			while z <= 500.0 {
+				gl::Vertex3d(
+					-500.0,
+					y,
+					z);
+				gl::Vertex3d(
+					500.0,
+					y,
+					z);
+
+				z += 100.0;
+			}
+		}
+
+		for &z in [-500.0, 500.0].iter() {
+			let mut y = -500.0;
+			while y <= 500.0 {
+				gl::Vertex3d(
+					-500.0,
+					y,
+					z);
+				gl::Vertex3d(
+					500.0,
+					y,
+					z);
+
+				y += 100.0;
+			}
+		}
 	}
-	gl::PopMatrix();
+	gl::End();
 }
 
 fn draw_texture(x: f64, y: f64, z: f64, texture: &Texture) {
