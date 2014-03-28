@@ -66,12 +66,12 @@ impl Renderer {
 		}
 		gl::PopMatrix();
 
-		self.draw_instructions();
+		self.draw_ui_overlay();
 
 		window.swap_buffers();
 	}
 
-	fn draw_instructions(&self) {
+	fn draw_ui_overlay(&self) {
 		gl::PushMatrix();
 		{
 			gl::LoadIdentity();
