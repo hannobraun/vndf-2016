@@ -70,6 +70,6 @@ fn main() {
 			&entities.positions,
 			&entities.visuals);
 
-		glfw::poll_events();
+		window.poll_events();
 	}
 }
