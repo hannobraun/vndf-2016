@@ -1,5 +1,7 @@
 use stb_image::image;
 
+use common::vec::Vec2;
+
 use ui::{Texture, Textures};
 
 
@@ -16,8 +18,10 @@ pub fn load(textures: &mut Textures) {
 	let image   = load_image(image_path);
 	let texture = Texture::new_rgb(
 		image.data,
-		image.width,
-		image.height);
+		Vec2 {
+			x: image.width as f64,
+			y: image.height as f64
+		});
 
 	textures.add(image_path, texture);
 }

@@ -61,8 +61,7 @@ impl Texture {
 		create_texture(data, size, gl::ALPHA, gl::ALPHA8)
 	}
 
-	pub fn new_rgb(data: &[u8], width: uint, height: uint) -> Texture {
-		let size = Vec2 { x: width as f64, y: height as f64 };
+	pub fn new_rgb(data: &[u8], size: Vec2) -> Texture {
 		create_texture(data, size, gl::RGBA, gl::RGBA8)
 	}
 }
