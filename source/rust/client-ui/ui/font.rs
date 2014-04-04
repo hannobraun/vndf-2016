@@ -110,8 +110,10 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 			slice::from_buf(
 				bitmap.buffer,
 				(bitmap.width * bitmap.rows) as uint),
-			bitmap.width as uint,
-			bitmap.rows as uint)
+			Vec2 {
+				x: bitmap.width as f64,
+				y: bitmap.rows as f64
+			})
 	}
 }
 
