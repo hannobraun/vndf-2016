@@ -84,7 +84,7 @@ impl Renderer {
 			if c != ' ' {
 				draw_texture(
 					Vec2 { x: x, y: y },
-					self.textures.get(&self.font.map.get(&c).texture_id));
+					self.textures.get(&self.font.get(c).texture_id));
 			}
 			x += 12.0;
 		}

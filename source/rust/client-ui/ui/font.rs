@@ -50,6 +50,10 @@ impl Font {
 			map: glyphs
 		}
 	}
+
+	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
+		self.map.get(&c)
+	}
 }
 
 
