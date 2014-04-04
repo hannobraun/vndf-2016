@@ -28,7 +28,7 @@ impl Font {
 
 		for n in range(32, 127) {
 			let c = char::from_u32(n as u32).unwrap();
-			textures.add(str::from_char(c), load_char(font_face, c));
+			textures.add(str::from_char(c), load_char_texture(font_face, c));
 		}
 
 		Font
@@ -60,7 +60,7 @@ fn init_font_face() -> FT_Face {
 	}
 }
 
-fn load_char(font_face: FT_Face, c: char) -> Texture {
+fn load_char_texture(font_face: FT_Face, c: char) -> Texture {
 	unsafe {
 		let glyph_index = FT_Get_Char_Index(font_face, c as u64);
 
