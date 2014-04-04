@@ -23,13 +23,15 @@ use ui::{Texture, Textures};
 pub struct Font;
 
 impl Font {
-	pub fn load(textures: &mut Textures) {
+	pub fn load(textures: &mut Textures) -> Font {
 		let font_face = init_font_face();
 
 		for n in range(32, 127) {
 			let c = char::from_u32(n as u32).unwrap();
 			textures.add(str::from_char(c), load_char(font_face, c));
 		}
+
+		Font
 	}
 }
 
