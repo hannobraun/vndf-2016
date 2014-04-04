@@ -37,7 +37,7 @@ fn main() {
 	let     window   = Window::create(screen_width, screen_height);
 	let mut textures = Textures::init(window);
 	images::load(&mut textures);
-	Font::load(&mut textures);
+	let _        = Font::load(&mut textures);
 	let renderer = Renderer::init(window, textures);
 
 	let mut entities = Entities::new();
