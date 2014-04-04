@@ -70,23 +70,10 @@ impl Renderer {
 	}
 
 	fn draw_ui_overlay(&self) {
-		gl::PushMatrix();
-		{
-			gl::LoadIdentity();
-			gl::Ortho(
-				0.0,
-				self.screen_width,
-				0.0,
-				self.screen_height,
-				-1.0,
-				1.0);
-
-			self.draw_text(
-				10.0,
-				10.0,
-				"Use cursor keys to control camera");
-		}
-		gl::PopMatrix();
+		self.draw_text(
+			10.0,
+			10.0,
+			"Use cursor keys to control camera");
 	}
 
 	fn draw_text(&self, mut x: f64, y: f64, text: &str) {
