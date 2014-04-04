@@ -28,6 +28,7 @@ pub struct Font {
 
 pub struct Glyph {
 	texture_id: ~str,
+	offset    : Vec2,
 	advance   : Vec2
 }
 
@@ -42,7 +43,7 @@ impl Font {
 
 			let glyph_slot = load_glyph_slot(font_face, c);
 			let texture    = make_texture(glyph_slot);
-			let glyph      = make_glyph(c, glyph_slot);
+			let glyph      = make_glyph(c, glyph_slot, texture);
 
 			textures.add(glyph.texture_id.clone(), texture);
 			glyphs.insert(c, glyph);
@@ -117,10 +118,15 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 	}
 }
 
-fn make_glyph(c: char, glyph_slot: FT_GlyphSlot) -> Glyph {
+fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 	unsafe {
 		Glyph {
 			texture_id: "char:" + str::from_char(c),
+
+			offset: Vec2 {
+				x: (*glyph_slot).bitmap_left as f64,
+				y: (*glyph_slot).bitmap_top as f64 - texture.size.y
+			},
 
 			advance: Vec2 {
 				x: (*glyph_slot).advance.x as f64 / 64.0,
