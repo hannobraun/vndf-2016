@@ -53,7 +53,9 @@ impl Renderer {
 
 			for (id, &position) in positions.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
-				draw_texture(position, texture);
+
+				let draw_position = position - texture.size * 0.5;
+				draw_texture(draw_position, texture);
 			}
 		}
 		gl::PopMatrix();
@@ -102,8 +104,8 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 	gl::PushMatrix();
 	{
 		gl::Translated(
-			position.x - texture.size.x / 2.0,
-			position.y - texture.size.y / 2.0,
+			position.x,
+			position.y,
 			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
