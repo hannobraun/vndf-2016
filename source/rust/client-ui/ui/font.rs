@@ -22,7 +22,7 @@ use ui::{Texture, Textures};
 
 
 pub struct Font {
-	map: HashMap<char, Glyph>
+	glyphs: HashMap<char, Glyph>
 }
 
 pub struct Glyph {
@@ -47,12 +47,12 @@ impl Font {
 		}
 
 		Font {
-			map: glyphs
+			glyphs: glyphs
 		}
 	}
 
 	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
-		self.map.get(&c)
+		self.glyphs.get(&c)
 	}
 }
 
