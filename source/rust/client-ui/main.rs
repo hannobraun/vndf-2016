@@ -11,6 +11,7 @@ use common::vec::Vec2;
 
 use core::Core;
 use entities::Entities;
+use font::Font;
 use ui::{Renderer, Textures, Window};
 
 
@@ -36,7 +37,7 @@ fn main() {
 	let     window   = Window::create(screen_width, screen_height);
 	let mut textures = Textures::init(window);
 	images::load(&mut textures);
-	font::load(&mut textures);
+	Font::load(&mut textures);
 	let renderer = Renderer::init(window, textures);
 
 	let mut entities = Entities::new();

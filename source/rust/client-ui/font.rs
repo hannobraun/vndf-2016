@@ -20,12 +20,17 @@ use freetype::freetype::{
 use ui::{Texture, Textures};
 
 
-pub fn load(textures: &mut Textures) {
-	for n in range(32, 127) {
-		let c = char::from_u32(n as u32).unwrap();
-		textures.add(str::from_char(c), load_char(c));
+pub struct Font;
+
+impl Font {
+	pub fn load(textures: &mut Textures) {
+		for n in range(32, 127) {
+			let c = char::from_u32(n as u32).unwrap();
+			textures.add(str::from_char(c), load_char(c));
+		}
 	}
 }
+
 
 fn load_char(c: char) -> Texture {
 	unsafe {
