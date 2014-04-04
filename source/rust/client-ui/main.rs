@@ -11,15 +11,13 @@ use common::vec::Vec2;
 
 use core::Core;
 use entities::Entities;
-use font::Font;
-use ui::{Renderer, Textures, Window};
+use ui::{Font, Renderer, Textures, Window};
 
 
 mod args;
 mod components;
 mod core;
 mod entities;
-mod font;
 mod images;
 mod ui;
 
