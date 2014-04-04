@@ -220,7 +220,7 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 		gl::Translated(
 			position.x - texture.width as f64 / 2.0,
 			position.y - texture.height as f64 / 2.0,
-			position.z);
+			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
 		{
