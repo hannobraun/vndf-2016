@@ -84,7 +84,7 @@ impl Renderer {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(&glyph.texture_id);
 
-			draw_texture(position, texture);
+			draw_texture(position + glyph.offset, texture);
 
 			position = position + glyph.advance;
 		}
