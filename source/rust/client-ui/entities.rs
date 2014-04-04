@@ -21,8 +21,8 @@ impl Entities {
 			visuals  : HashMap::new() }
 	}
 
-	pub fn update_ship(&mut self, id: Id, x: f64, y: f64, z: f64) {
-		self.positions.insert(id, Vec2 { x: x, y: y, z: z });
+	pub fn update_ship(&mut self, id: Id, position: Vec2) {
+		self.positions.insert(id, position);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 

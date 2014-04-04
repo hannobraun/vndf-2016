@@ -3,6 +3,7 @@ use std::os;
 use std::str;
 
 use common::protocol::{Message, Remove, SelfInfo, Update};
+use common::vec::Vec2;
 
 use entities::Entities;
 
@@ -69,9 +70,11 @@ impl Core {
 			Update(update) =>
 				entities.update_ship(
 					update.id,
-					update.pos.x,
-					update.pos.y,
-					update.pos.z),
+					Vec2 {
+						x: update.pos.x,
+						y: update.pos.y,
+						z: update.pos.z
+					}),
 
 			Remove(remove) =>
 				entities.remove_ship(
