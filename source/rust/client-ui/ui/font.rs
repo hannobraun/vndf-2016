@@ -15,8 +15,7 @@ use freetype::freetype::{
 	FT_New_Face,
 	FT_Render_Glyph,
 	FT_RENDER_MODE_NORMAL,
-	FT_Set_Pixel_Sizes,
-	struct_FT_GlyphSlotRec_};
+	FT_Set_Pixel_Sizes};
 
 use ui::{Texture, Textures};
 
@@ -39,7 +38,8 @@ impl Font {
 			let c = char::from_u32(n as u32).unwrap();
 
 			let texture_id = "char:" + str::from_char(c);
-			let texture    = load_char_texture(font_face, c);
+			let glyph_slot = load_glyph_slot(font_face, c);
+			let texture    = make_texture(glyph_slot);
 			let glyph      = Glyph { texture_id: texture_id.clone() };
 
 			textures.add(texture_id, texture);
@@ -81,7 +81,7 @@ fn init_font_face() -> FT_Face {
 	}
 }
 
-fn load_char_texture(font_face: FT_Face, c: char) -> Texture {
+fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
 	unsafe {
 		let glyph_index = FT_Get_Char_Index(font_face, c as u64);
 
@@ -96,8 +96,13 @@ fn load_char_texture(font_face: FT_Face, c: char) -> Texture {
 			FT_RENDER_MODE_NORMAL);
 		assert!(render_error == 0);
 
-		let bitmap =
-			(*((*font_face).glyph as *struct_FT_GlyphSlotRec_)).bitmap;
+		(*font_face).glyph as FT_GlyphSlot
+	}
+}
+
+fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
+	unsafe {
+		let bitmap = (*glyph_slot).bitmap;
 
 		Texture::new_alpha(
 			slice::from_buf(
