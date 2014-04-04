@@ -17,7 +17,8 @@ impl Add<Vec2, Vec2> for Vec2 {
 	fn add(&self, other: &Vec2) -> Vec2 {
 		Vec2 {
 			x: self.x + other.x,
-			y: self.y + other.y }
+			y: self.y + other.y
+		}
 	}
 }
 
@@ -25,7 +26,8 @@ impl Sub<Vec2, Vec2> for Vec2 {
 	fn sub(&self, other: &Vec2) -> Vec2 {
 		Vec2 {
 			x: self.x - other.x,
-			y: self.y - other.y }
+			y: self.y - other.y
+		}
 	}
 }
 
@@ -33,7 +35,8 @@ impl Mul<f64, Vec2> for Vec2 {
 	fn mul(&self, s: &f64) -> Vec2 {
 		Vec2 {
 			x: self.x * *s,
-			y: self.y * *s }
+			y: self.y * *s
+		}
 	}
 }
 
