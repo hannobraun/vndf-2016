@@ -17,6 +17,8 @@ use freetype::freetype::{
 	FT_RENDER_MODE_NORMAL,
 	FT_Set_Pixel_Sizes};
 
+use common::vec::Vec2;
+
 use ui::{Texture, Textures};
 
 
@@ -25,7 +27,8 @@ pub struct Font {
 }
 
 pub struct Glyph {
-	texture_id: ~str
+	texture_id: ~str,
+	advance   : Vec2
 }
 
 
@@ -39,7 +42,7 @@ impl Font {
 
 			let glyph_slot = load_glyph_slot(font_face, c);
 			let texture    = make_texture(glyph_slot);
-			let glyph      = make_glyph(c);
+			let glyph      = make_glyph(c, glyph_slot);
 
 			textures.add(glyph.texture_id.clone(), texture);
 			glyphs.insert(c, glyph);
@@ -112,8 +115,15 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 	}
 }
 
-fn make_glyph(c: char) -> Glyph {
-	Glyph {
-		texture_id: "char:" + str::from_char(c)
+fn make_glyph(c: char, glyph_slot: FT_GlyphSlot) -> Glyph {
+	unsafe {
+		Glyph {
+			texture_id: "char:" + str::from_char(c),
+
+			advance: Vec2 {
+				x: (*glyph_slot).advance.x as f64 / 64.0,
+				y: (*glyph_slot).advance.y as f64 / 64.0
+			}
+		}
 	}
 }
