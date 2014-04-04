@@ -31,8 +31,8 @@ impl Entities {
 		self.visuals.remove(&id);
 	}
 
-	pub fn update_asteroid(&mut self, id: Id, x: f64, y: f64) {
-		self.positions.insert(id, Vec2 { x: x, y: y, z: 0.0 });
+	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
+		self.positions.insert(id, position);
 		self.visuals.insert(id, Visual { texture: ~"A" });
 	}
 }

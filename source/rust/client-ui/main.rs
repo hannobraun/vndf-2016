@@ -7,6 +7,8 @@ extern crate stb_image;
 
 extern crate common;
 
+use common::vec::Vec2;
+
 use camera::Camera;
 use core::Core;
 use entities::Entities;
@@ -42,7 +44,7 @@ fn main() {
 
 	let mut entities = Entities::new();
 
-	entities.update_asteroid(999, 0.0, 0.0);
+	entities.update_asteroid(999, Vec2 { x: 0.0, y: 0.0, z: 0.0 });
 
 	let mut cam = Camera::new();
 
