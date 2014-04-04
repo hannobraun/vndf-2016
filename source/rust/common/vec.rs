@@ -2,51 +2,51 @@ use std::num;
 
 
 #[deriving(Show)]
-pub struct Vec3 {
+pub struct Vec2 {
 	x: f64,
 	y: f64,
 	z: f64
 }
 
-impl Eq for Vec3 {
-	fn eq(&self, other: &Vec3) -> bool {
+impl Eq for Vec2 {
+	fn eq(&self, other: &Vec2) -> bool {
 		self.x == other.x && self.y == other.y
 	}
 }
 
-impl Add<Vec3, Vec3> for Vec3 {
-	fn add(&self, other: &Vec3) -> Vec3 {
-		Vec3 {
+impl Add<Vec2, Vec2> for Vec2 {
+	fn add(&self, other: &Vec2) -> Vec2 {
+		Vec2 {
 			x: self.x + other.x,
 			y: self.y + other.y,
 			z: self.z + other.z }
 	}
 }
 
-impl Sub<Vec3, Vec3> for Vec3 {
-	fn sub(&self, other: &Vec3) -> Vec3 {
-		Vec3 {
+impl Sub<Vec2, Vec2> for Vec2 {
+	fn sub(&self, other: &Vec2) -> Vec2 {
+		Vec2 {
 			x: self.x - other.x,
 			y: self.y - other.y,
 			z: self.z - other.z }
 	}
 }
 
-impl Mul<f64, Vec3> for Vec3 {
-	fn mul(&self, s: &f64) -> Vec3 {
-		Vec3 {
+impl Mul<f64, Vec2> for Vec2 {
+	fn mul(&self, s: &f64) -> Vec2 {
+		Vec2 {
 			x: self.x * *s,
 			y: self.y * *s,
 			z: self.z * *s }
 	}
 }
 
-impl Vec3 {
+impl Vec2 {
 	pub fn magnitude(self) -> f64 {
 		num::sqrt(self.x*self.x + self.y*self.y + self.z*self.z)
 	}
 
-	pub fn normalize(self) -> Vec3 {
+	pub fn normalize(self) -> Vec2 {
 		let m = self.magnitude();
 		self * (1.0/m)
 	}

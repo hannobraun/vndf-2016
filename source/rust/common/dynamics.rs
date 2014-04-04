@@ -1,6 +1,6 @@
-use vec::Vec3;
+use vec::Vec2;
 
 pub struct Body {
-	pos: Vec3,
-	vel: Vec3
+	pos: Vec2,
+	vel: Vec2
 }

@@ -1,6 +1,6 @@
 use std::from_str;
 
-use vec::Vec3;
+use vec::Vec2;
 
 
 pub enum Message {
@@ -31,7 +31,7 @@ impl Message {
 
 				Update(Update {
 					id : id.unwrap(),
-					pos: Vec3 {
+					pos: Vec2 {
 						x : x.unwrap(),
 						y : y.unwrap(),
 						z : z.unwrap()
@@ -69,7 +69,7 @@ impl SelfInfo {
 #[deriving(Eq)]
 pub struct Update {
 	id : uint,
-	pos: Vec3
+	pos: Vec2
 }
 
 impl Update {

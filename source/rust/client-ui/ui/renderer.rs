@@ -3,7 +3,7 @@ use std::str;
 
 use gl;
 
-use common::vec::Vec3;
+use common::vec::Vec2;
 
 use camera::Camera;
 use components::Visual;
@@ -44,7 +44,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : &Camera,
-		positions: &Components<Vec3>,
+		positions: &Components<Vec2>,
 		visuals  : &Components<Visual>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);

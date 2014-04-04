@@ -4,7 +4,7 @@ use std::libc;
 
 use common::dynamics::Body;
 use common::protocol::{Remove, SelfInfo, Update};
-use common::vec::Vec3;
+use common::vec::Vec2;
 
 use clients::Clients;
 use net;
@@ -57,12 +57,12 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 
 fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events) {
 	let ship = Body {
-		pos: Vec3 {
+		pos: Vec2 {
 			x: 0.0,
 			y: 0.0,
 			z: 0.0
 		},
-		vel: Vec3 {
+		vel: Vec2 {
 			x: 30.0,
 			y: 10.0,
 			z: 10.0
