@@ -83,11 +83,9 @@ impl Renderer {
 		for c in text.chars() {
 			let glyph = self.font.get(c);
 
-			if c != ' ' {
-				draw_texture(
-					Vec2 { x: x, y: y },
-					self.textures.get(&glyph.texture_id));
-			}
+			draw_texture(
+				Vec2 { x: x, y: y },
+				self.textures.get(&glyph.texture_id));
 
 			x += glyph.advance.x;
 			y += glyph.advance.y;
