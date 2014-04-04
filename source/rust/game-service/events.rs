@@ -61,7 +61,7 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 			x: 0.0,
 			y: 0.0
 		},
-		vel: Vec2 {
+		velocity: Vec2 {
 			x: 30.0,
 			y: 10.0
 		}
@@ -105,7 +105,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.mut_each(|client| {
 		client.ship.position =
-			client.ship.position + client.ship.vel * dTimeInS;
+			client.ship.position + client.ship.velocity * dTimeInS;
 	});
 
 	clients.each(|clientA| {
