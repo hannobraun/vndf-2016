@@ -6,7 +6,7 @@ use common::vec::Vec2;
 
 use components::Visual;
 use entities::Components;
-use ui::{Texture, Textures, Window};
+use ui::{Font, Texture, Textures, Window};
 
 
 pub struct Renderer {
@@ -17,7 +17,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn init(window: &Window, textures: Textures) -> Renderer {
+	pub fn init(window: &Window, textures: Textures, _: Font) -> Renderer {
 		gl::LoadIdentity();
 		gl::Ortho(
 			0.0,
