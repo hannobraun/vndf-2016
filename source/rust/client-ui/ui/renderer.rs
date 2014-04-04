@@ -4,7 +4,6 @@ use gl;
 
 use common::vec::Vec2;
 
-use camera::Camera;
 use components::Visual;
 use entities::Components;
 use ui::{Texture, Textures, Window};
@@ -38,7 +37,7 @@ impl Renderer {
 
 	pub fn render(&self,
 		window   : &Window,
-		camera   : &Camera,
+		camera   : Vec2,
 		positions: &Components<Vec2>,
 		visuals  : &Components<Visual>) {
 

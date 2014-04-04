@@ -9,14 +9,12 @@ extern crate common;
 
 use common::vec::Vec2;
 
-use camera::Camera;
 use core::Core;
 use entities::Entities;
 use ui::{Renderer, Textures, Window};
 
 
 mod args;
-mod camera;
 mod components;
 mod core;
 mod entities;
@@ -45,7 +43,7 @@ fn main() {
 
 	entities.update_asteroid(999, Vec2 { x: 0.0, y: 0.0 });
 
-	let mut cam = Camera::new();
+	let mut cam = Vec2 { x: 0.0, y: 0.0 };
 
 	let self_id = core.get_self_id();
 
@@ -54,8 +52,7 @@ fn main() {
 
 		match entities.positions.find(&self_id) {
 			Some(ship_position) => {
-				cam.x = ship_position.x;
-				cam.y = ship_position.y;
+				cam = *ship_position;
 			},
 
 			_ => ()
