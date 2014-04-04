@@ -22,7 +22,6 @@ mod core;
 mod entities;
 mod font;
 mod images;
-mod input;
 mod ui;
 
 
@@ -52,9 +51,6 @@ fn main() {
 
 	while !window.should_close() {
 		core.update_positions(entities);
-		input::apply(
-			&window.glfw_window,
-			cam);
 
 		match entities.positions.find(&self_id) {
 			Some(ship_position) => {
