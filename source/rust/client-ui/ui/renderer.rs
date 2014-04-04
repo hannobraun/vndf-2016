@@ -13,11 +13,12 @@ pub struct Renderer {
 	screen_width : f64,
 	screen_height: f64,
 
-	textures: Textures
+	textures: Textures,
+	font    : Font
 }
 
 impl Renderer {
-	pub fn init(window: &Window, textures: Textures, _: Font) -> Renderer {
+	pub fn init(window: &Window, textures: Textures, font: Font) -> Renderer {
 		gl::LoadIdentity();
 		gl::Ortho(
 			0.0,
@@ -31,7 +32,8 @@ impl Renderer {
 			screen_width : window.width as f64,
 			screen_height: window.height as f64,
 
-			textures: textures
+			textures: textures,
+			font    : font
 		}
 	}
 
