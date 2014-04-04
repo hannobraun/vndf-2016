@@ -77,6 +77,9 @@ impl Renderer {
 		self.draw_text(
 			Vec2 { x: 20.0, y: 20.0 },
 			"Commit maneuver with Enter");
+		self.draw_text(
+			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
+			"000");
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
