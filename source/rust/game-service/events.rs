@@ -57,7 +57,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 
 fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events) {
 	let ship = Body {
-		pos: Vec2 {
+		position: Vec2 {
 			x: 0.0,
 			y: 0.0
 		},
@@ -104,14 +104,15 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.mut_each(|client| {
-		client.ship.pos = client.ship.pos + client.ship.vel * dTimeInS;
+		client.ship.position =
+			client.ship.position + client.ship.vel * dTimeInS;
 	});
 
 	clients.each(|clientA| {
 		clients.each(|clientB| {
 			let message = Update {
 				id : clientB.id,
-				pos: clientB.ship.pos
+				pos: clientB.ship.position
 			};
 
 			let status = net::send_message(clientA.socketFD, message.to_str());
