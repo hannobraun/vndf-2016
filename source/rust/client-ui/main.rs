@@ -60,7 +60,6 @@ fn main() {
 			Some(ship_position) => {
 				cam.x = ship_position.x;
 				cam.y = ship_position.y;
-				cam.z = ship_position.z;
 			},
 
 			_ => ()
