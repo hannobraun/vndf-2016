@@ -1,3 +1,4 @@
+use collections::HashMap;
 use std::char;
 use std::ptr;
 use std::slice;
@@ -20,18 +21,34 @@ use freetype::freetype::{
 use ui::{Texture, Textures};
 
 
-pub struct Font;
+pub struct Font {
+	map: HashMap<char, Glyph>
+}
+
+pub struct Glyph {
+	texture_id: ~str
+}
+
 
 impl Font {
 	pub fn load(textures: &mut Textures) -> Font {
-		let font_face = init_font_face();
+		let font_face  = init_font_face();
+		let mut glyphs = HashMap::new();
 
 		for n in range(32, 127) {
 			let c = char::from_u32(n as u32).unwrap();
-			textures.add(str::from_char(c), load_char_texture(font_face, c));
+
+			let texture_id = "char:" + str::from_char(c);
+			let texture    = load_char_texture(font_face, c);
+			let glyph      = Glyph { texture_id: texture_id.clone() };
+
+			textures.add(texture_id, texture);
+			glyphs.insert(c, glyph);
 		}
 
-		Font
+		Font {
+			map: glyphs
+		}
 	}
 }
 

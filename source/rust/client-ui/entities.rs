@@ -33,6 +33,6 @@ impl Entities {
 
 	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
 		self.positions.insert(id, position);
-		self.visuals.insert(id, Visual { texture: ~"A" });
+		self.visuals.insert(id, Visual { texture: ~"char:A" });
 	}
 }
