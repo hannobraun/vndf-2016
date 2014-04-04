@@ -61,7 +61,7 @@ fn load_char(c: char) -> Texture {
 		assert!(render_error == 0);
 
 		let bitmap =
-			(*(((*font_face).glyph) as *struct_FT_GlyphSlotRec_)).bitmap;
+			(*((*font_face).glyph as *struct_FT_GlyphSlotRec_)).bitmap;
 
 		Texture::new_alpha(
 			slice::from_buf(
