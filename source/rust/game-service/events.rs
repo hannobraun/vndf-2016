@@ -59,13 +59,11 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 	let ship = Body {
 		pos: Vec2 {
 			x: 0.0,
-			y: 0.0,
-			z: 0.0
+			y: 0.0
 		},
 		vel: Vec2 {
 			x: 30.0,
-			y: 10.0,
-			z: 10.0
+			y: 10.0
 		}
 	};
 

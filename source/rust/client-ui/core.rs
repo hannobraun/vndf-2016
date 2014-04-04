@@ -72,8 +72,7 @@ impl Core {
 					update.id,
 					Vec2 {
 						x: update.pos.x,
-						y: update.pos.y,
-						z: update.pos.z
+						y: update.pos.y
 					}),
 
 			Remove(remove) =>

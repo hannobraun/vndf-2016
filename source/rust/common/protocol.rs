@@ -27,14 +27,12 @@ impl Message {
 				let id: Option<uint> = from_str::from_str(words[1]);
 				let x : Option<f64>  = from_str::from_str(words[2]);
 				let y : Option<f64>  = from_str::from_str(words[3]);
-				let z : Option<f64>  = from_str::from_str(words[4]);
 
 				Update(Update {
 					id : id.unwrap(),
 					pos: Vec2 {
 						x : x.unwrap(),
 						y : y.unwrap(),
-						z : z.unwrap()
 					}
 				})
 			},
@@ -75,11 +73,10 @@ pub struct Update {
 impl Update {
 	pub fn to_str(&self) -> ~str {
 		format!(
-			"UPDATE {} {} {} {}",
+			"UPDATE {} {} {}",
 			self.id,
 			self.pos.x,
-			self.pos.y,
-			self.pos.z)
+			self.pos.y)
 	}
 }
 

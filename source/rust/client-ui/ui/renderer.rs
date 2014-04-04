@@ -100,7 +100,7 @@ impl Renderer {
 		for c in text.chars() {
 			if c != ' ' {
 				draw_texture(
-					Vec2 { x: x, y: y, z: 0.0 },
+					Vec2 { x: x, y: y },
 					self.textures.get(&str::from_char(c)));
 			}
 			x += 12.0;
