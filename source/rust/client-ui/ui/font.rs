@@ -37,12 +37,11 @@ impl Font {
 		for n in range(32, 127) {
 			let c = char::from_u32(n as u32).unwrap();
 
-			let texture_id = "char:" + str::from_char(c);
 			let glyph_slot = load_glyph_slot(font_face, c);
 			let texture    = make_texture(glyph_slot);
-			let glyph      = Glyph { texture_id: texture_id.clone() };
+			let glyph      = make_glyph(c);
 
-			textures.add(texture_id, texture);
+			textures.add(glyph.texture_id.clone(), texture);
 			glyphs.insert(c, glyph);
 		}
 
@@ -110,5 +109,11 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 				(bitmap.width * bitmap.rows) as uint),
 			bitmap.width as uint,
 			bitmap.rows as uint)
+	}
+}
+
+fn make_glyph(c: char) -> Glyph {
+	Glyph {
+		texture_id: "char:" + str::from_char(c)
 	}
 }
