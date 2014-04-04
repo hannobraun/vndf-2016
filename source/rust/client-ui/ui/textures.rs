@@ -58,19 +58,20 @@ impl Textures {
 
 impl Texture {
 	pub fn new_alpha(data: &[u8], width: uint, height: uint) -> Texture {
-		create_texture(data, width, height, gl::ALPHA, gl::ALPHA8)
+		let size = Vec2 { x: width as f64, y: height as f64 };
+		create_texture(data, size, gl::ALPHA, gl::ALPHA8)
 	}
 
 	pub fn new_rgb(data: &[u8], width: uint, height: uint) -> Texture {
-		create_texture(data, width, height, gl::RGBA, gl::RGBA8)
+		let size = Vec2 { x: width as f64, y: height as f64 };
+		create_texture(data, size, gl::RGBA, gl::RGBA8)
 	}
 }
 
 
 fn create_texture(
 	data           : &[u8],
-	width          : uint,
-	height         : uint,
+	size           : Vec2,
 	format         : gl::types::GLenum,
 	internal_format: gl::types::GLenum
 	) -> Texture {
@@ -110,8 +111,8 @@ fn create_texture(
 			gl::TEXTURE_2D,
 			0,
 			internal_format as i32,
-			width as i32,
-			height as i32,
+			size.x as i32,
+			size.y as i32,
 			0,
 			format,
 			gl::UNSIGNED_BYTE,
@@ -120,9 +121,6 @@ fn create_texture(
 
 	Texture {
 		name: texture_name,
-		size: Vec2 {
-			x: width as f64,
-			y: height as f64
-		}
+		size: size
 	}
 }
