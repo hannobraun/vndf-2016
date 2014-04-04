@@ -76,7 +76,7 @@ impl Renderer {
 			"Set attitude with the left and right cursor keys");
 		self.draw_text(
 			Vec2 { x: 20.0, y: 20.0 },
-			"Commit maneuver with Enter");
+			"Start maneuver with Enter");
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
 			"000");
