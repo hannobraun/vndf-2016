@@ -1,4 +1,3 @@
-use std::f64;
 use std::str;
 
 use gl;
@@ -21,17 +20,13 @@ pub struct Renderer {
 impl Renderer {
 	pub fn init(window: &Window, textures: Textures) -> Renderer {
 		gl::LoadIdentity();
-
-		let z_near = 0.1;
-		let fov_angle_y = 45.0;
-		let half_height =
-			f64::tan( fov_angle_y / 360.0 * f64::consts::PI ) * z_near;
-		let half_width =
-			half_height * window.width as f64 / window.height as f64;
-		gl::Frustum(
-			-half_width, half_width,
-			-half_height, half_height,
-			z_near, 2000.0);
+		gl::Ortho(
+			0.0,
+			window.width as f64,
+			0.0,
+			window.height as f64,
+			-100.0,
+			100.0);
 
 		Renderer {
 			screen_width : window.width as f64,
@@ -52,8 +47,10 @@ impl Renderer {
 
 		gl::PushMatrix();
 		{
-			gl::Translated(0.0, 0.0, -500.0);
-			gl::Translated(-camera.x, -camera.y, 0.0);
+			gl::Translated(
+				self.screen_width / 2.0 - camera.x,
+				self.screen_height / 2.0 - camera.y,
+				0.0);
 
 			for (id, &position) in positions.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
