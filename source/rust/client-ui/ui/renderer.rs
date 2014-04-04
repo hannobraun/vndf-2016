@@ -79,14 +79,18 @@ impl Renderer {
 			"Commit maneuver with Enter");
 	}
 
-	fn draw_text(&self, mut x: f64, y: f64, text: &str) {
+	fn draw_text(&self, mut x: f64, mut y: f64, text: &str) {
 		for c in text.chars() {
+			let glyph = self.font.get(c);
+
 			if c != ' ' {
 				draw_texture(
 					Vec2 { x: x, y: y },
-					self.textures.get(&self.font.get(c).texture_id));
+					self.textures.get(&glyph.texture_id));
 			}
-			x += 12.0;
+
+			x += glyph.advance.x;
+			y += glyph.advance.y;
 		}
 	}
 }
