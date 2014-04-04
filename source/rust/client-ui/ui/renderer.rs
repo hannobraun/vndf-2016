@@ -70,9 +70,13 @@ impl Renderer {
 
 	fn draw_ui_overlay(&self) {
 		self.draw_text(
-			10.0,
-			10.0,
-			"Use cursor keys to control camera");
+			20.0,
+			40.0,
+			"Set attitude with the left and right cursor keys");
+		self.draw_text(
+			20.0,
+			20.0,
+			"Commit maneuver with Enter");
 	}
 
 	fn draw_text(&self, mut x: f64, y: f64, text: &str) {
