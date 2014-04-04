@@ -59,9 +59,9 @@ impl Renderer {
 
 			draw_grid();
 
-			for (id, position) in positions.iter() {
+			for (id, &position) in positions.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
-				draw_texture(position.x, position.y, position.z, texture);
+				draw_texture(position, texture);
 			}
 		}
 		gl::PopMatrix();
@@ -99,7 +99,8 @@ impl Renderer {
 	fn draw_text(&self, mut x: f64, y: f64, text: &str) {
 		for c in text.chars() {
 			if c != ' ' {
-				draw_texture(x, y, 0.0,
+				draw_texture(
+					Vec2 { x: x, y: y, z: 0.0 },
 					self.textures.get(&str::from_char(c)));
 			}
 			x += 12.0;
@@ -209,7 +210,7 @@ fn draw_grid() {
 	gl::End();
 }
 
-fn draw_texture(x: f64, y: f64, z: f64, texture: &Texture) {
+fn draw_texture(position: Vec2, texture: &Texture) {
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture.name);
@@ -217,9 +218,9 @@ fn draw_texture(x: f64, y: f64, z: f64, texture: &Texture) {
 	gl::PushMatrix();
 	{
 		gl::Translated(
-			x - texture.width as f64 / 2.0,
-			y - texture.height as f64 / 2.0,
-			z);
+			position.x - texture.width as f64 / 2.0,
+			position.y - texture.height as f64 / 2.0,
+			position.z);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
 		{
