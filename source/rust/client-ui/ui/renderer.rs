@@ -72,26 +72,21 @@ impl Renderer {
 
 	fn draw_ui_overlay(&self) {
 		self.draw_text(
-			20.0,
-			40.0,
+			Vec2 { x: 20.0, y: 40.0 },
 			"Set attitude with the left and right cursor keys");
 		self.draw_text(
-			20.0,
-			20.0,
+			Vec2 { x: 20.0, y: 20.0 },
 			"Commit maneuver with Enter");
 	}
 
-	fn draw_text(&self, mut x: f64, mut y: f64, text: &str) {
+	fn draw_text(&self, mut position: Vec2, text: &str) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(&glyph.texture_id);
 
-			draw_texture(
-				Vec2 { x: x, y: y },
-				texture);
+			draw_texture(position, texture);
 
-			x += glyph.advance.x;
-			y += glyph.advance.y;
+			position = position + glyph.advance;
 		}
 	}
 }
