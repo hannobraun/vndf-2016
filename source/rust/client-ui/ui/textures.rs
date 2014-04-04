@@ -3,6 +3,8 @@ use std::libc;
 
 use gl;
 
+use common::vec::Vec2;
+
 use ui::Window;
 
 
@@ -11,9 +13,8 @@ pub struct Textures {
 }
 
 pub struct Texture {
-	name  : Name,
-	width : uint,
-	height: uint
+	name: Name,
+	size: Vec2
 }
 
 pub type Name = gl::types::GLuint;
@@ -118,7 +119,10 @@ fn create_texture(
 	}
 
 	Texture {
-		name  : texture_name,
-		width : width,
-		height: height }
+		name: texture_name,
+		size: Vec2 {
+			x: width as f64,
+			y: height as f64
+		}
+	}
 }

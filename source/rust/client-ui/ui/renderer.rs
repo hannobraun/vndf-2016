@@ -102,8 +102,8 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 	gl::PushMatrix();
 	{
 		gl::Translated(
-			position.x - texture.width as f64 / 2.0,
-			position.y - texture.height as f64 / 2.0,
+			position.x - texture.size.x / 2.0,
+			position.y - texture.size.y / 2.0,
 			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
@@ -112,15 +112,15 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 				1.0,
 				0.0);
 			gl::Vertex3d(
-				texture.width as f64,
-				texture.height as f64,
+				texture.size.x,
+				texture.size.y,
 				0.0);
 
 			gl::TexCoord2d(
 				1.0,
 				1.0);
 			gl::Vertex3d(
-				texture.width as f64,
+				texture.size.x,
 				0.0,
 				0.0);
 
@@ -129,7 +129,7 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 				0.0);
 			gl::Vertex3d(
 				0.0,
-				texture.height as f64,
+				texture.size.y,
 				0.0);
 
 			gl::TexCoord2d(
