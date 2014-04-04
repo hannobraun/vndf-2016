@@ -81,11 +81,12 @@ impl Renderer {
 
 	fn draw_text(&self, mut x: f64, mut y: f64, text: &str) {
 		for c in text.chars() {
-			let glyph = self.font.get(c);
+			let glyph   = self.font.get(c);
+			let texture = self.textures.get(&glyph.texture_id);
 
 			draw_texture(
 				Vec2 { x: x, y: y },
-				self.textures.get(&glyph.texture_id));
+				texture);
 
 			x += glyph.advance.x;
 			y += glyph.advance.y;
