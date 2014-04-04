@@ -24,15 +24,17 @@ pub struct Font;
 
 impl Font {
 	pub fn load(textures: &mut Textures) {
+		let font_face = init_font_face();
+
 		for n in range(32, 127) {
 			let c = char::from_u32(n as u32).unwrap();
-			textures.add(str::from_char(c), load_char(c));
+			textures.add(str::from_char(c), load_char(font_face, c));
 		}
 	}
 }
 
 
-fn load_char(c: char) -> Texture {
+fn init_font_face() -> FT_Face {
 	unsafe {
 		let freetype: FT_Library = ptr::null();
 		let init_error = FT_Init_FreeType(&freetype);
@@ -52,6 +54,12 @@ fn load_char(c: char) -> Texture {
 			16);
 		assert!(pixel_error == 0);
 
+		font_face
+	}
+}
+
+fn load_char(font_face: FT_Face, c: char) -> Texture {
+	unsafe {
 		let glyph_index = FT_Get_Char_Index(font_face, c as u64);
 
 		let glyph_error = FT_Load_Glyph(
