@@ -43,20 +43,21 @@ impl ClientCore {
 	}
 
 	pub fn expect_self_id(&mut self) -> uint {
-		let message = self.process.read_stdout_line();
-
-		match Message::from_str(message) {
+		match self.next_message() {
 			SelfInfo(self_info) => self_info.id,
-			_                   => fail!("unexpected message ({})", message)
+			message @ _         => fail!("unexpected message ({})", message)
 		}
 	}
 
 	pub fn expect_update(&mut self) -> Update {
-		let message = self.process.read_stdout_line();
-
-		match Message::from_str(message) {
+		match self.next_message() {
 			Update(update) => update,
-			_              => fail!("unexpected message ({})", message)
+			message @ _    => fail!("unexpected message ({})", message)
 		}
+	}
+
+	fn next_message(&mut self) -> Message {
+		let message = self.process.read_stdout_line();
+		Message::from_str(message)
 	}
 }
