@@ -16,11 +16,7 @@ impl Message {
 
 		match words[0] {
 			"SELF_ID" => {
-				let id: Option<uint> = from_str::from_str(words[1]);
-
-				SelfInfo(SelfInfo {
-					id: id.unwrap()
-				})
+				SelfInfo(SelfInfo::from_words(words))
 			},
 
 			"UPDATE" => {
@@ -56,6 +52,14 @@ pub struct SelfInfo {
 }
 
 impl SelfInfo {
+	pub fn from_words(words: ~[&str]) -> SelfInfo {
+		let id: Option<uint> = from_str::from_str(words[1]);
+
+		SelfInfo {
+			id: id.unwrap()
+		}
+	}
+
 	pub fn to_str(&self) -> ~str {
 		format!(
 			"SELF_ID {}",
