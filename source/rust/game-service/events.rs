@@ -2,9 +2,8 @@ use collections::Deque;
 use collections::RingBuf;
 use std::libc;
 
-use common::dynamics::Body;
+use common::physics::{Body, Vec2};
 use common::protocol::{Remove, SelfInfo, Update};
-use common::vec::Vec2;
 
 use clients::Clients;
 use net;

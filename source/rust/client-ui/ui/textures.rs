@@ -3,7 +3,7 @@ use std::libc;
 
 use gl;
 
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 use ui::Window;
 

@@ -7,7 +7,7 @@ extern crate stb_image;
 
 extern crate common;
 
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 use core::Core;
 use entities::Entities;

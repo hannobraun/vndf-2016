@@ -1,4 +1,4 @@
-use vec::Vec2;
+use physics::Vec2;
 
 pub struct Body {
 	position: Vec2,

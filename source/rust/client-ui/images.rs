@@ -1,6 +1,6 @@
 use stb_image::image;
 
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 use ui::{Texture, Textures};
 

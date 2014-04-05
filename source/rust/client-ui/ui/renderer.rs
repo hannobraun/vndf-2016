@@ -1,7 +1,6 @@
 use gl;
 
-use common::dynamics::Body;
-use common::vec::Vec2;
+use common::physics::{Body, Vec2};
 
 use components::Visual;
 use entities::Components;

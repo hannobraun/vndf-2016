@@ -1,4 +1,4 @@
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 
 #[test]

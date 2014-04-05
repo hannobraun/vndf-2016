@@ -1,6 +1,6 @@
 use std::from_str;
 
-use vec::Vec2;
+use physics::Vec2;
 
 
 pub enum Message {

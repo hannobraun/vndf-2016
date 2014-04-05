@@ -17,7 +17,7 @@ use freetype::freetype::{
 	FT_RENDER_MODE_NORMAL,
 	FT_Set_Pixel_Sizes};
 
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 use ui::{Texture, Textures};
 

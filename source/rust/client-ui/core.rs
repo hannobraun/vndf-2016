@@ -3,7 +3,7 @@ use std::os;
 use std::str;
 
 use common::protocol::{Message, Remove, SelfInfo, Update};
-use common::vec::Vec2;
+use common::physics::Vec2;
 
 use entities::Entities;
 

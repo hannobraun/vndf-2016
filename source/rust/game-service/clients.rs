@@ -1,7 +1,7 @@
 use collections::HashMap;
 use std::libc;
 
-use common::dynamics::Body;
+use common::physics::Body;
 
 
 pub struct Clients {
