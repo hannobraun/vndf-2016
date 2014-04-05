@@ -63,7 +63,8 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 		velocity: Vec2 {
 			x: 30.0,
 			y: 10.0
-		}
+		},
+		attitude: 0.0
 	};
 
 	match clients.add(clientFD, ship) {

@@ -24,7 +24,8 @@ impl Entities {
 	pub fn update_ship(&mut self, id: Id, position: Vec2) {
 		let body = Body {
 			position: position,
-			velocity: Vec2 { x: 0.0, y: 0.0 }
+			velocity: Vec2 { x: 0.0, y: 0.0 },
+			attitude: 0.0
 		};
 		self.positions.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
@@ -38,7 +39,8 @@ impl Entities {
 	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
 		let body = Body {
 			position: position,
-			velocity: Vec2 { x: 0.0, y: 0.0 }
+			velocity: Vec2 { x: 0.0, y: 0.0 },
+			attitude: 0.0
 		};
 		self.positions.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"char:A" });
