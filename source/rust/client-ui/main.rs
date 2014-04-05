@@ -50,8 +50,8 @@ fn main() {
 		core.update_positions(entities);
 
 		match entities.positions.find(&self_id) {
-			Some(ship_position) => {
-				cam = *ship_position;
+			Some(ship) => {
+				cam = ship.position;
 			},
 
 			_ => ()

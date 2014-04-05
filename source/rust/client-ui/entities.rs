@@ -1,5 +1,6 @@
 use collections::HashMap;
 
+use common::dynamics::Body;
 use common::vec::Vec2;
 
 use components::Visual;
@@ -10,7 +11,7 @@ pub type Components<T> = HashMap<Id, T>;
 
 
 pub struct Entities {
-	positions: Components<Vec2>,
+	positions: Components<Body>,
 	visuals  : Components<Visual>
 }
 
@@ -22,7 +23,11 @@ impl Entities {
 	}
 
 	pub fn update_ship(&mut self, id: Id, position: Vec2) {
-		self.positions.insert(id, position);
+		let body = Body {
+			position: position,
+			velocity: Vec2 { x: 0.0, y: 0.0 }
+		};
+		self.positions.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 
@@ -32,7 +37,11 @@ impl Entities {
 	}
 
 	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
-		self.positions.insert(id, position);
+		let body = Body {
+			position: position,
+			velocity: Vec2 { x: 0.0, y: 0.0 }
+		};
+		self.positions.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"char:A" });
 	}
 }

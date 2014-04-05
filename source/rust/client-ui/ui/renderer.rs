@@ -1,5 +1,6 @@
 use gl;
 
+use common::dynamics::Body;
 use common::vec::Vec2;
 
 use components::Visual;
@@ -38,7 +39,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : Vec2,
-		positions: &Components<Vec2>,
+		positions: &Components<Body>,
 		visuals  : &Components<Visual>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
@@ -51,10 +52,10 @@ impl Renderer {
 				self.screen_height / 2.0 - camera.y,
 				0.0);
 
-			for (id, &position) in positions.iter() {
+			for (id, &body) in positions.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
 
-				let draw_position = position - texture.size * 0.5;
+				let draw_position = body.position - texture.size * 0.5;
 				draw_texture(draw_position, texture);
 			}
 		}
