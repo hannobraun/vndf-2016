@@ -24,11 +24,7 @@ impl Message {
 			},
 
 			"REMOVE" => {
-				let id: Option<uint> = from_str::from_str(words[1]);
-
-				Remove(Remove {
-					id: id.unwrap()
-				})
+				Remove(Remove::from_words(words))
 			},
 
 			_ => Invalid
@@ -93,6 +89,14 @@ pub struct Remove {
 }
 
 impl Remove {
+	pub fn from_words(words: ~[&str]) -> Remove {
+		let id: Option<uint> = from_str::from_str(words[1]);
+
+		Remove {
+			id: id.unwrap()
+		}
+	}
+
 	pub fn to_str(&self) -> ~str {
 		format!(
 			"REMOVE {}",
