@@ -3,6 +3,7 @@ use std::from_str;
 use physics::Vec2;
 
 
+#[deriving(Show)]
 pub enum Message {
 	SelfInfo(SelfInfo),
 	Update(Update),
@@ -24,6 +25,7 @@ impl Message {
 }
 
 
+#[deriving(Show)]
 pub struct SelfInfo {
 	id: uint
 }
@@ -45,7 +47,7 @@ impl SelfInfo {
 }
 
 
-#[deriving(Eq)]
+#[deriving(Eq, Show)]
 pub struct Update {
 	id : uint,
 	pos: Vec2
@@ -75,6 +77,7 @@ impl Update {
 }
 
 
+#[deriving(Show)]
 pub struct Remove {
 	id: uint
 }
