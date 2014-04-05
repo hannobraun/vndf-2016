@@ -20,17 +20,7 @@ impl Message {
 			},
 
 			"UPDATE" => {
-				let id: Option<uint> = from_str::from_str(words[1]);
-				let x : Option<f64>  = from_str::from_str(words[2]);
-				let y : Option<f64>  = from_str::from_str(words[3]);
-
-				Update(Update {
-					id : id.unwrap(),
-					pos: Vec2 {
-						x : x.unwrap(),
-						y : y.unwrap(),
-					}
-				})
+				Update(Update::from_words(words))
 			},
 
 			"REMOVE" => {
@@ -75,6 +65,19 @@ pub struct Update {
 }
 
 impl Update {
+	pub fn from_words(words: ~[&str]) -> Update {
+		let id: Option<uint> = from_str::from_str(words[1]);
+		let x : Option<f64>  = from_str::from_str(words[2]);
+		let y : Option<f64>  = from_str::from_str(words[3]);
+
+		Update {
+			id : id.unwrap(),
+			pos: Vec2 {
+				x : x.unwrap(),
+				y : y.unwrap(),
+			}
+		}
+	}
 	pub fn to_str(&self) -> ~str {
 		format!(
 			"UPDATE {} {} {}",
