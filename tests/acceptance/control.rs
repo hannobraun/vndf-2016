@@ -16,7 +16,7 @@ impl GameService {
 
 		let mut process = Process::start(
 			"output/bin/vndf-game-service", [port.to_str()]);
-		process.read_stdout_line(); // Make sure it's ready.
+		process.read_stdout_line(); // Make sure it's ready
 
 		GameService {
 			port   : port,
