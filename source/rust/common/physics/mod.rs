@@ -1,5 +1,5 @@
-pub use physics::dynamics::Body;
+pub use physics::body::Body;
 pub use physics::vec::Vec2;
 
-mod dynamics;
+mod body;
 mod vec;
