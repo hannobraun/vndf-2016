@@ -7,7 +7,7 @@ pub enum Message {
 	SelfInfo(SelfInfo),
 	Update(Update),
 	Remove(Remove),
-	Invalid
+	Invalid(~str)
 }
 
 impl Message {
@@ -18,7 +18,7 @@ impl Message {
 			"SELF_ID" => SelfInfo(SelfInfo::from_words(words)),
 			"UPDATE"  => Update(Update::from_words(words)),
 			"REMOVE"  => Remove(Remove::from_words(words)),
-			_         => Invalid
+			_         => Invalid(s.to_owned())
 		}
 	}
 }
