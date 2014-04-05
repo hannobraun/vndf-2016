@@ -15,19 +15,10 @@ impl Message {
 		let words: ~[&str] = s.words().collect();
 
 		match words[0] {
-			"SELF_ID" => {
-				SelfInfo(SelfInfo::from_words(words))
-			},
-
-			"UPDATE" => {
-				Update(Update::from_words(words))
-			},
-
-			"REMOVE" => {
-				Remove(Remove::from_words(words))
-			},
-
-			_ => Invalid
+			"SELF_ID" => SelfInfo(SelfInfo::from_words(words)),
+			"UPDATE"  => Update(Update::from_words(words)),
+			"REMOVE"  => Remove(Remove::from_words(words)),
+			_         => Invalid
 		}
 	}
 }
