@@ -1,4 +1,6 @@
+use collections::HashSet;
 use rand;
+use std::intrinsics::TypeId;
 
 use common::protocol::{Message, SelfInfo, Update};
 
@@ -27,19 +29,25 @@ impl GameService {
 
 
 pub struct ClientCore {
-	process: Process
+	process: Process,
+	ignored: HashSet<TypeId>
 }
 
 impl ClientCore {
 	pub fn start(port: uint) -> ClientCore {
 		ClientCore {
 			process: Process::start(
-				"output/bin/vndf-client-core", [~"localhost", port.to_str()])
+				"output/bin/vndf-client-core", [~"localhost", port.to_str()]),
+			ignored: HashSet::new()
 		}
 	}
 
 	pub fn ignore_message(&mut self) {
 		self.process.read_stdout_line();
+	}
+
+	pub fn ignore(&mut self, type_id: TypeId) {
+		self.ignored.insert(type_id);
 	}
 
 	pub fn expect_self_id(&mut self) -> uint {
@@ -57,7 +65,13 @@ impl ClientCore {
 	}
 
 	fn next_message(&mut self) -> Message {
-		let message = self.process.read_stdout_line();
-		Message::from_str(message)
+		loop {
+			let line    = self.process.read_stdout_line();
+			let message = Message::from_str(line);
+
+			if !self.ignored.contains(&message.type_id()) {
+				return message
+			}
+		};
 	}
 }
