@@ -2,7 +2,7 @@ use libc;
 use std::ptr;
 use std::str;
 
-use common::protocol::{Message, Remove, SelfInfo, Update};
+use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 use net;
 
@@ -18,6 +18,7 @@ pub struct Connection {
 
 pub trait Handler {
 	fn set_self_id(&self, message: SelfInfo);
+	fn create_ship(&self, message: Create);
 	fn update_ship(&self, message: Update);
 	fn remove_ship(&self, message: Remove);
 }

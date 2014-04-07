@@ -1,7 +1,7 @@
 extern crate common;
 extern crate libc;
 
-use common::protocol::{Remove, SelfInfo, Update};
+use common::protocol::{Create, Remove, SelfInfo, Update};
 
 pub mod args;
 pub mod net;
@@ -12,6 +12,10 @@ struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
 	fn set_self_id(&self, message: SelfInfo) {
+		print!("{}\n", message.to_str());
+	}
+
+	fn create_ship(&self, message: Create) {
 		print!("{}\n", message.to_str());
 	}
 
