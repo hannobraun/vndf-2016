@@ -21,14 +21,18 @@ impl Entities {
 			visuals  : HashMap::new() }
 	}
 
-	pub fn update_ship(&mut self, id: Id, position: Vec2) {
+	pub fn create_ship(&mut self, id: Id) {
 		let body = Body {
-			position: position,
+			position: Vec2 { x: 0.0, y: 0.0 },
 			velocity: Vec2 { x: 0.0, y: 0.0 },
 			attitude: 0.0
 		};
 		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
+	}
+
+	pub fn update_ship(&mut self, id: Id, position: Vec2) {
+		self.bodies.get_mut(&id).position = position;
 	}
 
 	pub fn remove_ship(&mut self, id: Id) {

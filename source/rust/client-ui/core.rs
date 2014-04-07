@@ -2,7 +2,7 @@ use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
 use std::str;
 
-use common::protocol::{Message, Remove, SelfInfo, Update};
+use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 use common::physics::Vec2;
 
 use entities::Entities;
@@ -67,6 +67,10 @@ impl Core {
 		let message = self.read_message();
 
 		match Message::from_str(message) {
+			Create(create) =>
+				entities.create_ship(
+					create.id),
+
 			Update(update) =>
 				entities.update_ship(
 					update.id,
