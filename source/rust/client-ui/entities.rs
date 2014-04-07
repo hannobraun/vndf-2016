@@ -17,8 +17,8 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> ~Entities {
 		~Entities {
-			bodies: HashMap::new(),
-			visuals  : HashMap::new() }
+			bodies : HashMap::new(),
+			visuals: HashMap::new() }
 	}
 
 	pub fn create_ship(&mut self, id: Id) {
