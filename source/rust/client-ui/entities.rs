@@ -10,14 +10,14 @@ pub type Components<T> = HashMap<Id, T>;
 
 
 pub struct Entities {
-	pub positions: Components<Body>,
-	pub visuals  : Components<Visual>
+	pub bodies : Components<Body>,
+	pub visuals: Components<Visual>
 }
 
 impl Entities {
 	pub fn new() -> ~Entities {
 		~Entities {
-			positions: HashMap::new(),
+			bodies: HashMap::new(),
 			visuals  : HashMap::new() }
 	}
 
@@ -27,12 +27,12 @@ impl Entities {
 			velocity: Vec2 { x: 0.0, y: 0.0 },
 			attitude: 0.0
 		};
-		self.positions.insert(id, body);
+		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 	}
 
 	pub fn remove_ship(&mut self, id: Id) {
-		self.positions.remove(&id);
+		self.bodies.remove(&id);
 		self.visuals.remove(&id);
 	}
 
@@ -42,7 +42,7 @@ impl Entities {
 			velocity: Vec2 { x: 0.0, y: 0.0 },
 			attitude: 0.0
 		};
-		self.positions.insert(id, body);
+		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"char:A" });
 	}
 }

@@ -50,7 +50,7 @@ fn main() {
 	while !window.should_close() {
 		core.update_positions(entities);
 
-		match entities.positions.find(&self_id) {
+		match entities.bodies.find(&self_id) {
 			Some(ship) => {
 				cam = ship.position;
 			},
@@ -61,7 +61,7 @@ fn main() {
 		renderer.render(
 			window,
 			cam,
-			&entities.positions,
+			&entities.bodies,
 			&entities.visuals);
 
 		window.poll_events();
