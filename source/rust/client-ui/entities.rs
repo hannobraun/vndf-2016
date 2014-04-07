@@ -10,6 +10,7 @@ pub type Components<T> = HashMap<Id, T>;
 
 
 pub struct Entities {
+	pub self_id: Option<uint>,
 	pub bodies : Components<Body>,
 	pub visuals: Components<Visual>
 }
@@ -17,6 +18,7 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> ~Entities {
 		~Entities {
+			self_id: None,
 			bodies : HashMap::new(),
 			visuals: HashMap::new() }
 	}
