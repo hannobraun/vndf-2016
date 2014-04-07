@@ -46,6 +46,7 @@ fn main() {
 	let mut cam = Vec2 { x: 0.0, y: 0.0 };
 
 	let self_id = core.get_self_id();
+	entities.self_id = Some(self_id);
 
 	while !window.should_close() {
 		core.update_positions(entities);
