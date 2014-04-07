@@ -51,14 +51,9 @@ pub fn receive_positions(
 		};
 
 		match Message::from_str(message) {
-			SelfInfo(self_info) =>
-				handler.set_self_id(self_info),
-
-			Update(update) =>
-				handler.update_ship(update),
-
-			Remove(remove) =>
-				handler.remove_ship(remove),
+			SelfInfo(self_info) => handler.set_self_id(self_info),
+			Update(update)      => handler.update_ship(update),
+			Remove(remove)      => handler.remove_ship(remove),
 
 			_ =>
 				fail!("invalid message ({})\n", message)
