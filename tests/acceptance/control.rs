@@ -42,10 +42,6 @@ impl ClientCore {
 		}
 	}
 
-	pub fn ignore_message(&mut self) {
-		self.process.read_stdout_line();
-	}
-
 	pub fn ignore(&mut self, type_id: TypeId) {
 		self.ignored.insert(type_id);
 	}
