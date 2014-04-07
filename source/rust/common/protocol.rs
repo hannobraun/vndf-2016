@@ -1,4 +1,5 @@
 use std::from_str;
+use std::intrinsics::TypeId;
 
 use physics::Vec2;
 
@@ -20,6 +21,15 @@ impl Message {
 			"UPDATE"  => Update(Update::from_words(words)),
 			"REMOVE"  => Remove(Remove::from_words(words)),
 			_         => Invalid(s.to_owned())
+		}
+	}
+
+	pub fn type_id(&self) -> TypeId {
+		match *self {
+			SelfInfo(_) => TypeId::of::<SelfInfo>(),
+			Update(_)   => TypeId::of::<Update>(),
+			Remove(_)   => TypeId::of::<Remove>(),
+			Invalid(_)  => TypeId::of::<()>()
 		}
 	}
 }
