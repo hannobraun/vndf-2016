@@ -1,6 +1,6 @@
 use std::intrinsics::TypeId;
 
-use common::protocol::{Create, SelfInfo};
+use common::protocol::{Create, SelfInfo, Update};
 
 use control::{ClientCore, GameService};
 
@@ -13,6 +13,24 @@ fn it_should_send_the_self_id_after_connecting() {
 
 	assert_eq!(0, client_a.expect_self_id());
 	assert_eq!(1, client_b.expect_self_id());
+}
+
+#[test]
+fn it_should_send_create_to_all_clients_on_connect() {
+	let game_service    = GameService::start();
+	let mut this_client = ClientCore::start(game_service.port);
+	let other_client    = ClientCore::start(game_service.port);
+
+	let _ = other_client;
+
+	this_client.ignore(TypeId::of::<SelfInfo>());
+	this_client.ignore(TypeId::of::<Update>());
+
+	let create_a = this_client.expect_create();
+	let create_b = this_client.expect_create();
+
+	assert_eq!(0, create_a.id);
+	assert_eq!(1, create_b.id);
 }
 
 #[test]

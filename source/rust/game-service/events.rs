@@ -3,7 +3,7 @@ use collections::RingBuf;
 use libc;
 
 use common::physics::{Body, Vec2};
-use common::protocol::{Remove, SelfInfo, Update};
+use common::protocol::{Create, Remove, SelfInfo, Update};
 
 use clients::Clients;
 use net;
@@ -77,6 +77,19 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 			if status < 0 {
 				events.push(Disconnect(client.id));
 			}
+
+			clients.each(|clientB| {
+				let message = Create {
+					id  : client.id,
+					kind: ~"ship"
+				};
+
+				let status =
+					net::send_message(clientB.socketFD, message.to_str());
+				if status < 0 {
+					events.push(Disconnect(clientB.id));
+				}
+			});
 		},
 
 		None =>
