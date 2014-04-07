@@ -2,7 +2,7 @@ use collections::HashSet;
 use rand;
 use std::intrinsics::TypeId;
 
-use common::protocol::{Message, SelfInfo, Update};
+use common::protocol::{Create, Message, SelfInfo, Update};
 
 use util::Process;
 
@@ -50,6 +50,13 @@ impl ClientCore {
 		match self.next_message() {
 			SelfInfo(self_info) => self_info.id,
 			message @ _         => fail!("unexpected message ({})", message)
+		}
+	}
+
+	pub fn expect_create(&mut self) -> Create {
+		match self.next_message() {
+			Create(create) => create,
+			message @ _    => fail!("unexpected message ({})", message)
 		}
 	}
 
