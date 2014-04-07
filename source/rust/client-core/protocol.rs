@@ -53,6 +53,7 @@ pub fn receive_positions(
 
 		match Message::from_str(message) {
 			SelfInfo(self_info) => handler.set_self_id(self_info),
+			Create(create)      => handler.create_ship(create),
 			Update(update)      => handler.update_ship(update),
 			Remove(remove)      => handler.remove_ship(remove),
 
