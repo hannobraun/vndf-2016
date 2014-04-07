@@ -1,6 +1,6 @@
-use std::libc;
-use std::libc::funcs::bsd43;
-use std::libc::types::os::common::bsd44;
+use libc;
+use libc::funcs::bsd43;
+use libc::types::os::common::bsd44;
 use std::ptr;
 
 use common::net;
@@ -58,8 +58,8 @@ extern {
 
 
 pub struct Net {
-	pollerFD: libc::c_int,
-	serverFD: libc::c_int
+	pub pollerFD: libc::c_int,
+	pub serverFD: libc::c_int
 }
 
 struct EpollEvent {

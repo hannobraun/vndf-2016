@@ -1,6 +1,6 @@
 use collections::Deque;
 use collections::RingBuf;
-use std::libc;
+use libc;
 
 use common::physics::{Body, Vec2};
 use common::protocol::{Remove, SelfInfo, Update};

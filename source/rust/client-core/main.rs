@@ -1,4 +1,5 @@
 extern crate common;
+extern crate libc;
 
 use common::protocol::{Remove, SelfInfo, Update};
 

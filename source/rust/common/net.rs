@@ -1,5 +1,5 @@
-use std::libc;
-use std::libc::types::os::common::bsd44;
+use libc;
+use libc::types::os::common::bsd44;
 
 
 pub static AI_PASSIVE : libc::c_int = 1;

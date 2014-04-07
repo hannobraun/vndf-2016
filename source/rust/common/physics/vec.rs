@@ -1,10 +1,7 @@
-use std::num;
-
-
 #[deriving(Show)]
 pub struct Vec2 {
-	x: f64,
-	y: f64
+	pub x: f64,
+	pub y: f64
 }
 
 impl Eq for Vec2 {
@@ -42,7 +39,7 @@ impl Mul<f64, Vec2> for Vec2 {
 
 impl Vec2 {
 	pub fn magnitude(self) -> f64 {
-		num::sqrt(self.x*self.x + self.y*self.y)
+		(self.x*self.x + self.y*self.y).sqrt()
 	}
 
 	pub fn normalize(self) -> Vec2 {

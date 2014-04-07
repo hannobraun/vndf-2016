@@ -1,5 +1,5 @@
 use collections::HashMap;
-use std::libc;
+use libc;
 
 use gl;
 
@@ -13,8 +13,8 @@ pub struct Textures {
 }
 
 pub struct Texture {
-	name: Name,
-	size: Vec2
+	pub name: Name,
+	pub size: Vec2
 }
 
 pub type Name = gl::types::GLuint;

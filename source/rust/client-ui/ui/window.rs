@@ -1,10 +1,11 @@
 use gl;
 use glfw;
+use glfw::Context;
 
 
 pub struct Window {
-	width : u32,
-	height: u32,
+	pub width : u32,
+	pub height: u32,
 
 	glfw       : glfw::Glfw,
 	glfw_window: glfw::Window
@@ -12,8 +13,10 @@ pub struct Window {
 
 impl Window {
 	pub fn create(width: u32, height: u32) -> ~Window {
-		let (glfw, errors) = glfw::init().unwrap();
-		glfw::fail_on_error(&errors);
+		let glfw = match glfw::init(glfw::FAIL_ON_ERRORS) {
+			Ok(glfw)   => glfw,
+			Err(error) => fail!(error)
+		};
 
 		let (window, _) = glfw.create_window(
 			width, height,
@@ -21,7 +24,7 @@ impl Window {
 			glfw::Windowed)
 			.expect("failed to create window");
 
-		window.make_context_current();
+		glfw.make_context_current(Some(&window));
 		gl::load_with(|proc_name| { glfw.get_proc_address(proc_name) });
 
 		~Window {

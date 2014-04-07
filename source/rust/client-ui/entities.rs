@@ -10,8 +10,8 @@ pub type Components<T> = HashMap<Id, T>;
 
 
 pub struct Entities {
-	positions: Components<Body>,
-	visuals  : Components<Visual>
+	pub positions: Components<Body>,
+	pub visuals  : Components<Visual>
 }
 
 impl Entities {

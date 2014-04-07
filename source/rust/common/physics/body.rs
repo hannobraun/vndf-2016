@@ -1,7 +1,7 @@
 use physics::Vec2;
 
 pub struct Body {
-	position: Vec2,
-	velocity: Vec2,
-	attitude: f64
+	pub position: Vec2,
+	pub velocity: Vec2,
+	pub attitude: f64
 }

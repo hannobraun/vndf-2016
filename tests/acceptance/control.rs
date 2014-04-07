@@ -6,8 +6,8 @@ use util::Process;
 
 
 pub struct GameService {
-	port   : uint,
-	process: Process
+	pub port   : uint,
+	pub process: Process
 }
 
 impl GameService {

@@ -1,4 +1,4 @@
-use std::libc;
+use libc;
 use std::ptr;
 use std::str;
 

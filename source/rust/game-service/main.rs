@@ -1,8 +1,7 @@
 extern crate collections;
 extern crate common;
+extern crate libc;
 extern crate time;
-
-use std::libc;
 
 use clients::Clients;
 use events::Events;

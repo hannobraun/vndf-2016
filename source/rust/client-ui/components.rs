@@ -1,3 +1,3 @@
 pub struct Visual {
-	texture: ~str
+	pub texture: ~str
 }

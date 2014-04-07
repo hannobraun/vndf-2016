@@ -27,9 +27,9 @@ pub struct Font {
 }
 
 pub struct Glyph {
-	texture_id: ~str,
-	offset    : Vec2,
-	advance   : Vec2
+	pub texture_id: ~str,
+	pub offset    : Vec2,
+	pub advance   : Vec2
 }
 
 
@@ -69,7 +69,7 @@ fn init_font_face() -> FT_Face {
 		let mut font_face: FT_Face = ptr::null();
 		let face_error = FT_New_Face(
 				freetype,
-				"fonts/amble/Amble-Bold.ttf".as_ptr() as *i8,
+				"fonts/amble/Amble-Bold.ttf".to_c_str().unwrap(),
 				0,
 				&mut font_face);
 		assert!(face_error == 0);

@@ -27,7 +27,7 @@ impl Message {
 
 #[deriving(Show)]
 pub struct SelfInfo {
-	id: uint
+	pub id: uint
 }
 
 impl SelfInfo {
@@ -49,8 +49,8 @@ impl SelfInfo {
 
 #[deriving(Eq, Show)]
 pub struct Update {
-	id : uint,
-	pos: Vec2
+	pub id : uint,
+	pub pos: Vec2
 }
 
 impl Update {
@@ -79,7 +79,7 @@ impl Update {
 
 #[deriving(Show)]
 pub struct Remove {
-	id: uint
+	pub id: uint
 }
 
 impl Remove {

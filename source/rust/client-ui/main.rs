@@ -1,4 +1,5 @@
 extern crate collections;
+extern crate libc;
 
 extern crate freetype;
 extern crate gl;

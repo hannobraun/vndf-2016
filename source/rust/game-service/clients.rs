@@ -1,18 +1,18 @@
 use collections::HashMap;
-use std::libc;
+use libc;
 
 use common::physics::Body;
 
 
 pub struct Clients {
-	map   : ~HashMap<uint, Client>,
-	idPool: ~IdPool
+	pub map   : ~HashMap<uint, Client>,
+	pub idPool: ~IdPool
 }
 
 pub struct Client {
-	socketFD: libc::c_int,
-	id      : uint,
-	ship    : Body
+	pub socketFD: libc::c_int,
+	pub id      : uint,
+	pub ship    : Body
 }
 
 impl Clients {
