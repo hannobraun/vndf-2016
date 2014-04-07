@@ -1,6 +1,6 @@
 use std::intrinsics::TypeId;
 
-use common::protocol::SelfInfo;
+use common::protocol::{Create, SelfInfo};
 
 use control::{ClientCore, GameService};
 
@@ -21,6 +21,7 @@ fn the_ship_should_move_on_a_straight_line() {
 	let mut client       = ClientCore::start(game_service.port);
 
 	client.ignore(TypeId::of::<SelfInfo>());
+	client.ignore(TypeId::of::<Create>());
 
 	let update1 = client.expect_update();
 	let update2 = client.expect_update();
