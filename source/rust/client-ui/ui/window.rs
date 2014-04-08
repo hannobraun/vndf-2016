@@ -36,6 +36,10 @@ impl Window {
 		}
 	}
 
+	pub fn key_pressed(&self, key: glfw::Key) -> bool {
+		self.glfw_window.get_key(key) == glfw::Press
+	}
+
 	pub fn should_close(&self) -> bool {
 		self.glfw_window.should_close() ||
 			self.glfw_window.get_key(glfw::KeyEscape) == glfw::Press
