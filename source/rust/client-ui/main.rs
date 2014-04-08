@@ -59,6 +59,10 @@ fn main() {
 			_ => ()
 		}
 
+		ui::apply_input(
+			&window,
+			entities.bodies.find_mut(&self_id));
+
 		renderer.render(
 			&window,
 			cam,
