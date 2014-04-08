@@ -1,3 +1,5 @@
+use std::f64;
+
 use glfw;
 
 use common::physics::Body;
@@ -17,7 +19,15 @@ pub fn apply_input(window: &Window, player: Option<&mut Body>) {
 	}
 
 	match player {
-		Some(ship) => ship.attitude += attitude_change,
-		None       => ()
+		Some(ship) => {
+			ship.attitude += attitude_change;
+			while ship.attitude > f64::consts::PI {
+				ship.attitude -= f64::consts::PI * 2.0
+			}
+			while ship.attitude < -f64::consts::PI {
+				ship.attitude += f64::consts::PI * 2.0
+			}
+		},
+		None => ()
 	}
 }
