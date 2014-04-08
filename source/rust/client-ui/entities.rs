@@ -35,6 +35,13 @@ impl Entities {
 		};
 		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
+
+		match self.self_id {
+			Some(self_id) => if id == self_id {
+				self.controls.insert(id, Control { attitude: 0.0 });
+			},
+			None => ()
+		}
 	}
 
 	pub fn update_ship(&mut self, id: Id, position: Vec2) {
