@@ -2,14 +2,12 @@ use std::f64;
 
 use glfw;
 
-use common::physics::Body;
-
 use components::Control;
 use entities::Components;
 use ui::Window;
 
 
-pub fn apply_input(window: &Window, controls: &mut Components<Control>, player: Option<&mut Body>) {
+pub fn apply_input(window: &Window, controls: &mut Components<Control>) {
 	let angular_velocity = 0.1;
 	let mut attitude_change = 0.0;
 
@@ -28,18 +26,5 @@ pub fn apply_input(window: &Window, controls: &mut Components<Control>, player: 
 		while control.attitude < -f64::consts::PI {
 			control.attitude += f64::consts::PI * 2.0
 		}
-	}
-
-	match player {
-		Some(ship) => {
-			ship.attitude += attitude_change;
-			while ship.attitude > f64::consts::PI {
-				ship.attitude -= f64::consts::PI * 2.0
-			}
-			while ship.attitude < -f64::consts::PI {
-				ship.attitude += f64::consts::PI * 2.0
-			}
-		},
-		None => ()
 	}
 }
