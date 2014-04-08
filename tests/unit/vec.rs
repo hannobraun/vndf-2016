@@ -2,6 +2,11 @@ use common::physics::Vec2;
 
 
 #[test]
+fn it_should_return_the_zero_Vector() {
+	assert_eq!(Vec2 { x: 0.0, y: 0.0 }, Vec2::zero())
+}
+
+#[test]
 fn it_should_add_two_vectors() {
 	let a = Vec2 { x: 1.0, y: 2.0 };
 	let b = Vec2 { x: 2.0, y: 1.0 };

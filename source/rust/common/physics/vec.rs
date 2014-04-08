@@ -38,6 +38,13 @@ impl Mul<f64, Vec2> for Vec2 {
 }
 
 impl Vec2 {
+	pub fn zero() -> Vec2 {
+		Vec2 {
+			x: 0.0,
+			y: 0.0
+		}
+	}
+
 	pub fn magnitude(self) -> f64 {
 		(self.x*self.x + self.y*self.y).sqrt()
 	}
