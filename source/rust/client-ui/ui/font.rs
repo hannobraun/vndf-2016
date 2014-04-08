@@ -69,7 +69,7 @@ fn init_font_face() -> FT_Face {
 		let mut font_face: FT_Face = ptr::null();
 		let face_error = FT_New_Face(
 				freetype,
-				"fonts/amble/Amble-Bold.ttf".to_c_str().unwrap(),
+				"fonts/amble/Amble-Regular.ttf".to_c_str().unwrap(),
 				0,
 				&mut font_face);
 		assert!(face_error == 0);
