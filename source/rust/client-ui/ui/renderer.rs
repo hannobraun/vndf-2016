@@ -36,11 +36,11 @@ impl Renderer {
 	}
 
 	pub fn render(&self,
-		window   : &Window,
-		camera   : Vec2,
-		controls : &Components<Control>,
-		positions: &Components<Body>,
-		visuals  : &Components<Visual>) {
+		window  : &Window,
+		camera  : Vec2,
+		controls: &Components<Control>,
+		bodies  : &Components<Body>,
+		visuals : &Components<Visual>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
@@ -52,7 +52,7 @@ impl Renderer {
 				self.screen_height / 2.0 - camera.y,
 				0.0);
 
-			for (id, &body) in positions.iter() {
+			for (id, &body) in bodies.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
 
 				let draw_position = body.position - texture.size * 0.5;
