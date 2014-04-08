@@ -38,7 +38,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : Vec2,
-		_        : Option<&Body>,
+		player   : Option<&Body>,
 		positions: &Components<Body>,
 		visuals  : &Components<Visual>) {
 
@@ -61,7 +61,7 @@ impl Renderer {
 		}
 		gl::PopMatrix();
 
-		self.draw_ui_overlay();
+		self.draw_ui_overlay(player);
 
 		window.swap_buffers();
 
@@ -71,7 +71,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ui_overlay(&self) {
+	fn draw_ui_overlay(&self, _: Option<&Body>) {
 		self.draw_text(
 			Vec2 { x: 20.0, y: 40.0 },
 			"Set attitude with the left and right cursor keys");
