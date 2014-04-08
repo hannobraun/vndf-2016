@@ -88,8 +88,8 @@ impl Create {
 
 #[deriving(Eq, Show)]
 pub struct Update {
-	pub id : uint,
-	pub pos: Vec2
+	pub id      : uint,
+	pub position: Vec2
 }
 
 impl Update {
@@ -99,8 +99,8 @@ impl Update {
 		let y : Option<f64>  = from_str::from_str(words[3]);
 
 		Update {
-			id : id.unwrap(),
-			pos: Vec2 {
+			id      : id.unwrap(),
+			position: Vec2 {
 				x : x.unwrap(),
 				y : y.unwrap(),
 			}
@@ -110,8 +110,8 @@ impl Update {
 		format!(
 			"UPDATE {} {} {}",
 			self.id,
-			self.pos.x,
-			self.pos.y)
+			self.position.x,
+			self.position.y)
 	}
 }
 

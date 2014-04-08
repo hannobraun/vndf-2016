@@ -45,8 +45,8 @@ fn the_ship_should_move_on_a_straight_line() {
 	let update2 = client.expect_update();
 	let update3 = client.expect_update();
 
-	let movement1 = update2.pos - update1.pos;
-	let movement2 = update3.pos - update2.pos;
+	let movement1 = update2.position - update1.position;
+	let movement2 = update3.position - update2.position;
 
 	assert_eq!(movement1.normalize(), movement2.normalize());
 }

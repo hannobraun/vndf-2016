@@ -124,8 +124,8 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.each(|clientA| {
 		clients.each(|clientB| {
 			let message = Update {
-				id : clientB.id,
-				pos: clientB.ship.position
+				id      : clientB.id,
+				position: clientB.ship.position
 			};
 
 			let status = net::send_message(clientA.socketFD, message.to_str());
