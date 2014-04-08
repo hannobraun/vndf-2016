@@ -12,7 +12,7 @@ pub struct Window {
 }
 
 impl Window {
-	pub fn create(width: u32, height: u32) -> ~Window {
+	pub fn create(width: u32, height: u32) -> Window {
 		let glfw = match glfw::init(glfw::FAIL_ON_ERRORS) {
 			Ok(glfw)   => glfw,
 			Err(error) => fail!(error)
@@ -27,7 +27,7 @@ impl Window {
 		glfw.make_context_current(Some(&window));
 		gl::load_with(|proc_name| { glfw.get_proc_address(proc_name) });
 
-		~Window {
+		Window {
 			width  : width,
 			height: height,
 

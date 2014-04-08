@@ -34,10 +34,10 @@ fn main() {
 	let mut core = Core::start(args::get_server_address());
 
 	let     window   = Window::create(screen_width, screen_height);
-	let mut textures = Textures::init(window);
+	let mut textures = Textures::init(&window);
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
-	let renderer = Renderer::init(window, textures, font);
+	let renderer = Renderer::init(&window, textures, font);
 
 	let mut entities = Entities::new();
 
@@ -62,7 +62,7 @@ fn main() {
 		}
 
 		renderer.render(
-			window,
+			&window,
 			cam,
 			player_ship,
 			&entities.bodies,
