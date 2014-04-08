@@ -78,6 +78,13 @@ impl Renderer {
 
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);
+
+		let data_position = draw_position + texture.size;
+		self.draw_text(
+			data_position,
+			format!("pos: {:i} / {:i}",
+				body.position.x.to_int().unwrap(),
+				body.position.y.to_int().unwrap()));
 	}
 
 	fn draw_ui_overlay(&self, control: Control) {
