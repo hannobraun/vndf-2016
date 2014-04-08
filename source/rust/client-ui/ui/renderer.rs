@@ -71,7 +71,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ui_overlay(&self, _: Option<&Body>) {
+	fn draw_ui_overlay(&self, player: Option<&Body>) {
 		self.draw_text(
 			Vec2 { x: 20.0, y: 40.0 },
 			"Set attitude with the left and right cursor keys");
@@ -79,11 +79,14 @@ impl Renderer {
 			Vec2 { x: 20.0, y: 20.0 },
 			"Start maneuver with Enter");
 
-		let attitude = 164;
+		let attitude = match player {
+			Some(ship) => ship.attitude,
+			None       => 0.0
+		};
 
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
-			format!("{:+04}", attitude));
+			format!("{:+04i}", attitude.to_degrees() as i64));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
