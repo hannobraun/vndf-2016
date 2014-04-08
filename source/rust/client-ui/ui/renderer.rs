@@ -78,9 +78,12 @@ impl Renderer {
 		self.draw_text(
 			Vec2 { x: 20.0, y: 20.0 },
 			"Start maneuver with Enter");
+
+		let attitude = 164;
+
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
-			"000");
+			format!("{:+04}", attitude));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
