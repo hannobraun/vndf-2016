@@ -55,8 +55,7 @@ impl Renderer {
 			for (id, &body) in bodies.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
 
-				let draw_position = body.position - texture.size * 0.5;
-				draw_texture(draw_position, texture);
+				draw_ship(body, texture);
 			}
 		}
 		gl::PopMatrix();
@@ -97,6 +96,11 @@ impl Renderer {
 			position = position + glyph.advance;
 		}
 	}
+}
+
+fn draw_ship(body: Body, texture: &Texture) {
+	let draw_position = body.position - texture.size * 0.5;
+	draw_texture(draw_position, texture);
 }
 
 fn draw_texture(position: Vec2, texture: &Texture) {
