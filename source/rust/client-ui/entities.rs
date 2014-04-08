@@ -18,8 +18,8 @@ pub struct Entities {
 }
 
 impl Entities {
-	pub fn new() -> ~Entities {
-		~Entities {
+	pub fn new() -> Entities {
+		Entities {
 			self_id: None,
 
 			controls: HashMap::new(),

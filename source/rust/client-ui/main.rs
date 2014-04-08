@@ -49,7 +49,7 @@ fn main() {
 	entities.self_id = Some(self_id);
 
 	while !window.should_close() {
-		core.update_positions(entities);
+		core.update_positions(&mut entities);
 
 		match entities.bodies.find(&self_id) {
 			Some(ship) => {
