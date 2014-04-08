@@ -55,7 +55,7 @@ impl Renderer {
 			for (id, &body) in bodies.iter() {
 				let texture = self.textures.get(&visuals.get(id).texture);
 
-				draw_ship(body, texture);
+				self.draw_ship(body, texture);
 			}
 		}
 		gl::PopMatrix();
@@ -71,6 +71,11 @@ impl Renderer {
 			gl::NO_ERROR => (),
 			error @ _    => fail!("OpenGL error ({})", error)
 		}
+	}
+
+	fn draw_ship(&self, body: Body, texture: &Texture) {
+		let draw_position = body.position - texture.size * 0.5;
+		draw_texture(draw_position, texture);
 	}
 
 	fn draw_ui_overlay(&self, control: Control) {
@@ -96,11 +101,6 @@ impl Renderer {
 			position = position + glyph.advance;
 		}
 	}
-}
-
-fn draw_ship(body: Body, texture: &Texture) {
-	let draw_position = body.position - texture.size * 0.5;
-	draw_texture(draw_position, texture);
 }
 
 fn draw_texture(position: Vec2, texture: &Texture) {
