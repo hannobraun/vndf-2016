@@ -51,7 +51,9 @@ fn main() {
 	while !window.should_close() {
 		core.update_positions(entities);
 
-		match entities.bodies.find(&self_id) {
+		let player_ship = entities.bodies.find(&self_id);
+
+		match player_ship {
 			Some(ship) => {
 				cam = ship.position;
 			},
