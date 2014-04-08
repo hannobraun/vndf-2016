@@ -53,9 +53,9 @@ impl Renderer {
 				0.0);
 
 			for (id, &body) in bodies.iter() {
-				let texture = self.textures.get(&visuals.get(id).texture);
-
-				self.draw_ship(body, texture);
+				self.draw_ship(
+					body,
+					visuals.get(id));
 			}
 		}
 		gl::PopMatrix();
@@ -73,7 +73,9 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ship(&self, body: Body, texture: &Texture) {
+	fn draw_ship(&self, body: Body, visual: &Visual) {
+		let texture = self.textures.get(&visual.texture);
+
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);
 	}
