@@ -38,6 +38,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : Vec2,
+		_        : Option<&Body>,
 		positions: &Components<Body>,
 		visuals  : &Components<Visual>) {
 

@@ -64,6 +64,7 @@ fn main() {
 		renderer.render(
 			window,
 			cam,
+			player_ship,
 			&entities.bodies,
 			&entities.visuals);
 
