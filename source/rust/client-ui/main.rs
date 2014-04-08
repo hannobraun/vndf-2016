@@ -67,7 +67,7 @@ fn main() {
 		renderer.render(
 			&window,
 			cam,
-			entities.bodies.find(&self_id),
+			&entities.controls,
 			&entities.bodies,
 			&entities.visuals);
 

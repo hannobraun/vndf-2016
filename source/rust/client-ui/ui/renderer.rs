@@ -2,7 +2,7 @@ use gl;
 
 use common::physics::{Body, Vec2};
 
-use components::Visual;
+use components::{Control, Visual};
 use entities::Components;
 use ui::{Font, Texture, Textures, Window};
 
@@ -38,7 +38,7 @@ impl Renderer {
 	pub fn render(&self,
 		window   : &Window,
 		camera   : Vec2,
-		player   : Option<&Body>,
+		controls : &Components<Control>,
 		positions: &Components<Body>,
 		visuals  : &Components<Visual>) {
 
@@ -61,7 +61,10 @@ impl Renderer {
 		}
 		gl::PopMatrix();
 
-		self.draw_ui_overlay(player);
+		for (_, &control) in controls.iter() {
+			self.draw_ui_overlay(control);
+			break;
+		}
 
 		window.swap_buffers();
 
@@ -71,7 +74,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ui_overlay(&self, player: Option<&Body>) {
+	fn draw_ui_overlay(&self, control: Control) {
 		self.draw_text(
 			Vec2 { x: 20.0, y: 40.0 },
 			"Set attitude with the left and right cursor keys");
@@ -79,14 +82,9 @@ impl Renderer {
 			Vec2 { x: 20.0, y: 20.0 },
 			"Start maneuver with Enter");
 
-		let attitude = match player {
-			Some(ship) => ship.attitude,
-			None       => 0.0
-		};
-
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
-			format!("{:+04i}", attitude.to_degrees() as i64));
+			format!("{:+04i}", control.attitude.to_degrees() as i64));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
