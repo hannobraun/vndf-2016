@@ -61,6 +61,7 @@ fn main() {
 
 		ui::apply_input(
 			&window,
+			&mut entities.controls,
 			entities.bodies.find_mut(&self_id));
 
 		renderer.render(
