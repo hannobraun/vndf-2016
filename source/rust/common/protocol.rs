@@ -26,6 +26,17 @@ impl Message {
 		}
 	}
 
+	pub fn to_str(self) -> ~str {
+		match self {
+			SelfInfo(self_info) => self_info.to_str(),
+			Create(create)      => create.to_str(),
+			Update(update)      => update.to_str(),
+			Remove(remove)      => remove.to_str(),
+
+			_ => fail!("unexpected message ({})", self)
+		}
+	}
+
 	pub fn type_id(&self) -> TypeId {
 		match *self {
 			SelfInfo(_) => TypeId::of::<SelfInfo>(),
