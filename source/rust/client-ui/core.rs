@@ -75,8 +75,8 @@ impl Core {
 				entities.update_ship(
 					update.id,
 					Vec2 {
-						x: update.position.x,
-						y: update.position.y
+						x: update.body.position.x,
+						y: update.body.position.y
 					}),
 
 			Remove(remove) =>

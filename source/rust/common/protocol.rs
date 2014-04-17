@@ -1,7 +1,7 @@
 use std::from_str;
 use std::intrinsics::TypeId;
 
-use physics::Vec2;
+use physics::{Body, Radians, Vec2};
 
 
 #[deriving(Show)]
@@ -88,8 +88,8 @@ impl Create {
 
 #[deriving(Eq, Show)]
 pub struct Update {
-	pub id      : uint,
-	pub position: Vec2
+	pub id  : uint,
+	pub body: Body
 }
 
 impl Update {
@@ -99,10 +99,17 @@ impl Update {
 		let y : Option<f64>  = from_str::from_str(words[3]);
 
 		Update {
-			id      : id.unwrap(),
-			position: Vec2 {
-				x : x.unwrap(),
-				y : y.unwrap(),
+			id  : id.unwrap(),
+			body: Body {
+				position: Vec2 {
+					x: x.unwrap(),
+					y: y.unwrap()
+				},
+				velocity: Vec2 {
+					x: 0.0,
+					y: 0.0
+				},
+				attitude: Radians(0.0)
 			}
 		}
 	}
@@ -110,8 +117,8 @@ impl Update {
 		format!(
 			"UPDATE {} {} {}",
 			self.id,
-			self.position.x,
-			self.position.y)
+			self.body.position.x,
+			self.body.position.y)
 	}
 }
 
