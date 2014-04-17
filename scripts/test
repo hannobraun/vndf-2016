@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-./scripts/tasks/run-tests
+source project.conf
+
+FILES=$(find tests source/rust -name *.rs)
+
+$ZWOBOT scripts/tasks/run-tests $FILES
