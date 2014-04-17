@@ -2,7 +2,7 @@ use std::fmt;
 use std::fmt::Formatter;
 
 
-#[deriving(Show)]
+#[deriving(Eq, Show)]
 pub struct Radians(pub f64);
 
 impl Radians {
@@ -30,13 +30,6 @@ impl Neg<Radians> for Radians {
 	fn neg(&self) -> Radians {
 		let &Radians(this) = self;
 		Radians(-this)
-	}
-}
-
-impl Eq for Radians {
-	fn eq(&self, &Radians(other): &Radians) -> bool {
-		let &Radians(this) = self;
-		this == other
 	}
 }
 
