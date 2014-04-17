@@ -47,4 +47,12 @@ impl Vec2 {
 		let m = self.magnitude();
 		self * (1.0/m)
 	}
+
+	pub fn round(self, precision_in_bits: u8) -> Vec2 {
+		let factor = (1 << precision_in_bits) as f64;
+		Vec2 {
+			x: (self.x * factor).floor() / factor,
+			y: (self.y * factor).floor() / factor
+		}
+	}
 }

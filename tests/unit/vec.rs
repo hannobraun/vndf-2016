@@ -45,3 +45,10 @@ fn it_should_normalize_a_vector() {
 	assert!(a.normalize() == Vec2 { x: 1.0, y: 0.0 });
 	assert!(b.normalize() == Vec2 { x: 0.0, y: 1.0 });
 }
+
+#[test]
+fn it_should_round_a_vector() {
+	let v = Vec2 { x: 0.25, y: 0.375 };
+
+	assert_eq!(Vec2 { x: 0.25, y: 0.25 }, v.round(2));
+}
