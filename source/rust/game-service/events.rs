@@ -18,6 +18,7 @@ pub struct Events {
 	buffer: ~Deque<Event>
 }
 
+#[deriving(Eq, Show)]
 pub enum Event {
 	Connect(libc::c_int),
 	Disconnect(uint),
