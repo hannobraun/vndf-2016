@@ -44,8 +44,10 @@ impl Core {
 			Err(error)  => fail!("Failed to create process: {}", error)
 		};
 
-		let stdout = BufferedReader::new(process.stdout.take().unwrap());
-		let stderr = BufferedReader::new(process.stderr.take().unwrap());
+		let stdout = BufferedReader::new(
+			process.stdout.take().expect("Expected stdout to be set"));
+		let stderr = BufferedReader::new(
+			process.stderr.take().expect("Expected stderr to be set"));
 
 		~Core {
 			process: process,
