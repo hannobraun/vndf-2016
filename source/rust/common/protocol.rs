@@ -124,6 +124,7 @@ impl Update {
 			}
 		}
 	}
+
 	fn to_str(&self) -> ~str {
 		format!(
 			"UPDATE {} {} {} {} {} {}",
