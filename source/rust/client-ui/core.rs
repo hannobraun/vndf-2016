@@ -35,9 +35,11 @@ impl Core {
 			os::self_exe_path().expect("Failed to get executable path");
 
 		path.push("vndf-client-core");
+
+		let path_str = path.as_str().expect("Failed to convert path to string");
 		let args = [server, ~"34481"];
 
-		let mut process = match Process::new(path.as_str().unwrap(), args) {
+		let mut process = match Process::new(path_str, args) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to create process: {}", error)
 		};
