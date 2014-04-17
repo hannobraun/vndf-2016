@@ -2,6 +2,7 @@ use std::fmt;
 use std::fmt::Formatter;
 
 
+#[deriving(Show)]
 pub struct Radians(pub f64);
 
 impl Radians {
