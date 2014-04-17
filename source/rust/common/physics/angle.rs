@@ -13,3 +13,10 @@ impl Eq for Radians {
 		this == other
 	}
 }
+
+impl Ord for Radians {
+	fn lt(&self, &Radians(other): &Radians) -> bool {
+		let &Radians(this) = self;
+		this < other
+	}
+}
