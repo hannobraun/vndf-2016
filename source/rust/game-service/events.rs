@@ -3,6 +3,7 @@ use collections::RingBuf;
 use libc;
 
 use common::physics::{Body, Radians, Vec2};
+use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 use clients::Clients;
@@ -69,9 +70,9 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 
 	match clients.add(clientFD, ship) {
 		Some(client) => {
-			let message = SelfInfo {
+			let message = SelfInfo(SelfInfo {
 				id: client.id
-			};
+			});
 
 			let status = net::send_message(client.socketFD, message.to_str());
 			if status < 0 {
@@ -79,10 +80,10 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 			}
 
 			clients.each(|clientB| {
-				let message = Create {
+				let message = Create(Create {
 					id  : client.id,
 					kind: ~"ship"
-				};
+				});
 
 				let status =
 					net::send_message(clientB.socketFD, message.to_str());
@@ -103,9 +104,9 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 	clients.remove(clientId);
 
 	clients.each(|client| {
-		let message = Remove {
+		let message = Remove(Remove {
 			id: clientId
-		};
+		});
 
 		let status = net::send_message(client.socketFD, message.to_str());
 
@@ -123,10 +124,10 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 
 	clients.each(|clientA| {
 		clients.each(|clientB| {
-			let message = Update {
+			let message = protocol::Update(Update {
 				id  : clientB.id,
 				body: clientB.ship
-			};
+			});
 
 			let status = net::send_message(clientA.socketFD, message.to_str());
 
