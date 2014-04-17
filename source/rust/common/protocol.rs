@@ -4,7 +4,7 @@ use std::intrinsics::TypeId;
 use physics::{Body, Radians, Vec2};
 
 
-#[deriving(Show)]
+#[deriving(Decodable, Encodable, Show)]
 pub enum Message {
 	SelfInfo(SelfInfo),
 	Create(Create),
@@ -38,7 +38,7 @@ impl Message {
 }
 
 
-#[deriving(Show)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct SelfInfo {
 	pub id: uint
 }
@@ -60,7 +60,7 @@ impl SelfInfo {
 }
 
 
-#[deriving(Show)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct Create {
 	pub id  : uint,
 	pub kind: ~str
@@ -86,7 +86,7 @@ impl Create {
 }
 
 
-#[deriving(Eq, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Update {
 	pub id  : uint,
 	pub body: Body
@@ -126,7 +126,7 @@ impl Update {
 }
 
 
-#[deriving(Show)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct Remove {
 	pub id: uint
 }
