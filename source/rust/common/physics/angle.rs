@@ -7,6 +7,13 @@ impl Add<Radians, Radians> for Radians {
 	}
 }
 
+impl Sub<Radians, Radians> for Radians {
+	fn sub(&self, &Radians(other): &Radians) -> Radians {
+		let &Radians(this) = self;
+		Radians(this - other)
+	}
+}
+
 impl Eq for Radians {
 	fn eq(&self, &Radians(other): &Radians) -> bool {
 		let &Radians(this) = self;
