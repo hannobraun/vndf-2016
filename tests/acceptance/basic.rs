@@ -34,19 +34,20 @@ fn it_should_send_create_to_all_clients_on_connect() {
 }
 
 #[test]
-fn the_ship_should_move_on_a_straight_line() {
+fn the_ship_should_move_along_its_velocity_vector() {
 	let     game_service = GameService::start();
 	let mut client       = ClientCore::start(game_service.port);
 
 	client.ignore(TypeId::of::<SelfInfo>());
 	client.ignore(TypeId::of::<Create>());
 
-	let update1 = client.expect_update();
-	let update2 = client.expect_update();
-	let update3 = client.expect_update();
+	let update_1 = client.expect_update();
+	let update_2 = client.expect_update();
 
-	let movement1 = update2.body.position - update1.body.position;
-	let movement2 = update3.body.position - update2.body.position;
+	let movement = update_2.body.position - update_1.body.position;
+	let velocity = update_1.body.velocity;
 
-	assert_eq!(movement1.normalize(), movement2.normalize());
+	assert_eq!(
+		movement.normalize().round(32),
+		velocity.normalize().round(32));
 }
