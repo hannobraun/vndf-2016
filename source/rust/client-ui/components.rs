@@ -1,5 +1,8 @@
+use common::physics::Radians;
+
+
 pub struct Control {
-	pub attitude: f64
+	pub attitude: Radians
 }
 
 pub struct Visual {

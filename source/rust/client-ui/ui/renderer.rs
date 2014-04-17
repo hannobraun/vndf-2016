@@ -102,9 +102,11 @@ impl Renderer {
 			Vec2 { x: 20.0, y: 20.0 },
 			"Start maneuver with Enter");
 
+		let Radians(attitude) = control.attitude;
+
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
-			format!("{:+04i}", control.attitude.to_degrees() as i64));
+			format!("{:+04i}", attitude.to_degrees() as i64));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {

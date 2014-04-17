@@ -2,6 +2,8 @@ use std::f64;
 
 use glfw;
 
+use common::physics::Radians;
+
 use components::Control;
 use entities::Components;
 use ui::Window;
@@ -19,12 +21,12 @@ pub fn apply_input(window: &Window, controls: &mut Components<Control>) {
 	}
 
 	for (_, control) in controls.mut_iter() {
-		control.attitude += attitude_change;
-		while control.attitude > f64::consts::PI {
-			control.attitude -= f64::consts::PI * 2.0
+		control.attitude = control.attitude + Radians(attitude_change);
+		while control.attitude > Radians(f64::consts::PI) {
+			control.attitude = control.attitude - Radians(f64::consts::PI * 2.0)
 		}
-		while control.attitude < -f64::consts::PI {
-			control.attitude += f64::consts::PI * 2.0
+		while control.attitude < -Radians(f64::consts::PI) {
+			control.attitude = control.attitude + Radians(f64::consts::PI * 2.0)
 		}
 	}
 }
