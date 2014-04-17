@@ -12,19 +12,19 @@ struct ProtocolHandler;
 
 impl protocol::Handler for ProtocolHandler {
 	fn set_self_id(&self, message: SelfInfo) {
-		print!("{}\n", message.to_str());
+		print!("{}\n", SelfInfo(message).to_str());
 	}
 
 	fn create_ship(&self, message: Create) {
-		print!("{}\n", message.to_str());
+		print!("{}\n", Create(message).to_str());
 	}
 
 	fn update_ship(&self, message: Update) {
-		print!("{}\n", message.to_str());
+		print!("{}\n", Update(message).to_str());
 	}
 
 	fn remove_ship(&self, message: Remove) {
-		print!("{}\n", message.to_str());
+		print!("{}\n", Remove(message).to_str());
 	}
 }
 
