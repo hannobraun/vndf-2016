@@ -6,3 +6,10 @@ impl Add<Radians, Radians> for Radians {
 		Radians(this + other)
 	}
 }
+
+impl Eq for Radians {
+	fn eq(&self, &Radians(other): &Radians) -> bool {
+		let &Radians(this) = self;
+		this == other
+	}
+}
