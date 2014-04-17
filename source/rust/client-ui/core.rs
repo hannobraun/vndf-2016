@@ -31,10 +31,8 @@ pub struct Core {
 
 impl Core {
 	pub fn start(server: ~str) -> ~Core {
-		let mut path = match os::self_exe_path() {
-			Some(path) => path,
-			None       => fail!("Failed to get executable path.")
-		};
+		let mut path =
+			os::self_exe_path().expect("Failed to get executable path");
 
 		path.push("vndf-client-core");
 		let args = [server, ~"34481"];
