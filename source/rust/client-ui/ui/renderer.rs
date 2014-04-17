@@ -1,6 +1,6 @@
 use gl;
 
-use common::physics::{Body, Vec2};
+use common::physics::{Body, Radians, Vec2};
 
 use components::{Control, Visual};
 use entities::Components;
@@ -86,11 +86,12 @@ impl Renderer {
 				body.position.x.to_int().unwrap(),
 				body.position.y.to_int().unwrap()));
 
+		let Radians(attitude) = body.attitude;
+
 		text_position = text_position - Vec2 { x: 0.0, y: 15.0 };
 		self.draw_text(
 			text_position,
-			format!("att: {:+04i}",
-				body.attitude.to_int().unwrap()));
+			format!("att: {:+04i}", attitude.to_int().unwrap()));
 	}
 
 	fn draw_ui_overlay(&self, control: Control) {

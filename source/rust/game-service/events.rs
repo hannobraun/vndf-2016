@@ -2,7 +2,7 @@ use collections::Deque;
 use collections::RingBuf;
 use libc;
 
-use common::physics::{Body, Vec2};
+use common::physics::{Body, Radians, Vec2};
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 use clients::Clients;
@@ -64,7 +64,7 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 			x: 30.0,
 			y: 10.0
 		},
-		attitude: 0.0
+		attitude: Radians(0.0)
 	};
 
 	match clients.add(clientFD, ship) {

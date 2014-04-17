@@ -1,6 +1,6 @@
 use collections::HashMap;
 
-use common::physics::{Body, Vec2};
+use common::physics::{Body, Radians, Vec2};
 
 use components::{Control, Visual};
 
@@ -31,7 +31,7 @@ impl Entities {
 		let body = Body {
 			position: Vec2 { x: 0.0, y: 0.0 },
 			velocity: Vec2 { x: 0.0, y: 0.0 },
-			attitude: 0.0
+			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
@@ -57,7 +57,7 @@ impl Entities {
 		let body = Body {
 			position: position,
 			velocity: Vec2 { x: 0.0, y: 0.0 },
-			attitude: 0.0
+			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);
 		self.visuals.insert(id, Visual { texture: ~"char:A" });
