@@ -63,7 +63,7 @@ impl SelfInfo {
 		}
 	}
 
-	pub fn to_str(&self) -> ~str {
+	fn to_str(&self) -> ~str {
 		format!(
 			"SELF_ID {}",
 			self.id)
@@ -88,7 +88,7 @@ impl Create {
 		}
 	}
 
-	pub fn to_str(&self) -> ~str {
+	fn to_str(&self) -> ~str {
 		format!(
 			"CREATE {} {}",
 			self.id,
@@ -124,7 +124,7 @@ impl Update {
 			}
 		}
 	}
-	pub fn to_str(&self) -> ~str {
+	fn to_str(&self) -> ~str {
 		format!(
 			"UPDATE {} {} {} {} {} {}",
 			self.id,
@@ -151,7 +151,7 @@ impl Remove {
 		}
 	}
 
-	pub fn to_str(&self) -> ~str {
+	fn to_str(&self) -> ~str {
 		format!(
 			"REMOVE {}",
 			self.id)
