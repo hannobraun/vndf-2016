@@ -99,8 +99,7 @@ pub fn receive(socketFD: libc::c_int, buffer: &[i8]) -> libc::ssize_t {
 			})
 		}
 		if bytesReceived == 0 {
-			print!("Connection closed while receiving.\n");
-			libc::exit(1);
+			fail!("Connection closed while receiving");
 		}
 
 		bytesReceived
