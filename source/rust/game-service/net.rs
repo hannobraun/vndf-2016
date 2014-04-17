@@ -253,6 +253,10 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 				MSG_NOSIGNAL);
 
 			if bytesSent < 0 {
+				"Error sending message".to_c_str().with_ref(|c_str| {
+					libc::perror(c_str);
+				});
+
 				-1
 			}
 			else if bytesSent as u64 != buffer_length {
