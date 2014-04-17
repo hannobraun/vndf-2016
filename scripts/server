@@ -4,17 +4,10 @@ source project.conf
 
 SOURCE_FILES=$(find $GAME_SERVICE_SOURCE -name "*.rs")
 
-function updateServer() {
-	./scripts/tasks/build-common &&
-	./scripts/tasks/build-game-service &&
-	killall $(basename $GAME_SERVICE_BINARY)
-	./$GAME_SERVICE_BINARY 34481 &
-}
-
-updateServer
+./scripts/tasks/restart-server
 while true
 do
 	inotifywait -qq -e modify $SOURCE_FILES
 	echo -e "Change detected.\n\n\n"
-	updateServer
+	./scripts/tasks/restart-server
 done
