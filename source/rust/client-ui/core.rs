@@ -121,5 +121,9 @@ impl Drop for Core {
 
 
 fn reader_to_string(reader: &mut BufferedReader<PipeStream>) -> ~str {
-	str::from_utf8(reader.read_to_end().unwrap().as_slice()).unwrap().to_owned()
+	let reader_contents = match reader.read_to_end() {
+		Ok(contents) => contents,
+		Err(error)   => fail!("{}", error)
+	};
+	str::from_utf8(reader_contents.as_slice()).unwrap().to_owned()
 }
