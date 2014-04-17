@@ -91,7 +91,7 @@ impl Renderer {
 		text_position = text_position - Vec2 { x: 0.0, y: 15.0 };
 		self.draw_text(
 			text_position,
-			format!("att: {:+04i}", attitude.to_int().unwrap()));
+			format!("att: {:+04i}", attitude as i64));
 	}
 
 	fn draw_ui_overlay(&self, control: Control) {
