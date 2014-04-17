@@ -265,7 +265,6 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 					bytesSent,
 					buffer_length);
 				libc::exit(1)
-
 			}
 			else {
 				0
