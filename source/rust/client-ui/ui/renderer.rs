@@ -1,6 +1,6 @@
 use gl;
 
-use common::physics::{Body, Degrees, Vec2};
+use common::physics::{Body, Vec2};
 
 use components::{Control, Visual};
 use entities::Components;
@@ -86,12 +86,10 @@ impl Renderer {
 				body.position.x.to_int().unwrap(),
 				body.position.y.to_int().unwrap()));
 
-		let Degrees(attitude) = body.attitude.degrees();
-
 		text_position = text_position - Vec2 { x: 0.0, y: 15.0 };
 		self.draw_text(
 			text_position,
-			format!("att: {:+04i}", attitude as i64));
+			format!("att: {:+04i}", body.attitude.degrees()));
 	}
 
 	fn draw_ui_overlay(&self, control: Control) {
@@ -102,11 +100,9 @@ impl Renderer {
 			Vec2 { x: 20.0, y: 20.0 },
 			"Start maneuver with Enter");
 
-		let Degrees(attitude) = control.attitude.degrees();
-
 		self.draw_text(
 			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
-			format!("{:+04i}", attitude as i64));
+			format!("{:+04i}", control.attitude.degrees()));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
