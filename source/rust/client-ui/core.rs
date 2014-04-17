@@ -125,5 +125,8 @@ fn reader_to_string(reader: &mut BufferedReader<PipeStream>) -> ~str {
 		Ok(contents) => contents,
 		Err(error)   => fail!("{}", error)
 	};
-	str::from_utf8(reader_contents.as_slice()).unwrap().to_owned()
+	let contents_as_str = str::from_utf8(reader_contents.as_slice())
+		.expect("Failed to convert reader contents to string");
+	
+	contents_as_str.to_owned()
 }
