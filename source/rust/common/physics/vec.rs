@@ -1,13 +1,7 @@
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Vec2 {
 	pub x: f64,
 	pub y: f64
-}
-
-impl Eq for Vec2 {
-	fn eq(&self, other: &Vec2) -> bool {
-		self.x == other.x && self.y == other.y
-	}
 }
 
 impl Add<Vec2, Vec2> for Vec2 {
