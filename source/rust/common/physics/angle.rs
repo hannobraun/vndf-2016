@@ -1,5 +1,12 @@
 pub struct Radians(pub f64);
 
+impl Radians {
+	pub fn degrees(&self) -> Degrees {
+		let &Radians(this) = self;
+		Degrees(this.to_degrees())
+	}
+}
+
 impl Add<Radians, Radians> for Radians {
 	fn add(&self, &Radians(other): &Radians) -> Radians {
 		let &Radians(this) = self;
@@ -34,3 +41,6 @@ impl Ord for Radians {
 		this < other
 	}
 }
+
+
+pub struct Degrees(pub f64);
