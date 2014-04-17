@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(cd vendor/zwobot; ./scripts/build.sh)
