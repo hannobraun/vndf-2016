@@ -1,3 +1,7 @@
+use std::fmt;
+use std::fmt::Formatter;
+
+
 pub struct Radians(pub f64);
 
 impl Radians {
@@ -44,3 +48,10 @@ impl Ord for Radians {
 
 
 pub struct Degrees(pub f64);
+
+impl fmt::Signed for Degrees {
+	fn fmt(&self, formatter: &mut Formatter) -> fmt::Result {
+		let &Degrees(this) = self;
+		(this as i64).fmt(formatter)
+	}
+}
