@@ -111,10 +111,7 @@ impl Drop for Core {
 		// depend on what I do with the PipeStreams. What exactly causes this
 		// behavior is beyond my current understanding and killing it
 		// explicitely works fine, so there.
-		match self.process.signal_kill() {
-			Ok(_)      => (),
-			Err(error) => print!("error killing core process: {}", error)
-		}
+		let _ = self.process.signal_kill();
 	}
 }
 
