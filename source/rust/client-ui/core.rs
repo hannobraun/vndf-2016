@@ -115,7 +115,7 @@ impl Drop for Core {
 		// explicitely works fine, so there.
 		match self.process.signal_kill() {
 			Ok(_)      => (),
-			Err(error) => fail!("error killing core process: {}", error)
+			Err(error) => print!("error killing core process: {}", error)
 		}
 	}
 }
