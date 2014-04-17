@@ -2,6 +2,7 @@
 #![crate_type = "rlib"]
 
 extern crate libc;
+extern crate serialize;
 
 pub mod net;
 pub mod physics;
