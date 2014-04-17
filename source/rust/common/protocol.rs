@@ -115,10 +115,13 @@ impl Update {
 	}
 	pub fn to_str(&self) -> ~str {
 		format!(
-			"UPDATE {} {} {}",
+			"UPDATE {} {} {} {} {} {}",
 			self.id,
 			self.body.position.x,
-			self.body.position.y)
+			self.body.position.y,
+			self.body.velocity.x,
+			self.body.velocity.y,
+			self.body.attitude)
 	}
 }
 
