@@ -81,7 +81,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	}
 }
 
-pub fn receive(socketFD: libc::c_int, buffer: &[i8]) -> libc::ssize_t {
+pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
 	unsafe {
 		let bytesReceived = bsd43::recv(
 			socketFD,

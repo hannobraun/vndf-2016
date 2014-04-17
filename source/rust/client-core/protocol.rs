@@ -12,7 +12,7 @@ static BUFFER_SIZE : libc::c_int = 256;
 
 pub struct Connection {
 	socket_fd : libc::c_int,
-	buffer    : [i8, ..BUFFER_SIZE],
+	buffer    : [u8, ..BUFFER_SIZE],
 	buffer_pos: uint
 }
 
@@ -43,7 +43,6 @@ pub fn receive_positions(
 
 	while connection.buffer_pos > 0 && connection.buffer[0] as uint <= connection.buffer_pos {
 		let message_size = connection.buffer[0];
-		assert!(message_size >= 0);
 
 		let message = unsafe {
 			str::raw::from_buf_len(
