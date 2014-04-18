@@ -29,7 +29,7 @@ extern {
 
 	fn bind(
 		sockfd : libc::c_int,
-		addr   : *bsd44::sockaddr,
+		addr   : *net::sockaddr,
 		addrlen: libc::c_uint) -> libc::c_int;
 
 	fn listen(
@@ -38,7 +38,7 @@ extern {
 
 	fn accept(
 		sockfd : libc::c_int,
-		addr   : *bsd44::sockaddr,
+		addr   : *net::sockaddr,
 		addrlen: *libc::c_uint) -> libc::c_int;
 
 	fn send(
