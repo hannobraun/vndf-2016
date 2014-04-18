@@ -79,15 +79,15 @@ pub fn init_socket(port: &str) -> c_int {
 
 pub fn init_poller() -> c_int {
 	unsafe {
-		let pollerFD = ffi::epoll_create(1);
-		if pollerFD < 0 {
+		let poller_fd = ffi::epoll_create(1);
+		if poller_fd < 0 {
 			"Error initiating epoll".to_c_str().with_ref(|c_message| {
 				libc::perror(c_message);
 			});
 			libc::exit(1);
 		}
 
-		pollerFD
+		poller_fd
 	}
 }
 
