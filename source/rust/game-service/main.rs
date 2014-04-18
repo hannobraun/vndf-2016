@@ -24,8 +24,8 @@ fn main() {
 	loop {
 		let frameTimeInMs = 50;
 
-		acceptor.accept(frameTimeInMs, |fd| {
-			events.push(events::Connect(fd))
+		acceptor.accept(frameTimeInMs, |connection| {
+			events.push(events::Connect(connection.fd))
 		});
 
 		events.push(events::Update);

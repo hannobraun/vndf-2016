@@ -5,6 +5,7 @@ use std::mem;
 use std::os;
 use std::ptr;
 
+use net::Connection;
 use net::ffi;
 use net::epoll;
 use net::epoll::EPoll;
@@ -37,7 +38,7 @@ impl Acceptor {
 		}
 	}
 
-	pub fn accept(&self, timeout_in_ms: u32, handler: |c_int| -> ()) {
+	pub fn accept(&self, timeout_in_ms: u32, handler: |Connection| -> ()) {
 		let number_of_events = match self.epoll.wait(timeout_in_ms) {
 			Ok(number_of_events) => number_of_events,
 
@@ -53,7 +54,7 @@ impl Acceptor {
 			};
 
 			if fd >= 0 {
-				handler(fd);
+				handler(Connection { fd: fd });
 			}
 			else {
 				print!("Error accepting connection: {}", last_error());
