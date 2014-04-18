@@ -33,8 +33,8 @@ impl protocol::Handler for ProtocolHandler {
 fn main() {
 	let (address, port) = args::address_and_port();
 
-	let     socket_fd = Connection::connect(address, port).fd;
-	let mut protocol  = protocol::init(socket_fd);
+	let     connection = Connection::connect(address, port);
+	let mut protocol   = protocol::init(connection.fd);
 
 	let mut handler = ProtocolHandler;
 
