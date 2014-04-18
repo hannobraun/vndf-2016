@@ -12,7 +12,7 @@ pub struct Connection {
 }
 
 impl Connection {
-	pub fn create(fd: c_int) -> Connection {
+	pub fn from_fd(fd: c_int) -> Connection {
 		Connection {
 			fd: fd
 		}

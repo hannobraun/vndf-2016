@@ -53,7 +53,7 @@ impl Acceptor {
 			};
 
 			if fd >= 0 {
-				handler(Connection { fd: fd });
+				handler(Connection::from_fd(fd));
 			}
 			else {
 				print!("Error accepting connection: {}", last_error());
