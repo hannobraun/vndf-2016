@@ -14,7 +14,7 @@ pub fn init(port: &str) -> Net {
 	let serverFD = init_socket(port);
 	let pollerFD = init_poller();
 
-	register_accept(pollerFD, serverFD);
+	net::register_accept(pollerFD, serverFD);
 
 	print!("Listening on port {}\n", port);
 
@@ -119,25 +119,6 @@ fn init_poller() -> libc::c_int {
 		}
 
 		pollerFD
-	}
-}
-
-fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
-	let event = net::ffi::epoll_event { events: net::ffi::EPOLLIN, data: 0 };
-
-	unsafe {
-		let status = net::ffi::epoll_ctl(
-			pollerFD,
-			net::ffi::EPOLL_CTL_ADD,
-			serverFD,
-			&event);
-
-		if status != 0 {
-			"Error registering server socket with epoll".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
-		}
 	}
 }
 
