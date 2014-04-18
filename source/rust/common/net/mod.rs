@@ -1,4 +1,4 @@
-pub use net::wrapper::init_socket;
+pub use net::wrapper::Acceptor;
 
 
 mod wrapper;

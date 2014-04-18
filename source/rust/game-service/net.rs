@@ -2,6 +2,7 @@ use libc;
 use std::ptr;
 
 use common::net;
+use common::net::Acceptor;
 use common::net::epoll;
 use common::net::epoll::EPoll;
 
@@ -13,14 +14,14 @@ pub struct Net {
 
 
 pub fn init(port: &str) -> Net {
-	let server_fd = net::init_socket(port);
+	let acceptor = Acceptor::create(port);
 
 	let epoll = match EPoll::create() {
 		Ok(epoll)  => epoll,
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	match epoll.add(server_fd, epoll::ffi::EPOLLIN) {
+	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
 			fail!("Error registering server socket with epoll: {}", error),
 
@@ -31,7 +32,8 @@ pub fn init(port: &str) -> Net {
 
 	Net {
 		epoll   : epoll,
-		serverFD: server_fd }
+		serverFD: acceptor.fd
+	}
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: u32) -> u32 {

@@ -8,7 +8,20 @@ use std::ptr;
 use net::ffi;
 
 
-pub fn init_socket(port: &str) -> c_int {
+pub struct Acceptor {
+	pub fd: c_int
+}
+
+impl Acceptor {
+	pub fn create(port: &str) -> Acceptor {
+		Acceptor {
+			fd: init_socket(port)
+		}
+	}
+}
+
+
+fn init_socket(port: &str) -> c_int {
 	let hints = ffi::addrinfo {
 		ai_flags    : ffi::AI_PASSIVE,
 		ai_family   : ffi::AF_UNSPEC,
