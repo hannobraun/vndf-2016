@@ -124,7 +124,11 @@ impl Connection {
 				buffer.len() as u64,
 				ffi::MSG_DONTWAIT);
 
-			if bytes_received == -1 && (os::errno() as i32 == ffi::EAGAIN || os::errno() as i32 == ffi::EWOULDBLOCK) {
+			if bytes_received == -1
+				&& (
+					os::errno() as i32 == ffi::EAGAIN ||
+					os::errno() as i32 == ffi::EWOULDBLOCK) {
+
 				return 0;
 			}
 			if bytes_received == -1 {
