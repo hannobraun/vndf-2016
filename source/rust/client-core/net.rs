@@ -38,7 +38,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let socketFD = bsd43::socket(
+		let socketFD = net::ffi::socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);
