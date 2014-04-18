@@ -12,6 +12,7 @@ pub use libc::funcs::bsd43::{
 	accept,
 	bind,
 	listen,
+	send,
 	setsockopt,
 	socket};
 pub use libc::types::os::common::bsd44::{

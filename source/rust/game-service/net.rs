@@ -4,15 +4,6 @@ use std::ptr;
 use common::net;
 
 
-extern {
-	fn send(
-		sockfd: libc::c_int,
-		buf   : *libc::c_void,
-		len   : libc::size_t,
-		flags : libc::c_int) -> libc::ssize_t;
-}
-
-
 pub struct Net {
 	pub pollerFD: libc::c_int,
 	pub serverFD: libc::c_int
@@ -197,9 +188,9 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 
 			let buffer_length = messageLength + 1;
 
-			let bytesSent = send(
+			let bytesSent = net::send(
 				clientFD,
-				buffer.as_ptr() as *libc::c_void,
+				buffer.as_ptr() as *mut libc::c_void,
 				buffer_length,
 				net::MSG_NOSIGNAL);
 
