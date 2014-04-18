@@ -23,20 +23,12 @@ fn main() {
 
 	loop {
 		let frameTimeInMs = 50;
-		let numberOfEvents = net::number_of_events(&acceptor, frameTimeInMs) as int;
-		handle_connects(numberOfEvents, acceptor.fd, events);
+
+		acceptor.accept(frameTimeInMs, |fd| {
+			events.push(events::Connect(fd))
+		});
+
 		events.push(events::Update);
 		events::handle_events(events, clientMap, frameTimeInMs as uint);
-	}
-}
-
-fn handle_connects(numberOfEvents: int, serverFD: libc::c_int, events: &mut events::Events) {
-	let mut i = 0;
-	while i < numberOfEvents {
-		let clientFD = net::accept_client(serverFD);
-
-		events.push(events::Connect(clientFD));
-
-		i += 1;
 	}
 }

@@ -2,25 +2,7 @@ use libc;
 use std::ptr;
 
 use common::net;
-use common::net::Acceptor;
 
-
-pub fn number_of_events(acceptor: &Acceptor, frameTimeInMs: u32) -> u32 {
-	match acceptor.epoll.wait(frameTimeInMs) {
-		Ok(number_of_events) => number_of_events,
-
-		Err(error) => fail!("Error while waiting for events: {}", error)
-	}
-}
-
-pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
-	unsafe {
-		net::ffi::accept(
-			serverFD,
-			ptr::mut_null(),
-			ptr::mut_null())
-	}
-}
 
 pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 	let mut buffer: [libc::c_char, ..256] = [0, ..256];
