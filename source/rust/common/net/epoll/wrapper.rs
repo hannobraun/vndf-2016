@@ -7,7 +7,8 @@ use net::epoll::ffi;
 
 
 pub struct EPoll {
-	pub epfd: c_int
+	pub epfd        : c_int,
+	pub event_buffer: [ffi::epoll_event, ..1024]
 }
 
 impl EPoll {
@@ -17,8 +18,13 @@ impl EPoll {
 		};
 
 		if epfd >= 0 {
+			let emptyEvent = ffi::epoll_event {
+				events: 0,
+				data  : 0 };
+
 			Ok(EPoll {
-				epfd: epfd
+				epfd        : epfd,
+				event_buffer: [emptyEvent, ..1024]
 			})
 		}
 		else {

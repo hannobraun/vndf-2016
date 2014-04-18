@@ -35,16 +35,11 @@ pub fn init(port: &str) -> Net {
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
-	let emptyEvent = epoll::ffi::epoll_event {
-		events: 0,
-		data  : 0 };
-	let pollEvents: [epoll::ffi::epoll_event, ..1024] = [emptyEvent, ..1024];
-
 	unsafe {
 		let numberOfEvents = epoll::ffi::epoll_wait(
 			net.epoll.epfd,
-			pollEvents.as_ptr(),
-			1024,
+			net.epoll.event_buffer.as_ptr(),
+			net.epoll.event_buffer.len() as i32,
 			frameTimeInMs);
 
 		assert!(numberOfEvents != -1);
