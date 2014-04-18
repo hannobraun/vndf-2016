@@ -11,7 +11,6 @@ use events::Events;
 mod args;
 mod clients;
 mod events;
-mod net;
 
 
 fn main() {

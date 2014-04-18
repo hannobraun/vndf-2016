@@ -8,7 +8,6 @@ use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 use clients::Clients;
-use net;
 
 extern {
 	fn close(fd: libc::c_int) -> libc::c_int;
@@ -76,7 +75,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 				id: client.id
 			});
 
-			let status = net::send_message(client.conn.fd, message.to_str());
+			let status = client.conn.send_message(message.to_str());
 			if status < 0 {
 				events.push(Disconnect(client.id));
 			}
@@ -88,7 +87,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 				});
 
 				let status =
-					net::send_message(clientB.conn.fd, message.to_str());
+					clientB.conn.send_message(message.to_str());
 				if status < 0 {
 					events.push(Disconnect(clientB.id));
 				}
@@ -110,7 +109,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			id: clientId
 		});
 
-		let status = net::send_message(client.conn.fd, message.to_str());
+		let status = client.conn.send_message(message.to_str());
 
 		if status < 0 {
 			events.push(Disconnect(client.id));
@@ -131,7 +130,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				body: clientB.ship
 			});
 
-			let status = net::send_message(clientA.conn.fd, message.to_str());
+			let status = clientA.conn.send_message(message.to_str());
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
