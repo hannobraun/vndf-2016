@@ -17,8 +17,7 @@ mod net;
 fn main() {
 	print!("Game Service started.\n");
 
-	let acceptor = Acceptor::create(args::port());
-
+	let acceptor      = Acceptor::create(args::port());
 	let mut events    = Events::new();
 	let mut clientMap = Clients::new(4);
 
