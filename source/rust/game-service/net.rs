@@ -34,9 +34,9 @@ pub fn init(port: &str) -> Net {
 		serverFD: server_fd }
 }
 
-pub fn number_of_events(net: &Net, frameTimeInMs: u32) -> i32 {
+pub fn number_of_events(net: &Net, frameTimeInMs: u32) -> u32 {
 	match net.epoll.wait(frameTimeInMs) {
-		Ok(number_of_events) => number_of_events as i32,
+		Ok(number_of_events) => number_of_events,
 
 		Err(error) => fail!("Error while waiting for events: {}", error)
 	}
