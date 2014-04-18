@@ -1,5 +1,4 @@
 use libc;
-use libc::types::os::common::bsd44;
 use std::os::errno;
 use std::ptr;
 
@@ -7,7 +6,7 @@ use common::net;
 
 
 pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
-	let hints = bsd44::addrinfo {
+	let hints = net::ffi::addrinfo {
 		ai_flags    : net::ffi::AI_PASSIVE,
 		ai_family   : net::ffi::AF_UNSPEC,
 		ai_socktype : net::ffi::SOCK_STREAM,
@@ -17,7 +16,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 		ai_canonname: ptr::null(),
 		ai_next     : ptr::null() };
 
-	let servinfo = ptr::null::<bsd44::addrinfo>();
+	let servinfo = ptr::null::<net::ffi::addrinfo>();
 
 	unsafe {
 		let mut status = hostname.to_c_str().with_ref(|c_hostname| {
