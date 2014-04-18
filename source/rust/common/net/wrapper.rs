@@ -31,10 +31,7 @@ pub fn init_socket(port: &str) -> c_int {
 		});
 
 		if status != 0 {
-			"Error getting address info".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
+			fail!("Error getting address info: {}", last_error());
 		}
 
 		let socketFD = ffi::socket(
