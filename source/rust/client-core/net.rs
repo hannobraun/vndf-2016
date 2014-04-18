@@ -17,7 +17,6 @@ fn errno() -> libc::c_int {
 }
 
 
-static MSG_DONTWAIT: i32 = 0x40;
 static EAGAIN      : i32 = 11;
 static EWOULDBLOCK : i32 = 140;
 
@@ -87,7 +86,7 @@ pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
 			socketFD,
 			buffer.as_ptr() as *mut libc::c_void,
 			buffer.len() as u64,
-			MSG_DONTWAIT);
+			net::MSG_DONTWAIT);
 
 		if bytesReceived == -1 && (errno() == EAGAIN || errno() == EWOULDBLOCK) {
 			return 0;

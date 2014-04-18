@@ -24,6 +24,7 @@ pub static AF_UNSPEC    : c_int = 0;
 pub static AI_PASSIVE   : c_int = 1;
 pub static EPOLLIN      : u32   = 1;
 pub static EPOLL_CTL_ADD: i32   = 1;
+pub static MSG_DONTWAIT : i32   = 0x40;
 pub static MSG_NOSIGNAL : i32   = 0x4000;
 
 
