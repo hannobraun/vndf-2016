@@ -5,11 +5,6 @@ use common::net;
 
 
 extern {
-	fn bind(
-		sockfd : libc::c_int,
-		addr   : *net::sockaddr,
-		addrlen: libc::c_uint) -> libc::c_int;
-
 	fn listen(
 		sockfd : libc::c_int,
 		backlog: libc::c_int) -> libc::c_int;
@@ -103,7 +98,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let status = bind(
+		let status = net::bind(
 			socketFD,
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
