@@ -5,7 +5,9 @@ use net::ffi;
 
 
 pub fn register_accept(pollerFD: c_int, serverFD: c_int) {
-	let event = ffi::epoll_event { events: ffi::EPOLLIN, data: 0 };
+	let event = ffi::epoll_event {
+		events: ffi::EPOLLIN,
+		data  : 0 };
 
 	unsafe {
 		let status = ffi::epoll_ctl(
