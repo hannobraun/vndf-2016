@@ -45,4 +45,10 @@ extern {
 		op   : c_int,
 		fd   : c_int,
 		event: *epoll_event) -> c_int;
+
+	pub fn epoll_wait(
+		epfd     : c_int,
+		events   : *epoll_event,
+		maxevents: c_int,
+		timeout  : c_int) -> c_int;
 }

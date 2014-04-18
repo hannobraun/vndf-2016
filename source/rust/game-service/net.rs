@@ -5,12 +5,6 @@ use common::net;
 
 
 extern {
-	fn epoll_wait(
-		epfd     : libc::c_int,
-		events   : *net::epoll_event,
-		maxevents: libc::c_int,
-		timeout  : libc::c_int) -> libc::c_int;
-
 	fn setsockopt(
 		sockfd : libc::c_int,
 		level  : libc::c_int,
@@ -184,7 +178,7 @@ pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
 	let pollEvents: [net::epoll_event, ..1024] = [emptyEvent, ..1024];
 
 	unsafe {
-		let numberOfEvents = epoll_wait(
+		let numberOfEvents = net::epoll_wait(
 			net.pollerFD,
 			pollEvents.as_ptr(),
 			1024,
