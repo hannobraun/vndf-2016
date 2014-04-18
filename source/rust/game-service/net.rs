@@ -6,7 +6,6 @@ use std::ptr;
 use common::net;
 
 
-static SOL_SOCKET   : i32 = 1;
 static SO_REUSEADDR : i32 = 2;
 static EPOLLIN      : u32 = 1;
 static EPOLL_CTL_ADD: i32 = 1;
@@ -126,7 +125,7 @@ fn init_socket(port: &str) -> libc::c_int {
 		let yes= 1;
 		let status = setsockopt(
 			socketFD,
-			SOL_SOCKET,
+			net::SOL_SOCKET,
 			SO_REUSEADDR,
 			&yes as *int as *libc::c_void,
 			::std::mem::size_of::<libc::c_int>() as u32);
