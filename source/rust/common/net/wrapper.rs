@@ -68,10 +68,7 @@ pub fn init_socket(port: &str) -> c_int {
 			socketFD,
 			1024);
 		if status != 0 {
-			"Error listening on socket".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
+			fail!("Error listening on socket: {}", last_error());
 		}
 
 		ffi::freeaddrinfo(servinfo);
