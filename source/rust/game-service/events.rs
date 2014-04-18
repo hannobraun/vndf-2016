@@ -88,8 +88,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 			});
 		},
 
-		None =>
-			connection.close()
+		None => connection.close()
 	}
 }
 
