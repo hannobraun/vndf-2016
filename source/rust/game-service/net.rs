@@ -5,12 +5,6 @@ use common::net;
 
 
 extern {
-	fn epoll_ctl(
-		epfd : libc::c_int,
-		op   : libc::c_int,
-		fd   : libc::c_int,
-		event: *net::epoll_event) -> libc::c_int;
-
 	fn epoll_wait(
 		epfd     : libc::c_int,
 		events   : *net::epoll_event,
@@ -168,7 +162,7 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 	let event = net::epoll_event { events: net::EPOLLIN, data: 0 };
 
 	unsafe {
-		let status = epoll_ctl(
+		let status = net::epoll_ctl(
 			pollerFD,
 			net::EPOLL_CTL_ADD,
 			serverFD,

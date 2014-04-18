@@ -37,4 +37,10 @@ extern {
 
 
 	pub fn epoll_create(size: libc::c_int) -> libc::c_int;
+
+	pub fn epoll_ctl(
+		epfd : libc::c_int,
+		op   : libc::c_int,
+		fd   : libc::c_int,
+		event: *epoll_event) -> libc::c_int;
 }
