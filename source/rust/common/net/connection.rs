@@ -9,7 +9,7 @@ use util::last_error;
 
 #[deriving(Eq, Show)]
 pub struct Connection {
-	pub fd: c_int
+	fd: c_int
 }
 
 impl Connection {
