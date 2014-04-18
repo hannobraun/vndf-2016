@@ -9,11 +9,11 @@ extern {
 		epfd : libc::c_int,
 		op   : libc::c_int,
 		fd   : libc::c_int,
-		event: *EpollEvent) -> libc::c_int;
+		event: *net::epoll_event) -> libc::c_int;
 
 	fn epoll_wait(
 		epfd     : libc::c_int,
-		events   : *EpollEvent,
+		events   : *net::epoll_event,
 		maxevents: libc::c_int,
 		timeout  : libc::c_int) -> libc::c_int;
 
@@ -49,11 +49,6 @@ extern {
 pub struct Net {
 	pub pollerFD: libc::c_int,
 	pub serverFD: libc::c_int
-}
-
-struct EpollEvent {
-	events: u32,
-	data  : u64
 }
 
 
@@ -170,7 +165,7 @@ fn init_poller() -> libc::c_int {
 }
 
 fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
-	let event = EpollEvent { events: net::EPOLLIN, data: 0 };
+	let event = net::epoll_event { events: net::EPOLLIN, data: 0 };
 
 	unsafe {
 		let status = epoll_ctl(
@@ -189,10 +184,10 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
-	let emptyEvent = EpollEvent {
+	let emptyEvent = net::epoll_event {
 		events: 0,
 		data  : 0 };
-	let pollEvents: [EpollEvent, ..1024] = [emptyEvent, ..1024];
+	let pollEvents: [net::epoll_event, ..1024] = [emptyEvent, ..1024];
 
 	unsafe {
 		let numberOfEvents = epoll_wait(

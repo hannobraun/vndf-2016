@@ -19,6 +19,13 @@ pub static EPOLL_CTL_ADD: i32         = 1;
 pub static MSG_NOSIGNAL : i32         = 0x4000;
 
 
+#[allow(non_camel_case_types)]
+pub struct epoll_event {
+	pub events: u32,
+	pub data  : u64
+}
+
+
 extern {
 	pub fn getaddrinfo(
 		name   : *libc::c_char,
