@@ -12,7 +12,7 @@ static BUFFER_SIZE : libc::c_int = 256;
 
 
 pub struct Protocol {
-	socket_fd : libc::c_int,
+	connection: Connection,
 	buffer    : [u8, ..BUFFER_SIZE],
 	buffer_pos: uint
 }
@@ -27,7 +27,7 @@ pub trait Handler {
 
 pub fn init(connection: Connection) -> Protocol {
 	Protocol {
-		socket_fd : connection.fd,
+		connection: connection,
 		buffer    : [0, ..BUFFER_SIZE],
 		buffer_pos: 0 }
 }
@@ -37,7 +37,7 @@ pub fn receive_positions(
 	handler   : &mut Handler) {
 
 	let bytes_received = net::receive(
-		connection.socket_fd,
+		connection.connection.fd,
 		connection.buffer.slice_from(connection.buffer_pos));
 
 	connection.buffer_pos += bytes_received as uint;
