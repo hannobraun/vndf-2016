@@ -35,16 +35,10 @@ pub fn init(port: &str) -> Net {
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
-	unsafe {
-		let numberOfEvents = epoll::ffi::epoll_wait(
-			net.epoll.epfd,
-			net.epoll.event_buffer.as_ptr(),
-			net.epoll.event_buffer.len() as i32,
-			frameTimeInMs);
+	match net.epoll.wait(frameTimeInMs as u32) {
+		Ok(number_of_events) => number_of_events as i32,
 
-		assert!(numberOfEvents != -1);
-
-		numberOfEvents
+		Err(error) => fail!("Error while waiting for events: {}", error)
 	}
 }
 

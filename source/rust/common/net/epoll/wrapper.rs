@@ -53,6 +53,23 @@ impl EPoll {
 			Err(last_error())
 		}
 	}
+
+	pub fn wait(&self, timeout_in_ms: u32) -> Result<u32, ~str> {
+		let number_of_events = unsafe {
+			ffi::epoll_wait(
+				self.epfd,
+				self.event_buffer.as_ptr(),
+				self.event_buffer.len() as i32,
+				timeout_in_ms as i32)
+		};
+
+		if number_of_events >= 0 {
+			Ok(number_of_events as u32)
+		}
+		else {
+			Err(last_error())
+		}
+	}
 }
 
 
