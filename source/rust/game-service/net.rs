@@ -7,7 +7,7 @@ use common::net::epoll::EPoll;
 
 
 pub struct Net {
-	pub pollerFD: libc::c_int,
+	pub epoll   : EPoll,
 	pub serverFD: libc::c_int
 }
 
@@ -30,7 +30,7 @@ pub fn init(port: &str) -> Net {
 	print!("Listening on port {}\n", port);
 
 	Net {
-		pollerFD: epoll.epfd,
+		epoll   : epoll,
 		serverFD: server_fd }
 }
 
@@ -42,7 +42,7 @@ pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
 
 	unsafe {
 		let numberOfEvents = epoll::ffi::epoll_wait(
-			net.pollerFD,
+			net.epoll.epfd,
 			pollEvents.as_ptr(),
 			1024,
 			frameTimeInMs);
