@@ -17,7 +17,8 @@ pub fn init_socket(port: &str) -> c_int {
 		ai_addrlen  : 0,
 		ai_addr     : ptr::null(),
 		ai_canonname: ptr::null(),
-		ai_next     : ptr::null() };
+		ai_next     : ptr::null()
+	};
 
 	let servinfo: *ffi::addrinfo = ptr::null();
 
