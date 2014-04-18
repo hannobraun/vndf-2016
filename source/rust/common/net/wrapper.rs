@@ -78,14 +78,15 @@ pub fn init_socket(port: &str) -> c_int {
 }
 
 pub fn init_poller() -> c_int {
-	unsafe {
-		let poller_fd = ffi::epoll_create(1);
-		if poller_fd < 0 {
-			fail!("Error initiating epoll: {}", last_error());
-		}
+	let poller_fd = unsafe {
+		ffi::epoll_create(1)
+	};
 
-		poller_fd
+	if poller_fd < 0 {
+		fail!("Error initiating epoll: {}", last_error());
 	}
+
+	poller_fd
 }
 
 pub fn register_accept(poller_fd: c_int, server_fd: c_int) {
