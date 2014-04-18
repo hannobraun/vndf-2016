@@ -25,7 +25,7 @@ fn main() {
 		let frameTimeInMs = 50;
 
 		acceptor.accept(frameTimeInMs, |connection| {
-			events.push(events::Connect(connection.fd))
+			events.push(events::Connect(connection))
 		});
 
 		events.push(events::Update);

@@ -3,6 +3,7 @@ use collections::RingBuf;
 use libc;
 
 use common::physics::{Body, Radians, Vec2};
+use common::net::Connection;
 use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
@@ -20,7 +21,7 @@ pub struct Events {
 
 #[deriving(Eq, Show)]
 pub enum Event {
-	Connect(libc::c_int),
+	Connect(Connection),
 	Disconnect(uint),
 	Update
 }
@@ -46,7 +47,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 		match events.pull() {
 			Some(event) =>
 				match event {
-					Connect(clientFD)    => on_connect(clientFD, clients, events),
+					Connect(connection)  => on_connect(connection.fd, clients, events),
 					Disconnect(clientId) => on_disconnect(clientId, clients, events),
 					Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 				},
