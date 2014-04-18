@@ -3,6 +3,7 @@ use libc::c_int;
 use std::ptr;
 
 use net::ffi;
+use util::last_error;
 
 
 #[deriving(Eq, Show)]
@@ -17,7 +18,7 @@ impl Connection {
 		}
 	}
 
-	pub fn send_message(&self, message: &str) -> c_int {
+	pub fn send_message(&self, message: &str) -> Result<(), ~str> {
 		let mut buffer: [libc::c_char, ..256] = [0, ..256];
 
 		unsafe {
@@ -43,21 +44,16 @@ impl Connection {
 					ffi::MSG_NOSIGNAL);
 
 				if bytesSent < 0 {
-					"Error sending message".to_c_str().with_ref(|c_str| {
-						libc::perror(c_str);
-					});
-
-					-1
+					Err(format!("Error sending message: {}", last_error()))
 				}
 				else if bytesSent as u64 != buffer_length {
-					format!(
-						"Only sent {:d} of {:u} bytes.\n",
+					Err(format!(
+						"Only sent {:d} of {:u} bytes",
 						bytesSent,
-						buffer_length);
-					libc::exit(1)
+						buffer_length))
 				}
 				else {
-					0
+					Ok(())
 				}
 			})
 		}

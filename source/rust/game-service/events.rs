@@ -75,9 +75,9 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 				id: client.id
 			});
 
-			let status = client.conn.send_message(message.to_str());
-			if status < 0 {
-				events.push(Disconnect(client.id));
+			match client.conn.send_message(message.to_str()) {
+				Err(_) => events.push(Disconnect(client.id)),
+				_      => ()
 			}
 
 			clients.each(|clientB| {
@@ -86,10 +86,9 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 					kind: ~"ship"
 				});
 
-				let status =
-					clientB.conn.send_message(message.to_str());
-				if status < 0 {
-					events.push(Disconnect(clientB.id));
+				match clientB.conn.send_message(message.to_str()) {
+					Err(_) => events.push(Disconnect(clientB.id)),
+					_      => ()
 				}
 			});
 		},
@@ -109,10 +108,9 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			id: clientId
 		});
 
-		let status = client.conn.send_message(message.to_str());
-
-		if status < 0 {
-			events.push(Disconnect(client.id));
+		match client.conn.send_message(message.to_str()) {
+			Err(_) => events.push(Disconnect(client.id)),
+			_      => ()
 		}
 	})
 }
@@ -130,10 +128,9 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				body: clientB.ship
 			});
 
-			let status = clientA.conn.send_message(message.to_str());
-
-			if status < 0 {
-				events.push(Disconnect(clientA.id));
+			match clientA.conn.send_message(message.to_str()) {
+				Err(_) => events.push(Disconnect(clientA.id)),
+				_      => ()
 			}
 		})
 	});
