@@ -8,6 +8,7 @@ pub use libc::consts::os::bsd44::{
 	SOCK_STREAM,
 	SOL_SOCKET};
 pub use libc::consts::os::bsd44::SO_REUSEADDR;
+pub use libc::consts::os::posix88::EAGAIN;
 pub use libc::funcs::bsd43::{
 	accept,
 	bind,
