@@ -25,4 +25,7 @@ extern {
 		pai    : **bsd44::addrinfo) -> libc::c_int;
 
 	pub fn freeaddrinfo(res: *bsd44::addrinfo);
+
+
+	pub fn epoll_create(size: libc::c_int) -> libc::c_int;
 }

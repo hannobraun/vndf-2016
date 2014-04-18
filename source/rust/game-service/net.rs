@@ -5,8 +5,6 @@ use common::net;
 
 
 extern {
-	fn epoll_create(size: libc::c_int) -> libc::c_int;
-
 	fn epoll_ctl(
 		epfd : libc::c_int,
 		op   : libc::c_int,
@@ -159,7 +157,7 @@ fn init_socket(port: &str) -> libc::c_int {
 
 fn init_poller() -> libc::c_int {
 	unsafe {
-		let pollerFD = epoll_create(1);
+		let pollerFD = net::epoll_create(1);
 		if pollerFD < 0 {
 			"Error initiating epoll".to_c_str().with_ref(|c_message| {
 				libc::perror(c_message);
