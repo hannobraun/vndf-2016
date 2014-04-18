@@ -61,10 +61,7 @@ pub fn init_socket(port: &str) -> c_int {
 			(*servinfo).ai_addrlen);
 
 		if status != 0 {
-			"Error binding socket".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
+			fail!("Error binding socket: {}", last_error());
 		}
 
 		let status = ffi::listen(
