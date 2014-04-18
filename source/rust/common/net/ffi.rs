@@ -14,6 +14,7 @@ pub use libc::consts::os::posix88::{
 pub use libc::funcs::bsd43::{
 	accept,
 	bind,
+	connect,
 	listen,
 	send,
 	setsockopt,

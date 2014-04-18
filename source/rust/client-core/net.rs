@@ -49,7 +49,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		status = bsd43::connect(
+		status = net::ffi::connect(
 			socketFD,
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
