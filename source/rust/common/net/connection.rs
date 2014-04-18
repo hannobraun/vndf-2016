@@ -47,17 +47,17 @@ impl Connection {
 				fail!("Error getting address info: {}", last_error());
 			}
 
-			let socketFD = ffi::socket(
+			let fd = ffi::socket(
 				(*servinfo).ai_family,
 				(*servinfo).ai_socktype,
 				(*servinfo).ai_protocol);
 
-			if socketFD == -1 {
+			if fd == -1 {
 				fail!("Error creating socket: {}", last_error());
 			}
 
 			status = ffi::connect(
-				socketFD,
+				fd,
 				(*servinfo).ai_addr,
 				(*servinfo).ai_addrlen);
 			if status != 0 {
@@ -69,7 +69,7 @@ impl Connection {
 
 			ffi::freeaddrinfo(servinfo);
 
-			Connection::from_fd(socketFD)
+			Connection::from_fd(fd)
 		}
 	}
 
