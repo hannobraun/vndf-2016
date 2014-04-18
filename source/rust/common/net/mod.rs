@@ -1,11 +1,11 @@
 use libc;
 use libc::types::os::common::bsd44;
 
-
 pub use libc::consts::os::bsd44::{
 	SOCK_STREAM,
 	SOL_SOCKET};
 pub use libc::consts::os::bsd44::SO_REUSEADDR;
+pub use libc::funcs::bsd43::socket;
 
 pub static AF_UNSPEC    : libc::c_int = 0;
 pub static AI_PASSIVE   : libc::c_int = 1;
