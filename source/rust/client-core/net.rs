@@ -2,12 +2,13 @@ use libc;
 use std::os::errno;
 
 use common::net;
+use common::net::Connection;
 
 
-pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
+pub fn receive(connection: Connection, buffer: &[u8]) -> libc::ssize_t {
 	unsafe {
 		let bytesReceived = net::ffi::recv(
-			socketFD,
+			connection.fd,
 			buffer.as_ptr() as *mut libc::c_void,
 			buffer.len() as u64,
 			net::ffi::MSG_DONTWAIT);

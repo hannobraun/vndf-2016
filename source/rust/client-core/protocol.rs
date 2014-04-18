@@ -34,7 +34,7 @@ pub fn init(connection: Connection) -> Protocol {
 
 pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
 	let bytes_received = net::receive(
-		protocol.connection.fd,
+		protocol.connection,
 		protocol.buffer.slice_from(protocol.buffer_pos));
 
 	protocol.buffer_pos += bytes_received as uint;
