@@ -1,20 +1,10 @@
 use libc;
 use libc::funcs::bsd43;
 use libc::types::os::common::bsd44;
+use std::os::errno;
 use std::ptr;
 
 use common::net;
-
-
-extern {
-	fn __errno_location() -> *libc::c_int;
-}
-
-fn errno() -> libc::c_int {
-	unsafe {
-		*__errno_location()
-	}
-}
 
 
 pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
@@ -84,7 +74,7 @@ pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
 			buffer.len() as u64,
 			net::MSG_DONTWAIT);
 
-		if bytesReceived == -1 && (errno() == net::EAGAIN || errno() == net::EWOULDBLOCK) {
+		if bytesReceived == -1 && (errno() as i32 == net::EAGAIN || errno() as i32 == net::EWOULDBLOCK) {
 			return 0;
 		}
 		if bytesReceived == -1 {
