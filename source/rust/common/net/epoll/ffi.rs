@@ -1,5 +1,9 @@
 use libc::c_int;
 
+
+pub use std::os::close;
+
+
 // epoll_create1 flags
 pub static EPOLL_CLOEXEC: c_int = 0o2000000;
 
