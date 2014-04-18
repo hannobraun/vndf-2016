@@ -15,6 +15,8 @@ pub struct epoll_event {
 extern {
 	pub fn epoll_create(size: c_int) -> c_int;
 
+	pub fn epoll_create1(flags: c_int) -> c_int;
+
 	pub fn epoll_ctl(
 		epfd : c_int,
 		op   : c_int,
