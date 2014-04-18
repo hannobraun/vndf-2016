@@ -10,7 +10,7 @@ use net;
 static BUFFER_SIZE : libc::c_int = 256;
 
 
-pub struct Connection {
+pub struct Protocol {
 	socket_fd : libc::c_int,
 	buffer    : [u8, ..BUFFER_SIZE],
 	buffer_pos: uint
@@ -24,15 +24,15 @@ pub trait Handler {
 }
 
 
-pub fn init(socket_fd: libc::c_int) -> Connection {
-	Connection {
+pub fn init(socket_fd: libc::c_int) -> Protocol {
+	Protocol {
 		socket_fd : socket_fd,
 		buffer    : [0, ..BUFFER_SIZE],
 		buffer_pos: 0 }
 }
 
 pub fn receive_positions(
-	connection: &mut Connection,
+	connection: &mut Protocol,
 	handler   : &mut Handler) {
 
 	let bytes_received = net::receive(
