@@ -135,7 +135,7 @@ impl Connection {
 				fail!("Error receiving message: {}", last_error());
 			}
 			if bytes_received == 0 {
-				fail!("Connection closed while receiving");
+				fail!("Connection closed by server");
 			}
 
 			bytes_received
