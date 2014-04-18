@@ -1,7 +1,7 @@
-pub use net::wrapper::Acceptor;
+pub use net::acceptor::Acceptor;
 
 
-mod wrapper;
+mod acceptor;
 
 pub mod epoll;
 pub mod ffi;
