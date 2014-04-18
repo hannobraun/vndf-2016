@@ -1,7 +1,7 @@
 use collections::HashMap;
-use libc;
 
 use common::physics::Body;
+use common::net::Connection;
 
 
 pub struct Clients {
@@ -10,9 +10,9 @@ pub struct Clients {
 }
 
 pub struct Client {
-	pub socketFD: libc::c_int,
-	pub id      : uint,
-	pub ship    : Body
+	pub conn: Connection,
+	pub id  : uint,
+	pub ship: Body
 }
 
 impl Clients {
@@ -22,14 +22,14 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add(&mut self, socketFD: libc::c_int, ship: Body) -> Option<Client> {
+	pub fn add(&mut self, conn: Connection, ship: Body) -> Option<Client> {
 		if self.idPool.has_ids() {
 			let client_id = self.idPool.pop();
 
 			let client = Client {
-				socketFD: socketFD,
-				id      : client_id,
-				ship    : ship };
+				conn: conn,
+				id  : client_id,
+				ship: ship };
 
 			self.map.insert(client.id, client);
 

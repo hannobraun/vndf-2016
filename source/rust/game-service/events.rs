@@ -70,13 +70,13 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 		attitude: Radians(0.0)
 	};
 
-	match clients.add(connection.fd, ship) {
+	match clients.add(connection, ship) {
 		Some(client) => {
 			let message = SelfInfo(SelfInfo {
 				id: client.id
 			});
 
-			let status = net::send_message(client.socketFD, message.to_str());
+			let status = net::send_message(client.conn.fd, message.to_str());
 			if status < 0 {
 				events.push(Disconnect(client.id));
 			}
@@ -88,7 +88,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 				});
 
 				let status =
-					net::send_message(clientB.socketFD, message.to_str());
+					net::send_message(clientB.conn.fd, message.to_str());
 				if status < 0 {
 					events.push(Disconnect(clientB.id));
 				}
@@ -110,7 +110,7 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			id: clientId
 		});
 
-		let status = net::send_message(client.socketFD, message.to_str());
+		let status = net::send_message(client.conn.fd, message.to_str());
 
 		if status < 0 {
 			events.push(Disconnect(client.id));
@@ -131,7 +131,7 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 				body: clientB.ship
 			});
 
-			let status = net::send_message(clientA.socketFD, message.to_str());
+			let status = net::send_message(clientA.conn.fd, message.to_str());
 
 			if status < 0 {
 				events.push(Disconnect(clientA.id));
