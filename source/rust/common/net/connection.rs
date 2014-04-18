@@ -58,5 +58,4 @@ impl Connection {
 			})
 		}
 	}
-
 }
