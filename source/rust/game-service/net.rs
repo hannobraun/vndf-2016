@@ -6,7 +6,6 @@ use std::ptr;
 use common::net;
 
 
-static EPOLL_CTL_ADD: i32 = 1;
 static MSG_NOSIGNAL : i32 = 0x4000;
 
 
@@ -183,7 +182,7 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 	unsafe {
 		let status = epoll_ctl(
 			pollerFD,
-			EPOLL_CTL_ADD,
+			net::EPOLL_CTL_ADD,
 			serverFD,
 			&event);
 
