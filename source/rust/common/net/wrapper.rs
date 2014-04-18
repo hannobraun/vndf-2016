@@ -81,10 +81,7 @@ pub fn init_poller() -> c_int {
 	unsafe {
 		let poller_fd = ffi::epoll_create(1);
 		if poller_fd < 0 {
-			"Error initiating epoll".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
+			fail!("Error initiating epoll: {}", last_error());
 		}
 
 		poller_fd
