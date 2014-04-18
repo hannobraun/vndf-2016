@@ -5,6 +5,7 @@ use std::mem;
 use std::os;
 use std::ptr;
 
+use net::epoll;
 use net::ffi;
 
 
@@ -80,7 +81,7 @@ pub fn init_socket(port: &str) -> c_int {
 
 pub fn init_poller() -> c_int {
 	let poller_fd = unsafe {
-		ffi::epoll_create(1)
+		epoll::ffi::epoll_create(1)
 	};
 
 	if poller_fd < 0 {
@@ -91,14 +92,14 @@ pub fn init_poller() -> c_int {
 }
 
 pub fn register_accept(poller_fd: c_int, server_fd: c_int) {
-	let event = ffi::epoll_event {
-		events: ffi::EPOLLIN,
+	let event = epoll::ffi::epoll_event {
+		events: epoll::ffi::EPOLLIN,
 		data  : 0 };
 
 	let status = unsafe {
-		ffi::epoll_ctl(
+		epoll::ffi::epoll_ctl(
 			poller_fd,
-			ffi::EPOLL_CTL_ADD,
+			epoll::ffi::EPOLL_CTL_ADD,
 			server_fd,
 			&event)
 	};

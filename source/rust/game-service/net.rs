@@ -2,6 +2,7 @@ use libc;
 use std::ptr;
 
 use common::net;
+use common::net::epoll;
 
 
 pub struct Net {
@@ -24,13 +25,13 @@ pub fn init(port: &str) -> Net {
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
-	let emptyEvent = net::ffi::epoll_event {
+	let emptyEvent = epoll::ffi::epoll_event {
 		events: 0,
 		data  : 0 };
-	let pollEvents: [net::ffi::epoll_event, ..1024] = [emptyEvent, ..1024];
+	let pollEvents: [epoll::ffi::epoll_event, ..1024] = [emptyEvent, ..1024];
 
 	unsafe {
-		let numberOfEvents = net::ffi::epoll_wait(
+		let numberOfEvents = epoll::ffi::epoll_wait(
 			net.pollerFD,
 			pollEvents.as_ptr(),
 			1024,
