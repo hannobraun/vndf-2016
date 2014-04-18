@@ -7,8 +7,8 @@ use net::epoll::ffi;
 
 
 pub struct EPoll {
-	pub epfd        : c_int,
-	pub event_buffer: [ffi::epoll_event, ..1024]
+	epfd        : c_int,
+	event_buffer: [ffi::epoll_event, ..1024]
 }
 
 impl EPoll {
