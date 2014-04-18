@@ -2,6 +2,7 @@ use libc;
 use std::ptr;
 use std::str;
 
+use common::net::Connection;
 use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 use net;
@@ -24,9 +25,9 @@ pub trait Handler {
 }
 
 
-pub fn init(socket_fd: libc::c_int) -> Protocol {
+pub fn init(connection: Connection) -> Protocol {
 	Protocol {
-		socket_fd : socket_fd,
+		socket_fd : connection.fd,
 		buffer    : [0, ..BUFFER_SIZE],
 		buffer_pos: 0 }
 }

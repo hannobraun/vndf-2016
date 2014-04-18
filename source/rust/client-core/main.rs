@@ -34,7 +34,7 @@ fn main() {
 	let (address, port) = args::address_and_port();
 
 	let     connection = Connection::connect(address, port);
-	let mut protocol   = protocol::init(connection.fd);
+	let mut protocol   = protocol::init(connection);
 
 	let mut handler = ProtocolHandler;
 
