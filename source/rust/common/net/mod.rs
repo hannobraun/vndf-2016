@@ -1,4 +1,5 @@
 use libc;
+use libc::c_char;
 use libc::types::os::common::bsd44;
 
 
@@ -28,8 +29,8 @@ pub struct epoll_event {
 
 extern {
 	pub fn getaddrinfo(
-		name   : *libc::c_char,
-		service: *libc::c_char,
+		name   : *c_char,
+		service: *c_char,
 		req    : *bsd44::addrinfo,
 		pai    : **bsd44::addrinfo) -> libc::c_int;
 
