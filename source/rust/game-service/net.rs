@@ -1,5 +1,4 @@
 use libc;
-use libc::types::os::common::bsd44;
 use std::ptr;
 
 use common::net;
@@ -75,7 +74,7 @@ pub fn init(port: &str) -> Net {
 
 
 fn init_socket(port: &str) -> libc::c_int {
-	let hints = bsd44::addrinfo {
+	let hints = net::addrinfo {
 		ai_flags    : net::AI_PASSIVE,
 		ai_family   : net::AF_UNSPEC,
 		ai_socktype : net::SOCK_STREAM,
@@ -85,7 +84,7 @@ fn init_socket(port: &str) -> libc::c_int {
 		ai_canonname: ptr::null(),
 		ai_next     : ptr::null() };
 
-	let servinfo = ptr::null::<bsd44::addrinfo>();
+	let servinfo = ptr::null::<net::addrinfo>();
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
