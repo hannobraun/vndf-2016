@@ -1,6 +1,7 @@
 use libc;
 use libc::c_int;
 use std::c_str::CString;
+use std::mem;
 use std::os;
 use std::ptr;
 
@@ -54,7 +55,7 @@ pub fn init_socket(port: &str) -> c_int {
 			ffi::SOL_SOCKET,
 			ffi::SO_REUSEADDR,
 			&yes as *int as *libc::c_void,
-			::std::mem::size_of::<c_int>() as u32);
+			mem::size_of::<c_int>() as u32);
 
 		if status == -1 {
 			"Error setting socket option".to_c_str().with_ref(|c_message| {
