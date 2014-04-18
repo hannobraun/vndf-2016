@@ -9,9 +9,9 @@ use common::net;
 
 pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	let hints = bsd44::addrinfo {
-		ai_flags    : net::AI_PASSIVE,
-		ai_family   : net::AF_UNSPEC,
-		ai_socktype : net::SOCK_STREAM,
+		ai_flags    : net::ffi::AI_PASSIVE,
+		ai_family   : net::ffi::AF_UNSPEC,
+		ai_socktype : net::ffi::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
 		ai_addr     : ptr::null(),
@@ -23,7 +23,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 	unsafe {
 		let mut status = hostname.to_c_str().with_ref(|c_hostname| {
 			port.to_c_str().with_ref(|c_port| {
-				net::getaddrinfo(
+				net::ffi::getaddrinfo(
 					c_hostname,
 					c_port,
 					&hints,
@@ -60,7 +60,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		net::freeaddrinfo(servinfo);
+		net::ffi::freeaddrinfo(servinfo);
 
 		socketFD
 	}
@@ -72,9 +72,9 @@ pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
 			socketFD,
 			buffer.as_ptr() as *mut libc::c_void,
 			buffer.len() as u64,
-			net::MSG_DONTWAIT);
+			net::ffi::MSG_DONTWAIT);
 
-		if bytesReceived == -1 && (errno() as i32 == net::EAGAIN || errno() as i32 == net::EWOULDBLOCK) {
+		if bytesReceived == -1 && (errno() as i32 == net::ffi::EAGAIN || errno() as i32 == net::ffi::EWOULDBLOCK) {
 			return 0;
 		}
 		if bytesReceived == -1 {

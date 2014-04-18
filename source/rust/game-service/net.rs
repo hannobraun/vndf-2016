@@ -25,21 +25,21 @@ pub fn init(port: &str) -> Net {
 
 
 fn init_socket(port: &str) -> libc::c_int {
-	let hints = net::addrinfo {
-		ai_flags    : net::AI_PASSIVE,
-		ai_family   : net::AF_UNSPEC,
-		ai_socktype : net::SOCK_STREAM,
+	let hints = net::ffi::addrinfo {
+		ai_flags    : net::ffi::AI_PASSIVE,
+		ai_family   : net::ffi::AF_UNSPEC,
+		ai_socktype : net::ffi::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
 		ai_addr     : ptr::null(),
 		ai_canonname: ptr::null(),
 		ai_next     : ptr::null() };
 
-	let servinfo = ptr::null::<net::addrinfo>();
+	let servinfo = ptr::null::<net::ffi::addrinfo>();
 
 	unsafe {
 		let status = port.to_c_str().with_ref(|c_message| {
-			net::getaddrinfo(
+			net::ffi::getaddrinfo(
 				ptr::null(),
 				c_message,
 				&hints,
@@ -53,7 +53,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let socketFD = net::socket(
+		let socketFD = net::ffi::socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);
@@ -66,10 +66,10 @@ fn init_socket(port: &str) -> libc::c_int {
 		}
 
 		let yes= 1;
-		let status = net::setsockopt(
+		let status = net::ffi::setsockopt(
 			socketFD,
-			net::SOL_SOCKET,
-			net::SO_REUSEADDR,
+			net::ffi::SOL_SOCKET,
+			net::ffi::SO_REUSEADDR,
 			&yes as *int as *libc::c_void,
 			::std::mem::size_of::<libc::c_int>() as u32);
 
@@ -80,7 +80,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let status = net::bind(
+		let status = net::ffi::bind(
 			socketFD,
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
@@ -92,7 +92,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let status = net::listen(
+		let status = net::ffi::listen(
 			socketFD,
 			1024);
 		if status != 0 {
@@ -102,7 +102,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		net::freeaddrinfo(servinfo);
+		net::ffi::freeaddrinfo(servinfo);
 
 		socketFD
 	}
@@ -110,7 +110,7 @@ fn init_socket(port: &str) -> libc::c_int {
 
 fn init_poller() -> libc::c_int {
 	unsafe {
-		let pollerFD = net::epoll_create(1);
+		let pollerFD = net::ffi::epoll_create(1);
 		if pollerFD < 0 {
 			"Error initiating epoll".to_c_str().with_ref(|c_message| {
 				libc::perror(c_message);
@@ -123,12 +123,12 @@ fn init_poller() -> libc::c_int {
 }
 
 fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
-	let event = net::epoll_event { events: net::EPOLLIN, data: 0 };
+	let event = net::ffi::epoll_event { events: net::ffi::EPOLLIN, data: 0 };
 
 	unsafe {
-		let status = net::epoll_ctl(
+		let status = net::ffi::epoll_ctl(
 			pollerFD,
-			net::EPOLL_CTL_ADD,
+			net::ffi::EPOLL_CTL_ADD,
 			serverFD,
 			&event);
 
@@ -142,13 +142,13 @@ fn register_accept(pollerFD: libc::c_int, serverFD: libc::c_int) {
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
-	let emptyEvent = net::epoll_event {
+	let emptyEvent = net::ffi::epoll_event {
 		events: 0,
 		data  : 0 };
-	let pollEvents: [net::epoll_event, ..1024] = [emptyEvent, ..1024];
+	let pollEvents: [net::ffi::epoll_event, ..1024] = [emptyEvent, ..1024];
 
 	unsafe {
-		let numberOfEvents = net::epoll_wait(
+		let numberOfEvents = net::ffi::epoll_wait(
 			net.pollerFD,
 			pollEvents.as_ptr(),
 			1024,
@@ -162,7 +162,7 @@ pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
 
 pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 	unsafe {
-		net::accept(
+		net::ffi::accept(
 			serverFD,
 			ptr::mut_null(),
 			ptr::mut_null())
@@ -188,11 +188,11 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 
 			let buffer_length = messageLength + 1;
 
-			let bytesSent = net::send(
+			let bytesSent = net::ffi::send(
 				clientFD,
 				buffer.as_ptr() as *mut libc::c_void,
 				buffer_length,
-				net::MSG_NOSIGNAL);
+				net::ffi::MSG_NOSIGNAL);
 
 			if bytesSent < 0 {
 				"Error sending message".to_c_str().with_ref(|c_str| {
