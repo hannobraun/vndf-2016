@@ -32,22 +32,19 @@ pub fn init(connection: Connection) -> Protocol {
 		buffer_pos: 0 }
 }
 
-pub fn receive_positions(
-	connection: &mut Protocol,
-	handler   : &mut Handler) {
-
+pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
 	let bytes_received = net::receive(
-		connection.connection.fd,
-		connection.buffer.slice_from(connection.buffer_pos));
+		protocol.connection.fd,
+		protocol.buffer.slice_from(protocol.buffer_pos));
 
-	connection.buffer_pos += bytes_received as uint;
+	protocol.buffer_pos += bytes_received as uint;
 
-	while connection.buffer_pos > 0 && connection.buffer[0] as uint <= connection.buffer_pos {
-		let message_size = connection.buffer[0];
+	while protocol.buffer_pos > 0 && protocol.buffer[0] as uint <= protocol.buffer_pos {
+		let message_size = protocol.buffer[0];
 
 		let message = unsafe {
 			str::raw::from_buf_len(
-				(connection.buffer.as_ptr() as *u8).offset(1),
+				(protocol.buffer.as_ptr() as *u8).offset(1),
 				(message_size - 1) as uint)
 		};
 
@@ -63,10 +60,10 @@ pub fn receive_positions(
 
 		unsafe {
 			ptr::copy_memory(
-				connection.buffer.as_mut_ptr(),
-				connection.buffer.as_ptr().offset(message_size as int),
+				protocol.buffer.as_mut_ptr(),
+				protocol.buffer.as_ptr().offset(message_size as int),
 				(BUFFER_SIZE - message_size as i32) as uint);
-			connection.buffer_pos -= message_size as uint;
+			protocol.buffer_pos -= message_size as uint;
 		}
 	}
 }
