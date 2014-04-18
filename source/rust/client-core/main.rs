@@ -1,6 +1,7 @@
 extern crate common;
 extern crate libc;
 
+use common::net::Connection;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 pub mod args;
@@ -32,7 +33,7 @@ impl protocol::Handler for ProtocolHandler {
 fn main() {
 	let (address, port) = args::address_and_port();
 
-	let     socket_fd  = net::connect(address, port);
+	let     socket_fd  = Connection::connect(address, port).fd;
 	let mut connection = protocol::init(socket_fd);
 
 	let mut handler = ProtocolHandler;
