@@ -5,10 +5,6 @@ use common::net;
 
 
 extern {
-	fn listen(
-		sockfd : libc::c_int,
-		backlog: libc::c_int) -> libc::c_int;
-
 	fn accept(
 		sockfd : libc::c_int,
 		addr   : *net::sockaddr,
@@ -110,7 +106,7 @@ fn init_socket(port: &str) -> libc::c_int {
 			libc::exit(1);
 		}
 
-		let status = listen(
+		let status = net::listen(
 			socketFD,
 			1024);
 		if status != 0 {
