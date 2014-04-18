@@ -6,14 +6,14 @@ use std::os;
 use net::ffi;
 
 
-pub fn register_accept(pollerFD: c_int, serverFD: c_int) {
+pub fn register_accept(poller_fd: c_int, serverFD: c_int) {
 	let event = ffi::epoll_event {
 		events: ffi::EPOLLIN,
 		data  : 0 };
 
 	let status = unsafe {
 		ffi::epoll_ctl(
-			pollerFD,
+			poller_fd,
 			ffi::EPOLL_CTL_ADD,
 			serverFD,
 			&event)
