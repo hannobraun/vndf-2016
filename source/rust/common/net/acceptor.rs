@@ -12,8 +12,8 @@ use net::epoll::EPoll;
 
 
 pub struct Acceptor {
-	pub fd   : c_int,
-	pub epoll: EPoll
+	fd   : c_int,
+	epoll: EPoll
 }
 
 impl Acceptor {
