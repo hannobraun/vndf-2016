@@ -34,18 +34,18 @@ pub fn init_socket(port: &str) -> c_int {
 			fail!("Error getting address info: {}", last_error());
 		}
 
-		let socketFD = ffi::socket(
+		let socket_fd = ffi::socket(
 			(*servinfo).ai_family,
 			(*servinfo).ai_socktype,
 			(*servinfo).ai_protocol);
 
-		if socketFD == -1 {
+		if socket_fd == -1 {
 			fail!("Error creating socket: {}", last_error());
 		}
 
 		let yes= 1;
 		let status = ffi::setsockopt(
-			socketFD,
+			socket_fd,
 			ffi::SOL_SOCKET,
 			ffi::SO_REUSEADDR,
 			&yes as *int as *libc::c_void,
@@ -56,7 +56,7 @@ pub fn init_socket(port: &str) -> c_int {
 		}
 
 		let status = ffi::bind(
-			socketFD,
+			socket_fd,
 			(*servinfo).ai_addr,
 			(*servinfo).ai_addrlen);
 
@@ -65,7 +65,7 @@ pub fn init_socket(port: &str) -> c_int {
 		}
 
 		let status = ffi::listen(
-			socketFD,
+			socket_fd,
 			1024);
 		if status != 0 {
 			fail!("Error listening on socket: {}", last_error());
@@ -73,7 +73,7 @@ pub fn init_socket(port: &str) -> c_int {
 
 		ffi::freeaddrinfo(servinfo);
 
-		socketFD
+		socket_fd
 	}
 }
 
