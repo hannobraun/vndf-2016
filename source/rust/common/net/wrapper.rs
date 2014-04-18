@@ -6,16 +6,34 @@ use std::os;
 use std::ptr;
 
 use net::ffi;
+use net::epoll;
+use net::epoll::EPoll;
 
 
 pub struct Acceptor {
-	pub fd: c_int
+	pub fd   : c_int,
+	pub epoll: EPoll
 }
 
 impl Acceptor {
 	pub fn create(port: &str) -> Acceptor {
+		let fd = init_socket(port);
+
+		let epoll = match EPoll::create() {
+			Ok(epoll)  => epoll,
+			Err(error) => fail!("Error initializing epoll: {}", error)
+		};
+
+		match epoll.add(fd, epoll::ffi::EPOLLIN) {
+			Err(error) =>
+				fail!("Error registering server socket with epoll: {}", error),
+
+			_ => ()
+		}
+
 		Acceptor {
-			fd: init_socket(port)
+			fd   : fd,
+			epoll: epoll
 		}
 	}
 }
