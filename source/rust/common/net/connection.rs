@@ -1,6 +1,7 @@
 use libc::c_int;
 
 
+#[deriving(Eq, Show)]
 pub struct Connection {
 	pub fd: c_int
 }
