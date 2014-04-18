@@ -6,7 +6,7 @@ use std::os;
 use net::ffi;
 
 
-pub fn register_accept(poller_fd: c_int, serverFD: c_int) {
+pub fn register_accept(poller_fd: c_int, server_fd: c_int) {
 	let event = ffi::epoll_event {
 		events: ffi::EPOLLIN,
 		data  : 0 };
@@ -15,7 +15,7 @@ pub fn register_accept(poller_fd: c_int, serverFD: c_int) {
 		ffi::epoll_ctl(
 			poller_fd,
 			ffi::EPOLL_CTL_ADD,
-			serverFD,
+			server_fd,
 			&event)
 	};
 
