@@ -3,28 +3,10 @@ use std::ptr;
 
 use common::net;
 use common::net::Acceptor;
-use common::net::epoll::EPoll;
 
 
-pub struct Net {
-	pub epoll   : EPoll,
-	pub serverFD: libc::c_int
-}
-
-
-pub fn init(port: &str) -> Net {
-	let acceptor = Acceptor::create(port);
-
-	print!("Listening on port {}\n", port);
-
-	Net {
-		epoll   : acceptor.epoll,
-		serverFD: acceptor.fd
-	}
-}
-
-pub fn number_of_events(net: &Net, frameTimeInMs: u32) -> u32 {
-	match net.epoll.wait(frameTimeInMs) {
+pub fn number_of_events(acceptor: &Acceptor, frameTimeInMs: u32) -> u32 {
+	match acceptor.epoll.wait(frameTimeInMs) {
 		Ok(number_of_events) => number_of_events,
 
 		Err(error) => fail!("Error while waiting for events: {}", error)
