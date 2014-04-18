@@ -7,8 +7,13 @@ pub use std::os::close;
 // epoll_create1 flags
 pub static EPOLL_CLOEXEC: c_int = 0o2000000;
 
-pub static EPOLLIN      : u32   = 1;
-pub static EPOLL_CTL_ADD: i32   = 1;
+// epoll_ctl ops
+pub static EPOLL_CTL_ADD: c_int = 1;
+pub static EPOLL_CTL_DEL: c_int = 2;
+pub static EPOLL_CTL_MOD: c_int = 3;
+
+pub static EPOLLIN: u32 = 1;
+
 
 
 #[allow(non_camel_case_types)]
