@@ -43,7 +43,7 @@ pub fn init_socket(port: &str) -> c_int {
 			fail!("Error creating socket: {}", last_error());
 		}
 
-		let yes= 1;
+		let yes = 1;
 		let status = ffi::setsockopt(
 			socket_fd,
 			ffi::SOL_SOCKET,
