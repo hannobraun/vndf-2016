@@ -9,6 +9,7 @@ pub use libc::consts::os::bsd44::{
 	SOL_SOCKET};
 pub use libc::consts::os::bsd44::SO_REUSEADDR;
 pub use libc::funcs::bsd43::{
+	accept,
 	bind,
 	listen,
 	setsockopt,

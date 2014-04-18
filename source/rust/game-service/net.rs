@@ -5,11 +5,6 @@ use common::net;
 
 
 extern {
-	fn accept(
-		sockfd : libc::c_int,
-		addr   : *net::sockaddr,
-		addrlen: *libc::c_uint) -> libc::c_int;
-
 	fn send(
 		sockfd: libc::c_int,
 		buf   : *libc::c_void,
@@ -176,10 +171,10 @@ pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
 
 pub fn accept_client(serverFD: libc::c_int) -> libc::c_int {
 	unsafe {
-		accept(
+		net::accept(
 			serverFD,
-			ptr::null(),
-			ptr::null())
+			ptr::mut_null(),
+			ptr::mut_null())
 	}
 }
 
