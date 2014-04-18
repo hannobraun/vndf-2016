@@ -60,11 +60,12 @@ impl Connection {
 				fd,
 				(*servinfo).ai_addr,
 				(*servinfo).ai_addrlen);
+
 			if status != 0 {
-				(format!("Error connecting to server ({}:{})", hostname, port)).to_c_str().with_ref(|c_message| {
-					libc::perror(c_message);
-				});
-				libc::exit(1);
+				fail!("Error connecting to server ({}:{}): {}",
+					hostname,
+					port,
+					last_error());
 			}
 
 			ffi::freeaddrinfo(servinfo);
