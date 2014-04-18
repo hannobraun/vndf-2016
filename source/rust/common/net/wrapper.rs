@@ -11,18 +11,16 @@ pub fn register_accept(pollerFD: c_int, serverFD: c_int) {
 		events: ffi::EPOLLIN,
 		data  : 0 };
 
-	unsafe {
-		let status = ffi::epoll_ctl(
+	let status = unsafe {
+		ffi::epoll_ctl(
 			pollerFD,
 			ffi::EPOLL_CTL_ADD,
 			serverFD,
-			&event);
+			&event)
+	};
 
-		if status != 0 {
-			fail!(
-				"Error registering server socket with epoll: {}",
-				last_error());
-		}
+	if status != 0 {
+		fail!("Error registering server socket with epoll: {}", last_error());
 	}
 }
 
