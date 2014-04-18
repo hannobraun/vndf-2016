@@ -6,9 +6,6 @@ use std::ptr;
 use common::net;
 
 
-static MSG_NOSIGNAL : i32 = 0x4000;
-
-
 extern {
 	fn epoll_create(size: libc::c_int) -> libc::c_int;
 
@@ -246,7 +243,7 @@ pub fn send_message(clientFD: libc::c_int, message: &str) -> libc::c_int {
 				clientFD,
 				buffer.as_ptr() as *libc::c_void,
 				buffer_length,
-				MSG_NOSIGNAL);
+				net::MSG_NOSIGNAL);
 
 			if bytesSent < 0 {
 				"Error sending message".to_c_str().with_ref(|c_str| {
