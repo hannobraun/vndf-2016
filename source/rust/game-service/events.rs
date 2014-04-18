@@ -2,7 +2,6 @@ use collections::Deque;
 use collections::RingBuf;
 
 use common::physics::{Body, Radians, Vec2};
-use common::net;
 use common::net::Connection;
 use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
@@ -89,10 +88,8 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 			});
 		},
 
-		None => {
-			net::ffi::close(connection.fd as int);
-			()
-		}
+		None =>
+			connection.close()
 	}
 }
 

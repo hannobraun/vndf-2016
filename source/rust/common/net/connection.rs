@@ -141,4 +141,8 @@ impl Connection {
 			bytes_received
 		}
 	}
+
+	pub fn close(&self) {
+		ffi::close(self.fd as int);
+	}
 }
