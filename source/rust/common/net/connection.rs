@@ -132,10 +132,7 @@ impl Connection {
 				return 0;
 			}
 			if bytes_received == -1 {
-				"Error receiving message".to_c_str().with_ref(|c_str| {
-					libc::perror(c_str);
-					libc::exit(1);
-				})
+				fail!("Error receiving message: {}", last_error());
 			}
 			if bytes_received == 0 {
 				fail!("Connection closed while receiving");
