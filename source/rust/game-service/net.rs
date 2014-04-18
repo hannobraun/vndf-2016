@@ -3,6 +3,7 @@ use std::ptr;
 
 use common::net;
 use common::net::epoll;
+use common::net::epoll::EPoll;
 
 
 pub struct Net {
@@ -13,14 +14,18 @@ pub struct Net {
 
 pub fn init(port: &str) -> Net {
 	let serverFD = net::init_socket(port);
-	let pollerFD = net::init_poller();
 
-	net::register_accept(pollerFD, serverFD);
+	let epoll = match EPoll::create() {
+		Ok(epoll)  => epoll,
+		Err(error) => fail!("Error initializing epoll: {}", error)
+	};
+
+	net::register_accept(epoll.epfd, serverFD);
 
 	print!("Listening on port {}\n", port);
 
 	Net {
-		pollerFD: pollerFD,
+		pollerFD: epoll.epfd,
 		serverFD: serverFD }
 }
 

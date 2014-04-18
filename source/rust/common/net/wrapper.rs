@@ -79,18 +79,6 @@ pub fn init_socket(port: &str) -> c_int {
 	}
 }
 
-pub fn init_poller() -> c_int {
-	let poller_fd = unsafe {
-		epoll::ffi::epoll_create(1)
-	};
-
-	if poller_fd < 0 {
-		fail!("Error initiating epoll: {}", last_error());
-	}
-
-	poller_fd
-}
-
 pub fn register_accept(poller_fd: c_int, server_fd: c_int) {
 	let event = epoll::ffi::epoll_event {
 		events: epoll::ffi::EPOLLIN,
