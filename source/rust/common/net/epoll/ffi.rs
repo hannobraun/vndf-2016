@@ -1,5 +1,7 @@
 use libc::c_int;
 
+// epoll_create1 flags
+pub static EPOLL_CLOEXEC: c_int = 0o2000000;
 
 pub static EPOLLIN      : u32   = 1;
 pub static EPOLL_CTL_ADD: i32   = 1;
