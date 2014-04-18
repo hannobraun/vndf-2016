@@ -13,14 +13,14 @@ pub struct Net {
 
 
 pub fn init(port: &str) -> Net {
-	let serverFD = net::init_socket(port);
+	let server_fd = net::init_socket(port);
 
 	let epoll = match EPoll::create() {
 		Ok(epoll)  => epoll,
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	match epoll.add(serverFD, epoll::ffi::EPOLLIN) {
+	match epoll.add(server_fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
 			fail!("Error registering server socket with epoll: {}", error),
 
@@ -31,7 +31,7 @@ pub fn init(port: &str) -> Net {
 
 	Net {
 		pollerFD: epoll.epfd,
-		serverFD: serverFD }
+		serverFD: server_fd }
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
