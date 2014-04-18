@@ -14,8 +14,11 @@ pub static EPOLL_CTL_ADD: i32   = 1;
 #[allow(non_camel_case_types)]
 pub struct epoll_event {
 	pub events: u32,
-	pub data  : u64
+	pub data  : epoll_data
 }
+
+#[allow(non_camel_case_types)]
+pub type epoll_data = u64;
 
 
 extern {
