@@ -7,7 +7,7 @@ use std::ptr;
 use net::ffi;
 
 
-pub fn init_socket(port: &str) -> libc::c_int {
+pub fn init_socket(port: &str) -> c_int {
 	let hints = ffi::addrinfo {
 		ai_flags    : ffi::AI_PASSIVE,
 		ai_family   : ffi::AF_UNSPEC,
@@ -54,7 +54,7 @@ pub fn init_socket(port: &str) -> libc::c_int {
 			ffi::SOL_SOCKET,
 			ffi::SO_REUSEADDR,
 			&yes as *int as *libc::c_void,
-			::std::mem::size_of::<libc::c_int>() as u32);
+			::std::mem::size_of::<c_int>() as u32);
 
 		if status == -1 {
 			"Error setting socket option".to_c_str().with_ref(|c_message| {
