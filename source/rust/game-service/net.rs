@@ -12,7 +12,7 @@ pub struct Net {
 
 pub fn init(port: &str) -> Net {
 	let serverFD = net::init_socket(port);
-	let pollerFD = init_poller();
+	let pollerFD = net::init_poller();
 
 	net::register_accept(pollerFD, serverFD);
 
@@ -21,20 +21,6 @@ pub fn init(port: &str) -> Net {
 	Net {
 		pollerFD: pollerFD,
 		serverFD: serverFD }
-}
-
-fn init_poller() -> libc::c_int {
-	unsafe {
-		let pollerFD = net::ffi::epoll_create(1);
-		if pollerFD < 0 {
-			"Error initiating epoll".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
-		}
-
-		pollerFD
-	}
 }
 
 pub fn number_of_events(net: &Net, frameTimeInMs: i32) -> i32 {
