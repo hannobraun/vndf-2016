@@ -47,7 +47,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 		match events.pull() {
 			Some(event) =>
 				match event {
-					Connect(connection)  => on_connect(connection.fd, clients, events),
+					Connect(connection)  => on_connect(connection, clients, events),
 					Disconnect(clientId) => on_disconnect(clientId, clients, events),
 					Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 				},
@@ -57,7 +57,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 	}
 }
 
-fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events) {
+fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events) {
 	let ship = Body {
 		position: Vec2 {
 			x: 0.0,
@@ -70,7 +70,7 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 		attitude: Radians(0.0)
 	};
 
-	match clients.add(clientFD, ship) {
+	match clients.add(connection.fd, ship) {
 		Some(client) => {
 			let message = SelfInfo(SelfInfo {
 				id: client.id
@@ -97,7 +97,7 @@ fn on_connect(clientFD: libc::c_int, clients: &mut Clients, events: &mut Events)
 
 		None =>
 			unsafe {
-				close(clientFD);
+				close(connection.fd);
 			}
 	}
 }
