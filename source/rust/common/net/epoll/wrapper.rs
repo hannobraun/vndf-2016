@@ -1,9 +1,7 @@
-use libc;
 use libc::c_int;
-use std::c_str::CString;
-use std::os;
 
 use net::epoll::ffi;
+use util::last_error;
 
 
 pub struct EPoll {
@@ -69,16 +67,5 @@ impl EPoll {
 		else {
 			Err(last_error())
 		}
-	}
-}
-
-
-fn last_error() -> ~str {
-	unsafe {
-		let c_error = libc::strerror(os::errno() as i32);
-		CString::new(c_error, false)
-			.as_str()
-			.expect("failed to convert C error message into Rust string")
-			.to_owned()
 	}
 }
