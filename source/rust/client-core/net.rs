@@ -16,7 +16,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 		ai_canonname: ptr::null(),
 		ai_next     : ptr::null() };
 
-	let servinfo = ptr::null::<net::ffi::addrinfo>();
+	let servinfo: *net::ffi::addrinfo = ptr::null();
 
 	unsafe {
 		let mut status = hostname.to_c_str().with_ref(|c_hostname| {
