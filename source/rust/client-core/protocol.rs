@@ -5,8 +5,6 @@ use std::str;
 use common::net::Connection;
 use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
-use net;
-
 
 static BUFFER_SIZE : libc::c_int = 256;
 
@@ -33,8 +31,7 @@ pub fn init(connection: Connection) -> Protocol {
 }
 
 pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
-	let bytes_received = net::receive(
-		protocol.connection,
+	let bytes_received = protocol.connection.receive(
 		protocol.buffer.slice_from(protocol.buffer_pos));
 
 	protocol.buffer_pos += bytes_received as uint;

@@ -5,7 +5,6 @@ use common::net::Connection;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 pub mod args;
-pub mod net;
 pub mod protocol;
 
 

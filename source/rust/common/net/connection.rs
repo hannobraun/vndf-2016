@@ -1,5 +1,6 @@
 use libc;
 use libc::c_int;
+use std::os;
 use std::ptr;
 
 use net::ffi;
@@ -112,6 +113,31 @@ impl Connection {
 					Ok(())
 				}
 			})
+		}
+	}
+
+	pub fn receive(&self, buffer: &[u8]) -> libc::ssize_t {
+		unsafe {
+			let bytesReceived = ffi::recv(
+				self.fd,
+				buffer.as_ptr() as *mut libc::c_void,
+				buffer.len() as u64,
+				ffi::MSG_DONTWAIT);
+
+			if bytesReceived == -1 && (os::errno() as i32 == ffi::EAGAIN || os::errno() as i32 == ffi::EWOULDBLOCK) {
+				return 0;
+			}
+			if bytesReceived == -1 {
+				"Error receiving message".to_c_str().with_ref(|c_str| {
+					libc::perror(c_str);
+					libc::exit(1);
+				})
+			}
+			if bytesReceived == 0 {
+				fail!("Connection closed while receiving");
+			}
+
+			bytesReceived
 		}
 	}
 }
