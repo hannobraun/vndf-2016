@@ -1,17 +1,13 @@
 use collections::Deque;
 use collections::RingBuf;
-use libc;
 
 use common::physics::{Body, Radians, Vec2};
+use common::net;
 use common::net::Connection;
 use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
 use clients::Clients;
-
-extern {
-	fn close(fd: libc::c_int) -> libc::c_int;
-}
 
 
 pub struct Events {
@@ -93,10 +89,10 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 			});
 		},
 
-		None =>
-			unsafe {
-				close(connection.fd);
-			}
+		None => {
+			net::ffi::close(connection.fd as int);
+			()
+		}
 	}
 }
 

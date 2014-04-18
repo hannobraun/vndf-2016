@@ -23,6 +23,7 @@ pub use libc::funcs::bsd43::{
 pub use libc::types::os::common::bsd44::{
 	addrinfo,
 	sockaddr};
+pub use std::os::close;
 
 
 pub static AF_UNSPEC    : c_int = 0;
