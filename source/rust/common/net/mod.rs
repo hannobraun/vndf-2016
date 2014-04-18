@@ -8,7 +8,9 @@ pub use libc::consts::os::bsd44::{
 	SOCK_STREAM,
 	SOL_SOCKET};
 pub use libc::consts::os::bsd44::SO_REUSEADDR;
-pub use libc::funcs::bsd43::socket;
+pub use libc::funcs::bsd43::{
+	setsockopt,
+	socket};
 pub use libc::types::os::common::bsd44::{
 	addrinfo,
 	sockaddr};

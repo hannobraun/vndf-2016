@@ -5,13 +5,6 @@ use common::net;
 
 
 extern {
-	fn setsockopt(
-		sockfd : libc::c_int,
-		level  : libc::c_int,
-		optname: libc::c_int,
-		optval : *libc::c_void,
-		optlen : libc::c_uint) -> libc::c_int;
-
 	fn bind(
 		sockfd : libc::c_int,
 		addr   : *net::sockaddr,
@@ -96,7 +89,7 @@ fn init_socket(port: &str) -> libc::c_int {
 		}
 
 		let yes= 1;
-		let status = setsockopt(
+		let status = net::setsockopt(
 			socketFD,
 			net::SOL_SOCKET,
 			net::SO_REUSEADDR,
