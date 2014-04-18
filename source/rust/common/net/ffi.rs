@@ -16,6 +16,7 @@ pub use libc::funcs::bsd43::{
 	bind,
 	connect,
 	listen,
+	recv,
 	send,
 	setsockopt,
 	socket};

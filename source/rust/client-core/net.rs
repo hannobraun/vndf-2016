@@ -1,5 +1,4 @@
 use libc;
-use libc::funcs::bsd43;
 use libc::types::os::common::bsd44;
 use std::os::errno;
 use std::ptr;
@@ -68,7 +67,7 @@ pub fn connect(hostname: ~str, port: ~str) -> libc::c_int {
 
 pub fn receive(socketFD: libc::c_int, buffer: &[u8]) -> libc::ssize_t {
 	unsafe {
-		let bytesReceived = bsd43::recv(
+		let bytesReceived = net::ffi::recv(
 			socketFD,
 			buffer.as_ptr() as *mut libc::c_void,
 			buffer.len() as u64,
