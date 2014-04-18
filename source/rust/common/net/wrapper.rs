@@ -52,10 +52,7 @@ pub fn init_socket(port: &str) -> c_int {
 			mem::size_of::<c_int>() as u32);
 
 		if status == -1 {
-			"Error setting socket option".to_c_str().with_ref(|c_message| {
-				libc::perror(c_message);
-			});
-			libc::exit(1);
+			fail!("Error setting socket option: {}", last_error());
 		}
 
 		let status = ffi::bind(
