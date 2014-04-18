@@ -25,6 +25,28 @@ impl EPoll {
 			Err(last_error())
 		}
 	}
+
+	pub fn add(&self, fd: c_int, events: u32) -> Result<(), ~str> {
+		let event = ffi::epoll_event {
+			events: events,
+			data  : 0
+		};
+
+		let status = unsafe {
+			ffi::epoll_ctl(
+				self.epfd,
+				ffi::EPOLL_CTL_ADD,
+				fd,
+				&event)
+		};
+
+		if status == 0 {
+			Ok(())
+		}
+		else {
+			Err(last_error())
+		}
+	}
 }
 
 

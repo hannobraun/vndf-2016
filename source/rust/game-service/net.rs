@@ -20,7 +20,12 @@ pub fn init(port: &str) -> Net {
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	net::register_accept(epoll.epfd, serverFD);
+	match epoll.add(serverFD, epoll::ffi::EPOLLIN) {
+		Err(error) =>
+			fail!("Error registering server socket with epoll: {}", error),
+
+		_ => ()
+	}
 
 	print!("Listening on port {}\n", port);
 
