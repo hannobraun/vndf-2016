@@ -66,9 +66,9 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 		attitude: Radians(0.0)
 	};
 
-	let client = Client::new(connection, ship);
+	let new_client = Client::new(connection, ship);
 
-	match clients.add(client) {
+	match clients.add(new_client) {
 		Some((client_id, client)) => {
 			let message = SelfInfo(SelfInfo {
 				id: client_id
