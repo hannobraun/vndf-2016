@@ -82,7 +82,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 			events.push(CreateEvent(client_id))
 		},
 
-		None => connection.close()
+		None => new_client.conn.close()
 	}
 }
 
