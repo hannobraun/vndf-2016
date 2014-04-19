@@ -99,10 +99,10 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 	})
 }
 
-fn on_create(client_id: uint, clients: &mut Clients, events: &mut Events) {
+fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
 	clients.each(|client| {
 		let message = Create(Create {
-			id  : client_id,
+			id  : created_id,
 			kind: ~"ship"
 		});
 
