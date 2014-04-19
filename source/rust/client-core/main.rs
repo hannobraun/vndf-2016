@@ -4,8 +4,8 @@ extern crate libc;
 use common::net::Connection;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
-pub mod args;
-pub mod protocol;
+mod args;
+mod protocol;
 
 
 struct ProtocolHandler;
