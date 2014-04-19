@@ -62,14 +62,14 @@ impl Clients {
 
 pub struct IdPool {
 	capacity: uint,
-	pool    : ~[uint]
+	pool    : Vec<uint>
 }
 
 impl IdPool {
 	fn new(capacity: uint) -> ~IdPool {
 		let mut idPool = ~IdPool {
 			capacity: capacity,
-			pool    : ~[] };
+			pool    : Vec::new() };
 
 		let mut i = 0;
 		while i < capacity {
