@@ -17,6 +17,7 @@ pub struct Events {
 pub enum Event {
 	Connect(Connection),
 	Disconnect(uint),
+	CreateEvent(uint),
 	Update
 }
 
@@ -41,9 +42,10 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 		match events.pull() {
 			Some(event) =>
 				match event {
-					Connect(connection)  => on_connect(connection, clients, events),
-					Disconnect(clientId) => on_disconnect(clientId, clients, events),
-					Update               => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
+					Connect(connection)  =>   on_connect(connection, clients, events),
+					Disconnect(clientId) =>   on_disconnect(clientId, clients, events),
+					CreateEvent(client_id) => on_create(client_id, clients, events),
+					Update               =>   on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 				},
 
 			None => break
@@ -75,17 +77,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 				_      => ()
 			}
 
-			clients.each(|clientB| {
-				let message = Create(Create {
-					id  : client.id,
-					kind: ~"ship"
-				});
-
-				match clientB.conn.send_message(message.to_str()) {
-					Err(_) => events.push(Disconnect(clientB.id)),
-					_      => ()
-				}
-			});
+			events.push(CreateEvent(client.id))
 		},
 
 		None => connection.close()
@@ -105,6 +97,20 @@ fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
 			_      => ()
 		}
 	})
+}
+
+fn on_create(client_id: uint, clients: &mut Clients, events: &mut Events) {
+	clients.each(|client| {
+		let message = Create(Create {
+			id  : client_id,
+			kind: ~"ship"
+		});
+
+		match client.conn.send_message(message.to_str()) {
+			Err(_) => events.push(Disconnect(client_id)),
+			_      => ()
+		}
+	});
 }
 
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
