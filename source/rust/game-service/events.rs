@@ -6,7 +6,7 @@ use common::net::Connection;
 use common::protocol;
 use common::protocol::{Create, Remove, SelfInfo, Update};
 
-use clients::Clients;
+use clients::{Client, Clients};
 
 
 pub struct Events {
@@ -66,7 +66,9 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 		attitude: Radians(0.0)
 	};
 
-	match clients.add(connection, ship) {
+	let client = Client::new(connection, ship);
+
+	match clients.add(client) {
 		Some((client_id, client)) => {
 			let message = SelfInfo(SelfInfo {
 				id: client_id
