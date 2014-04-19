@@ -1,4 +1,3 @@
-use libc;
 use std::ptr;
 use std::str;
 
@@ -6,12 +5,8 @@ use common::net::Connection;
 use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 
-static BUFFER_SIZE : libc::c_int = 256;
-
-
 pub struct Protocol {
 	connection: Connection,
-	buffer    : [u8, ..BUFFER_SIZE],
 	buffer_pos: uint
 }
 
@@ -26,22 +21,21 @@ pub trait Handler {
 pub fn init(connection: Connection) -> Protocol {
 	Protocol {
 		connection: connection,
-		buffer    : [0, ..BUFFER_SIZE],
 		buffer_pos: 0 }
 }
 
 pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
 	let bytes_received = protocol.connection.receive(
-		protocol.buffer.slice_from(protocol.buffer_pos));
+		protocol.connection.in_buffer.slice_from(protocol.buffer_pos));
 
 	protocol.buffer_pos += bytes_received as uint;
 
-	while protocol.buffer_pos > 0 && protocol.buffer[0] as uint <= protocol.buffer_pos {
-		let message_size = protocol.buffer[0];
+	while protocol.buffer_pos > 0 && protocol.connection.in_buffer[0] as uint <= protocol.buffer_pos {
+		let message_size = protocol.connection.in_buffer[0];
 
 		let message = unsafe {
 			str::raw::from_buf_len(
-				(protocol.buffer.as_ptr() as *u8).offset(1),
+				(protocol.connection.in_buffer.as_ptr() as *u8).offset(1),
 				(message_size - 1) as uint)
 		};
 
@@ -57,9 +51,9 @@ pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
 
 		unsafe {
 			ptr::copy_memory(
-				protocol.buffer.as_mut_ptr(),
-				protocol.buffer.as_ptr().offset(message_size as int),
-				(BUFFER_SIZE - message_size as i32) as uint);
+				protocol.connection.in_buffer.as_mut_ptr(),
+				protocol.connection.in_buffer.as_ptr().offset(message_size as int),
+				(protocol.connection.in_buffer.len() - message_size as uint) as uint);
 			protocol.buffer_pos -= message_size as uint;
 		}
 	}

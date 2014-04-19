@@ -9,13 +9,16 @@ use util::last_error;
 
 #[deriving(Eq, Show)]
 pub struct Connection {
-	fd: c_int
+	fd: c_int,
+
+	pub in_buffer: ~[u8]
 }
 
 impl Connection {
 	pub fn from_fd(fd: c_int) -> Connection {
 		Connection {
-			fd: fd
+			fd       : fd,
+			in_buffer: ~[0, ..1024]
 		}
 	}
 
