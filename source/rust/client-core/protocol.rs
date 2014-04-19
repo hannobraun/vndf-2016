@@ -2,18 +2,10 @@ use std::ptr;
 use std::str;
 
 use common::net::Connection;
-use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 
 pub struct Protocol {
 	connection: Connection
-}
-
-pub trait Handler {
-	fn set_self_id(&self, message: SelfInfo);
-	fn create_ship(&self, message: Create);
-	fn update_ship(&self, message: Update);
-	fn remove_ship(&self, message: Remove);
 }
 
 
@@ -23,7 +15,7 @@ pub fn init(connection: Connection) -> Protocol {
 	}
 }
 
-pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
+pub fn receive_positions(protocol: &mut Protocol, handler: |~str|) {
 	let bytes_received = protocol.connection.receive(
 		protocol.connection.in_buffer.slice_from(protocol.connection.in_buffer_pos));
 
@@ -38,15 +30,7 @@ pub fn receive_positions(protocol: &mut Protocol, handler : &mut Handler) {
 				(message_size - 1) as uint)
 		};
 
-		match Message::from_str(message) {
-			SelfInfo(self_info) => handler.set_self_id(self_info),
-			Create(create)      => handler.create_ship(create),
-			Update(update)      => handler.update_ship(update),
-			Remove(remove)      => handler.remove_ship(remove),
-
-			_ =>
-				fail!("invalid message ({})\n", message)
-		}
+		handler(message);
 
 		unsafe {
 			ptr::copy_memory(

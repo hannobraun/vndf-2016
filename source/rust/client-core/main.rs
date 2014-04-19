@@ -2,31 +2,10 @@ extern crate common;
 extern crate libc;
 
 use common::net::Connection;
-use common::protocol::{Create, Remove, SelfInfo, Update};
+use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 mod args;
 mod protocol;
-
-
-struct ProtocolHandler;
-
-impl protocol::Handler for ProtocolHandler {
-	fn set_self_id(&self, message: SelfInfo) {
-		print!("{}\n", SelfInfo(message).to_str());
-	}
-
-	fn create_ship(&self, message: Create) {
-		print!("{}\n", Create(message).to_str());
-	}
-
-	fn update_ship(&self, message: Update) {
-		print!("{}\n", Update(message).to_str());
-	}
-
-	fn remove_ship(&self, message: Remove) {
-		print!("{}\n", Remove(message).to_str());
-	}
-}
 
 
 fn main() {
@@ -35,11 +14,21 @@ fn main() {
 	let     connection = Connection::connect(address, port);
 	let mut protocol   = protocol::init(connection);
 
-	let mut handler = ProtocolHandler;
-
 	loop {
-		protocol::receive_positions(
-			&mut protocol,
-			&mut handler);
+		protocol::receive_positions(&mut protocol, |message| {
+			match Message::from_str(message) {
+				SelfInfo(self_info) =>
+					print!("{}\n", SelfInfo(self_info).to_str()),
+				Create(create) =>
+					print!("{}\n", Create(create).to_str()),
+				Update(update) =>
+					print!("{}\n", Update(update).to_str()),
+				Remove(remove) =>
+					print!("{}\n", Remove(remove).to_str()),
+
+				_ =>
+					fail!("invalid message ({})\n", message)
+			}
+		});
 	}
 }
