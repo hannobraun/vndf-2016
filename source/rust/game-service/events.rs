@@ -93,7 +93,7 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 		});
 
 		match client.conn.send_message(message.to_str()) {
-			Err(_) => events.push(Disconnect(client.id)),
+			Err(_) => events.push(Disconnect(client_id)),
 			_      => ()
 		}
 	})
