@@ -5,17 +5,15 @@ use common::net::Connection;
 use common::protocol::{Create, Message, Remove, SelfInfo, Update};
 
 mod args;
-mod protocol;
 
 
 fn main() {
 	let (address, port) = args::address_and_port();
 
-	let     connection = Connection::connect(address, port);
-	let mut protocol   = protocol::init(connection);
+	let mut connection = Connection::connect(address, port);
 
 	loop {
-		protocol::receive_positions(&mut protocol, |message| {
+		connection.receive_messages(|message| {
 			match Message::from_str(message) {
 				SelfInfo(self_info) =>
 					print!("{}\n", SelfInfo(self_info).to_str()),

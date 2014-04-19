@@ -2,6 +2,7 @@ use libc;
 use libc::c_int;
 use std::os;
 use std::ptr;
+use std::str;
 
 use net::ffi;
 use util::last_error;
@@ -118,6 +119,33 @@ impl Connection {
 					Ok(())
 				}
 			})
+		}
+	}
+
+	pub fn receive_messages(&mut self, handler: |~str|) {
+		let bytes_received = self.receive(
+			self.in_buffer.slice_from(self.in_buffer_pos));
+
+		self.in_buffer_pos += bytes_received as uint;
+
+		while self.in_buffer_pos > 0 && self.in_buffer[0] as uint <= self.in_buffer_pos {
+			let message_size = self.in_buffer[0];
+
+			let message = unsafe {
+				str::raw::from_buf_len(
+					(self.in_buffer.as_ptr() as *u8).offset(1),
+					(message_size - 1) as uint)
+			};
+
+			handler(message);
+
+			unsafe {
+				ptr::copy_memory(
+					self.in_buffer.as_mut_ptr(),
+					self.in_buffer.as_ptr().offset(message_size as int),
+					(self.in_buffer.len() - message_size as uint) as uint);
+				self.in_buffer_pos -= message_size as uint;
+			}
 		}
 	}
 
