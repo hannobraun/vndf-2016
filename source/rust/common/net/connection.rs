@@ -11,14 +11,16 @@ use util::last_error;
 pub struct Connection {
 	fd: c_int,
 
-	pub in_buffer: ~[u8]
+	pub in_buffer    : ~[u8],
+	pub in_buffer_pos: uint
 }
 
 impl Connection {
 	pub fn from_fd(fd: c_int) -> Connection {
 		Connection {
-			fd       : fd,
-			in_buffer: ~[0, ..1024]
+			fd           : fd,
+			in_buffer    : ~[0, ..1024],
+			in_buffer_pos: 0
 		}
 	}
 
