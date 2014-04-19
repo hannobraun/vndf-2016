@@ -9,12 +9,6 @@ pub struct Clients {
 	pub idPool: ~IdPool
 }
 
-pub struct Client {
-	pub conn: Connection,
-	pub id  : uint,
-	pub ship: Body
-}
-
 impl Clients {
 	pub fn new(capacity: uint) -> ~Clients {
 		~Clients {
@@ -57,6 +51,13 @@ impl Clients {
 			f(client);
 		}
 	}
+}
+
+
+pub struct Client {
+	pub conn: Connection,
+	pub id  : uint,
+	pub ship: Body
 }
 
 
