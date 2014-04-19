@@ -107,7 +107,7 @@ fn on_create(client_id: uint, clients: &mut Clients, events: &mut Events) {
 		});
 
 		match client.conn.send_message(message.to_str()) {
-			Err(_) => events.push(Disconnect(client_id)),
+			Err(_) => events.push(Disconnect(client.id)),
 			_      => ()
 		}
 	});
