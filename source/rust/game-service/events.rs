@@ -87,7 +87,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 	clients.remove(removed_id);
 
-	clients.each(|client| {
+	clients.each(|client_id, client| {
 		let message = Remove(Remove {
 			id: removed_id
 		});
@@ -100,14 +100,14 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
-	clients.each(|client| {
+	clients.each(|client_id, client| {
 		let message = Create(Create {
 			id  : created_id,
 			kind: ~"ship"
 		});
 
 		match client.conn.send_message(message.to_str()) {
-			Err(_) => events.push(Disconnect(client.id)),
+			Err(_) => events.push(Disconnect(client_id)),
 			_      => ()
 		}
 	});
@@ -119,15 +119,15 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 			client.ship.position + client.ship.velocity * dTimeInS;
 	});
 
-	clients.each(|clientA| {
-		clients.each(|clientB| {
+	clients.each(|client_a_id, clientA| {
+		clients.each(|client_b_id, clientB| {
 			let message = protocol::Update(Update {
-				id  : clientB.id,
+				id  : client_b_id,
 				body: clientB.ship
 			});
 
 			match clientA.conn.send_message(message.to_str()) {
-				Err(_) => events.push(Disconnect(clientA.id)),
+				Err(_) => events.push(Disconnect(client_a_id)),
 				_      => ()
 			}
 		})

@@ -40,9 +40,9 @@ impl Clients {
 		}
 	}
 
-	pub fn each(&self, f: |&Client|) {
-		for (_, client) in self.map.iter() {
-			f(client);
+	pub fn each(&self, f: |uint, &Client|) {
+		for (&id, client) in self.map.iter() {
+			f(id, client);
 		}
 	}
 
