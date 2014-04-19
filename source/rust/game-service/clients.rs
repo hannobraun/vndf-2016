@@ -25,7 +25,7 @@ impl Clients {
 				id  : client_id,
 				ship: ship };
 
-			self.map.insert(client.id, client);
+			self.map.insert(client_id, client);
 
 			Some(client)
 		}
