@@ -1,5 +1,6 @@
 use std::intrinsics::TypeId;
 
+use common::physics::Radians;
 use common::protocol::{Create, SelfInfo, Update};
 
 use control::{ClientCore, GameService};
@@ -50,4 +51,19 @@ fn the_ship_should_move_along_its_velocity_vector() {
 	assert_eq!(
 		movement.normalize().round(32),
 		velocity.normalize().round(32));
+}
+
+#[test]
+fn the_ships_attitude_should_match_its_velocity() {
+	let     game_service = GameService::start();
+	let mut client       = ClientCore::start(game_service.port);
+
+	client.ignore(TypeId::of::<SelfInfo>());
+	client.ignore(TypeId::of::<Create>());
+
+	let update = client.expect_update();
+
+	assert_eq!(
+		Radians::from_vec(update.body.velocity).round(16),
+		update.body.attitude.round(16));
 }

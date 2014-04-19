@@ -54,16 +54,18 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 }
 
 fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events) {
+	let velocity = Vec2 {
+		x: 30.0,
+		y: 10.0
+	};
+
 	let ship = Body {
 		position: Vec2 {
 			x: 0.0,
 			y: 0.0
 		},
-		velocity: Vec2 {
-			x: 30.0,
-			y: 10.0
-		},
-		attitude: Radians(0.0)
+		velocity: velocity,
+		attitude: Radians::from_vec(velocity)
 	};
 
 	let new_client = Client::new(connection, ship);
