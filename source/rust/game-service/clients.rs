@@ -16,15 +16,28 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add<'a>(&'a mut self, client: Client) -> Option<(uint, &'a Client)> {
+	/**
+	 * Adds a client.
+	 *
+	 * The return value is a bit complicated. The reason for this is that
+	 * calling this function will move the client into it, making it unusable
+	 * for the caller.
+	 * If the adding was successful, we borrow it back to the caller, so they
+	 * can do whatever they need.
+	 * If the adding was unsuccessful, we have no need for the client and move
+	 * it back to the caller.
+	 */
+	pub fn add<'a>(&'a mut self, client: Client) -> Result<(uint, &'a Client), Client> {
 		if self.idPool.has_ids() {
 			let client_id = self.idPool.pop();
 			self.map.insert(client_id, client);
 
-			Some((client_id, self.map.get(&client_id)))
+			Ok((
+				client_id,
+				self.map.get(&client_id)))
 		}
 		else {
-			None
+			Err(client)
 		}
 	}
 

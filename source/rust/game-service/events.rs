@@ -69,7 +69,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 	let new_client = Client::new(connection, ship);
 
 	match clients.add(new_client) {
-		Some((client_id, client)) => {
+		Ok((client_id, client)) => {
 			let message = SelfInfo(SelfInfo {
 				id: client_id
 			});
@@ -82,7 +82,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 			events.push(CreateEvent(client_id))
 		},
 
-		None => new_client.conn.close()
+		Err(client) => client.conn.close()
 	}
 }
 
