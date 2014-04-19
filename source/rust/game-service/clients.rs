@@ -20,10 +20,7 @@ impl Clients {
 		if self.idPool.has_ids() {
 			let client_id = self.idPool.pop();
 
-			let client = Client {
-				conn: conn,
-				id  : client_id,
-				ship: ship };
+			let client = Client::new(client_id, conn, ship);
 
 			self.map.insert(client_id, client);
 
@@ -58,6 +55,16 @@ pub struct Client {
 	pub conn: Connection,
 	pub id  : uint,
 	pub ship: Body
+}
+
+impl Client {
+	pub fn new(id: uint, conn: Connection, ship: Body) -> Client {
+		Client {
+			conn: conn,
+			id  : id,
+			ship: ship
+		}
+	}
 }
 
 
