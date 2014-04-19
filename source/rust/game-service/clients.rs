@@ -16,7 +16,7 @@ impl Clients {
 			idPool: IdPool::new(capacity) }
 	}
 
-	pub fn add(&mut self, conn: Connection, ship: Body) -> Option<Client> {
+	pub fn add(&mut self, conn: Connection, ship: Body) -> Option<(uint, Client)> {
 		if self.idPool.has_ids() {
 			let client_id = self.idPool.pop();
 
@@ -24,7 +24,7 @@ impl Clients {
 
 			self.map.insert(client_id, client);
 
-			Some(client)
+			Some((client_id, client))
 		}
 		else {
 			None

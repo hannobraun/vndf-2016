@@ -67,17 +67,17 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 	};
 
 	match clients.add(connection, ship) {
-		Some(client) => {
+		Some((client_id, client)) => {
 			let message = SelfInfo(SelfInfo {
-				id: client.id
+				id: client_id
 			});
 
 			match client.conn.send_message(message.to_str()) {
-				Err(_) => events.push(Disconnect(client.id)),
+				Err(_) => events.push(Disconnect(client_id)),
 				_      => ()
 			}
 
-			events.push(CreateEvent(client.id))
+			events.push(CreateEvent(client_id))
 		},
 
 		None => connection.close()
