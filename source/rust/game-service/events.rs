@@ -84,12 +84,12 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 	}
 }
 
-fn on_disconnect(clientId: uint, clients: &mut Clients, events: &mut Events) {
-	clients.remove(clientId);
+fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
+	clients.remove(removed_id);
 
 	clients.each(|client| {
 		let message = Remove(Remove {
-			id: clientId
+			id: removed_id
 		});
 
 		match client.conn.send_message(message.to_str()) {
