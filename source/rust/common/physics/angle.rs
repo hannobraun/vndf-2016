@@ -1,11 +1,17 @@
 use std::fmt;
 use std::fmt::Formatter;
 
+use physics::Vec2;
+
 
 #[deriving(Decodable, Encodable, Eq, Ord, Show)]
 pub struct Radians(pub f64);
 
 impl Radians {
+	pub fn from_vec(vec: Vec2) -> Radians {
+		Radians(vec.y.atan2(&vec.x))
+	}
+
 	pub fn degrees(&self) -> Degrees {
 		let &Radians(this) = self;
 		Degrees(this.to_degrees())
