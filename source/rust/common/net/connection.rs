@@ -149,7 +149,7 @@ impl Connection {
 		}
 	}
 
-	pub fn receive(&self, buffer: &[u8]) -> libc::ssize_t {
+	fn receive(&self, buffer: &[u8]) -> libc::ssize_t {
 		unsafe {
 			let bytes_received = ffi::recv(
 				self.fd,
