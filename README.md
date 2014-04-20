@@ -1,7 +1,8 @@
 ## Initialization
 
-You need to check out all the submodules in vendor. Instead of doing that
-yourself, feel free to add a script that does this for you to scripts.
+You need to do this after cloning the repository.
+
+> ./scripts/init
 
 
 ## Start the server-side components
