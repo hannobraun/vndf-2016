@@ -16,3 +16,6 @@
 [submodule "vendor/zwobot"]
 	path = vendor/zwobot
 	url = https://github.com/hannobraun/zwobot.git
+[submodule "vendor/glfw"]
+	path = vendor/glfw
+	url = https://github.com/hannobraun/glfw.git
