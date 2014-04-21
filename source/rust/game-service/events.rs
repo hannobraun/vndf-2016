@@ -104,7 +104,11 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
-	clients.each(|client_id, client| {
+	clients.mut_each(|client_id, client| {
+		if client_id == created_id {
+			client.created = true;
+		}
+
 		let message = Create(Create {
 			id  : created_id,
 			kind: ~"ship"
@@ -119,20 +123,24 @@ fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
 
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 	clients.mut_each(|_, client| {
-		client.ship.position =
-			client.ship.position + client.ship.velocity * dTimeInS;
+		if client.created {
+			client.ship.position =
+				client.ship.position + client.ship.velocity * dTimeInS;
+		}
 	});
 
 	clients.each(|client_a_id, clientA| {
 		clients.each(|client_b_id, clientB| {
-			let message = protocol::Update(Update {
-				id  : client_b_id,
-				body: clientB.ship
-			});
+			if clientB.created {
+				let message = protocol::Update(Update {
+					id  : client_b_id,
+					body: clientB.ship
+				});
 
-			match clientA.conn.send_message(message.to_str()) {
-				Err(_) => events.push(Disconnect(client_a_id)),
-				_      => ()
+				match clientA.conn.send_message(message.to_str()) {
+					Err(_) => events.push(Disconnect(client_a_id)),
+					_      => ()
+				}
 			}
 		})
 	});
