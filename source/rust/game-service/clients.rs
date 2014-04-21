@@ -53,9 +53,9 @@ impl Clients {
 		}
 	}
 
-	pub fn mut_each(&mut self, f: |&mut Client|) {
-		for (_, client) in self.map.mut_iter() {
-			f(client);
+	pub fn mut_each(&mut self, f: |uint, &mut Client|) {
+		for (&id, client) in self.map.mut_iter() {
+			f(id, client);
 		}
 	}
 }

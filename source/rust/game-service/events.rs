@@ -118,7 +118,7 @@ fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
-	clients.mut_each(|client| {
+	clients.mut_each(|_, client| {
 		client.ship.position =
 			client.ship.position + client.ship.velocity * dTimeInS;
 	});
