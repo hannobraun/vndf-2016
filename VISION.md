@@ -1,8 +1,10 @@
-Vision
+## Vision
 
-A space MMO with freedom and adventure as its central themes.
+A multiplayer game about freedom, adventure and having to make hard choices.
 
-Inspirations:
+
+### Inspirations
+
 * EVE Online, for its vast scale and the player's ability to create their own
   stories.
 * Kerbal Space Program, for its realistic, skill-driven gameplay and the
@@ -11,7 +13,8 @@ Inspirations:
 * FTL, for using constant pressure to drive stories, which unfold guided by the
   player's decisions.
 
-Core goals:
+### Core Goals
+
 * Mechanics that make player skill the prime condition for success.
 * Players that drive everything that is meaningful about the game.
 * As few arbitrary limitations as possible. Players should only be limited by
@@ -23,6 +26,6 @@ Core goals:
   to the typical sandbox game (Minecraft, Starbound).
 
 
-Next Step
+### Next Step
 
 Let the player control the ship's attitude via keyboard input.
