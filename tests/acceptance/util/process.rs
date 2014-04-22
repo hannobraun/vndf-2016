@@ -5,7 +5,8 @@ use std::io::{BufferedReader, PipeStream};
 pub struct Process {
 	process: io::Process,
 	stdout : BufferedReader<PipeStream>,
-	stderr : BufferedReader<PipeStream>
+	stderr : BufferedReader<PipeStream>,
+	stdin  : PipeStream
 }
 
 impl Process {
@@ -17,11 +18,13 @@ impl Process {
 
 		let stdout_opt = process.stdout.take();
 		let stderr_opt = process.stderr.take();
+		let stdin_opt  = process.stdin.take();
 
 		Process {
 			process: process,
 			stdout : to_reader(stdout_opt),
-			stderr : to_reader(stderr_opt)
+			stderr : to_reader(stderr_opt),
+			stdin  : stdin_opt.expect("Expected stdin")
 		}
 	}
 
@@ -29,6 +32,13 @@ impl Process {
 		match self.stdout.read_line() {
 			Ok(line)   => line,
 			Err(error) => fail!("Failed to read line from stdout: {}", error)
+		}
+	}
+
+	pub fn write_stdin_line(&mut self, line: &str) {
+		match self.stdin.write_line(line) {
+			Ok(())     => (),
+			Err(error) => fail!("Failed to write to stdin: {}", error)
 		}
 	}
 }
