@@ -12,8 +12,8 @@ use util::last_error;
 pub struct Connection {
 	fd: c_int,
 
-	pub in_buffer    : ~[u8],
-	pub in_buffer_pos: uint
+	in_buffer    : ~[u8],
+	in_buffer_pos: uint
 }
 
 impl Connection {
