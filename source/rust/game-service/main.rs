@@ -37,21 +37,22 @@ fn main() {
 	loop {
 		let frameTimeInMs = 50;
 
-		let number_of_events = match epoll.wait(frameTimeInMs) {
-			Ok(number_of_events) => number_of_events,
+		let result = epoll.wait(frameTimeInMs, |fd| {
+			if fd == acceptor.fd {
+				match acceptor.accept() {
+					Ok(connection) =>
+						events.push(events::Connect(connection)),
 
+					Err(error) =>
+						fail!("Error accepting connection: {}", error)
+				}
+			}
+		});
+
+		match result {
+			Ok(())     => (),
 			Err(error) => fail!("Error while waiting for events: {}", error)
 		};
-
-		for _ in range(0, number_of_events) {
-			match acceptor.accept() {
-				Ok(connection) =>
-					events.push(events::Connect(connection)),
-
-				Err(error) =>
-					fail!("Error accepting connection: {}", error)
-			}
-		}
 
 		events.push(events::Update);
 		events::handle_events(events, clientMap, frameTimeInMs as uint);
