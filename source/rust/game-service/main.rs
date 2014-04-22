@@ -40,12 +40,22 @@ fn main() {
 		let result = epoll.wait(frameTimeInMs, |fd| {
 			if fd == acceptor.fd {
 				match acceptor.accept() {
-					Ok(connection) =>
-						events.push(events::Connect(connection)),
+					Ok(connection) => {
+						match epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
+							Ok(()) => (),
+
+							Err(error) =>
+								fail!("Error adding to epoll: {}", error)
+						}
+						events.push(events::Connect(connection));
+					},
 
 					Err(error) =>
 						fail!("Error accepting connection: {}", error)
 				}
+			}
+			else {
+				events.push(events::DataReceived(fd))
 			}
 		});
 
