@@ -10,7 +10,7 @@ use util::last_error;
 
 #[deriving(Eq, Show)]
 pub struct Connection {
-	fd: c_int,
+	pub fd: c_int,
 
 	in_buffer    : ~[u8],
 	in_buffer_pos: uint
