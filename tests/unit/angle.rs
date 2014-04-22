@@ -16,4 +16,5 @@ fn it_should_convert_from_a_vector(){
 #[test]
 fn it_should_round_an_angle(){
 	assert_eq!(Radians(0.25), Radians(0.25).round(2));
+	assert_eq!(Radians(0.25), Radians(0.375).round(2));
 }
