@@ -48,6 +48,13 @@ impl Neg<Radians> for Radians {
 
 pub struct Degrees(pub f64);
 
+impl Degrees {
+	pub fn to_radians(&self) -> Radians {
+		let &Degrees(this) = self;
+		Radians(this.to_radians())
+	}
+}
+
 impl fmt::Signed for Degrees {
 	fn fmt(&self, formatter: &mut Formatter) -> fmt::Result {
 		let &Degrees(this) = self;
