@@ -2,7 +2,8 @@ use collections::HashSet;
 use rand;
 use std::intrinsics::TypeId;
 
-use common::protocol::{Create, Message, SelfInfo, Update};
+use common::physics::Radians;
+use common::protocol::{Command, Create, Message, SelfInfo, Update};
 
 use util::Process;
 
@@ -65,6 +66,13 @@ impl ClientCore {
 			Update(update) => update,
 			message @ _    => fail!("unexpected message ({})", message)
 		}
+	}
+
+	pub fn send_attitude(&mut self, attitude: Radians) {
+		let message = Command(Command {
+			attitude: attitude
+		});
+		self.process.write_stdin_line(message.to_str());
 	}
 
 	fn next_message(&mut self) -> Message {
