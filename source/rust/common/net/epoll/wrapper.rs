@@ -5,7 +5,8 @@ use util::last_error;
 
 
 pub struct EPoll {
-	epfd        : c_int,
+	pub epfd: c_int,
+
 	event_buffer: [ffi::epoll_event, ..1024]
 }
 
