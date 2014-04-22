@@ -1,5 +1,6 @@
 use collections::Deque;
 use collections::RingBuf;
+use libc::c_int;
 
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
@@ -17,6 +18,7 @@ pub struct Events {
 pub enum Event {
 	Connect(Connection),
 	Disconnect(uint),
+	DataReceived(c_int),
 	CreateEvent(uint),
 	Update
 }
@@ -44,6 +46,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 				match event {
 					Connect(connection)    => on_connect(connection, clients, events),
 					Disconnect(clientId)   => on_disconnect(clientId, clients, events),
+					DataReceived(fd)       => on_data_received(fd),
 					CreateEvent(client_id) => on_create(client_id, clients, events),
 					Update                 => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
 				},
@@ -101,6 +104,10 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 			_      => ()
 		}
 	})
+}
+
+fn on_data_received(fd: c_int) {
+	print!("Data received from {}!\n", fd);
 }
 
 fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
