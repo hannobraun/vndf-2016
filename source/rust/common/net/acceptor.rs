@@ -16,13 +16,8 @@ pub struct Acceptor {
 }
 
 impl Acceptor {
-	pub fn create(port: &str) -> Acceptor {
+	pub fn create(port: &str, epoll: EPoll) -> Acceptor {
 		let fd = init_socket(port);
-
-		let epoll = match EPoll::create() {
-			Ok(epoll)  => epoll,
-			Err(error) => fail!("Error initializing epoll: {}", error)
-		};
 
 		match epoll.add(fd, epoll::ffi::EPOLLIN) {
 			Err(error) =>

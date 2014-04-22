@@ -4,6 +4,7 @@ extern crate libc;
 extern crate time;
 
 use common::net::Acceptor;
+use common::net::epoll::EPoll;
 
 use clients::Clients;
 use events::Events;
@@ -16,7 +17,12 @@ mod events;
 fn main() {
 	print!("Game Service started.\n");
 
-	let acceptor      = Acceptor::create(args::port());
+	let epoll = match EPoll::create() {
+		Ok(epoll)  => epoll,
+		Err(error) => fail!("Error initializing epoll: {}", error)
+	};
+
+	let acceptor      = Acceptor::create(args::port(), epoll);
 	let mut events    = Events::new();
 	let mut clientMap = Clients::new(4);
 
