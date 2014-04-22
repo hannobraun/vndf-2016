@@ -25,27 +25,19 @@ impl Acceptor {
 		}
 	}
 
-	pub fn accept(&self, timeout_in_ms: u32, handler: |Connection| -> ()) {
-		let number_of_events = match self.epoll.wait(timeout_in_ms) {
-			Ok(number_of_events) => number_of_events,
-
-			Err(error) => fail!("Error while waiting for events: {}", error)
+	pub fn accept(&self) -> Result<Connection, ~str> {
+		let fd = unsafe {
+			ffi::accept(
+				self.fd,
+				ptr::mut_null(),
+				ptr::mut_null())
 		};
 
-		for _ in range(0, number_of_events) {
-			let fd = unsafe {
-				ffi::accept(
-					self.fd,
-					ptr::mut_null(),
-					ptr::mut_null())
-			};
-
-			if fd >= 0 {
-				handler(Connection::from_fd(fd));
-			}
-			else {
-				print!("Error accepting connection: {}", last_error());
-			}
+		if fd >= 0 {
+			Ok(Connection::from_fd(fd))
+		}
+		else {
+			Err(last_error())
 		}
 	}
 }
