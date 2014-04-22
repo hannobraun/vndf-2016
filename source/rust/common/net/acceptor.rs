@@ -11,7 +11,8 @@ use util::last_error;
 
 
 pub struct Acceptor {
-	fd   : c_int,
+	pub fd: c_int,
+
 	epoll: EPoll
 }
 
