@@ -10,13 +10,13 @@ pub struct Process {
 
 impl Process {
 	pub fn start(path: &str, args: &[~str]) -> Process {
-		let process = match io::Process::new(path, args) {
+		let mut process = match io::Process::new(path, args) {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to start process {}: {}", path, error)
 		};
 
-		let stdout_opt = process.stdout.clone();
-		let stderr_opt = process.stderr.clone();
+		let stdout_opt = process.stdout.take();
+		let stderr_opt = process.stderr.take();
 
 		Process {
 			process: process,
