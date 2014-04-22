@@ -33,7 +33,7 @@ impl EPoll {
 	pub fn add(&self, fd: c_int, events: u32) -> Result<(), ~str> {
 		let event = ffi::epoll_event {
 			events: events,
-			data  : 0
+			data  : fd as u64
 		};
 
 		let status = unsafe {
