@@ -1,6 +1,9 @@
 extern crate common;
 extern crate libc;
 
+use std::comm;
+use std::io;
+use std::task;
 
 use common::net::Connection;
 use common::protocol::{Create, Message, Remove, SelfInfo, Update};
@@ -11,6 +14,17 @@ mod args;
 
 fn main() {
 	let (address, port) = args::address_and_port();
+
+	let (tx, rx) = comm::channel();
+	task::spawn(proc() {
+		let mut stdin = io::stdin();
+		loop {
+			match stdin.read_line() {
+				Ok(message) => tx.send(message),
+				Err(error)  => fail!("Error reading from stdin: {}", error)
+			}
+		}
+	});
 
 	let mut connection = Connection::connect(address, port);
 
@@ -30,5 +44,16 @@ fn main() {
 					fail!("invalid message ({})\n", message)
 			}
 		});
+
+		match rx.try_recv() {
+			Ok(message) => {
+				match connection.send_message(message) {
+					Ok(())     => (),
+					Err(error) => fail!("Error sending message: {}", error)
+				}
+			},
+
+			_  => ()
+		};
 	}
 }
