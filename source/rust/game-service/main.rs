@@ -4,6 +4,7 @@ extern crate libc;
 extern crate time;
 
 use common::net::Acceptor;
+use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
@@ -25,6 +26,13 @@ fn main() {
 	let acceptor      = Acceptor::create(args::port(), epoll);
 	let mut events    = Events::new();
 	let mut clientMap = Clients::new(4);
+
+	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
+		Err(error) =>
+			fail!("Error registering server socket with epoll: {}", error),
+
+		_ => ()
+	}
 
 	loop {
 		let frameTimeInMs = 50;

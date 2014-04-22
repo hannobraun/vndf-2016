@@ -5,7 +5,6 @@ use std::ptr;
 
 use net::Connection;
 use net::ffi;
-use net::epoll;
 use net::epoll::EPoll;
 use util::last_error;
 
@@ -19,13 +18,6 @@ pub struct Acceptor {
 impl Acceptor {
 	pub fn create(port: &str, epoll: EPoll) -> Acceptor {
 		let fd = init_socket(port);
-
-		match epoll.add(fd, epoll::ffi::EPOLLIN) {
-			Err(error) =>
-				fail!("Error registering server socket with epoll: {}", error),
-
-			_ => ()
-		}
 
 		Acceptor {
 			fd   : fd,
