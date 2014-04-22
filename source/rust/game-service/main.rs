@@ -23,7 +23,7 @@ fn main() {
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	let acceptor      = Acceptor::create(args::port(), epoll);
+	let acceptor      = Acceptor::create(args::port());
 	let mut events    = Events::new();
 	let mut clientMap = Clients::new(4);
 

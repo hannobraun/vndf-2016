@@ -5,23 +5,19 @@ use std::ptr;
 
 use net::Connection;
 use net::ffi;
-use net::epoll::EPoll;
 use util::last_error;
 
 
 pub struct Acceptor {
-	pub fd: c_int,
-
-	epoll: EPoll
+	pub fd: c_int
 }
 
 impl Acceptor {
-	pub fn create(port: &str, epoll: EPoll) -> Acceptor {
+	pub fn create(port: &str) -> Acceptor {
 		let fd = init_socket(port);
 
 		Acceptor {
-			fd   : fd,
-			epoll: epoll
+			fd   : fd
 		}
 	}
 
