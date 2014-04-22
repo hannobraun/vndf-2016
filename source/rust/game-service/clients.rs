@@ -5,15 +5,14 @@ use common::net::Connection;
 
 
 pub struct Clients {
-	pub map   : ~HashMap<uint, Client>,
-	pub idPool: ~IdPool
+	pub map   : ~HashMap<uint, Client>
 }
 
 impl Clients {
-	pub fn new(capacity: uint) -> ~Clients {
+	pub fn new() -> ~Clients {
 		~Clients {
-			map   : ~HashMap::<uint, Client>::new(),
-			idPool: IdPool::new(capacity) }
+			map: ~HashMap::<uint, Client>::new()
+		}
 	}
 
 	/**
@@ -28,23 +27,16 @@ impl Clients {
 	 * it back to the caller.
 	 */
 	pub fn add<'a>(&'a mut self, client: Client) -> Result<(uint, &'a Client), Client> {
-		if self.idPool.has_ids() {
-			let client_id = self.idPool.pop();
-			self.map.insert(client_id, client);
+		let client_id = client.conn.fd as uint;
+		self.map.insert(client_id, client);
 
-			Ok((
-				client_id,
-				self.map.get(&client_id)))
-		}
-		else {
-			Err(client)
-		}
+		Ok((
+			client_id,
+			self.map.get(&client_id)))
 	}
 
 	pub fn remove(&mut self, id: uint) {
-		if self.map.remove(&id) {
-			self.idPool.push(id);
-		}
+		self.map.remove(&id);
 	}
 
 	pub fn each(&self, f: |uint, &Client|) {
@@ -73,43 +65,6 @@ impl Client {
 			conn   : conn,
 			ship   : ship,
 			created: false
-		}
-	}
-}
-
-
-pub struct IdPool {
-	capacity: uint,
-	pool    : Vec<uint>
-}
-
-impl IdPool {
-	fn new(capacity: uint) -> ~IdPool {
-		let mut idPool = ~IdPool {
-			capacity: capacity,
-			pool    : Vec::new() };
-
-		let mut i = 0;
-		while i < capacity {
-			idPool.pool.push(capacity - i - 1);
-			i += 1
-		}
-
-		idPool
-	}
-
-	fn has_ids(&self) -> bool {
-		self.pool.len() > 0
-	}
-
-	fn push(&mut self, id: uint) {
-		self.pool.push(id);
-	}
-
-	fn pop(&mut self) -> uint {
-		match self.pool.pop() {
-			Some(id) => id,
-			None     => fail!("No id available.")
 		}
 	}
 }

@@ -25,7 +25,7 @@ fn main() {
 
 	let acceptor      = Acceptor::create(args::port());
 	let mut events    = Events::new();
-	let mut clientMap = Clients::new(4);
+	let mut clientMap = Clients::new();
 
 	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
