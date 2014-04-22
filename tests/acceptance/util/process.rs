@@ -42,10 +42,10 @@ impl Drop for Process {
 
 		print!(
 			"stdout: {}\n",
-			self.process.stdout.clone().unwrap().read_to_str().unwrap());
+			self.stdout.read_to_str().unwrap());
 		print!(
 			"stderr: {}\n",
-			self.process.stderr.clone().unwrap().read_to_str().unwrap());
+			self.stderr.read_to_str().unwrap());
 	}
 }
 
