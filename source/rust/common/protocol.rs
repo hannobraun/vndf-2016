@@ -6,7 +6,7 @@ use std::io::MemWriter;
 use std::io::Writer;
 use std::str;
 
-use physics::Body;
+use physics::{Body, Radians};
 
 
 #[deriving(Decodable, Encodable, Show)]
@@ -15,6 +15,7 @@ pub enum Message {
 	Create(Create),
 	Update(Update),
 	Remove(Remove),
+	Command(Command),
 	Invalid(~str)
 }
 
@@ -55,6 +56,7 @@ impl Message {
 			Create(_)   => TypeId::of::<Create>(),
 			Update(_)   => TypeId::of::<Update>(),
 			Remove(_)   => TypeId::of::<Remove>(),
+			Command(_)  => TypeId::of::<Command>(),
 			Invalid(_)  => TypeId::of::<()>()
 		}
 	}
@@ -81,4 +83,9 @@ pub struct Update {
 #[deriving(Decodable, Encodable, Show)]
 pub struct Remove {
 	pub id: uint
+}
+
+#[deriving(Decodable, Encodable, Show)]
+pub struct Command {
+	pub attitude: Radians
 }
