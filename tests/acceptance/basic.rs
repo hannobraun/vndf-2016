@@ -43,4 +43,7 @@ fn the_ship_should_change_direction_according_to_input() {
 	assert_eq!(
 		attitude.round(16),
 		update.body.attitude.round(16));
+	assert_eq!(
+		attitude.round(16),
+		Radians::from_vec(update.body.velocity).round(16));
 }
