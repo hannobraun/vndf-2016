@@ -12,6 +12,14 @@ impl Radians {
 		Radians(vec.y.atan2(&vec.x))
 	}
 
+	pub fn to_vec(&self) -> Vec2 {
+		let &Radians(this) = self;
+		Vec2 {
+			x: this.cos(),
+			y: this.sin()
+		}
+	}
+
 	pub fn round(&self, precision_in_bits: u8) -> Radians {
 		let &Radians(this) = self;
 		let factor = (1 << precision_in_bits) as f64;
