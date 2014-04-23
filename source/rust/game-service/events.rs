@@ -5,7 +5,7 @@ use libc::c_int;
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol;
-use common::protocol::{Create, Remove, SelfInfo, Update};
+use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
 
 use clients::{Client, Clients};
 
@@ -20,6 +20,7 @@ pub enum Event {
 	Disconnect(uint),
 	DataReceived(c_int),
 	CreateEvent(uint),
+	CommandEvent(c_int, Radians),
 	Update
 }
 
@@ -46,9 +47,12 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 				match event {
 					Connect(connection)    => on_connect(connection, clients, events),
 					Disconnect(clientId)   => on_disconnect(clientId, clients, events),
-					DataReceived(fd)       => on_data_received(fd, clients),
+					DataReceived(fd)       => on_data_received(fd, clients, events),
 					CreateEvent(client_id) => on_create(client_id, clients, events),
-					Update                 => on_update(clients, events, frameTimeInMs as f64 / 1000.0)
+					Update                 => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
+
+					CommandEvent(client_id, attitude) =>
+						on_command(client_id, attitude, clients)
 				},
 
 			None => break
@@ -106,10 +110,16 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 	})
 }
 
-fn on_data_received(fd: c_int, clients: &mut Clients) {
-	let connection = &mut (clients.map.get_mut(&(fd as uint)).conn);
-	connection.receive_messages(|message| {
-		print!("Received \"{}\" from {}\n", message, fd);
+fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
+	let client = clients.map.get_mut(&(fd as uint));
+
+	client.conn.receive_messages(|message| {
+		match Message::from_str(message) {
+			Command(command) =>
+				events.push(CommandEvent(fd, command.attitude)),
+
+			_ => fail!("Received unexpected message from client: {}", message)
+		}
 	})
 }
 
@@ -154,4 +164,9 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 			}
 		})
 	});
+}
+
+fn on_command(fd: c_int, attitude: Radians, clients: &mut Clients) {
+	let client = clients.map.get_mut(&(fd as uint));
+	client.ship.attitude = attitude;
 }
