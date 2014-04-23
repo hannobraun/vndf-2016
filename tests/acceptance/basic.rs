@@ -21,8 +21,8 @@ fn the_ship_should_move_along_its_velocity_vector() {
 	let velocity = update_1.body.velocity;
 
 	assert_eq!(
-		movement.normalize().round(32),
-		velocity.normalize().round(32));
+		movement.normalize().round(16),
+		velocity.normalize().round(16));
 }
 
 #[test]
