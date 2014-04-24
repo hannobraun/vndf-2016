@@ -38,7 +38,11 @@ impl Entities {
 
 		match self.self_id {
 			Some(self_id) => if id == self_id {
-				self.controls.insert(id, Control { attitude: Radians(0.0) });
+				let control = Control {
+					attitude: Radians(0.0),
+					send    : false
+				};
+				self.controls.insert(id, control);
 			},
 			None => ()
 		}
