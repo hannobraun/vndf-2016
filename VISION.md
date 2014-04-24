@@ -28,4 +28,4 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Step
 
-Let the player control the ship's attitude via keyboard input.
+Make the production environment 100% solid and reliable.
