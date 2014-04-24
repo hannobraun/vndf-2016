@@ -2,8 +2,8 @@ use std::io::{BufferedReader, PipeStream, Process};
 use std::os;
 use std::str;
 
-use common::protocol::{Create, Message, Remove, SelfInfo, Update};
-use common::physics::Vec2;
+use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
+use common::physics::{Radians, Vec2};
 
 use entities::Entities;
 
@@ -90,6 +90,14 @@ impl Core {
 					remove.id),
 
 			_ => fail!("unexpected message ({})", message)
+		}
+	}
+
+	pub fn send_command(&mut self, attitude: Radians) {
+		let command = Command(Command { attitude: attitude });
+		match self.stdin.write_line(command.to_str()) {
+			Ok(_) => (),
+			Err(error) => fail!("Error writing command: {}", error)
 		}
 	}
 
