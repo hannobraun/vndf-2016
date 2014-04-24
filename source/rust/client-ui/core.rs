@@ -26,7 +26,8 @@ use entities::Entities;
 pub struct Core {
 	process: Process,
 	stdout : BufferedReader<PipeStream>,
-	stderr : BufferedReader<PipeStream>
+	stderr : BufferedReader<PipeStream>,
+	stdin  : PipeStream
 }
 
 impl Core {
@@ -48,11 +49,14 @@ impl Core {
 			process.stdout.take().expect("Expected stdout to be set"));
 		let stderr = BufferedReader::new(
 			process.stderr.take().expect("Expected stderr to be set"));
+		let stdin = process.stdin.take().expect("Expected stdin to be set");
 
 		~Core {
 			process: process,
 			stdout : stdout,
-			stderr : stderr }
+			stderr : stderr,
+			stdin  : stdin
+		}
 	}
 
 	pub fn get_self_id(&mut self) -> uint {
