@@ -28,5 +28,9 @@ pub fn apply_input(window: &Window, controls: &mut Components<Control>) {
 		while control.attitude < -Radians(f64::consts::PI) {
 			control.attitude = control.attitude + Radians(f64::consts::PI * 2.0)
 		}
+
+		if window.key_pressed(glfw::KeyEnter) {
+			control.send = true;
+		}
 	}
 }

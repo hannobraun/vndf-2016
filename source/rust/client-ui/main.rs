@@ -63,6 +63,13 @@ fn main() {
 			&window,
 			&mut entities.controls);
 
+		for (_, control) in entities.controls.mut_iter() {
+			if control.send {
+				core.send_command(control.attitude);
+				control.send = false;
+			}
+		}
+
 		renderer.render(
 			&window,
 			cam,
