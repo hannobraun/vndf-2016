@@ -37,7 +37,9 @@ impl EventHandler {
 			match self.incoming.pop() {
 				Some(event) =>
 					match event {
-						Connect(connection)     => self.on_connect(connection, clients),
+						Connect(connection) =>
+							self.on_connect(connection, clients),
+
 						Disconnect(clientId)    => on_disconnect(clientId, clients, &mut self.incoming),
 						DataReceived(fd)        => on_data_received(fd, clients, &mut self.incoming),
 						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
