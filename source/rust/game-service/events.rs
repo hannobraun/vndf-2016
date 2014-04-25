@@ -45,8 +45,8 @@ impl EventHandler {
 							self.on_data_received(fd, clients),
 						CreateEvent(client_id) =>
 							self.on_create(client_id, clients),
-
-						Update(frame_time_in_s) => on_update(clients, &mut self.incoming, frame_time_in_s),
+						Update(frame_time_in_s) =>
+							self.on_update(clients, frame_time_in_s),
 
 						CommandEvent(client_id, attitude) =>
 							on_command(client_id, attitude, clients)
@@ -148,32 +148,32 @@ impl EventHandler {
 			}
 		});
 	}
-}
 
-fn on_update(clients: &mut Clients, events: &mut EventBuffer<Event>, dTimeInS: f64) {
-	clients.mut_each(|_, client| {
-		if client.created {
-			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
-			client.ship.position =
-				client.ship.position + client.ship.velocity * dTimeInS;
-		}
-	});
-
-	clients.each(|client_a_id, clientA| {
-		clients.each(|client_b_id, clientB| {
-			if clientB.created {
-				let message = protocol::Update(Update {
-					id  : client_b_id,
-					body: clientB.ship
-				});
-
-				match clientA.conn.send_message(message.to_str()) {
-					Err(_) => events.push(Disconnect(client_a_id)),
-					_      => ()
-				}
+	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
+		clients.mut_each(|_, client| {
+			if client.created {
+				client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
+				client.ship.position =
+					client.ship.position + client.ship.velocity * dTimeInS;
 			}
-		})
-	});
+		});
+
+		clients.each(|client_a_id, clientA| {
+			clients.each(|client_b_id, clientB| {
+				if clientB.created {
+					let message = protocol::Update(Update {
+						id  : client_b_id,
+						body: clientB.ship
+					});
+
+					match clientA.conn.send_message(message.to_str()) {
+						Err(_) => self.incoming.push(Disconnect(client_a_id)),
+						_      => ()
+					}
+				}
+			})
+		});
+	}
 }
 
 fn on_command(fd: c_int, attitude: Radians, clients: &mut Clients) {
