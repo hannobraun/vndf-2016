@@ -4,7 +4,6 @@ extern crate libc;
 extern crate time;
 
 
-use common::net::Acceptor;
 use common::net::epoll;
 
 use clients::Clients;
@@ -27,12 +26,11 @@ mod network;
 fn main() {
 	print!("Game Service started.\n");
 
-	let network           = Network::new();
-	let acceptor          = Acceptor::create(args::port());
+	let network           = Network::new(args::port());
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 
-	match network.epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
+	match network.epoll.add(network.acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
 			fail!("Error registering server socket with epoll: {}", error),
 
@@ -43,8 +41,8 @@ fn main() {
 		let frame_time_in_ms = 1000;
 
 		let result = network.epoll.wait(frame_time_in_ms, |fd| {
-			if fd == acceptor.fd {
-				match acceptor.accept() {
+			if fd == network.acceptor.fd {
+				match network.acceptor.accept() {
 					Ok(connection) => {
 						match network.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
 							Ok(()) => (),
