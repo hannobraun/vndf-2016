@@ -47,9 +47,8 @@ impl EventHandler {
 							self.on_create(client_id, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
-
 						CommandEvent(client_id, attitude) =>
-							on_command(client_id, attitude, clients)
+							self.on_command(client_id, attitude, clients)
 					},
 
 				None => break
@@ -174,11 +173,11 @@ impl EventHandler {
 			})
 		});
 	}
-}
 
-fn on_command(fd: c_int, attitude: Radians, clients: &mut Clients) {
-	match clients.client_by_fd(fd) {
-		Some((_, client)) => client.ship.attitude = attitude,
-		None              => ()
+	fn on_command(&self, fd: c_int, attitude: Radians, clients: &mut Clients) {
+		match clients.client_by_fd(fd) {
+			Some((_, client)) => client.ship.attitude = attitude,
+			None              => ()
+		}
 	}
 }
