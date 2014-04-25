@@ -5,13 +5,13 @@ use common::net::Connection;
 
 
 pub struct Clients {
-	pub map   : ~HashMap<uint, Client>
+	pub map: HashMap<uint, Client>
 }
 
 impl Clients {
 	pub fn new() -> Clients {
 		Clients {
-			map: ~HashMap::<uint, Client>::new()
+			map: HashMap::<uint, Client>::new()
 		}
 	}
 
