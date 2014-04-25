@@ -28,7 +28,10 @@ fn main() {
 
 	let mut connection = match Connection::connect(address, port) {
 		Ok(connection) => connection,
-		Err(error)     => fail!("Error connecting to server: {}", error)
+		Err(error)     => {
+			print!("Error connecting to server: {}\n", error);
+			unsafe { libc::exit(1) }
+		}
 	};
 
 	loop {
