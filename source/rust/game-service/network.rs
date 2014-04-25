@@ -40,20 +40,21 @@ impl Network {
 	pub fn update(&self, timeout_in_ms: u32, events: &mut EventBuffer<Event>) {
 		let result = self.epoll.wait(timeout_in_ms, |fd| {
 			if fd == self.acceptor.fd {
-				match self.acceptor.accept() {
-					Ok(connection) => {
-						match self.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
-							Ok(()) => (),
-
-							Err(error) =>
-								fail!("Error adding to epoll: {}", error)
-						}
-						events.push(Connect(connection));
-					},
+				let connection = match self.acceptor.accept() {
+					Ok(connection) => connection,
 
 					Err(error) =>
 						fail!("Error accepting connection: {}", error)
+				};
+
+				match self.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
+					Ok(()) => (),
+
+					Err(error) =>
+						fail!("Error adding to epoll: {}", error)
 				}
+
+				events.push(Connect(connection));
 			}
 			else {
 				events.push(DataReceived(fd))
