@@ -6,7 +6,6 @@ extern crate time;
 
 use common::net::Acceptor;
 use common::net::epoll;
-use common::net::epoll::EPoll;
 
 use clients::Clients;
 use eventhandler::{
@@ -15,27 +14,25 @@ use eventhandler::{
 	EventHandler,
 	Update
 };
+use network::Network;
 
 
 mod args;
 mod clients;
 mod eventbuffer;
 mod eventhandler;
+mod network;
 
 
 fn main() {
 	print!("Game Service started.\n");
 
-	let epoll = match EPoll::create() {
-		Ok(epoll)  => epoll,
-		Err(error) => fail!("Error initializing epoll: {}", error)
-	};
-
+	let network           = Network::new();
 	let acceptor          = Acceptor::create(args::port());
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 
-	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
+	match network.epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
 			fail!("Error registering server socket with epoll: {}", error),
 
@@ -45,11 +42,11 @@ fn main() {
 	loop {
 		let frame_time_in_ms = 1000;
 
-		let result = epoll.wait(frame_time_in_ms, |fd| {
+		let result = network.epoll.wait(frame_time_in_ms, |fd| {
 			if fd == acceptor.fd {
 				match acceptor.accept() {
 					Ok(connection) => {
-						match epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
+						match network.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
 							Ok(()) => (),
 
 							Err(error) =>
