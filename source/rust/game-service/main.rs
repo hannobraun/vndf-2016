@@ -23,9 +23,9 @@ fn main() {
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	let acceptor      = Acceptor::create(args::port());
-	let mut events    = Events::new();
-	let mut clientMap = Clients::new();
+	let acceptor    = Acceptor::create(args::port());
+	let mut events  = Events::new();
+	let mut clients = Clients::new();
 
 	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
@@ -65,6 +65,6 @@ fn main() {
 		};
 
 		events.push(events::Update);
-		events::handle_events(events, clientMap, frameTimeInMs as uint);
+		events::handle_events(events, &mut clients, frameTimeInMs as uint);
 	}
 }

@@ -9,8 +9,8 @@ pub struct Clients {
 }
 
 impl Clients {
-	pub fn new() -> ~Clients {
-		~Clients {
+	pub fn new() -> Clients {
+		Clients {
 			map: ~HashMap::<uint, Client>::new()
 		}
 	}
