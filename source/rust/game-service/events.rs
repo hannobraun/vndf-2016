@@ -1,5 +1,3 @@
-use collections::Deque;
-use collections::RingBuf;
 use libc::c_int;
 
 use common::physics::{Body, Radians, Vec2};
@@ -8,11 +6,8 @@ use common::protocol;
 use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
 
 use clients::{Client, Clients};
+use eventbuffer::Events;
 
-
-pub struct Events {
-	buffer: ~Deque<Event>
-}
 
 #[deriving(Eq, Show)]
 pub enum Event {
@@ -22,21 +17,6 @@ pub enum Event {
 	CreateEvent(uint),
 	CommandEvent(c_int, Radians),
 	Update
-}
-
-impl Events {
-	pub fn new() -> ~Events {
-		~Events {
-			buffer: ~RingBuf::<Event>::new() }
-	}
-
-	pub fn push(&mut self, event: Event) {
-		self.buffer.push_back(event)
-	}
-
-	pub fn pull(&mut self) -> Option<Event> {
-		self.buffer.pop_front()
-	}
 }
 
 

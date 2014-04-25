@@ -8,10 +8,11 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
-use events::Events;
+use eventbuffer::Events;
 
 mod args;
 mod clients;
+mod eventbuffer;
 mod events;
 
 
