@@ -1,4 +1,5 @@
 use collections::HashMap;
+use libc::c_int;
 
 use common::physics::Body;
 use common::net::Connection;
@@ -33,6 +34,13 @@ impl Clients {
 		Ok((
 			client_id,
 			self.map.get(&client_id)))
+	}
+
+	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> (uint, &'a mut Client) {
+		let client_id = fd as uint;
+		let client    = self.map.get_mut(&client_id);
+
+		(client_id, client)
 	}
 
 	pub fn remove(&mut self, id: uint) {

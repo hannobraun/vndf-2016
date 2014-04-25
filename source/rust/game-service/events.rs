@@ -111,8 +111,7 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
-	let client_id = fd as uint;
-	let client    = clients.map.get_mut(&client_id);
+	let (_, client) = clients.client_by_fd(fd);
 
 	let result = client.conn.receive_messages(|message| {
 		match Message::from_str(message) {
