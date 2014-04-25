@@ -37,7 +37,7 @@ impl EventHandler {
 			match self.incoming.pop() {
 				Some(event) =>
 					match event {
-						Connect(connection)     => on_connect(connection, clients, &mut self.incoming),
+						Connect(connection)     => self.on_connect(connection, clients),
 						Disconnect(clientId)    => on_disconnect(clientId, clients, &mut self.incoming),
 						DataReceived(fd)        => on_data_received(fd, clients, &mut self.incoming),
 						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
@@ -51,40 +51,40 @@ impl EventHandler {
 			}
 		}
 	}
-}
 
-fn on_connect(connection: Connection, clients: &mut Clients, events: &mut EventBuffer<Event>) {
-	let velocity = Vec2 {
-		x: 30.0,
-		y: 10.0
-	};
+	fn on_connect(&mut self, connection: Connection, clients: &mut Clients) {
+		let velocity = Vec2 {
+			x: 30.0,
+			y: 10.0
+		};
 
-	let ship = Body {
-		position: Vec2 {
-			x: 0.0,
-			y: 0.0
-		},
-		velocity: velocity,
-		attitude: Radians::from_vec(velocity)
-	};
+		let ship = Body {
+			position: Vec2 {
+				x: 0.0,
+				y: 0.0
+			},
+			velocity: velocity,
+			attitude: Radians::from_vec(velocity)
+		};
 
-	let new_client = Client::new(connection, ship);
+		let new_client = Client::new(connection, ship);
 
-	match clients.add(new_client) {
-		Ok((client_id, client)) => {
-			let message = SelfInfo(SelfInfo {
-				id: client_id
-			});
+		match clients.add(new_client) {
+			Ok((client_id, client)) => {
+				let message = SelfInfo(SelfInfo {
+					id: client_id
+				});
 
-			match client.conn.send_message(message.to_str()) {
-				Err(_) => events.push(Disconnect(client_id)),
-				_      => ()
-			}
+				match client.conn.send_message(message.to_str()) {
+					Err(_) => self.incoming.push(Disconnect(client_id)),
+					_      => ()
+				}
 
-			events.push(CreateEvent(client_id))
-		},
+				self.incoming.push(CreateEvent(client_id))
+			},
 
-		Err(client) => client.conn.close()
+			Err(client) => client.conn.close()
+		}
 	}
 }
 
