@@ -11,8 +11,8 @@ use eventhandler::{
 
 
 pub struct Network {
-	pub epoll   : EPoll,
-	pub acceptor: Acceptor
+	epoll   : EPoll,
+	acceptor: Acceptor
 }
 
 impl Network {
