@@ -9,9 +9,10 @@ pub struct Events {
 }
 
 impl Events {
-	pub fn new() -> ~Events {
-		~Events {
-			buffer: RingBuf::<Event>::new() }
+	pub fn new() -> Events {
+		Events {
+			buffer: RingBuf::<Event>::new()
+		}
 	}
 
 	pub fn push(&mut self, event: Event) {
