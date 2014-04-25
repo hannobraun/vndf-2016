@@ -1,4 +1,6 @@
 extern crate common;
 
-mod angle;
-mod vec;
+mod common_test {
+	mod angle;
+	mod vec;
+}
