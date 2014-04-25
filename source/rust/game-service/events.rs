@@ -39,8 +39,9 @@ impl EventHandler {
 					match event {
 						Connect(connection) =>
 							self.on_connect(connection, clients),
+						Disconnect(clientId) =>
+							self.on_disconnect(clientId, clients),
 
-						Disconnect(clientId)    => on_disconnect(clientId, clients, &mut self.incoming),
 						DataReceived(fd)        => on_data_received(fd, clients, &mut self.incoming),
 						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
 						Update(frame_time_in_s) => on_update(clients, &mut self.incoming, frame_time_in_s),
@@ -88,21 +89,21 @@ impl EventHandler {
 			Err(client) => client.conn.close()
 		}
 	}
-}
 
-fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut EventBuffer<Event>) {
-	clients.remove(removed_id);
+	fn on_disconnect(&mut self, removed_id: uint, clients: &mut Clients) {
+		clients.remove(removed_id);
 
-	clients.each(|client_id, client| {
-		let message = Remove(Remove {
-			id: removed_id
-		});
+		clients.each(|client_id, client| {
+			let message = Remove(Remove {
+				id: removed_id
+			});
 
-		match client.conn.send_message(message.to_str()) {
-			Err(_) => events.push(Disconnect(client_id)),
-			_      => ()
-		}
-	})
+			match client.conn.send_message(message.to_str()) {
+				Err(_) => self.incoming.push(Disconnect(client_id)),
+				_      => ()
+			}
+		})
+	}
 }
 
 fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut EventBuffer<Event>) {
