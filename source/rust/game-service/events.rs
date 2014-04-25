@@ -111,7 +111,10 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
-	let (_, client) = clients.client_by_fd(fd);
+	let (_, client) = match clients.client_by_fd(fd) {
+		Some(result) => result,
+		None         => return
+	};
 
 	let result = client.conn.receive_messages(|message| {
 		match Message::from_str(message) {
@@ -173,6 +176,8 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 }
 
 fn on_command(fd: c_int, attitude: Radians, clients: &mut Clients) {
-	let (_, client) = clients.client_by_fd(fd);
-	client.ship.attitude = attitude;
+	match clients.client_by_fd(fd) {
+		Some((_, client)) => client.ship.attitude = attitude,
+		None              => ()
+	}
 }

@@ -36,11 +36,12 @@ impl Clients {
 			self.map.get(&client_id)))
 	}
 
-	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> (uint, &'a mut Client) {
+	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> Option<(uint, &'a mut Client)> {
 		let client_id = fd as uint;
-		let client    = self.map.get_mut(&client_id);
-
-		(client_id, client)
+		match self.map.find_mut(&client_id) {
+			Some(client) => Some((client_id, client)),
+			None         => None
+		}
 	}
 
 	pub fn remove(&mut self, id: uint) {
