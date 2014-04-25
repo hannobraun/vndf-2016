@@ -9,7 +9,7 @@ pub struct Radians(pub f64);
 
 impl Radians {
 	pub fn from_vec(vec: Vec2) -> Radians {
-		Radians(vec.y.atan2(&vec.x))
+		Radians(vec.y.atan2(vec.x))
 	}
 
 	pub fn to_vec(&self) -> Vec2 {
