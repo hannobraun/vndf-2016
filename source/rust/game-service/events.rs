@@ -20,7 +20,7 @@ pub enum Event {
 }
 
 
-pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: uint) {
+pub fn handle_events(events: &mut Events<Event>, clients: &mut Clients, frameTimeInMs: uint) {
 	loop {
 		match events.pull() {
 			Some(event) =>
@@ -40,7 +40,7 @@ pub fn handle_events(events: &mut Events, clients: &mut Clients, frameTimeInMs: 
 	}
 }
 
-fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events) {
+fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events<Event>) {
 	let velocity = Vec2 {
 		x: 30.0,
 		y: 10.0
@@ -75,7 +75,7 @@ fn on_connect(connection: Connection, clients: &mut Clients, events: &mut Events
 	}
 }
 
-fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
+fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events<Event>) {
 	clients.remove(removed_id);
 
 	clients.each(|client_id, client| {
@@ -90,7 +90,7 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 	})
 }
 
-fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
+fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events<Event>) {
 	let (client_id, client) = match clients.client_by_fd(fd) {
 		Some(result) => result,
 		None         => return
@@ -111,7 +111,7 @@ fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
 	}
 }
 
-fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
+fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events<Event>) {
 	clients.mut_each(|client_id, client| {
 		if client_id == created_id {
 			client.created = true;
@@ -129,7 +129,7 @@ fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
 	});
 }
 
-fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
+fn on_update(clients: &mut Clients, events: &mut Events<Event>, dTimeInS: f64) {
 	clients.mut_each(|_, client| {
 		if client.created {
 			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;

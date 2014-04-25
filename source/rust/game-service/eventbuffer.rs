@@ -1,25 +1,23 @@
 use collections::Deque;
 use collections::RingBuf;
 
-use events::Event;
 
-
-pub struct Events {
-	buffer: RingBuf<Event>
+pub struct Events<T> {
+	buffer: RingBuf<T>
 }
 
-impl Events {
-	pub fn new() -> Events {
+impl<T> Events<T> {
+	pub fn new() -> Events<T> {
 		Events {
-			buffer: RingBuf::<Event>::new()
+			buffer: RingBuf::new()
 		}
 	}
 
-	pub fn push(&mut self, event: Event) {
+	pub fn push(&mut self, event: T) {
 		self.buffer.push_back(event)
 	}
 
-	pub fn pull(&mut self) -> Option<Event> {
+	pub fn pull(&mut self) -> Option<T> {
 		self.buffer.pop_front()
 	}
 }
