@@ -2,13 +2,13 @@ use collections::Deque;
 use collections::RingBuf;
 
 
-pub struct Events<T> {
+pub struct EventBuffer<T> {
 	buffer: RingBuf<T>
 }
 
-impl<T> Events<T> {
-	pub fn new() -> Events<T> {
-		Events {
+impl<T> EventBuffer<T> {
+	pub fn new() -> EventBuffer<T> {
+		EventBuffer {
 			buffer: RingBuf::new()
 		}
 	}

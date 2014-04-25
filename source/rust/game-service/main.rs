@@ -8,7 +8,7 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
-use eventbuffer::Events;
+use eventbuffer::EventBuffer;
 
 mod args;
 mod clients;
@@ -25,7 +25,7 @@ fn main() {
 	};
 
 	let acceptor    = Acceptor::create(args::port());
-	let mut events  = Events::new();
+	let mut events  = EventBuffer::new();
 	let mut clients = Clients::new();
 
 	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
