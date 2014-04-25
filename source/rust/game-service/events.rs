@@ -173,6 +173,6 @@ fn on_update(clients: &mut Clients, events: &mut Events, dTimeInS: f64) {
 }
 
 fn on_command(fd: c_int, attitude: Radians, clients: &mut Clients) {
-	let client = clients.map.get_mut(&(fd as uint));
+	let (_, client) = clients.client_by_fd(fd);
 	client.ship.attitude = attitude;
 }
