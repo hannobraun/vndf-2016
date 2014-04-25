@@ -26,7 +26,10 @@ fn main() {
 		}
 	});
 
-	let mut connection = Connection::connect(address, port);
+	let mut connection = match Connection::connect(address, port) {
+		Ok(connection) => connection,
+		Err(error)     => fail!("Error connecting to server: {}", error)
+	};
 
 	loop {
 		connection.receive_messages(|message| {

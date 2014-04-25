@@ -1,5 +1,9 @@
 use libc;
 use libc::c_int;
+use std::io::{
+	IoError,
+	IoResult
+};
 use std::os;
 use std::ptr;
 use std::str;
@@ -25,7 +29,7 @@ impl Connection {
 		}
 	}
 
-	pub fn connect(hostname: ~str, port: ~str) -> Connection {
+	pub fn connect(hostname: ~str, port: ~str) -> IoResult<Connection> {
 		let hints = ffi::addrinfo {
 			ai_flags    : ffi::AI_PASSIVE,
 			ai_family   : ffi::AF_UNSPEC,
@@ -51,7 +55,7 @@ impl Connection {
 			});
 
 			if status != 0 {
-				fail!("Error getting address info: {}", last_error());
+				return Err(IoError::last_error())
 			}
 
 			let fd = ffi::socket(
@@ -60,7 +64,7 @@ impl Connection {
 				(*servinfo).ai_protocol);
 
 			if fd == -1 {
-				fail!("Error creating socket: {}", last_error());
+				return Err(IoError::last_error())
 			}
 
 			status = ffi::connect(
@@ -69,15 +73,12 @@ impl Connection {
 				(*servinfo).ai_addrlen);
 
 			if status != 0 {
-				fail!("Error connecting to server ({}:{}): {}",
-					hostname,
-					port,
-					last_error());
+				return Err(IoError::last_error())
 			}
 
 			ffi::freeaddrinfo(servinfo);
 
-			Connection::from_fd(fd)
+			Ok(Connection::from_fd(fd))
 		}
 	}
 
