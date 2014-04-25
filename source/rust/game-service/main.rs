@@ -65,7 +65,7 @@ fn main() {
 			Err(error) => fail!("Error while waiting for events: {}", error)
 		};
 
-		event_handler.incoming.push(events::Update);
-		event_handler.handle(&mut clients, frame_time_in_ms as uint);
+		event_handler.incoming.push(events::Update(frame_time_in_ms as f64 / 1000.0));
+		event_handler.handle(&mut clients);
 	}
 }

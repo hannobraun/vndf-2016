@@ -16,7 +16,7 @@ pub enum Event {
 	DataReceived(c_int),
 	CreateEvent(uint),
 	CommandEvent(c_int, Radians),
-	Update
+	Update(f64)
 }
 
 
@@ -32,16 +32,16 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients, frame_time_in_ms: uint) {
+	pub fn handle(&mut self, clients: &mut Clients) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) =>
 					match event {
-						Connect(connection)    => on_connect(connection, clients, &mut self.incoming),
-						Disconnect(clientId)   => on_disconnect(clientId, clients, &mut self.incoming),
-						DataReceived(fd)       => on_data_received(fd, clients, &mut self.incoming),
-						CreateEvent(client_id) => on_create(client_id, clients, &mut self.incoming),
-						Update                 => on_update(clients, &mut self.incoming, frame_time_in_ms as f64 / 1000.0),
+						Connect(connection)     => on_connect(connection, clients, &mut self.incoming),
+						Disconnect(clientId)    => on_disconnect(clientId, clients, &mut self.incoming),
+						DataReceived(fd)        => on_data_received(fd, clients, &mut self.incoming),
+						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
+						Update(frame_time_in_s) => on_update(clients, &mut self.incoming, frame_time_in_s),
 
 						CommandEvent(client_id, attitude) =>
 							on_command(client_id, attitude, clients)
