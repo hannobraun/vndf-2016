@@ -43,8 +43,9 @@ impl EventHandler {
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
 							self.on_data_received(fd, clients),
+						CreateEvent(client_id) =>
+							self.on_create(client_id, clients),
 
-						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
 						Update(frame_time_in_s) => on_update(clients, &mut self.incoming, frame_time_in_s),
 
 						CommandEvent(client_id, attitude) =>
@@ -129,24 +130,24 @@ impl EventHandler {
 			Err(_) => self.incoming.push(Disconnect(client_id))
 		}
 	}
-}
 
-fn on_create(created_id: uint, clients: &mut Clients, events: &mut EventBuffer<Event>) {
-	clients.mut_each(|client_id, client| {
-		if client_id == created_id {
-			client.created = true;
-		}
+	fn on_create(&mut self, created_id: uint, clients: &mut Clients) {
+		clients.mut_each(|client_id, client| {
+			if client_id == created_id {
+				client.created = true;
+			}
 
-		let message = Create(Create {
-			id  : created_id,
-			kind: ~"ship"
+			let message = Create(Create {
+				id  : created_id,
+				kind: ~"ship"
+			});
+
+			match client.conn.send_message(message.to_str()) {
+				Err(_) => self.incoming.push(Disconnect(client_id)),
+				_      => ()
+			}
 		});
-
-		match client.conn.send_message(message.to_str()) {
-			Err(_) => events.push(Disconnect(client_id)),
-			_      => ()
-		}
-	});
+	}
 }
 
 fn on_update(clients: &mut Clients, events: &mut EventBuffer<Event>, dTimeInS: f64) {
