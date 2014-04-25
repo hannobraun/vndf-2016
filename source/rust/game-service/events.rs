@@ -31,25 +31,24 @@ impl EventHandler {
 			incoming: EventBuffer::new()
 		}
 	}
-}
 
+	pub fn handle(&mut self, clients: &mut Clients, frameTimeInMs: uint) {
+		loop {
+			match self.incoming.pop() {
+				Some(event) =>
+					match event {
+						Connect(connection)    => on_connect(connection, clients, &mut self.incoming),
+						Disconnect(clientId)   => on_disconnect(clientId, clients, &mut self.incoming),
+						DataReceived(fd)       => on_data_received(fd, clients, &mut self.incoming),
+						CreateEvent(client_id) => on_create(client_id, clients, &mut self.incoming),
+						Update                 => on_update(clients, &mut self.incoming, frameTimeInMs as f64 / 1000.0),
 
-pub fn handle_events(events: &mut EventBuffer<Event>, clients: &mut Clients, frameTimeInMs: uint) {
-	loop {
-		match events.pop() {
-			Some(event) =>
-				match event {
-					Connect(connection)    => on_connect(connection, clients, events),
-					Disconnect(clientId)   => on_disconnect(clientId, clients, events),
-					DataReceived(fd)       => on_data_received(fd, clients, events),
-					CreateEvent(client_id) => on_create(client_id, clients, events),
-					Update                 => on_update(clients, events, frameTimeInMs as f64 / 1000.0),
+						CommandEvent(client_id, attitude) =>
+							on_command(client_id, attitude, clients)
+					},
 
-					CommandEvent(client_id, attitude) =>
-						on_command(client_id, attitude, clients)
-				},
-
-			None => break
+				None => break
+			}
 		}
 	}
 }

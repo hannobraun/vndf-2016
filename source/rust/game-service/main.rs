@@ -66,6 +66,6 @@ fn main() {
 		};
 
 		event_handler.incoming.push(events::Update);
-		events::handle_events(&mut event_handler.incoming, &mut clients, frameTimeInMs as uint);
+		event_handler.handle(&mut clients, frameTimeInMs as uint);
 	}
 }
