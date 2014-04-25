@@ -5,13 +5,13 @@ use events::Event;
 
 
 pub struct Events {
-	buffer: ~RingBuf<Event>
+	buffer: RingBuf<Event>
 }
 
 impl Events {
 	pub fn new() -> ~Events {
 		~Events {
-			buffer: ~RingBuf::<Event>::new() }
+			buffer: RingBuf::<Event>::new() }
 	}
 
 	pub fn push(&mut self, event: Event) {
