@@ -83,8 +83,8 @@ impl Renderer {
 		self.draw_text(
 			text_position,
 			format!("pos: {:i} / {:i}",
-				body.position.x.to_int().unwrap(),
-				body.position.y.to_int().unwrap()));
+				body.position.x as int,
+				body.position.y as int));
 
 		text_position = text_position - Vec2 { x: 0.0, y: 15.0 };
 		self.draw_text(
