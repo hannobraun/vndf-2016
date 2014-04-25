@@ -35,7 +35,7 @@ fn main() {
 	};
 
 	loop {
-		connection.receive_messages(|message| {
+		let result = connection.receive_messages(|message| {
 			match Message::from_str(message) {
 				SelfInfo(self_info) =>
 					print!("{}\n", SelfInfo(self_info).to_str()),
@@ -50,6 +50,11 @@ fn main() {
 					fail!("invalid message ({})\n", message)
 			}
 		});
+
+		match result {
+			Ok(())     => (),
+			Err(error) => fail!("Failed to receive message: {}", error)
+		}
 
 		match rx.try_recv() {
 			Ok(message) => {

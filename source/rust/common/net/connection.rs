@@ -123,13 +123,13 @@ impl Connection {
 		}
 	}
 
-	pub fn receive_messages(&mut self, handler: |~str|) {
+	pub fn receive_messages(&mut self, handler: |~str|) -> Result<(), &'static str> {
 		let result = self.receive(
 			self.in_buffer.slice_from(self.in_buffer_pos));
 
 		let bytes_received = match result {
 			Ok(bytes_received) => bytes_received,
-			Err(error)         => fail!("Receive error: {}", error)
+			Err(error)         => return Err(error)
 		};
 
 		self.in_buffer_pos += bytes_received as uint;
@@ -153,6 +153,8 @@ impl Connection {
 				self.in_buffer_pos -= message_size as uint;
 			}
 		}
+
+		Ok(())
 	}
 
 	fn receive(&self, buffer: &[u8]) -> Result<libc::ssize_t, &'static str> {

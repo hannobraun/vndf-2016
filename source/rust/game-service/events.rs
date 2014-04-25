@@ -113,14 +113,19 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
 	let client = clients.map.get_mut(&(fd as uint));
 
-	client.conn.receive_messages(|message| {
+	let result = client.conn.receive_messages(|message| {
 		match Message::from_str(message) {
 			Command(command) =>
 				events.push(CommandEvent(fd, command.attitude)),
 
 			_ => fail!("Received unexpected message from client: {}", message)
 		}
-	})
+	});
+
+	match result {
+		Ok(())     => (),
+		Err(error) => fail!("Error receiving messages: {}", error)
+	}
 }
 
 fn on_create(created_id: uint, clients: &mut Clients, events: &mut Events) {
