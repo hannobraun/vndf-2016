@@ -20,6 +20,20 @@ pub enum Event {
 }
 
 
+pub struct EventHandler {
+	pub incoming: EventBuffer<Event>
+}
+
+
+impl EventHandler {
+	pub fn new() -> EventHandler {
+		EventHandler {
+			incoming: EventBuffer::new()
+		}
+	}
+}
+
+
 pub fn handle_events(events: &mut EventBuffer<Event>, clients: &mut Clients, frameTimeInMs: uint) {
 	loop {
 		match events.pop() {

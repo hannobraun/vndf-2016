@@ -8,7 +8,7 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
-use eventbuffer::EventBuffer;
+use events::EventHandler;
 
 mod args;
 mod clients;
@@ -24,9 +24,9 @@ fn main() {
 		Err(error) => fail!("Error initializing epoll: {}", error)
 	};
 
-	let acceptor    = Acceptor::create(args::port());
-	let mut events  = EventBuffer::new();
-	let mut clients = Clients::new();
+	let acceptor          = Acceptor::create(args::port());
+	let mut event_handler = EventHandler::new();
+	let mut clients       = Clients::new();
 
 	match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 		Err(error) =>
@@ -48,7 +48,7 @@ fn main() {
 							Err(error) =>
 								fail!("Error adding to epoll: {}", error)
 						}
-						events.push(events::Connect(connection));
+						event_handler.incoming.push(events::Connect(connection));
 					},
 
 					Err(error) =>
@@ -56,7 +56,7 @@ fn main() {
 				}
 			}
 			else {
-				events.push(events::DataReceived(fd))
+				event_handler.incoming.push(events::DataReceived(fd))
 			}
 		});
 
@@ -65,7 +65,7 @@ fn main() {
 			Err(error) => fail!("Error while waiting for events: {}", error)
 		};
 
-		events.push(events::Update);
-		events::handle_events(&mut events, &mut clients, frameTimeInMs as uint);
+		event_handler.incoming.push(events::Update);
+		events::handle_events(&mut event_handler.incoming, &mut clients, frameTimeInMs as uint);
 	}
 }
