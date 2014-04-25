@@ -1,8 +1,11 @@
 extern crate collections;
 extern crate common;
+extern crate getopts;
 extern crate libc;
 extern crate time;
 
+
+use std::os;
 
 use clients::Clients;
 use eventhandler::EventHandler;
@@ -21,7 +24,16 @@ mod network;
 fn main() {
 	print!("Game Service started.\n");
 
-	let network           = Network::new(args::port());
+	let port = match args::port() {
+		Some(port) => port,
+
+		None => {
+			os::set_exit_status(1);
+			return;
+		}
+	};
+
+	let network           = Network::new(port);
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 

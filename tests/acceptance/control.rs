@@ -18,7 +18,9 @@ impl GameService {
 		let port = rand::random::<uint>() % 10000 + 40000;
 
 		let mut process = Process::start(
-			"output/bin/vndf-game-service", [port.to_str()]);
+			"output/bin/vndf-game-service",
+			[
+				~"--port", port.to_str()]);
 		process.read_stdout_line(); // Make sure it's ready
 
 		GameService {

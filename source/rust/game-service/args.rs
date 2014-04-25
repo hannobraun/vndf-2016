@@ -1,12 +1,35 @@
+use getopts::{
+	getopts,
+	optopt,
+	usage
+};
 use std::os;
 
 
-pub fn port() -> ~str {
+static default_port: &'static str = "34481";
+
+
+pub fn port() -> Option<~str> {
 	let args = os::args();
 
-	if args.len() != 2 {
-		fail!("Usage: {:s} <port>\n", args[0]);
-	}
+	let options = [
+		optopt("p", "port", "port to listen on", default_port)
+	];
 
-	args[1]
+	let usage = usage(format!("{} [OPTIONS]", args[0]), options);
+
+	let matches = match getopts(args.tail(), options) {
+		Ok(matches) => matches,
+		Err(fail)   => {
+			print!("{}\n", fail.to_err_msg());
+			print!("{}", usage);
+
+			return None
+		}
+	};
+
+	match matches.opt_str("p") {
+		Some(port) => Some(port),
+		None       => Some(default_port.to_owned())
+	}
 }
