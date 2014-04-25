@@ -36,9 +36,9 @@ fn main() {
 	}
 
 	loop {
-		let frameTimeInMs = 50;
+		let frame_time_in_ms = 50;
 
-		let result = epoll.wait(frameTimeInMs, |fd| {
+		let result = epoll.wait(frame_time_in_ms, |fd| {
 			if fd == acceptor.fd {
 				match acceptor.accept() {
 					Ok(connection) => {
@@ -66,6 +66,6 @@ fn main() {
 		};
 
 		event_handler.incoming.push(events::Update);
-		event_handler.handle(&mut clients, frameTimeInMs as uint);
+		event_handler.handle(&mut clients, frame_time_in_ms as uint);
 	}
 }
