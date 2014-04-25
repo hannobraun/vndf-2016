@@ -69,7 +69,7 @@ impl Core {
 		}
 	}
 
-	pub fn update_positions(&mut self, entities: &mut Entities) {
+	pub fn update_ships(&mut self, entities: &mut Entities) {
 		let message = self.read_message();
 
 		match Message::from_str(message) {
