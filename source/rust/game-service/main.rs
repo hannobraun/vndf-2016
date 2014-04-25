@@ -24,8 +24,8 @@ mod network;
 fn main() {
 	print!("Game Service started.\n");
 
-	let port = match args::port() {
-		Some(port) => port,
+	let args = match args::parse() {
+		Some(args) => args,
 
 		None => {
 			os::set_exit_status(1);
@@ -33,7 +33,7 @@ fn main() {
 		}
 	};
 
-	let network           = Network::new(port);
+	let network           = Network::new(args.port);
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 

@@ -6,14 +6,20 @@ use getopts::{
 use std::os;
 
 
-static default_port: &'static str = "34481";
+pub struct Args {
+	pub port: ~str
+}
 
 
-pub fn port() -> Option<~str> {
+pub fn parse() -> Option<Args> {
+	let mut parsed_args = Args {
+		port: ~"34481"
+	};
+
 	let args = os::args();
 
 	let options = [
-		optopt("p", "port", "port to listen on", default_port)
+		optopt("p", "port", "port to listen on", parsed_args.port)
 	];
 
 	let usage = usage(format!("{} [OPTIONS]", args[0]), options);
@@ -29,7 +35,9 @@ pub fn port() -> Option<~str> {
 	};
 
 	match matches.opt_str("p") {
-		Some(port) => Some(port),
-		None       => Some(default_port.to_owned())
+		Some(port) => parsed_args.port = port,
+		None       => ()
 	}
+
+	Some(parsed_args)
 }
