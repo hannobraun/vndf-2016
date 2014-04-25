@@ -3,7 +3,14 @@ use libc::c_int;
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol;
-use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
+use common::protocol::{
+	Command,
+	Create,
+	Message,
+	Remove,
+	SelfInfo,
+	Update
+};
 
 use clients::{Client, Clients};
 use eventbuffer::EventBuffer;
