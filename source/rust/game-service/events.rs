@@ -117,7 +117,10 @@ impl EventHandler {
 				Command(command) =>
 					self.incoming.push(CommandEvent(fd, command.attitude)),
 
-				_ => fail!("Received unexpected message from client: {}", message)
+				_ =>
+					fail!(
+						"Received unexpected message from client: {}",
+						message)
 			}
 		});
 
