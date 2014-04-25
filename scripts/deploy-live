@@ -26,7 +26,9 @@ mv -f $(basename $CLIENT_ARCHIVE) /srv/http/vndf.de
 mv -f index.html /srv/http/vndf.de
 
 service nginx restart
-restart --quiet $GAME_SERVICE_NAME"
+
+stop $GAME_SERVICE_NAME
+start $GAME_SERVICE_NAME"
 
 ./scripts/tasks/build-game-service &&
 ./scripts/tasks/build-client &&
