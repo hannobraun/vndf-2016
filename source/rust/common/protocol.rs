@@ -9,7 +9,7 @@ use std::str;
 use physics::{Body, Radians};
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub enum Message {
 	SelfInfo(SelfInfo),
 	Create(Create),
@@ -63,12 +63,12 @@ impl Message {
 }
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct SelfInfo {
 	pub id: uint
 }
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Create {
 	pub id  : uint,
 	pub kind: ~str
@@ -80,12 +80,12 @@ pub struct Update {
 	pub body: Body
 }
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Remove {
 	pub id: uint
 }
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Command {
 	pub attitude: Radians
 }
