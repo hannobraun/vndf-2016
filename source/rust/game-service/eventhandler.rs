@@ -42,7 +42,9 @@ impl EventHandler {
 	pub fn handle(&mut self, clients: &mut Clients) {
 		loop {
 			match self.incoming.pop() {
-				Some(event) =>
+				Some(event) => {
+					print!("Incoming event: {}\n", event);
+
 					match event {
 						Connect(connection) =>
 							self.on_connect(connection, clients),
@@ -56,7 +58,8 @@ impl EventHandler {
 							self.on_update(clients, frame_time_in_s),
 						CommandEvent(client_id, attitude) =>
 							self.on_command(client_id, attitude, clients)
-					},
+					}
+				},
 
 				None => break
 			}
