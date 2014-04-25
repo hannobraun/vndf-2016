@@ -31,7 +31,7 @@ pub struct Core {
 }
 
 impl Core {
-	pub fn start(server: ~str) -> ~Core {
+	pub fn start(server: ~str) -> Core {
 		let mut path =
 			os::self_exe_path().expect("Failed to get executable path");
 
@@ -51,7 +51,7 @@ impl Core {
 			process.stderr.take().expect("Expected stderr to be set"));
 		let stdin = process.stdin.take().expect("Expected stdin to be set");
 
-		~Core {
+		Core {
 			process: process,
 			stdout : stdout,
 			stderr : stderr,
