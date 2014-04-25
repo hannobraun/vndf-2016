@@ -3,7 +3,7 @@ use std::os;
 use std::str;
 
 use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
-use common::physics::{Radians, Vec2};
+use common::physics::{Radians};
 
 use entities::Entities;
 
@@ -80,10 +80,7 @@ impl Core {
 			Update(update) =>
 				entities.update_ship(
 					update.id,
-					Vec2 {
-						x: update.body.position.x,
-						y: update.body.position.y
-					}),
+					update.body),
 
 			Remove(remove) =>
 				entities.remove_ship(

@@ -48,8 +48,8 @@ impl Entities {
 		}
 	}
 
-	pub fn update_ship(&mut self, id: Id, position: Vec2) {
-		self.bodies.get_mut(&id).position = position;
+	pub fn update_ship(&mut self, id: Id, body: Body) {
+		self.bodies.insert(id, body);
 	}
 
 	pub fn remove_ship(&mut self, id: Id) {
