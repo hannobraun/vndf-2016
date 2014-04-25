@@ -6,7 +6,7 @@ use common::net::Connection;
 
 
 pub struct Clients {
-	pub map: HashMap<uint, Client>
+	map: HashMap<uint, Client>
 }
 
 impl Clients {
