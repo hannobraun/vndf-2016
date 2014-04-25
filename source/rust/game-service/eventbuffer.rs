@@ -5,7 +5,7 @@ use events::Event;
 
 
 pub struct Events {
-	buffer: ~Deque<Event>
+	buffer: ~RingBuf<Event>
 }
 
 impl Events {
