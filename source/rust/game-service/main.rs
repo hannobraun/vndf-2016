@@ -41,7 +41,7 @@ fn main() {
 	}
 
 	loop {
-		let frame_time_in_ms = 50;
+		let frame_time_in_ms = 1000;
 
 		let result = epoll.wait(frame_time_in_ms, |fd| {
 			if fd == acceptor.fd {
