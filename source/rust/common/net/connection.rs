@@ -124,8 +124,13 @@ impl Connection {
 	}
 
 	pub fn receive_messages(&mut self, handler: |~str|) {
-		let bytes_received = self.receive(
+		let result = self.receive(
 			self.in_buffer.slice_from(self.in_buffer_pos));
+
+		let bytes_received = match result {
+			Ok(bytes_received) => bytes_received,
+			Err(error)         => fail!("Receive error: {}", error)
+		};
 
 		self.in_buffer_pos += bytes_received as uint;
 
@@ -150,7 +155,7 @@ impl Connection {
 		}
 	}
 
-	fn receive(&self, buffer: &[u8]) -> libc::ssize_t {
+	fn receive(&self, buffer: &[u8]) -> Result<libc::ssize_t, &'static str> {
 		unsafe {
 			let bytes_received = ffi::recv(
 				self.fd,
@@ -163,16 +168,16 @@ impl Connection {
 					os::errno() as i32 == ffi::EAGAIN ||
 					os::errno() as i32 == ffi::EWOULDBLOCK) {
 
-				return 0;
+				return Ok(0);
 			}
 			if bytes_received == -1 {
-				fail!("Error receiving message: {}", last_error());
+				return Err(IoError::last_error().desc)
 			}
 			if bytes_received == 0 {
-				fail!("Connection closed by server");
+				return Err("Connection closed by server")
 			}
 
-			bytes_received
+			Ok(bytes_received)
 		}
 	}
 
