@@ -111,7 +111,7 @@ fn on_disconnect(removed_id: uint, clients: &mut Clients, events: &mut Events) {
 }
 
 fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
-	let (_, client) = match clients.client_by_fd(fd) {
+	let (client_id, client) = match clients.client_by_fd(fd) {
 		Some(result) => result,
 		None         => return
 	};
@@ -126,8 +126,8 @@ fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut Events) {
 	});
 
 	match result {
-		Ok(())     => (),
-		Err(error) => fail!("Error receiving messages: {}", error)
+		Ok(()) => (),
+		Err(_) => events.push(Disconnect(client_id))
 	}
 }
 
