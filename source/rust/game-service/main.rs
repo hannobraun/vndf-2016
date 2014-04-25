@@ -8,12 +8,17 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
-use events::EventHandler;
+use eventhandler::{
+	Connect,
+	DataReceived,
+	EventHandler,
+	Update
+};
 
 mod args;
 mod clients;
 mod eventbuffer;
-mod events;
+mod eventhandler;
 
 
 fn main() {
@@ -48,7 +53,7 @@ fn main() {
 							Err(error) =>
 								fail!("Error adding to epoll: {}", error)
 						}
-						event_handler.incoming.push(events::Connect(connection));
+						event_handler.incoming.push(Connect(connection));
 					},
 
 					Err(error) =>
@@ -56,7 +61,7 @@ fn main() {
 				}
 			}
 			else {
-				event_handler.incoming.push(events::DataReceived(fd))
+				event_handler.incoming.push(DataReceived(fd))
 			}
 		});
 
@@ -65,7 +70,7 @@ fn main() {
 			Err(error) => fail!("Error while waiting for events: {}", error)
 		};
 
-		event_handler.incoming.push(events::Update(frame_time_in_ms as f64 / 1000.0));
+		event_handler.incoming.push(Update(frame_time_in_ms as f64 / 1000.0));
 		event_handler.handle(&mut clients);
 	}
 }
