@@ -17,7 +17,7 @@ impl<T> EventBuffer<T> {
 		self.buffer.push_back(event)
 	}
 
-	pub fn pull(&mut self) -> Option<T> {
+	pub fn pop(&mut self) -> Option<T> {
 		self.buffer.pop_front()
 	}
 }

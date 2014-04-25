@@ -22,7 +22,7 @@ pub enum Event {
 
 pub fn handle_events(events: &mut EventBuffer<Event>, clients: &mut Clients, frameTimeInMs: uint) {
 	loop {
-		match events.pull() {
+		match events.pop() {
 			Some(event) =>
 				match event {
 					Connect(connection)    => on_connect(connection, clients, events),
