@@ -1,4 +1,5 @@
 use common::net::Acceptor;
+use common::net::epoll;
 use common::net::epoll::EPoll;
 
 
@@ -15,6 +16,13 @@ impl Network {
 		};
 
 		let acceptor = Acceptor::create(port);
+
+		match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
+			Ok(()) => (),
+
+			Err(error) =>
+				fail!("Error registering server socket with epoll: {}", error)
+		}
 
 		Network {
 			epoll   : epoll,

@@ -30,13 +30,6 @@ fn main() {
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 
-	match network.epoll.add(network.acceptor.fd, epoll::ffi::EPOLLIN) {
-		Err(error) =>
-			fail!("Error registering server socket with epoll: {}", error),
-
-		_ => ()
-	}
-
 	loop {
 		let frame_time_in_ms = 1000;
 
