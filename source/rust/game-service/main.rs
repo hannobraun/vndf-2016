@@ -5,15 +5,14 @@ extern crate time;
 
 
 use clients::Clients;
-use eventhandler::{
-	EventHandler,
-	Update
-};
+use eventhandler::EventHandler;
+use events::Update;
 use network::Network;
 
 
 mod args;
 mod clients;
+mod events;
 mod eventbuffer;
 mod eventhandler;
 mod network;

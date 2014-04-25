@@ -14,21 +14,19 @@ use common::protocol::{
 
 use clients::{Client, Clients};
 use eventbuffer::EventBuffer;
-
-
-#[deriving(Eq, Show)]
-pub enum Event {
-	Connect(Connection),
-	Disconnect(uint),
-	DataReceived(c_int),
-	CreateEvent(uint),
-	CommandEvent(c_int, Radians),
-	Update(f64)
-}
+use events::{
+	CommandEvent,
+	Connect,
+	CreateEvent,
+	DataReceived,
+	Disconnect,
+	GameEvent,
+	Update
+};
 
 
 pub struct EventHandler {
-	pub incoming: EventBuffer<Event>
+	pub incoming: EventBuffer<GameEvent>
 }
 
 

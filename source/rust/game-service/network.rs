@@ -3,10 +3,10 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use eventbuffer::EventBuffer;
-use eventhandler::{
+use events::{
 	Connect,
 	DataReceived,
-	Event,
+	GameEvent
 };
 
 
@@ -37,7 +37,7 @@ impl Network {
 		}
 	}
 
-	pub fn update(&self, timeout_in_ms: u32, events: &mut EventBuffer<Event>) {
+	pub fn update(&self, timeout_in_ms: u32, events: &mut EventBuffer<GameEvent>) {
 		let result = self.epoll.wait(timeout_in_ms, |fd| {
 			if fd == self.acceptor.fd {
 				let connection = match self.acceptor.accept() {
