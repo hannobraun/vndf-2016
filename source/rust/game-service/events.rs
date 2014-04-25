@@ -41,8 +41,9 @@ impl EventHandler {
 							self.on_connect(connection, clients),
 						Disconnect(clientId) =>
 							self.on_disconnect(clientId, clients),
+						DataReceived(fd) =>
+							self.on_data_received(fd, clients),
 
-						DataReceived(fd)        => on_data_received(fd, clients, &mut self.incoming),
 						CreateEvent(client_id)  => on_create(client_id, clients, &mut self.incoming),
 						Update(frame_time_in_s) => on_update(clients, &mut self.incoming, frame_time_in_s),
 
@@ -104,26 +105,26 @@ impl EventHandler {
 			}
 		})
 	}
-}
 
-fn on_data_received(fd: c_int, clients: &mut Clients, events: &mut EventBuffer<Event>) {
-	let (client_id, client) = match clients.client_by_fd(fd) {
-		Some(result) => result,
-		None         => return
-	};
+	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients) {
+		let (client_id, client) = match clients.client_by_fd(fd) {
+			Some(result) => result,
+			None         => return
+		};
 
-	let result = client.conn.receive_messages(|message| {
-		match Message::from_str(message) {
-			Command(command) =>
-				events.push(CommandEvent(fd, command.attitude)),
+		let result = client.conn.receive_messages(|message| {
+			match Message::from_str(message) {
+				Command(command) =>
+					self.incoming.push(CommandEvent(fd, command.attitude)),
 
-			_ => fail!("Received unexpected message from client: {}", message)
+				_ => fail!("Received unexpected message from client: {}", message)
+			}
+		});
+
+		match result {
+			Ok(()) => (),
+			Err(_) => self.incoming.push(Disconnect(client_id))
 		}
-	});
-
-	match result {
-		Ok(()) => (),
-		Err(_) => events.push(Disconnect(client_id))
 	}
 }
 
