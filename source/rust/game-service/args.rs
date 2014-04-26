@@ -12,14 +12,14 @@ pub struct Args {
 
 
 pub fn parse() -> Option<Args> {
-	let mut parsed_args = Args {
+	let mut args = Args {
 		port: ~"34481"
 	};
 
 	let args_as_strs = os::args();
 
 	let options = [
-		optopt("p", "port", "port to listen on", parsed_args.port)
+		optopt("p", "port", "port to listen on", args.port)
 	];
 
 	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]), options);
@@ -35,9 +35,9 @@ pub fn parse() -> Option<Args> {
 	};
 
 	match matches.opt_str("p") {
-		Some(port) => parsed_args.port = port,
+		Some(port) => args.port = port,
 		None       => ()
 	}
 
-	Some(parsed_args)
+	Some(args)
 }
