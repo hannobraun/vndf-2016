@@ -16,15 +16,15 @@ pub fn parse() -> Option<Args> {
 		port: ~"34481"
 	};
 
-	let args = os::args();
+	let args_as_strs = os::args();
 
 	let options = [
 		optopt("p", "port", "port to listen on", parsed_args.port)
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args[0]), options);
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]), options);
 
-	let matches = match getopts(args.tail(), options) {
+	let matches = match getopts(args_as_strs.tail(), options) {
 		Ok(matches) => matches,
 		Err(fail)   => {
 			print!("{}\n", fail.to_err_msg());
