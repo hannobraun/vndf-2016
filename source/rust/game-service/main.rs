@@ -9,7 +9,10 @@ use std::os;
 
 use clients::Clients;
 use eventhandler::EventHandler;
-use events::Update;
+use events::{
+	Init,
+	Update
+};
 use network::Network;
 
 
@@ -38,6 +41,8 @@ fn main() {
 	let mut clients       = Clients::new();
 
 	let frame_time_in_ms = args.frame_time;
+
+	event_handler.incoming.push(Init);
 
 	loop {
 		network.update(frame_time_in_ms, &mut event_handler.incoming);
