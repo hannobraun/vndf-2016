@@ -11,5 +11,6 @@ pub enum GameEvent {
 	DataReceived(c_int),
 	CreateEvent(uint),
 	CommandEvent(c_int, Radians),
+	Init,
 	Update(f64)
 }

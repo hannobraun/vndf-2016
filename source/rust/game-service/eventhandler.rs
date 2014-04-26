@@ -21,6 +21,7 @@ use events::{
 	DataReceived,
 	Disconnect,
 	GameEvent,
+	Init,
 	Update
 };
 
@@ -44,6 +45,8 @@ impl EventHandler {
 					print!("Incoming event: {}\n", event);
 
 					match event {
+						Init =>
+							(), // nothing do do, it just exists for the logging
 						Connect(connection) =>
 							self.on_connect(connection, clients),
 						Disconnect(clientId) =>
