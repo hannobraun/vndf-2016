@@ -37,9 +37,9 @@ fn main() {
 	let mut event_handler = EventHandler::new();
 	let mut clients       = Clients::new();
 
-	loop {
-		let frame_time_in_ms = 1000;
+	let frame_time_in_ms = args.frame_time;
 
+	loop {
 		network.update(frame_time_in_ms, &mut event_handler.incoming);
 
 		event_handler.incoming.push(Update(frame_time_in_ms as f64 / 1000.0));
