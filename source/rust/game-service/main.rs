@@ -25,8 +25,6 @@ mod network;
 
 
 fn main() {
-	print!("Game Service started.\n");
-
 	let args = match args::parse() {
 		Some(args) => args,
 
