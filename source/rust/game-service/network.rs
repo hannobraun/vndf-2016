@@ -16,7 +16,7 @@ pub struct Network {
 }
 
 impl Network {
-	pub fn new(port: ~str) -> Network {
+	pub fn new(port: &str) -> Network {
 		let epoll = match EPoll::create() {
 			Ok(epoll)  => epoll,
 			Err(error) => fail!("Error initializing epoll: {}", error)
