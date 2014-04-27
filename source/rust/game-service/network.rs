@@ -42,7 +42,19 @@ impl Network {
 		}
 	}
 
-	pub fn update(&self, timeout_in_ms: u32, events: &mut EventBuffer<GameEvent>) {
+	pub fn update(&mut self, timeout_in_ms: u32, events: &mut EventBuffer<GameEvent>, clients: &mut Clients) {
+		loop {
+			match self.incoming.pop() {
+				Some(event) => match event {
+					Close(fd) => match clients.remove(fd) {
+						Some(client) => client.conn.close(),
+						None         => ()
+					}
+				},
+
+				None => break
+			}
+		}
 		let result = self.epoll.wait(timeout_in_ms, |fd| {
 			if fd == self.acceptor.fd {
 				let connection = match self.acceptor.accept() {
