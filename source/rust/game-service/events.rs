@@ -14,3 +14,8 @@ pub enum GameEvent {
 	Init,
 	Update(f64)
 }
+
+#[deriving(Eq, Show)]
+pub enum NetworkEvent {
+	Close(uint)
+}
