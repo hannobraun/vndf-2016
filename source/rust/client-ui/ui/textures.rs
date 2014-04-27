@@ -43,7 +43,10 @@ impl Textures {
 	}
 
 	pub fn get<'a>(&'a self, key: &~str) -> &'a Texture {
-		self.map.get(key)
+		match self.map.find(key) {
+			Some(texture) => texture,
+			None          => fail!("Texture not found: {}", key)
+		}
 	}
 
 	pub fn add(&mut self, key: ~str, texture: Texture) {
