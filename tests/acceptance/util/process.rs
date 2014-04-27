@@ -28,6 +28,13 @@ impl Process {
 		}
 	}
 
+	pub fn kill(&mut self) {
+		match self.process.signal_kill() {
+			Ok(())     => (),
+			Err(error) => print!("Error killing process: {}\n", error)
+		}
+	}
+
 	pub fn read_stdout_line(&mut self) -> ~str {
 		match self.stdout.read_line() {
 			Ok(line)   => line,
@@ -45,10 +52,7 @@ impl Process {
 
 impl Drop for Process {
 	fn drop(&mut self) {
-		match self.process.signal_kill() {
-			Ok(_)      => (), // nothing to do
-			Err(error) => print!("ERROR Failed to kill process: {}\n", error)
-		}
+		self.kill();
 
 		print!(
 			"stdout: {}\n",
