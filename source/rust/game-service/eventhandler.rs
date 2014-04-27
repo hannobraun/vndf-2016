@@ -15,7 +15,6 @@ use common::protocol::{
 use clients::{Client, Clients};
 use eventbuffer::EventBuffer;
 use events::{
-	Close,
 	CommandEvent,
 	Connect,
 	CreateEvent,
@@ -23,7 +22,6 @@ use events::{
 	Disconnect,
 	GameEvent,
 	Init,
-	NetworkEvent,
 	Update
 };
 
@@ -40,7 +38,7 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
+	pub fn handle(&mut self, clients: &mut Clients) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) => {
@@ -50,7 +48,7 @@ impl EventHandler {
 						Init =>
 							(), // nothing do do, it just exists for the logging
 						Connect(connection) =>
-							self.on_connect(connection, clients, net_events),
+							self.on_connect(connection, clients),
 						Disconnect(clientId) =>
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
@@ -69,7 +67,7 @@ impl EventHandler {
 		}
 	}
 
-	fn on_connect(&mut self, connection: Connection, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
+	fn on_connect(&mut self, connection: Connection, clients: &mut Clients) {
 		let velocity = Vec2 {
 			x: 30.0,
 			y: 10.0
@@ -85,23 +83,18 @@ impl EventHandler {
 		};
 
 		let new_client = Client::new(connection, ship);
+		let (client_id, client) = clients.add(new_client);
 
-		match clients.add(new_client) {
-			Ok((client_id, client)) => {
-				let message = SelfInfo(SelfInfo {
-					id: client_id
-				});
+		let message = SelfInfo(SelfInfo {
+			id: client_id
+		});
 
-				match client.conn.send_message(message.to_str()) {
-					Err(_) => self.incoming.push(Disconnect(client_id)),
-					_      => ()
-				}
-
-				self.incoming.push(CreateEvent(client_id))
-			},
-
-			Err(client) => net_events.push(Close(client.conn.fd as uint))
+		match client.conn.send_message(message.to_str()) {
+			Err(_) => self.incoming.push(Disconnect(client_id)),
+			_      => ()
 		}
+
+		self.incoming.push(CreateEvent(client_id))
 	}
 
 	fn on_disconnect(&mut self, removed_id: uint, clients: &mut Clients) {

@@ -16,24 +16,13 @@ impl Clients {
 		}
 	}
 
-	/**
-	 * Adds a client.
-	 *
-	 * The return value is a bit complicated. The reason for this is that
-	 * calling this function will move the client into it, making it unusable
-	 * for the caller.
-	 * If the adding was successful, we borrow it back to the caller, so they
-	 * can do whatever they need.
-	 * If the adding was unsuccessful, we have no need for the client and move
-	 * it back to the caller.
-	 */
-	pub fn add<'a>(&'a mut self, client: Client) -> Result<(uint, &'a Client), Client> {
+	pub fn add<'a>(&'a mut self, client: Client) -> (uint, &'a Client) {
 		let client_id = client.conn.fd as uint;
 		self.map.insert(client_id, client);
 
-		Ok((
+		(
 			client_id,
-			self.map.get(&client_id)))
+			self.map.get(&client_id))
 	}
 
 	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> Option<(uint, &'a mut Client)> {
