@@ -3,7 +3,12 @@ use rand;
 use std::intrinsics::TypeId;
 
 use common::physics::Radians;
-use common::protocol::{Command, Message, Update};
+use common::protocol::{
+	Command,
+	Message,
+	SelfInfo,
+	Update
+};
 
 use util::Process;
 
@@ -48,6 +53,13 @@ impl ClientCore {
 
 	pub fn ignore(&mut self, type_id: TypeId) {
 		self.ignored.insert(type_id);
+	}
+
+	pub fn expect_self_info(&mut self) -> SelfInfo {
+		match self.next_message() {
+			SelfInfo(self_info) => self_info,
+			message @ _         => fail!("Unexpected message: {}", message)
+		}
 	}
 
 	pub fn expect_update(&mut self) -> Update {
