@@ -16,7 +16,8 @@ use events::{
 pub struct Network {
 	epoll   : EPoll,
 	acceptor: Acceptor,
-	incoming: EventBuffer<NetworkEvent>
+
+	pub incoming: EventBuffer<NetworkEvent>
 }
 
 impl Network {
