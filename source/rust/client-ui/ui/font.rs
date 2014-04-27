@@ -55,7 +55,10 @@ impl Font {
 	}
 
 	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
-		self.glyphs.get(&c)
+		match self.glyphs.find(&c) {
+			Some(glyph) => glyph,
+			None        => fail!("No such glyph: {}", c)
+		}
 	}
 }
 
