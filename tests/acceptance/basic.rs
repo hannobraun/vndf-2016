@@ -1,9 +1,67 @@
 use std::intrinsics::TypeId;
 
-use common::protocol::{Create, SelfInfo};
+use common::protocol::{
+	Create,
+	Remove,
+	SelfInfo
+};
 use common::physics::{Degrees, Radians};
 
 use control::{ClientCore, GameService};
+
+
+#[test]
+fn it_should_send_updates_for_connected_clients() {
+	let     game_service = GameService::start();
+	let mut client_a     = ClientCore::start(game_service.port);
+	let mut client_b     = ClientCore::start(game_service.port);
+
+	client_a.ignore(TypeId::of::<Create>());
+	client_a.ignore(TypeId::of::<Remove>());
+	client_b.ignore(TypeId::of::<Create>());
+
+	let client_a_id = client_a.expect_self_info().id;
+	let client_b_id = client_b.expect_self_info().id;
+
+	let mut update_for_a = false;
+	let mut update_for_b = false;
+	for _ in range(0, 10) {
+		let update = client_a.expect_update();
+
+		if update.id == client_a_id {
+			update_for_a = true;
+		}
+		if update.id == client_b_id {
+			update_for_b = true;
+		}
+	}
+
+	assert!(update_for_a);
+	assert!(update_for_b);
+
+	client_b.stop();
+
+	for _ in range(0, 10) {
+		client_a.expect_update();
+	}
+
+	update_for_a = false;
+	update_for_b = false;
+
+	for _ in range(0, 10) {
+		let update = client_a.expect_update();
+
+		if update.id == client_a_id {
+			update_for_a = true;
+		}
+		if update.id == client_b_id {
+			update_for_b = true;
+		}
+	}
+
+	assert!(update_for_a);
+	assert!(!update_for_b);
+}
 
 
 #[test]
