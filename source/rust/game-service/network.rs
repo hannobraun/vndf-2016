@@ -2,17 +2,21 @@ use common::net::Acceptor;
 use common::net::epoll;
 use common::net::epoll::EPoll;
 
+use clients::Clients;
 use eventbuffer::EventBuffer;
 use events::{
+	Close,
 	Connect,
 	DataReceived,
-	GameEvent
+	GameEvent,
+	NetworkEvent
 };
 
 
 pub struct Network {
 	epoll   : EPoll,
-	acceptor: Acceptor
+	acceptor: Acceptor,
+	incoming: EventBuffer<NetworkEvent>
 }
 
 impl Network {
@@ -33,7 +37,8 @@ impl Network {
 
 		Network {
 			epoll   : epoll,
-			acceptor: acceptor
+			acceptor: acceptor,
+			incoming: EventBuffer::new()
 		}
 	}
 
