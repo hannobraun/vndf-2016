@@ -15,6 +15,7 @@ use common::protocol::{
 use clients::{Client, Clients};
 use eventbuffer::EventBuffer;
 use events::{
+	Close,
 	CommandEvent,
 	Connect,
 	CreateEvent,
@@ -22,6 +23,7 @@ use events::{
 	Disconnect,
 	GameEvent,
 	Init,
+	NetworkEvent,
 	Update
 };
 
@@ -38,7 +40,7 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients) {
+	pub fn handle(&mut self, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) => {
@@ -48,7 +50,7 @@ impl EventHandler {
 						Init =>
 							(), // nothing do do, it just exists for the logging
 						Connect(connection) =>
-							self.on_connect(connection, clients),
+							self.on_connect(connection, clients, net_events),
 						Disconnect(clientId) =>
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
@@ -67,7 +69,7 @@ impl EventHandler {
 		}
 	}
 
-	fn on_connect(&mut self, connection: Connection, clients: &mut Clients) {
+	fn on_connect(&mut self, connection: Connection, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
 		let velocity = Vec2 {
 			x: 30.0,
 			y: 10.0
@@ -98,7 +100,7 @@ impl EventHandler {
 				self.incoming.push(CreateEvent(client_id))
 			},
 
-			Err(client) => client.conn.close()
+			Err(client) => net_events.push(Close(client.conn.fd as uint))
 		}
 	}
 
