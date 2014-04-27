@@ -51,6 +51,10 @@ impl ClientCore {
 		}
 	}
 
+	pub fn stop(&mut self) {
+		self.process.kill();
+	}
+
 	pub fn ignore(&mut self, type_id: TypeId) {
 		self.ignored.insert(type_id);
 	}
