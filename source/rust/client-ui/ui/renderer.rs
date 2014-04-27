@@ -53,9 +53,14 @@ impl Renderer {
 				0.0);
 
 			for (id, &body) in bodies.iter() {
+				let visual = match visuals.find(id) {
+					Some(visual) => visual,
+					None         => fail!("Visual not found: {}", id)
+				};
+
 				self.draw_ship(
 					body,
-					visuals.get(id));
+					visual);
 			}
 		}
 		gl::PopMatrix();
