@@ -44,8 +44,8 @@ impl Clients {
 		}
 	}
 
-	pub fn remove(&mut self, id: uint) {
-		self.map.remove(&id);
+	pub fn remove(&mut self, id: uint) -> Option<Client> {
+		self.map.pop(&id)
 	}
 
 	pub fn each(&self, f: |uint, &Client|) {
