@@ -29,6 +29,7 @@ mod args;
 mod components;
 mod core;
 mod entities;
+mod headless;
 mod images;
 mod io;
 mod ui;
@@ -54,7 +55,13 @@ fn main() {
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
 	let renderer = Renderer::init(&*window, textures, font);
-	let input    = ui::Input::new(window.clone());
+
+	let input = if args.headless {
+		~headless::Input::new() as ~Input
+	}
+	else {
+		~ui::Input::new(window.clone()) as ~Input
+	};
 
 	let mut entities = Entities::new();
 
