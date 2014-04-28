@@ -1,141 +1,63 @@
-use std::io::{BufferedReader, PipeStream, Process};
-use std::os;
-use std::str;
-
+use common::net::Connection;
 use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
 use common::physics::{Radians};
 
 use entities::Entities;
 
 
-// This module starts the vndf-core executable and reads its messages, updating
-// the ships. The approach used here to do this is certainly not ideal:
-// - The I/O used to read the messages is blocking.
-// - We're reading this without the use of any tasks or anything else that would
-//   introduce asynchronicity.
-// - Ergo, we're binding the rendering rate to the rate of messages received
-//   from vndf-core.
-// I've tried to prevent just that by reading from vndf-core in a task and
-// reading from the task without blocking. This didn't work. There were a lot of
-// timing issues that I was unable to track down.
-// For now, this ghetto solution works well enough. However, this code should be
-// revisited, once task support is more solid, or, if it is already solid, I've
-// learned how to use it correctly, or until Rust grows asynch I/O.
-
-
 pub struct Core {
-	process: Process,
-	stdout : BufferedReader<PipeStream>,
-	stderr : BufferedReader<PipeStream>,
-	stdin  : PipeStream
+	conn: Connection,
+	id  : Option<uint>
 }
 
 impl Core {
 	pub fn start(server: ~str) -> Core {
-		let mut path =
-			os::self_exe_path().expect("Failed to get executable path");
-
-		path.push("vndf-client-core");
-
-		let path_str = path.as_str().expect("Failed to convert path to string");
-		let args = [server, ~"34481"];
-
-		let mut process = match Process::new(path_str, args) {
-			Ok(process) => process,
-			Err(error)  => fail!("Failed to create process: {}", error)
+		let connection = match Connection::connect(server, ~"34481") {
+			Ok(connection) => connection,
+			Err(error)     => fail!("Error connecting to server: {}", error)
 		};
 
-		let stdout = BufferedReader::new(
-			process.stdout.take().expect("Expected stdout to be set"));
-		let stderr = BufferedReader::new(
-			process.stderr.take().expect("Expected stderr to be set"));
-		let stdin = process.stdin.take().expect("Expected stdin to be set");
-
 		Core {
-			process: process,
-			stdout : stdout,
-			stderr : stderr,
-			stdin  : stdin
-		}
-	}
-
-	pub fn get_self_id(&mut self) -> uint {
-		let message = self.read_message();
-
-		match Message::from_str(message) {
-			SelfInfo(self_info) => self_info.id,
-
-			_  => fail!("unexpected message ({})", message)
+			conn: connection,
+			id  : None
 		}
 	}
 
 	pub fn update_ships(&mut self, entities: &mut Entities) {
-		let message = self.read_message();
+		let result = self.conn.receive_messages(|message| {
+			match Message::from_str(message) {
+				SelfInfo(self_info) =>
+					entities.self_id = Some(self_info.id),
 
-		match Message::from_str(message) {
-			Create(create) =>
-				entities.create_ship(
-					create.id),
+				Create(create) =>
+					entities.create_ship(
+						create.id),
 
-			Update(update) =>
-				entities.update_ship(
-					update.id,
-					update.body),
+				Update(update) =>
+					entities.update_ship(
+						update.id,
+						update.body),
 
-			Remove(remove) =>
-				entities.remove_ship(
-					remove.id),
+				Remove(remove) =>
+					entities.remove_ship(
+						remove.id),
 
-			_ => fail!("unexpected message ({})", message)
+				_ =>
+					fail!("Unexpected message: {}", message)
+			}
+		});
+
+		match result {
+			Ok(())     => (),
+			Err(error) => fail!("Failed to receive message: {}", error)
 		}
 	}
 
 	pub fn send_command(&mut self, attitude: Radians) {
 		let command = Command(Command { attitude: attitude });
-		match self.stdin.write_line(command.to_str()) {
-			Ok(_) => (),
-			Err(error) => fail!("Error writing command: {}", error)
+		match self.conn.send_message(command.to_str()) {
+			Ok(())     => (),
+			Err(error) => fail!("Error sending message: {}", error)
 		}
 	}
-
-	fn read_message(&mut self) -> ~str {
-		match self.stdout.read_line() {
-			Ok(message) => message,
-			Err(error)  => {
-				print!("Failed to read message from client-core: {}\n", error);
-				self.handle_error()
-			}
-		}
-	}
-
-	fn handle_error(&mut self) -> ! {
-		print!("Outputs of core:\n");
-		print!("stdout:\n{}\n", reader_to_string(&mut self.stdout));
-		print!("stderr:\n{}\n", reader_to_string(&mut self.stderr));
-		fail!();
-	}
-}
-
-impl Drop for Core {
-	fn drop(&mut self) {
-		// Make sure the process is killed, when Core drops out of scope.
-		// Sometimes client-core is killed automatically on exit, sometimes it
-		// hangs around and prevents the process from exiting. This seems to
-		// depend on what I do with the PipeStreams. What exactly causes this
-		// behavior is beyond my current understanding and killing it
-		// explicitely works fine, so there.
-		let _ = self.process.signal_kill();
-	}
-}
-
-
-fn reader_to_string(reader: &mut BufferedReader<PipeStream>) -> ~str {
-	let reader_contents = match reader.read_to_end() {
-		Ok(contents) => contents,
-		Err(error)   => fail!("{}", error)
-	};
-	let contents_as_str = str::from_utf8(reader_contents.as_slice())
-		.expect("Failed to convert reader contents to string");
-	
-	contents_as_str.to_owned()
 }
