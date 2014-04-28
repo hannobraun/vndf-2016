@@ -24,14 +24,14 @@ impl Input {
 }
 
 impl io::Input<Window> for Input {
-	fn apply(&self, window: &Window, controls: &mut Components<Control>) {
+	fn apply(&self, _: &Window, controls: &mut Components<Control>) {
 		let angular_velocity = 0.1;
 		let mut attitude_change = 0.0;
 
-		if window.key_pressed(glfw::KeyLeft) {
+		if self.window.key_pressed(glfw::KeyLeft) {
 			attitude_change += angular_velocity;
 		}
-		if window.key_pressed(glfw::KeyRight) {
+		if self.window.key_pressed(glfw::KeyRight) {
 			attitude_change -= angular_velocity;
 		}
 
@@ -44,7 +44,7 @@ impl io::Input<Window> for Input {
 				control.attitude = control.attitude + Radians(f64::consts::PI * 2.0)
 			}
 
-			if window.key_pressed(glfw::KeyEnter) {
+			if self.window.key_pressed(glfw::KeyEnter) {
 				control.send = true;
 			}
 		}
