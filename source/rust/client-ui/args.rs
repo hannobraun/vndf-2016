@@ -1,12 +1,51 @@
+use getopts::{
+	getopts,
+	optopt,
+	usage
+};
 use std::os;
 
 
-pub fn get_server_address() -> ~str {
-	let args = os::args();
+pub struct Args {
+	pub address: ~str,
+	pub port   : ~str
+}
 
-	if args.len() != 2 {
-		fail!("Usage: {:s} <server_address>\n", args[0]);
+
+pub fn parse() -> Option<Args> {
+	let mut args = Args {
+		address: ~"localhost",
+		port   : ~"34481"
+	};
+
+	let args_as_strs = os::args();
+
+	let options = [
+		optopt("a", "address", "address of the server", args.address),
+		optopt("p", "port"   , "port to connect to"   , args.port)
+	];
+
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]), options);
+
+	let matches = match getopts(args_as_strs.tail(), options) {
+		Ok(matches) => matches,
+		Err(fail)   => {
+			print!("{}\n", fail.to_err_msg());
+			print!("{}", usage);
+
+			return None
+		}
+	};
+
+	match matches.opt_str("a") {
+		Some(address) => args.address = address,
+		None          => ()
 	}
 
-	args[1]
+	match matches.opt_str("p") {
+		Some(port) => args.port = port,
+		None       => ()
+	}
+
+	Some(args)
 }

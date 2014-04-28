@@ -1,4 +1,5 @@
 extern crate collections;
+extern crate getopts;
 extern crate libc;
 
 extern crate freetype;
@@ -31,7 +32,12 @@ fn main() {
 	let screen_width  = 800;
 	let screen_height = 600;
 
-	let mut core = Core::start(args::get_server_address());
+	let args = match args::parse() {
+		Some(args) => args,
+		None       => fail!("Failed to parse arguments")
+	};
+
+	let mut core = Core::start(args.address);
 
 	let     window   = Window::create(screen_width, screen_height);
 	let mut textures = Textures::init(&window);
