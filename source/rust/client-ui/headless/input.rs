@@ -35,15 +35,17 @@ impl Input {
 }
 
 impl io::Input for Input {
-	fn apply(&self, _: &mut Components<Control>) {
+	fn apply(&self, _: &mut Components<Control>) -> bool {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
-				Empty        => return,
+				Empty        => return false,
 				Disconnected => fail!("Error receiving input: {}", error)
 			}
 		};
 
-		print!("stdin: {}\n", message)
+		print!("stdin: {}\n", message);
+
+		false
 	}
 }

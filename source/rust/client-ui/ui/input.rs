@@ -24,7 +24,7 @@ impl Input {
 }
 
 impl io::Input for Input {
-	fn apply(&self, controls: &mut Components<Control>) {
+	fn apply(&self, controls: &mut Components<Control>) -> bool {
 		self.window.poll_events();
 
 		let angular_velocity = 0.1;
@@ -50,5 +50,7 @@ impl io::Input for Input {
 				control.send = true;
 			}
 		}
+
+		self.window.should_close()
 	}
 }

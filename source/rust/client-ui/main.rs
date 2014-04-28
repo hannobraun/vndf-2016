@@ -74,7 +74,8 @@ fn main() {
 
 	let mut cam = Vec2 { x: 0.0, y: 0.0 };
 
-	while !window.should_close() {
+	let mut should_close = false;
+	while !should_close {
 		core.update_ships(&mut entities);
 
 		match entities.bodies.find(&entities.self_id.expect("self id")) {
@@ -85,7 +86,7 @@ fn main() {
 			_ => ()
 		}
 
-		input.apply(&mut entities.controls);
+		should_close = input.apply(&mut entities.controls);
 
 		for (_, control) in entities.controls.mut_iter() {
 			if control.send {

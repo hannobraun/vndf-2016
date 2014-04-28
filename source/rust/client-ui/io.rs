@@ -11,7 +11,7 @@ use entities::Components;
 
 
 pub trait Input {
-	fn apply(&self, controls: &mut Components<Control>);
+	fn apply(&self, controls: &mut Components<Control>) -> bool;
 }
 
 pub trait Renderer {
