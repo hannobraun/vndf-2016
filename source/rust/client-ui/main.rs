@@ -9,6 +9,9 @@ extern crate stb_image;
 
 extern crate common;
 
+
+use std::rc::Rc;
+
 use common::physics::Vec2;
 
 use core::Core;
@@ -46,12 +49,12 @@ fn main() {
 
 	let mut core = Core::start(args.address, args.port);
 
-	let     window   = Window::create(screen_width, screen_height);
-	let mut textures = Textures::init(&window);
+	let     window   = Rc::new(Window::create(screen_width, screen_height));
+	let mut textures = Textures::init(&*window);
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
-	let renderer = Renderer::init(&window, textures, font);
-	let input    = ui::Input::new();
+	let renderer = Renderer::init(&*window, textures, font);
+	let input    = ui::Input::new(window.clone());
 
 	let mut entities = Entities::new();
 
@@ -71,7 +74,7 @@ fn main() {
 		}
 
 		input.apply(
-			&window,
+			&*window,
 			&mut entities.controls);
 
 		for (_, control) in entities.controls.mut_iter() {
@@ -82,7 +85,7 @@ fn main() {
 		}
 
 		renderer.render(
-			&window,
+			&*window,
 			cam,
 			&entities.controls,
 			&entities.bodies,

@@ -1,4 +1,5 @@
 use std::f64;
+use std::rc::Rc;
 
 use glfw;
 
@@ -10,11 +11,15 @@ use io;
 use ui::Window;
 
 
-pub struct Input;
+pub struct Input {
+	window: Rc<Window>
+}
 
 impl Input {
-	pub fn new() -> Input {
-		Input
+	pub fn new(window: Rc<Window>) -> Input {
+		Input {
+			window: window
+		}
 	}
 }
 
