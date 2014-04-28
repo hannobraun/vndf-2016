@@ -11,8 +11,8 @@ pub struct Core {
 }
 
 impl Core {
-	pub fn start(server: &str) -> Core {
-		let connection = match Connection::connect(server, "34481") {
+	pub fn start(address: &str, port: &str) -> Core {
+		let connection = match Connection::connect(address, port) {
 			Ok(connection) => connection,
 			Err(error)     => fail!("Error connecting to server: {}", error)
 		};

@@ -37,7 +37,7 @@ fn main() {
 		None       => fail!("Failed to parse arguments")
 	};
 
-	let mut core = Core::start(args.address);
+	let mut core = Core::start(args.address, args.port);
 
 	let     window   = Window::create(screen_width, screen_height);
 	let mut textures = Textures::init(&window);
