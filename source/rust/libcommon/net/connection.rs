@@ -29,7 +29,7 @@ impl Connection {
 		}
 	}
 
-	pub fn connect(hostname: ~str, port: ~str) -> IoResult<Connection> {
+	pub fn connect(hostname: &str, port: &str) -> IoResult<Connection> {
 		let hints = ffi::addrinfo {
 			ai_flags    : ffi::AI_PASSIVE,
 			ai_family   : ffi::AF_UNSPEC,

@@ -12,7 +12,7 @@ pub struct Core {
 
 impl Core {
 	pub fn start(server: ~str) -> Core {
-		let connection = match Connection::connect(server, ~"34481") {
+		let connection = match Connection::connect(server, "34481") {
 			Ok(connection) => connection,
 			Err(error)     => fail!("Error connecting to server: {}", error)
 		};
