@@ -23,8 +23,8 @@ impl Input {
 	}
 }
 
-impl io::Input<Window> for Input {
-	fn apply(&self, _: &Window, controls: &mut Components<Control>) {
+impl io::Input for Input {
+	fn apply(&self, controls: &mut Components<Control>) {
 		let angular_velocity = 0.1;
 		let mut attitude_change = 0.0;
 

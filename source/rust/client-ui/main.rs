@@ -73,9 +73,7 @@ fn main() {
 			_ => ()
 		}
 
-		input.apply(
-			&*window,
-			&mut entities.controls);
+		input.apply(&mut entities.controls);
 
 		for (_, control) in entities.controls.mut_iter() {
 			if control.send {
