@@ -6,6 +6,7 @@ use common::physics::Radians;
 
 use components::Control;
 use entities::Components;
+use io;
 use ui::Window;
 
 
@@ -15,8 +16,10 @@ impl Input {
 	pub fn new() -> Input {
 		Input
 	}
+}
 
-	pub fn apply(&self, window: &Window, controls: &mut Components<Control>) {
+impl io::Input<Window> for Input {
+	fn apply(&self, window: &Window, controls: &mut Components<Control>) {
 		let angular_velocity = 0.1;
 		let mut attitude_change = 0.0;
 
