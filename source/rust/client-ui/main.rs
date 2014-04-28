@@ -52,17 +52,18 @@ fn main() {
 
 	let mut core = Core::start(args.address, args.port);
 
-	let     window   = Rc::new(Window::create(screen_width, screen_height));
-	let mut textures = Textures::init(&*window);
-	images::load(&mut textures);
-	let font     = Font::load(&mut textures);
-
 	let (input, renderer) = if args.headless {
 		(
 			~headless::Input::new() as ~Input,
 			~headless::Renderer::new() as ~Renderer)
 	}
 	else {
+		let     window   = Rc::new(Window::create(screen_width, screen_height));
+		let mut textures = Textures::init(&*window);
+		let     font     = Font::load(&mut textures);
+
+		images::load(&mut textures);
+
 		(
 			~ui::Input::new(window.clone()) as ~Input,
 			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
