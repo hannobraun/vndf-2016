@@ -1,3 +1,5 @@
+use std::rc::Rc;
+
 use gl;
 
 use common::physics::{Body, Vec2};
@@ -11,12 +13,13 @@ pub struct Renderer {
 	screen_width : f64,
 	screen_height: f64,
 
+	window  : Rc<Window>,
 	textures: Textures,
 	font    : Font
 }
 
 impl Renderer {
-	pub fn init(window: &Window, textures: Textures, font: Font) -> Renderer {
+	pub fn init(window: Rc<Window>, textures: Textures, font: Font) -> Renderer {
 		gl::LoadIdentity();
 		gl::Ortho(
 			0.0,
@@ -30,13 +33,13 @@ impl Renderer {
 			screen_width : window.width as f64,
 			screen_height: window.height as f64,
 
+			window  : window,
 			textures: textures,
 			font    : font
 		}
 	}
 
 	pub fn render(&self,
-		window  : &Window,
 		camera  : Vec2,
 		controls: &Components<Control>,
 		bodies  : &Components<Body>,
@@ -70,7 +73,7 @@ impl Renderer {
 			break;
 		}
 
-		window.swap_buffers();
+		self.window.swap_buffers();
 
 		match gl::GetError() {
 			gl::NO_ERROR => (),

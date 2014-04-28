@@ -54,7 +54,7 @@ fn main() {
 	let mut textures = Textures::init(&*window);
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
-	let renderer = Renderer::init(&*window, textures, font);
+	let renderer = Renderer::init(window.clone(), textures, font);
 
 	let input = if args.headless {
 		~headless::Input::new() as ~Input
@@ -90,7 +90,6 @@ fn main() {
 		}
 
 		renderer.render(
-			&*window,
 			cam,
 			&entities.controls,
 			&entities.bodies,
