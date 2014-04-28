@@ -8,4 +8,4 @@ mkdir -p $OUTPUT_LIB_RUST
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/common/lib.rs
+	source/rust/libcommon/lib.rs
