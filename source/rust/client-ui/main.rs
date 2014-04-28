@@ -56,13 +56,16 @@ fn main() {
 	let mut textures = Textures::init(&*window);
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
-	let renderer = ui::Renderer::init(window.clone(), textures, font);
 
-	let input = if args.headless {
-		~headless::Input::new() as ~Input
+	let (input, renderer) = if args.headless {
+		(
+			~headless::Input::new() as ~Input,
+			~headless::Renderer::new() as ~Renderer)
 	}
 	else {
-		~ui::Input::new(window.clone()) as ~Input
+		(
+			~ui::Input::new(window.clone()) as ~Input,
+			~ui::Renderer::init(window.clone(), textures, font) as ~Renderer)
 	};
 
 	let mut entities = Entities::new();
