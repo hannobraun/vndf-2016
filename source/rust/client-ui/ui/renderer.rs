@@ -6,6 +6,7 @@ use common::physics::{Body, Vec2};
 
 use components::{Control, Visual};
 use entities::Components;
+use io;
 use ui::{Font, Texture, Textures, Window};
 
 
@@ -36,48 +37,6 @@ impl Renderer {
 			window  : window,
 			textures: textures,
 			font    : font
-		}
-	}
-
-	pub fn render(&self,
-		camera  : Vec2,
-		controls: &Components<Control>,
-		bodies  : &Components<Body>,
-		visuals : &Components<Visual>) {
-
-		gl::Clear(gl::COLOR_BUFFER_BIT);
-		gl::Color4d(1.0, 1.0, 1.0, 1.0);
-
-		gl::PushMatrix();
-		{
-			gl::Translated(
-				self.screen_width / 2.0 - camera.x,
-				self.screen_height / 2.0 - camera.y,
-				0.0);
-
-			for (id, &body) in bodies.iter() {
-				let visual = match visuals.find(id) {
-					Some(visual) => visual,
-					None         => fail!("Visual not found: {}", id)
-				};
-
-				self.draw_ship(
-					body,
-					visual);
-			}
-		}
-		gl::PopMatrix();
-
-		for (_, &control) in controls.iter() {
-			self.draw_ui_overlay(control);
-			break;
-		}
-
-		self.window.swap_buffers();
-
-		match gl::GetError() {
-			gl::NO_ERROR => (),
-			error @ _    => fail!("OpenGL error ({})", error)
 		}
 	}
 
@@ -121,6 +80,50 @@ impl Renderer {
 			draw_texture(position + glyph.offset, texture);
 
 			position = position + glyph.advance;
+		}
+	}
+}
+
+impl io::Renderer for Renderer {
+	fn render(&self,
+		camera  : Vec2,
+		controls: &Components<Control>,
+		bodies  : &Components<Body>,
+		visuals : &Components<Visual>) {
+
+		gl::Clear(gl::COLOR_BUFFER_BIT);
+		gl::Color4d(1.0, 1.0, 1.0, 1.0);
+
+		gl::PushMatrix();
+		{
+			gl::Translated(
+				self.screen_width / 2.0 - camera.x,
+				self.screen_height / 2.0 - camera.y,
+				0.0);
+
+			for (id, &body) in bodies.iter() {
+				let visual = match visuals.find(id) {
+					Some(visual) => visual,
+					None         => fail!("Visual not found: {}", id)
+				};
+
+				self.draw_ship(
+					body,
+					visual);
+			}
+		}
+		gl::PopMatrix();
+
+		for (_, &control) in controls.iter() {
+			self.draw_ui_overlay(control);
+			break;
+		}
+
+		self.window.swap_buffers();
+
+		match gl::GetError() {
+			gl::NO_ERROR => (),
+			error @ _    => fail!("OpenGL error ({})", error)
 		}
 	}
 }

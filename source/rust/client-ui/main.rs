@@ -16,10 +16,12 @@ use common::physics::Vec2;
 
 use core::Core;
 use entities::Entities;
-use io::Input;
+use io::{
+	Input,
+	Renderer
+};
 use ui::{
 	Font,
-	Renderer,
 	Textures,
 	Window
 };
@@ -54,7 +56,7 @@ fn main() {
 	let mut textures = Textures::init(&*window);
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
-	let renderer = Renderer::init(window.clone(), textures, font);
+	let renderer = ui::Renderer::init(window.clone(), textures, font);
 
 	let input = if args.headless {
 		~headless::Input::new() as ~Input
