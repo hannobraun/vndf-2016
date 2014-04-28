@@ -13,7 +13,13 @@ use common::physics::Vec2;
 
 use core::Core;
 use entities::Entities;
-use ui::{Font, Renderer, Textures, Window};
+use ui::{
+	Font,
+	Input,
+	Renderer,
+	Textures,
+	Window
+};
 
 
 mod args;
@@ -44,6 +50,7 @@ fn main() {
 	images::load(&mut textures);
 	let font     = Font::load(&mut textures);
 	let renderer = Renderer::init(&window, textures, font);
+	let input    = Input::new();
 
 	let mut entities = Entities::new();
 
@@ -62,7 +69,7 @@ fn main() {
 			_ => ()
 		}
 
-		ui::apply_input(
+		input.apply(
 			&window,
 			&mut entities.controls);
 

@@ -1,5 +1,5 @@
 pub use ui::font::Font;
-pub use ui::input::apply_input;
+pub use ui::input::Input;
 pub use ui::renderer::Renderer;
 pub use ui::textures::{Texture, Textures};
 pub use ui::window::Window;
