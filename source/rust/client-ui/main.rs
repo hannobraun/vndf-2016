@@ -27,6 +27,7 @@ mod components;
 mod core;
 mod entities;
 mod images;
+mod io;
 mod ui;
 
 
