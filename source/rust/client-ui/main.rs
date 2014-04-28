@@ -78,12 +78,16 @@ fn main() {
 	while !should_close {
 		core.update_ships(&mut entities);
 
-		match entities.bodies.find(&entities.self_id.expect("self id")) {
-			Some(ship) => {
-				cam = ship.position;
+		match entities.self_id {
+			Some(self_id) => match entities.bodies.find(&self_id) {
+				Some(ship) => {
+					cam = ship.position;
+				},
+
+				None => ()
 			},
 
-			_ => ()
+			None => ()
 		}
 
 		should_close = input.apply(&mut entities.controls);
