@@ -99,7 +99,5 @@ fn main() {
 			&entities.controls,
 			&entities.bodies,
 			&entities.visuals);
-
-		window.poll_events();
 	}
 }
