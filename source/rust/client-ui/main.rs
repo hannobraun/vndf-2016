@@ -65,7 +65,7 @@ fn main() {
 	else {
 		(
 			~ui::Input::new(window.clone()) as ~Input,
-			~ui::Renderer::init(window.clone(), textures, font) as ~Renderer)
+			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
 	};
 
 	let mut entities = Entities::new();

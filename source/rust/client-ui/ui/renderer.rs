@@ -20,7 +20,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn init(window: Rc<Window>, textures: Textures, font: Font) -> Renderer {
+	pub fn new(window: Rc<Window>, textures: Textures, font: Font) -> Renderer {
 		gl::LoadIdentity();
 		gl::Ortho(
 			0.0,
