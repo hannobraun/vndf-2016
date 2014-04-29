@@ -1,3 +1,4 @@
+use common::headless::Frame;
 use common::physics::{
 	Body,
 	Vec2
@@ -21,11 +22,15 @@ impl Renderer {
 
 impl io::Renderer for Renderer {
 	fn render(&self,
-		_: Vec2,
-		_: &Components<Control>,
-		_: &Components<Body>,
-		_: &Components<Visual>) {
+		_     : Vec2,
+		_     : &Components<Control>,
+		bodies: &Components<Body>,
+		_     : &Components<Visual>) {
 
-		print!("Yeah, fake rendering!\n");
+		let frame = Frame {
+			ships: bodies.values().map(|&x| x).collect()
+		};
+
+		print!("{}\n", frame.to_json());
 	}
 }
