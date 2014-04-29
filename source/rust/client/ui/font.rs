@@ -122,14 +122,14 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 
 fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 	unsafe {
-		let Vec2(texture_width, _) = texture.size;
+		let Vec2(_, texture_height) = texture.size;
 
 		Glyph {
 			texture_id: "char:" + str::from_char(c),
 
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,
-				(*glyph_slot).bitmap_top as f64 - texture_width),
+				(*glyph_slot).bitmap_top as f64 - texture_height),
 
 			advance: Vec2(
 				(*glyph_slot).advance.x as f64 / 64.0,
