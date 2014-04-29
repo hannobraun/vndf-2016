@@ -4,7 +4,7 @@ source project.conf
 
 START_SCRIPT_CONTENTS="\
 #!/usr/bin/env bash
-./bin/$(basename $CLIENT_UI_BINARY) $SERVER_ADDRESS \
+./bin/$(basename $CLIENT_BINARY) $SERVER_ADDRESS \
 	1>> stdout.log \
 	2>> stderr.log"
 START_SCRIPT=$DIST_DIR/vndf
@@ -17,4 +17,4 @@ chmod a+x $START_SCRIPT &&
 cp -rf source/fonts $DIST_DIR &&
 cp -rf source/images $DIST_DIR &&
 cp $CLIENT_CORE_BINARY $DIST_BIN_DIR &&
-cp $CLIENT_UI_BINARY $DIST_BIN_DIR
+cp $CLIENT_BINARY $DIST_BIN_DIR

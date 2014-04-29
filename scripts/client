@@ -2,7 +2,7 @@
 
 source project.conf
 
-BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_UI_BINARY)
+BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_BINARY)
 
 ./scripts/tasks/build-common &&
 ./scripts/tasks/build-client &&
