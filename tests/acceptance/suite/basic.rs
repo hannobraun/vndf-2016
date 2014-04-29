@@ -1,5 +1,6 @@
 use std::intrinsics::TypeId;
 
+use common::physics::Vec2;
 use common::protocol::{
 	Create,
 	Remove,
@@ -7,8 +8,45 @@ use common::protocol::{
 };
 use common::physics::{Degrees, Radians};
 
-use control::{ClientCore, GameService};
+use control::{
+	Client,
+	ClientCore,
+	GameService
+};
 
+
+#[test]
+fn the_ship_should_follow_its_velocity_vector() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port);
+
+	let mut frame_1 = client.frame();
+	let mut frame_2 = client.frame();
+
+	while frame_1.ships.len() == 0 {
+		frame_1 = frame_2;
+		frame_2 = client.frame();
+	}
+
+	// This is necessary because the ship is created due to a CREATE message,
+	// which zeroes everything. After the network refactoring, this can be
+	// cleaned up.
+	while frame_1.ships[0].position == Vec2::zero() {
+		frame_1 = frame_2;
+		frame_2 = client.frame();
+	}
+
+	while frame_1.ships[0].position == frame_2.ships[0].position {
+		frame_2 = client.frame();
+	}
+
+	let movement = frame_2.ships[0].position - frame_1.ships[0].position;
+	let velocity = frame_1.ships[0].velocity;
+
+	assert_eq!(
+		velocity.normalize().round(16),
+		movement.normalize().round(16));
+}
 
 #[test]
 fn it_should_send_updates_for_connected_clients() {
@@ -61,26 +99,6 @@ fn it_should_send_updates_for_connected_clients() {
 
 	assert!(update_for_a);
 	assert!(!update_for_b);
-}
-
-
-#[test]
-fn the_ship_should_move_along_its_velocity_vector() {
-	let     game_service = GameService::start();
-	let mut client       = ClientCore::start(game_service.port);
-
-	client.ignore(TypeId::of::<SelfInfo>());
-	client.ignore(TypeId::of::<Create>());
-
-	let update_1 = client.expect_update();
-	let update_2 = client.expect_update();
-
-	let movement = update_2.body.position - update_1.body.position;
-	let velocity = update_1.body.velocity;
-
-	assert_eq!(
-		movement.normalize().round(16),
-		velocity.normalize().round(16));
 }
 
 #[test]
