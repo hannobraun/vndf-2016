@@ -3,6 +3,9 @@ extern crate rand;
 
 extern crate common;
 
-mod basic;
+mod suite {
+	mod basic;
+}
+
 mod control;
 mod util;
