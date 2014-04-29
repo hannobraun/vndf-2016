@@ -114,27 +114,26 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 			slice::from_buf(
 				bitmap.buffer,
 				(bitmap.width * bitmap.rows) as uint),
-			Vec2 {
-				x: bitmap.width as f64,
-				y: bitmap.rows as f64
-			})
+			Vec2(
+				bitmap.width as f64,
+				bitmap.rows as f64))
 	}
 }
 
 fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 	unsafe {
+		let Vec2(texture_width, _) = texture.size;
+
 		Glyph {
 			texture_id: "char:" + str::from_char(c),
 
-			offset: Vec2 {
-				x: (*glyph_slot).bitmap_left as f64,
-				y: (*glyph_slot).bitmap_top as f64 - texture.size.y
-			},
+			offset: Vec2(
+				(*glyph_slot).bitmap_left as f64,
+				(*glyph_slot).bitmap_top as f64 - texture_width),
 
-			advance: Vec2 {
-				x: (*glyph_slot).advance.x as f64 / 64.0,
-				y: (*glyph_slot).advance.y as f64 / 64.0
-			}
+			advance: Vec2(
+				(*glyph_slot).advance.x as f64 / 64.0,
+				(*glyph_slot).advance.y as f64 / 64.0)
 		}
 	}
 }

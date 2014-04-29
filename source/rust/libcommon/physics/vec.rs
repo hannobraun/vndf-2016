@@ -1,58 +1,53 @@
 #[deriving(Decodable, Encodable, Eq, Show)]
-pub struct Vec2 {
-	pub x: f64,
-	pub y: f64
-}
+pub struct Vec2(pub f64, pub f64);
+
 
 impl Add<Vec2, Vec2> for Vec2 {
-	fn add(&self, other: &Vec2) -> Vec2 {
-		Vec2 {
-			x: self.x + other.x,
-			y: self.y + other.y
-		}
+	fn add(&self, &Vec2(x2, y2): &Vec2) -> Vec2 {
+		let &Vec2(x1, y1) = self;
+		Vec2(
+			x1 + x2,
+			y1 + y2)
 	}
 }
 
 impl Sub<Vec2, Vec2> for Vec2 {
-	fn sub(&self, other: &Vec2) -> Vec2 {
-		Vec2 {
-			x: self.x - other.x,
-			y: self.y - other.y
-		}
+	fn sub(&self, &Vec2(x2, y2): &Vec2) -> Vec2 {
+		let &Vec2(x1, y1) = self;
+		Vec2(
+			x1 - x2,
+			y1 - y2)
 	}
 }
 
 impl Mul<f64, Vec2> for Vec2 {
 	fn mul(&self, s: &f64) -> Vec2 {
-		Vec2 {
-			x: self.x * *s,
-			y: self.y * *s
-		}
+		let &Vec2(x, y) = self;
+		Vec2(
+			x * *s,
+			y * *s)
 	}
 }
 
 impl Vec2 {
 	pub fn zero() -> Vec2 {
-		Vec2 {
-			x: 0.0,
-			y: 0.0
-		}
+		Vec2(0.0, 0.0)
 	}
 
-	pub fn magnitude(self) -> f64 {
-		(self.x*self.x + self.y*self.y).sqrt()
+	pub fn magnitude(&self) -> f64 {
+		let &Vec2(x, y) = self;
+		(x*x + y*y).sqrt()
 	}
 
-	pub fn normalize(self) -> Vec2 {
-		let m = self.magnitude();
-		self * (1.0/m)
+	pub fn normalize(&self) -> Vec2 {
+		self * (1.0 / self.magnitude())
 	}
 
-	pub fn round(self, precision_in_bits: u8) -> Vec2 {
+	pub fn round(&self, precision_in_bits: u8) -> Vec2 {
+		let &Vec2(x, y) = self;
 		let factor = (1 << precision_in_bits) as f64;
-		Vec2 {
-			x: (self.x * factor).floor() / factor,
-			y: (self.y * factor).floor() / factor
-		}
+		Vec2(
+			(x * factor).floor() / factor,
+			(y * factor).floor() / factor)
 	}
 }

@@ -47,13 +47,14 @@ impl Renderer {
 		draw_texture(draw_position, texture);
 
 		let mut text_position = draw_position + texture.size;
+		let Vec2(body_x, body_y) = body.position;
 		self.draw_text(
 			text_position,
 			format!("pos: {:i} / {:i}",
-				body.position.x as int,
-				body.position.y as int));
+				body_x as int,
+				body_y as int));
 
-		text_position = text_position - Vec2 { x: 0.0, y: 15.0 };
+		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
 			text_position,
 			format!("att: {:+04i}", body.attitude.degrees()));
@@ -61,14 +62,14 @@ impl Renderer {
 
 	fn draw_ui_overlay(&self, control: Control) {
 		self.draw_text(
-			Vec2 { x: 20.0, y: 40.0 },
+			Vec2(20.0, 40.0),
 			"Set attitude with the left and right cursor keys");
 		self.draw_text(
-			Vec2 { x: 20.0, y: 20.0 },
+			Vec2(20.0, 20.0),
 			"Start maneuver with Enter");
 
 		self.draw_text(
-			Vec2 { x: self.screen_width - 50.0, y: 40.0 },
+			Vec2(self.screen_width - 50.0, 40.0),
 			format!("{:+04i}", control.attitude.degrees()));
 	}
 
@@ -96,9 +97,10 @@ impl io::Renderer for Renderer {
 
 		gl::PushMatrix();
 		{
+			let Vec2(camera_x, camera_y) = camera;
 			gl::Translated(
-				self.screen_width / 2.0 - camera.x,
-				self.screen_height / 2.0 - camera.y,
+				self.screen_width / 2.0 - camera_x,
+				self.screen_height / 2.0 - camera_y,
 				0.0);
 
 			for (id, &body) in bodies.iter() {
@@ -128,7 +130,9 @@ impl io::Renderer for Renderer {
 	}
 }
 
-fn draw_texture(position: Vec2, texture: &Texture) {
+fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
+	let Vec2(texture_width, texture_height) = texture.size;
+
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture.name);
@@ -136,8 +140,8 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 	gl::PushMatrix();
 	{
 		gl::Translated(
-			position.x,
-			position.y,
+			pos_x,
+			pos_y,
 			0.0);
 
 		gl::Begin(gl::TRIANGLE_STRIP);
@@ -146,15 +150,15 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 				1.0,
 				0.0);
 			gl::Vertex3d(
-				texture.size.x,
-				texture.size.y,
+				texture_width,
+				texture_height,
 				0.0);
 
 			gl::TexCoord2d(
 				1.0,
 				1.0);
 			gl::Vertex3d(
-				texture.size.x,
+				texture_width,
 				0.0,
 				0.0);
 
@@ -163,7 +167,7 @@ fn draw_texture(position: Vec2, texture: &Texture) {
 				0.0);
 			gl::Vertex3d(
 				0.0,
-				texture.size.y,
+				texture_height,
 				0.0);
 
 			gl::TexCoord2d(

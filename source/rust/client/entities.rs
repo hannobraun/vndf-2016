@@ -29,8 +29,8 @@ impl Entities {
 
 	pub fn create_ship(&mut self, id: Id) {
 		let body = Body {
-			position: Vec2 { x: 0.0, y: 0.0 },
-			velocity: Vec2 { x: 0.0, y: 0.0 },
+			position: Vec2::zero(),
+			velocity: Vec2::zero(),
 			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);
@@ -60,7 +60,7 @@ impl Entities {
 	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
 		let body = Body {
 			position: position,
-			velocity: Vec2 { x: 0.0, y: 0.0 },
+			velocity: Vec2::zero(),
 			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);

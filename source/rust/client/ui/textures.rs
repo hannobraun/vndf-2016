@@ -106,14 +106,16 @@ fn create_texture(
 		gl::TEXTURE_WRAP_T,
 		gl::CLAMP_TO_EDGE as i32);
 
+	let Vec2(size_x, size_y) = size;
+
 	// Bind image data to texture name.
 	unsafe {
 		gl::TexImage2D(
 			gl::TEXTURE_2D,
 			0,
 			internal_format as i32,
-			size.x as i32,
-			size.y as i32,
+			size_x as i32,
+			size_y as i32,
 			0,
 			format,
 			gl::UNSIGNED_BYTE,

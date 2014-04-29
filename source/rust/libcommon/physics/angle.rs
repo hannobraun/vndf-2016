@@ -8,16 +8,15 @@ use physics::Vec2;
 pub struct Radians(pub f64);
 
 impl Radians {
-	pub fn from_vec(vec: Vec2) -> Radians {
-		Radians(vec.y.atan2(vec.x))
+	pub fn from_vec(Vec2(x, y): Vec2) -> Radians {
+		Radians(y.atan2(x))
 	}
 
 	pub fn to_vec(&self) -> Vec2 {
 		let &Radians(this) = self;
-		Vec2 {
-			x: this.cos(),
-			y: this.sin()
-		}
+		Vec2(
+			this.cos(),
+			this.sin())
 	}
 
 	pub fn round(&self, precision_in_bits: u8) -> Radians {

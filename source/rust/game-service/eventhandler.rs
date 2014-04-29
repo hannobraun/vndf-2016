@@ -68,16 +68,10 @@ impl EventHandler {
 	}
 
 	fn on_connect(&mut self, connection: Connection, clients: &mut Clients) {
-		let velocity = Vec2 {
-			x: 30.0,
-			y: 10.0
-		};
+		let velocity = Vec2(30.0, 10.0);
 
 		let ship = Body {
-			position: Vec2 {
-				x: 0.0,
-				y: 0.0
-			},
+			position: Vec2::zero(),
 			velocity: velocity,
 			attitude: Radians::from_vec(velocity)
 		};
