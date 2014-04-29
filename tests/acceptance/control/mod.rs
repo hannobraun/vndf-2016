@@ -24,7 +24,7 @@ pub struct ClientCore {
 }
 
 impl ClientCore {
-	pub fn start(port: uint) -> ClientCore {
+	pub fn start(port: u16) -> ClientCore {
 		ClientCore {
 			process: Process::start(
 				"output/bin/vndf-client-core", [~"localhost", port.to_str()]),
