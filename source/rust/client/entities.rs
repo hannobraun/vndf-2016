@@ -56,14 +56,4 @@ impl Entities {
 		self.bodies.remove(&id);
 		self.visuals.remove(&id);
 	}
-
-	pub fn update_asteroid(&mut self, id: Id, position: Vec2) {
-		let body = Body {
-			position: position,
-			velocity: Vec2::zero(),
-			attitude: Radians(0.0)
-		};
-		self.bodies.insert(id, body);
-		self.visuals.insert(id, Visual { texture: ~"char:A" });
-	}
 }

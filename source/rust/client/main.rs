@@ -71,8 +71,6 @@ fn main() {
 
 	let mut entities = Entities::new();
 
-	entities.update_asteroid(999, Vec2::zero());
-
 	let mut cam = Vec2::zero();
 
 	let mut should_close = false;
