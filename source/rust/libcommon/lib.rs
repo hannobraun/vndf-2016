@@ -5,6 +5,7 @@ extern crate libc;
 extern crate serialize;
 
 pub mod headless;
+pub mod json;
 pub mod net;
 pub mod physics;
 pub mod protocol;

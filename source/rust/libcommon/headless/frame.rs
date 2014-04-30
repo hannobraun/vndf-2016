@@ -1,15 +1,9 @@
-use serialize::{
-	Decodable,
-	Encodable
-};
-use serialize::json;
-use serialize::json::{
-	Decoder,
-	Encoder
-};
+use serialize::Encodable;
+use serialize::json::Encoder;
 use std::io::MemWriter;
 use std::str;
 
+use json::from_json;
 use physics::{
 	Body,
 	Vec2
@@ -24,18 +18,7 @@ pub struct Frame {
 
 impl Frame {
 	pub fn from_json(s: &str) -> Frame {
-		let json_object = match json::from_str(s) {
-			Ok(object) => object,
-			Err(error) =>
-				fail!("Error decoding JSON object from \"{}\": {}", s, error)
-		};
-
-		let mut decoder = Decoder::new(json_object);
-
-		match Decodable::decode(&mut decoder) {
-			Ok(frame)  => frame,
-			Err(error) => fail!("error decoding JSON object ({})", error)
-		}
+		from_json(s)
 	}
 
 	pub fn to_json(&self) -> ~str {
