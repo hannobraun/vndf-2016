@@ -21,6 +21,10 @@ impl Client {
 		}
 	}
 
+	pub fn stop(&mut self) {
+		self.process.kill();
+	}
+
 	pub fn frame(&mut self) -> Frame {
 		let line = self.process.read_stdout_line();
 		Frame::from_json(line)
