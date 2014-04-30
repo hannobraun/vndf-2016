@@ -5,7 +5,6 @@ use common::physics::Radians;
 use common::protocol::{
 	Command,
 	Message,
-	SelfInfo,
 	Update
 };
 
@@ -34,19 +33,8 @@ impl ClientCore {
 		}
 	}
 
-	pub fn stop(&mut self) {
-		self.process.kill();
-	}
-
 	pub fn ignore(&mut self, type_id: TypeId) {
 		self.ignored.insert(type_id);
-	}
-
-	pub fn expect_self_info(&mut self) -> SelfInfo {
-		match self.next_message() {
-			SelfInfo(self_info) => self_info,
-			message @ _         => fail!("Unexpected message: {}", message)
-		}
 	}
 
 	pub fn expect_update(&mut self) -> Update {
