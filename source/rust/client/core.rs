@@ -34,9 +34,11 @@ impl Core {
 						create.id),
 
 				Update(update) =>
-					entities.update_ship(
-						update.id,
-						update.body),
+					for ship in update.ships.iter() {
+						entities.update_ship(
+							ship.id,
+							ship.body)
+					},
 
 				Remove(remove) =>
 					entities.remove_ship(

@@ -9,6 +9,7 @@ use common::protocol::{
 	Message,
 	Remove,
 	SelfInfo,
+	Ship,
 	Update
 };
 
@@ -161,8 +162,10 @@ impl EventHandler {
 			clients.each(|client_b_id, clientB| {
 				if clientB.created {
 					let message = protocol::Update(Update {
-						id  : client_b_id,
-						body: clientB.ship
+						ships: ~[Ship {
+							id  : client_b_id,
+							body: clientB.ship
+						}]
 					});
 
 					match clientA.conn.send_message(message.to_str()) {
