@@ -5,6 +5,8 @@ use std::comm::{
 	Receiver
 };
 
+use common::headless::Input;
+
 use components::Control;
 use entities::Components;
 use io;
@@ -35,7 +37,7 @@ impl InputHandler {
 }
 
 impl io::Input for InputHandler {
-	fn apply(&self, _: &mut Components<Control>) -> bool {
+	fn apply(&self, controls: &mut Components<Control>) -> bool {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
@@ -44,7 +46,12 @@ impl io::Input for InputHandler {
 			}
 		};
 
-		print!("stdin: {}\n", message);
+		let input = Input::from_json(message);
+
+		for (_, control) in controls.mut_iter() {
+			control.attitude = input.attitude;
+			control.send     = input.send;
+		}
 
 		false
 	}
