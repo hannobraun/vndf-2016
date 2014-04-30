@@ -1,5 +1,5 @@
-pub use self::input::InputHandler;
+pub use self::inputhandler::InputHandler;
 pub use self::renderer::Renderer;
 
-mod input;
+mod inputhandler;
 mod renderer;
