@@ -1,5 +1,3 @@
-use std::intrinsics::TypeId;
-
 use json::{
 	from_json,
 	to_json
@@ -24,17 +22,6 @@ impl Message {
 
 	pub fn to_str(&self) -> ~str {
 		to_json(self)
-	}
-
-	pub fn type_id(&self) -> TypeId {
-		match *self {
-			SelfInfo(_) => TypeId::of::<SelfInfo>(),
-			Create(_)   => TypeId::of::<Create>(),
-			Update(_)   => TypeId::of::<Update>(),
-			Remove(_)   => TypeId::of::<Remove>(),
-			Command(_)  => TypeId::of::<Command>(),
-			Invalid(_)  => TypeId::of::<()>()
-		}
 	}
 }
 
