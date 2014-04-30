@@ -1,4 +1,7 @@
-use common::headless::Frame;
+use common::headless::{
+	Frame,
+	Input
+};
 
 use util::Process;
 
@@ -23,6 +26,11 @@ impl Client {
 
 	pub fn stop(&mut self) {
 		self.process.kill();
+	}
+
+	pub fn input(&mut self, input: Input) {
+		let line = input.to_json();
+		self.process.write_stdin_line(line);
 	}
 
 	pub fn frame(&mut self) -> Frame {
