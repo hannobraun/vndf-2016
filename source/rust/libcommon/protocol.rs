@@ -45,7 +45,7 @@ pub struct Update {
 	pub ships: ~[Ship]
 }
 
-#[deriving(Decodable, Encodable, Eq, Show)]
+#[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Ship {
 	pub id  : uint,
 	pub body: Body
