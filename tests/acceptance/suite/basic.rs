@@ -3,7 +3,6 @@ use std::intrinsics::TypeId;
 use common::physics::Vec2;
 use common::protocol::{
 	Create,
-	Remove,
 	SelfInfo
 };
 use common::physics::{Degrees, Radians};
@@ -74,56 +73,39 @@ fn the_camera_should_follow_the_ship() {
 }
 
 #[test]
-fn it_should_send_updates_for_connected_clients() {
+fn it_should_render_all_connected_clients() {
 	let     game_service = GameService::start();
-	let mut client_a     = ClientCore::start(game_service.port);
-	let mut client_b     = ClientCore::start(game_service.port);
+	let mut client_1     = Client::start(game_service.port);
 
-	client_a.ignore(TypeId::of::<Create>());
-	client_a.ignore(TypeId::of::<Remove>());
-	client_b.ignore(TypeId::of::<Create>());
+	let mut frame = client_1.frame();
 
-	let client_a_id = client_a.expect_self_info().id;
-	let client_b_id = client_b.expect_self_info().id;
-
-	let mut update_for_a = false;
-	let mut update_for_b = false;
-	for _ in range(0, 10) {
-		let update = client_a.expect_update();
-
-		if update.id == client_a_id {
-			update_for_a = true;
-		}
-		if update.id == client_b_id {
-			update_for_b = true;
-		}
+	while frame.ships.len() == 0 {
+		frame = client_1.frame();
 	}
 
-	assert!(update_for_a);
-	assert!(update_for_b);
+	assert_eq!(
+		1,
+		frame.ships.len());
 
-	client_b.stop();
+	let mut client_2 = Client::start(game_service.port);
 
-	for _ in range(0, 10) {
-		client_a.expect_update();
+	while frame.ships.len() == 1 {
+		frame = client_1.frame();
 	}
 
-	update_for_a = false;
-	update_for_b = false;
+	assert_eq!(
+		2,
+		frame.ships.len());
 
-	for _ in range(0, 10) {
-		let update = client_a.expect_update();
+	client_2.stop();
 
-		if update.id == client_a_id {
-			update_for_a = true;
-		}
-		if update.id == client_b_id {
-			update_for_b = true;
-		}
+	while frame.ships.len() == 2 {
+		frame = client_1.frame();
 	}
 
-	assert!(update_for_a);
-	assert!(!update_for_b);
+	assert_eq!(
+		1,
+		frame.ships.len());
 }
 
 #[test]
