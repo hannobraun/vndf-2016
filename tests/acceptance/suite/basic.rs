@@ -49,6 +49,31 @@ fn the_ship_should_follow_its_velocity_vector() {
 }
 
 #[test]
+fn the_camera_should_follow_the_ship() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port);
+
+	let mut frame_1 = client.frame();
+	let mut frame_2 = client.frame();
+
+	while frame_1.ships.len() == 0 {
+		frame_1 = frame_2;
+		frame_2 = client.frame();
+	}
+
+	while frame_1.ships[0].position == frame_2.ships[0].position {
+		frame_2 = client.frame();
+	}
+
+	assert_eq!(
+		frame_1.ships[0].position,
+		frame_1.camera);
+	assert_eq!(
+		frame_2.ships[0].position,
+		frame_2.camera);
+}
+
+#[test]
 fn it_should_send_updates_for_connected_clients() {
 	let     game_service = GameService::start();
 	let mut client_a     = ClientCore::start(game_service.port);
