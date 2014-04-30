@@ -10,12 +10,16 @@ use serialize::json::{
 use std::io::MemWriter;
 use std::str;
 
-use physics::Body;
+use physics::{
+	Body,
+	Vec2
+};
 
 
 #[deriving(Decodable, Encodable)]
 pub struct Frame {
-	pub ships: ~[Body]
+	pub camera: Vec2,
+	pub ships : ~[Body]
 }
 
 impl Frame {

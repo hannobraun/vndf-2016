@@ -22,13 +22,14 @@ impl Renderer {
 
 impl io::Renderer for Renderer {
 	fn render(&self,
-		_     : Vec2,
+		camera: Vec2,
 		_     : &Components<Control>,
 		bodies: &Components<Body>,
 		_     : &Components<Visual>) {
 
 		let frame = Frame {
-			ships: bodies.values().map(|&x| x).collect()
+			camera: camera,
+			ships : bodies.values().map(|&x| x).collect()
 		};
 
 		print!("{}\n", frame.to_json());
