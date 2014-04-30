@@ -10,12 +10,12 @@ use entities::Components;
 use io;
 
 
-pub struct Input {
+pub struct InputHandler {
 	input: Receiver<~str>
 }
 
-impl Input {
-	pub fn new() -> Input {
+impl InputHandler {
+	pub fn new() -> InputHandler {
 		let (sender, receiver) = channel();
 
 		spawn(proc() {
@@ -28,13 +28,13 @@ impl Input {
 			}
 		});
 
-		Input {
+		InputHandler {
 			input: receiver
 		}
 	}
 }
 
-impl io::Input for Input {
+impl io::Input for InputHandler {
 	fn apply(&self, _: &mut Components<Control>) -> bool {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,

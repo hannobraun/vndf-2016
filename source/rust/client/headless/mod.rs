@@ -1,4 +1,4 @@
-pub use self::input::Input;
+pub use self::input::InputHandler;
 pub use self::renderer::Renderer;
 
 mod input;

@@ -54,7 +54,7 @@ fn main() {
 
 	let (input, renderer) = if args.headless {
 		(
-			~headless::Input::new() as ~Input,
+			~headless::InputHandler::new() as ~Input,
 			~headless::Renderer::new() as ~Renderer)
 	}
 	else {
