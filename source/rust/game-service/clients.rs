@@ -8,7 +8,7 @@ use common::net::Connection;
 pub type Id = uint;
 
 pub struct Clients {
-	map: HashMap<Id, Client>
+	pub map: HashMap<Id, Client>
 }
 
 impl Clients {
