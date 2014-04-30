@@ -2,7 +2,10 @@ use json::{
 	from_json,
 	to_json
 };
-use physics::{Body, Radians};
+use physics::{
+	Body,
+	Radians
+};
 
 
 #[deriving(Decodable, Encodable, Eq, Show)]
