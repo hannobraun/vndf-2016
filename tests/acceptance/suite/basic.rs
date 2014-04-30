@@ -1,15 +1,11 @@
-use std::intrinsics::TypeId;
-
-use common::physics::Vec2;
-use common::protocol::{
-	Create,
-	SelfInfo
+use common::headless::Input;
+use common::physics::{
+	Radians,
+	Vec2
 };
-use common::physics::{Degrees, Radians};
 
 use control::{
 	Client,
-	ClientCore,
 	GameService
 };
 
@@ -111,22 +107,32 @@ fn it_should_render_all_connected_clients() {
 #[test]
 fn the_ship_should_change_direction_according_to_input() {
 	let     game_service = GameService::start();
-	let mut client       = ClientCore::start(game_service.port);
+	let mut client       = Client::start(game_service.port);
 
-	client.ignore(TypeId::of::<SelfInfo>());
-	client.ignore(TypeId::of::<Create>());
+	let mut frame = client.frame();
 
-	let attitude = Degrees(90.0).to_radians();
+	while frame.ships.len() == 0 {
+		frame = client.frame();
+	}
 
-	client.send_attitude(attitude);
-	client.expect_update();
-	client.expect_update();
-	let update = client.expect_update();
+	while frame.ships[0].velocity == Vec2::zero() {
+		frame = client.frame();
+	}
+
+	let velocity     = frame.ships[0].velocity;
+	let new_velocity = velocity * -1.0;
+	let new_attitude = Radians::from_vec(new_velocity);
+
+	client.input(Input {
+		attitude: new_attitude,
+		send    : true
+	});
+
+	while frame.ships[0].velocity == velocity {
+		frame = client.frame();
+	}
 
 	assert_eq!(
-		attitude.round(16),
-		update.body.attitude.round(16));
-	assert_eq!(
-		attitude.round(16),
-		Radians::from_vec(update.body.velocity).round(16));
+		new_velocity.round(16),
+		frame.ships[0].velocity.round(16));
 }
