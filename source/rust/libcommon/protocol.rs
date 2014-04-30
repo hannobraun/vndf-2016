@@ -1,11 +1,9 @@
-use serialize::Encodable;
-use serialize::json::Encoder;
 use std::intrinsics::TypeId;
-use std::io::MemWriter;
-use std::io::Writer;
-use std::str;
 
-use json::from_json;
+use json::{
+	from_json,
+	to_json
+};
 use physics::{Body, Radians};
 
 
@@ -25,18 +23,7 @@ impl Message {
 	}
 
 	pub fn to_str(&self) -> ~str {
-		let mut m = MemWriter::new();
-		{
-			let mut encoder = Encoder::new(&mut m as &mut Writer);
-			match self.encode(&mut encoder) {
-				Ok(()) => (),
-				Err(e) => fail!("json encoding error: {}", e)
-			};
-		}
-
-		str::from_utf8(m.get_ref())
-			.expect("expected UTF-8 string")
-			.to_owned()
+		to_json(self)
 	}
 
 	pub fn type_id(&self) -> TypeId {
