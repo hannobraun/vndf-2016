@@ -1,11 +1,11 @@
-use serialize::{Decodable, Encodable};
-use serialize::json;
+use serialize::Encodable;
 use serialize::json::Encoder;
 use std::intrinsics::TypeId;
 use std::io::MemWriter;
 use std::io::Writer;
 use std::str;
 
+use json::from_json;
 use physics::{Body, Radians};
 
 
@@ -21,18 +21,7 @@ pub enum Message {
 
 impl Message {
 	pub fn from_str(s: &str) -> Message {
-		let json_object = match json::from_str(s) {
-			Ok(object) => object,
-			Err(error) =>
-				fail!("Error decoding JSON object from \"{}\": {}", s, error)
-		};
-
-		let mut decoder = json::Decoder::new(json_object);
-
-		match Decodable::decode(&mut decoder) {
-			Ok(message) => message,
-			Err(error)  => fail!("error decoding JSON object ({})", error)
-		}
+		from_json(s)
 	}
 
 	pub fn to_str(&self) -> ~str {
