@@ -5,7 +5,8 @@ use serialize::{
 use serialize::json;
 use serialize::json::{
 	Encoder,
-	Decoder
+	Decoder,
+	DecoderError
 };
 use std::io::{
 	IoError,
@@ -14,7 +15,7 @@ use std::io::{
 use std::str;
 
 
-pub fn from_json<T: Decodable<Decoder, json::Error>>(s: &str) -> T {
+pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> T {
 	let json_object = match json::from_str(s) {
 		Ok(object) => object,
 		Err(error) =>
