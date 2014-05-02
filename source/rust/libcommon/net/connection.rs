@@ -101,6 +101,8 @@ impl Connection {
 
 				let buffer_length = messageLength + 1;
 
+				assert!(buffer_length <= buffer.len() as u64);
+
 				let bytesSent = ffi::send(
 					self.fd,
 					buffer.as_ptr() as *mut libc::c_void,
