@@ -51,7 +51,7 @@ fn main() {
 		None       => error::exit(format!("Failed to parse arguments"))
 	};
 
-	let mut core = Network::connect(args.address, args.port);
+	let mut network = Network::connect(args.address, args.port);
 
 	let (input, renderer) = if args.headless {
 		(
@@ -76,7 +76,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		core.update_ships(&mut entities);
+		network.update_ships(&mut entities);
 
 		match entities.self_id {
 			Some(self_id) => match entities.bodies.find(&self_id) {
@@ -94,7 +94,7 @@ fn main() {
 
 		for (_, control) in entities.controls.mut_iter() {
 			if control.send {
-				core.send_command(control.attitude);
+				network.send_command(control.attitude);
 				control.send = false;
 			}
 		}
