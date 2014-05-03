@@ -12,6 +12,9 @@ use net::ffi;
 use util::last_error;
 
 
+type MessageLength = u8;
+
+
 #[deriving(Eq, Show)]
 pub struct Connection {
 	pub fd: c_int,
@@ -91,7 +94,7 @@ impl Connection {
 
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
-					(messageLength + 1) as u8,
+					(messageLength + 1) as MessageLength,
 					1);
 
 				ptr::copy_memory(
