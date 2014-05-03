@@ -40,7 +40,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&mut self, controls: &mut Components<Control>) -> Input {
+	fn apply(&mut self, _: &mut Components<Control>) -> Input {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
@@ -60,11 +60,6 @@ impl io::InputHandler for InputHandler {
 			Ok(input)  => input,
 			Err(error) => exit(format!("Error decoding input: {}", error))
 		};
-
-		for (_, control) in controls.mut_iter() {
-			control.attitude = input.attitude;
-			control.send     = input.send;
-		}
 
 		input
 	}
