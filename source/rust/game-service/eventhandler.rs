@@ -89,12 +89,12 @@ impl EventHandler {
 		};
 
 		let result = client.conn.receive_messages(|raw_message| {
-			let command = match Action::from_str(raw_message) {
+			let action = match Action::from_str(raw_message) {
 				Ok(message) => message,
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};
 
-			self.incoming.push(CommandEvent(fd, command.attitude));
+			self.incoming.push(CommandEvent(fd, action.attitude));
 		});
 
 		match result {
