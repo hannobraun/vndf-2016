@@ -1,7 +1,5 @@
 use common::io::Frame;
 
-use components::Control;
-use entities::Components;
 use io;
 
 
@@ -14,9 +12,7 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self, frame: &Frame,
-		_: &Components<Control>) {
-
+	fn render(&self, frame: &Frame) {
 		print!("{}\n", frame.to_json());
 	}
 }

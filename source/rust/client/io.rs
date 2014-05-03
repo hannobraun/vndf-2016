@@ -10,6 +10,5 @@ pub trait InputHandler {
 }
 
 pub trait Renderer {
-	fn render(&self, frame: &Frame,
-		controls: &Components<Control>);
+	fn render(&self, frame: &Frame);
 }

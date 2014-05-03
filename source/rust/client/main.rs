@@ -104,8 +104,6 @@ fn main() {
 			ships : entities.bodies.values().map(|&x| x).collect()
 		};
 
-		renderer.render(
-			&frame,
-			&entities.controls);
+		renderer.render(&frame);
 	}
 }

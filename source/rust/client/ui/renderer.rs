@@ -9,8 +9,6 @@ use common::physics::{
 	Vec2
 };
 
-use components::Control;
-use entities::Components;
 use error::exit;
 use io;
 use ui::{Font, Texture, Textures, Window};
@@ -92,9 +90,7 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self, frame: &Frame,
-		_: &Components<Control>) {
-
+	fn render(&self, frame: &Frame) {
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
 
