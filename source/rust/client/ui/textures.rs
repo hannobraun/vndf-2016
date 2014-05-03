@@ -5,6 +5,7 @@ use gl;
 
 use common::physics::Vec2;
 
+use error::exit;
 use ui::Window;
 
 
@@ -45,13 +46,13 @@ impl Textures {
 	pub fn get<'a>(&'a self, key: &~str) -> &'a Texture {
 		match self.map.find(key) {
 			Some(texture) => texture,
-			None          => fail!("Texture not found: {}", key)
+			None          => exit(format!("Texture not found: {}", key))
 		}
 	}
 
 	pub fn add(&mut self, key: ~str, texture: Texture) {
 		if self.map.contains_key(&key) {
-			fail!("texture already present ({})", key);
+			exit(format!("texture already present ({})", key));
 		}
 
 		self.map.insert(key, texture);
