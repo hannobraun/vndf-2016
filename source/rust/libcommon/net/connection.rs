@@ -152,12 +152,13 @@ impl Connection {
 				break;
 			}
 
+			let size_of_length = size_of::<MessageLength>();
 			let message_length = self.in_buffer[0];
 
 			let message = unsafe {
 				str::raw::from_buf_len(
 					(self.in_buffer.as_ptr() as *u8).offset(1),
-					(message_length - 1) as uint)
+					(message_length - size_of_length as MessageLength) as uint)
 			};
 
 			handler(message);
