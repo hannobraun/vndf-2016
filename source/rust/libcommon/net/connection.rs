@@ -103,7 +103,7 @@ impl Connection {
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
 					message_length as MessageLength,
-					1);
+					size_of::<MessageLength>());
 
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(1),
