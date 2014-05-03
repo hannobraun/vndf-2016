@@ -34,7 +34,7 @@ pub struct Create {
 	pub kind: ~str
 }
 
-#[deriving(Decodable, Encodable, Eq, Show)]
+#[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Perception {
 	pub self_id: uint,
 	pub ships  : ~[Ship]
