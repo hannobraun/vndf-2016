@@ -101,9 +101,9 @@ impl Connection {
 				assert!(message_length <= buffer.len() as u64);
 				assert!(message_length <= MAX_MSG_LENGTH as u64);
 
-				ptr::set_memory(
+				ptr::copy_memory(
 					buffer.as_mut_ptr(),
-					message_length as MessageLength,
+					&(message_length as MessageLength) as *u8 as *i8,
 					size_of_length);
 
 				ptr::copy_memory(
