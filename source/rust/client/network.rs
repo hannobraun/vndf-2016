@@ -1,7 +1,6 @@
 use common::net::Connection;
 use common::protocol::{
 	Command,
-	Create,
 	Message,
 	Perception,
 	Remove
@@ -37,9 +36,6 @@ impl Network {
 			};
 
 			match message {
-				Create(_) =>
-					(),
-
 				Perception(update) =>
 					handler(update),
 

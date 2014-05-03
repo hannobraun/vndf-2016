@@ -10,7 +10,6 @@ use physics::{
 
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub enum Message {
-	Create(Create),
 	Perception(Perception),
 	Remove(Remove),
 	Command(Command),
@@ -25,13 +24,6 @@ impl Message {
 	pub fn to_str(&self) -> ~str {
 		to_json(self)
 	}
-}
-
-
-#[deriving(Decodable, Encodable, Eq, Show)]
-pub struct Create {
-	pub id  : uint,
-	pub kind: ~str
 }
 
 #[deriving(Clone, Decodable, Encodable, Eq, Show)]
