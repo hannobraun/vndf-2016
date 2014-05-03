@@ -9,6 +9,7 @@ use common::headless::Input;
 
 use components::Control;
 use entities::Components;
+use error::exit;
 use io;
 
 
@@ -25,7 +26,8 @@ impl InputHandler {
 			loop {
 				match stdin.read_line() {
 					Ok(message) => sender.send(message),
-					Err(error)  => fail!("Error reading from stdin: {}", error)
+					Err(error)  =>
+						exit(format!("Error reading from stdin: {}", error))
 				}
 			}
 		});
@@ -42,7 +44,8 @@ impl io::Input for InputHandler {
 			Ok(message) => message,
 			Err(error)  => match error {
 				Empty        => return false,
-				Disconnected => fail!("Error receiving input: {}", error)
+				Disconnected =>
+					exit(format!("Error receiving input: {}", error))
 			}
 		};
 
