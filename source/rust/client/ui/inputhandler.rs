@@ -3,6 +3,7 @@ use std::rc::Rc;
 
 use glfw;
 
+use common::io::Input;
 use common::physics::Radians;
 
 use components::Control;
@@ -24,7 +25,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&self, controls: &mut Components<Control>) -> bool {
+	fn apply(&self, controls: &mut Components<Control>) -> Input {
 		self.window.poll_events();
 
 		let angular_velocity = 0.1;
@@ -51,6 +52,10 @@ impl io::InputHandler for InputHandler {
 			}
 		}
 
-		self.window.should_close()
+		Input {
+			exit    : self.window.should_close(),
+			attitude: Radians(0.0),
+			send    : false
+		}
 	}
 }

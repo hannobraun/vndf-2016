@@ -6,6 +6,7 @@ use std::comm::{
 };
 
 use common::io::Input;
+use common::physics::Radians;
 
 use components::Control;
 use entities::Components;
@@ -39,11 +40,17 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&self, controls: &mut Components<Control>) -> bool {
+	fn apply(&self, controls: &mut Components<Control>) -> Input {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
-				Empty        => return false,
+				Empty =>
+					return Input {
+						exit    : false,
+						attitude: Radians(0.0),
+						send    : false
+					},
+
 				Disconnected =>
 					exit(format!("Error receiving input: {}", error))
 			}
@@ -59,6 +66,6 @@ impl io::InputHandler for InputHandler {
 			control.send     = input.send;
 		}
 
-		false
+		input
 	}
 }

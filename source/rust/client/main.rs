@@ -91,7 +91,8 @@ fn main() {
 			None => ()
 		}
 
-		should_close = input_handler.apply(&mut entities.controls);
+		let input = input_handler.apply(&mut entities.controls);
+		should_close = input.exit;
 
 		for (_, control) in entities.controls.mut_iter() {
 			if control.send {
