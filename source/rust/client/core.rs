@@ -34,8 +34,8 @@ impl Core {
 			};
 
 			match message {
-				SelfInfo(self_info) =>
-					entities.self_id = Some(self_info.id),
+				SelfInfo(_) =>
+					(),
 
 				Create(create) =>
 					entities.create_ship(
