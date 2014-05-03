@@ -8,7 +8,6 @@ use common::protocol::{
 };
 use common::physics::Radians;
 
-use entities::Entities;
 use error::exit;
 
 
@@ -29,7 +28,7 @@ impl Network {
 		}
 	}
 
-	pub fn receive(&mut self, _: &mut Entities, handler: |Perception|) {
+	pub fn receive(&mut self, handler: |Perception|) {
 		let result = self.conn.receive_messages(|raw_message| {
 			let message = match Message::from_str(raw_message) {
 				Ok(message) => message,

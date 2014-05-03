@@ -72,7 +72,7 @@ fn main() {
 			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
 	};
 
-	let mut entities = Entities::new();
+	let entities = Entities::new();
 
 	let mut camera = Vec2::zero();
 
@@ -80,7 +80,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		network.receive(&mut entities, |perception| {
+		network.receive(|perception| {
 			ships = perception.ships.iter().map(|ship| {
 				if ship.id == perception.self_id {
 					camera = ship.body.position;
