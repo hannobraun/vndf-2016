@@ -41,7 +41,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ship(&self, body: Body, _: &Visual) {
+	fn draw_ship(&self, body: Body) {
 		let texture = self.textures.get(&~"images/spaceship.png");
 
 		let draw_position = body.position - texture.size * 0.5;
@@ -91,7 +91,7 @@ impl io::Renderer for Renderer {
 		camera  : Vec2,
 		controls: &Components<Control>,
 		bodies  : &Components<Body>,
-		visuals : &Components<Visual>) {
+		_       : &Components<Visual>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
@@ -104,15 +104,8 @@ impl io::Renderer for Renderer {
 				self.screen_height / 2.0 - camera_y,
 				0.0);
 
-			for (id, &body) in bodies.iter() {
-				let visual = match visuals.find(id) {
-					Some(visual) => visual,
-					None         => exit(format!("Visual not found: {}", id))
-				};
-
-				self.draw_ship(
-					body,
-					visual);
+			for (_, &body) in bodies.iter() {
+				self.draw_ship(body);
 			}
 		}
 		gl::PopMatrix();
