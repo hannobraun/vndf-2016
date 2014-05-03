@@ -163,22 +163,26 @@ impl EventHandler {
 			}
 		});
 
-		clients.each(|client_a_id, clientA| {
-			clients.each(|client_b_id, clientB| {
-				if clientB.created {
-					let message = protocol::Update(Update {
-						ships: ~[Ship {
-							id  : client_b_id,
-							body: clientB.ship
-						}]
-					});
+		let mut ships = Vec::new();
+		clients.each(|client_id, client| {
+			if client.created {
+				ships.push(Ship {
+					id  : client_id,
+					body: client.ship
+				});
+			}
+		});
 
-					match clientA.conn.send_message(message.to_str()) {
-						Err(_) => self.incoming.push(Disconnect(client_a_id)),
-						_      => ()
-					}
-				}
-			})
+		let update = protocol::Update(Update {
+			ships: ships.as_slice().to_owned()
+		});
+		let message = update.to_str();
+
+		clients.each(|client_id, client| {
+			match client.conn.send_message(message) {
+				Err(_) => self.incoming.push(Disconnect(client_id)),
+				_      => ()
+			};
 		});
 	}
 
