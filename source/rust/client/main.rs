@@ -67,7 +67,7 @@ fn main() {
 		images::load(&mut textures);
 
 		(
-			~ui::Input::new(window.clone()) as ~InputHandler,
+			~ui::InputHandler::new(window.clone()) as ~InputHandler,
 			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
 	};
 

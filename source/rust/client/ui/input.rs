@@ -11,19 +11,19 @@ use io;
 use ui::Window;
 
 
-pub struct Input {
+pub struct InputHandler {
 	window: Rc<Window>
 }
 
-impl Input {
-	pub fn new(window: Rc<Window>) -> Input {
-		Input {
+impl InputHandler {
+	pub fn new(window: Rc<Window>) -> InputHandler {
+		InputHandler {
 			window: window
 		}
 	}
 }
 
-impl io::InputHandler for Input {
+impl io::InputHandler for InputHandler {
 	fn apply(&self, controls: &mut Components<Control>) -> bool {
 		self.window.poll_events();
 
