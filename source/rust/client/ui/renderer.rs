@@ -89,9 +89,7 @@ impl Renderer {
 
 impl io::Renderer for Renderer {
 	fn render(&self, frame: &Frame,
-		_       : Vec2,
-		controls: &Components<Control>,
-		_       : &Components<Body>) {
+		controls: &Components<Control>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);

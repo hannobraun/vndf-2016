@@ -1,8 +1,4 @@
 use common::headless::Frame;
-use common::physics::{
-	Body,
-	Vec2
-};
 
 use components::Control;
 use entities::Components;
@@ -19,9 +15,7 @@ impl Renderer {
 
 impl io::Renderer for Renderer {
 	fn render(&self, frame: &Frame,
-		_: Vec2,
-		_: &Components<Control>,
-		_: &Components<Body>) {
+		_: &Components<Control>) {
 
 		print!("{}\n", frame.to_json());
 	}
