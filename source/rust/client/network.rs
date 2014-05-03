@@ -29,7 +29,7 @@ impl Network {
 		}
 	}
 
-	pub fn receive(&mut self, entities: &mut Entities) {
+	pub fn receive(&mut self, entities: &mut Entities, handler: |Perception|) {
 		let result = self.conn.receive_messages(|raw_message| {
 			let message = match Message::from_str(raw_message) {
 				Ok(message) => message,
@@ -43,6 +43,8 @@ impl Network {
 						create.id),
 
 				Perception(update) => {
+					handler(update.clone());
+
 					entities.self_id = Some(update.self_id);
 
 					for ship in update.ships.iter() {

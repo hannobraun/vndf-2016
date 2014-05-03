@@ -17,7 +17,10 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::Vec2;
+use common::physics::{
+	Body,
+	Vec2
+};
 
 use entities::Entities;
 use network::Network;
@@ -73,9 +76,19 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
+	let mut ships: ~[Body] = ~[];
+
 	let mut should_close = false;
 	while !should_close {
-		network.receive(&mut entities);
+		network.receive(&mut entities, |perception| {
+			ships = perception.ships.iter().map(|ship| {
+				if ship.id == perception.self_id {
+					camera = ship.body.position;
+				}
+
+				ship.body
+			}).collect();
+		});
 
 		match entities.self_id {
 			Some(self_id) => match entities.bodies.find(&self_id) {
@@ -99,7 +112,7 @@ fn main() {
 		let frame = Frame {
 			input : input,
 			camera: camera,
-			ships : entities.bodies.values().map(|&x| x).collect()
+			ships : ships.clone()
 		};
 
 		renderer.render(&frame);
