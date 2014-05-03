@@ -93,7 +93,7 @@ impl Renderer {
 
 impl io::Renderer for Renderer {
 	fn render(&self, frame: &Frame,
-		controls: &Components<Control>) {
+		_: &Components<Control>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
@@ -112,10 +112,7 @@ impl io::Renderer for Renderer {
 		}
 		gl::PopMatrix();
 
-		for (_, &control) in controls.iter() {
-			self.draw_ui_overlay(control.attitude);
-			break;
-		}
+		self.draw_ui_overlay(frame.input.attitude);
 
 		self.window.swap_buffers();
 
