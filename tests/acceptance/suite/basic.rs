@@ -124,6 +124,7 @@ fn the_ship_should_change_direction_according_to_input() {
 	let new_attitude = Radians::from_vec(new_velocity);
 
 	client.input(Input {
+		exit    : false,
 		attitude: new_attitude,
 		send    : true
 	});
