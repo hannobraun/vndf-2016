@@ -48,7 +48,7 @@ fn main() {
 
 	let args = match args::parse() {
 		Some(args) => args,
-		None       => fail!("Failed to parse arguments")
+		None       => error::exit(format!("Failed to parse arguments"))
 	};
 
 	let mut core = Core::start(args.address, args.port);
