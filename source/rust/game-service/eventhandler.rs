@@ -3,7 +3,7 @@ use libc::c_int;
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol::{
-	Command,
+	Action,
 	Perception,
 	Ship
 };
@@ -89,7 +89,7 @@ impl EventHandler {
 		};
 
 		let result = client.conn.receive_messages(|raw_message| {
-			let command = match Command::from_str(raw_message) {
+			let command = match Action::from_str(raw_message) {
 				Ok(message) => message,
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};

@@ -33,12 +33,12 @@ pub struct Ship {
 
 
 #[deriving(Decodable, Encodable, Eq, Show)]
-pub struct Command {
+pub struct Action {
 	pub attitude: Radians
 }
 
-impl Command {
-	pub fn from_str(s: &str) -> Result<Command, ~str> {
+impl Action {
+	pub fn from_str(s: &str) -> Result<Action, ~str> {
 		from_json(s)
 	}
 

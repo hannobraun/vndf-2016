@@ -1,6 +1,6 @@
 use common::net::Connection;
 use common::protocol::{
-	Command,
+	Action,
 	Perception
 };
 use common::physics::Radians;
@@ -44,7 +44,7 @@ impl Network {
 	}
 
 	pub fn send_command(&mut self, attitude: Radians) {
-		let command = Command { attitude: attitude };
+		let command = Action { attitude: attitude };
 		match self.conn.send_message(command.to_str()) {
 			Ok(())     => (),
 			Err(error) => exit(format!("Error sending message: {}", error))
