@@ -15,18 +15,19 @@ use std::io::{
 use std::str;
 
 
-pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> T {
+pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, ~str> {
 	let json_object = match json::from_str(s) {
 		Ok(object) => object,
 		Err(error) =>
-			fail!("Error decoding JSON object from \"{}\": {}", s, error)
+			return Err(
+				format!("Error decoding JSON object from \"{}\": {}", s, error))
 	};
 
 	let mut decoder = Decoder::new(json_object);
 
 	match Decodable::decode(&mut decoder) {
-		Ok(frame)  => frame,
-		Err(error) => fail!("error decoding JSON object ({})", error)
+		Ok(t)      => Ok(t),
+		Err(error) => Err(format!("error decoding JSON object ({})", error))
 	}
 }
 

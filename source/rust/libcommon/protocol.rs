@@ -20,7 +20,10 @@ pub enum Message {
 
 impl Message {
 	pub fn from_str(s: &str) -> Message {
-		from_json(s)
+		match from_json(s) {
+			Ok(message) => message,
+			Err(error)  => fail!(error)
+		}
 	}
 
 	pub fn to_str(&self) -> ~str {

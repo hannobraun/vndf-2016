@@ -16,7 +16,10 @@ pub struct Frame {
 
 impl Frame {
 	pub fn from_json(s: &str) -> Frame {
-		from_json(s)
+		match from_json(s) {
+			Ok(frame)  => frame,
+			Err(error) => fail!(error)
+		}
 	}
 
 	pub fn to_json(&self) -> ~str {
