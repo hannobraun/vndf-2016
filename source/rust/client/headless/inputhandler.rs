@@ -5,11 +5,11 @@ use std::comm::{
 	Receiver
 };
 
+use common::io;
 use common::io::Input;
 use common::physics::Radians;
 
 use error::exit;
-use io;
 
 
 pub struct InputHandler {

@@ -3,10 +3,10 @@ use std::rc::Rc;
 
 use glfw;
 
+use common::io;
 use common::io::Input;
 use common::physics::Radians;
 
-use io;
 use ui::Window;
 
 

@@ -12,14 +12,14 @@ extern crate common;
 
 use std::rc::Rc;
 
-use common::io::Frame;
+use common::io::{
+	InputHandler,
+	Frame
+};
 use common::physics::Vec2;
 
 use entities::Entities;
-use io::{
-	InputHandler,
-	Renderer
-};
+use io::Renderer;
 use network::Network;
 use ui::{
 	Font,
