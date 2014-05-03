@@ -71,7 +71,7 @@ fn main() {
 
 	let mut entities = Entities::new();
 
-	let mut cam = Vec2::zero();
+	let mut camera = Vec2::zero();
 
 	let mut should_close = false;
 	while !should_close {
@@ -80,7 +80,7 @@ fn main() {
 		match entities.self_id {
 			Some(self_id) => match entities.bodies.find(&self_id) {
 				Some(ship) => {
-					cam = ship.position;
+					camera = ship.position;
 				},
 
 				None => ()
@@ -98,7 +98,7 @@ fn main() {
 
 		let frame = Frame {
 			input : input,
-			camera: cam,
+			camera: camera,
 			ships : entities.bodies.values().map(|&x| x).collect()
 		};
 
