@@ -99,6 +99,7 @@ fn main() {
 		}
 
 		let frame = Frame {
+			input : input,
 			camera: cam,
 			ships : entities.bodies.values().map(|&x| x).collect()
 		};
