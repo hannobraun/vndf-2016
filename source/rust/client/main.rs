@@ -94,11 +94,8 @@ fn main() {
 		let input = input_handler.apply(&mut entities.controls);
 		should_close = input.exit;
 
-		for (_, control) in entities.controls.mut_iter() {
-			if control.send {
-				network.send_command(control.attitude);
-				control.send = false;
-			}
+		if input.send {
+			network.send_command(input.attitude);
 		}
 
 		let frame = Frame {
