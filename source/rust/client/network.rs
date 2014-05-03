@@ -44,7 +44,7 @@ impl Network {
 	}
 
 	pub fn send_command(&mut self, attitude: Radians) {
-		let command = Command(Command { attitude: attitude });
+		let command = Command { attitude: attitude };
 		match self.conn.send_message(command.to_str()) {
 			Ok(())     => (),
 			Err(error) => exit(format!("Error sending message: {}", error))

@@ -4,7 +4,6 @@ use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol::{
 	Command,
-	Message,
 	Perception,
 	Ship
 };
@@ -90,20 +89,12 @@ impl EventHandler {
 		};
 
 		let result = client.conn.receive_messages(|raw_message| {
-			let message = match Message::from_str(raw_message) {
+			let command = match Command::from_str(raw_message) {
 				Ok(message) => message,
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};
 
-			match message {
-				Command(command) =>
-					self.incoming.push(CommandEvent(fd, command.attitude)),
-
-				_ =>
-					fail!(
-						"Received unexpected message from client: {}",
-						message)
-			}
+			self.incoming.push(CommandEvent(fd, command.attitude));
 		});
 
 		match result {
