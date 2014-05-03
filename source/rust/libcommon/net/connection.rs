@@ -4,6 +4,7 @@ use std::io::{
 	IoError,
 	IoResult
 };
+use std;
 use std::os;
 use std::ptr;
 use std::str;
@@ -13,6 +14,8 @@ use util::last_error;
 
 
 type MessageLength = u8;
+
+static MAX_MSG_LENGTH: MessageLength = std::u8::MAX;
 
 
 #[deriving(Eq, Show)]
@@ -92,6 +95,7 @@ impl Connection {
 			message.to_c_str().with_ref(|c_message| {
 				let message_length = libc::strlen(c_message) + 1;
 				assert!(message_length <= buffer.len() as u64);
+				assert!(message_length <= MAX_MSG_LENGTH as u64);
 
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
