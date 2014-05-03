@@ -107,7 +107,7 @@ impl Connection {
 					size_of_length);
 
 				ptr::copy_memory(
-					buffer.as_mut_ptr().offset(1),
+					buffer.as_mut_ptr().offset(size_of_length as int),
 					c_message,
 					(message_length - size_of_length as u64) as uint);
 
