@@ -14,12 +14,12 @@ use std::rc::Rc;
 
 use common::physics::Vec2;
 
-use core::Network;
 use entities::Entities;
 use io::{
 	Input,
 	Renderer
 };
+use network::Network;
 use ui::{
 	Font,
 	Textures,
@@ -29,12 +29,12 @@ use ui::{
 
 mod args;
 mod components;
-mod core;
 mod entities;
 mod error;
 mod headless;
 mod images;
 mod io;
+mod network;
 mod ui;
 
 
