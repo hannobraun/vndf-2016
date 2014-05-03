@@ -75,7 +75,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		network.update_ships(&mut entities);
+		network.receive(&mut entities);
 
 		match entities.self_id {
 			Some(self_id) => match entities.bodies.find(&self_id) {

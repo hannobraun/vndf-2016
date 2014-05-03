@@ -29,7 +29,7 @@ impl Network {
 		}
 	}
 
-	pub fn update_ships(&mut self, entities: &mut Entities) {
+	pub fn receive(&mut self, entities: &mut Entities) {
 		let result = self.conn.receive_messages(|raw_message| {
 			let message = match Message::from_str(raw_message) {
 				Ok(message) => message,
