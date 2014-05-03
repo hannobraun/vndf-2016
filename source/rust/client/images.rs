@@ -2,6 +2,7 @@ use stb_image::image;
 
 use common::physics::Vec2;
 
+use error::exit;
 use ui::{Texture, Textures};
 
 
@@ -37,7 +38,10 @@ fn load_image(image_path: &str) -> Image {
 				height: height }
 		},
 
-		image::ImageF32(_)    => fail!("Unexpected image type: ImageF32"),
-		image::Error(message) => fail!(message)
+		image::ImageF32(_) =>
+			exit(format!("Unexpected image type: ImageF32")),
+
+		image::Error(message) =>
+			exit(message)
 	}
 }
