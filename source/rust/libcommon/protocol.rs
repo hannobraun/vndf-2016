@@ -11,7 +11,6 @@ use physics::{
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub enum Message {
 	Perception(Perception),
-	Remove(Remove),
 	Command(Command),
 	Invalid(~str)
 }
@@ -36,11 +35,6 @@ pub struct Perception {
 pub struct Ship {
 	pub id  : uint,
 	pub body: Body
-}
-
-#[deriving(Decodable, Encodable, Eq, Show)]
-pub struct Remove {
-	pub id: uint
 }
 
 #[deriving(Decodable, Encodable, Eq, Show)]

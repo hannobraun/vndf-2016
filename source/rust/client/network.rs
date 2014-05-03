@@ -2,8 +2,7 @@ use common::net::Connection;
 use common::protocol::{
 	Command,
 	Message,
-	Perception,
-	Remove
+	Perception
 };
 use common::physics::Radians;
 
@@ -38,9 +37,6 @@ impl Network {
 			match message {
 				Perception(update) =>
 					handler(update),
-
-				Remove(_) =>
-					(),
 
 				_ =>
 					exit(format!("Unexpected message: {}", message))
