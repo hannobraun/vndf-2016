@@ -41,12 +41,15 @@ impl Core {
 					entities.create_ship(
 						create.id),
 
-				Update(update) =>
+				Update(update) => {
+					entities.self_id = Some(update.self_id);
+
 					for ship in update.ships.iter() {
 						entities.update_ship(
 							ship.id,
 							ship.body)
-					},
+					}
+				},
 
 				Remove(remove) =>
 					entities.remove_ship(
