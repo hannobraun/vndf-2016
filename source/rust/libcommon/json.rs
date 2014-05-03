@@ -26,8 +26,10 @@ pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, ~str
 	let mut decoder = Decoder::new(json_object);
 
 	match Decodable::decode(&mut decoder) {
-		Ok(t)      => Ok(t),
-		Err(error) => Err(format!("error decoding JSON object ({})", error))
+		Ok(t) => Ok(t),
+
+		Err(error) =>
+			Err(format!("Error decoding JSON object ({}): {}", s, error))
 	}
 }
 
