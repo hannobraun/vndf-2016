@@ -144,7 +144,14 @@ impl Connection {
 
 		self.in_buffer_pos += bytes_received as uint;
 
-		while self.in_buffer_pos > 0 && self.in_buffer[0] as uint <= self.in_buffer_pos {
+		loop {
+			if self.in_buffer_pos == 0 {
+				break;
+			}
+			if self.in_buffer[0] as uint > self.in_buffer_pos {
+				break;
+			}
+
 			let message_length = self.in_buffer[0];
 
 			let message = unsafe {
