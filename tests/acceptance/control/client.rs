@@ -35,6 +35,9 @@ impl Client {
 
 	pub fn frame(&mut self) -> Frame {
 		let line = self.process.read_stdout_line();
-		Frame::from_json(line)
+		match Frame::from_json(line) {
+			Ok(frame)  => frame,
+			Err(error) => fail!("Error decoding frame: {}", error)
+		}
 	}
 }
