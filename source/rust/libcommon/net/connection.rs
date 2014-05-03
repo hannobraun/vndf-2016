@@ -103,7 +103,7 @@ impl Connection {
 
 				ptr::copy_memory(
 					buffer.as_mut_ptr(),
-					&(message_length as MessageLength) as *u8 as *i8,
+					&(message_length as MessageLength) as *MessageLength as *i8,
 					size_of_length);
 
 				ptr::copy_memory(
