@@ -6,6 +6,7 @@ use common::physics::{Body, Vec2};
 
 use components::{Control, Visual};
 use entities::Components;
+use error::exit;
 use io;
 use ui::{Font, Texture, Textures, Window};
 
@@ -106,7 +107,7 @@ impl io::Renderer for Renderer {
 			for (id, &body) in bodies.iter() {
 				let visual = match visuals.find(id) {
 					Some(visual) => visual,
-					None         => fail!("Visual not found: {}", id)
+					None         => exit(format!("Visual not found: {}", id))
 				};
 
 				self.draw_ship(
@@ -125,7 +126,7 @@ impl io::Renderer for Renderer {
 
 		match gl::GetError() {
 			gl::NO_ERROR => (),
-			error @ _    => fail!("OpenGL error ({})", error)
+			error @ _    => exit(format!("OpenGL error ({})", error))
 		}
 	}
 }
