@@ -17,7 +17,7 @@ pub struct Network {
 }
 
 impl Network {
-	pub fn start(address: &str, port: &str) -> Network {
+	pub fn connect(address: &str, port: &str) -> Network {
 		let connection = match Connection::connect(address, port) {
 			Ok(connection) => connection,
 			Err(error)     =>

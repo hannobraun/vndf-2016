@@ -51,7 +51,7 @@ fn main() {
 		None       => error::exit(format!("Failed to parse arguments"))
 	};
 
-	let mut core = Network::start(args.address, args.port);
+	let mut core = Network::connect(args.address, args.port);
 
 	let (input, renderer) = if args.headless {
 		(
