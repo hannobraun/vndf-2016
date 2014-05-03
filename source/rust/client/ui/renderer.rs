@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use gl;
 
-use common::headless::Frame;
+use common::io::Frame;
 use common::physics::{Body, Vec2};
 
 use components::Control;

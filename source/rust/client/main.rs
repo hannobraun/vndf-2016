@@ -12,7 +12,7 @@ extern crate common;
 
 use std::rc::Rc;
 
-use common::headless::Frame;
+use common::io::Frame;
 use common::physics::Vec2;
 
 use entities::Entities;

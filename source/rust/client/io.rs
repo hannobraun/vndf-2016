@@ -1,4 +1,4 @@
-use common::headless::Frame;
+use common::io::Frame;
 
 use components::Control;
 use entities::Components;

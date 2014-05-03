@@ -5,7 +5,7 @@ use std::comm::{
 	Receiver
 };
 
-use common::headless::Input;
+use common::io::Input;
 
 use components::Control;
 use entities::Components;

@@ -1,4 +1,4 @@
-use common::headless::{
+use common::io::{
 	Frame,
 	Input
 };

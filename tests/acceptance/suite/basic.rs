@@ -1,4 +1,4 @@
-use common::headless::Input;
+use common::io::Input;
 use common::physics::{
 	Radians,
 	Vec2
