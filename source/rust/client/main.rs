@@ -31,6 +31,7 @@ mod args;
 mod components;
 mod core;
 mod entities;
+mod error;
 mod headless;
 mod images;
 mod io;
