@@ -3,6 +3,7 @@ use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
 use common::physics::{Radians};
 
 use entities::Entities;
+use error::exit;
 
 
 pub struct Core {
@@ -14,7 +15,8 @@ impl Core {
 	pub fn start(address: &str, port: &str) -> Core {
 		let connection = match Connection::connect(address, port) {
 			Ok(connection) => connection,
-			Err(error)     => fail!("Error connecting to server: {}", error)
+			Err(error)     =>
+				exit(format!("Error connecting to server: {}", error))
 		};
 
 		Core {
@@ -45,13 +47,13 @@ impl Core {
 						remove.id),
 
 				_ =>
-					fail!("Unexpected message: {}", message)
+					exit(format!("Unexpected message: {}", message))
 			}
 		});
 
 		match result {
 			Ok(())     => (),
-			Err(error) => fail!("Failed to receive message: {}", error)
+			Err(error) => exit(format!("Failed to receive message: {}", error))
 		}
 	}
 
@@ -59,7 +61,7 @@ impl Core {
 		let command = Command(Command { attitude: attitude });
 		match self.conn.send_message(command.to_str()) {
 			Ok(())     => (),
-			Err(error) => fail!("Error sending message: {}", error)
+			Err(error) => exit(format!("Error sending message: {}", error))
 		}
 	}
 }
