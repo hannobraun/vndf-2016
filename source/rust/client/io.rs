@@ -6,7 +6,7 @@ use entities::Components;
 
 
 pub trait InputHandler {
-	fn apply(&self, controls: &mut Components<Control>) -> Input;
+	fn apply(&mut self, controls: &mut Components<Control>) -> Input;
 }
 
 pub trait Renderer {

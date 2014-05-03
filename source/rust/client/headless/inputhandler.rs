@@ -40,7 +40,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&self, controls: &mut Components<Control>) -> Input {
+	fn apply(&mut self, controls: &mut Components<Control>) -> Input {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
