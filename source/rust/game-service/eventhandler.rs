@@ -140,10 +140,10 @@ impl EventHandler {
 		});
 
 		clients.each(|client_id, client| {
-			let update = Perception(Perception {
+			let update = Perception {
 				self_id: client_id,
 				ships  : ships.as_slice().to_owned()
-			});
+			};
 			let message = update.to_str();
 
 			match client.conn.send_message(message) {

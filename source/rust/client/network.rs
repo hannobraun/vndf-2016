@@ -1,7 +1,6 @@
 use common::net::Connection;
 use common::protocol::{
 	Command,
-	Message,
 	Perception
 };
 use common::physics::Radians;
@@ -27,20 +26,15 @@ impl Network {
 	}
 
 	pub fn receive(&mut self, handler: |Perception|) {
-		let result = self.conn.receive_messages(|raw_message| {
-			let message = match Message::from_str(raw_message) {
-				Ok(message) => message,
-				Err(error)  =>
+		let result = self.conn.receive_messages(|message| {
+			let perception = match Perception::from_str(message) {
+				Ok(perception) => perception,
+
+				Err(error) =>
 					exit(format!("Error decoding message: {}", error))
 			};
 
-			match message {
-				Perception(update) =>
-					handler(update),
-
-				_ =>
-					exit(format!("Unexpected message: {}", message))
-			}
+			handler(perception);
 		});
 
 		match result {
