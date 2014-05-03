@@ -90,19 +90,19 @@ impl Connection {
 
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
-				let messageLength = libc::strlen(c_message);
+				let message_length = libc::strlen(c_message);
 
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
-					(messageLength + 1) as MessageLength,
+					(message_length + 1) as MessageLength,
 					1);
 
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(1),
 					c_message,
-					messageLength as uint);
+					message_length as uint);
 
-				let buffer_length = messageLength + 1;
+				let buffer_length = message_length + 1;
 
 				assert!(buffer_length <= buffer.len() as u64);
 
