@@ -90,7 +90,7 @@ fn main() {
 		should_close = input.exit;
 
 		if input.send {
-			network.send_command(input.attitude);
+			network.send(input.attitude);
 		}
 
 		let frame = Frame {

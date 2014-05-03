@@ -43,7 +43,7 @@ impl Network {
 		}
 	}
 
-	pub fn send_command(&mut self, attitude: Radians) {
+	pub fn send(&mut self, attitude: Radians) {
 		let action = Action { attitude: attitude };
 		match self.conn.send_message(action.to_str()) {
 			Ok(())     => (),
