@@ -94,8 +94,9 @@ impl Connection {
 
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
+				let size_of_length = size_of::<MessageLength>();
 				let message_length =
-					libc::strlen(c_message) + size_of::<MessageLength>() as u64;
+					libc::strlen(c_message) + size_of_length as u64;
 
 				assert!(message_length <= buffer.len() as u64);
 				assert!(message_length <= MAX_MSG_LENGTH as u64);
@@ -103,12 +104,12 @@ impl Connection {
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
 					message_length as MessageLength,
-					size_of::<MessageLength>());
+					size_of_length);
 
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(1),
 					c_message,
-					(message_length - size_of::<MessageLength>() as u64) as uint);
+					(message_length - size_of_length as u64) as uint);
 
 				let bytesSent = ffi::send(
 					self.fd,
