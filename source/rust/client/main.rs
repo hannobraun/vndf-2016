@@ -29,7 +29,6 @@ use ui::{
 
 
 mod args;
-mod components;
 mod entities;
 mod error;
 mod headless;

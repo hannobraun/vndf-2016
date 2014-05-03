@@ -2,8 +2,6 @@ use collections::HashMap;
 
 use common::physics::{Body, Radians, Vec2};
 
-use components::{Control};
-
 
 pub type Id            = uint;
 pub type Components<T> = HashMap<Id, T>;
@@ -12,8 +10,7 @@ pub type Components<T> = HashMap<Id, T>;
 pub struct Entities {
 	pub self_id: Option<uint>,
 
-	pub bodies  : Components<Body>,
-	pub controls: Components<Control>
+	pub bodies  : Components<Body>
 }
 
 impl Entities {
@@ -21,7 +18,6 @@ impl Entities {
 		Entities {
 			self_id: None,
 
-			controls: HashMap::new(),
 			bodies  : HashMap::new()
 		}
 	}
@@ -33,17 +29,6 @@ impl Entities {
 			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);
-
-		match self.self_id {
-			Some(self_id) => if id == self_id {
-				let control = Control {
-					attitude: Radians(0.0),
-					send    : false
-				};
-				self.controls.insert(id, control);
-			},
-			None => ()
-		}
 	}
 
 	pub fn update_ship(&mut self, id: Id, body: Body) {
