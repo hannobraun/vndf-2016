@@ -1,12 +1,8 @@
 use common::io::Frame;
 use common::io::Input;
 
-use components::Control;
-use entities::Components;
-
-
 pub trait InputHandler {
-	fn apply(&mut self, controls: &mut Components<Control>) -> Input;
+	fn apply(&mut self) -> Input;
 }
 
 pub trait Renderer {

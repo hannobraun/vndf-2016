@@ -91,7 +91,7 @@ fn main() {
 			None => ()
 		}
 
-		let input = input_handler.apply(&mut entities.controls);
+		let input = input_handler.apply();
 		should_close = input.exit;
 
 		if input.send {

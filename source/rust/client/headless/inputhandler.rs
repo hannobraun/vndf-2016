@@ -8,8 +8,6 @@ use std::comm::{
 use common::io::Input;
 use common::physics::Radians;
 
-use components::Control;
-use entities::Components;
 use error::exit;
 use io;
 
@@ -40,7 +38,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&mut self, _: &mut Components<Control>) -> Input {
+	fn apply(&mut self) -> Input {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {

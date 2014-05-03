@@ -6,8 +6,6 @@ use glfw;
 use common::io::Input;
 use common::physics::Radians;
 
-use components::Control;
-use entities::Components;
 use io;
 use ui::Window;
 
@@ -27,7 +25,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&mut self, _: &mut Components<Control>) -> Input {
+	fn apply(&mut self) -> Input {
 		self.window.poll_events();
 
 		let angular_velocity = 0.1;
