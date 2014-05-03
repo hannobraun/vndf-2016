@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use gl;
 
+use common::io;
 use common::io::Frame;
 use common::physics::{
 	Body,
@@ -10,7 +11,6 @@ use common::physics::{
 };
 
 use error::exit;
-use io;
 use ui::{Font, Texture, Textures, Window};
 
 

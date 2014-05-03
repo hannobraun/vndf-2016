@@ -13,13 +13,13 @@ extern crate common;
 use std::rc::Rc;
 
 use common::io::{
+	Frame,
 	InputHandler,
-	Frame
+	Renderer
 };
 use common::physics::Vec2;
 
 use entities::Entities;
-use io::Renderer;
 use network::Network;
 use ui::{
 	Font,
@@ -34,7 +34,6 @@ mod entities;
 mod error;
 mod headless;
 mod images;
-mod io;
 mod network;
 mod ui;
 
