@@ -13,8 +13,7 @@ use error::exit;
 
 
 pub struct Core {
-	conn: Connection,
-	id  : Option<uint>
+	conn: Connection
 }
 
 impl Core {
@@ -26,8 +25,7 @@ impl Core {
 		};
 
 		Core {
-			conn: connection,
-			id  : None
+			conn: connection
 		}
 	}
 
