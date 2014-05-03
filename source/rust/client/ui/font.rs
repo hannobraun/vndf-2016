@@ -19,6 +19,7 @@ use freetype::freetype::{
 
 use common::physics::Vec2;
 
+use error::exit;
 use ui::{Texture, Textures};
 
 
@@ -57,7 +58,7 @@ impl Font {
 	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
 		match self.glyphs.find(&c) {
 			Some(glyph) => glyph,
-			None        => fail!("No such glyph: {}", c)
+			None        => exit(format!("No such glyph: {}", c))
 		}
 	}
 }
