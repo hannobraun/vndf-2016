@@ -1,6 +1,12 @@
 use libc;
+use std::io;
+
 
 pub fn exit(message: &str) -> ! {
-	print!("Fatal Error: {}\n", message);
+	match write!(&mut io::stderr(), "Fatal Error: {}\n", message) {
+		Ok(_)  => (),
+		Err(_) => ()
+	}
+
 	unsafe { libc::exit(1) };
 }
