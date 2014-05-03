@@ -6,7 +6,7 @@ use common::protocol::{
 	Remove,
 	Update
 };
-use common::physics::{Radians};
+use common::physics::Radians;
 
 use entities::Entities;
 use error::exit;
