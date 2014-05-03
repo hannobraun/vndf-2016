@@ -90,7 +90,7 @@ fn main() {
 			None => ()
 		}
 
-		let input = input_handler.apply();
+		let input = input_handler.input();
 		should_close = input.exit;
 
 		if input.send {

@@ -25,7 +25,7 @@ impl InputHandler {
 }
 
 impl io::InputHandler for InputHandler {
-	fn apply(&mut self) -> Input {
+	fn input(&mut self) -> Input {
 		self.window.poll_events();
 
 		let angular_velocity = 0.1;
