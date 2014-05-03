@@ -31,6 +31,17 @@ pub struct Perception {
 	pub ships  : ~[Ship]
 }
 
+impl Perception {
+	pub fn from_str(s: &str) -> Result<Perception, ~str> {
+		from_json(s)
+	}
+
+	pub fn to_str(&self) -> ~str {
+		to_json(self)
+	}
+}
+
+
 #[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Ship {
 	pub id  : uint,
