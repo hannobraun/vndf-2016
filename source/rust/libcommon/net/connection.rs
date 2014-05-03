@@ -83,7 +83,7 @@ impl Connection {
 	}
 
 	pub fn send_message(&self, message: &str) -> Result<(), ~str> {
-		let mut buffer: [libc::c_char, ..256] = [0, ..256];
+		let mut buffer: [libc::c_char, ..1024] = [0, ..1024];
 
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
