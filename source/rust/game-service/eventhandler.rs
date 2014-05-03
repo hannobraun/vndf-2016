@@ -8,7 +8,6 @@ use common::protocol::{
 	Create,
 	Message,
 	Remove,
-	SelfInfo,
 	Ship,
 	Update
 };
@@ -78,16 +77,7 @@ impl EventHandler {
 		};
 
 		let new_client = Client::new(connection, ship);
-		let (client_id, client) = clients.add(new_client);
-
-		let message = SelfInfo(SelfInfo {
-			id: client_id
-		});
-
-		match client.conn.send_message(message.to_str()) {
-			Err(_) => self.incoming.push(Disconnect(client_id)),
-			_      => ()
-		}
+		let (client_id, _) = clients.add(new_client);
 
 		self.incoming.push(CreateEvent(client_id))
 	}
