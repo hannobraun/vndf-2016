@@ -31,7 +31,6 @@ use ui::{
 
 
 mod args;
-mod entities;
 mod error;
 mod headless;
 mod images;
