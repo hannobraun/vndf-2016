@@ -12,11 +12,8 @@ pub struct Input {
 }
 
 impl Input {
-	pub fn from_json(s: &str) -> Input {
-		match from_json(s) {
-			Ok(input)  => input,
-			Err(error) => fail!(error)
-		}
+	pub fn from_json(s: &str) -> Result<Input, ~str> {
+		from_json(s)
 	}
 
 	pub fn to_json(&self) -> ~str {

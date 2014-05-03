@@ -49,7 +49,10 @@ impl io::Input for InputHandler {
 			}
 		};
 
-		let input = Input::from_json(message);
+		let input = match Input::from_json(message) {
+			Ok(input)  => input,
+			Err(error) => exit(format!("Error decoding input: {}", error))
+		};
 
 		for (_, control) in controls.mut_iter() {
 			control.attitude = input.attitude;
