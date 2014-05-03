@@ -19,11 +19,8 @@ pub enum Message {
 }
 
 impl Message {
-	pub fn from_str(s: &str) -> Message {
-		match from_json(s) {
-			Ok(message) => message,
-			Err(error)  => fail!(error)
-		}
+	pub fn from_str(s: &str) -> Result<Message, ~str> {
+		from_json(s)
 	}
 
 	pub fn to_str(&self) -> ~str {

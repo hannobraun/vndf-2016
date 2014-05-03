@@ -113,8 +113,13 @@ impl EventHandler {
 			None         => return
 		};
 
-		let result = client.conn.receive_messages(|message| {
-			match Message::from_str(message) {
+		let result = client.conn.receive_messages(|raw_message| {
+			let message = match Message::from_str(raw_message) {
+				Ok(message) => message,
+				Err(error)  => fail!("Error decoding message: {}", error)
+			};
+
+			match message {
 				Command(command) =>
 					self.incoming.push(CommandEvent(fd, command.attitude)),
 

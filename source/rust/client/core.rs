@@ -26,8 +26,14 @@ impl Core {
 	}
 
 	pub fn update_ships(&mut self, entities: &mut Entities) {
-		let result = self.conn.receive_messages(|message| {
-			match Message::from_str(message) {
+		let result = self.conn.receive_messages(|raw_message| {
+			let message = match Message::from_str(raw_message) {
+				Ok(message) => message,
+				Err(error)  =>
+					exit(format!("Error decoding message: {}", error))
+			};
+
+			match message {
 				SelfInfo(self_info) =>
 					entities.self_id = Some(self_info.id),
 
