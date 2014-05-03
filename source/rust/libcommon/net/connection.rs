@@ -90,36 +90,33 @@ impl Connection {
 
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
-				let message_length = libc::strlen(c_message);
+				let message_length = libc::strlen(c_message) + 1;
+				assert!(message_length <= buffer.len() as u64);
 
 				ptr::set_memory(
 					buffer.as_mut_ptr(),
-					(message_length + 1) as MessageLength,
+					message_length as MessageLength,
 					1);
 
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(1),
 					c_message,
-					message_length as uint);
-
-				let buffer_length = message_length + 1;
-
-				assert!(buffer_length <= buffer.len() as u64);
+					(message_length - 1) as uint);
 
 				let bytesSent = ffi::send(
 					self.fd,
 					buffer.as_ptr() as *mut libc::c_void,
-					buffer_length,
+					message_length,
 					ffi::MSG_NOSIGNAL);
 
 				if bytesSent < 0 {
 					Err(format!("Error sending message: {}", last_error()))
 				}
-				else if bytesSent as u64 != buffer_length {
+				else if bytesSent as u64 != message_length {
 					Err(format!(
 						"Only sent {:d} of {:u} bytes",
 						bytesSent,
-						buffer_length))
+						message_length))
 				}
 				else {
 					Ok(())
