@@ -149,7 +149,7 @@ impl Connection {
 			let mut message_length: MessageLength = 0;
 			unsafe {
 				ptr::copy_memory(
-					&mut message_length as *mut u8,
+					&mut message_length as *mut MessageLength as *mut u8,
 					self.in_buffer.as_ptr(),
 					size_of_length);
 			}
