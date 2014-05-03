@@ -3,7 +3,11 @@ use std::rc::Rc;
 use gl;
 
 use common::io::Frame;
-use common::physics::{Body, Vec2};
+use common::physics::{
+	Body,
+	Radians,
+	Vec2
+};
 
 use components::Control;
 use entities::Components;
@@ -62,7 +66,7 @@ impl Renderer {
 			format!("att: {:+04i}", body.attitude.degrees()));
 	}
 
-	fn draw_ui_overlay(&self, control: Control) {
+	fn draw_ui_overlay(&self, attitude: Radians) {
 		self.draw_text(
 			Vec2(20.0, 40.0),
 			"Set attitude with the left and right cursor keys");
@@ -72,7 +76,7 @@ impl Renderer {
 
 		self.draw_text(
 			Vec2(self.screen_width - 50.0, 40.0),
-			format!("{:+04i}", control.attitude.degrees()));
+			format!("{:+04i}", attitude.degrees()));
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
@@ -109,7 +113,7 @@ impl io::Renderer for Renderer {
 		gl::PopMatrix();
 
 		for (_, &control) in controls.iter() {
-			self.draw_ui_overlay(control);
+			self.draw_ui_overlay(control.attitude);
 			break;
 		}
 
