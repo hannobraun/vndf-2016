@@ -175,7 +175,8 @@ impl EventHandler {
 
 		clients.each(|client_id, client| {
 			let update = protocol::Update(Update {
-				ships: ships.as_slice().to_owned()
+				self_id: client_id,
+				ships  : ships.as_slice().to_owned()
 			});
 			let message = update.to_str();
 
