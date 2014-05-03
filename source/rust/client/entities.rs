@@ -2,7 +2,7 @@ use collections::HashMap;
 
 use common::physics::{Body, Radians, Vec2};
 
-use components::{Control, Visual};
+use components::{Control};
 
 
 pub type Id            = uint;
@@ -13,8 +13,7 @@ pub struct Entities {
 	pub self_id: Option<uint>,
 
 	pub bodies  : Components<Body>,
-	pub controls: Components<Control>,
-	pub visuals : Components<Visual>
+	pub controls: Components<Control>
 }
 
 impl Entities {
@@ -23,8 +22,8 @@ impl Entities {
 			self_id: None,
 
 			controls: HashMap::new(),
-			bodies  : HashMap::new(),
-			visuals : HashMap::new() }
+			bodies  : HashMap::new()
+		}
 	}
 
 	pub fn create_ship(&mut self, id: Id) {
@@ -34,7 +33,6 @@ impl Entities {
 			attitude: Radians(0.0)
 		};
 		self.bodies.insert(id, body);
-		self.visuals.insert(id, Visual { texture: ~"images/spaceship.png" });
 
 		match self.self_id {
 			Some(self_id) => if id == self_id {
@@ -54,6 +52,5 @@ impl Entities {
 
 	pub fn remove_ship(&mut self, id: Id) {
 		self.bodies.remove(&id);
-		self.visuals.remove(&id);
 	}
 }
