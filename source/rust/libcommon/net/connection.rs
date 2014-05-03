@@ -157,7 +157,7 @@ impl Connection {
 
 			let message = unsafe {
 				str::raw::from_buf_len(
-					(self.in_buffer.as_ptr() as *u8).offset(1),
+					(self.in_buffer.as_ptr() as *u8).offset(size_of_length as int),
 					(message_length - size_of_length as MessageLength) as uint)
 			};
 
