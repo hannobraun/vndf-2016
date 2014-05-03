@@ -145,12 +145,12 @@ impl Connection {
 		self.in_buffer_pos += bytes_received as uint;
 
 		while self.in_buffer_pos > 0 && self.in_buffer[0] as uint <= self.in_buffer_pos {
-			let message_size = self.in_buffer[0];
+			let message_length = self.in_buffer[0];
 
 			let message = unsafe {
 				str::raw::from_buf_len(
 					(self.in_buffer.as_ptr() as *u8).offset(1),
-					(message_size - 1) as uint)
+					(message_length - 1) as uint)
 			};
 
 			handler(message);
@@ -158,9 +158,9 @@ impl Connection {
 			unsafe {
 				ptr::copy_memory(
 					self.in_buffer.as_mut_ptr(),
-					self.in_buffer.as_ptr().offset(message_size as int),
-					(self.in_buffer.len() - message_size as uint) as uint);
-				self.in_buffer_pos -= message_size as uint;
+					self.in_buffer.as_ptr().offset(message_length as int),
+					(self.in_buffer.len() - message_length as uint) as uint);
+				self.in_buffer_pos -= message_length as uint;
 			}
 		}
 
