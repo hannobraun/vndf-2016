@@ -6,7 +6,6 @@ use common::protocol::{
 	Command,
 	Message,
 	Perception,
-	Remove,
 	Ship
 };
 
@@ -82,17 +81,6 @@ impl EventHandler {
 
 	fn on_disconnect(&mut self, removed_id: uint, clients: &mut Clients) {
 		clients.remove(removed_id);
-
-		clients.each(|client_id, client| {
-			let message = Remove(Remove {
-				id: removed_id
-			});
-
-			match client.conn.send_message(message.to_str()) {
-				Err(_) => self.incoming.push(Disconnect(client_id)),
-				_      => ()
-			}
-		})
 	}
 
 	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients) {
