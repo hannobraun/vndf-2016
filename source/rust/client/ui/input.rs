@@ -23,7 +23,7 @@ impl Input {
 	}
 }
 
-impl io::Input for Input {
+impl io::InputHandler for Input {
 	fn apply(&self, controls: &mut Components<Control>) -> bool {
 		self.window.poll_events();
 

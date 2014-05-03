@@ -38,7 +38,7 @@ impl InputHandler {
 	}
 }
 
-impl io::Input for InputHandler {
+impl io::InputHandler for InputHandler {
 	fn apply(&self, controls: &mut Components<Control>) -> bool {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,

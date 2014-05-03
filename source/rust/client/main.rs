@@ -17,7 +17,7 @@ use common::physics::Vec2;
 
 use entities::Entities;
 use io::{
-	Input,
+	InputHandler,
 	Renderer
 };
 use network::Network;
@@ -56,7 +56,7 @@ fn main() {
 
 	let (input, renderer) = if args.headless {
 		(
-			~headless::InputHandler::new() as ~Input,
+			~headless::InputHandler::new() as ~InputHandler,
 			~headless::Renderer::new() as ~Renderer)
 	}
 	else {
@@ -67,7 +67,7 @@ fn main() {
 		images::load(&mut textures);
 
 		(
-			~ui::Input::new(window.clone()) as ~Input,
+			~ui::Input::new(window.clone()) as ~InputHandler,
 			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
 	};
 

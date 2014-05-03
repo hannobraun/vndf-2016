@@ -4,7 +4,7 @@ use components::Control;
 use entities::Components;
 
 
-pub trait Input {
+pub trait InputHandler {
 	fn apply(&self, controls: &mut Components<Control>) -> bool;
 }
 
