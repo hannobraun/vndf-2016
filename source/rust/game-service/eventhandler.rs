@@ -173,12 +173,12 @@ impl EventHandler {
 			}
 		});
 
-		let update = protocol::Update(Update {
-			ships: ships.as_slice().to_owned()
-		});
-		let message = update.to_str();
-
 		clients.each(|client_id, client| {
+			let update = protocol::Update(Update {
+				ships: ships.as_slice().to_owned()
+			});
+			let message = update.to_str();
+
 			match client.conn.send_message(message) {
 				Err(_) => self.incoming.push(Disconnect(client_id)),
 				_      => ()
