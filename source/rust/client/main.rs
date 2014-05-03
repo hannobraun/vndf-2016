@@ -54,7 +54,7 @@ fn main() {
 
 	let mut network = Network::connect(args.address, args.port);
 
-	let (input, renderer) = if args.headless {
+	let (input_handler, renderer) = if args.headless {
 		(
 			~headless::InputHandler::new() as ~InputHandler,
 			~headless::Renderer::new() as ~Renderer)
@@ -91,7 +91,7 @@ fn main() {
 			None => ()
 		}
 
-		should_close = input.apply(&mut entities.controls);
+		should_close = input_handler.apply(&mut entities.controls);
 
 		for (_, control) in entities.controls.mut_iter() {
 			if control.send {
