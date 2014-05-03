@@ -14,9 +14,9 @@ use net::ffi;
 use util::last_error;
 
 
-type MessageLength = u8;
+type MessageLength = u16;
 
-static MAX_MSG_LENGTH: MessageLength = std::u8::MAX;
+static MAX_MSG_LENGTH: MessageLength = std::u16::MAX;
 
 
 #[deriving(Eq, Show)]
