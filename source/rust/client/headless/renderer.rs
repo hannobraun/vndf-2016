@@ -18,15 +18,10 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self, _: &Frame,
-		camera: Vec2,
-		_     : &Components<Control>,
-		bodies: &Components<Body>) {
-
-		let frame = Frame {
-			camera: camera,
-			ships : bodies.values().map(|&x| x).collect()
-		};
+	fn render(&self, frame: &Frame,
+		_: Vec2,
+		_: &Components<Control>,
+		_: &Components<Body>) {
 
 		print!("{}\n", frame.to_json());
 	}
