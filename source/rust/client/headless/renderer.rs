@@ -4,10 +4,7 @@ use common::physics::{
 	Vec2
 };
 
-use components::{
-	Control,
-	Visual
-};
+use components::Control;
 use entities::Components;
 use io;
 
@@ -24,8 +21,7 @@ impl io::Renderer for Renderer {
 	fn render(&self,
 		camera: Vec2,
 		_     : &Components<Control>,
-		bodies: &Components<Body>,
-		_     : &Components<Visual>) {
+		bodies: &Components<Body>) {
 
 		let frame = Frame {
 			camera: camera,

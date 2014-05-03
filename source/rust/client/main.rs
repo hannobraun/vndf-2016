@@ -102,7 +102,6 @@ fn main() {
 		renderer.render(
 			cam,
 			&entities.controls,
-			&entities.bodies,
-			&entities.visuals);
+			&entities.bodies);
 	}
 }

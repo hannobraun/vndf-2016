@@ -3,10 +3,7 @@ use common::physics::{
 	Vec2
 };
 
-use components::{
-	Control,
-	Visual
-};
+use components::Control;
 use entities::Components;
 
 
@@ -18,6 +15,5 @@ pub trait Renderer {
 	fn render(&self,
 		camera  : Vec2,
 		controls: &Components<Control>,
-		bodies  : &Components<Body>,
-		visuals : &Components<Visual>);
+		bodies  : &Components<Body>);
 }

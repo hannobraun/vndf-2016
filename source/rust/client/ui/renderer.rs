@@ -4,7 +4,7 @@ use gl;
 
 use common::physics::{Body, Vec2};
 
-use components::{Control, Visual};
+use components::Control;
 use entities::Components;
 use error::exit;
 use io;
@@ -90,8 +90,7 @@ impl io::Renderer for Renderer {
 	fn render(&self,
 		camera  : Vec2,
 		controls: &Components<Control>,
-		bodies  : &Components<Body>,
-		_       : &Components<Visual>) {
+		bodies  : &Components<Body>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
