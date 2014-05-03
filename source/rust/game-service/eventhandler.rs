@@ -4,7 +4,6 @@ use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol::{
 	Command,
-	Create,
 	Message,
 	Perception,
 	Remove,
@@ -129,16 +128,6 @@ impl EventHandler {
 		clients.mut_each(|client_id, client| {
 			if client_id == created_id {
 				client.created = true;
-			}
-
-			let message = Create(Create {
-				id  : created_id,
-				kind: ~"ship"
-			});
-
-			match client.conn.send_message(message.to_str()) {
-				Err(_) => self.incoming.push(Disconnect(client_id)),
-				_      => ()
 			}
 		});
 	}
