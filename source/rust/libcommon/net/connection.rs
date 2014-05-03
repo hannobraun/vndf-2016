@@ -5,6 +5,7 @@ use std::io::{
 	IoResult
 };
 use std;
+use std::mem::size_of;
 use std::os;
 use std::ptr;
 use std::str;
@@ -93,7 +94,9 @@ impl Connection {
 
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
-				let message_length = libc::strlen(c_message) + 1;
+				let message_length =
+					libc::strlen(c_message) + size_of::<MessageLength>() as u64;
+
 				assert!(message_length <= buffer.len() as u64);
 				assert!(message_length <= MAX_MSG_LENGTH as u64);
 
