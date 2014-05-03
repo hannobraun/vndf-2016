@@ -145,15 +145,21 @@ impl Connection {
 		self.in_buffer_pos += bytes_received as uint;
 
 		loop {
+			let size_of_length = size_of::<MessageLength>();
+			let mut message_length: MessageLength = 0;
+			unsafe {
+				ptr::copy_memory(
+					&mut message_length as *mut u8,
+					self.in_buffer.as_ptr(),
+					size_of_length);
+			}
+
 			if self.in_buffer_pos == 0 {
 				break;
 			}
 			if self.in_buffer[0] as uint > self.in_buffer_pos {
 				break;
-			}
-
-			let size_of_length = size_of::<MessageLength>();
-			let message_length = self.in_buffer[0];
+			};
 
 			let message = unsafe {
 				str::raw::from_buf_len(
