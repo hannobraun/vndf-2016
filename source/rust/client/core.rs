@@ -1,5 +1,5 @@
 use common::net::Connection;
-use common::protocol::{Command, Create, Message, Remove, SelfInfo, Update};
+use common::protocol::{Command, Create, Message, Remove, Update};
 use common::physics::{Radians};
 
 use entities::Entities;
@@ -34,9 +34,6 @@ impl Core {
 			};
 
 			match message {
-				SelfInfo(_) =>
-					(),
-
 				Create(create) =>
 					entities.create_ship(
 						create.id),

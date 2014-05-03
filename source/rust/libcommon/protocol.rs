@@ -10,7 +10,6 @@ use physics::{
 
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub enum Message {
-	SelfInfo(SelfInfo),
 	Create(Create),
 	Update(Update),
 	Remove(Remove),
@@ -28,11 +27,6 @@ impl Message {
 	}
 }
 
-
-#[deriving(Decodable, Encodable, Eq, Show)]
-pub struct SelfInfo {
-	pub id: uint
-}
 
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Create {
