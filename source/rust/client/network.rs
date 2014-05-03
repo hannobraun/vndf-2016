@@ -3,8 +3,8 @@ use common::protocol::{
 	Command,
 	Create,
 	Message,
-	Remove,
-	Update
+	Perception,
+	Remove
 };
 use common::physics::Radians;
 
@@ -42,7 +42,7 @@ impl Network {
 					entities.create_ship(
 						create.id),
 
-				Update(update) => {
+				Perception(update) => {
 					entities.self_id = Some(update.self_id);
 
 					for ship in update.ships.iter() {

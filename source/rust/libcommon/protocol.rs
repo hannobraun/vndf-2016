@@ -11,7 +11,7 @@ use physics::{
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub enum Message {
 	Create(Create),
-	Update(Update),
+	Perception(Perception),
 	Remove(Remove),
 	Command(Command),
 	Invalid(~str)
@@ -35,7 +35,7 @@ pub struct Create {
 }
 
 #[deriving(Decodable, Encodable, Eq, Show)]
-pub struct Update {
+pub struct Perception {
 	pub self_id: uint,
 	pub ships  : ~[Ship]
 }

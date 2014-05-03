@@ -2,14 +2,13 @@ use libc::c_int;
 
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
-use common::protocol;
 use common::protocol::{
 	Command,
 	Create,
 	Message,
+	Perception,
 	Remove,
-	Ship,
-	Update
+	Ship
 };
 
 use clients::{Client, Clients};
@@ -164,7 +163,7 @@ impl EventHandler {
 		});
 
 		clients.each(|client_id, client| {
-			let update = protocol::Update(Update {
+			let update = Perception(Perception {
 				self_id: client_id,
 				ships  : ships.as_slice().to_owned()
 			});
