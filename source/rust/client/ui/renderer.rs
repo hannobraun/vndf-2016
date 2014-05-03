@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use gl;
 
+use common::headless::Frame;
 use common::physics::{Body, Vec2};
 
 use components::Control;
@@ -87,7 +88,7 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self,
+	fn render(&self, _: &Frame,
 		camera  : Vec2,
 		controls: &Components<Control>,
 		bodies  : &Components<Body>) {

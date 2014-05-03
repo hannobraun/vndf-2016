@@ -12,6 +12,7 @@ extern crate common;
 
 use std::rc::Rc;
 
+use common::headless::Frame;
 use common::physics::Vec2;
 
 use entities::Entities;
@@ -99,7 +100,13 @@ fn main() {
 			}
 		}
 
+		let frame = Frame {
+			camera: cam,
+			ships : entities.bodies.values().map(|&x| x).collect()
+		};
+
 		renderer.render(
+			&frame,
 			cam,
 			&entities.controls,
 			&entities.bodies);
