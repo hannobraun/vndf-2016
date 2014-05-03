@@ -22,7 +22,6 @@ use common::physics::{
 	Vec2
 };
 
-use entities::Entities;
 use network::Network;
 use ui::{
 	Font,
@@ -72,8 +71,6 @@ fn main() {
 			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
 	};
 
-	let entities = Entities::new();
-
 	let mut camera = Vec2::zero();
 
 	let mut ships: ~[Body] = ~[];
@@ -89,18 +86,6 @@ fn main() {
 				ship.body
 			}).collect();
 		});
-
-		match entities.self_id {
-			Some(self_id) => match entities.bodies.find(&self_id) {
-				Some(ship) => {
-					camera = ship.position;
-				},
-
-				None => ()
-			},
-
-			None => ()
-		}
 
 		let input = input_handler.input();
 		should_close = input.exit;
