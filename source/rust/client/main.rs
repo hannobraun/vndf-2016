@@ -14,7 +14,7 @@ use std::rc::Rc;
 
 use common::physics::Vec2;
 
-use core::Core;
+use core::Network;
 use entities::Entities;
 use io::{
 	Input,
@@ -51,7 +51,7 @@ fn main() {
 		None       => error::exit(format!("Failed to parse arguments"))
 	};
 
-	let mut core = Core::start(args.address, args.port);
+	let mut core = Network::start(args.address, args.port);
 
 	let (input, renderer) = if args.headless {
 		(

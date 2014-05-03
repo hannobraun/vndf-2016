@@ -12,19 +12,19 @@ use entities::Entities;
 use error::exit;
 
 
-pub struct Core {
+pub struct Network {
 	conn: Connection
 }
 
-impl Core {
-	pub fn start(address: &str, port: &str) -> Core {
+impl Network {
+	pub fn start(address: &str, port: &str) -> Network {
 		let connection = match Connection::connect(address, port) {
 			Ok(connection) => connection,
 			Err(error)     =>
 				exit(format!("Error connecting to server: {}", error))
 		};
 
-		Core {
+		Network {
 			conn: connection
 		}
 	}
