@@ -88,23 +88,23 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self, _: &Frame,
-		camera  : Vec2,
+	fn render(&self, frame: &Frame,
+		_       : Vec2,
 		controls: &Components<Control>,
-		bodies  : &Components<Body>) {
+		_       : &Components<Body>) {
 
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 		gl::Color4d(1.0, 1.0, 1.0, 1.0);
 
 		gl::PushMatrix();
 		{
-			let Vec2(camera_x, camera_y) = camera;
+			let Vec2(camera_x, camera_y) = frame.camera;
 			gl::Translated(
 				self.screen_width / 2.0 - camera_x,
 				self.screen_height / 2.0 - camera_y,
 				0.0);
 
-			for (_, &body) in bodies.iter() {
+			for &body in frame.ships.iter() {
 				self.draw_ship(body);
 			}
 		}
