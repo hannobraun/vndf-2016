@@ -157,7 +157,7 @@ impl Connection {
 			if self.in_buffer_pos == 0 {
 				break;
 			}
-			if self.in_buffer[0] as uint > self.in_buffer_pos {
+			if message_length as uint > self.in_buffer_pos {
 				break;
 			};
 
