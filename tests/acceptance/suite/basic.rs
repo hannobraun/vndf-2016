@@ -23,14 +23,6 @@ fn the_ship_should_follow_its_velocity_vector() {
 		frame_2 = client.frame();
 	}
 
-	// This is necessary because the ship is created due to a CREATE message,
-	// which zeroes everything. After the network refactoring, this can be
-	// cleaned up.
-	while frame_1.ships[0].position == Vec2::zero() {
-		frame_1 = frame_2;
-		frame_2 = client.frame();
-	}
-
 	while frame_1.ships[0].position == frame_2.ships[0].position {
 		frame_2 = client.frame();
 	}
