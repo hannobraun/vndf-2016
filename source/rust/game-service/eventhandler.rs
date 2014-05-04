@@ -113,11 +113,9 @@ impl EventHandler {
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
 		clients.mut_each(|_, client| {
-			if client.created {
-				client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
-				client.ship.position =
-					client.ship.position + client.ship.velocity * dTimeInS;
-			}
+			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
+			client.ship.position =
+				client.ship.position + client.ship.velocity * dTimeInS;
 		});
 
 		let mut ships = Vec::new();
