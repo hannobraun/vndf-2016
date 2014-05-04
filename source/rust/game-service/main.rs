@@ -8,18 +8,18 @@ extern crate time;
 use std::os;
 
 use clients::Clients;
-use eventhandler::Game;
 use events::{
 	Init,
 	Update
 };
+use game::Game;
 use network::Network;
 
 
 mod args;
 mod clients;
 mod events;
-mod eventhandler;
+mod game;
 mod network;
 
 
