@@ -24,13 +24,16 @@ use events::{
 
 
 pub struct EventHandler {
+	network: Sender<NetworkEvent>,
+
 	pub incoming: EventBuffer<GameEvent>
 }
 
 
 impl EventHandler {
-	pub fn new() -> EventHandler {
+	pub fn new(network: Sender<NetworkEvent>) -> EventHandler {
 		EventHandler {
+			network : network,
 			incoming: EventBuffer::new()
 		}
 	}

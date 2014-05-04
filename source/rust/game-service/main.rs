@@ -35,7 +35,7 @@ fn main() {
 	};
 
 	let mut network       = Network::new(args.port);
-	let mut event_handler = EventHandler::new();
+	let mut event_handler = EventHandler::new(network.event_sender.clone());
 	let mut clients       = Clients::new();
 
 	let frame_time_in_ms = args.frame_time;
