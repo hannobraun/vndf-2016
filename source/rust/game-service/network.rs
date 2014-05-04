@@ -74,6 +74,7 @@ impl Network {
 				}
 			}
 		}
+
 		let result = self.epoll.wait(timeout_in_ms, |fd| {
 			if fd == self.acceptor.fd {
 				let connection = match self.acceptor.accept() {
