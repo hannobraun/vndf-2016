@@ -9,7 +9,7 @@ pub enum GameEvent {
 	Enter(Connection),
 	Leave(uint),
 	DataReceived(c_int),
-	ActionEvent(c_int, Radians),
+	Action(c_int, Radians),
 	Init,
 	Update(f64)
 }

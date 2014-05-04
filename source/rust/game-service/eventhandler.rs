@@ -14,7 +14,7 @@ use common::protocol::{
 
 use clients::{Client, Clients};
 use events::{
-	ActionEvent,
+	Action,
 	Close,
 	DataReceived,
 	Enter,
@@ -63,7 +63,7 @@ impl EventHandler {
 							self.on_data_received(fd, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
-						ActionEvent(client_id, attitude) =>
+						Action(client_id, attitude) =>
 							self.on_action(client_id, attitude, clients)
 					}
 				},
@@ -105,7 +105,7 @@ impl EventHandler {
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};
 
-			self.events.send(ActionEvent(fd, action.attitude));
+			self.events.send(Action(fd, action.attitude));
 		});
 
 		match result {
