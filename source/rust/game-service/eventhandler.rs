@@ -24,7 +24,7 @@ use events::{
 };
 
 
-pub struct EventHandler {
+pub struct Game {
 	pub events: Sender<GameEvent>,
 
 	incoming: Receiver<GameEvent>,
@@ -32,11 +32,11 @@ pub struct EventHandler {
 }
 
 
-impl EventHandler {
-	pub fn new(network: Sender<NetworkEvent>) -> EventHandler {
+impl Game {
+	pub fn new(network: Sender<NetworkEvent>) -> Game {
 		let (sender, receiver) = channel();
 
-		EventHandler {
+		Game {
 			events  : sender,
 
 			incoming: receiver,
