@@ -33,18 +33,18 @@ fn main() {
 		}
 	};
 
-	let mut network       = Network::new(args.port);
-	let mut event_handler = Game::new(network.events.clone());
-	let mut clients       = Clients::new();
+	let mut network = Network::new(args.port);
+	let mut game    = Game::new(network.events.clone());
+	let mut clients = Clients::new();
 
 	let frame_time_in_ms = args.frame_time;
 
-	event_handler.events.send(Init);
+	game.events.send(Init);
 
 	loop {
-		network.update(frame_time_in_ms, &mut event_handler.events, &mut clients);
+		network.update(frame_time_in_ms, &mut game.events, &mut clients);
 
-		event_handler.events.send(Update(frame_time_in_ms as f64 / 1000.0));
-		event_handler.handle(&mut clients);
+		game.events.send(Update(frame_time_in_ms as f64 / 1000.0));
+		game.handle(&mut clients);
 	}
 }
