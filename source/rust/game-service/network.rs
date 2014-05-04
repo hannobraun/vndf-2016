@@ -21,7 +21,7 @@ use events::{
 pub struct Network {
 	pub event_sender: Sender<NetworkEvent>,
 
-	events  : Receiver<NetworkEvent>,
+	incoming: Receiver<NetworkEvent>,
 	epoll   : EPoll,
 	acceptor: Acceptor
 }
@@ -47,7 +47,7 @@ impl Network {
 		Network {
 			event_sender: sender,
 
-			events  : receiver,
+			incoming: receiver,
 			epoll   : epoll,
 			acceptor: acceptor
 
@@ -56,7 +56,7 @@ impl Network {
 
 	pub fn update(&mut self, timeout_in_ms: u32, events: &mut Sender<GameEvent>, clients: &mut Clients) {
 		loop {
-			match self.events.try_recv() {
+			match self.incoming.try_recv() {
 				Ok(event) => match event {
 					Close(fd) => match clients.remove(fd) {
 						Some(client) => {
