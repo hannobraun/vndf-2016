@@ -1,3 +1,8 @@
+use std::comm::{
+	Disconnected,
+	Empty
+};
+
 use common::net::Acceptor;
 use common::net::epoll;
 use common::net::epoll::EPoll;
@@ -17,8 +22,9 @@ use events::{
 pub struct Network {
 	epoll   : EPoll,
 	acceptor: Acceptor,
+	events  : Receiver<NetworkEvent>,
 
-	pub incoming: EventBuffer<NetworkEvent>
+	pub event_sender: Sender<NetworkEvent>
 }
 
 impl Network {
@@ -37,17 +43,21 @@ impl Network {
 				fail!("Error registering server socket with epoll: {}", error)
 		}
 
+		let (sender, receiver) = channel();
+
 		Network {
 			epoll   : epoll,
 			acceptor: acceptor,
-			incoming: EventBuffer::new()
+			events  : receiver,
+
+			event_sender: sender
 		}
 	}
 
 	pub fn update(&mut self, timeout_in_ms: u32, events: &mut EventBuffer<GameEvent>, clients: &mut Clients) {
 		loop {
-			match self.incoming.pop() {
-				Some(event) => match event {
+			match self.events.try_recv() {
+				Ok(event) => match event {
 					Close(fd) => match clients.remove(fd) {
 						Some(client) => {
 							client.conn.close();
@@ -58,7 +68,10 @@ impl Network {
 					}
 				},
 
-				None => break
+				Err(error) => match error {
+					Empty        => break,
+					Disconnected => fail!("Unexpected error: {}", error)
+				}
 			}
 		}
 		let result = self.epoll.wait(timeout_in_ms, |fd| {

@@ -35,7 +35,7 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
+	pub fn handle(&mut self, clients: &mut Clients, net_events: &mut Sender<NetworkEvent>) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) => {
@@ -79,7 +79,7 @@ impl EventHandler {
 		clients.remove(removed_id);
 	}
 
-	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients, net_events: &mut EventBuffer<NetworkEvent>) {
+	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients, net_events: &mut Sender<NetworkEvent>) {
 		let (client_id, client) = match clients.client_by_fd(fd) {
 			Some(result) => result,
 			None         => return
@@ -96,11 +96,11 @@ impl EventHandler {
 
 		match result {
 			Ok(()) => (),
-			Err(_) => net_events.push(Close(client_id))
+			Err(_) => net_events.send(Close(client_id))
 		}
 	}
 
-	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64, net_events: &mut EventBuffer<NetworkEvent>) {
+	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64, net_events: &mut Sender<NetworkEvent>) {
 		clients.mut_each(|_, client| {
 			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
 			client.ship.position =
@@ -123,7 +123,7 @@ impl EventHandler {
 			let message = update.to_str();
 
 			match client.conn.send_message(message) {
-				Err(_) => net_events.push(Close(client_id)),
+				Err(_) => net_events.send(Close(client_id)),
 				_      => ()
 			};
 		});

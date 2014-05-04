@@ -46,6 +46,6 @@ fn main() {
 		network.update(frame_time_in_ms, &mut event_handler.incoming, &mut clients);
 
 		event_handler.incoming.push(Update(frame_time_in_ms as f64 / 1000.0));
-		event_handler.handle(&mut clients, &mut network.incoming);
+		event_handler.handle(&mut clients, &mut network.event_sender);
 	}
 }
