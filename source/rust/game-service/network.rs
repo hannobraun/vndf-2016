@@ -53,14 +53,14 @@ impl Network {
 		}
 	}
 
-	pub fn update(&mut self, timeout_in_ms: u32, events: &mut Sender<GameEvent>, clients: &mut Clients) {
+	pub fn update(&mut self, timeout_in_ms: u32, game: &mut Sender<GameEvent>, clients: &mut Clients) {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => match event {
 					Close(fd) => match clients.remove(fd) {
 						Some(client) => {
 							client.conn.close();
-							events.send(Leave(fd));
+							game.send(Leave(fd));
 						},
 
 						None => ()
@@ -90,10 +90,10 @@ impl Network {
 						fail!("Error adding to epoll: {}", error)
 				}
 
-				events.send(Enter(connection));
+				game.send(Enter(connection));
 			}
 			else {
-				events.send(DataReceived(fd))
+				game.send(DataReceived(fd))
 			}
 		});
 
