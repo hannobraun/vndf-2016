@@ -6,12 +6,12 @@ use common::physics::Radians;
 
 #[deriving(Eq, Show)]
 pub enum GameEvent {
+	Init,
+	Update(f64),
 	Enter(Connection),
 	Leave(uint),
-	DataReceived(c_int),
 	Action(c_int, Radians),
-	Init,
-	Update(f64)
+	DataReceived(c_int)
 }
 
 #[deriving(Eq, Show)]
