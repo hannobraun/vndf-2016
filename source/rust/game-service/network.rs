@@ -19,11 +19,11 @@ use events::{
 
 
 pub struct Network {
+	pub event_sender: Sender<NetworkEvent>,
+
 	epoll   : EPoll,
 	acceptor: Acceptor,
-	events  : Receiver<NetworkEvent>,
-
-	pub event_sender: Sender<NetworkEvent>
+	events  : Receiver<NetworkEvent>
 }
 
 impl Network {
@@ -45,11 +45,12 @@ impl Network {
 		let (sender, receiver) = channel();
 
 		Network {
+			event_sender: sender,
+
 			epoll   : epoll,
 			acceptor: acceptor,
 			events  : receiver,
 
-			event_sender: sender
 		}
 	}
 
