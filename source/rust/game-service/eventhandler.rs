@@ -1,4 +1,8 @@
 use libc::c_int;
+use std::comm::{
+	Disconnected,
+	Empty
+};
 
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
@@ -9,7 +13,6 @@ use common::protocol::{
 };
 
 use clients::{Client, Clients};
-use eventbuffer::EventBuffer;
 use events::{
 	ActionEvent,
 	Close,
@@ -24,24 +27,29 @@ use events::{
 
 
 pub struct EventHandler {
-	network: Sender<NetworkEvent>,
+	pub events: Sender<GameEvent>,
 
-	pub incoming: EventBuffer<GameEvent>
+	incoming: Receiver<GameEvent>,
+	network : Sender<NetworkEvent>
 }
 
 
 impl EventHandler {
 	pub fn new(network: Sender<NetworkEvent>) -> EventHandler {
+		let (sender, receiver) = channel();
+
 		EventHandler {
+			events  : sender,
+
+			incoming: receiver,
 			network : network,
-			incoming: EventBuffer::new()
 		}
 	}
 
 	pub fn handle(&mut self, clients: &mut Clients) {
 		loop {
-			match self.incoming.pop() {
-				Some(event) => {
+			match self.incoming.try_recv() {
+				Ok(event) => {
 					print!("Incoming event: {}\n", event);
 
 					match event {
@@ -60,7 +68,10 @@ impl EventHandler {
 					}
 				},
 
-				None => break
+				Err(error) => match error {
+					Empty        => break,
+					Disconnected => fail!("Unexpected error: {}", error)
+				}
 			}
 		}
 	}
@@ -94,7 +105,7 @@ impl EventHandler {
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};
 
-			self.incoming.push(ActionEvent(fd, action.attitude));
+			self.events.send(ActionEvent(fd, action.attitude));
 		});
 
 		match result {

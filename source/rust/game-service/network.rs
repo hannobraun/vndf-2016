@@ -8,7 +8,6 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 
 use clients::Clients;
-use eventbuffer::EventBuffer;
 use events::{
 	Close,
 	DataReceived,
@@ -54,14 +53,14 @@ impl Network {
 		}
 	}
 
-	pub fn update(&mut self, timeout_in_ms: u32, events: &mut EventBuffer<GameEvent>, clients: &mut Clients) {
+	pub fn update(&mut self, timeout_in_ms: u32, events: &mut Sender<GameEvent>, clients: &mut Clients) {
 		loop {
 			match self.events.try_recv() {
 				Ok(event) => match event {
 					Close(fd) => match clients.remove(fd) {
 						Some(client) => {
 							client.conn.close();
-							events.push(Leave(fd));
+							events.send(Leave(fd));
 						},
 
 						None => ()
@@ -91,10 +90,10 @@ impl Network {
 						fail!("Error adding to epoll: {}", error)
 				}
 
-				events.push(Enter(connection));
+				events.send(Enter(connection));
 			}
 			else {
-				events.push(DataReceived(fd))
+				events.send(DataReceived(fd))
 			}
 		});
 

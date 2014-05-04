@@ -40,12 +40,12 @@ fn main() {
 
 	let frame_time_in_ms = args.frame_time;
 
-	event_handler.incoming.push(Init);
+	event_handler.events.send(Init);
 
 	loop {
-		network.update(frame_time_in_ms, &mut event_handler.incoming, &mut clients);
+		network.update(frame_time_in_ms, &mut event_handler.events, &mut clients);
 
-		event_handler.incoming.push(Update(frame_time_in_ms as f64 / 1000.0));
+		event_handler.events.send(Update(frame_time_in_ms as f64 / 1000.0));
 		event_handler.handle(&mut clients);
 	}
 }
