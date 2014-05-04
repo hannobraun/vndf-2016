@@ -13,9 +13,9 @@ use eventbuffer::EventBuffer;
 use events::{
 	ActionEvent,
 	Close,
-	Connect,
 	DataReceived,
 	Disconnect,
+	Enter,
 	GameEvent,
 	Init,
 	NetworkEvent,
@@ -44,7 +44,7 @@ impl EventHandler {
 					match event {
 						Init =>
 							(), // nothing do do, it just exists for the logging
-						Connect(connection) =>
+						Enter(connection) =>
 							self.on_connect(connection, clients),
 						Disconnect(clientId) =>
 							self.on_disconnect(clientId, clients),

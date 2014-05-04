@@ -6,9 +6,9 @@ use clients::Clients;
 use eventbuffer::EventBuffer;
 use events::{
 	Close,
-	Connect,
 	DataReceived,
 	Disconnect,
+	Enter,
 	GameEvent,
 	NetworkEvent
 };
@@ -77,7 +77,7 @@ impl Network {
 						fail!("Error adding to epoll: {}", error)
 				}
 
-				events.push(Connect(connection));
+				events.push(Enter(connection));
 			}
 			else {
 				events.push(DataReceived(fd))
