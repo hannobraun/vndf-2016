@@ -120,12 +120,10 @@ impl EventHandler {
 
 		let mut ships = Vec::new();
 		clients.each(|client_id, client| {
-			if client.created {
-				ships.push(Ship {
-					id  : client_id,
-					body: client.ship
-				});
-			}
+			ships.push(Ship {
+				id  : client_id,
+				body: client.ship
+			});
 		});
 
 		clients.each(|client_id, client| {
