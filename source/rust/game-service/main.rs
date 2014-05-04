@@ -19,7 +19,6 @@ use network::Network;
 mod args;
 mod clients;
 mod events;
-mod eventbuffer;
 mod eventhandler;
 mod network;
 
