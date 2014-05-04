@@ -52,7 +52,7 @@ impl EventHandler {
 						Leave(clientId) =>
 							self.on_leave(clientId, clients),
 						DataReceived(fd) =>
-							self.on_data_received(fd, clients, net_events),
+							self.on_data_received(fd, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s, net_events),
 						ActionEvent(client_id, attitude) =>
@@ -82,7 +82,7 @@ impl EventHandler {
 		clients.remove(removed_id);
 	}
 
-	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients, net_events: &mut Sender<NetworkEvent>) {
+	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients) {
 		let (client_id, client) = match clients.client_by_fd(fd) {
 			Some(result) => result,
 			None         => return
@@ -99,7 +99,7 @@ impl EventHandler {
 
 		match result {
 			Ok(()) => (),
-			Err(_) => net_events.send(Close(client_id))
+			Err(_) => self.network.send(Close(client_id))
 		}
 	}
 
