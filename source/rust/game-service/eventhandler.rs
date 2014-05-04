@@ -38,7 +38,7 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients, _: &mut Sender<NetworkEvent>) {
+	pub fn handle(&mut self, clients: &mut Clients) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) => {
