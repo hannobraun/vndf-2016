@@ -38,7 +38,7 @@ impl EventHandler {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients, net_events: &mut Sender<NetworkEvent>) {
+	pub fn handle(&mut self, clients: &mut Clients, _: &mut Sender<NetworkEvent>) {
 		loop {
 			match self.incoming.pop() {
 				Some(event) => {
@@ -54,7 +54,7 @@ impl EventHandler {
 						DataReceived(fd) =>
 							self.on_data_received(fd, clients),
 						Update(frame_time_in_s) =>
-							self.on_update(clients, frame_time_in_s, net_events),
+							self.on_update(clients, frame_time_in_s),
 						ActionEvent(client_id, attitude) =>
 							self.on_action(client_id, attitude, clients)
 					}
@@ -103,7 +103,7 @@ impl EventHandler {
 		}
 	}
 
-	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64, net_events: &mut Sender<NetworkEvent>) {
+	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
 		clients.mut_each(|_, client| {
 			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
 			client.ship.position =
@@ -126,7 +126,7 @@ impl EventHandler {
 			let message = update.to_str();
 
 			match client.conn.send_message(message) {
-				Err(_) => net_events.send(Close(client_id)),
+				Err(_) => self.network.send(Close(client_id)),
 				_      => ()
 			};
 		});
