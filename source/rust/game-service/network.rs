@@ -21,9 +21,9 @@ use events::{
 pub struct Network {
 	pub event_sender: Sender<NetworkEvent>,
 
+	events  : Receiver<NetworkEvent>,
 	epoll   : EPoll,
-	acceptor: Acceptor,
-	events  : Receiver<NetworkEvent>
+	acceptor: Acceptor
 }
 
 impl Network {
@@ -47,9 +47,9 @@ impl Network {
 		Network {
 			event_sender: sender,
 
-			epoll   : epoll,
-			acceptor: acceptor,
 			events  : receiver,
+			epoll   : epoll,
+			acceptor: acceptor
 
 		}
 	}
