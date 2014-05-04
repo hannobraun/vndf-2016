@@ -36,6 +36,40 @@ fn the_ship_should_follow_its_velocity_vector() {
 }
 
 #[test]
+fn the_ship_should_change_direction_according_to_input() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port);
+
+	let mut frame = client.frame();
+
+	while frame.ships.len() == 0 {
+		frame = client.frame();
+	}
+
+	while frame.ships[0].velocity == Vec2::zero() {
+		frame = client.frame();
+	}
+
+	let velocity     = frame.ships[0].velocity;
+	let new_velocity = velocity * -1.0;
+	let new_attitude = Radians::from_vec(new_velocity);
+
+	client.input(Input {
+		exit    : false,
+		attitude: new_attitude,
+		send    : true
+	});
+
+	while frame.ships[0].velocity == velocity {
+		frame = client.frame();
+	}
+
+	assert_eq!(
+		new_velocity.round(16),
+		frame.ships[0].velocity.round(16));
+}
+
+#[test]
 fn the_camera_should_follow_the_ship() {
 	let     game_service = GameService::start();
 	let mut client       = Client::start(game_service.port);
@@ -94,38 +128,4 @@ fn it_should_render_all_connected_clients() {
 	assert_eq!(
 		1,
 		frame.ships.len());
-}
-
-#[test]
-fn the_ship_should_change_direction_according_to_input() {
-	let     game_service = GameService::start();
-	let mut client       = Client::start(game_service.port);
-
-	let mut frame = client.frame();
-
-	while frame.ships.len() == 0 {
-		frame = client.frame();
-	}
-
-	while frame.ships[0].velocity == Vec2::zero() {
-		frame = client.frame();
-	}
-
-	let velocity     = frame.ships[0].velocity;
-	let new_velocity = velocity * -1.0;
-	let new_attitude = Radians::from_vec(new_velocity);
-
-	client.input(Input {
-		exit    : false,
-		attitude: new_attitude,
-		send    : true
-	});
-
-	while frame.ships[0].velocity == velocity {
-		frame = client.frame();
-	}
-
-	assert_eq!(
-		new_velocity.round(16),
-		frame.ships[0].velocity.round(16));
 }
