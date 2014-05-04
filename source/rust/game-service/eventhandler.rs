@@ -45,7 +45,7 @@ impl EventHandler {
 						Init =>
 							(), // nothing do do, it just exists for the logging
 						Enter(connection) =>
-							self.on_connect(connection, clients),
+							self.on_enter(connection, clients),
 						Disconnect(clientId) =>
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
@@ -62,7 +62,7 @@ impl EventHandler {
 		}
 	}
 
-	fn on_connect(&mut self, connection: Connection, clients: &mut Clients) {
+	fn on_enter(&mut self, connection: Connection, clients: &mut Clients) {
 		let velocity = Vec2(30.0, 10.0);
 
 		let ship = Body {
