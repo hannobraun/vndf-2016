@@ -11,7 +11,7 @@ use common::protocol::{
 use clients::{Client, Clients};
 use eventbuffer::EventBuffer;
 use events::{
-	CommandEvent,
+	ActionEvent,
 	Connect,
 	DataReceived,
 	Disconnect,
@@ -50,7 +50,7 @@ impl EventHandler {
 							self.on_data_received(fd, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
-						CommandEvent(client_id, attitude) =>
+						ActionEvent(client_id, attitude) =>
 							self.on_action(client_id, attitude, clients)
 					}
 				},
@@ -89,7 +89,7 @@ impl EventHandler {
 				Err(error)  => fail!("Error decoding message: {}", error)
 			};
 
-			self.incoming.push(CommandEvent(fd, action.attitude));
+			self.incoming.push(ActionEvent(fd, action.attitude));
 		});
 
 		match result {
