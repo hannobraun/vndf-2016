@@ -7,9 +7,9 @@ use eventbuffer::EventBuffer;
 use events::{
 	Close,
 	DataReceived,
-	Disconnect,
 	Enter,
 	GameEvent,
+	Leave,
 	NetworkEvent
 };
 
@@ -51,7 +51,7 @@ impl Network {
 					Close(fd) => match clients.remove(fd) {
 						Some(client) => {
 							client.conn.close();
-							events.push(Disconnect(fd));
+							events.push(Leave(fd));
 						},
 
 						None => ()

@@ -14,10 +14,10 @@ use events::{
 	ActionEvent,
 	Close,
 	DataReceived,
-	Disconnect,
 	Enter,
 	GameEvent,
 	Init,
+	Leave,
 	NetworkEvent,
 	Update
 };
@@ -46,7 +46,7 @@ impl EventHandler {
 							(), // nothing do do, it just exists for the logging
 						Enter(connection) =>
 							self.on_enter(connection, clients),
-						Disconnect(clientId) =>
+						Leave(clientId) =>
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
 							self.on_data_received(fd, clients, net_events),
