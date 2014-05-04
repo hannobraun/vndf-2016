@@ -13,7 +13,6 @@ use eventbuffer::EventBuffer;
 use events::{
 	CommandEvent,
 	Connect,
-	CreateEvent,
 	DataReceived,
 	Disconnect,
 	GameEvent,
@@ -49,8 +48,6 @@ impl EventHandler {
 							self.on_disconnect(clientId, clients),
 						DataReceived(fd) =>
 							self.on_data_received(fd, clients),
-						CreateEvent(client_id) =>
-							self.on_create(client_id, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						CommandEvent(client_id, attitude) =>
@@ -73,9 +70,7 @@ impl EventHandler {
 		};
 
 		let new_client = Client::new(connection, ship);
-		let (client_id, _) = clients.add(new_client);
-
-		self.incoming.push(CreateEvent(client_id))
+		clients.add(new_client);
 	}
 
 	fn on_disconnect(&mut self, removed_id: uint, clients: &mut Clients) {
@@ -101,14 +96,6 @@ impl EventHandler {
 			Ok(()) => (),
 			Err(_) => self.incoming.push(Disconnect(client_id))
 		}
-	}
-
-	fn on_create(&mut self, created_id: uint, clients: &mut Clients) {
-		clients.mut_each(|client_id, client| {
-			if client_id == created_id {
-				client.created = true;
-			}
-		});
 	}
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
