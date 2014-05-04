@@ -128,4 +128,16 @@ fn it_should_render_all_connected_clients() {
 	assert_eq!(
 		1,
 		frame.ships.len());
+
+	let mut client_3 = Client::start(game_service.port);
+
+	while frame.ships.len() == 1 {
+		frame = client_1.frame();
+	}
+
+	assert_eq!(
+		2,
+		frame.ships.len());
+
+	client_3.stop();
 }

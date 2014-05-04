@@ -8,6 +8,7 @@ use events::{
 	Close,
 	Connect,
 	DataReceived,
+	Disconnect,
 	GameEvent,
 	NetworkEvent
 };
@@ -48,8 +49,12 @@ impl Network {
 			match self.incoming.pop() {
 				Some(event) => match event {
 					Close(fd) => match clients.remove(fd) {
-						Some(client) => client.conn.close(),
-						None         => ()
+						Some(client) => {
+							client.conn.close();
+							events.push(Disconnect(fd));
+						},
+
+						None => ()
 					}
 				},
 
