@@ -47,7 +47,7 @@ impl EventHandler {
 						Enter(connection) =>
 							self.on_enter(connection, clients),
 						Leave(clientId) =>
-							self.on_disconnect(clientId, clients),
+							self.on_leave(clientId, clients),
 						DataReceived(fd) =>
 							self.on_data_received(fd, clients, net_events),
 						Update(frame_time_in_s) =>
@@ -75,7 +75,7 @@ impl EventHandler {
 		clients.add(new_client);
 	}
 
-	fn on_disconnect(&mut self, removed_id: uint, clients: &mut Clients) {
+	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
 		clients.remove(removed_id);
 	}
 
