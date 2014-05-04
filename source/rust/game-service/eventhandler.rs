@@ -7,7 +7,6 @@ use std::comm::{
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol::{
-	Action,
 	Perception,
 	Ship
 };
@@ -16,7 +15,6 @@ use clients::{Client, Clients};
 use events::{
 	Action,
 	Close,
-	DataReceived,
 	Enter,
 	GameEvent,
 	Init,
@@ -59,8 +57,6 @@ impl EventHandler {
 							self.on_enter(connection, clients),
 						Leave(clientId) =>
 							self.on_leave(clientId, clients),
-						DataReceived(fd) =>
-							self.on_data_received(fd, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						Action(client_id, attitude) =>
@@ -91,27 +87,6 @@ impl EventHandler {
 
 	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
 		clients.remove(removed_id);
-	}
-
-	fn on_data_received(&mut self, fd: c_int, clients: &mut Clients) {
-		let (client_id, client) = match clients.client_by_fd(fd) {
-			Some(result) => result,
-			None         => return
-		};
-
-		let result = client.conn.receive_messages(|raw_message| {
-			let action = match Action::from_str(raw_message) {
-				Ok(message) => message,
-				Err(error)  => fail!("Error decoding message: {}", error)
-			};
-
-			self.events.send(Action(fd, action.attitude));
-		});
-
-		match result {
-			Ok(()) => (),
-			Err(_) => self.network.send(Close(client_id))
-		}
 	}
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {

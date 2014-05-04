@@ -10,8 +10,7 @@ pub enum GameEvent {
 	Update(f64),
 	Enter(Connection),
 	Leave(uint),
-	Action(c_int, Radians),
-	DataReceived(c_int)
+	Action(c_int, Radians)
 }
 
 #[deriving(Eq, Show)]

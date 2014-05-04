@@ -6,11 +6,12 @@ use std::comm::{
 use common::net::Acceptor;
 use common::net::epoll;
 use common::net::epoll::EPoll;
+use common::protocol::Action;
 
 use clients::Clients;
 use events::{
+	Action,
 	Close,
-	DataReceived,
 	Enter,
 	GameEvent,
 	Leave,
@@ -93,7 +94,26 @@ impl Network {
 				game.send(Enter(connection));
 			}
 			else {
-				game.send(DataReceived(fd))
+				let (client_id, client) = match clients.client_by_fd(fd) {
+					Some(result) => result,
+					None         => return
+				};
+
+				let result = client.conn.receive_messages(|raw_message| {
+					let action = match Action::from_str(raw_message) {
+						Ok(message) => message,
+
+						Err(error) =>
+							fail!("Error decoding message: {}", error)
+					};
+
+					game.send(Action(fd, action.attitude));
+				});
+
+				match result {
+					Ok(()) => (),
+					Err(_) => self.events.send(Close(client_id))
+				}
 			}
 		});
 
