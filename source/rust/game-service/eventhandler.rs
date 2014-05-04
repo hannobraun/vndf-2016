@@ -51,7 +51,7 @@ impl EventHandler {
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						CommandEvent(client_id, attitude) =>
-							self.on_command(client_id, attitude, clients)
+							self.on_action(client_id, attitude, clients)
 					}
 				},
 
@@ -127,7 +127,7 @@ impl EventHandler {
 		});
 	}
 
-	fn on_command(&self, fd: c_int, attitude: Radians, clients: &mut Clients) {
+	fn on_action(&self, fd: c_int, attitude: Radians, clients: &mut Clients) {
 		match clients.client_by_fd(fd) {
 			Some((_, client)) => client.ship.attitude = attitude,
 			None              => ()
