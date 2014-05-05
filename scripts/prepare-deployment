@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+rm -rf output &&
+./scripts/tasks/build-common &&
+./scripts/tasks/build-game-service &&
+./scripts/tasks/build-client &&
+./scripts/tasks/arrange-client &&
+./scripts/tasks/package-client &&
+cp source/docker/Dockerfile output &&
+cp -r source/http output &&
+cp -r source/nginx output &&
+cp -r source/upstart output &&
+cp $CLIENT_ARCHIVE output/http
