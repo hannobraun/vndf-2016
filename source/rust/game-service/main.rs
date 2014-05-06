@@ -8,10 +8,7 @@ extern crate time;
 use std::os;
 
 use clients::Clients;
-use events::{
-	Init,
-	Update
-};
+use events::Init;
 use game::Game;
 use network::Network;
 
@@ -21,6 +18,7 @@ mod clients;
 mod events;
 mod game;
 mod network;
+mod updater;
 
 
 fn main() {
@@ -39,12 +37,13 @@ fn main() {
 
 	let frame_time_in_ms = args.frame_time;
 
+	updater::init(frame_time_in_ms as u64, game.events.clone());
+
 	game.events.send(Init);
 
 	loop {
 		network.update(frame_time_in_ms, &mut game.events, &mut clients);
 
-		game.events.send(Update(frame_time_in_ms as f64 / 1000.0));
 		game.handle(&mut clients);
 	}
 }
