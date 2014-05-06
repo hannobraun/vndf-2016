@@ -11,7 +11,10 @@ use common::protocol::{
 	Ship
 };
 
-use clients::{Client, Clients};
+use clients::{
+	Client,
+	Clients
+};
 use events::{
 	Action,
 	Close,
