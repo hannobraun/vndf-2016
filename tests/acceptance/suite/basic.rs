@@ -1,8 +1,5 @@
 use common::io::Input;
-use common::physics::{
-	Radians,
-	Vec2
-};
+use common::physics::Radians;
 
 use control::{
 	Client,
@@ -43,10 +40,6 @@ fn the_ship_should_change_direction_according_to_input() {
 	let mut frame = client.frame();
 
 	while frame.ships.len() == 0 {
-		frame = client.frame();
-	}
-
-	while frame.ships[0].velocity == Vec2::zero() {
 		frame = client.frame();
 	}
 
