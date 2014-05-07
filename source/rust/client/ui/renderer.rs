@@ -133,6 +133,8 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 			pos_y,
 			0.0);
 
+		gl::Enable(gl::TEXTURE_2D);
+
 		gl::Begin(gl::TRIANGLE_STRIP);
 		{
 			gl::TexCoord2d(
@@ -168,6 +170,8 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 				0.0);
 		}
 		gl::End();
+
+		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
 }
