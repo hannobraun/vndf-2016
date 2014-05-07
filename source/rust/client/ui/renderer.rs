@@ -134,10 +134,10 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 			0.0);
 
 		let vertices = [
-			texture_width, texture_height, 0.0,
-			texture_width, 0.0           , 0.0,
-			0.0          , texture_height, 0.0,
-			0.0          , 0.0           , 0.0];
+			texture_width as f32, texture_height as f32, 0.0f32,
+			texture_width as f32, 0.0f32               , 0.0f32,
+			0.0f32              , texture_height as f32, 0.0f32,
+			0.0f32              , 0.0f32               , 0.0f32];
 		let texture_coordinates = [
 			1.0f32, 0.0f32,
 			1.0f32, 1.0f32,
@@ -151,7 +151,7 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		unsafe {
 			gl::VertexPointer(
 				3,
-				gl::DOUBLE,
+				gl::FLOAT,
 				0,
 				vertices.as_ptr() as *gl::types::GLvoid);
 			gl::TexCoordPointer(
