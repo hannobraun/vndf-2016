@@ -27,8 +27,6 @@ impl Textures {
 		// function's dependence on an OpenGL context, which is implied by
 		// Window.
 
-		gl::Enable(gl::TEXTURE_2D);
-
 		gl::Enable(gl::BLEND);
 		gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
 
