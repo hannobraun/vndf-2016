@@ -28,4 +28,4 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Step
 
-Make the production environment 100% solid and reliable.
+Draw a grid.
