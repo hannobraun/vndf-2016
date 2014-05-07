@@ -133,44 +133,38 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 			pos_y,
 			0.0);
 
+		let vertices = [
+			texture_width, texture_height, 0.0,
+			texture_width, 0.0           , 0.0,
+			0.0          , texture_height, 0.0,
+			0.0          , 0.0           , 0.0];
+		let texture_coordinates = [
+			1.0, 0.0,
+			1.0, 1.0,
+			0.0, 0.0,
+			0.0, 1.0];
+
+		gl::EnableClientState(gl::VERTEX_ARRAY);
+		gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
 		gl::Enable(gl::TEXTURE_2D);
 
-		gl::Begin(gl::TRIANGLE_STRIP);
-		{
-			gl::TexCoord2d(
-				1.0,
-				0.0);
-			gl::Vertex3d(
-				texture_width,
-				texture_height,
-				0.0);
-
-			gl::TexCoord2d(
-				1.0,
-				1.0);
-			gl::Vertex3d(
-				texture_width,
-				0.0,
-				0.0);
-
-			gl::TexCoord2d(
-				0.0,
-				0.0);
-			gl::Vertex3d(
-				0.0,
-				texture_height,
-				0.0);
-
-			gl::TexCoord2d(
-				0.0,
-				1.0);
-			gl::Vertex3d(
-				0.0,
-				0.0,
-				0.0);
+		unsafe {
+			gl::VertexPointer(
+				3,
+				gl::DOUBLE,
+				0,
+				vertices.as_ptr() as *gl::types::GLvoid);
+			gl::TexCoordPointer(
+				2,
+				gl::DOUBLE,
+				0,
+				texture_coordinates.as_ptr() as *gl::types::GLvoid);
 		}
-		gl::End();
 
+		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+
+		gl::DisableClientState(gl::VERTEX_ARRAY);
+		gl::DisableClientState(gl::TEXTURE_COORD_ARRAY);
 		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
