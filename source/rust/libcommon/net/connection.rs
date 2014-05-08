@@ -139,13 +139,13 @@ impl Connection {
 		}
 	}
 
-	pub fn receive_messages(&mut self, handler: |~str|) -> Result<(), &'static str> {
+	pub fn receive_messages(&mut self, handler: |~str|) -> IoResult<()> {
 		let result = self.receive(
 			self.in_buffer.slice_from(self.in_buffer_pos));
 
 		let bytes_received = match result {
 			Ok(bytes_received) => bytes_received,
-			Err(error)         => return Err(error.desc)
+			Err(error)         => return Err(error)
 		};
 
 		self.in_buffer_pos += bytes_received as uint;
