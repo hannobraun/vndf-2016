@@ -1,4 +1,8 @@
 use libc::c_int;
+use std::io::{
+	IoError,
+	IoResult
+};
 
 use net::epoll::ffi;
 use util::last_error;
@@ -11,7 +15,7 @@ pub struct EPoll {
 }
 
 impl EPoll {
-	pub fn create() -> Result<EPoll, ~str> {
+	pub fn create() -> IoResult<EPoll> {
 		let epfd = unsafe {
 			ffi::epoll_create(1)
 		};
@@ -27,7 +31,7 @@ impl EPoll {
 			})
 		}
 		else {
-			Err(last_error())
+			Err(IoError::last_error())
 		}
 	}
 
