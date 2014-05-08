@@ -1,6 +1,7 @@
 use libc;
 use libc::c_int;
 use std::io::{
+	Closed,
 	IoError,
 	IoResult,
 	OtherIoError
@@ -144,7 +145,7 @@ impl Connection {
 
 		let bytes_received = match result {
 			Ok(bytes_received) => bytes_received,
-			Err(error)         => return Err(error)
+			Err(error)         => return Err(error.desc)
 		};
 
 		self.in_buffer_pos += bytes_received as uint;
@@ -186,7 +187,7 @@ impl Connection {
 		Ok(())
 	}
 
-	fn receive(&self, buffer: &[u8]) -> Result<libc::ssize_t, &'static str> {
+	fn receive(&self, buffer: &[u8]) -> IoResult<libc::ssize_t> {
 		unsafe {
 			let bytes_received = ffi::recv(
 				self.fd,
@@ -202,10 +203,14 @@ impl Connection {
 				return Ok(0);
 			}
 			if bytes_received == -1 {
-				return Err(IoError::last_error().desc)
+				return Err(IoError::last_error())
 			}
 			if bytes_received == 0 {
-				return Err("Connection closed by server")
+				return Err(IoError {
+					kind  : Closed,
+					desc  : "Connection closed by remote host",
+					detail: None
+				})
 			}
 
 			Ok(bytes_received)
