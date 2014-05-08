@@ -35,7 +35,7 @@ impl EPoll {
 		}
 	}
 
-	pub fn add(&self, fd: c_int, events: u32) -> Result<(), ~str> {
+	pub fn add(&self, fd: c_int, events: u32) -> IoResult<()> {
 		let event = ffi::epoll_event {
 			events: events,
 			data  : fd as u64
@@ -53,7 +53,7 @@ impl EPoll {
 			Ok(())
 		}
 		else {
-			Err(last_error())
+			Err(IoError::last_error())
 		}
 	}
 
