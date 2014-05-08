@@ -5,7 +5,6 @@ use std::io::{
 };
 
 use net::epoll::ffi;
-use util::last_error;
 
 
 pub struct EPoll {
