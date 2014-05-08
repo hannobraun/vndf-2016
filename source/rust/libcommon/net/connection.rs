@@ -13,7 +13,6 @@ use std::ptr;
 use std::str;
 
 use net::ffi;
-use util::last_error;
 
 
 type MessageLength = u16;
