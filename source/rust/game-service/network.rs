@@ -34,7 +34,10 @@ impl Network {
 			Err(error) => fail!("Error initializing epoll: {}", error)
 		};
 
-		let acceptor = Acceptor::create(port);
+		let acceptor = match Acceptor::create(port) {
+			Ok(acceptor) => acceptor,
+			Err(error)   => fail!("Error creating acceptor: {}", error)
+		};
 
 		match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 			Ok(()) => (),

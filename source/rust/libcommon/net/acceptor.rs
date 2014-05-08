@@ -17,14 +17,15 @@ pub struct Acceptor {
 }
 
 impl Acceptor {
-	pub fn create(port: &str) -> Acceptor {
-		let fd = match init_socket(port) {
-			Ok(fd)     => fd,
-			Err(error) => fail!("Error creating acceptor: {}", error)
-		};
+	pub fn create(port: &str) -> IoResult<Acceptor> {
+		match init_socket(port) {
+			Ok(fd) =>
+				Ok(Acceptor {
+					fd: fd
+				}),
 
-		Acceptor {
-			fd: fd
+			Err(error) =>
+				Err(error)
 		}
 	}
 
