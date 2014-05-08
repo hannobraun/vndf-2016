@@ -18,7 +18,10 @@ pub struct Acceptor {
 
 impl Acceptor {
 	pub fn create(port: &str) -> Acceptor {
-		let fd = init_socket(port);
+		let fd = match init_socket(port) {
+			Ok(fd)     => fd,
+			Err(error) => fail!("Error creating acceptor: {}", error)
+		};
 
 		Acceptor {
 			fd: fd
@@ -43,7 +46,7 @@ impl Acceptor {
 }
 
 
-fn init_socket(port: &str) -> c_int {
+fn init_socket(port: &str) -> IoResult<c_int> {
 	let hints = ffi::addrinfo {
 		ai_flags    : ffi::AI_PASSIVE,
 		ai_family   : ffi::AF_UNSPEC,
@@ -67,7 +70,7 @@ fn init_socket(port: &str) -> c_int {
 		});
 
 		if status != 0 {
-			fail!("Error getting address info: {}", last_error());
+			return Err(IoError::last_error());
 		}
 
 		let socket_fd = ffi::socket(
@@ -76,7 +79,7 @@ fn init_socket(port: &str) -> c_int {
 			(*servinfo).ai_protocol);
 
 		if socket_fd == -1 {
-			fail!("Error creating socket: {}", last_error());
+			return Err(IoError::last_error());
 		}
 
 		let yes = 1;
@@ -88,7 +91,7 @@ fn init_socket(port: &str) -> c_int {
 			mem::size_of::<c_int>() as u32);
 
 		if status == -1 {
-			fail!("Error setting socket option: {}", last_error());
+			return Err(IoError::last_error());
 		}
 
 		let status = ffi::bind(
@@ -97,18 +100,18 @@ fn init_socket(port: &str) -> c_int {
 			(*servinfo).ai_addrlen);
 
 		if status != 0 {
-			fail!("Error binding socket: {}", last_error());
+			return Err(IoError::last_error());
 		}
 
 		let status = ffi::listen(
 			socket_fd,
 			1024);
 		if status != 0 {
-			fail!("Error listening on socket: {}", last_error());
+			return Err(IoError::last_error());
 		}
 
 		ffi::freeaddrinfo(servinfo);
 
-		socket_fd
+		Ok(socket_fd)
 	}
 }
