@@ -1,5 +1,9 @@
 use libc;
 use libc::c_int;
+use std::io::{
+	IoError,
+	IoResult
+};
 use std::mem;
 use std::ptr;
 
@@ -21,7 +25,7 @@ impl Acceptor {
 		}
 	}
 
-	pub fn accept(&self) -> Result<Connection, ~str> {
+	pub fn accept(&self) -> IoResult<Connection> {
 		let fd = unsafe {
 			ffi::accept(
 				self.fd,
@@ -33,7 +37,7 @@ impl Acceptor {
 			Ok(Connection::from_fd(fd))
 		}
 		else {
-			Err(last_error())
+			Err(IoError::last_error())
 		}
 	}
 }
