@@ -16,7 +16,7 @@ pub struct Acceptor {
 }
 
 impl Acceptor {
-	pub fn create(port: &str) -> IoResult<Acceptor> {
+	pub fn new(port: &str) -> IoResult<Acceptor> {
 		match init_socket(port) {
 			Ok(fd) =>
 				Ok(Acceptor {
