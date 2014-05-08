@@ -55,8 +55,8 @@ fn main() {
 
 	let (mut input_handler, renderer) = if args.headless {
 		(
-			~headless::InputHandler::new() as ~InputHandler,
-			~headless::Renderer::new() as ~Renderer)
+			box headless::InputHandler::new() as Box<InputHandler>,
+			box headless::Renderer::new() as Box<Renderer>)
 	}
 	else {
 		let     window   = Rc::new(Window::create(screen_width, screen_height));
@@ -66,8 +66,8 @@ fn main() {
 		images::load(&mut textures);
 
 		(
-			~ui::InputHandler::new(window.clone()) as ~InputHandler,
-			~ui::Renderer::new(window.clone(), textures, font) as ~Renderer)
+			box ui::InputHandler::new(window.clone()) as Box<InputHandler>,
+			box ui::Renderer::new(window.clone(), textures, font) as Box<Renderer>)
 	};
 
 	let mut camera = Vec2::zero();

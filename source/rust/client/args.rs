@@ -16,8 +16,8 @@ pub struct Args {
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		address : ~"localhost",
-		port    : ~"34481",
+		address : "localhost".to_owned(),
+		port    : "34481".to_owned(),
 		headless: false
 	};
 

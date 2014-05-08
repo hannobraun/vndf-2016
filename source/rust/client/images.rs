@@ -14,7 +14,7 @@ struct Image {
 
 
 pub fn load(textures: &mut Textures) {
-	let image_path = ~"images/spaceship.png";
+	let image_path = "images/spaceship.png".to_owned();
 
 	let image   = load_image(image_path);
 	let texture = Texture::new_rgb(
@@ -27,7 +27,7 @@ pub fn load(textures: &mut Textures) {
 }
 
 fn load_image(image_path: &str) -> Image {
-	match image::load(image_path.into_owned()) {
+	match image::load(&Path::new(image_path)) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;

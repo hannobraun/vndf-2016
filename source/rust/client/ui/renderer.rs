@@ -45,7 +45,7 @@ impl Renderer {
 	}
 
 	fn draw_ship(&self, body: Body) {
-		let texture = self.textures.get(&~"images/spaceship.png");
+		let texture = self.textures.get(&"images/spaceship.png".to_owned());
 
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);

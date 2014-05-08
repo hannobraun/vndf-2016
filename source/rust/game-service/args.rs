@@ -14,7 +14,7 @@ pub struct Args {
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		port      : ~"34481",
+		port      : "34481".to_owned(),
 		frame_time: 1000
 	};
 
