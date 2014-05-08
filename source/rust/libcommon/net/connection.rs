@@ -2,7 +2,8 @@ use libc;
 use libc::c_int;
 use std::io::{
 	IoError,
-	IoResult
+	IoResult,
+	OtherIoError
 };
 use std;
 use std::mem::size_of;
@@ -89,7 +90,7 @@ impl Connection {
 		}
 	}
 
-	pub fn send_message(&self, message: &str) -> Result<(), ~str> {
+	pub fn send_message(&self, message: &str) -> IoResult<()> {
 		let mut buffer: [libc::c_char, ..1024] = [0, ..1024];
 
 		unsafe {
@@ -118,13 +119,17 @@ impl Connection {
 					ffi::MSG_NOSIGNAL);
 
 				if bytesSent < 0 {
-					Err(format!("Error sending message: {}", last_error()))
+					Err(IoError::last_error())
 				}
 				else if bytesSent as u64 != message_length {
-					Err(format!(
-						"Only sent {:d} of {:u} bytes",
-						bytesSent,
-						message_length))
+					Err(IoError {
+						kind  : OtherIoError,
+						desc  : "Could not send all bytes",
+						detail: Some(format!(
+							"Only sent {:d} of {:u} bytes",
+							bytesSent,
+							message_length))
+					})
 				}
 				else {
 					Ok(())
