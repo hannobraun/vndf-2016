@@ -57,7 +57,7 @@ impl EPoll {
 		}
 	}
 
-	pub fn wait(&self, timeout_in_ms: u32, f: |c_int|) -> Result<(), ~str> {
+	pub fn wait(&self, timeout_in_ms: u32, f: |c_int|) -> IoResult<()> {
 		let number_of_events = unsafe {
 			ffi::epoll_wait(
 				self.epfd,
@@ -73,7 +73,7 @@ impl EPoll {
 			Ok(())
 		}
 		else {
-			Err(last_error())
+			Err(IoError::last_error())
 		}
 	}
 }
