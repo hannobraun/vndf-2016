@@ -9,7 +9,6 @@ use std::ptr;
 
 use net::Connection;
 use net::ffi;
-use util::last_error;
 
 
 pub struct Acceptor {
