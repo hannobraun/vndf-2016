@@ -21,7 +21,7 @@ impl Acceptor {
 		let fd = init_socket(port);
 
 		Acceptor {
-			fd   : fd
+			fd: fd
 		}
 	}
 
