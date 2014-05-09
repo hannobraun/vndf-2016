@@ -128,9 +128,9 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 
 	gl::PushMatrix();
 	{
-		gl::Translated(
-			pos_x,
-			pos_y,
+		gl::Translatef(
+			pos_x as f32,
+			pos_y as f32,
 			0.0);
 
 		let vertices = [
