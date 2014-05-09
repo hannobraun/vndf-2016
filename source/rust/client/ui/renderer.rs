@@ -92,7 +92,7 @@ impl Renderer {
 impl io::Renderer for Renderer {
 	fn render(&self, frame: &Frame) {
 		gl::Clear(gl::COLOR_BUFFER_BIT);
-		gl::Color4d(1.0, 1.0, 1.0, 1.0);
+		gl::Color4f(1.0, 1.0, 1.0, 1.0);
 
 		gl::PushMatrix();
 		{
