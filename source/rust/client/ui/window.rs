@@ -20,6 +20,8 @@ impl Window {
 			Err(error) => exit(format!("{}", error))
 		};
 
+		glfw.window_hint(glfw::ContextVersion(3, 0));
+
 		let (window, _) = glfw.create_window(
 			width, height,
 			"Von Neumann Defense Force",
