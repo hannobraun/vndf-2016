@@ -36,6 +36,8 @@ impl Textures {
 		// memory access errors and not displaying it correctly.
 		gl::PixelStorei(gl::UNPACK_ALIGNMENT, 1);
 
+		assert_eq!(gl::GetError(), gl::NO_ERROR);
+
 		Textures {
 			map: HashMap::new()
 		}
