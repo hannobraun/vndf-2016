@@ -11,4 +11,4 @@ LIB_ARGS=$2
 OUTPUT_ARGS=$3
 SOURCE_FILE=$4
 
-$RUSTC --force-color-output --debuginfo 2 $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
+$RUSTC --color --debuginfo 2 $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
