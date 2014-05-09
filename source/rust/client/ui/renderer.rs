@@ -114,7 +114,27 @@ impl io::Renderer for Renderer {
 
 		match gl::GetError() {
 			gl::NO_ERROR => (),
-			error @ _    => exit(format!("OpenGL error ({})", error))
+
+			error @ _ => {
+				let error_as_str = match error {
+					gl::INVALID_ENUM =>
+						"GL_INVALID_ENUM",
+					gl::INVALID_VALUE =>
+						"GL_INVALID_VALUE",
+					gl::INVALID_OPERATION =>
+						"GL_INVALID_OPERATION",
+					gl::OUT_OF_MEMORY =>
+						"GL_OUT_OF_MEMORY",
+					gl::STACK_UNDERFLOW =>
+						"GL_STACK_UNDERFLOW",
+					gl::STACK_OVERFLOW =>
+						"GL_STACK_OVERFLOW",
+
+					_ => "unknown"
+				};
+
+				exit(format!("OpenGL error: {} ({})", error_as_str, error))
+			}
 		}
 	}
 }
