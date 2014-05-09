@@ -123,6 +123,8 @@ fn create_texture(
 			data.as_ptr() as *libc::c_void);
 	}
 
+	assert_eq!(gl::GetError(), gl::NO_ERROR);
+
 	Texture {
 		name: texture_name,
 		size: size
