@@ -97,9 +97,9 @@ impl io::Renderer for Renderer {
 		gl::PushMatrix();
 		{
 			let Vec2(camera_x, camera_y) = frame.camera;
-			gl::Translated(
-				self.screen_width / 2.0 - camera_x,
-				self.screen_height / 2.0 - camera_y,
+			gl::Translatef(
+				(self.screen_width / 2.0 - camera_x) as f32,
+				(self.screen_height / 2.0 - camera_y) as f32,
 				0.0);
 
 			for &body in frame.ships.iter() {
