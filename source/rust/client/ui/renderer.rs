@@ -106,10 +106,12 @@ impl Renderer {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
-
 			let program = self.shaders.program("ui-overlay");
 
-			draw_texture2(position + glyph.offset, texture, program);
+			draw_texture2(
+				position + glyph.offset,
+				texture,
+				program);
 
 			position = position + glyph.advance;
 		}
