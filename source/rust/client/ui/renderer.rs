@@ -112,7 +112,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_texture2(&self, Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
+	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture) {
 		let Vec2(texture_width, texture_height) = texture.size;
 
 		let program = self.shaders.program("ui-overlay");
@@ -124,7 +124,7 @@ impl Renderer {
 				program,
 				"position".to_c_str().unwrap())
 		};
-		gl::Uniform2f(position_pos, pos_x as f32, pos_y as f32);
+		gl::Uniform2f(position_pos, x as f32, y as f32);
 
 		let texture_pos = unsafe {
 			gl::GetUniformLocation(
