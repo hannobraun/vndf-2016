@@ -41,6 +41,12 @@ impl Shaders {
 				*shaders.get(&"glsl/ui-overlay.vert".to_owned()),
 				*shaders.get(&"glsl/common.frag".to_owned())],
 			&mut programs);
+		create_program(
+			"ships",
+			[
+				*shaders.get(&"glsl/ships.vert".to_owned()),
+				*shaders.get(&"glsl/common.frag".to_owned())],
+			&mut programs);
 
 		Shaders {
 			programs: programs
