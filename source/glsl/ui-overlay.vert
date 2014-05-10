@@ -1,6 +1,6 @@
 #version 130
 
-attribute vec3 vertex;
+in vec3 vertex;
 
 uniform vec2 position;
 
