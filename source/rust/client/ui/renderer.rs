@@ -1,3 +1,4 @@
+use std::io::File;
 use std::rc::Rc;
 
 use gl;
@@ -250,4 +251,11 @@ fn draw_texture2(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
+}
+
+fn load_shader(path: &str) -> ~str {
+	match File::open(&Path::new(path)).read_to_str() {
+		Ok(string) => string,
+		Err(error) => fail!("Error loading shader: {}", error)
+	}
 }
