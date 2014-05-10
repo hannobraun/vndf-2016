@@ -49,13 +49,6 @@ impl Shaders {
 		}
 	}
 
-	pub fn shader<'a>(&self, key: &str) -> Shader {
-		match self.shaders.find(&key.to_owned()) {
-			Some(&shader) => shader,
-			None          => exit(format!("Shader not found: {}", key))
-		}
-	}
-
 	pub fn program(&self, key: &str) -> Program {
 		match self.programs.find(&key.to_owned()) {
 			Some(&program) => program,
