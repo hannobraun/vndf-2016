@@ -1,5 +1,6 @@
 use collections::HashMap;
 use std::io::File;
+use std::ptr;
 
 use gl;
 use gl::types::{
@@ -50,7 +51,7 @@ fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 			shader,
 			1,
 			&load_shader(path).to_c_str().unwrap(),
-			::std::ptr::null());
+			ptr::null());
 	}
 	gl::CompileShader(shader);
 	shaders.insert(path.to_owned(), shader);
