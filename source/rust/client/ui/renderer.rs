@@ -113,7 +113,7 @@ impl Renderer {
 	}
 
 	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture) {
-		let Vec2(texture_width, texture_height) = texture.size;
+		let Vec2(width, height) = texture.size;
 
 		let program = self.shaders.program("ui-overlay");
 
@@ -139,10 +139,10 @@ impl Renderer {
 			texture.name);
 
 		let vertices = [
-			texture_width as f32, texture_height as f32, 0.0f32,
-			texture_width as f32, 0.0f32               , 0.0f32,
-			0.0f32              , texture_height as f32, 0.0f32,
-			0.0f32              , 0.0f32               , 0.0f32];
+			width as f32, height as f32, 0.0f32,
+			width as f32, 0.0f32       , 0.0f32,
+			0.0f32      , height as f32, 0.0f32,
+			0.0f32      , 0.0f32       , 0.0f32];
 		let texture_coordinates = [
 			1.0f32, 0.0f32,
 			1.0f32, 1.0f32,
