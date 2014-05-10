@@ -25,6 +25,7 @@ use common::physics::{
 use network::Network;
 use ui::{
 	Font,
+	Shaders,
 	Textures,
 	Window
 };
@@ -60,6 +61,7 @@ fn main() {
 	}
 	else {
 		let     window   = Rc::new(Window::create(screen_width, screen_height));
+		let     shaders  = Shaders::new(&*window);
 		let mut textures = Textures::init(&*window);
 		let     font     = Font::load(&mut textures);
 
@@ -67,7 +69,11 @@ fn main() {
 
 		(
 			box ui::InputHandler::new(window.clone()) as Box<InputHandler>,
-			box ui::Renderer::new(window.clone(), textures, font) as Box<Renderer>)
+			box ui::Renderer::new(
+				window.clone(),
+				shaders,
+				textures,
+				font) as Box<Renderer>)
 	};
 
 	let mut camera = Vec2::zero();

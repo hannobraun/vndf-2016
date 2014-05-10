@@ -1,4 +1,3 @@
-use std::io::File;
 use std::rc::Rc;
 
 use gl;
@@ -12,7 +11,13 @@ use common::physics::{
 };
 
 use error::exit;
-use ui::{Font, Texture, Textures, Window};
+use ui::{
+	Font,
+	Shaders,
+	Texture,
+	Textures,
+	Window
+};
 
 
 pub struct Renderer {
@@ -27,7 +32,12 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(window: Rc<Window>, textures: Textures, font: Font) -> Renderer {
+	pub fn new(
+		window  : Rc<Window>,
+		shaders : Shaders,
+		textures: Textures,
+		font    : Font) -> Renderer {
+
 		gl::LoadIdentity();
 		gl::Ortho(
 			0.0,
@@ -37,29 +47,13 @@ impl Renderer {
 			-100.0,
 			100.0);
 
-		let vertex_shader = gl::CreateShader(gl::VERTEX_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				vertex_shader,
-				1,
-				&load_shader("glsl/ui-overlay.vert").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(vertex_shader);
-
-		let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				fragment_shader,
-				1,
-				&load_shader("glsl/ui-overlay.frag").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(fragment_shader);
-
 		let shader_program = gl::CreateProgram();
-		gl::AttachShader(shader_program, vertex_shader);
-		gl::AttachShader(shader_program, fragment_shader);
+		gl::AttachShader(
+			shader_program,
+			shaders.shader("glsl/ui-overlay.vert"));
+		gl::AttachShader(
+			shader_program,
+			shaders.shader("glsl/ui-overlay.frag"));
 
 		gl::LinkProgram(shader_program);
 
@@ -291,11 +285,4 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
-}
-
-fn load_shader(path: &str) -> ~str {
-	match File::open(&Path::new(path)).read_to_str() {
-		Ok(string) => string,
-		Err(error) => fail!("Error loading shader: {}", error)
-	}
 }
