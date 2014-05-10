@@ -139,10 +139,10 @@ impl Renderer {
 			texture.name);
 
 		let vertices = [
-			width as f32, height as f32, 0.0f32,
-			width as f32, 0.0f32       , 0.0f32,
-			0.0f32      , height as f32, 0.0f32,
-			0.0f32      , 0.0f32       , 0.0f32];
+			width as f32, height as f32, 0.0,
+			width as f32, 0.0          , 0.0,
+			0.0         , height as f32, 0.0,
+			0.0         , 0.0          , 0.0];
 		let texture_coordinates = [
 			1.0f32, 0.0f32,
 			1.0f32, 1.0f32,
