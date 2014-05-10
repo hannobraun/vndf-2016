@@ -31,14 +31,14 @@ impl Shaders {
 
 		let mut shaders = HashMap::new();
 		create_shader(gl::VERTEX_SHADER, "glsl/ui-overlay.vert", &mut shaders);
-		create_shader(gl::FRAGMENT_SHADER, "glsl/ui-overlay.frag", &mut shaders);
+		create_shader(gl::FRAGMENT_SHADER, "glsl/common.frag", &mut shaders);
 
 		let mut programs = HashMap::new();
 		create_program(
 			"ui-overlay",
 			[
 				*shaders.get(&"glsl/ui-overlay.vert".to_owned()),
-				*shaders.get(&"glsl/ui-overlay.frag".to_owned())],
+				*shaders.get(&"glsl/common.frag".to_owned())],
 			&mut programs);
 
 		Shaders {
