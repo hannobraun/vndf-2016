@@ -2,6 +2,7 @@ use collections::HashMap;
 use std::io::File;
 
 use gl;
+use gl::types::GLuint;
 
 use error::exit;
 use ui::Window;
@@ -11,7 +12,7 @@ pub struct Shaders {
 	shaders: HashMap<~str, Shader>
 }
 
-type Shader = gl::types::GLuint;
+type Shader = GLuint;
 
 
 impl Shaders {
