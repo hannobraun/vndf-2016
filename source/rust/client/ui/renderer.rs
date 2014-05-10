@@ -21,7 +21,9 @@ pub struct Renderer {
 
 	window  : Rc<Window>,
 	textures: Textures,
-	font    : Font
+	font    : Font,
+
+	ui_overlay_program: gl::types::GLuint
 }
 
 impl Renderer {
@@ -35,13 +37,41 @@ impl Renderer {
 			-100.0,
 			100.0);
 
+		let vertex_shader = gl::CreateShader(gl::VERTEX_SHADER);
+		unsafe {
+			gl::ShaderSource(
+				vertex_shader,
+				1,
+				&load_shader("glsl/ui-overlay.vert").to_c_str().unwrap(),
+				::std::ptr::null());
+		}
+		gl::CompileShader(vertex_shader);
+
+		let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
+		unsafe {
+			gl::ShaderSource(
+				fragment_shader,
+				1,
+				&load_shader("glsl/ui-overlay.frag").to_c_str().unwrap(),
+				::std::ptr::null());
+		}
+		gl::CompileShader(fragment_shader);
+
+		let shader_program = gl::CreateProgram();
+		gl::AttachShader(shader_program, vertex_shader);
+		gl::AttachShader(shader_program, fragment_shader);
+
+		gl::LinkProgram(shader_program);
+
 		Renderer {
 			screen_width : window.width as f64,
 			screen_height: window.height as f64,
 
 			window  : window,
 			textures: textures,
-			font    : font
+			font    : font,
+
+			ui_overlay_program: shader_program
 		}
 	}
 
@@ -103,43 +133,18 @@ impl Renderer {
 	fn draw_texture2(&self, Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		let Vec2(texture_width, texture_height) = texture.size;
 
-		let vertex_shader = gl::CreateShader(gl::VERTEX_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				vertex_shader,
-				1,
-				&load_shader("glsl/ui-overlay.vert").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(vertex_shader);
-
-		let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				fragment_shader,
-				1,
-				&load_shader("glsl/ui-overlay.frag").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(fragment_shader);
-
-		let shader_program = gl::CreateProgram();
-		gl::AttachShader(shader_program, vertex_shader);
-		gl::AttachShader(shader_program, fragment_shader);
-
-		gl::LinkProgram(shader_program);
-		gl::UseProgram(shader_program);
+		gl::UseProgram(self.ui_overlay_program);
 
 		let position_pos = unsafe {
 			gl::GetUniformLocation(
-				shader_program,
+				self.ui_overlay_program,
 				"position".to_c_str().unwrap())
 		};
 		gl::Uniform2f(position_pos, pos_x as f32, pos_y as f32);
 
 		let texture_pos = unsafe {
 			gl::GetUniformLocation(
-				shader_program,
+				self.ui_overlay_program,
 				"tex".to_c_str().unwrap())
 		};
 		gl::Uniform1i(texture_pos, 0);
@@ -184,7 +189,6 @@ impl Renderer {
 		gl::Disable(gl::TEXTURE_2D);
 
 		gl::UseProgram(0);
-		gl::DeleteProgram(shader_program);
 	}
 }
 
