@@ -32,15 +32,12 @@ impl Shaders {
 		create_shader(gl::FRAGMENT_SHADER, "glsl/ui-overlay.frag", &mut shaders);
 
 		let mut programs = HashMap::new();
-		let shader_program = gl::CreateProgram();
-		gl::AttachShader(
-			shader_program,
-			*shaders.get(&"glsl/ui-overlay.vert".to_owned()));
-		gl::AttachShader(
-			shader_program,
-			*shaders.get(&"glsl/ui-overlay.frag".to_owned()));
-		gl::LinkProgram(shader_program);
-		programs.insert("ui-overlay".to_owned(), shader_program);
+		create_program(
+			"ui-overlay",
+			[
+				*shaders.get(&"glsl/ui-overlay.vert".to_owned()),
+				*shaders.get(&"glsl/ui-overlay.frag".to_owned())],
+			&mut programs);
 
 		Shaders {
 			programs: programs
@@ -74,4 +71,13 @@ fn load_shader(path: &str) -> ~str {
 		Ok(string) => string,
 		Err(error) => fail!("Error loading shader: {}", error)
 	}
+}
+
+fn create_program(id: &str, shaders: &[Shader], programs: &mut HashMap<~str, Program>) {
+	let program = gl::CreateProgram();
+	for &shader in shaders.iter() {
+		gl::AttachShader(program, shader);
+	}
+	gl::LinkProgram(program);
+	programs.insert(id.to_owned(), program);
 }
