@@ -205,17 +205,54 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 fn draw_texture2(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 	let Vec2(texture_width, texture_height) = texture.size;
 
+	let vertex_shader = gl::CreateShader(gl::VERTEX_SHADER);
+	unsafe {
+		gl::ShaderSource(
+			vertex_shader,
+			1,
+			&load_shader("glsl/ui-overlay.vert").to_c_str().unwrap(),
+			::std::ptr::null());
+	}
+	gl::CompileShader(vertex_shader);
+
+	let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
+	unsafe {
+		gl::ShaderSource(
+			fragment_shader,
+			1,
+			&load_shader("glsl/ui-overlay.frag").to_c_str().unwrap(),
+			::std::ptr::null());
+	}
+	gl::CompileShader(fragment_shader);
+
+	let shader_program = gl::CreateProgram();
+	gl::AttachShader(shader_program, vertex_shader);
+	gl::AttachShader(shader_program, fragment_shader);
+
+	gl::LinkProgram(shader_program);
+	gl::UseProgram(shader_program);
+
+	let position_pos = unsafe {
+		gl::GetUniformLocation(
+			shader_program,
+			"position".to_c_str().unwrap())
+	};
+	gl::Uniform2f(position_pos, pos_x as f32, pos_y as f32);
+
+	let texture_pos = unsafe {
+		gl::GetUniformLocation(
+			shader_program,
+			"tex".to_c_str().unwrap())
+	};
+	gl::Uniform1i(texture_pos, 0);
+
+	gl::ActiveTexture(gl::TEXTURE0);
 	gl::BindTexture(
 		gl::TEXTURE_2D,
 		texture.name);
 
 	gl::PushMatrix();
 	{
-		gl::Translatef(
-			pos_x as f32,
-			pos_y as f32,
-			0.0);
-
 		let vertices = [
 			texture_width as f32, texture_height as f32, 0.0f32,
 			texture_width as f32, 0.0f32               , 0.0f32,
@@ -251,6 +288,9 @@ fn draw_texture2(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
+
+	gl::UseProgram(0);
+	gl::DeleteProgram(shader_program);
 }
 
 fn load_shader(path: &str) -> ~str {
