@@ -43,8 +43,8 @@ impl Textures {
 		}
 	}
 
-	pub fn get<'a>(&'a self, key: &~str) -> &'a Texture {
-		match self.map.find(key) {
+	pub fn get<'a>(&'a self, key: &str) -> &'a Texture {
+		match self.map.find(&key.to_owned()) {
 			Some(texture) => texture,
 			None          => exit(format!("Texture not found: {}", key))
 		}

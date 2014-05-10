@@ -59,7 +59,7 @@ impl Renderer {
 	}
 
 	fn draw_ship(&self, body: Body) {
-		let texture = self.textures.get(&"images/spaceship.png".to_owned());
+		let texture = self.textures.get("images/spaceship.png");
 
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);
@@ -94,7 +94,7 @@ impl Renderer {
 	fn draw_text(&self, mut position: Vec2, text: &str) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
-			let texture = self.textures.get(&glyph.texture_id);
+			let texture = self.textures.get(glyph.texture_id);
 
 			draw_texture(position + glyph.offset, texture);
 
@@ -105,7 +105,7 @@ impl Renderer {
 	fn draw_text2(&self, mut position: Vec2, text: &str) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
-			let texture = self.textures.get(&glyph.texture_id);
+			let texture = self.textures.get(glyph.texture_id);
 
 			let program = self.shaders.program("ui-overlay");
 
