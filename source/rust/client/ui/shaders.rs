@@ -2,7 +2,10 @@ use collections::HashMap;
 use std::io::File;
 
 use gl;
-use gl::types::GLuint;
+use gl::types::{
+	GLenum,
+	GLuint
+};
 
 use error::exit;
 use ui::Window;
@@ -21,29 +24,9 @@ impl Shaders {
 		// function's dependence on an OpenGL context, which is implied by
 		// Window.
 
-		let vertex_shader = gl::CreateShader(gl::VERTEX_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				vertex_shader,
-				1,
-				&load_shader("glsl/ui-overlay.vert").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(vertex_shader);
-
-		let fragment_shader = gl::CreateShader(gl::FRAGMENT_SHADER);
-		unsafe {
-			gl::ShaderSource(
-				fragment_shader,
-				1,
-				&load_shader("glsl/ui-overlay.frag").to_c_str().unwrap(),
-				::std::ptr::null());
-		}
-		gl::CompileShader(fragment_shader);
-
 		let mut shaders = HashMap::new();
-		shaders.insert("glsl/ui-overlay.vert".to_owned(), vertex_shader);
-		shaders.insert("glsl/ui-overlay.frag".to_owned(), fragment_shader);
+		create_shader(gl::VERTEX_SHADER, "glsl/ui-overlay.vert", &mut shaders);
+		create_shader(gl::FRAGMENT_SHADER, "glsl/ui-overlay.frag", &mut shaders);
 
 		Shaders {
 			shaders: shaders
@@ -58,6 +41,19 @@ impl Shaders {
 	}
 }
 
+
+fn create_shader(kind: GLenum, path: &str, shaders: &mut HashMap<~str, Shader>) {
+	let shader = gl::CreateShader(kind);
+	unsafe {
+		gl::ShaderSource(
+			shader,
+			1,
+			&load_shader(path).to_c_str().unwrap(),
+			::std::ptr::null());
+	}
+	gl::CompileShader(shader);
+	shaders.insert(path.to_owned(), shader);
+}
 
 fn load_shader(path: &str) -> ~str {
 	match File::open(&Path::new(path)).read_to_str() {
