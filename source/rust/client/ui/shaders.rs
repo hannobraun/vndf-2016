@@ -16,9 +16,11 @@ pub struct Shaders {
 	programs: HashMap<~str, Program>
 }
 
+pub type Program = GLuint;
+
 type ShaderMap = HashMap<~str, Shader>;
 type Shader    = GLuint;
-type Program   = GLuint;
+
 
 
 impl Shaders {
