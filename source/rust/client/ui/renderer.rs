@@ -47,16 +47,6 @@ impl Renderer {
 			-100.0,
 			100.0);
 
-		let shader_program = gl::CreateProgram();
-		gl::AttachShader(
-			shader_program,
-			shaders.shader("glsl/ui-overlay.vert"));
-		gl::AttachShader(
-			shader_program,
-			shaders.shader("glsl/ui-overlay.frag"));
-
-		gl::LinkProgram(shader_program);
-
 		Renderer {
 			screen_width : window.width as f64,
 			screen_height: window.height as f64,
@@ -65,7 +55,7 @@ impl Renderer {
 			textures: textures,
 			font    : font,
 
-			ui_overlay_program: shader_program
+			ui_overlay_program: shaders.program("ui-overlay")
 		}
 	}
 

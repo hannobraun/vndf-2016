@@ -13,11 +13,13 @@ use ui::Window;
 
 
 pub struct Shaders {
-	shaders: ShaderMap
+	shaders : ShaderMap,
+	programs: HashMap<~str, Program>
 }
 
 type ShaderMap = HashMap<~str, Shader>;
 type Shader    = GLuint;
+type Program   = GLuint;
 
 
 impl Shaders {
@@ -30,8 +32,20 @@ impl Shaders {
 		create_shader(gl::VERTEX_SHADER, "glsl/ui-overlay.vert", &mut shaders);
 		create_shader(gl::FRAGMENT_SHADER, "glsl/ui-overlay.frag", &mut shaders);
 
+		let mut programs = HashMap::new();
+		let shader_program = gl::CreateProgram();
+		gl::AttachShader(
+			shader_program,
+			*shaders.get(&"glsl/ui-overlay.vert".to_owned()));
+		gl::AttachShader(
+			shader_program,
+			*shaders.get(&"glsl/ui-overlay.frag".to_owned()));
+		gl::LinkProgram(shader_program);
+		programs.insert("ui-overlay".to_owned(), shader_program);
+
 		Shaders {
-			shaders: shaders
+			shaders : shaders,
+			programs: programs
 		}
 	}
 
@@ -39,6 +53,13 @@ impl Shaders {
 		match self.shaders.find(&key.to_owned()) {
 			Some(&shader) => shader,
 			None          => exit(format!("Shader not found: {}", key))
+		}
+	}
+
+	pub fn program(&self, key: &str) -> Program {
+		match self.programs.find(&key.to_owned()) {
+			Some(&program) => program,
+			None           => exit(format!("Shader program not found: {}", key))
 		}
 	}
 }
