@@ -1,8 +1,8 @@
 #version 130
 
-in vec3 vertex;
-
 uniform vec2 position;
+
+in vec3 vertex;
 
 void main()
 {
