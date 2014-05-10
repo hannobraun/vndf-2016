@@ -12,10 +12,11 @@ use ui::Window;
 
 
 pub struct Shaders {
-	shaders: HashMap<~str, Shader>
+	shaders: ShaderMap
 }
 
-type Shader = GLuint;
+type ShaderMap = HashMap<~str, Shader>;
+type Shader    = GLuint;
 
 
 impl Shaders {
@@ -42,7 +43,7 @@ impl Shaders {
 }
 
 
-fn create_shader(kind: GLenum, path: &str, shaders: &mut HashMap<~str, Shader>) {
+fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 	let shader = gl::CreateShader(kind);
 	unsafe {
 		gl::ShaderSource(
