@@ -25,10 +25,9 @@ pub struct Renderer {
 	screen_height: f64,
 
 	window  : Rc<Window>,
+	shaders : Shaders,
 	textures: Textures,
-	font    : Font,
-
-	ui_overlay_program: gl::types::GLuint
+	font    : Font
 }
 
 impl Renderer {
@@ -52,10 +51,9 @@ impl Renderer {
 			screen_height: window.height as f64,
 
 			window  : window,
+			shaders : shaders,
 			textures: textures,
-			font    : font,
-
-			ui_overlay_program: shaders.program("ui-overlay")
+			font    : font
 		}
 	}
 
@@ -117,18 +115,20 @@ impl Renderer {
 	fn draw_texture2(&self, Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		let Vec2(texture_width, texture_height) = texture.size;
 
-		gl::UseProgram(self.ui_overlay_program);
+		let program = self.shaders.program("ui-overlay");
+
+		gl::UseProgram(program);
 
 		let position_pos = unsafe {
 			gl::GetUniformLocation(
-				self.ui_overlay_program,
+				program,
 				"position".to_c_str().unwrap())
 		};
 		gl::Uniform2f(position_pos, pos_x as f32, pos_y as f32);
 
 		let texture_pos = unsafe {
 			gl::GetUniformLocation(
-				self.ui_overlay_program,
+				program,
 				"tex".to_c_str().unwrap())
 		};
 		gl::Uniform1i(texture_pos, 0);
