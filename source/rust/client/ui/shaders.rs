@@ -31,6 +31,7 @@ impl Shaders {
 
 		let mut shaders = HashMap::new();
 		create_shader(gl::VERTEX_SHADER, "glsl/ui-overlay.vert", &mut shaders);
+		create_shader(gl::VERTEX_SHADER, "glsl/ships.vert", &mut shaders);
 		create_shader(gl::FRAGMENT_SHADER, "glsl/common.frag", &mut shaders);
 
 		let mut programs = HashMap::new();
