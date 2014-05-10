@@ -9,6 +9,8 @@ START_SCRIPT_CONTENTS="\
 	2>> stderr.log"
 START_SCRIPT=$DIST_DIR/vndf
 
+rm -rf $DIST_DIR
+
 mkdir -p $DIST_DIR
 mkdir -p $DIST_BIN_DIR
 
