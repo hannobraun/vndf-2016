@@ -254,7 +254,6 @@ fn draw_texture2(Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program)
 
 	gl::EnableClientState(gl::VERTEX_ARRAY);
 	gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
-	gl::Enable(gl::TEXTURE_2D);
 
 	unsafe {
 		gl::VertexPointer(
@@ -273,7 +272,6 @@ fn draw_texture2(Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program)
 
 	gl::DisableClientState(gl::VERTEX_ARRAY);
 	gl::DisableClientState(gl::TEXTURE_COORD_ARRAY);
-	gl::Disable(gl::TEXTURE_2D);
 
 	gl::UseProgram(0);
 }
