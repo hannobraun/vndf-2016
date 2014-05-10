@@ -65,14 +65,14 @@ impl Renderer {
 	}
 
 	fn draw_ui_overlay(&self, attitude: Radians) {
-		self.draw_text(
+		self.draw_text2(
 			Vec2(20.0, 40.0),
 			"Set attitude with the left and right cursor keys");
-		self.draw_text(
+		self.draw_text2(
 			Vec2(20.0, 20.0),
 			"Start maneuver with Enter");
 
-		self.draw_text(
+		self.draw_text2(
 			Vec2(self.screen_width - 50.0, 40.0),
 			format!("{:+04i}", attitude.degrees()));
 	}
@@ -83,6 +83,17 @@ impl Renderer {
 			let texture = self.textures.get(&glyph.texture_id);
 
 			draw_texture(position + glyph.offset, texture);
+
+			position = position + glyph.advance;
+		}
+	}
+
+	fn draw_text2(&self, mut position: Vec2, text: &str) {
+		for c in text.chars() {
+			let glyph   = self.font.get(c);
+			let texture = self.textures.get(&glyph.texture_id);
+
+			draw_texture2(position + glyph.offset, texture);
 
 			position = position + glyph.advance;
 		}
@@ -140,6 +151,57 @@ impl io::Renderer for Renderer {
 }
 
 fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
+	let Vec2(texture_width, texture_height) = texture.size;
+
+	gl::BindTexture(
+		gl::TEXTURE_2D,
+		texture.name);
+
+	gl::PushMatrix();
+	{
+		gl::Translatef(
+			pos_x as f32,
+			pos_y as f32,
+			0.0);
+
+		let vertices = [
+			texture_width as f32, texture_height as f32, 0.0f32,
+			texture_width as f32, 0.0f32               , 0.0f32,
+			0.0f32              , texture_height as f32, 0.0f32,
+			0.0f32              , 0.0f32               , 0.0f32];
+		let texture_coordinates = [
+			1.0f32, 0.0f32,
+			1.0f32, 1.0f32,
+			0.0f32, 0.0f32,
+			0.0f32, 1.0f32];
+
+		gl::EnableClientState(gl::VERTEX_ARRAY);
+		gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
+		gl::Enable(gl::TEXTURE_2D);
+
+		unsafe {
+			gl::VertexPointer(
+				3,
+				gl::FLOAT,
+				0,
+				vertices.as_ptr() as *gl::types::GLvoid);
+			gl::TexCoordPointer(
+				2,
+				gl::FLOAT,
+				0,
+				texture_coordinates.as_ptr() as *gl::types::GLvoid);
+		}
+
+		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+
+		gl::DisableClientState(gl::VERTEX_ARRAY);
+		gl::DisableClientState(gl::TEXTURE_COORD_ARRAY);
+		gl::Disable(gl::TEXTURE_2D);
+	}
+	gl::PopMatrix();
+}
+
+fn draw_texture2(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 	let Vec2(texture_width, texture_height) = texture.size;
 
 	gl::BindTexture(
