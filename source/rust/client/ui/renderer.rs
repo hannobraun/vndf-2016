@@ -79,16 +79,21 @@ impl Renderer {
 	}
 
 	fn draw_ui_overlay(&self, attitude: Radians) {
+		let program = self.shaders.program("ui-overlay");
+
 		self.draw_text2(
 			Vec2(20.0, 40.0),
-			"Set attitude with the left and right cursor keys");
+			"Set attitude with the left and right cursor keys",
+			program);
 		self.draw_text2(
 			Vec2(20.0, 20.0),
-			"Start maneuver with Enter");
+			"Start maneuver with Enter",
+			program);
 
 		self.draw_text2(
 			Vec2(self.screen_width - 50.0, 40.0),
-			format!("{:+04i}", attitude.degrees()));
+			format!("{:+04i}", attitude.degrees()),
+			program);
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
@@ -102,11 +107,10 @@ impl Renderer {
 		}
 	}
 
-	fn draw_text2(&self, mut position: Vec2, text: &str) {
+	fn draw_text2(&self, mut position: Vec2, text: &str, program: shaders::Program) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
-			let program = self.shaders.program("ui-overlay");
 
 			draw_texture2(
 				position + glyph.offset,
