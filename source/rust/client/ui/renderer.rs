@@ -18,6 +18,7 @@ use ui::{
 	Textures,
 	Window
 };
+use ui::shaders;
 
 
 pub struct Renderer {
@@ -106,16 +107,16 @@ impl Renderer {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(&glyph.texture_id);
 
-			self.draw_texture2(position + glyph.offset, texture);
+			let program = self.shaders.program("ui-overlay");
+
+			self.draw_texture2(position + glyph.offset, texture, program);
 
 			position = position + glyph.advance;
 		}
 	}
 
-	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture) {
+	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program) {
 		let Vec2(width, height) = texture.size;
-
-		let program = self.shaders.program("ui-overlay");
 
 		gl::UseProgram(program);
 
