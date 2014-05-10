@@ -13,7 +13,6 @@ use ui::Window;
 
 
 pub struct Shaders {
-	shaders : ShaderMap,
 	programs: HashMap<~str, Program>
 }
 
@@ -44,7 +43,6 @@ impl Shaders {
 		programs.insert("ui-overlay".to_owned(), shader_program);
 
 		Shaders {
-			shaders : shaders,
 			programs: programs
 		}
 	}
