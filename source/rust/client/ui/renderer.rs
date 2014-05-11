@@ -36,21 +36,10 @@ pub struct Renderer {
 impl io::Renderer for Renderer {
 	fn render(&mut self, frame: &Frame) {
 		gl::Clear(gl::COLOR_BUFFER_BIT);
-		gl::Color4f(1.0, 1.0, 1.0, 1.0);
 
-		gl::PushMatrix();
-		{
-			let Vec2(camera_x, camera_y) = frame.camera;
-			gl::Translatef(
-				(self.screen_width / 2.0 - camera_x) as f32,
-				(self.screen_height / 2.0 - camera_y) as f32,
-				0.0);
-
-			for &body in frame.ships.iter() {
-				self.draw_ship(body, frame.camera);
-			}
+		for &body in frame.ships.iter() {
+			self.draw_ship(body, frame.camera);
 		}
-		gl::PopMatrix();
 
 		self.draw_ui_overlay(frame.input.attitude);
 
@@ -89,15 +78,6 @@ impl Renderer {
 		shaders : Shaders,
 		textures: Textures,
 		font    : Font) -> Renderer {
-
-		gl::LoadIdentity();
-		gl::Ortho(
-			0.0,
-			window.width as f64,
-			0.0,
-			window.height as f64,
-			-100.0,
-			100.0);
 
 		Renderer {
 			screen_width : window.width as f64,
