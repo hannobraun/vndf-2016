@@ -30,12 +30,15 @@ pub struct Renderer {
 	textures: Textures,
 	font    : Font,
 
+	camera : Vec2,
 	program: shaders::Program
 }
 
 impl io::Renderer for Renderer {
 	fn render(&mut self, frame: &Frame) {
 		gl::Clear(gl::COLOR_BUFFER_BIT);
+
+		self.camera = frame.camera;
 
 		for &body in frame.ships.iter() {
 			self.draw_ship(body, frame.camera);
@@ -88,12 +91,15 @@ impl Renderer {
 			textures: textures,
 			font    : font,
 
+			camera : Vec2(0.0, 0.0),
 			program: 0
 		}
 	}
 
-	fn draw_ship(&mut self, body: Body, Vec2(cam_x, cam_y): Vec2) {
+	fn draw_ship(&mut self, body: Body, _: Vec2) {
 		let texture = self.textures.get("images/spaceship.png");
+
+		let Vec2(cam_x, cam_y) = self.camera;
 
 		self.program = self.shaders.program("ship-image");
 
