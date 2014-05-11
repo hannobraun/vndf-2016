@@ -48,6 +48,12 @@ impl Shaders {
 				*shaders.get(&"glsl/ship.vert".to_owned()),
 				*shaders.get(&"glsl/text.frag".to_owned())],
 			&mut programs);
+		create_program(
+			"ship-image",
+			[
+				*shaders.get(&"glsl/ship.vert".to_owned()),
+				*shaders.get(&"glsl/image.frag".to_owned())],
+			&mut programs);
 
 		Shaders {
 			programs: programs
