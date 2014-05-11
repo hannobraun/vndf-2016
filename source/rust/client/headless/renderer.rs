@@ -11,7 +11,7 @@ impl Renderer {
 }
 
 impl io::Renderer for Renderer {
-	fn render(&self, frame: &Frame) {
+	fn render(&mut self, frame: &Frame) {
 		print!("{}\n", frame.to_json());
 	}
 }

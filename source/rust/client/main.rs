@@ -54,7 +54,7 @@ fn main() {
 
 	let mut network = Network::connect(args.address, args.port);
 
-	let (mut input_handler, renderer) = if args.headless {
+	let (mut input_handler, mut renderer) = if args.headless {
 		(
 			box headless::InputHandler::new() as Box<InputHandler>,
 			box headless::Renderer::new() as Box<Renderer>)

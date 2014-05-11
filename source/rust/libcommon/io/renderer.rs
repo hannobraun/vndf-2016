@@ -1,5 +1,5 @@
 use io::Frame;
 
 pub trait Renderer {
-	fn render(&self, frame: &Frame);
+	fn render(&mut self, frame: &Frame);
 }
