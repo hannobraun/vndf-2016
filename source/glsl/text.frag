@@ -6,5 +6,5 @@ out vec4 outColor;
 
 void main()
 {
-	outColor = vec4(1.0, 1.0, 1.0, texture(tex, gl_TexCoord[0].st).a);
+	outColor = vec4(1.0, 1.0, 1.0, texture(tex, gl_TexCoord[0].st).r);
 }

@@ -62,7 +62,7 @@ impl Textures {
 
 impl Texture {
 	pub fn new_alpha(data: &[u8], size: Vec2) -> Texture {
-		create_texture(data, size, gl::ALPHA, gl::ALPHA8)
+		create_texture(data, size, gl::RED, gl::R8)
 	}
 
 	pub fn new_rgb(data: &[u8], size: Vec2) -> Texture {
