@@ -62,22 +62,32 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ship(&self, body: Body) {
+	fn draw_ship(&mut self, body: Body, Vec2(cam_x, cam_y): Vec2) {
 		let texture = self.textures.get("images/spaceship.png");
 
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);
 
+		self.program = self.shaders.program("ships");
+
+		gl::UseProgram(self.program);
+		let camera_pos = unsafe {
+			gl::GetUniformLocation(
+				self.program,
+				"camera".to_c_str().unwrap())
+		};
+		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
+
 		let mut text_position = draw_position + texture.size;
 		let Vec2(body_x, body_y) = body.position;
-		self.draw_text(
+		self.draw_text2(
 			text_position,
 			format!("pos: {:i} / {:i}",
 				body_x as int,
 				body_y as int));
 
 		text_position = text_position - Vec2(0.0, 15.0);
-		self.draw_text(
+		self.draw_text2(
 			text_position,
 			format!("att: {:+04i}", body.attitude.degrees()));
 	}
@@ -195,7 +205,7 @@ impl io::Renderer for Renderer {
 				0.0);
 
 			for &body in frame.ships.iter() {
-				self.draw_ship(body);
+				self.draw_ship(body, frame.camera);
 			}
 		}
 		gl::PopMatrix();
