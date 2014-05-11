@@ -41,7 +41,7 @@ impl io::Renderer for Renderer {
 		self.camera = frame.camera;
 
 		for &body in frame.ships.iter() {
-			self.draw_ship(body, frame.camera);
+			self.draw_ship(body);
 		}
 
 		self.draw_ui_overlay(frame.input.attitude);
@@ -96,7 +96,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_ship(&mut self, body: Body, _: Vec2) {
+	fn draw_ship(&mut self, body: Body) {
 		let texture = self.textures.get("images/spaceship.png");
 
 		let Vec2(cam_x, cam_y) = self.camera;
