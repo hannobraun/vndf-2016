@@ -32,20 +32,20 @@ impl Shaders {
 		let mut shaders = HashMap::new();
 		create_shader(gl::VERTEX_SHADER, "glsl/ui-overlay.vert", &mut shaders);
 		create_shader(gl::VERTEX_SHADER, "glsl/ships.vert", &mut shaders);
-		create_shader(gl::FRAGMENT_SHADER, "glsl/common.frag", &mut shaders);
+		create_shader(gl::FRAGMENT_SHADER, "glsl/text.frag", &mut shaders);
 
 		let mut programs = HashMap::new();
 		create_program(
 			"ui-overlay",
 			[
 				*shaders.get(&"glsl/ui-overlay.vert".to_owned()),
-				*shaders.get(&"glsl/common.frag".to_owned())],
+				*shaders.get(&"glsl/text.frag".to_owned())],
 			&mut programs);
 		create_program(
 			"ships",
 			[
 				*shaders.get(&"glsl/ships.vert".to_owned()),
-				*shaders.get(&"glsl/common.frag".to_owned())],
+				*shaders.get(&"glsl/text.frag".to_owned())],
 			&mut programs);
 
 		Shaders {
