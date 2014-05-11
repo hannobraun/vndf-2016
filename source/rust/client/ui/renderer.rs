@@ -106,7 +106,7 @@ impl Renderer {
 		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
 
 		let draw_position = body.position - texture.size * 0.5;
-		self.draw_texture2(draw_position, texture);
+		self.draw_texture(draw_position, texture);
 
 		self.program = self.shaders.program("ship-text");
 
@@ -152,7 +152,7 @@ impl Renderer {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
 
-			self.draw_texture2(
+			self.draw_texture(
 				position + glyph.offset,
 				texture);
 
@@ -160,7 +160,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture) {
+	fn draw_texture(&self, Vec2(x, y): Vec2, texture: &Texture) {
 		let Vec2(width, height) = texture.size;
 
 		gl::UseProgram(self.program);
