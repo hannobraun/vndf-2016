@@ -33,6 +33,56 @@ pub struct Renderer {
 	program: shaders::Program
 }
 
+impl io::Renderer for Renderer {
+	fn render(&mut self, frame: &Frame) {
+		gl::Clear(gl::COLOR_BUFFER_BIT);
+		gl::Color4f(1.0, 1.0, 1.0, 1.0);
+
+		gl::PushMatrix();
+		{
+			let Vec2(camera_x, camera_y) = frame.camera;
+			gl::Translatef(
+				(self.screen_width / 2.0 - camera_x) as f32,
+				(self.screen_height / 2.0 - camera_y) as f32,
+				0.0);
+
+			for &body in frame.ships.iter() {
+				self.draw_ship(body, frame.camera);
+			}
+		}
+		gl::PopMatrix();
+
+		self.draw_ui_overlay(frame.input.attitude);
+
+		self.window.swap_buffers();
+
+		match gl::GetError() {
+			gl::NO_ERROR => (),
+
+			error @ _ => {
+				let error_as_str = match error {
+					gl::INVALID_ENUM =>
+						"GL_INVALID_ENUM",
+					gl::INVALID_VALUE =>
+						"GL_INVALID_VALUE",
+					gl::INVALID_OPERATION =>
+						"GL_INVALID_OPERATION",
+					gl::OUT_OF_MEMORY =>
+						"GL_OUT_OF_MEMORY",
+					gl::STACK_UNDERFLOW =>
+						"GL_STACK_UNDERFLOW",
+					gl::STACK_OVERFLOW =>
+						"GL_STACK_OVERFLOW",
+
+					_ => "unknown"
+				};
+
+				exit(format!("OpenGL error: {} ({})", error_as_str, error))
+			}
+		}
+	}
+}
+
 impl Renderer {
 	pub fn new(
 		window  : Rc<Window>,
@@ -180,55 +230,6 @@ impl Renderer {
 	}
 }
 
-impl io::Renderer for Renderer {
-	fn render(&mut self, frame: &Frame) {
-		gl::Clear(gl::COLOR_BUFFER_BIT);
-		gl::Color4f(1.0, 1.0, 1.0, 1.0);
-
-		gl::PushMatrix();
-		{
-			let Vec2(camera_x, camera_y) = frame.camera;
-			gl::Translatef(
-				(self.screen_width / 2.0 - camera_x) as f32,
-				(self.screen_height / 2.0 - camera_y) as f32,
-				0.0);
-
-			for &body in frame.ships.iter() {
-				self.draw_ship(body, frame.camera);
-			}
-		}
-		gl::PopMatrix();
-
-		self.draw_ui_overlay(frame.input.attitude);
-
-		self.window.swap_buffers();
-
-		match gl::GetError() {
-			gl::NO_ERROR => (),
-
-			error @ _ => {
-				let error_as_str = match error {
-					gl::INVALID_ENUM =>
-						"GL_INVALID_ENUM",
-					gl::INVALID_VALUE =>
-						"GL_INVALID_VALUE",
-					gl::INVALID_OPERATION =>
-						"GL_INVALID_OPERATION",
-					gl::OUT_OF_MEMORY =>
-						"GL_OUT_OF_MEMORY",
-					gl::STACK_UNDERFLOW =>
-						"GL_STACK_UNDERFLOW",
-					gl::STACK_OVERFLOW =>
-						"GL_STACK_OVERFLOW",
-
-					_ => "unknown"
-				};
-
-				exit(format!("OpenGL error: {} ({})", error_as_str, error))
-			}
-		}
-	}
-}
 
 fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 	let Vec2(texture_width, texture_height) = texture.size;
