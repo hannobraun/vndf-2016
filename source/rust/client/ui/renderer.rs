@@ -115,8 +115,18 @@ impl Renderer {
 	fn draw_ship(&mut self, body: Body, Vec2(cam_x, cam_y): Vec2) {
 		let texture = self.textures.get("images/spaceship.png");
 
+		self.program = self.shaders.program("ship-image");
+
+		gl::UseProgram(self.program);
+		let camera_pos = unsafe {
+			gl::GetUniformLocation(
+				self.program,
+				"camera".to_c_str().unwrap())
+		};
+		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
+
 		let draw_position = body.position - texture.size * 0.5;
-		draw_texture(draw_position, texture);
+		self.draw_texture2(draw_position, texture);
 
 		self.program = self.shaders.program("ship-text");
 
