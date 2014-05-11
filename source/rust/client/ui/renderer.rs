@@ -84,6 +84,7 @@ impl Renderer {
 
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
 		let program = self.shaders.program("ui-overlay");
+		self.program = program;
 
 		self.draw_text2(
 			Vec2(20.0, 40.0),
@@ -111,12 +112,10 @@ impl Renderer {
 		}
 	}
 
-	fn draw_text2(&mut self, mut position: Vec2, text: &str, program: shaders::Program) {
+	fn draw_text2(&mut self, mut position: Vec2, text: &str, _: shaders::Program) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
-
-			self.program = program;
 
 			self.draw_texture2(
 				position + glyph.offset,
