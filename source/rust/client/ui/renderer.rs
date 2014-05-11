@@ -112,7 +112,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_text2(&mut self, mut position: Vec2, text: &str, _: shaders::Program) {
+	fn draw_text2(&self, mut position: Vec2, text: &str, _: shaders::Program) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
