@@ -28,7 +28,9 @@ pub struct Renderer {
 	window  : Rc<Window>,
 	shaders : Shaders,
 	textures: Textures,
-	font    : Font
+	font    : Font,
+
+	program: shaders::Program
 }
 
 impl Renderer {
@@ -54,7 +56,9 @@ impl Renderer {
 			window  : window,
 			shaders : shaders,
 			textures: textures,
-			font    : font
+			font    : font,
+
+			program: 0
 		}
 	}
 
@@ -78,7 +82,7 @@ impl Renderer {
 			format!("att: {:+04i}", body.attitude.degrees()));
 	}
 
-	fn draw_ui_overlay(&self, attitude: Radians) {
+	fn draw_ui_overlay(&mut self, attitude: Radians) {
 		let program = self.shaders.program("ui-overlay");
 
 		self.draw_text2(
@@ -107,10 +111,12 @@ impl Renderer {
 		}
 	}
 
-	fn draw_text2(&self, mut position: Vec2, text: &str, program: shaders::Program) {
+	fn draw_text2(&mut self, mut position: Vec2, text: &str, program: shaders::Program) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
+
+			self.program = program;
 
 			self.draw_texture2(
 				position + glyph.offset,
@@ -121,21 +127,21 @@ impl Renderer {
 		}
 	}
 
-	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program) {
+	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture, _: shaders::Program) {
 		let Vec2(width, height) = texture.size;
 
-		gl::UseProgram(program);
+		gl::UseProgram(self.program);
 
 		let position_pos = unsafe {
 			gl::GetUniformLocation(
-				program,
+				self.program,
 				"position".to_c_str().unwrap())
 		};
 		gl::Uniform2f(position_pos, x as f32, y as f32);
 
 		let texture_pos = unsafe {
 			gl::GetUniformLocation(
-				program,
+				self.program,
 				"tex".to_c_str().unwrap())
 		};
 		gl::Uniform1i(texture_pos, 0);
