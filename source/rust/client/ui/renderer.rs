@@ -112,13 +112,72 @@ impl Renderer {
 			let glyph   = self.font.get(c);
 			let texture = self.textures.get(glyph.texture_id);
 
-			draw_texture2(
+			self.draw_texture2(
 				position + glyph.offset,
 				texture,
 				program);
 
 			position = position + glyph.advance;
 		}
+	}
+
+	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program) {
+		let Vec2(width, height) = texture.size;
+
+		gl::UseProgram(program);
+
+		let position_pos = unsafe {
+			gl::GetUniformLocation(
+				program,
+				"position".to_c_str().unwrap())
+		};
+		gl::Uniform2f(position_pos, x as f32, y as f32);
+
+		let texture_pos = unsafe {
+			gl::GetUniformLocation(
+				program,
+				"tex".to_c_str().unwrap())
+		};
+		gl::Uniform1i(texture_pos, 0);
+
+		gl::ActiveTexture(gl::TEXTURE0);
+		gl::BindTexture(
+			gl::TEXTURE_2D,
+			texture.name);
+
+		let vertices = [
+			width as f32, height as f32, 0.0,
+			width as f32, 0.0          , 0.0,
+			0.0         , height as f32, 0.0,
+			0.0         , 0.0          , 0.0];
+		let texture_coordinates = [
+			1.0f32, 0.0f32,
+			1.0f32, 1.0f32,
+			0.0f32, 0.0f32,
+			0.0f32, 1.0f32];
+
+		gl::EnableClientState(gl::VERTEX_ARRAY);
+		gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
+
+		unsafe {
+			gl::VertexPointer(
+				3,
+				gl::FLOAT,
+				0,
+				vertices.as_ptr() as *gl::types::GLvoid);
+			gl::TexCoordPointer(
+				2,
+				gl::FLOAT,
+				0,
+				texture_coordinates.as_ptr() as *gl::types::GLvoid);
+		}
+
+		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+
+		gl::DisableClientState(gl::VERTEX_ARRAY);
+		gl::DisableClientState(gl::TEXTURE_COORD_ARRAY);
+
+		gl::UseProgram(0);
 	}
 }
 
@@ -221,63 +280,4 @@ fn draw_texture(Vec2(pos_x, pos_y): Vec2, texture: &Texture) {
 		gl::Disable(gl::TEXTURE_2D);
 	}
 	gl::PopMatrix();
-}
-
-fn draw_texture2(Vec2(x, y): Vec2, texture: &Texture, program: shaders::Program) {
-	let Vec2(width, height) = texture.size;
-
-	gl::UseProgram(program);
-
-	let position_pos = unsafe {
-		gl::GetUniformLocation(
-			program,
-			"position".to_c_str().unwrap())
-	};
-	gl::Uniform2f(position_pos, x as f32, y as f32);
-
-	let texture_pos = unsafe {
-		gl::GetUniformLocation(
-			program,
-			"tex".to_c_str().unwrap())
-	};
-	gl::Uniform1i(texture_pos, 0);
-
-	gl::ActiveTexture(gl::TEXTURE0);
-	gl::BindTexture(
-		gl::TEXTURE_2D,
-		texture.name);
-
-	let vertices = [
-		width as f32, height as f32, 0.0,
-		width as f32, 0.0          , 0.0,
-		0.0         , height as f32, 0.0,
-		0.0         , 0.0          , 0.0];
-	let texture_coordinates = [
-		1.0f32, 0.0f32,
-		1.0f32, 1.0f32,
-		0.0f32, 0.0f32,
-		0.0f32, 1.0f32];
-
-	gl::EnableClientState(gl::VERTEX_ARRAY);
-	gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
-
-	unsafe {
-		gl::VertexPointer(
-			3,
-			gl::FLOAT,
-			0,
-			vertices.as_ptr() as *gl::types::GLvoid);
-		gl::TexCoordPointer(
-			2,
-			gl::FLOAT,
-			0,
-			texture_coordinates.as_ptr() as *gl::types::GLvoid);
-	}
-
-	gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
-
-	gl::DisableClientState(gl::VERTEX_ARRAY);
-	gl::DisableClientState(gl::TEXTURE_COORD_ARRAY);
-
-	gl::UseProgram(0);
 }
