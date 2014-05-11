@@ -120,14 +120,13 @@ impl Renderer {
 
 			self.draw_texture2(
 				position + glyph.offset,
-				texture,
-				program);
+				texture);
 
 			position = position + glyph.advance;
 		}
 	}
 
-	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture, _: shaders::Program) {
+	fn draw_texture2(&self, Vec2(x, y): Vec2, texture: &Texture) {
 		let Vec2(width, height) = texture.size;
 
 		gl::UseProgram(self.program);
