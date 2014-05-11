@@ -110,15 +110,6 @@ impl Renderer {
 				"camera".to_c_str().unwrap())
 		};
 		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
-		let screen_pos = unsafe {
-			gl::GetUniformLocation(
-				self.program,
-				"screen".to_c_str().unwrap())
-		};
-		gl::Uniform2f(
-			screen_pos,
-			self.screen_width as f32,
-			self.screen_height as f32);
 
 		let draw_position = body.position - texture.size * 0.5;
 		self.draw_texture(draw_position, texture);
@@ -132,15 +123,6 @@ impl Renderer {
 				"camera".to_c_str().unwrap())
 		};
 		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
-		let screen_pos = unsafe {
-			gl::GetUniformLocation(
-				self.program,
-				"screen".to_c_str().unwrap())
-		};
-		gl::Uniform2f(
-			screen_pos,
-			self.screen_width as f32,
-			self.screen_height as f32);
 
 		let mut text_position = draw_position + texture.size;
 		let Vec2(body_x, body_y) = body.position;
@@ -188,6 +170,16 @@ impl Renderer {
 		let Vec2(width, height) = texture.size;
 
 		gl::UseProgram(self.program);
+
+		let screen_pos = unsafe {
+			gl::GetUniformLocation(
+				self.program,
+				"screen".to_c_str().unwrap())
+		};
+		gl::Uniform2f(
+			screen_pos,
+			self.screen_width as f32,
+			self.screen_height as f32);
 
 		let position_pos = unsafe {
 			gl::GetUniformLocation(
