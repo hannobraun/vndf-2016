@@ -118,7 +118,7 @@ impl Renderer {
 		let draw_position = body.position - texture.size * 0.5;
 		draw_texture(draw_position, texture);
 
-		self.program = self.shaders.program("ships");
+		self.program = self.shaders.program("ship-text");
 
 		gl::UseProgram(self.program);
 		let camera_pos = unsafe {

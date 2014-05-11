@@ -42,7 +42,7 @@ impl Shaders {
 				*shaders.get(&"glsl/text.frag".to_owned())],
 			&mut programs);
 		create_program(
-			"ships",
+			"ship-text",
 			[
 				*shaders.get(&"glsl/ship.vert".to_owned()),
 				*shaders.get(&"glsl/text.frag".to_owned())],
