@@ -5,7 +5,7 @@ uniform vec2 position;
 
 in vec3 vertex;
 
-out vec4 TexCoord;
+out vec2 TexCoord;
 
 void main()
 {
@@ -18,5 +18,5 @@ void main()
 	vec3 translated = vertex + vec3(position, 0.0);
 	gl_Position = m * vec4(translated, 1.0);
 
-	TexCoord = gl_MultiTexCoord0;
+	TexCoord = gl_MultiTexCoord0.st;
 }
