@@ -2,9 +2,11 @@
 
 uniform sampler2D tex;
 
+in vec4 TexCoord;
+
 out vec4 outColor;
 
 void main()
 {
-	outColor = texture(tex, gl_TexCoord[0].st);
+	outColor = texture(tex, TexCoord.st);
 }
