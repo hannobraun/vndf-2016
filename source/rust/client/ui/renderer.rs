@@ -169,6 +169,17 @@ impl Renderer {
 	fn draw_texture(&self, Vec2(x, y): Vec2, texture: &Texture) {
 		let Vec2(width, height) = texture.size;
 
+		let vertices = [
+			width as f32, height as f32, 0.0,
+			width as f32, 0.0          , 0.0,
+			0.0         , height as f32, 0.0,
+			0.0         , 0.0          , 0.0];
+		let texture_coordinates = [
+			1.0f32, 0.0f32,
+			1.0f32, 1.0f32,
+			0.0f32, 0.0f32,
+			0.0f32, 1.0f32];
+
 		gl::UseProgram(self.program);
 
 		let screen_pos = unsafe {
@@ -199,17 +210,6 @@ impl Renderer {
 		gl::BindTexture(
 			gl::TEXTURE_2D,
 			texture.name);
-
-		let vertices = [
-			width as f32, height as f32, 0.0,
-			width as f32, 0.0          , 0.0,
-			0.0         , height as f32, 0.0,
-			0.0         , 0.0          , 0.0];
-		let texture_coordinates = [
-			1.0f32, 0.0f32,
-			1.0f32, 1.0f32,
-			0.0f32, 0.0f32,
-			0.0f32, 1.0f32];
 
 		gl::EnableClientState(gl::VERTEX_ARRAY);
 		gl::EnableClientState(gl::TEXTURE_COORD_ARRAY);
