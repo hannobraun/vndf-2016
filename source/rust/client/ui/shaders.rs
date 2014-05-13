@@ -35,6 +35,8 @@ impl Shaders {
 		create_shader(gl::VERTEX_SHADER, "glsl/ship.vert", &mut shaders);
 		create_shader(gl::FRAGMENT_SHADER, "glsl/text.frag", &mut shaders);
 		create_shader(gl::FRAGMENT_SHADER, "glsl/image.frag", &mut shaders);
+		create_shader(gl::VERTEX_SHADER, "glsl/grid.vert", &mut shaders);
+		create_shader(gl::FRAGMENT_SHADER, "glsl/grid.frag", &mut shaders);
 
 		let mut programs = HashMap::new();
 		create_program(
