@@ -57,6 +57,12 @@ impl Shaders {
 				*shaders.get(&"glsl/ship.vert".to_owned()),
 				*shaders.get(&"glsl/image.frag".to_owned())],
 			&mut programs);
+		create_program(
+			"grid",
+			[
+				*shaders.get(&"glsl/grid.vert".to_owned()),
+				*shaders.get(&"glsl/grid.frag".to_owned())],
+			&mut programs);
 
 		Shaders {
 			programs: programs
