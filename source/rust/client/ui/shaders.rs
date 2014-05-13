@@ -1,4 +1,5 @@
 use collections::HashMap;
+use std::c_str::CString;
 use std::io::File;
 use std::ptr;
 
@@ -79,6 +80,34 @@ fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 			ptr::null());
 	}
 	gl::CompileShader(shader);
+
+	let mut status = 0;
+	unsafe {
+		gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut status);
+	}
+
+	if status == gl::FALSE as i32 {
+		let mut buffer = [0, .. 1024];
+		unsafe {
+			gl::GetShaderInfoLog(
+				shader,
+				buffer.len() as i32,
+				::std::ptr::mut_null(),
+				buffer.as_mut_ptr());
+		}
+
+		let c_str = unsafe {
+			CString::new(
+				buffer.as_ptr(),
+				false)
+		};
+
+		print!("Error compiling shader {}:\n\n", path);
+		print!("{}\n", c_str.as_str().unwrap());
+
+		exit("");
+	}
+
 	shaders.insert(path.to_owned(), shader);
 }
 
