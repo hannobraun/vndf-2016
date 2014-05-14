@@ -28,4 +28,4 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Step
 
-Draw a grid.
+Implement interpolation to make movement look smooth.
