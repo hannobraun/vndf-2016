@@ -40,6 +40,8 @@ impl io::Renderer for Renderer {
 
 		self.camera = frame.camera;
 
+		self.draw_grid();
+
 		for &body in frame.ships.iter() {
 			self.draw_ship(body);
 		}
@@ -94,6 +96,84 @@ impl Renderer {
 			camera : Vec2(0.0, 0.0),
 			program: 0
 		}
+	}
+
+	fn draw_grid(&mut self) {
+		let Vec2(mut cam_x, mut cam_y) = self.camera;
+
+		cam_x = cam_x % 200.0;
+		cam_y = cam_y % 200.0;
+
+		let vertices = [
+			-700.0f32, -600.0f32,
+			-700.0f32,  600.0f32,
+			-500.0f32, -600.0f32,
+			-500.0f32,  600.0f32,
+			-300.0f32, -600.0f32,
+			-300.0f32,  600.0f32,
+			-100.0f32, -600.0f32,
+			-100.0f32,  600.0f32,
+			 100.0f32, -600.0f32,
+			 100.0f32,  600.0f32,
+			 300.0f32, -600.0f32,
+			 300.0f32,  600.0f32,
+			 500.0f32, -600.0f32,
+			 500.0f32,  600.0f32,
+			 700.0f32, -600.0f32,
+			 700.0f32,  600.0f32,
+
+			-700.0f32, -600.0f32,
+			 700.0f32, -600.0f32,
+			-700.0f32, -400.0f32,
+			 700.0f32, -400.0f32,
+			-700.0f32, -200.0f32,
+			 700.0f32, -200.0f32,
+			-700.0f32,    0.0f32,
+			 700.0f32,    0.0f32,
+			-700.0f32,  200.0f32,
+			 700.0f32,  200.0f32,
+			-700.0f32,  400.0f32,
+			 700.0f32,  400.0f32,
+			-700.0f32,  600.0f32,
+			 700.0f32,  600.0f32];
+
+		self.program = self.shaders.program("grid");
+		gl::UseProgram(self.program);
+
+		let screen_pos = unsafe {
+			gl::GetUniformLocation(
+				self.program,
+				"screen".to_c_str().unwrap())
+		};
+		gl::Uniform2f(
+			screen_pos,
+			self.screen_width as f32,
+			self.screen_height as f32);
+
+		let camera_pos = unsafe {
+			gl::GetUniformLocation(
+				self.program,
+				"camera".to_c_str().unwrap())
+		};
+		gl::Uniform2f(
+			camera_pos,
+			cam_x as f32,
+			cam_y as f32);
+
+		gl::EnableClientState(gl::VERTEX_ARRAY);
+
+		unsafe {
+			gl::VertexPointer(
+				2,
+				gl::FLOAT,
+				0,
+				vertices.as_ptr() as *gl::types::GLvoid);
+		}
+
+		gl::DrawArrays(gl::LINES, 0, 30);
+		gl::DisableClientState(gl::VERTEX_ARRAY);
+
+		gl::UseProgram(0);
 	}
 
 	fn draw_ship(&mut self, body: Body) {
