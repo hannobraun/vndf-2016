@@ -13,7 +13,7 @@ use physics::{
 pub struct Frame {
 	pub input : Input,
 	pub camera: Vec2,
-	pub ships : ~[Body]
+	pub ships : Vec<Body>
 }
 
 impl Frame {

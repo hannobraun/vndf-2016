@@ -1,8 +1,8 @@
 use collections::HashMap;
 use std::char;
 use std::ptr;
-use std::slice;
 use std::str;
+use std::vec;
 
 use freetype::freetype::{
 	FT_Face,
@@ -112,7 +112,7 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 		let bitmap = (*glyph_slot).bitmap;
 
 		Texture::new_alpha(
-			slice::from_buf(
+			&vec::raw::from_buf(
 				bitmap.buffer,
 				(bitmap.width * bitmap.rows) as uint),
 			Vec2(

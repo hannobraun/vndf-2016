@@ -30,7 +30,7 @@ pub fn parse() -> Option<Args> {
 		optflag("h", "headless", "start in headless mode")
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]), options);
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)), options);
 
 	let matches = match getopts(args_as_strs.tail(), options) {
 		Ok(matches) => matches,

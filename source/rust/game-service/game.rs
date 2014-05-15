@@ -110,7 +110,7 @@ impl Game {
 		clients.each(|client_id, client| {
 			let update = Perception {
 				self_id: client_id,
-				ships  : ships.as_slice().to_owned()
+				ships  : ships.clone()
 			};
 			let message = update.to_str();
 

@@ -2,6 +2,10 @@
 
 source project.conf
 
-(cd vendor/gl-rs; rm -r build; mkdir -p build;
-	$RUSTC --out-dir build src/gl/gl30.rs)
+(
+	cd vendor/gl-rs;
+	rm -r build;
+	mkdir -p build;
+	make lib RUSTC=$RUSTC GL_VERSION=3.0;
+	$RUSTC --out-dir build src/gl/lib.rs)
 cp $(find vendor/gl-rs/build -name *.rlib) $OUTPUT_LIB_RUST

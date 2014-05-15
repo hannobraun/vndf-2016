@@ -25,7 +25,7 @@ pub fn parse() -> Option<Args> {
 		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_str())
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]), options);
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)), options);
 
 	let matches = match getopts(args_as_strs.tail(), options) {
 		Ok(matches) => matches,

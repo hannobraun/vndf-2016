@@ -20,12 +20,12 @@ fn the_ship_should_follow_its_velocity_vector() {
 		frame_2 = client.frame();
 	}
 
-	while frame_1.ships[0].position == frame_2.ships[0].position {
+	while frame_1.ships.get(0).position == frame_2.ships.get(0).position {
 		frame_2 = client.frame();
 	}
 
-	let movement = frame_2.ships[0].position - frame_1.ships[0].position;
-	let velocity = frame_1.ships[0].velocity;
+	let movement = frame_2.ships.get(0).position - frame_1.ships.get(0).position;
+	let velocity = frame_1.ships.get(0).velocity;
 
 	assert_eq!(
 		velocity.normalize().round(16),
@@ -43,7 +43,7 @@ fn the_ship_should_change_direction_according_to_input() {
 		frame = client.frame();
 	}
 
-	let velocity     = frame.ships[0].velocity;
+	let velocity     = frame.ships.get(0).velocity;
 	let new_velocity = velocity * -1.0;
 	let new_attitude = Radians::from_vec(new_velocity);
 
@@ -53,13 +53,13 @@ fn the_ship_should_change_direction_according_to_input() {
 		send    : true
 	});
 
-	while frame.ships[0].velocity == velocity {
+	while frame.ships.get(0).velocity == velocity {
 		frame = client.frame();
 	}
 
 	assert_eq!(
 		new_velocity.round(16),
-		frame.ships[0].velocity.round(16));
+		frame.ships.get(0).velocity.round(16));
 }
 
 #[test]
@@ -75,15 +75,15 @@ fn the_camera_should_follow_the_ship() {
 		frame_2 = client.frame();
 	}
 
-	while frame_1.ships[0].position == frame_2.ships[0].position {
+	while frame_1.ships.get(0).position == frame_2.ships.get(0).position {
 		frame_2 = client.frame();
 	}
 
 	assert_eq!(
-		frame_1.ships[0].position,
+		frame_1.ships.get(0).position,
 		frame_1.camera);
 	assert_eq!(
-		frame_2.ships[0].position,
+		frame_2.ships.get(0).position,
 		frame_2.camera);
 }
 

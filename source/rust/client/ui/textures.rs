@@ -61,18 +61,18 @@ impl Textures {
 
 
 impl Texture {
-	pub fn new_alpha(data: &[u8], size: Vec2) -> Texture {
+	pub fn new_alpha(data: &Vec<u8>, size: Vec2) -> Texture {
 		create_texture(data, size, gl::RED, gl::R8)
 	}
 
-	pub fn new_rgb(data: &[u8], size: Vec2) -> Texture {
+	pub fn new_rgb(data: &Vec<u8>, size: Vec2) -> Texture {
 		create_texture(data, size, gl::RGBA, gl::RGBA8)
 	}
 }
 
 
 fn create_texture(
-	data           : &[u8],
+	data           : &Vec<u8>,
 	size           : Vec2,
 	format         : gl::types::GLenum,
 	internal_format: gl::types::GLenum

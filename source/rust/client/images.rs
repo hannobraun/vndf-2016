@@ -7,7 +7,7 @@ use ui::{Texture, Textures};
 
 
 struct Image {
-	data  : ~[u8],
+	data  : Vec<u8>,
 	width : uint,
 	height: uint
 }
@@ -18,7 +18,7 @@ pub fn load(textures: &mut Textures) {
 
 	let image   = load_image(image_path);
 	let texture = Texture::new_rgb(
-		image.data,
+		&image.data,
 		Vec2(
 			image.width as f64,
 			image.height as f64));

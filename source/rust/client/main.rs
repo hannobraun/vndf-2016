@@ -17,10 +17,7 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::{
-	Body,
-	Vec2
-};
+use common::physics::Vec2;
 
 use network::Network;
 use ui::{
@@ -78,7 +75,7 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
-	let mut ships: ~[Body] = ~[];
+	let mut ships = Vec::new();
 
 	let mut should_close = false;
 	while !should_close {
