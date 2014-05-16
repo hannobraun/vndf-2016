@@ -93,7 +93,7 @@ impl Renderer {
 			textures: textures,
 			font    : font,
 
-			camera : Vec2(0.0, 0.0),
+			camera : Vec2::zero(),
 			program: 0
 		}
 	}
