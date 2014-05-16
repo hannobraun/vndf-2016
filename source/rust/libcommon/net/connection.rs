@@ -105,26 +105,26 @@ impl Connection {
 		self.send(message.as_bytes())
 	}
 
-	fn send(&self, buffer: &[u8]) -> IoResult<()> {
+	fn send(&self, data: &[u8]) -> IoResult<()> {
 		let bytes_sent = unsafe {
 			ffi::send(
 				self.fd,
-				buffer.as_ptr() as *mut libc::c_void,
-				buffer.len() as u64,
+				data.as_ptr() as *mut libc::c_void,
+				data.len() as u64,
 				ffi::MSG_NOSIGNAL)
 		};
 
 		if bytes_sent < 0 {
 			Err(IoError::last_error())
 		}
-		else if bytes_sent as uint != buffer.len() {
+		else if bytes_sent as uint != data.len() {
 			Err(IoError {
 				kind  : OtherIoError,
 				desc  : "Could not send all bytes",
 				detail: Some(format!(
 					"Only sent {:d} of {:u} bytes",
 					bytes_sent,
-					buffer.len()))
+					data.len()))
 			})
 		}
 		else {
