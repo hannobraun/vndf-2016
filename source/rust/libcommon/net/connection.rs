@@ -100,40 +100,38 @@ impl Connection {
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
 		unsafe {
-			message.to_c_str().with_ref(|c_message| {
-				ptr::copy_memory(
-					buffer.as_mut_ptr(),
-					&(message_length as MessageLength) as *MessageLength as *i8,
-					size_of_length);
+			ptr::copy_memory(
+				buffer.as_mut_ptr(),
+				&(message_length as MessageLength) as *MessageLength as *i8,
+				size_of_length);
 
-				ptr::copy_memory(
-					buffer.as_mut_ptr().offset(size_of_length as int),
-					c_message,
-					message_length - size_of_length);
+			ptr::copy_memory(
+				buffer.as_mut_ptr().offset(size_of_length as int),
+				message.as_ptr() as *i8,
+				message_length - size_of_length);
 
-				let bytesSent = ffi::send(
-					self.fd,
-					buffer.as_ptr() as *mut libc::c_void,
-					message_length as u64,
-					ffi::MSG_NOSIGNAL);
+			let bytesSent = ffi::send(
+				self.fd,
+				buffer.as_ptr() as *mut libc::c_void,
+				message_length as u64,
+				ffi::MSG_NOSIGNAL);
 
-				if bytesSent < 0 {
-					Err(IoError::last_error())
-				}
-				else if bytesSent as uint != message_length {
-					Err(IoError {
-						kind  : OtherIoError,
-						desc  : "Could not send all bytes",
-						detail: Some(format!(
-							"Only sent {:d} of {:u} bytes",
-							bytesSent,
-							message_length))
-					})
-				}
-				else {
-					Ok(())
-				}
-			})
+			if bytesSent < 0 {
+				Err(IoError::last_error())
+			}
+			else if bytesSent as uint != message_length {
+				Err(IoError {
+					kind  : OtherIoError,
+					desc  : "Could not send all bytes",
+					detail: Some(format!(
+						"Only sent {:d} of {:u} bytes",
+						bytesSent,
+						message_length))
+				})
+			}
+			else {
+				Ok(())
+			}
 		}
 	}
 
