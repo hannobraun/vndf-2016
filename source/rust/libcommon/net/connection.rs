@@ -94,8 +94,7 @@ impl Connection {
 	}
 
 	pub fn send_message(&self, message: &str) -> IoResult<()> {
-		let size_of_length = size_of::<MessageLength>();
-		let message_length = message.as_bytes().len() + size_of_length;
+		let message_length = message.as_bytes().len() + size_of::<MessageLength>();
 
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
