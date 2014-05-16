@@ -109,7 +109,7 @@ impl Connection {
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(size_of_length as int),
 					c_message,
-					(message_length - size_of_length) as uint);
+					message_length - size_of_length);
 
 				let bytesSent = ffi::send(
 					self.fd,
