@@ -7,7 +7,10 @@ use std::io::{
 	OtherIoError
 };
 use std;
-use std::mem::size_of;
+use std::mem::{
+	size_of,
+	transmute
+};
 use std::os;
 use std::ptr;
 use std::str;
@@ -91,27 +94,15 @@ impl Connection {
 	}
 
 	pub fn send_message(&self, message: &str) -> IoResult<()> {
-		let mut buffer: [u8, ..1024] = [0, ..1024];
-
 		let size_of_length = size_of::<MessageLength>();
 		let message_length = message.as_bytes().len() + size_of_length;
 
-		assert!(message_length <= buffer.len());
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
-		unsafe {
-			ptr::copy_memory(
-				buffer.as_mut_ptr(),
-				&(message_length as MessageLength) as *MessageLength as *u8,
-				size_of_length);
+		let length_as_bytes: [u8, ..2] = unsafe { transmute(message_length as MessageLength) };
+		try!(self.send(length_as_bytes, length_as_bytes.len()));
 
-			ptr::copy_memory(
-				buffer.as_mut_ptr().offset(size_of_length as int),
-				message.as_ptr(),
-				message_length - size_of_length);
-		}
-
-		self.send(buffer, message_length)
+		self.send(message.as_bytes(), message.as_bytes().len())
 	}
 
 	fn send(&self, buffer: &[u8], length: uint) -> IoResult<()> {
