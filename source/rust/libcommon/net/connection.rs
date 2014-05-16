@@ -99,7 +99,7 @@ impl Connection {
 		assert!(message_length <= buffer.len());
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
-		let bytes_sent = unsafe {
+		unsafe {
 			ptr::copy_memory(
 				buffer.as_mut_ptr(),
 				&(message_length as MessageLength) as *MessageLength as *i8,
@@ -111,33 +111,33 @@ impl Connection {
 				message_length - size_of_length);
 
 			self.send(buffer, message_length)
+		}
+	}
+
+	fn send(&self, buffer: &[i8], length: uint) -> IoResult<()> {
+		let bytes_sent = unsafe {
+			ffi::send(
+				self.fd,
+				buffer.as_ptr() as *mut libc::c_void,
+				length as u64,
+				ffi::MSG_NOSIGNAL)
 		};
 
 		if bytes_sent < 0 {
 			Err(IoError::last_error())
 		}
-		else if bytes_sent as uint != message_length {
+		else if bytes_sent as uint != length {
 			Err(IoError {
 				kind  : OtherIoError,
 				desc  : "Could not send all bytes",
 				detail: Some(format!(
 					"Only sent {:d} of {:u} bytes",
 					bytes_sent,
-					message_length))
+					length))
 			})
 		}
 		else {
 			Ok(())
-		}
-	}
-
-	fn send(&self, buffer: &[i8], length: uint) -> libc::ssize_t {
-		unsafe {
-			ffi::send(
-				self.fd,
-				buffer.as_ptr() as *mut libc::c_void,
-				length as u64,
-				ffi::MSG_NOSIGNAL)
 		}
 	}
 
