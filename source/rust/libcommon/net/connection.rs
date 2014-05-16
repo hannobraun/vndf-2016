@@ -91,7 +91,7 @@ impl Connection {
 	}
 
 	pub fn send_message(&self, message: &str) -> IoResult<()> {
-		let mut buffer: [libc::c_char, ..1024] = [0, ..1024];
+		let mut buffer: [u8, ..1024] = [0, ..1024];
 
 		let size_of_length = size_of::<MessageLength>();
 		let message_length = message.as_bytes().len() + size_of_length;
@@ -102,19 +102,19 @@ impl Connection {
 		unsafe {
 			ptr::copy_memory(
 				buffer.as_mut_ptr(),
-				&(message_length as MessageLength) as *MessageLength as *i8,
+				&(message_length as MessageLength) as *MessageLength as *u8,
 				size_of_length);
 
 			ptr::copy_memory(
 				buffer.as_mut_ptr().offset(size_of_length as int),
-				message.as_ptr() as *i8,
+				message.as_ptr(),
 				message_length - size_of_length);
 		}
 
 		self.send(buffer, message_length)
 	}
 
-	fn send(&self, buffer: &[i8], length: uint) -> IoResult<()> {
+	fn send(&self, buffer: &[u8], length: uint) -> IoResult<()> {
 		let bytes_sent = unsafe {
 			ffi::send(
 				self.fd,
