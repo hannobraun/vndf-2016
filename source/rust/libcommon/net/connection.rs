@@ -93,15 +93,14 @@ impl Connection {
 	pub fn send_message(&self, message: &str) -> IoResult<()> {
 		let mut buffer: [libc::c_char, ..1024] = [0, ..1024];
 
+		let size_of_length = size_of::<MessageLength>();
+		let message_length = message.as_bytes().len() + size_of_length;
+
+		assert!(message_length <= buffer.len());
+		assert!(message_length <= MAX_MSG_LENGTH as uint);
+
 		unsafe {
 			message.to_c_str().with_ref(|c_message| {
-				let size_of_length = size_of::<MessageLength>();
-				let message_length =
-					libc::strlen(c_message) + size_of_length as u64;
-
-				assert!(message_length <= buffer.len() as u64);
-				assert!(message_length <= MAX_MSG_LENGTH as u64);
-
 				ptr::copy_memory(
 					buffer.as_mut_ptr(),
 					&(message_length as MessageLength) as *MessageLength as *i8,
@@ -110,18 +109,18 @@ impl Connection {
 				ptr::copy_memory(
 					buffer.as_mut_ptr().offset(size_of_length as int),
 					c_message,
-					(message_length - size_of_length as u64) as uint);
+					(message_length - size_of_length) as uint);
 
 				let bytesSent = ffi::send(
 					self.fd,
 					buffer.as_ptr() as *mut libc::c_void,
-					message_length,
+					message_length as u64,
 					ffi::MSG_NOSIGNAL);
 
 				if bytesSent < 0 {
 					Err(IoError::last_error())
 				}
-				else if bytesSent as u64 != message_length {
+				else if bytesSent as uint != message_length {
 					Err(IoError {
 						kind  : OtherIoError,
 						desc  : "Could not send all bytes",
