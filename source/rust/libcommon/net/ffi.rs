@@ -1,16 +1,19 @@
 use libc::{
 	c_char,
-	c_int};
+	c_int
+};
 use libc::types::os::common::bsd44;
 
 
 pub use libc::consts::os::bsd44::{
 	SOCK_STREAM,
-	SOL_SOCKET};
+	SOL_SOCKET
+};
 pub use libc::consts::os::bsd44::SO_REUSEADDR;
 pub use libc::consts::os::posix88::{
 	EAGAIN,
-	EWOULDBLOCK};
+	EWOULDBLOCK
+};
 pub use libc::funcs::bsd43::{
 	accept,
 	bind,
@@ -19,10 +22,12 @@ pub use libc::funcs::bsd43::{
 	recv,
 	send,
 	setsockopt,
-	socket};
+	socket
+};
 pub use libc::types::os::common::bsd44::{
 	addrinfo,
-	sockaddr};
+	sockaddr
+};
 pub use std::os::close;
 
 
