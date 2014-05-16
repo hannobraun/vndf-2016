@@ -1,5 +1,7 @@
-use physics::Radians;
-use physics::Vec2;
+use physics::{
+	Radians,
+	Vec2
+};
 
 #[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Body {
