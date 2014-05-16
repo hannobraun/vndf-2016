@@ -94,14 +94,16 @@ impl Connection {
 	}
 
 	pub fn send_message(&self, message: &str) -> IoResult<()> {
-		let message_length = message.as_bytes().len() + size_of::<MessageLength>();
+		let data = message.as_bytes();
+
+		let message_length = data.len() + size_of::<MessageLength>();
 
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
 		let length_as_bytes: [u8, ..2] = unsafe { transmute(message_length as MessageLength) };
 		try!(self.send(length_as_bytes));
 
-		self.send(message.as_bytes())
+		self.send(data)
 	}
 
 	fn send(&self, data: &[u8]) -> IoResult<()> {
