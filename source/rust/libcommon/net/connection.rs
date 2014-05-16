@@ -97,7 +97,6 @@ impl Connection {
 		let data = message.as_bytes();
 
 		let message_length = data.len() + size_of::<MessageLength>();
-
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
 		let length_as_bytes: [u8, ..2] = unsafe { transmute(message_length as MessageLength) };
