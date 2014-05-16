@@ -110,11 +110,7 @@ impl Connection {
 				message.as_ptr() as *i8,
 				message_length - size_of_length);
 
-			ffi::send(
-				self.fd,
-				buffer.as_ptr() as *mut libc::c_void,
-				message_length as u64,
-				ffi::MSG_NOSIGNAL)
+			self.send(buffer, message_length)
 		};
 
 		if bytes_sent < 0 {
@@ -132,6 +128,16 @@ impl Connection {
 		}
 		else {
 			Ok(())
+		}
+	}
+
+	fn send(&self, buffer: &[i8], length: uint) -> libc::ssize_t {
+		unsafe {
+			ffi::send(
+				self.fd,
+				buffer.as_ptr() as *mut libc::c_void,
+				length as u64,
+				ffi::MSG_NOSIGNAL)
 		}
 	}
 
