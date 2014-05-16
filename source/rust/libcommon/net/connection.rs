@@ -109,9 +109,9 @@ impl Connection {
 				buffer.as_mut_ptr().offset(size_of_length as int),
 				message.as_ptr() as *i8,
 				message_length - size_of_length);
-
-			self.send(buffer, message_length)
 		}
+
+		self.send(buffer, message_length)
 	}
 
 	fn send(&self, buffer: &[i8], length: uint) -> IoResult<()> {
