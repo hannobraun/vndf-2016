@@ -100,31 +100,31 @@ impl Connection {
 		assert!(message_length <= MAX_MSG_LENGTH as uint);
 
 		let length_as_bytes: [u8, ..2] = unsafe { transmute(message_length as MessageLength) };
-		try!(self.send(length_as_bytes, length_as_bytes.len()));
+		try!(self.send(length_as_bytes));
 
-		self.send(message.as_bytes(), message.as_bytes().len())
+		self.send(message.as_bytes())
 	}
 
-	fn send(&self, buffer: &[u8], length: uint) -> IoResult<()> {
+	fn send(&self, buffer: &[u8]) -> IoResult<()> {
 		let bytes_sent = unsafe {
 			ffi::send(
 				self.fd,
 				buffer.as_ptr() as *mut libc::c_void,
-				length as u64,
+				buffer.len() as u64,
 				ffi::MSG_NOSIGNAL)
 		};
 
 		if bytes_sent < 0 {
 			Err(IoError::last_error())
 		}
-		else if bytes_sent as uint != length {
+		else if bytes_sent as uint != buffer.len() {
 			Err(IoError {
 				kind  : OtherIoError,
 				desc  : "Could not send all bytes",
 				detail: Some(format!(
 					"Only sent {:d} of {:u} bytes",
 					bytes_sent,
-					length))
+					buffer.len()))
 			})
 		}
 		else {
