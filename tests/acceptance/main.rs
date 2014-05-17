@@ -8,4 +8,3 @@ mod suite {
 }
 
 mod control;
-mod util;
