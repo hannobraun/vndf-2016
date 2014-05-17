@@ -10,8 +10,4 @@ export RUST_TEST_TASKS=1
 ./scripts/tools/test-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
-	tests/unit/main.rs &&
-./scripts/tools/test-rust \
-	$RUSTC \
-	"-L $OUTPUT_LIB_RUST" \
-	tests/acceptance/main.rs
+	tests/main.rs
