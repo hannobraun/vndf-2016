@@ -1,6 +1,7 @@
 extern crate collections;
 extern crate getopts;
 extern crate libc;
+extern crate time;
 
 extern crate freetype;
 extern crate gl;
@@ -79,11 +80,27 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
-	let mut ships = HashMap::new();
+	let mut previous_time = time::precise_time_ns();
+	let mut current_time  = time::precise_time_ns();
+
+	let mut previous_ships = HashMap::new();
+	let mut current_ships  = HashMap::new();
+
+	let mut self_id = None;
 
 	let mut should_close = false;
 	while !should_close {
-		receive_updates(&mut network, &mut ships, &mut camera);
+		let latest_self_id = receive_updates(
+			&mut network,
+			&mut previous_ships,
+			&mut current_ships,
+			&mut previous_time,
+			&mut current_time);
+
+		match latest_self_id {
+			Some(id) => self_id = Some(id),
+			None     => ()
+		}
 
 		let input = input_handler.input();
 		should_close = input.exit;
@@ -92,24 +109,72 @@ fn main() {
 			network.send(input.attitude);
 		}
 
+		let i = {
+			let diff = (current_time - previous_time) as f64;
+			if diff <= 0.0 {
+				0.0
+			}
+			else {
+				(time::precise_time_ns() - current_time) as f64 / diff
+			}
+		};
+
+		let mut ships = Vec::new();
+		for (&ship_id, &current) in current_ships.iter() {
+			match previous_ships.find(&ship_id) {
+				Some(&previous) => {
+					let mut body = current.clone();
+					body.position = previous.position + (current.position - previous.position) * i;
+					ships.push(body);
+
+					match self_id {
+						Some(id) => if id == ship_id {
+							camera = body.position;
+						},
+
+						None => ()
+					}
+				},
+
+				None => ()
+			}
+		}
+
 		let frame = Frame {
 			input : input,
 			camera: camera,
-			ships : ships.values().map(|&v| v).collect()
+			ships : ships
 		};
 
 		renderer.render(&frame);
 	}
 }
 
-fn receive_updates(network: &mut Network, ships: &mut HashMap<uint, Body>, camera: &mut Vec2) {
+fn receive_updates(
+	network       : &mut Network,
+	previous_ships: &mut HashMap<uint, Body>,
+	current_ships : &mut HashMap<uint, Body>,
+	previous_time : &mut u64,
+	current_time  : &mut u64) -> Option<uint> {
+
+	let mut self_id = None;
+
 	network.receive(|perception| {
-		ships.clear();
+		self_id = Some(perception.self_id);
+
+		*previous_time = *current_time;
+		*current_time  = time::precise_time_ns();
+
+		previous_ships.clear();
+		for (&id, &ship) in current_ships.iter() {
+			previous_ships.insert(id, ship);
+		}
+
+		current_ships.clear();
 		for ship in perception.ships.iter() {
-			if ship.id == perception.self_id {
-				*camera = ship.body.position;
-			}
-			ships.insert(ship.id, ship.body);
+			current_ships.insert(ship.id, ship.body);
 		}
 	});
+
+	self_id
 }

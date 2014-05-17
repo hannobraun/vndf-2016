@@ -8,6 +8,10 @@ mod unit {
 	}
 }
 
+mod component {
+	mod client;
+}
+
 mod acceptance {
 	mod basic;
 }
