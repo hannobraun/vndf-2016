@@ -18,7 +18,10 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::Vec2;
+use common::physics::{
+	Body,
+	Vec2
+};
 
 use network::Network;
 use ui::{
@@ -80,15 +83,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		network.receive(|perception| {
-			ships.clear();
-			for ship in perception.ships.iter() {
-				if ship.id == perception.self_id {
-					camera = ship.body.position;
-				}
-				ships.insert(ship.id, ship.body);
-			}
-		});
+		receive_updates(&mut network, &mut ships, &mut camera);
 
 		let input = input_handler.input();
 		should_close = input.exit;
@@ -105,4 +100,16 @@ fn main() {
 
 		renderer.render(&frame);
 	}
+}
+
+fn receive_updates(network: &mut Network, ships: &mut HashMap<uint, Body>, camera: &mut Vec2) {
+	network.receive(|perception| {
+		ships.clear();
+		for ship in perception.ships.iter() {
+			if ship.id == perception.self_id {
+				*camera = ship.body.position;
+			}
+			ships.insert(ship.id, ship.body);
+		}
+	});
 }
