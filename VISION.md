@@ -28,4 +28,4 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Step
 
-Implement interpolation to make movement look smooth.
+Players can press a key to spawn a missile that flies in a random direction.
