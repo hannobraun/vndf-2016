@@ -14,4 +14,4 @@ RUST_TEST=/tmp/rust-test-$RANDOM
 
 mkdir -p $(dirname $RUST_TEST)
 
-$RUSTC $LIB_ARGS --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST
+$RUSTC $LIB_ARGS --color=always --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST
