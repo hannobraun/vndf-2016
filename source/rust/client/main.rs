@@ -10,6 +10,7 @@ extern crate stb_image;
 extern crate common;
 
 
+use collections::HashMap;
 use std::rc::Rc;
 
 use common::io::{
@@ -75,18 +76,18 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
-	let mut ships = Vec::new();
+	let mut ships = HashMap::new();
 
 	let mut should_close = false;
 	while !should_close {
 		network.receive(|perception| {
-			ships = perception.ships.iter().map(|ship| {
+			ships.clear();
+			for ship in perception.ships.iter() {
 				if ship.id == perception.self_id {
 					camera = ship.body.position;
 				}
-
-				ship.body
-			}).collect();
+				ships.insert(ship.id, ship.body);
+			}
 		});
 
 		let input = input_handler.input();
@@ -99,7 +100,7 @@ fn main() {
 		let frame = Frame {
 			input : input,
 			camera: camera,
-			ships : ships.clone()
+			ships : ships.values().map(|&v| v).collect()
 		};
 
 		renderer.render(&frame);
