@@ -1,7 +1,7 @@
 use common::io::Input;
 use common::physics::Radians;
 
-use control::{
+use common::testing::{
 	Client,
 	GameService
 };
