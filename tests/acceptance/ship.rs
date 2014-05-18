@@ -8,7 +8,7 @@ use common::testing::{
 
 
 #[test]
-fn the_ship_should_follow_its_velocity_vector() {
+fn it_should_follow_its_velocity_vector() {
 	let     game_service = GameService::start();
 	let mut client       = Client::start(game_service.port);
 
@@ -33,7 +33,7 @@ fn the_ship_should_follow_its_velocity_vector() {
 }
 
 #[test]
-fn the_ship_should_change_direction_according_to_input() {
+fn it_should_change_direction_according_to_input() {
 	let     game_service = GameService::start();
 	let mut client       = Client::start(game_service.port);
 
