@@ -4,6 +4,7 @@ source project.conf
 
 CONTAINER_DIR=output/docker/vndf
 
+./scripts/init &&
 rm -rf output &&
 ./scripts/tasks/build-common &&
 ./scripts/tasks/build-game-service &&
