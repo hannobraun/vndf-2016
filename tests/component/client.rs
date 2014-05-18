@@ -55,12 +55,10 @@ fn it_should_interpolate_between_perceptions() {
 	}
 
 	assert!(util::is_on_line(
-		pos_1,
-		pos_2,
+		(pos_1, pos_2),
 		frame_1.ships.get(0).position));
 	assert!(util::is_on_line(
-		pos_1,
-		pos_2,
+		(pos_1, pos_2),
 		frame_2.ships.get(0).position));
 	assert!(frame_2.ships.get(0).position != pos_2);
 }
