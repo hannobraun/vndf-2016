@@ -13,6 +13,7 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 * FTL, for using constant pressure to drive stories, which unfold guided by the
   player's decisions.
 
+
 ### Core Goals
 
 * Mechanics that make player skill the prime condition for success.
