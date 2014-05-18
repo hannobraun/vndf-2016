@@ -1,5 +1,6 @@
 use common::io::Input;
 use common::physics::Radians;
+use common::physics::util;
 
 use common::testing::{
 	Client,
@@ -24,12 +25,14 @@ fn it_should_follow_its_velocity_vector() {
 		frame_2 = client.frame();
 	}
 
-	let movement = frame_2.ships.get(0).position - frame_1.ships.get(0).position;
+	let pos_1    = frame_1.ships.get(0).position;
+	let pos_2    = frame_2.ships.get(0).position;
 	let velocity = frame_1.ships.get(0).velocity;
 
-	assert_eq!(
-		velocity.normalize().round(16),
-		movement.normalize().round(16));
+	assert!(util::is_on_line(
+		(pos_1, pos_1 + velocity),
+		pos_2,
+		8));
 }
 
 #[test]
