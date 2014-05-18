@@ -28,7 +28,7 @@ impl io::InputHandler for InputHandler {
 	fn input(&mut self) -> Input {
 		self.window.poll_events();
 
-		let angular_velocity = 0.1;
+		let angular_velocity = 0.01;
 		let mut attitude_change = 0.0;
 
 		if self.window.key_pressed(glfw::KeyLeft) {
