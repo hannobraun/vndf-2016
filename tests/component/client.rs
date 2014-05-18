@@ -7,6 +7,7 @@ use common::physics::{
 	Radians,
 	Vec2
 };
+use common::physics::util;
 use common::protocol::{
 	Perception,
 	Ship
@@ -53,17 +54,13 @@ fn it_should_interpolate_between_perceptions() {
 		frame_2 = client.frame();
 	}
 
-	assert!(is_on_line(
+	assert!(util::is_on_line(
 		pos_1,
 		pos_2,
 		frame_1.ships.get(0).position));
-	assert!(is_on_line(
+	assert!(util::is_on_line(
 		pos_1,
 		pos_2,
 		frame_2.ships.get(0).position));
 	assert!(frame_2.ships.get(0).position != pos_2);
-}
-
-fn is_on_line(Vec2(x1, y1): Vec2, Vec2(x2, y2): Vec2, Vec2(px, py): Vec2) -> bool {
-	((x2 - x1) * (py - y1) - (y2 - y1) * (px - x1)) == 0.0
 }
