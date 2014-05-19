@@ -31,7 +31,7 @@ fn main() {
 		}
 	};
 
-	let mut network = Network::new(args.port);
+	let mut network = Network::new(args.port.as_slice());
 	let mut game    = Game::new(network.events.clone());
 	let mut clients = Clients::new();
 

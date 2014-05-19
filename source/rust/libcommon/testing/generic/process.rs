@@ -11,7 +11,7 @@ pub struct Process {
 
 impl Process {
 	pub fn start(path: &str, args: &[~str]) -> Process {
-		let mut process = match io::Process::new(path, args) {
+		let mut process = match io::Command::new(path).args(args).spawn() {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to start process {}: {}", path, error)
 		};

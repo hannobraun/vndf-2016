@@ -8,24 +8,24 @@ use std::os;
 
 
 pub struct Args {
-	pub address : ~str,
-	pub port    : ~str,
+	pub address : StrBuf,
+	pub port    : StrBuf,
 	pub headless: bool
 }
 
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		address : "localhost".to_owned(),
-		port    : "34481".to_owned(),
+		address : "localhost".to_strbuf(),
+		port    : "34481".to_strbuf(),
 		headless: false
 	};
 
-	let args_as_strs = os::args();
+	let args_as_strs: Vec<StrBuf> = os::args().iter().map(|s| s.to_strbuf()).collect();
 
 	let options = [
-		optopt("a", "address", "address of the server", args.address),
-		optopt("p", "port"   , "port to connect to"   , args.port),
+		optopt("a", "address", "address of the server", args.address.as_slice()),
+		optopt("p", "port"   , "port to connect to"   , args.port.as_slice()),
 
 		optflag("h", "headless", "start in headless mode")
 	];
