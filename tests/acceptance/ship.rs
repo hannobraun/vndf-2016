@@ -32,7 +32,7 @@ fn it_should_follow_its_velocity_vector() {
 	assert!(util::is_on_line(
 		(pos_1, pos_1 + velocity),
 		pos_2,
-		8));
+		4));
 }
 
 #[test]
