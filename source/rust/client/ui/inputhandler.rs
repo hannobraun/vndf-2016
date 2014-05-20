@@ -46,10 +46,11 @@ impl io::InputHandler for InputHandler {
 			self.attitude = self.attitude + Radians(f64::consts::PI * 2.0)
 		}
 
-		Input {
-			exit    : self.window.should_close(),
-			attitude: self.attitude,
-			missile : false
-		}
+		let mut input = Input::default();
+
+		input.exit     = self.window.should_close();
+		input.attitude = self.attitude;
+
+		input
 	}
 }
