@@ -11,9 +11,10 @@ use physics::{
 
 #[deriving(Decodable, Encodable)]
 pub struct Frame {
-	pub input : Input,
-	pub camera: Vec2,
-	pub ships : Vec<Body>
+	pub input   : Input,
+	pub camera  : Vec2,
+	pub ships   : Vec<Body>,
+	pub missiles: Vec<Body>
 }
 
 impl Frame {

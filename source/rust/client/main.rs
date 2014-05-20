@@ -153,9 +153,10 @@ fn main() {
 		}
 
 		let frame = Frame {
-			input : input,
-			camera: camera,
-			ships : ships
+			input   : input,
+			camera  : camera,
+			ships   : ships,
+			missiles: Vec::new()
 		};
 
 		renderer.render(&frame);
