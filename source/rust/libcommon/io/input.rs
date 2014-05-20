@@ -13,6 +13,14 @@ pub struct Input {
 }
 
 impl Input {
+	pub fn default() -> Input {
+		Input {
+			exit    : false,
+			attitude: Radians(0.0),
+			missile : false
+		}
+	}
+
 	pub fn from_json(s: &str) -> Result<Input, ~str> {
 		from_json(s)
 	}

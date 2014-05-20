@@ -7,7 +7,6 @@ use std::comm::{
 
 use common::io;
 use common::io::Input;
-use common::physics::Radians;
 
 use error::exit;
 
@@ -33,13 +32,8 @@ impl InputHandler {
 		});
 
 		InputHandler {
-			input: receiver,
-
-			last_input: Input {
-				exit    : false,
-				attitude: Radians(0.0),
-				missile : false
-			}
+			input     : receiver,
+			last_input: Input::default()
 		}
 	}
 }

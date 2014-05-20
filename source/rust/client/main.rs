@@ -22,7 +22,6 @@ use common::io::{
 };
 use common::physics::{
 	Body,
-	Radians,
 	Vec2
 };
 
@@ -93,11 +92,7 @@ fn main() {
 	let mut self_id = None;
 
 	let mut next_input_send = 0;
-	let mut input_to_send = Input {
-		exit    : false,
-		attitude: Radians(0.0),
-		missile : false
-	};
+	let mut input_to_send   = Input::default();
 
 	let mut should_close = false;
 	while !should_close {
