@@ -48,8 +48,7 @@ impl io::InputHandler for InputHandler {
 
 		Input {
 			exit    : self.window.should_close(),
-			attitude: self.attitude,
-			send    : self.window.key_pressed(glfw::KeyEnter)
+			attitude: self.attitude
 		}
 	}
 }

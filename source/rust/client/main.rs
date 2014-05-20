@@ -95,8 +95,7 @@ fn main() {
 	let mut next_input_send = 0;
 	let mut input_to_send = Input {
 		exit    : false,
-		attitude: Radians(0.0),
-		send    : false
+		attitude: Radians(0.0)
 	};
 
 	let mut should_close = false;

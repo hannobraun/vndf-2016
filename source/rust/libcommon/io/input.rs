@@ -8,8 +8,7 @@ use physics::Radians;
 #[deriving(Decodable, Encodable)]
 pub struct Input {
 	pub exit    : bool,
-	pub attitude: Radians,
-	pub send    : bool
+	pub attitude: Radians
 }
 
 impl Input {

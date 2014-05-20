@@ -37,8 +37,7 @@ impl InputHandler {
 
 			last_input: Input {
 				exit    : false,
-				attitude: Radians(0.0),
-				send    : false
+				attitude: Radians(0.0)
 			}
 		}
 	}
