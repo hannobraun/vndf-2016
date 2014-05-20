@@ -16,11 +16,13 @@ use std::rc::Rc;
 
 use common::io::{
 	Frame,
+	Input,
 	InputHandler,
 	Renderer
 };
 use common::physics::{
 	Body,
+	Radians,
 	Vec2
 };
 
@@ -90,6 +92,13 @@ fn main() {
 
 	let mut self_id = None;
 
+	let mut next_input_send = 0;
+	let mut input_to_send = Input {
+		exit    : false,
+		attitude: Radians(0.0),
+		send    : false
+	};
+
 	let mut should_close = false;
 	while !should_close {
 		let latest_self_id = receive_updates(
@@ -107,8 +116,10 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		if input.send {
+		input_to_send.attitude = input.attitude;
+		if time::precise_time_ns() >= next_input_send {
 			network.send(input.attitude);
+			next_input_send = time::precise_time_ns() + 1 * 1000 * 1000 * 1000;
 		}
 
 		let i = {
