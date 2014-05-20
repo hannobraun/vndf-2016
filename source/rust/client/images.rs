@@ -14,16 +14,21 @@ struct Image {
 
 
 pub fn load(textures: &mut Textures) {
-	let image_path = "images/spaceship.png".to_owned();
+	let paths = vec!(
+		"images/spaceship.png");
 
-	let image   = load_image(image_path);
-	let texture = Texture::new_rgb(
-		&image.data,
-		Vec2(
-			image.width as f64,
-			image.height as f64));
+	for &path in paths.iter() {
+		let image   = load_image(path);
+		let texture = Texture::new_rgb(
+			&image.data,
+			Vec2(
+				image.width as f64,
+				image.height as f64));
 
-	textures.add(image_path, texture);
+		textures.add(
+			path.to_owned(),
+			texture)
+	}
 }
 
 fn load_image(image_path: &str) -> Image {
