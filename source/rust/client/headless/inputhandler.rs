@@ -13,7 +13,8 @@ use error::exit;
 
 
 pub struct InputHandler {
-	input: Receiver<~str>
+	input     : Receiver<~str>,
+	last_input: Input
 }
 
 impl InputHandler {
@@ -32,7 +33,13 @@ impl InputHandler {
 		});
 
 		InputHandler {
-			input: receiver
+			input: receiver,
+
+			last_input: Input {
+				exit    : false,
+				attitude: Radians(0.0),
+				send    : false
+			}
 		}
 	}
 }
@@ -43,11 +50,7 @@ impl io::InputHandler for InputHandler {
 			Ok(message) => message,
 			Err(error)  => match error {
 				Empty =>
-					return Input {
-						exit    : false,
-						attitude: Radians(0.0),
-						send    : false
-					},
+					return self.last_input,
 
 				Disconnected =>
 					exit(format!("Error receiving input: {}", error))
@@ -58,6 +61,8 @@ impl io::InputHandler for InputHandler {
 			Ok(input)  => input,
 			Err(error) => exit(format!("Error decoding input: {}", error))
 		};
+
+		self.last_input = input;
 
 		input
 	}
