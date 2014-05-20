@@ -43,11 +43,13 @@ impl io::Renderer for Renderer {
 		self.draw_grid();
 
 		for &body in frame.ships.iter() {
-			self.draw_ship(body);
+			let &texture = self.textures.get("images/spaceship.png");
+			self.draw_ship(body, texture);
 		}
 
 		for &body in frame.missiles.iter() {
-			self.draw_ship(body);
+			let &texture = self.textures.get("images/spaceship.png");
+			self.draw_ship(body, texture);
 		}
 
 		self.draw_ui_overlay(frame.input.attitude);
@@ -180,9 +182,7 @@ impl Renderer {
 		gl::UseProgram(0);
 	}
 
-	fn draw_ship(&mut self, body: Body) {
-		let texture = self.textures.get("images/spaceship.png");
-
+	fn draw_ship(&mut self, body: Body, texture: Texture) {
 		let Vec2(cam_x, cam_y) = self.camera;
 
 		self.program = self.shaders.program("ship-image");
@@ -196,7 +196,7 @@ impl Renderer {
 		gl::Uniform2f(camera_pos, cam_x as f32, cam_y as f32);
 
 		let draw_position = body.position - texture.size * 0.5;
-		self.draw_texture(draw_position, texture);
+		self.draw_texture(draw_position, &texture);
 
 		self.program = self.shaders.program("ship-text");
 
