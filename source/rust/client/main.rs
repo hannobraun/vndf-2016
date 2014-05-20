@@ -152,7 +152,7 @@ fn main() {
 			input   : input,
 			camera  : camera,
 			ships   : ships,
-			missiles: Vec::new()
+			missiles: vec!(Body::default())
 		};
 
 		renderer.render(&frame);
