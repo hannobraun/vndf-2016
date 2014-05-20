@@ -34,13 +34,13 @@ impl Vec2 {
 		Vec2(0.0, 0.0)
 	}
 
-	pub fn magnitude(&self) -> f64 {
+	pub fn mag(&self) -> f64 {
 		let &Vec2(x, y) = self;
 		(x*x + y*y).sqrt()
 	}
 
 	pub fn normalize(&self) -> Vec2 {
-		self * (1.0 / self.magnitude())
+		self * (1.0 / self.mag())
 	}
 
 	pub fn round(&self, precision_in_bits: u8) -> Vec2 {

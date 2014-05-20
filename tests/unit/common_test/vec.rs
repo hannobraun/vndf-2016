@@ -26,7 +26,7 @@ fn it_should_scale_a_vector() {
 fn it_should_compute_a_vectors_magnitude() {
 	assert_eq!(
 		5.0,
-		Vec2(3.0, 4.0).magnitude());
+		Vec2(3.0, 4.0).mag());
 }
 
 #[test]
