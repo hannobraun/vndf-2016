@@ -15,6 +15,7 @@ struct Image {
 
 pub fn load(textures: &mut Textures) {
 	let paths = vec!(
+		"images/missile.png",
 		"images/spaceship.png");
 
 	for &path in paths.iter() {
