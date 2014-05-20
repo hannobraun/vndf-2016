@@ -48,7 +48,8 @@ impl io::InputHandler for InputHandler {
 
 		Input {
 			exit    : self.window.should_close(),
-			attitude: self.attitude
+			attitude: self.attitude,
+			missile : false
 		}
 	}
 }

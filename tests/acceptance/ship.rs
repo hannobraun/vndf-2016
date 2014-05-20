@@ -24,7 +24,8 @@ fn it_should_change_direction_according_to_input() {
 
 	client.input(Input {
 		exit    : false,
-		attitude: new_attitude
+		attitude: new_attitude,
+		missile : false
 	});
 
 	while frame.ships.get(0).velocity == velocity {
