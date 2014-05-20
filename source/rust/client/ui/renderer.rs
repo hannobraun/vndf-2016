@@ -48,7 +48,7 @@ impl io::Renderer for Renderer {
 		}
 
 		for &body in frame.missiles.iter() {
-			let &texture = self.textures.get("images/spaceship.png");
+			let &texture = self.textures.get("images/missile.png");
 			self.draw_ship(body, texture);
 		}
 
