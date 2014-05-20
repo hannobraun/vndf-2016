@@ -9,3 +9,13 @@ pub struct Body {
 	pub velocity: Vec2,
 	pub attitude: Radians
 }
+
+impl Body {
+	pub fn default() -> Body {
+		Body {
+			position: Vec2::zero(),
+			velocity: Vec2::zero(),
+			attitude: Radians(0.0)
+		}
+	}
+}
