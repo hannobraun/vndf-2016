@@ -22,11 +22,9 @@ fn it_should_change_direction_according_to_input() {
 	let new_velocity = velocity * -1.0;
 	let new_attitude = Radians::from_vec(new_velocity);
 
-	client.input(Input {
-		exit    : false,
-		attitude: new_attitude,
-		missile : false
-	});
+	let mut input  = Input::default();
+	input.attitude = new_attitude;
+	client.input(input);
 
 	while frame.ships.get(0).velocity == velocity {
 		frame = client.frame();
