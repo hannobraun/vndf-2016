@@ -46,6 +46,10 @@ impl io::Renderer for Renderer {
 			self.draw_ship(body);
 		}
 
+		for &body in frame.missiles.iter() {
+			self.draw_ship(body);
+		}
+
 		self.draw_ui_overlay(frame.input.attitude);
 
 		self.window.swap_buffers();
