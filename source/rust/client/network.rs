@@ -25,6 +25,14 @@ impl Network {
 		}
 	}
 
+	pub fn send(&mut self, attitude: Radians) {
+		let action = Action { attitude: attitude };
+		match self.conn.send_message(action.to_str()) {
+			Ok(())     => (),
+			Err(error) => exit(format!("Error sending message: {}", error))
+		}
+	}
+
 	pub fn receive(&mut self, handler: |Perception|) {
 		let result = self.conn.receive_messages(|message| {
 			let perception = match Perception::from_str(message) {
@@ -40,14 +48,6 @@ impl Network {
 		match result {
 			Ok(())     => (),
 			Err(error) => exit(format!("Failed to receive message: {}", error))
-		}
-	}
-
-	pub fn send(&mut self, attitude: Radians) {
-		let action = Action { attitude: attitude };
-		match self.conn.send_message(action.to_str()) {
-			Ok(())     => (),
-			Err(error) => exit(format!("Error sending message: {}", error))
 		}
 	}
 }
