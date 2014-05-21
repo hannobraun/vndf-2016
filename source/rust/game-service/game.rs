@@ -150,6 +150,7 @@ impl Game {
 				if action.missile > client.missile {
 					let mut body = Body::default();
 					body.position = client.ship.position;
+					body.attitude = client.ship.attitude;
 
 					self.missiles.insert(
 						(fd * 1000) as uint + action.missile as uint,
