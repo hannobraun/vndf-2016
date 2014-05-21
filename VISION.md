@@ -29,4 +29,4 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Step
 
-Players can press a key to spawn a missile that flies in a random direction.
+Implement camera zoom.
