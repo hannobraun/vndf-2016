@@ -110,7 +110,7 @@ impl Network {
 							fail!("Error decoding message: {}", error)
 					};
 
-					game.send(Action(fd, action.attitude));
+					game.send(Action(fd, action));
 				});
 
 				match result {

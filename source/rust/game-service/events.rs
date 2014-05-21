@@ -1,7 +1,7 @@
 use libc::c_int;
 
 use common::net::Connection;
-use common::physics::Radians;
+use common::protocol::Action;
 
 
 #[deriving(Eq, Show)]
@@ -10,7 +10,7 @@ pub enum GameEvent {
 	Update(f64),
 	Enter(Connection),
 	Leave(uint),
-	Action(c_int, Radians)
+	Action(c_int, Action)
 }
 
 #[deriving(Eq, Show)]

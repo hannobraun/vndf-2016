@@ -70,8 +70,8 @@ impl Game {
 							self.on_leave(clientId, clients),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
-						Action(client_id, attitude) =>
-							self.on_action(client_id, attitude, clients)
+						Action(client_id, action) =>
+							self.on_action(client_id, action.attitude, clients)
 					}
 				},
 
