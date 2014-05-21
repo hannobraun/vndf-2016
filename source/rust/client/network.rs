@@ -28,7 +28,7 @@ impl Network {
 	pub fn send(&mut self, input: Input) {
 		let action = Action {
 			attitude: input.attitude,
-			missile : 0
+			missile : input.missile
 		};
 		match self.conn.send_message(action.to_str()) {
 			Ok(())     => (),
