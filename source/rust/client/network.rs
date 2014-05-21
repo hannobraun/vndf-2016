@@ -1,9 +1,9 @@
+use common::io::Input;
 use common::net::Connection;
 use common::protocol::{
 	Action,
 	Perception
 };
-use common::physics::Radians;
 
 use error::exit;
 
@@ -25,9 +25,9 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, attitude: Radians) {
+	pub fn send(&mut self, input: Input) {
 		let action = Action {
-			attitude: attitude,
+			attitude: input.attitude,
 			missile : 0
 		};
 		match self.conn.send_message(action.to_str()) {

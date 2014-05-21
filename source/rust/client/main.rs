@@ -116,7 +116,7 @@ fn main() {
 
 		input_to_send.attitude = input.attitude;
 		if time::precise_time_ns() >= next_input_send {
-			network.send(input.attitude);
+			network.send(input);
 			next_input_send = time::precise_time_ns() + 1 * 1000 * 1000 * 1000;
 		}
 
