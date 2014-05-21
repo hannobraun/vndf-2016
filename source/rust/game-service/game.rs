@@ -1,3 +1,4 @@
+use collections::HashMap;
 use libc::c_int;
 use std::comm::{
 	Disconnected,
@@ -31,7 +32,9 @@ pub struct Game {
 	pub events: Sender<GameEvent>,
 
 	incoming: Receiver<GameEvent>,
-	network : Sender<NetworkEvent>
+	network : Sender<NetworkEvent>,
+
+	missiles: HashMap<uint, Body>
 }
 
 
@@ -39,11 +42,16 @@ impl Game {
 	pub fn new(network: Sender<NetworkEvent>) -> Game {
 		let (sender, receiver) = channel();
 
+		let mut missiles = HashMap::new();
+		missiles.insert(999u, Body::default());
+
 		Game {
 			events  : sender,
 
 			incoming: receiver,
 			network : network,
+
+			missiles: missiles
 		}
 	}
 
@@ -107,14 +115,19 @@ impl Game {
 			});
 		});
 
+		let missiles: Vec<_> = self.missiles
+			.iter()
+			.map(|(&id, &body)|
+				Ship {
+					id  : id,
+					body: body})
+			.collect();
+
 		clients.each(|client_id, client| {
 			let update = Perception {
 				self_id : client_id,
 				ships   : ships.clone(),
-				missiles: vec!(Ship {
-					id  : 999,
-					body: Body::default()
-				})
+				missiles: missiles.clone()
 			};
 			let message = update.to_str();
 
