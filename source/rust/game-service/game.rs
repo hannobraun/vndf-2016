@@ -8,6 +8,7 @@ use std::comm::{
 use common::physics::{Body, Radians, Vec2};
 use common::net::Connection;
 use common::protocol::{
+	Action,
 	Perception,
 	Ship
 };
@@ -71,7 +72,7 @@ impl Game {
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						Action(client_id, action) =>
-							self.on_action(client_id, action.attitude, clients)
+							self.on_action(client_id, action, clients)
 					}
 				},
 
@@ -138,9 +139,9 @@ impl Game {
 		});
 	}
 
-	fn on_action(&self, fd: c_int, attitude: Radians, clients: &mut Clients) {
+	fn on_action(&self, fd: c_int, action: Action, clients: &mut Clients) {
 		match clients.client_by_fd(fd) {
-			Some((_, client)) => client.ship.attitude = attitude,
+			Some((_, client)) => client.ship.attitude = action.attitude,
 			None              => ()
 		}
 	}
