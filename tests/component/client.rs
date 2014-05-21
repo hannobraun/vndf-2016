@@ -33,7 +33,8 @@ fn it_should_interpolate_between_perceptions() {
 				velocity: Vec2(10.0, 0.0),
 				attitude: Radians(0.0)
 			}
-		})
+		}),
+		missiles: vec!()
 	};
 	let mut perception_2 = perception_1.clone();
 	perception_2.ships.get_mut(0).body.position = pos_2;

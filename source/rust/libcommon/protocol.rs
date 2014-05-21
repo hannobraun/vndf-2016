@@ -10,8 +10,9 @@ use physics::{
 
 #[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Perception {
-	pub self_id: uint,
-	pub ships  : Vec<Ship>
+	pub self_id : uint,
+	pub ships   : Vec<Ship>,
+	pub missiles: Vec<Ship>
 }
 
 impl Perception {

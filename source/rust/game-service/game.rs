@@ -109,8 +109,9 @@ impl Game {
 
 		clients.each(|client_id, client| {
 			let update = Perception {
-				self_id: client_id,
-				ships  : ships.clone()
+				self_id : client_id,
+				ships   : ships.clone(),
+				missiles: Vec::new()
 			};
 			let message = update.to_str();
 
