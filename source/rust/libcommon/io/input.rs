@@ -9,7 +9,7 @@ use physics::Radians;
 pub struct Input {
 	pub exit    : bool,
 	pub attitude: Radians,
-	pub missile : bool
+	pub missile : u64
 }
 
 impl Input {
@@ -17,7 +17,7 @@ impl Input {
 		Input {
 			exit    : false,
 			attitude: Radians(0.0),
-			missile : false
+			missile : 0
 		}
 	}
 
