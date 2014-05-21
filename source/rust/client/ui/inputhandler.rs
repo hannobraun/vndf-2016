@@ -12,14 +12,16 @@ use ui::Window;
 
 pub struct InputHandler {
 	window   : Rc<Window>,
-	attitude : Radians
+	attitude : Radians,
+	missile  : u64
 }
 
 impl InputHandler {
 	pub fn new(window: Rc<Window>) -> InputHandler {
 		InputHandler {
 			window  : window,
-			attitude: Radians(0.0)
+			attitude: Radians(0.0),
+			missile : 0
 		}
 	}
 }
@@ -46,10 +48,15 @@ impl io::InputHandler for InputHandler {
 			self.attitude = self.attitude + Radians(f64::consts::PI * 2.0)
 		}
 
+		if self.window.key_pressed(glfw::KeyEnter) {
+			self.missile += 1;
+		}
+
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
 		input.attitude = self.attitude;
+		input.missile  = self.missile;
 
 		input
 	}
