@@ -26,7 +26,10 @@ impl Network {
 	}
 
 	pub fn send(&mut self, attitude: Radians) {
-		let action = Action { attitude: attitude };
+		let action = Action {
+			attitude: attitude,
+			missile : 0
+		};
 		match self.conn.send_message(action.to_str()) {
 			Ok(())     => (),
 			Err(error) => exit(format!("Error sending message: {}", error))

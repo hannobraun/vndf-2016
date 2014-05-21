@@ -35,7 +35,8 @@ pub struct Ship {
 
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Action {
-	pub attitude: Radians
+	pub attitude: Radians,
+	pub missile : u64
 }
 
 impl Action {
