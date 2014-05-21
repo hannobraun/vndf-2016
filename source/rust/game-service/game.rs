@@ -43,16 +43,13 @@ impl Game {
 	pub fn new(network: Sender<NetworkEvent>) -> Game {
 		let (sender, receiver) = channel();
 
-		let mut missiles = HashMap::new();
-		missiles.insert(999u, Body::default());
-
 		Game {
 			events  : sender,
 
 			incoming: receiver,
 			network : network,
 
-			missiles: missiles
+			missiles: HashMap::new()
 		}
 	}
 
@@ -139,9 +136,21 @@ impl Game {
 		});
 	}
 
-	fn on_action(&self, fd: c_int, action: Action, clients: &mut Clients) {
+	fn on_action(&mut self, fd: c_int, action: Action, clients: &mut Clients) {
 		match clients.client_by_fd(fd) {
-			Some((_, client)) => client.ship.attitude = action.attitude,
+			Some((_, client)) => {
+				client.ship.attitude = action.attitude;
+
+				if action.missile > client.missile {
+					let mut body = Body::default();
+					body.position = client.ship.position;
+
+					self.missiles.insert(
+						(fd * 1000) as uint + action.missile as uint,
+						body);
+				}
+				client.missile = action.missile;
+			},
 			None              => ()
 		}
 	}

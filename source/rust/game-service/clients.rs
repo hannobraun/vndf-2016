@@ -55,14 +55,16 @@ impl Clients {
 
 pub struct Client {
 	pub conn   : Connection,
-	pub ship   : Body
+	pub ship   : Body,
+	pub missile: u64
 }
 
 impl Client {
 	pub fn new(conn: Connection, ship: Body) -> Client {
 		Client {
 			conn   : conn,
-			ship   : ship
+			ship   : ship,
+			missile: 0
 		}
 	}
 }

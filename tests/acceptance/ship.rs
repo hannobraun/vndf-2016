@@ -34,3 +34,29 @@ fn it_should_change_direction_according_to_input() {
 		new_velocity.round(16),
 		frame.ships.get(0).velocity.round(16));
 }
+
+#[test]
+fn it_should_fire_a_missile() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port);
+
+	let mut frame = client.frame();
+
+	while frame.ships.len() == 0 {
+		frame = client.frame();
+	}
+
+	let mut input = Input::default();
+	input.missile = 1;
+	client.input(input);
+
+	while frame.missiles.len() == 0 {
+		frame = client.frame();
+	}
+
+	let distance =
+		(frame.ships.get(0).position - frame.missiles.get(0).position).mag();
+
+	print!("distance: {}\n", distance);
+	assert!(distance < 5.0);
+}
