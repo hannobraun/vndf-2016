@@ -105,6 +105,12 @@ impl Game {
 				client.ship.position + client.ship.velocity * dTimeInS;
 		});
 
+		for (_, missile) in self.missiles.mut_iter() {
+			missile.velocity = missile.attitude.to_vec() * 30.0;
+			missile.position =
+				missile.position + missile.velocity * dTimeInS;
+		};
+
 		let mut ships = Vec::new();
 		clients.each(|client_id, client| {
 			ships.push(Ship {
