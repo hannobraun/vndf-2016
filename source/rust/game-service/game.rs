@@ -111,7 +111,10 @@ impl Game {
 			let update = Perception {
 				self_id : client_id,
 				ships   : ships.clone(),
-				missiles: Vec::new()
+				missiles: vec!(Ship {
+					id  : 999,
+					body: Body::default()
+				})
 			};
 			let message = update.to_str();
 

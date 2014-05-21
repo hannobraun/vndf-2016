@@ -89,6 +89,8 @@ fn main() {
 	let mut previous_ships = HashMap::new();
 	let mut current_ships  = HashMap::new();
 
+	let mut missiles = HashMap::new();
+
 	let mut self_id = None;
 
 	let mut next_input_send = 0;
@@ -100,6 +102,7 @@ fn main() {
 			&mut network,
 			&mut previous_ships,
 			&mut current_ships,
+			&mut missiles,
 			&mut previous_time,
 			&mut current_time);
 
@@ -152,7 +155,7 @@ fn main() {
 			input   : input,
 			camera  : camera,
 			ships   : ships,
-			missiles: vec!(Body::default())
+			missiles: missiles.iter().map(|(_, &body)| body).collect()
 		};
 
 		renderer.render(&frame);
@@ -163,6 +166,7 @@ fn receive_updates(
 	network       : &mut Network,
 	previous_ships: &mut HashMap<uint, Body>,
 	current_ships : &mut HashMap<uint, Body>,
+	missiles      : &mut HashMap<uint, Body>,
 	previous_time : &mut u64,
 	current_time  : &mut u64) -> Option<uint> {
 
@@ -182,6 +186,10 @@ fn receive_updates(
 		current_ships.clear();
 		for ship in perception.ships.iter() {
 			current_ships.insert(ship.id, ship.body);
+		}
+
+		for missile in perception.missiles.iter() {
+			missiles.insert(missile.id, missile.body);
 		}
 	});
 
