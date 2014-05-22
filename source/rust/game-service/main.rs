@@ -13,6 +13,7 @@ use network::Network;
 
 
 mod args;
+mod ecs;
 mod events;
 mod game;
 mod network;

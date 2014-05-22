@@ -15,6 +15,7 @@ use common::protocol::{
 	Ship
 };
 
+use ecs::Player;
 use events::{
 	Action,
 	Enter,
@@ -165,9 +166,4 @@ impl Game {
 			None => ()
 		}
 	}
-}
-
-
-struct Player {
-	missile_index: u64
 }
