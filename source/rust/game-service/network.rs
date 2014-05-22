@@ -80,7 +80,7 @@ impl Network {
 						}
 					},
 
-					Close(fd, reason) => match clients.remove(fd) {
+					Close(fd, _) => match clients.remove(fd) {
 						Some(conn) => {
 							conn.close();
 							game.send(Leave(fd));
