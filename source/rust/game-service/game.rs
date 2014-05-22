@@ -1,5 +1,4 @@
 use collections::HashMap;
-use libc::c_int;
 use std::comm::{
 	Disconnected,
 	Empty
@@ -142,9 +141,7 @@ impl Game {
 		});
 	}
 
-	fn on_action(&mut self, fd: c_int, action: Action) {
-		let id = fd as uint;
-
+	fn on_action(&mut self, id: uint, action: Action) {
 		match self.ships.find_mut(&id) {
 			Some(ship) => {
 				ship.attitude = action.attitude;
@@ -159,7 +156,7 @@ impl Game {
 					body.attitude = ship.attitude;
 
 					self.missiles.insert(
-						(fd * 1000) as uint + action.missile as uint,
+						(id * 1000) as uint + action.missile as uint,
 						body);
 				}
 				control.missile_index = action.missile;

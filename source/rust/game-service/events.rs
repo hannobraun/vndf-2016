@@ -1,7 +1,4 @@
-use libc::c_int;
-
 use common::protocol::Action;
-
 
 #[deriving(Eq, Show)]
 pub enum GameEvent {
@@ -9,7 +6,7 @@ pub enum GameEvent {
 	Update(f64),
 	Enter(uint),
 	Leave(uint),
-	Action(c_int, Action)
+	Action(uint, Action)
 }
 
 #[deriving(Eq, Show)]
