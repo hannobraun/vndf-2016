@@ -62,8 +62,8 @@ impl Game {
 					match event {
 						Init =>
 							(), // nothing do do, it just exists for the logging
-						Enter(id) =>
-							self.on_enter(id),
+						Enter(client_id) =>
+							self.on_enter(client_id),
 						Leave(client_id) =>
 							self.on_leave(client_id),
 						Update(frame_time_in_s) =>
