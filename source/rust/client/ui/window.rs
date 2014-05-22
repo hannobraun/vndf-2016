@@ -24,7 +24,7 @@ impl Window {
 
 		let (window, _) = glfw.create_window(
 			width, height,
-			"Von Neumann Defense Force",
+			"Von Neumann Defense Force *EARLY PROTOTYPE*",
 			glfw::Windowed)
 			.expect("failed to create window");
 
