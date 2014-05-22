@@ -93,19 +93,21 @@ impl Game {
 		};
 
 		let new_client = Client::new(connection, ship);
-		clients.add(new_client);
+		let (id, _) = clients.add(new_client);
+
+		self.ships.insert(id, ship);
 	}
 
 	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
 		clients.remove(removed_id);
+		self.ships.remove(&removed_id);
 	}
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
-		clients.mut_each(|_, client| {
-			client.ship.velocity = client.ship.attitude.to_vec() * 30.0;
-			client.ship.position =
-				client.ship.position + client.ship.velocity * dTimeInS;
-		});
+		for (_, ship) in self.ships.mut_iter() {
+			ship.velocity = ship.attitude.to_vec() * 30.0;
+			ship.position = ship.position + ship.velocity * dTimeInS;
+		}
 
 		for (_, missile) in self.missiles.mut_iter() {
 			missile.velocity = missile.attitude.to_vec() * 30.0;
@@ -114,12 +116,12 @@ impl Game {
 		}
 
 		let mut ships = Vec::new();
-		clients.each(|client_id, client| {
+		for (&id, &ship) in self.ships.mut_iter() {
 			ships.push(Ship {
-				id  : client_id,
-				body: client.ship
+				id  : id,
+				body: ship
 			});
-		});
+		}
 
 		let missiles: Vec<_> = self.missiles
 			.iter()
@@ -145,9 +147,14 @@ impl Game {
 	}
 
 	fn on_action(&mut self, fd: c_int, action: Action, clients: &mut Clients) {
-		match clients.client_by_fd(fd) {
-			Some((_, client)) => {
-				client.ship.attitude = action.attitude;
+		let client = match clients.client_by_fd(fd) {
+			Some((_, client)) => client,
+			None => return
+		};
+
+		match self.ships.find_mut(&(fd as uint)) {
+			Some(ship) => {
+				ship.attitude = action.attitude;
 
 				if action.missile > client.missile {
 					let mut body = Body::default();
