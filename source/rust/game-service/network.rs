@@ -84,10 +84,10 @@ impl Network {
 						}
 					},
 
-					Close(fd, _) => match self.connections.pop(&fd) {
+					Close(id, _) => match self.connections.pop(&id) {
 						Some(conn) => {
 							conn.close();
-							game.send(Leave(fd));
+							game.send(Leave(id));
 						},
 
 						None => ()
