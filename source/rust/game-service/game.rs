@@ -13,10 +13,7 @@ use common::protocol::{
 	Ship
 };
 
-use clients::{
-	Client,
-	Clients
-};
+use clients::Clients;
 use events::{
 	Action,
 	Close,
@@ -94,8 +91,7 @@ impl Game {
 			attitude: Radians::from_vec(velocity)
 		};
 
-		let new_client = Client::new(connection);
-		let (id, _) = clients.add(new_client);
+		let (id, _) = clients.add(connection);
 
 		self.ships.insert(id, ship);
 		self.controls.insert(id, Control { missile_index: 0 });
@@ -135,7 +131,7 @@ impl Game {
 					body: body})
 			.collect();
 
-		clients.each(|client_id, client| {
+		clients.each(|client_id, conn| {
 			let update = Perception {
 				self_id : client_id,
 				ships   : ships.clone(),
@@ -143,7 +139,7 @@ impl Game {
 			};
 			let message = update.to_str();
 
-			match client.conn.send_message(message) {
+			match conn.send_message(message) {
 				Err(_) => self.network.send(Close(client_id)),
 				_      => ()
 			};

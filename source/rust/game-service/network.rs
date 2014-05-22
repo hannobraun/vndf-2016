@@ -62,8 +62,8 @@ impl Network {
 			match self.incoming.try_recv() {
 				Ok(event) => match event {
 					Close(fd) => match clients.remove(fd) {
-						Some(client) => {
-							client.conn.close();
+						Some(conn) => {
+							conn.close();
 							game.send(Leave(fd));
 						},
 
@@ -97,12 +97,12 @@ impl Network {
 				game.send(Enter(connection));
 			}
 			else {
-				let (client_id, client) = match clients.client_by_fd(fd) {
+				let (client_id, conn) = match clients.client_by_fd(fd) {
 					Some(result) => result,
 					None         => return
 				};
 
-				let result = client.conn.receive_messages(|raw_message| {
+				let result = conn.receive_messages(|raw_message| {
 					let action = match Action::from_str(raw_message) {
 						Ok(message) => message,
 

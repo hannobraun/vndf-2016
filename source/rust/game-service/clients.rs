@@ -7,26 +7,26 @@ use common::net::Connection;
 pub type Id = uint;
 
 pub struct Clients {
-	pub map: HashMap<Id, Client>
+	pub map: HashMap<Id, Connection>
 }
 
 impl Clients {
 	pub fn new() -> Clients {
 		Clients {
-			map: HashMap::<Id, Client>::new()
+			map: HashMap::<Id, Connection>::new()
 		}
 	}
 
-	pub fn add<'a>(&'a mut self, client: Client) -> (Id, &'a Client) {
-		let client_id = client.conn.fd as Id;
-		self.map.insert(client_id, client);
+	pub fn add<'a>(&'a mut self, conn: Connection) -> (Id, &'a Connection) {
+		let client_id = conn.fd as Id;
+		self.map.insert(client_id, conn);
 
 		(
 			client_id,
 			self.map.get(&client_id))
 	}
 
-	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> Option<(Id, &'a mut Client)> {
+	pub fn client_by_fd<'a>(&'a mut self, fd: c_int) -> Option<(Id, &'a mut Connection)> {
 		let client_id = fd as Id;
 		match self.map.find_mut(&client_id) {
 			Some(client) => Some((client_id, client)),
@@ -34,26 +34,13 @@ impl Clients {
 		}
 	}
 
-	pub fn remove(&mut self, id: Id) -> Option<Client> {
+	pub fn remove(&mut self, id: Id) -> Option<Connection> {
 		self.map.pop(&id)
 	}
 
-	pub fn each(&self, f: |Id, &Client|) {
+	pub fn each(&self, f: |Id, &Connection|) {
 		for (&id, client) in self.map.iter() {
 			f(id, client);
-		}
-	}
-}
-
-
-pub struct Client {
-	pub conn: Connection
-}
-
-impl Client {
-	pub fn new(conn: Connection) -> Client {
-		Client {
-			conn: conn
 		}
 	}
 }
