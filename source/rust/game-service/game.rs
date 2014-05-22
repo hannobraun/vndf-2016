@@ -15,7 +15,10 @@ use common::protocol::{
 	Ship
 };
 
-use ecs::Player;
+use ecs::{
+	Components,
+	Player
+};
 use events::{
 	Action,
 	Enter,
@@ -35,9 +38,9 @@ pub struct Game {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	missiles: HashMap<ClientId, Body>,
-	ships   : HashMap<ClientId, Body>,
-	players : HashMap<ClientId, Player>
+	missiles: Components<Body>,
+	ships   : Components<Body>,
+	players : Components<Player>
 }
 
 
