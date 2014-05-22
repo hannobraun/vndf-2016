@@ -83,7 +83,6 @@ impl Game {
 
 	fn on_enter(&mut self, id: uint) {
 		let velocity = Vec2(30.0, 10.0);
-
 		self.ships.insert(id, Body {
 			position: Vec2::zero(),
 			velocity: velocity,
