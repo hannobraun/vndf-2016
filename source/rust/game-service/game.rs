@@ -91,7 +91,9 @@ impl Game {
 		};
 
 		self.ships.insert(id, ship);
-		self.controls.insert(id, Control { missile_index: 0 });
+		self.controls.insert(id, Control {
+			missile_index: 0
+		});
 	}
 
 	fn on_leave(&mut self, id: uint) {
