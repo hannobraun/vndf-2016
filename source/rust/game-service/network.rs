@@ -19,6 +19,9 @@ use events::{
 };
 
 
+type ClientId = uint;
+
+
 pub struct Network {
 	pub events: Sender<NetworkEvent>,
 
@@ -112,7 +115,7 @@ impl Network {
 							fail!("Error decoding message: {}", error)
 					};
 
-					game.send(Action(fd as uint, action));
+					game.send(Action(fd as ClientId, action));
 				});
 
 				match result {
