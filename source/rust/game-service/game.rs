@@ -147,11 +147,11 @@ impl Game {
 			Some(ship) => {
 				ship.attitude = action.attitude;
 
-				let control = self.players
+				let player = self.players
 					.find_mut(&id)
 					.expect("expected control");
 
-				if action.missile > control.missile_index {
+				if action.missile > player.missile_index {
 					let mut body = Body::default();
 					body.position = ship.position;
 					body.attitude = ship.attitude;
@@ -160,7 +160,7 @@ impl Game {
 						(id * 1000) as ClientId + action.missile as ClientId,
 						body);
 				}
-				control.missile_index = action.missile;
+				player.missile_index = action.missile;
 			},
 
 			None => ()
