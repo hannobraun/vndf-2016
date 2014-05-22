@@ -98,11 +98,13 @@ impl Game {
 		let (id, _) = clients.add(new_client);
 
 		self.ships.insert(id, ship);
+		self.controls.insert(id, Control);
 	}
 
 	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
 		clients.remove(removed_id);
 		self.ships.remove(&removed_id);
+		self.controls.remove(&removed_id);
 	}
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
