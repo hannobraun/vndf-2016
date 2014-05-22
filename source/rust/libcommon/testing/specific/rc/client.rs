@@ -14,9 +14,9 @@ impl Client {
 		let process = Process::start(
 			"output/bin/vndf-client",
 			[
-				"--headless".to_owned(),
-				"--address".to_owned(), "localhost".to_owned(),
-				"--port".to_owned(), port.to_str()]);
+				format!("--headless"),
+				format!("--address=localhost"),
+				format!("--port={}", port)]);
 
 		Client {
 			process: process
