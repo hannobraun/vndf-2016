@@ -36,7 +36,7 @@ pub struct Game {
 
 	missiles: HashMap<ClientId, Body>,
 	ships   : HashMap<ClientId, Body>,
-	controls: HashMap<ClientId, Control>
+	controls: HashMap<ClientId, Player>
 }
 
 
@@ -92,7 +92,7 @@ impl Game {
 			attitude: Radians::from_vec(velocity)
 		});
 
-		self.controls.insert(id, Control {
+		self.controls.insert(id, Player {
 			missile_index: 0
 		});
 	}
@@ -168,6 +168,6 @@ impl Game {
 }
 
 
-struct Control {
+struct Player {
 	missile_index: u64
 }
