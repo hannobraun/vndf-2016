@@ -98,7 +98,6 @@ impl Game {
 	}
 
 	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
-		clients.remove(removed_id);
 		self.ships.remove(&removed_id);
 		self.controls.remove(&removed_id);
 	}
