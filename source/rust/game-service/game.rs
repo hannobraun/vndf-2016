@@ -66,7 +66,7 @@ impl Game {
 						Enter(connection) =>
 							self.on_enter(connection, clients),
 						Leave(clientId) =>
-							self.on_leave(clientId, clients),
+							self.on_leave(clientId),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						Action(client_id, action) =>
@@ -97,7 +97,7 @@ impl Game {
 		self.controls.insert(id, Control { missile_index: 0 });
 	}
 
-	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
+	fn on_leave(&mut self, removed_id: uint) {
 		self.ships.remove(&removed_id);
 		self.controls.remove(&removed_id);
 	}
