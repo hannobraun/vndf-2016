@@ -1,3 +1,4 @@
+use libc::c_int;
 use std::comm::{
 	Disconnected,
 	Empty
@@ -15,6 +16,7 @@ use events::{
 	Enter,
 	GameEvent,
 	Leave,
+	Message,
 	NetworkEvent
 };
 
@@ -64,6 +66,20 @@ impl Network {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => match event {
+					Message(recipients, message) => {
+						for &id in recipients.iter() {
+							let (_, connection) = match clients.client_by_fd(id as c_int) {
+								Some(connection) => connection,
+								None             => return
+							};
+
+							match connection.send_message(message.to_str()) {
+								Ok(())     => (),
+								Err(error) => self.events.send(Close(id))
+							}
+						}
+					},
+
 					Close(fd) => match clients.remove(fd) {
 						Some(conn) => {
 							conn.close();

@@ -1,4 +1,7 @@
-use common::protocol::Action;
+use common::protocol::{
+	Action,
+	Perception
+};
 
 use network::ClientId;
 
@@ -14,5 +17,6 @@ pub enum GameEvent {
 
 #[deriving(Eq, Show)]
 pub enum NetworkEvent {
+	Message(Vec<ClientId>, Perception),
 	Close(ClientId)
 }
