@@ -28,8 +28,8 @@ pub fn parse() -> Option<Args> {
 		.collect();
 
 	let options = [
-		optopt("a", "address", "address of the server", args.address.as_slice()),
-		optopt("p", "port"   , "port to connect to"   , args.port.as_slice()),
+		optopt("a", "address", "server address", args.address.as_slice()),
+		optopt("p", "port"   , "server port"   , args.port.as_slice()),
 
 		optflag("h", "headless", "start in headless mode")
 	];
