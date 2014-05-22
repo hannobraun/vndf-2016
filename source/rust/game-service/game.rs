@@ -63,7 +63,7 @@ impl Game {
 						Init =>
 							(), // nothing do do, it just exists for the logging
 						Enter(id) =>
-							self.on_enter(id, clients),
+							self.on_enter(id),
 						Leave(clientId) =>
 							self.on_leave(clientId),
 						Update(frame_time_in_s) =>
@@ -81,7 +81,7 @@ impl Game {
 		}
 	}
 
-	fn on_enter(&mut self, id: uint, clients: &mut Clients) {
+	fn on_enter(&mut self, id: uint) {
 		let velocity = Vec2(30.0, 10.0);
 
 		let ship = Body {
