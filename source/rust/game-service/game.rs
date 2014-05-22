@@ -151,12 +151,14 @@ impl Game {
 	}
 
 	fn on_action(&mut self, fd: c_int, action: Action, clients: &mut Clients) {
+		let id = fd as uint;
+
 		let client = match clients.client_by_fd(fd) {
 			Some((_, client)) => client,
 			None => return
 		};
 
-		match self.ships.find_mut(&(fd as uint)) {
+		match self.ships.find_mut(&id) {
 			Some(ship) => {
 				ship.attitude = action.attitude;
 
