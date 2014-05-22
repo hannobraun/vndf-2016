@@ -37,10 +37,4 @@ impl Clients {
 	pub fn remove(&mut self, id: Id) -> Option<Connection> {
 		self.map.pop(&id)
 	}
-
-	pub fn each(&self, f: |Id, &Connection|) {
-		for (&id, client) in self.map.iter() {
-			f(id, client);
-		}
-	}
 }
