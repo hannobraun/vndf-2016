@@ -15,7 +15,6 @@ use common::protocol::{
 	Ship
 };
 
-use clients::Clients;
 use events::{
 	Action,
 	Enter,
@@ -57,7 +56,7 @@ impl Game {
 		}
 	}
 
-	pub fn handle(&mut self, clients: &mut Clients) {
+	pub fn handle(&mut self) {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => {
