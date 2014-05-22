@@ -1,10 +1,14 @@
+use collections::HashMap;
 use libc::c_int;
 use std::comm::{
 	Disconnected,
 	Empty
 };
 
-use common::net::Acceptor;
+use common::net::{
+	Acceptor,
+	Connection
+};
 use common::net::epoll;
 use common::net::epoll::EPoll;
 use common::protocol::Action;
@@ -27,9 +31,10 @@ pub type ClientId = uint;
 pub struct Network {
 	pub events: Sender<NetworkEvent>,
 
-	incoming: Receiver<NetworkEvent>,
-	epoll   : EPoll,
-	acceptor: Acceptor
+	incoming   : Receiver<NetworkEvent>,
+	epoll      : EPoll,
+	acceptor   : Acceptor,
+	connections: HashMap<ClientId, Connection>
 }
 
 impl Network {
@@ -54,10 +59,11 @@ impl Network {
 		let (sender, receiver) = channel();
 
 		Network {
-			events  : sender,
-			incoming: receiver,
-			epoll   : epoll,
-			acceptor: acceptor
+			events     : sender,
+			incoming   : receiver,
+			epoll      : epoll,
+			acceptor   : acceptor,
+			connections: HashMap::new()
 
 		}
 	}
