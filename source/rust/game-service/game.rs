@@ -73,7 +73,7 @@ impl Game {
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						Action(client_id, action) =>
-							self.on_action(client_id, action, clients)
+							self.on_action(client_id, action)
 					}
 				},
 
@@ -150,7 +150,7 @@ impl Game {
 		});
 	}
 
-	fn on_action(&mut self, fd: c_int, action: Action, clients: &mut Clients) {
+	fn on_action(&mut self, fd: c_int, action: Action) {
 		let id = fd as uint;
 
 		match self.ships.find_mut(&id) {
