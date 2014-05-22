@@ -97,9 +97,9 @@ impl Game {
 		self.controls.insert(id, Control { missile_index: 0 });
 	}
 
-	fn on_leave(&mut self, removed_id: uint) {
-		self.ships.remove(&removed_id);
-		self.controls.remove(&removed_id);
+	fn on_leave(&mut self, id: uint) {
+		self.ships.remove(&id);
+		self.controls.remove(&id);
 	}
 
 	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
