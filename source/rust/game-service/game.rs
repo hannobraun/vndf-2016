@@ -18,11 +18,11 @@ use common::protocol::{
 use clients::Clients;
 use events::{
 	Action,
-	Close,
 	Enter,
 	GameEvent,
 	Init,
 	Leave,
+	Message,
 	NetworkEvent,
 	Update
 };
@@ -137,12 +137,8 @@ impl Game {
 				ships   : ships.clone(),
 				missiles: missiles.clone()
 			};
-			let message = update.to_str();
 
-			match conn.send_message(message) {
-				Err(_) => self.network.send(Close(client_id)),
-				_      => ()
-			};
+			self.network.send(Message(vec!(client_id), update));
 		});
 	}
 
