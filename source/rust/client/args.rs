@@ -21,7 +21,11 @@ pub fn parse() -> Option<Args> {
 		headless: false
 	};
 
-	let args_as_strs: Vec<StrBuf> = os::args().iter().map(|s| s.to_strbuf()).collect();
+	let args_as_strs: Vec<StrBuf> =
+		os::args()
+		.iter()
+		.map(|s| s.to_strbuf())
+		.collect();
 
 	let options = [
 		optopt("a", "address", "address of the server", args.address.as_slice()),
