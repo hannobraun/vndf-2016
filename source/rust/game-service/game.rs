@@ -172,7 +172,8 @@ impl Game {
 				}
 				control.missile_index = action.missile;
 			},
-			None              => ()
+
+			None => ()
 		}
 	}
 }
