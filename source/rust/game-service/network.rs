@@ -75,12 +75,12 @@ impl Network {
 
 							match connection.send_message(message.to_str()) {
 								Ok(())     => (),
-								Err(error) => self.events.send(Close(id))
+								Err(error) => self.events.send(Close(id, error))
 							}
 						}
 					},
 
-					Close(fd) => match clients.remove(fd) {
+					Close(fd, reason) => match clients.remove(fd) {
 						Some(conn) => {
 							conn.close();
 							game.send(Leave(fd));
@@ -135,8 +135,8 @@ impl Network {
 				});
 
 				match result {
-					Ok(()) => (),
-					Err(_) => self.events.send(Close(client_id))
+					Ok(())     => (),
+					Err(error) => self.events.send(Close(client_id, error))
 				}
 			}
 		});

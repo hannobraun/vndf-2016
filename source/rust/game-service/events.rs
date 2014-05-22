@@ -1,3 +1,5 @@
+use std::io::IoError;
+
 use common::protocol::{
 	Action,
 	Perception
@@ -18,5 +20,5 @@ pub enum GameEvent {
 #[deriving(Eq, Show)]
 pub enum NetworkEvent {
 	Message(Vec<ClientId>, Perception),
-	Close(ClientId)
+	Close(ClientId, IoError)
 }
