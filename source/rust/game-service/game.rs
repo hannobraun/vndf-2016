@@ -149,7 +149,7 @@ impl Game {
 
 				let control = self.controls
 					.find_mut(&id)
-					.expect("execpted control");
+					.expect("expected control");
 
 				if action.missile > control.missile_index {
 					let mut body = Body::default();
