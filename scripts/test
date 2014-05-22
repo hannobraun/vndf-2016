@@ -4,5 +4,4 @@ source project.conf
 
 FILES=$(find tests source/rust -name *.rs)
 
-scripts/tasks/run-tests
 $ZWOBOT scripts/tasks/run-tests $FILES
