@@ -98,7 +98,7 @@ impl Game {
 		let (id, _) = clients.add(new_client);
 
 		self.ships.insert(id, ship);
-		self.controls.insert(id, Control);
+		self.controls.insert(id, Control { missile_index: 0 });
 	}
 
 	fn on_leave(&mut self, removed_id: uint, clients: &mut Clients) {
@@ -179,4 +179,6 @@ impl Game {
 }
 
 
-struct Control;
+struct Control {
+	missile_index: u64
+}
