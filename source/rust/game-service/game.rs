@@ -84,13 +84,12 @@ impl Game {
 	fn on_enter(&mut self, id: uint) {
 		let velocity = Vec2(30.0, 10.0);
 
-		let ship = Body {
+		self.ships.insert(id, Body {
 			position: Vec2::zero(),
 			velocity: velocity,
 			attitude: Radians::from_vec(velocity)
-		};
+		});
 
-		self.ships.insert(id, ship);
 		self.controls.insert(id, Control {
 			missile_index: 0
 		});
