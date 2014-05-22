@@ -16,7 +16,8 @@ impl Client {
 			[
 				format!("--headless"),
 				format!("--address=localhost"),
-				format!("--port={}", port)]);
+				format!("--port={}", port),
+				format!("--period=10")]);
 
 		Client {
 			process: process
