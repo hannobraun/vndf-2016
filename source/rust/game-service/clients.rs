@@ -1,7 +1,6 @@
 use collections::HashMap;
 use libc::c_int;
 
-use common::physics::Body;
 use common::net::Connection;
 
 
@@ -49,15 +48,13 @@ impl Clients {
 
 pub struct Client {
 	pub conn   : Connection,
-	pub ship   : Body,
 	pub missile: u64
 }
 
 impl Client {
-	pub fn new(conn: Connection, ship: Body) -> Client {
+	pub fn new(conn: Connection) -> Client {
 		Client {
 			conn   : conn,
-			ship   : ship,
 			missile: 0
 		}
 	}

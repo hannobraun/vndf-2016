@@ -92,7 +92,7 @@ impl Game {
 			attitude: Radians::from_vec(velocity)
 		};
 
-		let new_client = Client::new(connection, ship);
+		let new_client = Client::new(connection);
 		let (id, _) = clients.add(new_client);
 
 		self.ships.insert(id, ship);
