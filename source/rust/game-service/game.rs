@@ -71,7 +71,7 @@ impl Game {
 						Leave(client_id) =>
 							self.on_leave(client_id),
 						Update(frame_time_in_s) =>
-							self.on_update(clients, frame_time_in_s),
+							self.on_update(frame_time_in_s),
 						Action(client_id, action) =>
 							self.on_action(client_id, action)
 					}
@@ -103,7 +103,7 @@ impl Game {
 		self.controls.remove(&id);
 	}
 
-	fn on_update(&mut self, clients: &mut Clients, dTimeInS: f64) {
+	fn on_update(&mut self, dTimeInS: f64) {
 		for (_, ship) in self.ships.mut_iter() {
 			ship.velocity = ship.attitude.to_vec() * 30.0;
 			ship.position = ship.position + ship.velocity * dTimeInS;
