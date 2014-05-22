@@ -94,7 +94,9 @@ impl Network {
 						fail!("Error adding to epoll: {}", error)
 				}
 
-				game.send(Enter(connection));
+				let (id, _) = clients.add(connection);
+
+				game.send(Enter(id));
 			}
 			else {
 				let (client_id, conn) = match clients.client_by_fd(fd) {

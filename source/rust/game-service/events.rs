@@ -1,6 +1,5 @@
 use libc::c_int;
 
-use common::net::Connection;
 use common::protocol::Action;
 
 
@@ -8,7 +7,7 @@ use common::protocol::Action;
 pub enum GameEvent {
 	Init,
 	Update(f64),
-	Enter(Connection),
+	Enter(uint),
 	Leave(uint),
 	Action(c_int, Action)
 }
