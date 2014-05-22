@@ -35,7 +35,8 @@ pub struct Game {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	missiles: HashMap<uint, Body>
+	missiles: HashMap<uint, Body>,
+	ships   : HashMap<uint, Body>
 }
 
 
@@ -49,7 +50,8 @@ impl Game {
 			incoming: receiver,
 			network : network,
 
-			missiles: HashMap::new()
+			missiles: HashMap::new(),
+			ships   : HashMap::new()
 		}
 	}
 
