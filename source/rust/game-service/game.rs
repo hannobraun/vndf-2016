@@ -37,7 +37,7 @@ pub struct Game {
 
 	missiles: HashMap<ClientId, Body>,
 	ships   : HashMap<ClientId, Body>,
-	controls: HashMap<ClientId, Player>
+	players : HashMap<ClientId, Player>
 }
 
 
@@ -53,7 +53,7 @@ impl Game {
 
 			missiles: HashMap::new(),
 			ships   : HashMap::new(),
-			controls: HashMap::new()
+			players : HashMap::new()
 		}
 	}
 
@@ -93,14 +93,14 @@ impl Game {
 			attitude: Radians::from_vec(velocity)
 		});
 
-		self.controls.insert(id, Player {
+		self.players.insert(id, Player {
 			missile_index: 0
 		});
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
 		self.ships.remove(&id);
-		self.controls.remove(&id);
+		self.players.remove(&id);
 	}
 
 	fn on_update(&mut self, dTimeInS: f64) {
@@ -131,7 +131,7 @@ impl Game {
 					body: body})
 			.collect();
 
-		for &id in self.controls.keys() {
+		for &id in self.players.keys() {
 			let update = Perception {
 				self_id : id,
 				ships   : ships.clone(),
@@ -147,7 +147,7 @@ impl Game {
 			Some(ship) => {
 				ship.attitude = action.attitude;
 
-				let control = self.controls
+				let control = self.players
 					.find_mut(&id)
 					.expect("expected control");
 
