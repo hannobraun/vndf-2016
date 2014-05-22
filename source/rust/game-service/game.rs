@@ -56,7 +56,7 @@ impl Game {
 		}
 	}
 
-	pub fn handle(&mut self) {
+	pub fn update(&mut self) {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => {

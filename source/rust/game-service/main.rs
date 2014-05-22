@@ -44,6 +44,6 @@ fn main() {
 	loop {
 		network.update(frame_time_in_ms, &mut game.events, &mut clients);
 
-		game.handle();
+		game.update();
 	}
 }
