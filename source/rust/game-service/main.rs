@@ -42,7 +42,7 @@ fn main() {
 	game.events.send(Init);
 
 	loop {
-		network.update(frame_time_in_ms, &mut game.events, &mut clients);
+		network.update(frame_time_in_ms, &mut game.events);
 		game.update();
 	}
 }

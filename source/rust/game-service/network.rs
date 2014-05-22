@@ -12,7 +12,6 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 use common::protocol::Action;
 
-use clients::Clients;
 use events::{
 	Action,
 	Close,
@@ -67,7 +66,7 @@ impl Network {
 		}
 	}
 
-	pub fn update(&mut self, timeout_in_ms: u32, game: &mut Sender<GameEvent>, clients: &mut Clients) {
+	pub fn update(&mut self, timeout_in_ms: u32, game: &mut Sender<GameEvent>) {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => match event {
