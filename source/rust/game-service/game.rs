@@ -22,6 +22,7 @@ use events::{
 	NetworkEvent,
 	Update
 };
+use network::ClientId;
 
 
 pub struct Game {
@@ -30,9 +31,9 @@ pub struct Game {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	missiles: HashMap<uint, Body>,
-	ships   : HashMap<uint, Body>,
-	controls: HashMap<uint, Control>
+	missiles: HashMap<ClientId, Body>,
+	ships   : HashMap<ClientId, Body>,
+	controls: HashMap<ClientId, Control>
 }
 
 
@@ -80,7 +81,7 @@ impl Game {
 		}
 	}
 
-	fn on_enter(&mut self, id: uint) {
+	fn on_enter(&mut self, id: ClientId) {
 		let velocity = Vec2(30.0, 10.0);
 		self.ships.insert(id, Body {
 			position: Vec2::zero(),
@@ -93,7 +94,7 @@ impl Game {
 		});
 	}
 
-	fn on_leave(&mut self, id: uint) {
+	fn on_leave(&mut self, id: ClientId) {
 		self.ships.remove(&id);
 		self.controls.remove(&id);
 	}
@@ -141,7 +142,7 @@ impl Game {
 		});
 	}
 
-	fn on_action(&mut self, id: uint, action: Action) {
+	fn on_action(&mut self, id: ClientId, action: Action) {
 		match self.ships.find_mut(&id) {
 			Some(ship) => {
 				ship.attitude = action.attitude;
@@ -156,7 +157,7 @@ impl Game {
 					body.attitude = ship.attitude;
 
 					self.missiles.insert(
-						(id * 1000) as uint + action.missile as uint,
+						(id * 1000) as ClientId + action.missile as ClientId,
 						body);
 				}
 				control.missile_index = action.missile;
