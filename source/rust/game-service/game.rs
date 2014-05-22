@@ -153,16 +153,15 @@ impl Game {
 	fn on_action(&mut self, fd: c_int, action: Action, clients: &mut Clients) {
 		let id = fd as uint;
 
-		let client = match clients.client_by_fd(fd) {
-			Some((_, client)) => client,
-			None => return
-		};
-
 		match self.ships.find_mut(&id) {
 			Some(ship) => {
 				ship.attitude = action.attitude;
 
-				if action.missile > client.missile {
+				let control = self.controls
+					.find_mut(&id)
+					.expect("execpted control");
+
+				if action.missile > control.missile_index {
 					let mut body = Body::default();
 					body.position = ship.position;
 					body.attitude = ship.attitude;
@@ -171,7 +170,7 @@ impl Game {
 						(fd * 1000) as uint + action.missile as uint,
 						body);
 				}
-				client.missile = action.missile;
+				control.missile_index = action.missile;
 			},
 			None              => ()
 		}
