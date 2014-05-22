@@ -10,7 +10,8 @@ use net::epoll::ffi;
 pub struct EPoll {
 	pub epfd: c_int,
 
-	event_buffer: [ffi::epoll_event, ..1024]
+	event_buffer  : [ffi::epoll_event, ..1024],
+	results_buffer: Vec<c_int>
 }
 
 impl EPoll {
@@ -25,8 +26,9 @@ impl EPoll {
 				data  : 0 };
 
 			Ok(EPoll {
-				epfd        : epfd,
-				event_buffer: [emptyEvent, ..1024]
+				epfd          : epfd,
+				event_buffer  : [emptyEvent, ..1024],
+				results_buffer: Vec::new()
 			})
 		}
 		else {
@@ -56,7 +58,7 @@ impl EPoll {
 		}
 	}
 
-	pub fn wait(&self, timeout_in_ms: u32, f: |c_int|) -> IoResult<()> {
+	pub fn wait<'a>(&'a mut self, timeout_in_ms: u32) -> IoResult<&'a Vec<c_int>> {
 		let number_of_events = unsafe {
 			ffi::epoll_wait(
 				self.epfd,
@@ -66,10 +68,14 @@ impl EPoll {
 		};
 
 		if number_of_events >= 0 {
+			self.results_buffer.clear();
+
 			for i in range(0, number_of_events) {
-				f(self.event_buffer[i as uint].data as c_int)
+				self.results_buffer.push(
+					self.event_buffer[i as uint].data as c_int);
 			}
-			Ok(())
+
+			Ok(&self.results_buffer)
 		}
 		else {
 			Err(IoError::last_error())

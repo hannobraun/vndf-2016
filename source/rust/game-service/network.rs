@@ -97,53 +97,58 @@ impl Network {
 			}
 		}
 
-		let result = self.epoll.wait(timeout_in_ms, |fd| {
-			if fd == self.acceptor.fd {
-				let connection = match self.acceptor.accept() {
-					Ok(connection) => connection,
+		let mut to_accept = Vec::new();
 
-					Err(error) =>
-						fail!("Error accepting connection: {}", error)
-				};
-
-				match self.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
-					Ok(()) => (),
-
-					Err(error) =>
-						fail!("Error adding to epoll: {}", error)
+		match self.epoll.wait(timeout_in_ms) {
+			Ok(fds) => for &fd in fds.iter() {
+				if fd == self.acceptor.fd {
+					to_accept.push(fd);
 				}
-
-				let (id, _) = clients.add(connection);
-
-				game.send(Enter(id));
-			}
-			else {
-				let (client_id, conn) = match clients.client_by_fd(fd) {
-					Some(result) => result,
-					None         => return
-				};
-
-				let result = conn.receive_messages(|raw_message| {
-					let action = match Action::from_str(raw_message) {
-						Ok(message) => message,
-
-						Err(error) =>
-							fail!("Error decoding message: {}", error)
+				else {
+					let (client_id, conn) = match clients.client_by_fd(fd) {
+						Some(result) => result,
+						None         => return
 					};
 
-					game.send(Action(fd as ClientId, action));
-				});
+					let result = conn.receive_messages(|raw_message| {
+						let action = match Action::from_str(raw_message) {
+							Ok(message) => message,
 
-				match result {
-					Ok(())     => (),
-					Err(error) => self.events.send(Close(client_id, error))
+							Err(error) =>
+								fail!("Error decoding message: {}", error)
+						};
+
+						game.send(Action(fd as ClientId, action));
+					});
+
+					match result {
+						Ok(())     => (),
+						Err(error) => self.events.send(Close(client_id, error))
+					}
 				}
-			}
-		});
+			},
 
-		match result {
-			Ok(())     => (),
 			Err(error) => fail!("Error while waiting for events: {}", error)
-		};
+		}
+
+		for _ in to_accept.iter() {
+			let connection = match self.acceptor.accept() {
+				Ok(connection) => connection,
+
+				Err(error) =>
+					fail!("Error accepting connection: {}", error)
+			};
+
+			match self.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
+				Ok(()) => (),
+
+				Err(error) =>
+					fail!("Error adding to epoll: {}", error)
+			}
+
+			let (id, _) = clients.add(connection);
+
+			game.send(Enter(id));
+		}
 	}
 }
