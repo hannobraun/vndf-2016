@@ -1,5 +1,4 @@
 use collections::HashMap;
-use libc::c_int;
 use std::comm::{
 	Disconnected,
 	Empty
@@ -74,7 +73,7 @@ impl Network {
 				Ok(event) => match event {
 					Message(recipients, message) => {
 						for &id in recipients.iter() {
-							let (_, connection) = match clients.client_by_fd(id as c_int) {
+							let connection = match self.connections.find(&id) {
 								Some(connection) => connection,
 								None             => return
 							};
@@ -86,7 +85,7 @@ impl Network {
 						}
 					},
 
-					Close(fd, _) => match clients.remove(fd) {
+					Close(fd, _) => match self.connections.pop(&fd) {
 						Some(conn) => {
 							conn.close();
 							game.send(Leave(fd));
@@ -111,7 +110,9 @@ impl Network {
 					to_accept.push(fd);
 				}
 				else {
-					let (client_id, conn) = match clients.client_by_fd(fd) {
+					let client_id = fd as ClientId;
+
+					let conn = match self.connections.find_mut(&client_id) {
 						Some(result) => result,
 						None         => return
 					};
@@ -152,9 +153,9 @@ impl Network {
 					fail!("Error adding to epoll: {}", error)
 			}
 
-			let (id, _) = clients.add(connection);
-
-			game.send(Enter(id));
+			let client_id = connection.fd as ClientId;
+			self.connections.insert(client_id, connection);
+			game.send(Enter(client_id));
 		}
 	}
 }
