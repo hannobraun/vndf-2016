@@ -44,12 +44,6 @@ impl Clients {
 			f(id, client);
 		}
 	}
-
-	pub fn mut_each(&mut self, f: |Id, &mut Client|) {
-		for (&id, client) in self.map.mut_iter() {
-			f(id, client);
-		}
-	}
 }
 
 
