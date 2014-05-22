@@ -1,15 +1,18 @@
 use common::protocol::Action;
 
+use network::ClientId;
+
+
 #[deriving(Eq, Show)]
 pub enum GameEvent {
 	Init,
 	Update(f64),
-	Enter(uint),
-	Leave(uint),
-	Action(uint, Action)
+	Enter(ClientId),
+	Leave(ClientId),
+	Action(ClientId, Action)
 }
 
 #[deriving(Eq, Show)]
 pub enum NetworkEvent {
-	Close(uint)
+	Close(ClientId)
 }
