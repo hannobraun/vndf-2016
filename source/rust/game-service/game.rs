@@ -131,15 +131,15 @@ impl Game {
 					body: body})
 			.collect();
 
-		clients.each(|client_id, conn| {
+		for &id in self.controls.keys() {
 			let update = Perception {
-				self_id : client_id,
+				self_id : id,
 				ships   : ships.clone(),
 				missiles: missiles.clone()
 			};
 
-			self.network.send(Message(vec!(client_id), update));
-		});
+			self.network.send(Message(vec!(id), update));
+		}
 	}
 
 	fn on_action(&mut self, id: ClientId, action: Action) {
