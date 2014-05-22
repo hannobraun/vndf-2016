@@ -114,13 +114,13 @@ impl Game {
 				missile.position + missile.velocity * dTimeInS;
 		}
 
-		let mut ships = Vec::new();
-		for (&id, &ship) in self.ships.mut_iter() {
-			ships.push(Ship {
-				id  : id,
-				body: ship
-			});
-		}
+		let ships: Vec<_> = self.ships
+			.iter()
+			.map(|(&id, &body)|
+				Ship {
+					id  : id,
+					body: body})
+			.collect();
 
 		let missiles: Vec<_> = self.missiles
 			.iter()
