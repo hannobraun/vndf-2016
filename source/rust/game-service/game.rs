@@ -64,8 +64,8 @@ impl Game {
 							(), // nothing do do, it just exists for the logging
 						Enter(id) =>
 							self.on_enter(id),
-						Leave(clientId) =>
-							self.on_leave(clientId),
+						Leave(client_id) =>
+							self.on_leave(client_id),
 						Update(frame_time_in_s) =>
 							self.on_update(clients, frame_time_in_s),
 						Action(client_id, action) =>
