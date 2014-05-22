@@ -4,7 +4,11 @@ use std::comm::{
 	Empty
 };
 
-use common::physics::{Body, Radians, Vec2};
+use common::physics::{
+	Body,
+	Radians,
+	Vec2
+};
 use common::protocol::{
 	Action,
 	Perception,
