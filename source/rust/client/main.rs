@@ -23,6 +23,7 @@ use common::physics::{
 };
 
 use gamestate::GameState;
+use inputsender::InputSender;
 use network::Network;
 
 
@@ -30,18 +31,13 @@ mod args;
 mod error;
 mod gamestate;
 mod headless;
+mod inputsender;
 mod network;
 mod ui;
 
 
 #[link(name = "stb-image", kind = "static")]
 extern {}
-
-
-pub struct InputSender {
-	pub time_of_next_send: u64,
-	pub input_to_send    : Input
-}
 
 
 fn main() {
