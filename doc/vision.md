@@ -1,9 +1,9 @@
-## Vision
+# Vision
 
 A multiplayer game about freedom, adventure and having to make hard choices.
 
 
-### Inspirations
+## Inspirations
 
 * EVE Online, for its vast scale and the player's ability to create their own
   stories.
@@ -14,7 +14,7 @@ A multiplayer game about freedom, adventure and having to make hard choices.
   player's decisions.
 
 
-### Core Goals
+## Core Goals
 
 * Mechanics that make player skill the prime condition for success.
 * Players that drive everything that is meaningful about the game.
