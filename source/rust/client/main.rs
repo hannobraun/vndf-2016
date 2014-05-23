@@ -58,10 +58,8 @@ fn main() {
 	};
 
 	let mut game_state = GameState::new();
-
-	let mut camera = Vec2::zero();
-
 	let mut game_input = InputSender::new();
+	let mut camera     = Vec2::zero();
 
 	let mut should_close = false;
 	while !should_close {
