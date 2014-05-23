@@ -43,7 +43,6 @@ pub struct Game {
 	players : Components<Player>
 }
 
-
 impl Game {
 	pub fn new(network: Sender<NetworkEvent>) -> Game {
 		let (sender, receiver) = channel();
@@ -151,6 +150,7 @@ impl Game {
 		}
 	}
 }
+
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	body.velocity = body.attitude.to_vec() * 30.0;
