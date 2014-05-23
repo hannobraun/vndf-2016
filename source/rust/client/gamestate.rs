@@ -5,6 +5,7 @@ use common::physics::{
 	Body,
 	Vec2
 };
+use common::protocol::Ship;
 
 use network::Network;
 
@@ -29,18 +30,7 @@ impl GameState {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			self.ships.previous_time = self.ships.current_time;
-			self.ships.current_time  = time::precise_time_ns();
-
-			self.ships.previous.clear();
-			for (&id, &ship) in self.ships.current.iter() {
-				self.ships.previous.insert(id, ship);
-			}
-
-			self.ships.current.clear();
-			for ship in perception.ships.iter() {
-				self.ships.current.insert(ship.id, ship.body);
-			}
+			self.ships.receive(&perception.ships);
 
 			for missile in perception.missiles.iter() {
 				self.missiles.insert(missile.id, missile.body);
@@ -101,6 +91,21 @@ impl InterpolatedBodies {
 
 			previous: HashMap::new(),
 			current : HashMap::new()
+		}
+	}
+
+	fn receive(&mut self, ships: &Vec<Ship>) {
+		self.previous_time = self.current_time;
+		self.current_time  = time::precise_time_ns();
+
+		self.previous.clear();
+		for (&id, &ship) in self.current.iter() {
+			self.previous.insert(id, ship);
+		}
+
+		self.current.clear();
+		for ship in ships.iter() {
+			self.current.insert(ship.id, ship.body);
 		}
 	}
 }
