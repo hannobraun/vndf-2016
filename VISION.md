@@ -27,6 +27,8 @@ A multiplayer game about freedom, adventure and having to make hard choices.
   to the typical sandbox game (Minecraft, Starbound).
 
 
-### Next Step
+### Next Steps
 
-Implement camera zoom.
+* Camera zoom
+* Path prediction
+* UI: Selecting other ships as targets
