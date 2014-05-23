@@ -19,16 +19,15 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::{
-	Body,
-	Vec2
-};
+use common::physics::Vec2;
 
+use gamestate::GameState;
 use network::Network;
 
 
 mod args;
 mod error;
+mod gamestate;
 mod headless;
 mod network;
 mod ui;
@@ -36,18 +35,6 @@ mod ui;
 
 #[link(name = "stb-image", kind = "static")]
 extern {}
-
-
-pub struct GameState {
-	pub self_id: Option<uint>,
-
-	pub previous_time : u64,
-	pub current_time  : u64,
-	pub previous_ships: HashMap<uint, Body>,
-	pub current_ships : HashMap<uint, Body>,
-
-	pub missiles: HashMap<uint, Body>
-}
 
 
 fn main() {
