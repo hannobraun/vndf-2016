@@ -32,9 +32,9 @@ impl GameState {
 			self.ships.previous_time = self.ships.current_time;
 			self.ships.current_time  = time::precise_time_ns();
 
-			self.ships.previous_ships.clear();
+			self.ships.previous.clear();
 			for (&id, &ship) in self.ships.current_ships.iter() {
-				self.ships.previous_ships.insert(id, ship);
+				self.ships.previous.insert(id, ship);
 			}
 
 			self.ships.current_ships.clear();
@@ -61,7 +61,7 @@ impl GameState {
 
 		let mut ships = Vec::new();
 		for (&ship_id, &current) in self.ships.current_ships.iter() {
-			match self.ships.previous_ships.find(&ship_id) {
+			match self.ships.previous.find(&ship_id) {
 				Some(&previous) => {
 					let mut body = current.clone();
 					body.position = previous.position + (current.position - previous.position) * i;
@@ -86,19 +86,21 @@ impl GameState {
 
 
 struct InterpolatedBodies {
-	previous_time : u64,
-	current_time  : u64,
-	previous_ships: HashMap<uint, Body>,
-	current_ships : HashMap<uint, Body>
+	previous_time: u64,
+	current_time : u64,
+
+	previous     : HashMap<uint, Body>,
+	current_ships: HashMap<uint, Body>
 }
 
 impl InterpolatedBodies {
 	fn new() -> InterpolatedBodies {
 		InterpolatedBodies {
-			previous_time : time::precise_time_ns(),
-			current_time  : time::precise_time_ns(),
-			previous_ships: HashMap::new(),
-			current_ships : HashMap::new()
+			previous_time: time::precise_time_ns(),
+			current_time : time::precise_time_ns(),
+
+			previous     : HashMap::new(),
+			current_ships: HashMap::new()
 		}
 	}
 }
