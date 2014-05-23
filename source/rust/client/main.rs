@@ -66,7 +66,7 @@ fn main() {
 
 		input_sender.update(input, &mut network);
 
-		let ships = GameState::interpolate_ships_and_camera(&mut game_state, &mut camera);
+		let ships = game_state.interpolate_ships_and_camera(&mut camera);
 
 		let frame = Frame {
 			input   : input,
