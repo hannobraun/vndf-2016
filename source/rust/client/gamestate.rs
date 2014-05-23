@@ -1,10 +1,7 @@
 use collections::HashMap;
 use time;
 
-use common::physics::{
-	Body,
-	Vec2
-};
+use common::physics::Body;
 use common::protocol::Ship;
 
 use network::Network;
@@ -38,7 +35,7 @@ impl GameState {
 		});
 	}
 
-	pub fn interpolate_ships_and_camera(&mut self, camera: &mut Vec2) -> Vec<Body> {
+	pub fn interpolate_ships(&mut self) -> Vec<Body> {
 		let i = {
 			let diff = (self.ships.current_time - self.ships.previous_time) as f64;
 			if diff <= 0.0 {
@@ -56,14 +53,6 @@ impl GameState {
 					let mut body = current.clone();
 					body.position = previous.position + (current.position - previous.position) * i;
 					ships.push(body);
-
-					match self.self_id {
-						Some(id) => if id == ship_id {
-							*camera = body.position;
-						},
-
-						None => ()
-					}
 				},
 
 				None => ()

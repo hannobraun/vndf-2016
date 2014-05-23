@@ -70,7 +70,7 @@ fn main() {
 
 		input_sender.update(input, &mut network);
 
-		let ships = game_state.interpolate_ships_and_camera(&mut camera);
+		let ships = game_state.interpolate_ships();
 		let frame = make_frame(input, ships, &game_state, camera);
 
 		renderer.render(&frame);
