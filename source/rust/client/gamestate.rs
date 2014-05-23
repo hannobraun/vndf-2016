@@ -99,8 +99,8 @@ impl InterpolatedBodies {
 		self.current_time  = time::precise_time_ns();
 
 		self.previous.clear();
-		for (&id, &ship) in self.current.iter() {
-			self.previous.insert(id, ship);
+		for (&id, &body) in self.current.iter() {
+			self.previous.insert(id, body);
 		}
 
 		self.current.clear();
