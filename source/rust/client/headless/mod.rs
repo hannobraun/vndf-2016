@@ -1,7 +1,7 @@
 use common::io;
 
-pub use self::inputhandler::InputHandler;
-pub use self::renderer::Renderer;
+use self::inputhandler::InputHandler;
+use self::renderer::Renderer;
 
 
 mod inputhandler;
