@@ -38,9 +38,9 @@ mod ui;
 extern {}
 
 
-struct GameInput {
-	time_of_next_send: u64,
-	input_to_send    : Input
+pub struct GameInput {
+	pub time_of_next_send: u64,
+	pub input_to_send    : Input
 }
 
 
