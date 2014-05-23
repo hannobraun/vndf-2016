@@ -18,7 +18,7 @@ impl InputSender {
 		}
 	}
 
-	pub fn update_game_input(game_input: &mut InputSender, input: Input, network: &mut Network, period_in_ms: u64) {
+	pub fn update(game_input: &mut InputSender, input: Input, network: &mut Network, period_in_ms: u64) {
 		game_input.input_to_send.attitude = input.attitude;
 		if time::precise_time_ns() >= game_input.time_of_next_send {
 			network.send(input);
