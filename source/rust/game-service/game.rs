@@ -108,14 +108,11 @@ impl Game {
 
 	fn on_update(&mut self, dTimeInS: f64) {
 		for (_, ship) in self.ships.mut_iter() {
-			ship.velocity = ship.attitude.to_vec() * 30.0;
-			ship.position = ship.position + ship.velocity * dTimeInS;
+			integrate(ship, dTimeInS);
 		}
 
 		for (_, missile) in self.missiles.mut_iter() {
-			missile.velocity = missile.attitude.to_vec() * 30.0;
-			missile.position =
-				missile.position + missile.velocity * dTimeInS;
+			integrate(missile, dTimeInS);
 		}
 
 		let ships: Vec<_> = self.ships
@@ -169,4 +166,9 @@ impl Game {
 			None => ()
 		}
 	}
+}
+
+fn integrate(body: &mut Body, delta_time_in_s: f64) {
+	body.velocity = body.attitude.to_vec() * 30.0;
+	body.position = body.position + body.velocity * delta_time_in_s;
 }
