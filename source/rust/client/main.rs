@@ -71,18 +71,19 @@ fn main() {
 
 		input_sender.update(input, &mut network);
 
-		let ships = game_state.interpolate();
-		let frame = make_frame(input, ships, &game_state, camera);
+		let (ships, missiles) = game_state.interpolate();
+
+		let frame = make_frame(input, ships, missiles, camera);
 
 		renderer.render(&frame);
 	}
 }
 
-fn make_frame(input: Input, ships: Vec<Body>, game_state: &GameState, camera: Vec2) -> Frame {
+fn make_frame(input: Input, ships: Vec<Body>, missiles: Vec<Body>, camera: Vec2) -> Frame {
 	Frame {
 		input   : input,
 		camera  : camera,
 		ships   : ships,
-		missiles: game_state.missiles.iter().map(|(_, &body)| body).collect()
+		missiles: missiles
 	}
 }
