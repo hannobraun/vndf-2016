@@ -5,7 +5,7 @@ use json::{
 use physics::Radians;
 
 
-#[deriving(Decodable, Encodable)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct Input {
 	pub exit    : bool,
 	pub attitude: Radians,
