@@ -41,8 +41,9 @@ extern {}
 struct GameState {
 	self_id: Option<uint>,
 
-	previous_time: u64,
-	current_time : u64
+	previous_time : u64,
+	current_time  : u64,
+	previous_ships: HashMap<uint, Body>
 }
 
 
@@ -66,13 +67,13 @@ fn main() {
 	let mut game_state = GameState {
 		self_id: None,
 
-		previous_time: time::precise_time_ns(),
-		current_time : time::precise_time_ns()
+		previous_time : time::precise_time_ns(),
+		current_time  : time::precise_time_ns(),
+		previous_ships: HashMap::new()
 	};
 
 	let mut camera = Vec2::zero();
 
-	let mut previous_ships = HashMap::new();
 	let mut current_ships  = HashMap::new();
 
 	let mut missiles = HashMap::new();
@@ -84,7 +85,7 @@ fn main() {
 	while !should_close {
 		let self_id = receive_updates(
 			&mut network,
-			&mut previous_ships,
+			&mut game_state.previous_ships,
 			&mut current_ships,
 			&mut missiles,
 			&mut game_state.previous_time,
@@ -117,7 +118,7 @@ fn main() {
 
 		let mut ships = Vec::new();
 		for (&ship_id, &current) in current_ships.iter() {
-			match previous_ships.find(&ship_id) {
+			match game_state.previous_ships.find(&ship_id) {
 				Some(&previous) => {
 					let mut body = current.clone();
 					body.position = previous.position + (current.position - previous.position) * i;
