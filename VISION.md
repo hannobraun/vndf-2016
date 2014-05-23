@@ -29,6 +29,14 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 
 ### Next Steps
 
+For a next step to appear on this list, the following requirements must be met:
+
+* It must be a single, self-contained feature.
+* It must be a step towards our vision.
+* It must not depend on other steps that could appear on this list.
+
+So here's the list:
+
 * Camera zoom
 * Path prediction
 * UI: Selecting other ships as targets
