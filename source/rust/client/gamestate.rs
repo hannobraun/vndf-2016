@@ -1,7 +1,10 @@
 use collections::HashMap;
 use time;
 
-use common::physics::Body;
+use common::physics::{
+	Body,
+	Vec2
+};
 use common::protocol::Ship;
 
 use network::Network;
@@ -60,6 +63,19 @@ impl GameState {
 		}
 
 		ships
+	}
+
+	pub fn update_camera(&self, camera: &mut Vec2) {
+		let self_id = match self.self_id {
+			Some(id) => id,
+			None     => return
+		};
+
+		for (&id, ship) in self.ships.current.iter() {
+			if id == self_id {
+				*camera = ship.position;
+			}
+		}
 	}
 }
 

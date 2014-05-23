@@ -64,6 +64,7 @@ fn main() {
 	let mut should_close = false;
 	while !should_close {
 		game_state.receive_updates(&mut network);
+		game_state.update_camera(&mut camera);
 
 		let input = input_handler.input();
 		should_close = input.exit;
