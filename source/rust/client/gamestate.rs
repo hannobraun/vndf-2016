@@ -39,30 +39,7 @@ impl GameState {
 	}
 
 	pub fn interpolate(&mut self) -> Vec<Body> {
-		let i = {
-			let diff = (self.ships.current_time - self.ships.previous_time) as f64;
-			if diff <= 0.0 {
-				0.0
-			}
-			else {
-				(time::precise_time_ns() - self.ships.current_time) as f64 / diff
-			}
-		};
-
-		let mut ships = Vec::new();
-		for (&ship_id, &current) in self.ships.current.iter() {
-			match self.ships.previous.find(&ship_id) {
-				Some(&previous) => {
-					let mut body = current.clone();
-					body.position = previous.position + (current.position - previous.position) * i;
-					ships.push(body);
-				},
-
-				None => ()
-			}
-		}
-
-		ships
+		self.ships.interpolate()
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -112,5 +89,32 @@ impl InterpolatedBodies {
 		for ship in ships.iter() {
 			self.current.insert(ship.id, ship.body);
 		}
+	}
+
+	fn interpolate(&self) -> Vec<Body> {
+		let i = {
+			let diff = (self.current_time - self.previous_time) as f64;
+			if diff <= 0.0 {
+				0.0
+			}
+			else {
+				(time::precise_time_ns() - self.current_time) as f64 / diff
+			}
+		};
+
+		let mut bodies = Vec::new();
+		for (&ship_id, &current) in self.current.iter() {
+			match self.previous.find(&ship_id) {
+				Some(&previous) => {
+					let mut body = current.clone();
+					body.position = previous.position + (current.position - previous.position) * i;
+					bodies.push(body);
+				},
+
+				None => ()
+			}
+		}
+
+		bodies
 	}
 }
