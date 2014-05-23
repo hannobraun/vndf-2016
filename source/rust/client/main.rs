@@ -77,12 +77,7 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		game_input.input_to_send.attitude = input.attitude;
-		if time::precise_time_ns() >= game_input.next_input_send {
-			network.send(input);
-			game_input.next_input_send =
-				time::precise_time_ns() + args.period as u64 * 1000 * 1000;
-		}
+		update_game_input(&mut game_input, input, &mut network, args.period as u64);
 
 		let ships = interpolate_ships_and_camera(&mut game_state, &mut camera);
 
@@ -94,6 +89,15 @@ fn main() {
 		};
 
 		renderer.render(&frame);
+	}
+}
+
+fn update_game_input(game_input: &mut GameInput, input: Input, network: &mut Network, period_in_ms: u64) {
+	game_input.input_to_send.attitude = input.attitude;
+	if time::precise_time_ns() >= game_input.next_input_send {
+		network.send(input);
+		game_input.next_input_send =
+			time::precise_time_ns() + period_in_ms * 1000 * 1000;
 	}
 }
 
