@@ -1,6 +1,7 @@
 #![crate_id   = "common"]
 #![crate_type = "rlib"]
 
+extern crate collections;
 extern crate libc;
 extern crate rand;
 extern crate serialize;

@@ -5,7 +5,6 @@ use common::physics::{
 	Body,
 	Vec2
 };
-use common::protocol::Ship;
 
 use network::Network;
 
@@ -74,7 +73,7 @@ impl InterpolatedBodies {
 		}
 	}
 
-	fn receive(&mut self, ships: &Vec<Ship>) {
+	fn receive(&mut self, ships: &HashMap<uint, Body>) {
 		self.previous_time = self.current_time;
 		self.current_time  = time::precise_time_ns();
 
@@ -84,8 +83,8 @@ impl InterpolatedBodies {
 		}
 
 		self.current.clear();
-		for ship in ships.iter() {
-			self.current.insert(ship.id, ship.body);
+		for (&id, &body) in ships.iter() {
+			self.current.insert(id, body);
 		}
 	}
 

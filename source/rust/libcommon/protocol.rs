@@ -1,3 +1,5 @@
+use collections::HashMap;
+
 use json::{
 	from_json,
 	to_json
@@ -11,8 +13,8 @@ use physics::{
 #[deriving(Clone, Decodable, Encodable, Eq, Show)]
 pub struct Perception {
 	pub self_id : uint,
-	pub ships   : Vec<Ship>,
-	pub missiles: Vec<Ship>
+	pub ships   : HashMap<uint, Body>,
+	pub missiles: HashMap<uint, Body>
 }
 
 impl Perception {

@@ -117,8 +117,8 @@ impl Game {
 		for &id in self.players.keys() {
 			let update = Perception {
 				self_id : id,
-				ships   : to_vec(&self.ships),
-				missiles: to_vec(&self.missiles)
+				ships   : self.ships.clone(),
+				missiles: self.missiles.clone()
 			};
 
 			self.network.send(Message(vec!(id), update));

@@ -1,3 +1,5 @@
+use collections::HashMap;
+
 use common::testing::{
 	Client,
 	MockGameService
@@ -8,10 +10,7 @@ use common::physics::{
 	Vec2
 };
 use common::physics::util;
-use common::protocol::{
-	Perception,
-	Ship
-};
+use common::protocol::Perception;
 
 
 #[test]
@@ -24,20 +23,18 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let perception_1 = Perception {
-		self_id: 0,
-		ships  : vec!(Ship {
-			id  : 0,
-			body: Body {
-				position: pos_1,
-				velocity: Vec2(10.0, 0.0),
-				attitude: Radians(0.0)
-			}
-		}),
-		missiles: vec!()
+	let mut perception_1 = Perception {
+		self_id : 0,
+		ships   : HashMap::new(),
+		missiles: HashMap::new()
 	};
+	perception_1.ships.insert(0, Body {
+		position: pos_1,
+		velocity: Vec2(10.0, 0.0),
+		attitude: Radians(0.0)
+	});
 	let mut perception_2 = perception_1.clone();
-	perception_2.ships.get_mut(0).body.position = pos_2;
+	perception_2.ships.get_mut(&0).position = pos_2;
 
 	game_service.send_perception(&perception_1);
 	game_service.send_perception(&perception_2);
@@ -77,20 +74,18 @@ fn the_camera_should_follow_the_ship() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let perception_1 = Perception {
-		self_id: 0,
-		ships  : vec!(Ship {
-			id  : 0,
-			body: Body {
-				position: pos_1,
-				velocity: Vec2(10.0, 0.0),
-				attitude: Radians(0.0)
-			}
-		}),
-		missiles: vec!()
+	let mut perception_1 = Perception {
+		self_id : 0,
+		ships   : HashMap::new(),
+		missiles: HashMap::new()
 	};
+	perception_1.ships.insert(0, Body {
+		position: pos_1,
+		velocity: Vec2(10.0, 0.0),
+		attitude: Radians(0.0)
+	});
 	let mut perception_2 = perception_1.clone();
-	perception_2.ships.get_mut(0).body.position = pos_2;
+	perception_2.ships.get_mut(&0).position = pos_2;
 
 	game_service.send_perception(&perception_1);
 	let mut frame_1 = client.frame();

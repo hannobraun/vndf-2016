@@ -1,3 +1,5 @@
+extern crate collections;
+
 extern crate common;
 
 
