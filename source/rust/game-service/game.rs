@@ -11,8 +11,7 @@ use common::physics::{
 };
 use common::protocol::{
 	Action,
-	Perception,
-	Ship
+	Perception
 };
 
 use ecs::{
@@ -155,15 +154,4 @@ impl Game {
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	body.velocity = body.attitude.to_vec() * 30.0;
 	body.position = body.position + body.velocity * delta_time_in_s;
-}
-
-fn to_vec(bodies: &Components<Body>) -> Vec<Ship> {
-	bodies
-		.iter()
-		.map(|(&id, &body)|
-			Ship {
-				id  : id,
-				body: body
-			})
-		.collect()
 }
