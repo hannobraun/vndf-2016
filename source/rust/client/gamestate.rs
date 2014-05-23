@@ -33,13 +33,13 @@ impl GameState {
 			self.ships.current_time  = time::precise_time_ns();
 
 			self.ships.previous.clear();
-			for (&id, &ship) in self.ships.current_ships.iter() {
+			for (&id, &ship) in self.ships.current.iter() {
 				self.ships.previous.insert(id, ship);
 			}
 
-			self.ships.current_ships.clear();
+			self.ships.current.clear();
 			for ship in perception.ships.iter() {
-				self.ships.current_ships.insert(ship.id, ship.body);
+				self.ships.current.insert(ship.id, ship.body);
 			}
 
 			for missile in perception.missiles.iter() {
@@ -60,7 +60,7 @@ impl GameState {
 		};
 
 		let mut ships = Vec::new();
-		for (&ship_id, &current) in self.ships.current_ships.iter() {
+		for (&ship_id, &current) in self.ships.current.iter() {
 			match self.ships.previous.find(&ship_id) {
 				Some(&previous) => {
 					let mut body = current.clone();
@@ -89,8 +89,8 @@ struct InterpolatedBodies {
 	previous_time: u64,
 	current_time : u64,
 
-	previous     : HashMap<uint, Body>,
-	current_ships: HashMap<uint, Body>
+	previous: HashMap<uint, Body>,
+	current : HashMap<uint, Body>
 }
 
 impl InterpolatedBodies {
@@ -99,8 +99,8 @@ impl InterpolatedBodies {
 			previous_time: time::precise_time_ns(),
 			current_time : time::precise_time_ns(),
 
-			previous     : HashMap::new(),
-			current_ships: HashMap::new()
+			previous: HashMap::new(),
+			current : HashMap::new()
 		}
 	}
 }
