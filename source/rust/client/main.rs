@@ -57,7 +57,7 @@ fn main() {
 	};
 
 	let mut game_state   = GameState::new();
-	let mut input_sender = InputSender::new();
+	let mut input_sender = InputSender::new(args.period as u64);
 	let mut camera       = Vec2::zero();
 
 	let mut should_close = false;
@@ -67,7 +67,7 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		input_sender.update(input, &mut network, args.period as u64);
+		input_sender.update(input, &mut network);
 
 		let ships = interpolate_ships_and_camera(&mut game_state, &mut camera);
 
