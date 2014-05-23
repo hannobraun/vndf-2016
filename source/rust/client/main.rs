@@ -38,6 +38,11 @@ mod ui;
 extern {}
 
 
+struct GameState {
+	self_id: Option<uint>
+}
+
+
 fn main() {
 	let args = match args::parse() {
 		Some(args) => args,
@@ -55,6 +60,10 @@ fn main() {
 		ui::init()
 	};
 
+	let mut game_state = GameState {
+		self_id: None
+	};
+
 	let mut camera = Vec2::zero();
 
 	let mut previous_time = time::precise_time_ns();
@@ -64,8 +73,6 @@ fn main() {
 	let mut current_ships  = HashMap::new();
 
 	let mut missiles = HashMap::new();
-
-	let mut self_id = None;
 
 	let mut next_input_send = 0;
 	let mut input_to_send   = Input::default();
@@ -81,7 +88,7 @@ fn main() {
 			&mut current_time);
 
 		match latest_self_id {
-			Some(id) => self_id = Some(id),
+			Some(id) => game_state.self_id = Some(id),
 			None     => ()
 		}
 
@@ -113,7 +120,7 @@ fn main() {
 					body.position = previous.position + (current.position - previous.position) * i;
 					ships.push(body);
 
-					match self_id {
+					match game_state.self_id {
 						Some(id) => if id == ship_id {
 							camera = body.position;
 						},
