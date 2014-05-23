@@ -17,7 +17,10 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::Vec2;
+use common::physics::{
+	Body,
+	Vec2
+};
 
 use gamestate::GameState;
 use network::Network;
@@ -73,36 +76,7 @@ fn main() {
 				time::precise_time_ns() + args.period as u64 * 1000 * 1000;
 		}
 
-		let i = {
-			let diff = (game_state.current_time - game_state.previous_time) as f64;
-			if diff <= 0.0 {
-				0.0
-			}
-			else {
-				(time::precise_time_ns() - game_state.current_time) as f64 / diff
-			}
-		};
-
-		let mut ships = Vec::new();
-		for (&ship_id, &current) in game_state.current_ships.iter() {
-			match game_state.previous_ships.find(&ship_id) {
-				Some(&previous) => {
-					let mut body = current.clone();
-					body.position = previous.position + (current.position - previous.position) * i;
-					ships.push(body);
-
-					match game_state.self_id {
-						Some(id) => if id == ship_id {
-							camera = body.position;
-						},
-
-						None => ()
-					}
-				},
-
-				None => ()
-			}
-		}
+		let ships = interpolate_ships_and_camera(&mut game_state, &mut camera);
 
 		let frame = Frame {
 			input   : input,
@@ -113,4 +87,39 @@ fn main() {
 
 		renderer.render(&frame);
 	}
+}
+
+fn interpolate_ships_and_camera(game_state: &mut GameState, camera: &mut Vec2) -> Vec<Body> {
+	let i = {
+		let diff = (game_state.current_time - game_state.previous_time) as f64;
+		if diff <= 0.0 {
+			0.0
+		}
+		else {
+			(time::precise_time_ns() - game_state.current_time) as f64 / diff
+		}
+	};
+
+	let mut ships = Vec::new();
+	for (&ship_id, &current) in game_state.current_ships.iter() {
+		match game_state.previous_ships.find(&ship_id) {
+			Some(&previous) => {
+				let mut body = current.clone();
+				body.position = previous.position + (current.position - previous.position) * i;
+				ships.push(body);
+
+				match game_state.self_id {
+					Some(id) => if id == ship_id {
+						*camera = body.position;
+					},
+
+					None => ()
+				}
+			},
+
+			None => ()
+		}
+	}
+
+	ships
 }
