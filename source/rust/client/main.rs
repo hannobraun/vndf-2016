@@ -85,12 +85,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		let self_id = receive_updates(&mut network, &mut game_state);
-
-		match self_id {
-			Some(id) => game_state.self_id = Some(id),
-			None     => ()
-		}
+		receive_updates(&mut network, &mut game_state);
 
 		let input = input_handler.input();
 		should_close = input.exit;
@@ -144,11 +139,9 @@ fn main() {
 	}
 }
 
-fn receive_updates(network: &mut Network, game_state: &mut GameState) -> Option<uint> {
-	let mut self_id = None;
-
+fn receive_updates(network: &mut Network, game_state: &mut GameState) {
 	network.receive(|perception| {
-		self_id = Some(perception.self_id);
+		game_state.self_id = Some(perception.self_id);
 
 		game_state.previous_time = game_state.current_time;
 		game_state.current_time  = time::precise_time_ns();
@@ -167,6 +160,4 @@ fn receive_updates(network: &mut Network, game_state: &mut GameState) -> Option<
 			game_state.missiles.insert(missile.id, missile.body);
 		}
 	});
-
-	self_id
 }
