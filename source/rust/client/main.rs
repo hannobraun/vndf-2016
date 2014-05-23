@@ -61,7 +61,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		gamestate::receive_updates(&mut network, &mut game_state);
+		GameState::receive_updates(&mut network, &mut game_state);
 
 		let input = input_handler.input();
 		should_close = input.exit;
