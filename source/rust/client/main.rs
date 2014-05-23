@@ -13,7 +13,6 @@ extern crate common;
 
 use common::io::{
 	Frame,
-	Input,
 	InputHandler,
 	Renderer
 };
@@ -68,7 +67,7 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		update_game_input(&mut input_sender, input, &mut network, args.period as u64);
+		inputsender::update_game_input(&mut input_sender, input, &mut network, args.period as u64);
 
 		let ships = interpolate_ships_and_camera(&mut game_state, &mut camera);
 
@@ -80,15 +79,6 @@ fn main() {
 		};
 
 		renderer.render(&frame);
-	}
-}
-
-fn update_game_input(game_input: &mut InputSender, input: Input, network: &mut Network, period_in_ms: u64) {
-	game_input.input_to_send.attitude = input.attitude;
-	if time::precise_time_ns() >= game_input.time_of_next_send {
-		network.send(input);
-		game_input.time_of_next_send =
-			time::precise_time_ns() + period_in_ms * 1000 * 1000;
 	}
 }
 
