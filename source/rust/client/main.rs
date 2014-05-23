@@ -11,8 +11,6 @@ extern crate stb_image;
 extern crate common;
 
 
-use collections::HashMap;
-
 use common::io::{
 	Frame,
 	Input,
@@ -54,16 +52,7 @@ fn main() {
 		ui::init()
 	};
 
-	let mut game_state = GameState {
-		self_id: None,
-
-		previous_time : time::precise_time_ns(),
-		current_time  : time::precise_time_ns(),
-		previous_ships: HashMap::new(),
-		current_ships : HashMap::new(),
-
-		missiles: HashMap::new()
-	};
+	let mut game_state = GameState::new();
 
 	let mut camera = Vec2::zero();
 
