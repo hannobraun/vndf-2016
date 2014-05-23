@@ -85,13 +85,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		let self_id = receive_updates(
-			&mut network,
-			&mut game_state.previous_ships,
-			&mut game_state.current_ships,
-			&mut game_state.missiles,
-			&mut game_state.previous_time,
-			&mut game_state.current_time);
+		let self_id = receive_updates(&mut network, &mut game_state);
 
 		match self_id {
 			Some(id) => game_state.self_id = Some(id),
@@ -150,34 +144,27 @@ fn main() {
 	}
 }
 
-fn receive_updates(
-	network       : &mut Network,
-	previous_ships: &mut HashMap<uint, Body>,
-	current_ships : &mut HashMap<uint, Body>,
-	missiles      : &mut HashMap<uint, Body>,
-	previous_time : &mut u64,
-	current_time  : &mut u64) -> Option<uint> {
-
+fn receive_updates(network: &mut Network, game_state: &mut GameState) -> Option<uint> {
 	let mut self_id = None;
 
 	network.receive(|perception| {
 		self_id = Some(perception.self_id);
 
-		*previous_time = *current_time;
-		*current_time  = time::precise_time_ns();
+		game_state.previous_time = game_state.current_time;
+		game_state.current_time  = time::precise_time_ns();
 
-		previous_ships.clear();
-		for (&id, &ship) in current_ships.iter() {
-			previous_ships.insert(id, ship);
+		game_state.previous_ships.clear();
+		for (&id, &ship) in game_state.current_ships.iter() {
+			game_state.previous_ships.insert(id, ship);
 		}
 
-		current_ships.clear();
+		game_state.current_ships.clear();
 		for ship in perception.ships.iter() {
-			current_ships.insert(ship.id, ship.body);
+			game_state.current_ships.insert(ship.id, ship.body);
 		}
 
 		for missile in perception.missiles.iter() {
-			missiles.insert(missile.id, missile.body);
+			game_state.missiles.insert(missile.id, missile.body);
 		}
 	});
 
