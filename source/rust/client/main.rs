@@ -39,7 +39,9 @@ extern {}
 
 
 struct GameState {
-	self_id: Option<uint>
+	self_id: Option<uint>,
+
+	previous_time: u64
 }
 
 
@@ -61,12 +63,13 @@ fn main() {
 	};
 
 	let mut game_state = GameState {
-		self_id: None
+		self_id: None,
+
+		previous_time: time::precise_time_ns()
 	};
 
 	let mut camera = Vec2::zero();
 
-	let mut previous_time = time::precise_time_ns();
 	let mut current_time  = time::precise_time_ns();
 
 	let mut previous_ships = HashMap::new();
@@ -84,7 +87,7 @@ fn main() {
 			&mut previous_ships,
 			&mut current_ships,
 			&mut missiles,
-			&mut previous_time,
+			&mut game_state.previous_time,
 			&mut current_time);
 
 		match self_id {
@@ -103,7 +106,7 @@ fn main() {
 		}
 
 		let i = {
-			let diff = (current_time - previous_time) as f64;
+			let diff = (current_time - game_state.previous_time) as f64;
 			if diff <= 0.0 {
 				0.0
 			}
