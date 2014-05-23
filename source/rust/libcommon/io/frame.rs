@@ -9,7 +9,7 @@ use physics::{
 };
 
 
-#[deriving(Decodable, Encodable)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
 	pub input   : Input,
 	pub camera  : Vec2,
