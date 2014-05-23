@@ -28,13 +28,6 @@ impl Perception {
 }
 
 
-#[deriving(Clone, Decodable, Encodable, Eq, Show)]
-pub struct Ship {
-	pub id  : uint,
-	pub body: Body
-}
-
-
 #[deriving(Decodable, Encodable, Eq, Show)]
 pub struct Action {
 	pub attitude: Radians,
