@@ -10,12 +10,12 @@ use network::Network;
 
 
 pub struct GameState {
-	pub self_id: Option<uint>,
+	self_id: Option<uint>,
 
-	pub previous_time : u64,
-	pub current_time  : u64,
-	pub previous_ships: HashMap<uint, Body>,
-	pub current_ships : HashMap<uint, Body>,
+	previous_time : u64,
+	current_time  : u64,
+	previous_ships: HashMap<uint, Body>,
+	current_ships : HashMap<uint, Body>,
 
 	pub missiles: HashMap<uint, Body>
 }
