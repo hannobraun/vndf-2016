@@ -106,13 +106,13 @@ impl Game {
 		self.players.remove(&id);
 	}
 
-	fn on_update(&mut self, dTimeInS: f64) {
+	fn on_update(&mut self, delta_time_in_s: f64) {
 		for (_, ship) in self.ships.mut_iter() {
-			integrate(ship, dTimeInS);
+			integrate(ship, delta_time_in_s);
 		}
 
 		for (_, missile) in self.missiles.mut_iter() {
-			integrate(missile, dTimeInS);
+			integrate(missile, delta_time_in_s);
 		}
 
 		let ships: Vec<_> = self.ships
