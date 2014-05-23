@@ -19,15 +19,8 @@ pub struct GameState {
 impl GameState {
 	pub fn new() -> GameState {
 		GameState {
-			self_id: None,
-
-			ships: InterpolatedBodies {
-				previous_time : time::precise_time_ns(),
-				current_time  : time::precise_time_ns(),
-				previous_ships: HashMap::new(),
-				current_ships : HashMap::new()
-			},
-
+			self_id : None,
+			ships   : InterpolatedBodies::new(),
 			missiles: HashMap::new()
 		}
 	}
@@ -97,4 +90,15 @@ struct InterpolatedBodies {
 	current_time  : u64,
 	previous_ships: HashMap<uint, Body>,
 	current_ships : HashMap<uint, Body>
+}
+
+impl InterpolatedBodies {
+	fn new() -> InterpolatedBodies {
+		InterpolatedBodies {
+			previous_time : time::precise_time_ns(),
+			current_time  : time::precise_time_ns(),
+			previous_ships: HashMap::new(),
+			current_ships : HashMap::new()
+		}
+	}
 }
