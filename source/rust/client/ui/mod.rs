@@ -2,14 +2,14 @@ use std::rc::Rc;
 
 use common::io;
 
-use ui::inputhandler::InputHandler;
-use ui::renderer::Renderer;
+use self::inputhandler::InputHandler;
+use self::renderer::Renderer;
 
 
-pub use ui::font::Font;
-pub use ui::shaders::Shaders;
-pub use ui::textures::{Texture, Textures};
-pub use ui::window::Window;
+pub use self::font::Font;
+pub use self::shaders::Shaders;
+pub use self::textures::{Texture, Textures};
+pub use self::window::Window;
 
 
 mod font;
