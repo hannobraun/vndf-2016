@@ -12,7 +12,6 @@ extern crate common;
 
 
 use collections::HashMap;
-use std::rc::Rc;
 
 use common::io::{
 	Frame,
@@ -26,12 +25,6 @@ use common::physics::{
 };
 
 use network::Network;
-use ui::{
-	Font,
-	Shaders,
-	Textures,
-	Window
-};
 
 
 mod args;
@@ -47,9 +40,6 @@ extern {}
 
 
 fn main() {
-	let screen_width  = 800;
-	let screen_height = 600;
-
 	let args = match args::parse() {
 		Some(args) => args,
 		None       => error::exit(format!("Failed to parse arguments"))
@@ -63,20 +53,7 @@ fn main() {
 		headless::init()
 	}
 	else {
-		let     window   = Rc::new(Window::create(screen_width, screen_height));
-		let     shaders  = Shaders::new(&*window);
-		let mut textures = Textures::init(&*window);
-		let     font     = Font::load(&mut textures);
-
-		images::load(&mut textures);
-
-		(
-			box ui::InputHandler::new(window.clone()) as Box<InputHandler>,
-			box ui::Renderer::new(
-				window.clone(),
-				shaders,
-				textures,
-				font) as Box<Renderer>)
+		ui::init()
 	};
 
 	let mut camera = Vec2::zero();
