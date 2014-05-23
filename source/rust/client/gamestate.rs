@@ -73,7 +73,7 @@ impl InterpolatedBodies {
 		}
 	}
 
-	fn receive(&mut self, ships: &HashMap<uint, Body>) {
+	fn receive(&mut self, bodies: &HashMap<uint, Body>) {
 		self.previous_time = self.current_time;
 		self.current_time  = time::precise_time_ns();
 
@@ -83,7 +83,7 @@ impl InterpolatedBodies {
 		}
 
 		self.current.clear();
-		for (&id, &body) in ships.iter() {
+		for (&id, &body) in bodies.iter() {
 			self.current.insert(id, body);
 		}
 	}
