@@ -60,9 +60,7 @@ fn main() {
 		args.port.as_slice());
 
 	let (mut input_handler, mut renderer) = if args.headless {
-		(
-			box headless::InputHandler::new() as Box<InputHandler>,
-			box headless::Renderer::new() as Box<Renderer>)
+		headless::init()
 	}
 	else {
 		let     window   = Rc::new(Window::create(screen_width, screen_height));
