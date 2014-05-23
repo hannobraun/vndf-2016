@@ -44,7 +44,9 @@ struct GameState {
 	previous_time : u64,
 	current_time  : u64,
 	previous_ships: HashMap<uint, Body>,
-	current_ships : HashMap<uint, Body>
+	current_ships : HashMap<uint, Body>,
+
+	missiles: HashMap<uint, Body>
 }
 
 
@@ -71,12 +73,12 @@ fn main() {
 		previous_time : time::precise_time_ns(),
 		current_time  : time::precise_time_ns(),
 		previous_ships: HashMap::new(),
-		current_ships : HashMap::new()
+		current_ships : HashMap::new(),
+
+		missiles: HashMap::new()
 	};
 
 	let mut camera = Vec2::zero();
-
-	let mut missiles = HashMap::new();
 
 	let mut next_input_send = 0;
 	let mut input_to_send   = Input::default();
@@ -87,7 +89,7 @@ fn main() {
 			&mut network,
 			&mut game_state.previous_ships,
 			&mut game_state.current_ships,
-			&mut missiles,
+			&mut game_state.missiles,
 			&mut game_state.previous_time,
 			&mut game_state.current_time);
 
@@ -141,7 +143,7 @@ fn main() {
 			input   : input,
 			camera  : camera,
 			ships   : ships,
-			missiles: missiles.iter().map(|(_, &body)| body).collect()
+			missiles: game_state.missiles.iter().map(|(_, &body)| body).collect()
 		};
 
 		renderer.render(&frame);
