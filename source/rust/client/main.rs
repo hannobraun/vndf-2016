@@ -13,10 +13,14 @@ extern crate common;
 
 use common::io::{
 	Frame,
+	Input,
 	InputHandler,
 	Renderer
 };
-use common::physics::Vec2;
+use common::physics::{
+	Body,
+	Vec2
+};
 
 use gamestate::GameState;
 use inputsender::InputSender;
@@ -67,14 +71,17 @@ fn main() {
 		input_sender.update(input, &mut network);
 
 		let ships = game_state.interpolate_ships_and_camera(&mut camera);
-
-		let frame = Frame {
-			input   : input,
-			camera  : camera,
-			ships   : ships,
-			missiles: game_state.missiles.iter().map(|(_, &body)| body).collect()
-		};
+		let frame = make_frame(input, ships, &game_state, camera);
 
 		renderer.render(&frame);
+	}
+}
+
+fn make_frame(input: Input, ships: Vec<Body>, game_state: &GameState, camera: Vec2) -> Frame {
+	Frame {
+		input   : input,
+		camera  : camera,
+		ships   : ships,
+		missiles: game_state.missiles.iter().map(|(_, &body)| body).collect()
 	}
 }
