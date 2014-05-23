@@ -38,7 +38,7 @@ impl GameState {
 		});
 	}
 
-	pub fn interpolate_ships(&mut self) -> Vec<Body> {
+	pub fn interpolate(&mut self) -> Vec<Body> {
 		let i = {
 			let diff = (self.ships.current_time - self.ships.previous_time) as f64;
 			if diff <= 0.0 {
