@@ -61,10 +61,7 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
-	let mut game_input = InputSender {
-		time_of_next_send: 0,
-		input_to_send    : Input::default()
-	};
+	let mut game_input = InputSender::new();
 
 	let mut should_close = false;
 	while !should_close {
