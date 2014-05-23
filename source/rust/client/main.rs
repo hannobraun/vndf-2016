@@ -30,7 +30,6 @@ use network::Network;
 mod args;
 mod error;
 mod headless;
-mod images;
 mod network;
 mod ui;
 

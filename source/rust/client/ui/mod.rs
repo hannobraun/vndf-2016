@@ -2,8 +2,6 @@ use std::rc::Rc;
 
 use common::io;
 
-use images;
-
 
 pub use ui::font::Font;
 pub use ui::inputhandler::InputHandler;
@@ -14,6 +12,7 @@ pub use ui::window::Window;
 
 
 mod font;
+mod images;
 mod inputhandler;
 mod renderer;
 mod shaders;
