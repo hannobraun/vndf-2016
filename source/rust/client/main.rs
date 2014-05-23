@@ -39,8 +39,8 @@ extern {}
 
 
 struct GameInput {
-	next_input_send: u64,
-	input_to_send  : Input
+	time_of_next_send: u64,
+	input_to_send    : Input
 }
 
 
@@ -66,8 +66,8 @@ fn main() {
 	let mut camera = Vec2::zero();
 
 	let mut game_input = GameInput {
-		next_input_send: 0,
-		input_to_send  : Input::default()
+		time_of_next_send: 0,
+		input_to_send    : Input::default()
 	};
 
 	let mut should_close = false;
@@ -94,9 +94,9 @@ fn main() {
 
 fn update_game_input(game_input: &mut GameInput, input: Input, network: &mut Network, period_in_ms: u64) {
 	game_input.input_to_send.attitude = input.attitude;
-	if time::precise_time_ns() >= game_input.next_input_send {
+	if time::precise_time_ns() >= game_input.time_of_next_send {
 		network.send(input);
-		game_input.next_input_send =
+		game_input.time_of_next_send =
 			time::precise_time_ns() + period_in_ms * 1000 * 1000;
 	}
 }
