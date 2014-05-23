@@ -38,6 +38,12 @@ mod ui;
 extern {}
 
 
+struct GameInput {
+	next_input_send: u64,
+	input_to_send  : Input
+}
+
+
 fn main() {
 	let args = match args::parse() {
 		Some(args) => args,
@@ -59,8 +65,10 @@ fn main() {
 
 	let mut camera = Vec2::zero();
 
-	let mut next_input_send = 0;
-	let mut input_to_send   = Input::default();
+	let mut game_input = GameInput {
+		next_input_send: 0,
+		input_to_send  : Input::default()
+	};
 
 	let mut should_close = false;
 	while !should_close {
@@ -69,10 +77,10 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		input_to_send.attitude = input.attitude;
-		if time::precise_time_ns() >= next_input_send {
+		game_input.input_to_send.attitude = input.attitude;
+		if time::precise_time_ns() >= game_input.next_input_send {
 			network.send(input);
-			next_input_send =
+			game_input.next_input_send =
 				time::precise_time_ns() + args.period as u64 * 1000 * 1000;
 		}
 
