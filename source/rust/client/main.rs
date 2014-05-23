@@ -67,7 +67,7 @@ fn main() {
 		let input = input_handler.input();
 		should_close = input.exit;
 
-		inputsender::update_game_input(&mut input_sender, input, &mut network, args.period as u64);
+		InputSender::update_game_input(&mut input_sender, input, &mut network, args.period as u64);
 
 		let ships = interpolate_ships_and_camera(&mut game_state, &mut camera);
 
