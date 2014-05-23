@@ -79,7 +79,7 @@ fn main() {
 
 	let mut should_close = false;
 	while !should_close {
-		let latest_self_id = receive_updates(
+		let self_id = receive_updates(
 			&mut network,
 			&mut previous_ships,
 			&mut current_ships,
@@ -87,7 +87,7 @@ fn main() {
 			&mut previous_time,
 			&mut current_time);
 
-		match latest_self_id {
+		match self_id {
 			Some(id) => game_state.self_id = Some(id),
 			None     => ()
 		}
