@@ -6,10 +6,9 @@ use network::Network;
 
 
 pub struct InputSender {
-	period_in_ms: u64,
-
-	pub time_of_next_send: u64,
-	pub input_to_send    : Input
+	period_in_ms     : u64,
+	time_of_next_send: u64,
+	input_to_send    : Input
 }
 
 impl InputSender {
