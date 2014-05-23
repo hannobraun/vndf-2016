@@ -115,27 +115,11 @@ impl Game {
 			integrate(missile, delta_time_in_s);
 		}
 
-		let ships: Vec<_> = self.ships
-			.iter()
-			.map(|(&id, &body)|
-				Ship {
-					id  : id,
-					body: body})
-			.collect();
-
-		let missiles: Vec<_> = self.missiles
-			.iter()
-			.map(|(&id, &body)|
-				Ship {
-					id  : id,
-					body: body})
-			.collect();
-
 		for &id in self.players.keys() {
 			let update = Perception {
 				self_id : id,
-				ships   : ships.clone(),
-				missiles: missiles.clone()
+				ships   : to_vec(&self.ships),
+				missiles: to_vec(&self.missiles)
 			};
 
 			self.network.send(Message(vec!(id), update));
@@ -171,4 +155,15 @@ impl Game {
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	body.velocity = body.attitude.to_vec() * 30.0;
 	body.position = body.position + body.velocity * delta_time_in_s;
+}
+
+fn to_vec(bodies: &Components<Body>) -> Vec<Ship> {
+	bodies
+		.iter()
+		.map(|(&id, &body)|
+			Ship {
+				id  : id,
+				body: body
+			})
+		.collect()
 }
