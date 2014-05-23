@@ -38,15 +38,15 @@ mod ui;
 extern {}
 
 
-struct GameState {
-	self_id: Option<uint>,
+pub struct GameState {
+	pub self_id: Option<uint>,
 
-	previous_time : u64,
-	current_time  : u64,
-	previous_ships: HashMap<uint, Body>,
-	current_ships : HashMap<uint, Body>,
+	pub previous_time : u64,
+	pub current_time  : u64,
+	pub previous_ships: HashMap<uint, Body>,
+	pub current_ships : HashMap<uint, Body>,
 
-	missiles: HashMap<uint, Body>
+	pub missiles: HashMap<uint, Body>
 }
 
 
