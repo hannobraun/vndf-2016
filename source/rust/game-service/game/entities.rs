@@ -75,11 +75,10 @@ struct ShipTemplate;
 
 impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
 	fn create_components(&self, client_id: ClientId) -> (Body, Ship) {
-		let velocity = Vec2(30.0, 10.0);
 		let body = Body {
 			position: Vec2::zero(),
-			velocity: velocity,
-			attitude: Radians::from_vec(velocity)
+			velocity: Vec2::zero(),
+			attitude: Radians(0.0)
 		};
 
 		let ship = Ship {
