@@ -32,7 +32,7 @@ impl Entities {
 	}
 
 	pub fn create_ship(&mut self, id: ClientId) {
-		self.ship_template.create(id, (), &mut self.bodies, &mut self.ships);
+		self.ship_template.create(id, id, &mut self.bodies, &mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, id: ClientId) {
@@ -43,8 +43,8 @@ impl Entities {
 
 struct ShipTemplate;
 
-impl EntityTemplate2<(), Body, Ship> for ShipTemplate {
-	fn create_components(&self, _: ()) -> (Body, Ship) {
+impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
+	fn create_components(&self, client_id: ClientId) -> (Body, Ship) {
 		let velocity = Vec2(30.0, 10.0);
 		let body = Body {
 			position: Vec2::zero(),
@@ -53,6 +53,7 @@ impl EntityTemplate2<(), Body, Ship> for ShipTemplate {
 		};
 
 		let ship = Ship {
+			client_id    : client_id,
 			missile_index: 0
 		};
 
