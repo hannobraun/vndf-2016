@@ -28,10 +28,7 @@ use events::{
 	NetworkEvent,
 	Update
 };
-use game::data::{
-	Player,
-	Ship
-};
+use game::data::Ship;
 use network::ClientId;
 
 
@@ -43,8 +40,7 @@ pub struct GameState {
 
 	bodies  : Components<Body>,
 	missiles: Components<Body>,
-	ships   : Components<Ship>,
-	players : Components<Player>
+	ships   : Components<Ship>
 }
 
 impl GameState {
@@ -59,8 +55,7 @@ impl GameState {
 
 			bodies  : HashMap::new(),
 			missiles: HashMap::new(),
-			ships   : HashMap::new(),
-			players : HashMap::new()
+			ships   : HashMap::new()
 		}
 	}
 
@@ -100,16 +95,13 @@ impl GameState {
 			attitude: Radians::from_vec(velocity)
 		});
 
-		self.ships.insert(id, Ship);
-
-		self.players.insert(id, Player {
+		self.ships.insert(id, Ship {
 			missile_index: 0
 		});
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
 		self.ships.remove(&id);
-		self.players.remove(&id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
@@ -121,7 +113,7 @@ impl GameState {
 			integrate(missile, delta_time_in_s);
 		}
 
-		for &id in self.players.keys() {
+		for &id in self.ships.keys() {
 			let update = Perception {
 				self_id : id,
 				ships   : self.bodies
@@ -137,27 +129,27 @@ impl GameState {
 	}
 
 	fn on_action(&mut self, id: ClientId, action: Action) {
-		let ship = match self.bodies.find_mut(&id) {
-			Some(ship) => ship,
+		let ship_body = match self.bodies.find_mut(&id) {
+			Some(body) => body,
 			None       => return
 		};
 
-		ship.attitude = action.attitude;
+		ship_body.attitude = action.attitude;
 
-		let player = self.players
+		let ship = self.ships
 			.find_mut(&id)
 			.expect("expected control");
 
-		if action.missile > player.missile_index {
+		if action.missile > ship.missile_index {
 			let mut body = Body::default();
-			body.position = ship.position;
-			body.attitude = ship.attitude;
+			body.position = ship_body.position;
+			body.attitude = ship_body.attitude;
 
 			self.missiles.insert(
 				(id * 1000) as EntityId + action.missile as EntityId,
 				body);
 		}
-		player.missile_index = action.missile;
+		ship.missile_index = action.missile;
 	}
 }
 

@@ -1,5 +1,3 @@
-pub struct Player {
+pub struct Ship {
 	pub missile_index: u64
 }
-
-pub struct Ship;
