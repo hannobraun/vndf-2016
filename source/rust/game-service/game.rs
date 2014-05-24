@@ -15,7 +15,6 @@ use common::protocol::{
 	Perception
 };
 
-use ecs::Player;
 use events::{
 	Action,
 	Enter,
@@ -146,6 +145,11 @@ impl Game {
 			None => ()
 		}
 	}
+}
+
+
+pub struct Player {
+	pub missile_index: u64
 }
 
 
