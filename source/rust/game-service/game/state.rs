@@ -99,7 +99,7 @@ impl GameState {
 		}
 
 		for (&id, ship) in self.entities.ships.iter() {
-			let update = Perception {
+			let perception = Perception {
 				self_id: id,
 
 				ships: self.entities.bodies
@@ -111,7 +111,7 @@ impl GameState {
 				missiles: self.missiles.clone()
 			};
 
-			self.network.send(Message(vec!(ship.client_id), update));
+			self.network.send(Message(vec!(ship.client_id), perception));
 		}
 	}
 
