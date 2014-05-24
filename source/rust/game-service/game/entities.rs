@@ -1,3 +1,5 @@
+use collections::HashMap;
+
 use common::ecs::Components;
 use common::physics::{
 	Body,
@@ -15,6 +17,13 @@ pub struct Entities {
 }
 
 impl Entities {
+	pub fn new() -> Entities {
+		Entities {
+			bodies: HashMap::new(),
+			ships : HashMap::new()
+		}
+	}
+
 	pub fn create_ship(&mut self, id: ClientId) {
 		let ship_template = ShipTemplate;
 		ship_template.create(id, &mut self.bodies, &mut self.ships);

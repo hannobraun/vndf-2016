@@ -48,10 +48,7 @@ impl GameState {
 			incoming: receiver,
 			network : network,
 
-			entities: Entities {
-				bodies: HashMap::new(),
-				ships : HashMap::new()
-			},
+			entities: Entities::new(),
 			missiles: HashMap::new(),
 		}
 	}
