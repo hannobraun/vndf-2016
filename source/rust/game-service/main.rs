@@ -29,17 +29,17 @@ fn main() {
 		}
 	};
 
-	let mut network = Network::new(args.port.as_slice());
-	let mut game    = GameState::new(network.events.clone());
+	let mut network    = Network::new(args.port.as_slice());
+	let mut game_state = GameState::new(network.events.clone());
 
 	let frame_time_in_ms = args.frame_time;
 
-	updater::init(frame_time_in_ms as u64, game.events.clone());
+	updater::init(frame_time_in_ms as u64, game_state.events.clone());
 
-	game.events.send(Init);
+	game_state.events.send(Init);
 
 	loop {
-		network.update(frame_time_in_ms, &mut game.events);
-		game.update();
+		network.update(frame_time_in_ms, &mut game_state.events);
+		game_state.update();
 	}
 }
