@@ -6,6 +6,7 @@ extern crate libc;
 extern crate rand;
 extern crate serialize;
 
+pub mod ecs;
 pub mod io;
 pub mod json;
 pub mod net;
