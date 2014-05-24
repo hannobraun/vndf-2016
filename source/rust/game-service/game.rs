@@ -28,7 +28,7 @@ use events::{
 use network::ClientId;
 
 
-pub struct Game {
+pub struct GameState {
 	pub events: Sender<GameEvent>,
 
 	incoming: Receiver<GameEvent>,
@@ -39,11 +39,11 @@ pub struct Game {
 	players : Components<Player>
 }
 
-impl Game {
-	pub fn new(network: Sender<NetworkEvent>) -> Game {
+impl GameState {
+	pub fn new(network: Sender<NetworkEvent>) -> GameState {
 		let (sender, receiver) = channel();
 
-		Game {
+		GameState {
 			events  : sender,
 
 			incoming: receiver,
