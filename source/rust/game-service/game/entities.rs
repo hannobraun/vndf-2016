@@ -16,11 +16,13 @@ pub struct Entities {
 
 impl Entities {
 	pub fn create_ship(&mut self, id: ClientId) {
-		ShipTemplate::create(id, &mut self.bodies, &mut self.ships);
+		let ship_template = ShipTemplate;
+		ship_template.create(id, &mut self.bodies, &mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, id: ClientId) {
-		ShipTemplate::destroy(id, &mut self.bodies, &mut self.ships);
+		let ship_template = ShipTemplate;
+		ship_template.destroy(id, &mut self.bodies, &mut self.ships);
 	}
 }
 
@@ -28,7 +30,7 @@ impl Entities {
 struct ShipTemplate;
 
 impl ShipTemplate {
-	fn create(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
+	fn create(&self, id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		let velocity = Vec2(30.0, 10.0);
 		bodies.insert(id, Body {
 			position: Vec2::zero(),
@@ -41,7 +43,7 @@ impl ShipTemplate {
 		});
 	}
 
-	fn destroy(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
+	fn destroy(&self, id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		bodies.remove(&id);
 		ships.remove(&id);
 	}
