@@ -134,28 +134,27 @@ impl GameState {
 	}
 
 	fn on_action(&mut self, id: ClientId, action: Action) {
-		match self.bodies.find_mut(&id) {
-			Some(ship) => {
-				ship.attitude = action.attitude;
+		let ship = match self.bodies.find_mut(&id) {
+			Some(ship) => ship,
+			None       => return
+		};
 
-				let player = self.players
-					.find_mut(&id)
-					.expect("expected control");
+		ship.attitude = action.attitude;
 
-				if action.missile > player.missile_index {
-					let mut body = Body::default();
-					body.position = ship.position;
-					body.attitude = ship.attitude;
+		let player = self.players
+			.find_mut(&id)
+			.expect("expected control");
 
-					self.missiles.insert(
-						(id * 1000) as ClientId + action.missile as ClientId,
-						body);
-				}
-				player.missile_index = action.missile;
-			},
+		if action.missile > player.missile_index {
+			let mut body = Body::default();
+			body.position = ship.position;
+			body.attitude = ship.attitude;
 
-			None => ()
+			self.missiles.insert(
+				(id * 1000) as ClientId + action.missile as ClientId,
+				body);
 		}
+		player.missile_index = action.missile;
 	}
 }
 
