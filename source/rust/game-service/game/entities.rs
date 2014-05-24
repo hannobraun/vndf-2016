@@ -12,6 +12,8 @@ use network::ClientId;
 
 
 pub struct Entities {
+	ship_template: ShipTemplate,
+
 	pub bodies: Components<Body>,
 	pub ships : Components<Ship>
 }
@@ -19,19 +21,19 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
+			ship_template: ShipTemplate,
+
 			bodies: HashMap::new(),
 			ships : HashMap::new()
 		}
 	}
 
 	pub fn create_ship(&mut self, id: ClientId) {
-		let ship_template = ShipTemplate;
-		ship_template.create(id, &mut self.bodies, &mut self.ships);
+		self.ship_template.create(id, &mut self.bodies, &mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, id: ClientId) {
-		let ship_template = ShipTemplate;
-		ship_template.destroy(id, &mut self.bodies, &mut self.ships);
+		self.ship_template.destroy(id, &mut self.bodies, &mut self.ships);
 	}
 }
 
