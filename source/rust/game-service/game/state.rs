@@ -89,8 +89,7 @@ impl GameState {
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
-		self.entities.bodies.remove(&id);
-		self.entities.ships.remove(&id);
+		self.entities.destroy_ship(id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {

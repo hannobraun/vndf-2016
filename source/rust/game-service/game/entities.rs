@@ -27,4 +27,9 @@ impl Entities {
 			missile_index: 0
 		});
 	}
+
+	pub fn destroy_ship(&mut self, id: ClientId) {
+		self.bodies.remove(&id);
+		self.ships.remove(&id);
+	}
 }
