@@ -2,6 +2,7 @@ use collections::HashMap;
 
 use common::ecs::{
 	Components,
+	EntityId,
 	EntityTemplate2
 };
 use common::physics::{
@@ -29,6 +30,16 @@ impl Entities {
 			bodies: HashMap::new(),
 			ships : HashMap::new()
 		}
+	}
+
+	pub fn entity_id_from_client_id(&self, client_id: ClientId) -> Option<EntityId> {
+		for (&id, ship) in self.ships.iter() {
+			if ship.client_id == client_id {
+				return Some(id);
+			}
+		}
+
+		None
 	}
 
 	pub fn create_ship(&mut self, client_id: ClientId) {
