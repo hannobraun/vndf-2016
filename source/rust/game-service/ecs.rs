@@ -1,9 +1,9 @@
 use collections::HashMap;
 
-use network::ClientId;
+use common::ecs::EntityId;
 
 
-pub type Components<T> = HashMap<ClientId, T>;
+pub type Components<T> = HashMap<EntityId, T>;
 
 
 pub struct Player {
