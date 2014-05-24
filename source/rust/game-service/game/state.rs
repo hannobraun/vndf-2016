@@ -125,11 +125,11 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected body");
 
-		ship_body.attitude = action.attitude;
-
 		let ship = self.entities.ships
 			.find_mut(&id)
 			.expect("expected ship");
+
+		ship_body.attitude = action.attitude;
 
 		if action.missile > ship.missile_index {
 			let mut body = Body::default();
