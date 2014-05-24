@@ -4,6 +4,7 @@ use std::comm::{
 	Empty
 };
 
+use common::ecs::Components;
 use common::physics::{
 	Body,
 	Radians,
@@ -14,10 +15,7 @@ use common::protocol::{
 	Perception
 };
 
-use ecs::{
-	Components,
-	Player
-};
+use ecs::Player;
 use events::{
 	Action,
 	Enter,
