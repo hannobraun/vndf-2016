@@ -18,6 +18,8 @@ use network::ClientId;
 pub struct Entities {
 	ship_template: ShipTemplate,
 
+	next_id: EntityId,
+
 	pub bodies: Components<Body>,
 	pub ships : Components<Ship>
 }
@@ -26,6 +28,8 @@ impl Entities {
 	pub fn new() -> Entities {
 		Entities {
 			ship_template: ShipTemplate,
+
+			next_id: 0,
 
 			bodies: HashMap::new(),
 			ships : HashMap::new()
@@ -43,7 +47,8 @@ impl Entities {
 	}
 
 	pub fn create_ship(&mut self, client_id: ClientId) {
-		let id = client_id;
+		let id = self.next_id;
+		self.next_id += 1;
 
 		self.ship_template.create(
 			id,
