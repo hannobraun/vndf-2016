@@ -98,7 +98,7 @@ impl GameState {
 			integrate(missile, delta_time_in_s);
 		}
 
-		for &id in self.entities.ships.keys() {
+		for (&id, ship) in self.entities.ships.iter() {
 			let update = Perception {
 				self_id: id,
 
@@ -111,7 +111,7 @@ impl GameState {
 				missiles: self.missiles.clone()
 			};
 
-			self.network.send(Message(vec!(id), update));
+			self.network.send(Message(vec!(ship.client_id), update));
 		}
 	}
 
