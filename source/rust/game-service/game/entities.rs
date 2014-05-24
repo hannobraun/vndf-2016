@@ -5,13 +5,13 @@ use common::physics::{
 	Vec2
 };
 
-use game::data;
+use game::data::Ship;
 use network::ClientId;
 
 
 pub struct Entities {
 	pub bodies: Components<Body>,
-	pub ships : Components<data::Ship>
+	pub ships : Components<Ship>
 }
 
 impl Entities {
@@ -28,7 +28,7 @@ impl Entities {
 struct ShipTemplate;
 
 impl ShipTemplate {
-	fn create(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<data::Ship>) {
+	fn create(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		let velocity = Vec2(30.0, 10.0);
 		bodies.insert(id, Body {
 			position: Vec2::zero(),
@@ -36,12 +36,12 @@ impl ShipTemplate {
 			attitude: Radians::from_vec(velocity)
 		});
 
-		ships.insert(id, data::Ship {
+		ships.insert(id, Ship {
 			missile_index: 0
 		});
 	}
 
-	fn destroy(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<data::Ship>) {
+	fn destroy(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		bodies.remove(&id);
 		ships.remove(&id);
 	}
