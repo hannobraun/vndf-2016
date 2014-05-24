@@ -57,10 +57,3 @@ impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
 		});
 	}
 }
-
-impl ShipTemplate {
-	fn destroy(&self, id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
-		bodies.remove(&id);
-		ships.remove(&id);
-	}
-}
