@@ -138,7 +138,7 @@ impl GameState {
 
 		let ship = self.ships
 			.find_mut(&id)
-			.expect("expected control");
+			.expect("expected ship");
 
 		if action.missile > ship.missile_index {
 			let mut body = Body::default();
