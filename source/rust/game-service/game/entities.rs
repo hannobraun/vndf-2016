@@ -1,6 +1,9 @@
 use collections::HashMap;
 
-use common::ecs::Components;
+use common::ecs::{
+	Components,
+	EntityTemplate2
+};
 use common::physics::{
 	Body,
 	Radians,
@@ -40,7 +43,7 @@ impl Entities {
 
 struct ShipTemplate;
 
-impl ShipTemplate {
+impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
 	fn create(&self, id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		let velocity = Vec2(30.0, 10.0);
 		bodies.insert(id, Body {
@@ -53,7 +56,9 @@ impl ShipTemplate {
 			missile_index: 0
 		});
 	}
+}
 
+impl ShipTemplate {
 	fn destroy(&self, id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<Ship>) {
 		bodies.remove(&id);
 		ships.remove(&id);
