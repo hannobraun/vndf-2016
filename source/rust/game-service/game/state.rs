@@ -118,12 +118,14 @@ impl GameState {
 
 		for &id in self.entities.ships.keys() {
 			let update = Perception {
-				self_id : id,
-				ships   : self.entities.bodies
+				self_id: id,
+
+				ships: self.entities.bodies
 					.iter()
 					.filter(|&(id, _)| self.entities.ships.contains_key(id))
 					.map(|(&id, &body)| (id, body))
 					.collect(),
+
 				missiles: self.missiles.clone()
 			};
 
