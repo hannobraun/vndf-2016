@@ -29,6 +29,7 @@ use events::{
 	Update
 };
 use game::data::Ship;
+use game::entities::Entities;
 use network::ClientId;
 
 
@@ -38,9 +39,8 @@ pub struct GameState {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	bodies  : Components<Body>,
-	missiles: Components<Body>,
-	ships   : Components<Ship>
+	entities: Entities,
+	missiles: Components<Body>
 }
 
 impl GameState {
@@ -53,9 +53,11 @@ impl GameState {
 			incoming: receiver,
 			network : network,
 
-			bodies  : HashMap::new(),
+			entities: Entities {
+				bodies: HashMap::new(),
+				ships : HashMap::new()
+			},
 			missiles: HashMap::new(),
-			ships   : HashMap::new()
 		}
 	}
 
@@ -89,24 +91,24 @@ impl GameState {
 
 	fn on_enter(&mut self, id: ClientId) {
 		let velocity = Vec2(30.0, 10.0);
-		self.bodies.insert(id, Body {
+		self.entities.bodies.insert(id, Body {
 			position: Vec2::zero(),
 			velocity: velocity,
 			attitude: Radians::from_vec(velocity)
 		});
 
-		self.ships.insert(id, Ship {
+		self.entities.ships.insert(id, Ship {
 			missile_index: 0
 		});
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
-		self.bodies.remove(&id);
-		self.ships.remove(&id);
+		self.entities.bodies.remove(&id);
+		self.entities.ships.remove(&id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
-		for (_, body) in self.bodies.mut_iter() {
+		for (_, body) in self.entities.bodies.mut_iter() {
 			integrate(body, delta_time_in_s);
 		}
 
@@ -114,12 +116,12 @@ impl GameState {
 			integrate(missile, delta_time_in_s);
 		}
 
-		for &id in self.ships.keys() {
+		for &id in self.entities.ships.keys() {
 			let update = Perception {
 				self_id : id,
-				ships   : self.bodies
+				ships   : self.entities.bodies
 					.iter()
-					.filter(|&(id, _)| self.ships.contains_key(id))
+					.filter(|&(id, _)| self.entities.ships.contains_key(id))
 					.map(|(&id, &body)| (id, body))
 					.collect(),
 				missiles: self.missiles.clone()
@@ -130,14 +132,14 @@ impl GameState {
 	}
 
 	fn on_action(&mut self, id: ClientId, action: Action) {
-		let ship_body = match self.bodies.find_mut(&id) {
+		let ship_body = match self.entities.bodies.find_mut(&id) {
 			Some(body) => body,
 			None       => return
 		};
 
 		ship_body.attitude = action.attitude;
 
-		let ship = self.ships
+		let ship = self.entities.ships
 			.find_mut(&id)
 			.expect("expected ship");
 
