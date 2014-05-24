@@ -25,6 +25,7 @@ use events::{
 	NetworkEvent,
 	Update
 };
+use game::data::Player;
 use network::ClientId;
 
 
@@ -145,11 +146,6 @@ impl GameState {
 			None => ()
 		}
 	}
-}
-
-
-pub struct Player {
-	pub missile_index: u64
 }
 
 
