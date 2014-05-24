@@ -25,7 +25,10 @@ use events::{
 	NetworkEvent,
 	Update
 };
-use game::data::Player;
+use game::data::{
+	Player,
+	Ship
+};
 use network::ClientId;
 
 
@@ -35,8 +38,9 @@ pub struct GameState {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
+	bodies  : Components<Body>,
 	missiles: Components<Body>,
-	ships   : Components<Body>,
+	ships   : Components<Ship>,
 	players : Components<Player>
 }
 
@@ -50,6 +54,7 @@ impl GameState {
 			incoming: receiver,
 			network : network,
 
+			bodies  : HashMap::new(),
 			missiles: HashMap::new(),
 			ships   : HashMap::new(),
 			players : HashMap::new()
@@ -86,11 +91,13 @@ impl GameState {
 
 	fn on_enter(&mut self, id: ClientId) {
 		let velocity = Vec2(30.0, 10.0);
-		self.ships.insert(id, Body {
+		self.bodies.insert(id, Body {
 			position: Vec2::zero(),
 			velocity: velocity,
 			attitude: Radians::from_vec(velocity)
 		});
+
+		self.ships.insert(id, Ship);
 
 		self.players.insert(id, Player {
 			missile_index: 0
@@ -103,8 +110,8 @@ impl GameState {
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
-		for (_, ship) in self.ships.mut_iter() {
-			integrate(ship, delta_time_in_s);
+		for (_, body) in self.bodies.mut_iter() {
+			integrate(body, delta_time_in_s);
 		}
 
 		for (_, missile) in self.missiles.mut_iter() {
@@ -114,7 +121,11 @@ impl GameState {
 		for &id in self.players.keys() {
 			let update = Perception {
 				self_id : id,
-				ships   : self.ships.clone(),
+				ships   : self.bodies
+					.iter()
+					.filter(|&(id, _)| self.ships.contains_key(id))
+					.map(|(&id, &body)| (id, body))
+					.collect(),
 				missiles: self.missiles.clone()
 			};
 
@@ -123,7 +134,7 @@ impl GameState {
 	}
 
 	fn on_action(&mut self, id: ClientId, action: Action) {
-		match self.ships.find_mut(&id) {
+		match self.bodies.find_mut(&id) {
 			Some(ship) => {
 				ship.attitude = action.attitude;
 
