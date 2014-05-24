@@ -20,8 +20,7 @@ impl Entities {
 	}
 
 	pub fn destroy_ship(&mut self, id: ClientId) {
-		self.bodies.remove(&id);
-		self.ships.remove(&id);
+		Ship::destroy(id, &mut self.bodies, &mut self.ships);
 	}
 }
 
@@ -40,5 +39,10 @@ impl Ship {
 		ships.insert(id, data::Ship {
 			missile_index: 0
 		});
+	}
+
+	fn destroy(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<data::Ship>) {
+		bodies.remove(&id);
+		ships.remove(&id);
 	}
 }
