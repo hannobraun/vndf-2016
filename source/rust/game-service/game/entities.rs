@@ -16,18 +16,18 @@ pub struct Entities {
 
 impl Entities {
 	pub fn create_ship(&mut self, id: ClientId) {
-		Ship::create(id, &mut self.bodies, &mut self.ships);
+		ShipTemplate::create(id, &mut self.bodies, &mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, id: ClientId) {
-		Ship::destroy(id, &mut self.bodies, &mut self.ships);
+		ShipTemplate::destroy(id, &mut self.bodies, &mut self.ships);
 	}
 }
 
 
-struct Ship;
+struct ShipTemplate;
 
-impl Ship {
+impl ShipTemplate {
 	fn create(id: ClientId, bodies: &mut Components<Body>, ships: &mut Components<data::Ship>) {
 		let velocity = Vec2(30.0, 10.0);
 		bodies.insert(id, Body {
