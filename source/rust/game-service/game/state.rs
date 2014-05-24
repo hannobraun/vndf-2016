@@ -101,6 +101,7 @@ impl GameState {
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
+		self.bodies.remove(&id);
 		self.ships.remove(&id);
 	}
 
