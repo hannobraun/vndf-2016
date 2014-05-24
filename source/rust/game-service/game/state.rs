@@ -4,7 +4,10 @@ use std::comm::{
 	Empty
 };
 
-use common::ecs::Components;
+use common::ecs::{
+	Components,
+	EntityId
+};
 use common::physics::{
 	Body,
 	Radians,
@@ -151,7 +154,7 @@ impl GameState {
 			body.attitude = ship.attitude;
 
 			self.missiles.insert(
-				(id * 1000) as ClientId + action.missile as ClientId,
+				(id * 1000) as EntityId + action.missile as EntityId,
 				body);
 		}
 		player.missile_index = action.missile;
