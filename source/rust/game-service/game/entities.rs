@@ -31,8 +31,14 @@ impl Entities {
 		}
 	}
 
-	pub fn create_ship(&mut self, id: ClientId) {
-		self.ship_template.create(id, id, &mut self.bodies, &mut self.ships);
+	pub fn create_ship(&mut self, client_id: ClientId) {
+		let id = client_id;
+
+		self.ship_template.create(
+			id,
+			client_id,
+			&mut self.bodies,
+			&mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
