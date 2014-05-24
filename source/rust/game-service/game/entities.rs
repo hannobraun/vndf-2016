@@ -5,13 +5,13 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::Ship;
+use game::data;
 use network::ClientId;
 
 
 pub struct Entities {
 	pub bodies: Components<Body>,
-	pub ships : Components<Ship>
+	pub ships : Components<data::Ship>
 }
 
 impl Entities {
@@ -23,7 +23,7 @@ impl Entities {
 			attitude: Radians::from_vec(velocity)
 		});
 
-		self.ships.insert(id, Ship {
+		self.ships.insert(id, data::Ship {
 			missile_index: 0
 		});
 	}
