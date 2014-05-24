@@ -8,11 +8,7 @@ use common::ecs::{
 	Components,
 	EntityId
 };
-use common::physics::{
-	Body,
-	Radians,
-	Vec2
-};
+use common::physics::Body;
 use common::protocol::{
 	Action,
 	Perception
@@ -28,7 +24,6 @@ use events::{
 	NetworkEvent,
 	Update
 };
-use game::data::Ship;
 use game::entities::Entities;
 use network::ClientId;
 
@@ -90,16 +85,7 @@ impl GameState {
 	}
 
 	fn on_enter(&mut self, id: ClientId) {
-		let velocity = Vec2(30.0, 10.0);
-		self.entities.bodies.insert(id, Body {
-			position: Vec2::zero(),
-			velocity: velocity,
-			attitude: Radians::from_vec(velocity)
-		});
-
-		self.entities.ships.insert(id, Ship {
-			missile_index: 0
-		});
+		self.entities.create_ship(id);
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
