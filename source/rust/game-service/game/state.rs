@@ -115,11 +115,15 @@ impl GameState {
 		}
 	}
 
-	fn on_action(&mut self, id: ClientId, action: Action) {
-		let ship_body = match self.entities.bodies.find_mut(&id) {
-			Some(body) => body,
-			None       => return
+	fn on_action(&mut self, client_id: ClientId, action: Action) {
+		let id = match self.entities.entity_id_from_client_id(client_id) {
+			Some(id) => id,
+			None     => return
 		};
+
+		let ship_body = self.entities.bodies
+			.find_mut(&id)
+			.expect("expected body");
 
 		ship_body.attitude = action.attitude;
 
