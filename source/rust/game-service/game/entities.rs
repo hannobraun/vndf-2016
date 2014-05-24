@@ -53,17 +53,15 @@ impl Entities {
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
-		let mut ids = Vec::new();
+		let id = match self.entity_id_from_client_id(client_id) {
+			Some(id) => id,
+			None     => return
+		};
 
-		for (&id, ship) in self.ships.iter() {
-			if ship.client_id == client_id {
-				ids.push(id);
-			}
-		}
-
-		for &id in ids.iter() {
-			self.ship_template.destroy(id, &mut self.bodies, &mut self.ships);
-		}
+		self.ship_template.destroy(
+			id,
+			&mut self.bodies,
+			&mut self.ships);
 	}
 }
 
