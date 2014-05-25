@@ -1,13 +1,9 @@
-use collections::HashMap;
 use std::comm::{
 	Disconnected,
 	Empty
 };
 
-use common::ecs::{
-	Components,
-	EntityId
-};
+use common::ecs::EntityId;
 use common::physics::Body;
 use common::protocol::{
 	Action,
@@ -34,8 +30,7 @@ pub struct GameState {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	entities: Entities,
-	missiles: Components<Body>
+	entities: Entities
 }
 
 impl GameState {
@@ -48,8 +43,7 @@ impl GameState {
 			incoming: receiver,
 			network : network,
 
-			entities: Entities::new(),
-			missiles: HashMap::new(),
+			entities: Entities::new()
 		}
 	}
 
@@ -94,7 +88,7 @@ impl GameState {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (_, missile) in self.missiles.mut_iter() {
+		for (_, missile) in self.entities.missiles.mut_iter() {
 			integrate(missile, delta_time_in_s);
 		}
 
@@ -108,7 +102,7 @@ impl GameState {
 					.map(|(&id, &body)| (id, body))
 					.collect(),
 
-				missiles: self.missiles.clone()
+				missiles: self.entities.missiles.clone()
 			};
 
 			self.network.send(Message(vec!(ship.client_id), perception));
@@ -136,7 +130,7 @@ impl GameState {
 			body.position = ship_body.position;
 			body.attitude = ship_body.attitude;
 
-			self.missiles.insert(
+			self.entities.missiles.insert(
 				(id * 1000) as EntityId + action.missile as EntityId,
 				body);
 		}

@@ -20,8 +20,9 @@ pub struct Entities {
 
 	next_id: EntityId,
 
-	pub bodies: Components<Body>,
-	pub ships : Components<Ship>
+	pub bodies  : Components<Body>,
+	pub missiles: Components<Body>,
+	pub ships   : Components<Ship>
 }
 
 impl Entities {
@@ -31,8 +32,9 @@ impl Entities {
 
 			next_id: 0,
 
-			bodies: HashMap::new(),
-			ships : HashMap::new()
+			bodies  : HashMap::new(),
+			missiles: HashMap::new(),
+			ships   : HashMap::new()
 		}
 	}
 
