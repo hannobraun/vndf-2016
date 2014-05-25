@@ -121,7 +121,7 @@ impl GameState {
 			None     => return
 		};
 
-		let ship_body = self.entities.bodies
+		let body = self.entities.bodies
 			.find_mut(&id)
 			.expect("expected body");
 
@@ -129,13 +129,13 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected ship");
 
-		ship_body.attitude = action.attitude;
+		body.attitude = action.attitude;
 
 		if action.missile > ship.missile_index {
 			self.events.send(
 				MissileLaunch(
-					ship_body.position,
-					ship_body.attitude))
+					body.position,
+					body.attitude))
 		}
 		ship.missile_index = action.missile;
 	}
