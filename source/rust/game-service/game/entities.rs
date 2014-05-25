@@ -49,8 +49,7 @@ impl Entities {
 	}
 
 	pub fn create_ship(&mut self, client_id: ClientId) {
-		let id = self.next_id;
-		self.next_id += 1;
+		let id = self.next_id();
 
 		self.ship_template.create(
 			id,
@@ -72,14 +71,19 @@ impl Entities {
 	}
 
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
-		let id = self.next_id;
-		self.next_id += 1;
+		let id = self.next_id();
 
 		let mut body = Body::default();
 		body.position = position;
 		body.attitude = attitude;
 
 		self.missiles.insert(id, body);
+	}
+
+	fn next_id(&mut self) -> EntityId {
+		let id = self.next_id;
+		self.next_id += 1;
+		id
 	}
 }
 
