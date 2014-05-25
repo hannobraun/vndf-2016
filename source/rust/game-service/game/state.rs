@@ -124,7 +124,6 @@ impl GameState {
 		let body = self.entities.bodies
 			.find_mut(&id)
 			.expect("expected body");
-
 		let ship = self.entities.ships
 			.find_mut(&id)
 			.expect("expected ship");
