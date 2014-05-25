@@ -94,10 +94,6 @@ impl GameState {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (_, missile) in self.entities.missiles.mut_iter() {
-			integrate(missile, delta_time_in_s);
-		}
-
 		for (&id, ship) in self.entities.ships.iter() {
 			let perception = Perception {
 				self_id: id,
@@ -108,7 +104,11 @@ impl GameState {
 					.map(|(&id, &body)| (id, body))
 					.collect(),
 
-				missiles: self.entities.missiles.clone()
+				missiles: self.entities.bodies
+					.iter()
+					.filter(|&(id, _)| self.entities.missiles.contains_key(id))
+					.map(|(&id, &body)| (id, body))
+					.collect()
 			};
 
 			self.network.send(Message(vec!(ship.client_id), perception));

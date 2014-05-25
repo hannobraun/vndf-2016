@@ -11,24 +11,29 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::Ship;
+use game::data::{
+	Missile,
+	Ship
+};
 use network::ClientId;
 
 
 pub struct Entities {
-	ship_template: ShipTemplate,
+	missile_template: MissileTemplate,
+	ship_template   : ShipTemplate,
 
 	next_id: EntityId,
 
 	pub bodies  : Components<Body>,
-	pub missiles: Components<Body>,
+	pub missiles: Components<Missile>,
 	pub ships   : Components<Ship>
 }
 
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
-			ship_template: ShipTemplate,
+			missile_template: MissileTemplate,
+			ship_template   : ShipTemplate,
 
 			next_id: 0,
 
@@ -73,11 +78,11 @@ impl Entities {
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
 		let id = self.next_id();
 
-		let mut body = Body::default();
-		body.position = position;
-		body.attitude = attitude;
-
-		self.missiles.insert(id, body);
+		self.missile_template.create(
+			id,
+			(position, attitude),
+			&mut self.bodies,
+			&mut self.missiles);
 	}
 
 	fn next_id(&mut self) -> EntityId {
@@ -104,5 +109,20 @@ impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
 		};
 
 		(body, ship)
+	}
+}
+
+
+struct MissileTemplate;
+
+impl EntityTemplate2<(Vec2, Radians), Body, Missile> for MissileTemplate {
+	fn create_components(&self, (position, attitude): (Vec2, Radians)) -> (Body, Missile) {
+		let body = Body {
+			position: position,
+			velocity: Vec2::zero(),
+			attitude: attitude
+		};
+
+		(body, Missile)
 	}
 }
