@@ -3,7 +3,6 @@ use std::comm::{
 	Empty
 };
 
-use common::ecs::EntityId;
 use common::physics::{
 	Body,
 	Radians,
@@ -69,8 +68,8 @@ impl GameState {
 							self.on_update(frame_time_in_s),
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
-						MissileLaunch(id, position, attitude) =>
-							self.on_missile_launch(id, position, attitude)
+						MissileLaunch(position, attitude) =>
+							self.on_missile_launch(position, attitude)
 					}
 				},
 
@@ -135,15 +134,14 @@ impl GameState {
 		if action.missile > ship.missile_index {
 			self.events.send(
 				MissileLaunch(
-					(id * 1000) as EntityId + action.missile as EntityId,
 					ship_body.position,
 					ship_body.attitude))
 		}
 		ship.missile_index = action.missile;
 	}
 
-	fn on_missile_launch(&mut self, id: EntityId, position: Vec2, attitude: Radians) {
-		self.entities.create_missile(id, position, attitude);
+	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
+		self.entities.create_missile(position, attitude);
 	}
 }
 

@@ -71,7 +71,10 @@ impl Entities {
 			&mut self.ships);
 	}
 
-	pub fn create_missile(&mut self, id: EntityId, position: Vec2, attitude: Radians) {
+	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
+		let id = self.next_id;
+		self.next_id += 1;
+
 		let mut body = Body::default();
 		body.position = position;
 		body.attitude = attitude;

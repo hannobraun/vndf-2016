@@ -1,6 +1,5 @@
 use std::io::IoError;
 
-use common::ecs::EntityId;
 use common::physics::{
 	Radians,
 	Vec2
@@ -20,7 +19,7 @@ pub enum GameEvent {
 	Enter(ClientId),
 	Leave(ClientId),
 	Action(ClientId, Action),
-	MissileLaunch(EntityId, Vec2, Radians)
+	MissileLaunch(Vec2, Radians)
 }
 
 #[deriving(Eq, Show)]
