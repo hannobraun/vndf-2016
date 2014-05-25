@@ -70,6 +70,14 @@ impl Entities {
 			&mut self.bodies,
 			&mut self.ships);
 	}
+
+	pub fn create_missile(&mut self, id: EntityId, position: Vec2, attitude: Radians) {
+		let mut body = Body::default();
+		body.position = position;
+		body.attitude = attitude;
+
+		self.missiles.insert(id, body);
+	}
 }
 
 

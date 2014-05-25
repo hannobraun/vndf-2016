@@ -143,11 +143,7 @@ impl GameState {
 	}
 
 	fn on_missile_launch(&mut self, id: EntityId, position: Vec2, attitude: Radians) {
-		let mut body = Body::default();
-		body.position = position;
-		body.attitude = attitude;
-
-		self.entities.missiles.insert(id, body);
+		self.entities.create_missile(id, position, attitude);
 	}
 }
 
