@@ -4,7 +4,11 @@ use std::comm::{
 };
 
 use common::ecs::EntityId;
-use common::physics::Body;
+use common::physics::{
+	Body,
+	Radians,
+	Vec2
+};
 use common::protocol::{
 	Action,
 	Perception
@@ -17,6 +21,7 @@ use events::{
 	Init,
 	Leave,
 	Message,
+	MissileLaunch,
 	NetworkEvent,
 	Update
 };
@@ -63,7 +68,9 @@ impl GameState {
 						Update(frame_time_in_s) =>
 							self.on_update(frame_time_in_s),
 						Action(client_id, action) =>
-							self.on_action(client_id, action)
+							self.on_action(client_id, action),
+						MissileLaunch(id, position, attitude) =>
+							self.on_missile_launch(id, position, attitude)
 					}
 				},
 
@@ -126,15 +133,21 @@ impl GameState {
 		ship_body.attitude = action.attitude;
 
 		if action.missile > ship.missile_index {
-			let mut body = Body::default();
-			body.position = ship_body.position;
-			body.attitude = ship_body.attitude;
-
-			self.entities.missiles.insert(
-				(id * 1000) as EntityId + action.missile as EntityId,
-				body);
+			self.events.send(
+				MissileLaunch(
+					(id * 1000) as EntityId + action.missile as EntityId,
+					ship_body.position,
+					ship_body.attitude))
 		}
 		ship.missile_index = action.missile;
+	}
+
+	fn on_missile_launch(&mut self, id: EntityId, position: Vec2, attitude: Radians) {
+		let mut body = Body::default();
+		body.position = position;
+		body.attitude = attitude;
+
+		self.entities.missiles.insert(id, body);
 	}
 }
 
