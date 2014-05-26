@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+wintersmith build --chdir source/http --output $(pwd)/output/http
