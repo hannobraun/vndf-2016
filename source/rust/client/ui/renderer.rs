@@ -227,10 +227,10 @@ impl Renderer {
 
 		self.draw_text(
 			Vec2(20.0, 40.0),
-			"Set attitude with the left and right cursor keys");
+			"Change course with the left and right cursor keys");
 		self.draw_text(
 			Vec2(20.0, 20.0),
-			"Start maneuver with Enter");
+			"Shoot missiles with Enter");
 
 		self.draw_text(
 			Vec2(self.screen_width - 50.0, 40.0),
