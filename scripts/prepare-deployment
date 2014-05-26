@@ -6,6 +6,7 @@ CONTAINER_DIR=output/docker/vndf
 
 ./scripts/init &&
 rm -rf output &&
+./scripts/tasks/build-website &&
 ./scripts/tasks/build-common &&
 ./scripts/tasks/build-game-service &&
 ./scripts/tasks/build-client &&
@@ -13,7 +14,7 @@ rm -rf output &&
 ./scripts/tasks/package-client &&
 mkdir -p $CONTAINER_DIR &&
 cp source/docker/Dockerfile $CONTAINER_DIR &&
-cp -r source/http $CONTAINER_DIR &&
+cp -r output/http $CONTAINER_DIR &&
 cp -r source/nginx $CONTAINER_DIR &&
 cp -r source/upstart $CONTAINER_DIR &&
 cp $CLIENT_ARCHIVE $CONTAINER_DIR/http &&
