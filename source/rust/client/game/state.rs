@@ -14,15 +14,15 @@ use game::data::Interpolated;
 use network::Network;
 
 
-pub struct GameState {
+pub struct State {
 	self_id : Option<EntityId>,
 	ships   : Components<Interpolated>,
 	missiles: Components<Interpolated>
 }
 
-impl GameState {
-	pub fn new() -> GameState {
-		GameState {
+impl State {
+	pub fn new() -> State {
+		State {
 			self_id : None,
 			ships   : HashMap::new(),
 			missiles: HashMap::new()

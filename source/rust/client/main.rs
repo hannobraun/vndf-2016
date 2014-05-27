@@ -22,7 +22,6 @@ use common::physics::{
 	Vec2
 };
 
-use game::GameState;
 use inputsender::InputSender;
 use network::Network;
 
@@ -57,7 +56,7 @@ fn main() {
 		ui::init()
 	};
 
-	let mut game_state   = GameState::new();
+	let mut game_state   = game::State::new();
 	let mut input_sender = InputSender::new(args.period as u64);
 	let mut camera       = Vec2::zero();
 
