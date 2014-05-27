@@ -35,8 +35,8 @@ impl GameState {
 
 	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
 		(
-			self.ships.interpolate(),
-			self.missiles.interpolate())
+			interpolate(&mut self.ships.interpolateds),
+			interpolate(&mut self.missiles.interpolateds))
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -63,37 +63,6 @@ impl InterpolatedBodies {
 		InterpolatedBodies {
 			interpolateds: HashMap::new()
 		}
-	}
-
-	fn interpolate(&self) -> Vec<Body> {
-		let mut bodies = Vec::new();
-		for (_, &interpolated) in self.interpolateds.iter() {
-			let previous = match interpolated.previous {
-				Some(body) => body,
-				None       => continue
-			};
-			let current = match interpolated.current {
-				Some(body) => body,
-				None       => continue
-			};
-
-			let i = {
-				let diff = (interpolated.current_time - interpolated.previous_time) as f64;
-				if diff <= 0.0 {
-					0.0
-				}
-				else {
-					(time::precise_time_ns() - interpolated.current_time) as f64 / diff
-				}
-			};
-
-			let mut body = current.clone();
-			body.position =
-				previous.position + (current.position - previous.position) * i;
-			bodies.push(body);
-		}
-
-		bodies
 	}
 }
 
@@ -122,6 +91,39 @@ fn receive(interpolateds: &mut HashMap<uint, Interpolated>, bodies: &HashMap<uin
 		interpolated.current      = Some(body);
 		interpolated.current_time = current_time;
 	}
+}
+
+
+fn interpolate(interpolateds: &mut HashMap<uint, Interpolated>) -> Vec<Body> {
+	let mut bodies = Vec::new();
+	for (_, &interpolated) in interpolateds.iter() {
+		let previous = match interpolated.previous {
+			Some(body) => body,
+			None       => continue
+		};
+		let current = match interpolated.current {
+			Some(body) => body,
+			None       => continue
+		};
+
+		let i = {
+			let diff =
+				(interpolated.current_time - interpolated.previous_time) as f64;
+			if diff <= 0.0 {
+				0.0
+			}
+			else {
+				(time::precise_time_ns() - interpolated.current_time) as f64 / diff
+			}
+		};
+
+		let mut body = current.clone();
+		body.position =
+			previous.position + (current.position - previous.position) * i;
+		bodies.push(body);
+	}
+
+	bodies
 }
 
 
