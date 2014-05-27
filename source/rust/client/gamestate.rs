@@ -58,7 +58,7 @@ impl GameState {
 }
 
 
-fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<uint, Body>) {
+fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<EntityId, Body>) {
 	let current_time = time::precise_time_ns();
 
 	for (_, body) in interpolateds.mut_iter() {
