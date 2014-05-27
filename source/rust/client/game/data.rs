@@ -8,3 +8,5 @@ pub struct Interpolated {
 	pub previous: Option<Body>,
 	pub current : Option<Body>
 }
+
+pub struct Missile;
