@@ -8,7 +8,6 @@ extern crate time;
 use std::os;
 
 use events::Init;
-use game::GameState;
 use network::Network;
 
 
@@ -30,7 +29,7 @@ fn main() {
 	};
 
 	let mut network    = Network::new(args.port.as_slice());
-	let mut game_state = GameState::new(network.events.clone());
+	let mut game_state = game::State::new(network.events.clone());
 
 	let frame_time_in_ms = args.frame_time;
 
