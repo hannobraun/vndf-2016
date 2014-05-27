@@ -1,6 +1,7 @@
 use collections::HashMap;
 use time;
 
+use common::ecs::Components;
 use common::physics::{
 	Body,
 	Vec2
@@ -67,7 +68,7 @@ impl InterpolatedBodies {
 }
 
 
-fn receive(interpolateds: &mut HashMap<uint, Interpolated>, bodies: &HashMap<uint, Body>) {
+fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<uint, Body>) {
 	let current_time = time::precise_time_ns();
 
 	for (_, body) in interpolateds.mut_iter() {
