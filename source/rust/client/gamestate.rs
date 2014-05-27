@@ -15,7 +15,7 @@ use network::Network;
 
 pub struct GameState {
 	self_id : Option<EntityId>,
-	ships   : InterpolatedBodies,
+	ships   : Components<Interpolated>,
 	missiles: InterpolatedBodies
 }
 
@@ -23,7 +23,7 @@ impl GameState {
 	pub fn new() -> GameState {
 		GameState {
 			self_id : None,
-			ships   : InterpolatedBodies::new(),
+			ships   : HashMap::new(),
 			missiles: InterpolatedBodies::new()
 		}
 	}
@@ -32,14 +32,14 @@ impl GameState {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			receive(&mut self.ships.interpolateds, &perception.ships);
+			receive(&mut self.ships, &perception.ships);
 			receive(&mut self.missiles.interpolateds, &perception.missiles);
 		});
 	}
 
 	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
 		(
-			interpolate(&mut self.ships.interpolateds),
+			interpolate(&mut self.ships),
 			interpolate(&mut self.missiles.interpolateds))
 	}
 
@@ -49,7 +49,7 @@ impl GameState {
 			None     => return
 		};
 
-		for (&id, ship) in self.ships.interpolateds.iter() {
+		for (&id, ship) in self.ships.iter() {
 			if id == self_id && ship.current.is_some() {
 				*camera = ship.current.unwrap().position;
 			}
