@@ -95,7 +95,7 @@ fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<uint, 
 }
 
 
-fn interpolate(interpolateds: &mut HashMap<uint, Interpolated>) -> Vec<Body> {
+fn interpolate(interpolateds: &mut Components<Interpolated>) -> Vec<Body> {
 	let mut bodies = Vec::new();
 	for (_, &interpolated) in interpolateds.iter() {
 		let previous = match interpolated.previous {
