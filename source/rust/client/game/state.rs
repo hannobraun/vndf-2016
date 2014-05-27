@@ -10,6 +10,7 @@ use common::physics::{
 	Vec2
 };
 
+use game::data::Interpolated;
 use network::Network;
 
 
@@ -115,13 +116,4 @@ fn interpolate(interpolateds: &mut Components<Interpolated>) -> Vec<Body> {
 	}
 
 	bodies
-}
-
-
-struct Interpolated {
-	previous_time: u64,
-	current_time : u64,
-
-	previous: Option<Body>,
-	current : Option<Body>
 }
