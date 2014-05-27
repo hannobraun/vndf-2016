@@ -1,7 +1,10 @@
 use collections::HashMap;
 use time;
 
-use common::ecs::Components;
+use common::ecs::{
+	Components,
+	EntityId
+};
 use common::physics::{
 	Body,
 	Vec2
@@ -11,7 +14,7 @@ use network::Network;
 
 
 pub struct GameState {
-	self_id : Option<uint>,
+	self_id : Option<EntityId>,
 	ships   : InterpolatedBodies,
 	missiles: InterpolatedBodies
 }
