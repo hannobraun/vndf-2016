@@ -1,6 +1,6 @@
 use collections::HashMap;
 
-use common::ecs::{
+use common::ecs::infra::{
 	Components,
 	EntityId,
 	EntityTemplate2
