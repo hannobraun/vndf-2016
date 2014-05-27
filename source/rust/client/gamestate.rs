@@ -58,19 +58,6 @@ impl GameState {
 }
 
 
-struct InterpolatedBodies {
-	interpolateds: HashMap<uint, Interpolated>
-}
-
-impl InterpolatedBodies {
-	fn new() -> InterpolatedBodies {
-		InterpolatedBodies {
-			interpolateds: HashMap::new()
-		}
-	}
-}
-
-
 fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<uint, Body>) {
 	let current_time = time::precise_time_ns();
 
