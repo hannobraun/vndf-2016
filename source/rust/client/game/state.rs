@@ -40,6 +40,9 @@ impl State {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
+			prepare_receive(&mut self.ships);
+			prepare_receive(&mut self.interpolateds);
+
 			receive(&mut self.ships, &perception.ships);
 			receive(&mut self.interpolateds, &perception.missiles);
 		});
@@ -66,15 +69,17 @@ impl State {
 }
 
 
-fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<EntityId, Body>) {
-	let current_time = time::precise_time_ns();
-
+fn prepare_receive(interpolateds: &mut Components<Interpolated>) {
 	for (_, body) in interpolateds.mut_iter() {
 		body.previous_time = body.current_time;
 
 		body.previous = body.current;
 		body.current  = None;
 	}
+}
+
+fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<EntityId, Body>) {
+	let current_time = time::precise_time_ns();
 
 	for (&id, &body) in bodies.iter() {
 		let interpolated = interpolateds.find_or_insert(
