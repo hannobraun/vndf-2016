@@ -57,9 +57,9 @@ impl State {
 			None     => return
 		};
 
-		for (&id, ship) in self.ships.iter() {
-			if id == self_id && ship.current.is_some() {
-				*camera = ship.current.unwrap().position;
+		for (&id, interpolated) in self.ships.iter() {
+			if id == self_id && interpolated.current.is_some() {
+				*camera = interpolated.current.unwrap().position;
 			}
 		}
 	}
