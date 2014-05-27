@@ -28,8 +28,8 @@ impl GameState {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			self.ships.receive(&perception.ships);
-			self.missiles.receive(&perception.missiles);
+			receive(&mut self.ships.interpolateds, &perception.ships);
+			receive(&mut self.missiles.interpolateds, &perception.missiles);
 		});
 	}
 
@@ -65,32 +65,6 @@ impl InterpolatedBodies {
 		}
 	}
 
-	fn receive(&mut self, bodies: &HashMap<uint, Body>) {
-		let current_time = time::precise_time_ns();
-
-		for (_, body) in self.interpolateds.mut_iter() {
-			body.previous_time = body.current_time;
-
-			body.previous = body.current;
-			body.current  = None;
-		}
-
-		for (&id, &body) in bodies.iter() {
-			let interpolated = self.interpolateds.find_or_insert(
-				id,
-				Interpolated {
-					previous_time: current_time,
-					current_time : current_time,
-
-					previous: None,
-					current : None
-				});
-
-			interpolated.current      = Some(body);
-			interpolated.current_time = current_time;
-		}
-	}
-
 	fn interpolate(&self) -> Vec<Body> {
 		let mut bodies = Vec::new();
 		for (_, &interpolated) in self.interpolateds.iter() {
@@ -120,6 +94,33 @@ impl InterpolatedBodies {
 		}
 
 		bodies
+	}
+}
+
+
+fn receive(interpolateds: &mut HashMap<uint, Interpolated>, bodies: &HashMap<uint, Body>) {
+	let current_time = time::precise_time_ns();
+
+	for (_, body) in interpolateds.mut_iter() {
+		body.previous_time = body.current_time;
+
+		body.previous = body.current;
+		body.current  = None;
+	}
+
+	for (&id, &body) in bodies.iter() {
+		let interpolated = interpolateds.find_or_insert(
+			id,
+			Interpolated {
+				previous_time: current_time,
+				current_time : current_time,
+
+				previous: None,
+				current : None
+			});
+
+		interpolated.current      = Some(body);
+		interpolated.current_time = current_time;
 	}
 }
 
