@@ -45,7 +45,7 @@ impl GameState {
 			None     => return
 		};
 
-		for (&id, ship) in self.ships.bodies.iter() {
+		for (&id, ship) in self.ships.interpolateds.iter() {
 			if id == self_id && ship.current.is_some() {
 				*camera = ship.current.unwrap().position;
 			}
@@ -55,20 +55,20 @@ impl GameState {
 
 
 struct InterpolatedBodies {
-	bodies: HashMap<uint, Interpolated>
+	interpolateds: HashMap<uint, Interpolated>
 }
 
 impl InterpolatedBodies {
 	fn new() -> InterpolatedBodies {
 		InterpolatedBodies {
-			bodies: HashMap::new()
+			interpolateds: HashMap::new()
 		}
 	}
 
 	fn receive(&mut self, bodies: &HashMap<uint, Body>) {
 		let current_time = time::precise_time_ns();
 
-		for (_, body) in self.bodies.mut_iter() {
+		for (_, body) in self.interpolateds.mut_iter() {
 			body.previous_time = body.current_time;
 
 			body.previous = body.current;
@@ -76,13 +76,15 @@ impl InterpolatedBodies {
 		}
 
 		for (&id, &body) in bodies.iter() {
-			let interpolated = self.bodies.find_or_insert(id, Interpolated {
-				previous_time: current_time,
-				current_time : current_time,
+			let interpolated = self.interpolateds.find_or_insert(
+				id,
+				Interpolated {
+					previous_time: current_time,
+					current_time : current_time,
 
-				previous: None,
-				current : None
-			});
+					previous: None,
+					current : None
+				});
 
 			interpolated.current      = Some(body);
 			interpolated.current_time = current_time;
@@ -91,7 +93,7 @@ impl InterpolatedBodies {
 
 	fn interpolate(&self) -> Vec<Body> {
 		let mut bodies = Vec::new();
-		for (_, &interpolated) in self.bodies.iter() {
+		for (_, &interpolated) in self.interpolateds.iter() {
 			let previous = match interpolated.previous {
 				Some(body) => body,
 				None       => continue
