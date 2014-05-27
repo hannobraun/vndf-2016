@@ -22,14 +22,14 @@ use common::physics::{
 	Vec2
 };
 
-use gamestate::GameState;
+use game::GameState;
 use inputsender::InputSender;
 use network::Network;
 
 
 mod args;
 mod error;
-mod gamestate;
+mod game;
 mod headless;
 mod inputsender;
 mod network;
