@@ -1,6 +1,6 @@
 use collections::HashMap;
 
-use ecs::EntityId;
+use ecs::infra::EntityId;
 use json::{
 	from_json,
 	to_json
