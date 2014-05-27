@@ -1,7 +1,7 @@
 use collections::HashMap;
 use time;
 
-use common::ecs::{
+use common::ecs::infra::{
 	Components,
 	EntityId
 };
