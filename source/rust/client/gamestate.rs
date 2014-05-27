@@ -55,52 +55,41 @@ impl GameState {
 
 
 struct InterpolatedBodies {
-	previous_time: u64,
-	current_time : u64,
-
 	bodies: HashMap<uint, Interpolated>
 }
 
 impl InterpolatedBodies {
 	fn new() -> InterpolatedBodies {
 		InterpolatedBodies {
-			previous_time: time::precise_time_ns(),
-			current_time : time::precise_time_ns(),
-
 			bodies: HashMap::new()
 		}
 	}
 
 	fn receive(&mut self, bodies: &HashMap<uint, Body>) {
-		self.previous_time = self.current_time;
-		self.current_time  = time::precise_time_ns();
+		let current_time = time::precise_time_ns();
 
 		for (_, body) in self.bodies.mut_iter() {
+			body.previous_time = body.current_time;
+
 			body.previous = body.current;
 			body.current  = None;
 		}
 
 		for (&id, &body) in bodies.iter() {
 			let interpolated = self.bodies.find_or_insert(id, Interpolated {
+				previous_time: current_time,
+				current_time : current_time,
+
 				previous: None,
 				current : None
 			});
 
-			interpolated.current = Some(body);
+			interpolated.current      = Some(body);
+			interpolated.current_time = current_time;
 		}
 	}
 
 	fn interpolate(&self) -> Vec<Body> {
-		let i = {
-			let diff = (self.current_time - self.previous_time) as f64;
-			if diff <= 0.0 {
-				0.0
-			}
-			else {
-				(time::precise_time_ns() - self.current_time) as f64 / diff
-			}
-		};
-
 		let mut bodies = Vec::new();
 		for (_, &interpolated) in self.bodies.iter() {
 			let previous = match interpolated.previous {
@@ -110,6 +99,16 @@ impl InterpolatedBodies {
 			let current = match interpolated.current {
 				Some(body) => body,
 				None       => continue
+			};
+
+			let i = {
+				let diff = (interpolated.current_time - interpolated.previous_time) as f64;
+				if diff <= 0.0 {
+					0.0
+				}
+				else {
+					(time::precise_time_ns() - interpolated.current_time) as f64 / diff
+				}
 			};
 
 			let mut body = current.clone();
@@ -124,6 +123,9 @@ impl InterpolatedBodies {
 
 
 struct Interpolated {
+	previous_time: u64,
+	current_time : u64,
+
 	previous: Option<Body>,
 	current : Option<Body>
 }
