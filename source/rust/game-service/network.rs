@@ -23,7 +23,7 @@ use events::{
 };
 
 
-pub type ClientId = uint;
+pub type ClientId = u32;
 
 
 pub struct Network {
