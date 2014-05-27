@@ -10,22 +10,29 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::Interpolated;
+use game::data::{
+	Interpolated,
+	Missile
+};
 use network::Network;
 
 
 pub struct State {
-	self_id : Option<EntityId>,
-	ships   : Components<Interpolated>,
-	missiles: Components<Interpolated>
+	self_id: Option<EntityId>,
+
+	interpolateds: Components<Interpolated>,
+	missiles     : Components<Missile>,
+	ships        : Components<Interpolated>
 }
 
 impl State {
 	pub fn new() -> State {
 		State {
-			self_id : None,
-			ships   : HashMap::new(),
-			missiles: HashMap::new()
+			self_id: None,
+
+			interpolateds: HashMap::new(),
+			missiles     : HashMap::new(),
+			ships        : HashMap::new(),
 		}
 	}
 
@@ -34,14 +41,14 @@ impl State {
 			self.self_id = Some(perception.self_id);
 
 			receive(&mut self.ships, &perception.ships);
-			receive(&mut self.missiles, &perception.missiles);
+			receive(&mut self.interpolateds, &perception.missiles);
 		});
 	}
 
 	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
 		(
 			interpolate(&mut self.ships),
-			interpolate(&mut self.missiles))
+			interpolate(&mut self.interpolateds))
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
