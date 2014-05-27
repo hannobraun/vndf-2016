@@ -45,9 +45,9 @@ impl GameState {
 			None     => return
 		};
 
-		for (&id, ship) in self.ships.current.iter() {
-			if id == self_id {
-				*camera = ship.position;
+		for (&id, ship) in self.ships.bodies.iter() {
+			if id == self_id && ship.current.is_some() {
+				*camera = ship.current.unwrap().position;
 			}
 		}
 	}
@@ -58,8 +58,7 @@ struct InterpolatedBodies {
 	previous_time: u64,
 	current_time : u64,
 
-	previous: HashMap<uint, Body>,
-	current : HashMap<uint, Body>
+	bodies: HashMap<uint, Interpolated>
 }
 
 impl InterpolatedBodies {
@@ -68,8 +67,7 @@ impl InterpolatedBodies {
 			previous_time: time::precise_time_ns(),
 			current_time : time::precise_time_ns(),
 
-			previous: HashMap::new(),
-			current : HashMap::new()
+			bodies: HashMap::new()
 		}
 	}
 
@@ -77,14 +75,18 @@ impl InterpolatedBodies {
 		self.previous_time = self.current_time;
 		self.current_time  = time::precise_time_ns();
 
-		self.previous.clear();
-		for (&id, &body) in self.current.iter() {
-			self.previous.insert(id, body);
+		for (_, body) in self.bodies.mut_iter() {
+			body.previous = body.current;
+			body.current  = None;
 		}
 
-		self.current.clear();
 		for (&id, &body) in bodies.iter() {
-			self.current.insert(id, body);
+			let interpolated = self.bodies.find_or_insert(id, Interpolated {
+				previous: None,
+				current : None
+			});
+
+			interpolated.current = Some(body);
 		}
 	}
 
@@ -100,18 +102,28 @@ impl InterpolatedBodies {
 		};
 
 		let mut bodies = Vec::new();
-		for (&ship_id, &current) in self.current.iter() {
-			match self.previous.find(&ship_id) {
-				Some(&previous) => {
-					let mut body = current.clone();
-					body.position = previous.position + (current.position - previous.position) * i;
-					bodies.push(body);
-				},
+		for (_, &interpolated) in self.bodies.iter() {
+			let previous = match interpolated.previous {
+				Some(body) => body,
+				None       => continue
+			};
+			let current = match interpolated.current {
+				Some(body) => body,
+				None       => continue
+			};
 
-				None => ()
-			}
+			let mut body = current.clone();
+			body.position =
+				previous.position + (current.position - previous.position) * i;
+			bodies.push(body);
 		}
 
 		bodies
 	}
+}
+
+
+struct Interpolated {
+	previous: Option<Body>,
+	current : Option<Body>
 }
