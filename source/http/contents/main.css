@@ -62,7 +62,7 @@ form.newsletter input {
 	color:#ffffff;
 }
 
-.cr_button:hover,.cr_button-small:hover{
+.cr_button:hover {
 	opacity:0.7;
 	filter:alpha(opacity=70);
 }
