@@ -10,6 +10,12 @@ main {
 	margin   : 0 auto;
 }
 
+a.download {
+	margin: 0.5em 1.5em;
+
+	text-decoration: none;
+}
+
 form.newsletter {
 	padding: 0.5em 1.5em;
 }
@@ -24,6 +30,7 @@ form.newsletter input[type=text] {
 	padding: 0.3em;
 }
 
+a.download,
 form.newsletter input[type=submit] {
 	background-color: #333333;
 	color           : #f9f9f9;
@@ -37,6 +44,7 @@ form.newsletter input[type=submit] {
 	border-radius: 4px;
 }
 
+a.download:hover,
 form.newsletter input[type=submit]:hover {
 	opacity: 0.7;
 }
