@@ -25,7 +25,7 @@ form.newsletter input[type=text] {
 }
 
 form.newsletter input[type=submit] {
-	background-color: #333;
+	background-color: #333333;
 	color           : #f9f9f9;
 
 	padding: 0.4em 1.8em;
