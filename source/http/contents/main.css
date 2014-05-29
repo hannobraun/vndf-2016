@@ -29,7 +29,7 @@ form.newsletter label {
 	font-size:14px;
 }
 
-form.newsletter input {
+form.newsletter input[type=text] {
 	background: none repeat scroll 0 0 #eeeeee;
 	border: 1px solid #aaa;
 	padding: 5px;
@@ -37,7 +37,7 @@ form.newsletter input {
 	font-size: 16px;
 }
 
-form.newsletter button {
+form.newsletter input[type=submit] {
 	display:inline-block;
 	font-family:'Helvetica', Arial, sans-serif;
 	width:auto;
