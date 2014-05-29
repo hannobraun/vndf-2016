@@ -16,19 +16,6 @@ form.newsletter {
 	border-radius: 6px 6px 6px 6px;
 }
 
-form.newsletter label {
-	float:none;
-	clear:both;
-	display:block;
-	width:auto;
-	margin-top:8px;
-	text-align:left;
-	font-weight:bold;
-	position:relative;
-	line-height:150%;
-	font-size:14px;
-}
-
 form.newsletter input[type=text] {
 	background: none repeat scroll 0 0 #eeeeee;
 	border: 1px solid #aaa;
