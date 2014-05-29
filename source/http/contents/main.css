@@ -15,7 +15,7 @@ form.newsletter {
 }
 
 form.newsletter input[type=text] {
-	background: none repeat scroll 0 0 #eeeeee;
+	background-color: #f9f9f9;
 	border: 1px solid #aaa;
 	padding: 5px;
 	font-size: 16px;
