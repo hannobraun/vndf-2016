@@ -16,9 +16,12 @@ form.newsletter {
 
 form.newsletter input[type=text] {
 	background-color: #f9f9f9;
-	border: 1px solid #aaa;
-	padding: 5px;
-	font-size: 16px;
+
+	font-size: 105%;
+	min-width: 19em;
+
+	border : 1px solid #999999;
+	padding: 0.3em;
 }
 
 form.newsletter input[type=submit] {
