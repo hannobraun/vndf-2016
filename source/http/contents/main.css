@@ -38,7 +38,7 @@ form.newsletter input {
 	width:100%;
 }
 
-.cr_button{
+form.newsletter button {
 	display:inline-block;
 	font-family:'Helvetica', Arial, sans-serif;
 	width:auto;
