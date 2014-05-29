@@ -5,6 +5,17 @@ body {
 	color           : #222222;
 }
 
+a {
+	text-decoration: none;
+	font-weight    : bold;
+
+	color: #0000ee;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 main {
 	max-width: 34em;
 	margin   : 0 auto;
