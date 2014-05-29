@@ -7,6 +7,13 @@ form.newsletter {
 	border-radius:4px;
 	font-size: 14px;
 	font-family: Arial;
+	line-height:150%;
+	font-family:Helvetica;
+	font-size:12px;
+	color:#333333;
+	padding:20px;
+	background-color:#ffffff;
+	border-radius: 6px 6px 6px 6px;
 }
 
 form.newsletter label{
@@ -50,16 +57,6 @@ form.newsletter label{
 .cr_button:hover,.cr_button-small:hover{
 	opacity:0.7;
 	filter:alpha(opacity=70);
-}
-
-.formbox{
-	line-height:150%;
-	font-family:Helvetica;
-	font-size:12px;
-	color:#333333;
-	padding:20px;
-	background-color:#ffffff;
-	border-radius: 6px 6px 6px 6px;
 }
 
 .cr_ipe_item label{
