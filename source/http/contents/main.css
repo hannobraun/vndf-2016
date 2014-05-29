@@ -29,6 +29,14 @@ form.newsletter label {
 	font-size:14px;
 }
 
+form.newsletter input {
+	background: none repeat scroll 0 0 #eeeeee;
+	border: 1px solid #aaa;
+	padding: 5px;
+	font-family: Helvetica;
+	font-size: 16px;
+}
+
 .cr_button{
 	display:inline-block;
 	font-family:'Helvetica', Arial, sans-serif;
@@ -59,14 +67,6 @@ form.newsletter label {
 .cr_button:hover,.cr_button-small:hover{
 	opacity:0.7;
 	filter:alpha(opacity=70);
-}
-
-.cr_ipe_item input {
-	background: none repeat scroll 0 0 #eeeeee;
-	border: 1px solid #aaa;
-	padding: 5px;
-	font-family: Helvetica;
-	font-size: 16px;
 }
 
 .submit_container{
