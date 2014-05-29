@@ -11,12 +11,7 @@ main {
 }
 
 form.newsletter {
-	margin:0 auto 10px auto;
-	border-radius:4px;
-	line-height:150%;
-	color:#333333;
-	padding:20px;
-	border-radius: 6px 6px 6px 6px;
+	padding: 1.5em;
 }
 
 form.newsletter input[type=text] {
