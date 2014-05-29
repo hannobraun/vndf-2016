@@ -3,16 +3,13 @@
 	font-family: Arial;
 }
 
-.cr_page{
-	margin:0 auto 10px auto;
-	text-align:left;
-	border-radius:4px;
-}
-
 form.newsletter {
 	background-color:#ffffff;
 	font-size:12px;
 	color:#000000;
+	margin:0 auto 10px auto;
+	text-align:left;
+	border-radius:4px;
 }
 
 form.newsletter label{
