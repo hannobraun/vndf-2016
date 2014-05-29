@@ -9,6 +9,12 @@
 	border-radius:4px;
 }
 
+.cr_body {
+	background-color:#ffffff;
+	font-size:12px;
+	color:#000000;
+}
+
 .cr_body label{
 	float:none;
 	clear:both;
@@ -82,10 +88,4 @@
 .cr_ipe_item{
 	padding:1px 10px;
 	margin:1px 10px;
-}
-
-.cr_body {
-	background-color:#ffffff;
-	font-size:12px;
-	color:#000000;
 }
