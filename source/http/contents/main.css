@@ -1,5 +1,8 @@
 body {
 	font-family: Helvetica;
+
+	background-color: #fafafa;
+	color           : #222222;
 }
 
 form.newsletter {
