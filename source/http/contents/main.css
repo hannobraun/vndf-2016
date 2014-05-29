@@ -4,12 +4,10 @@ body {
 
 form.newsletter {
 	margin:0 auto 10px auto;
-	text-align:left;
 	border-radius:4px;
 	line-height:150%;
 	color:#333333;
 	padding:20px;
-	background-color:#ffffff;
 	border-radius: 6px 6px 6px 6px;
 }
 
