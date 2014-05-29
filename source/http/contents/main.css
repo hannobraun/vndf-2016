@@ -19,14 +19,10 @@ form.newsletter input[type=text] {
 }
 
 form.newsletter input[type=submit] {
-	display:inline-block;
 	width:auto;
-	white-space:nowrap;
 	height:32px;
 	margin:5px 5px 0 0;
 	padding:0 22px;
-	text-decoration:none;
-	text-align:center;
 	font-weight:bold;
 	font-style:normal;
 	font-size:15px;
