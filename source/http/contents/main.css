@@ -59,3 +59,13 @@ a.download:hover,
 form.newsletter input[type=submit]:hover {
 	opacity: 0.85;
 }
+
+div.signature {
+	margin-top   : 2em;
+	margin-bottom: 2em;
+}
+
+div.signature p {
+	margin-top   : 0em;
+	margin-bottom: 0em;
+}
