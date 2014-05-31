@@ -1,8 +1,9 @@
 doctype html
 html(lang='en')
-  head
-    meta(charset='utf-8')
-    title= locals.title
-  body
-    h1= page.title
-    != page.html
+	head
+		title Von Neumann Defense Force
+		meta(charset='utf-8')
+		link(href="main.css" rel="stylesheet" type="text/css" media="all")
+	body
+		main
+			include ../contents/newsletter.html
