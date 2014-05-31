@@ -69,3 +69,7 @@ div.signature p {
 	margin-top   : 0em;
 	margin-bottom: 0em;
 }
+
+p.ps {
+	background-color: #ffff00;
+}
