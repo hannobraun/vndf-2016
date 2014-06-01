@@ -1,4 +1,4 @@
-use rand::random;
+use std::rand::random;
 
 use testing::Process;
 

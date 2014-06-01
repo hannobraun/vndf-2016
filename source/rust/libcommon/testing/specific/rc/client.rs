@@ -30,12 +30,12 @@ impl Client {
 
 	pub fn input(&mut self, input: Input) {
 		let line = input.to_json();
-		self.process.write_stdin_line(line);
+		self.process.write_stdin_line(line.as_slice());
 	}
 
 	pub fn frame(&mut self) -> Frame {
 		let line = self.process.read_stdout_line();
-		match Frame::from_json(line) {
+		match Frame::from_json(line.as_slice()) {
 			Ok(frame)  => frame,
 			Err(error) => fail!("Error decoding frame: {}", error)
 		}

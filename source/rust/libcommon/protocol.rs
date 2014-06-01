@@ -11,7 +11,7 @@ use physics::{
 };
 
 
-#[deriving(Clone, Decodable, Encodable, Eq, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
 	pub self_id : EntityId,
 	pub ships   : HashMap<EntityId, Body>,
@@ -19,28 +19,28 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn from_str(s: &str) -> Result<Perception, ~str> {
+	pub fn from_str(s: &str) -> Result<Perception, String> {
 		from_json(s)
 	}
 
-	pub fn to_str(&self) -> ~str {
+	pub fn to_str(&self) -> String {
 		to_json(self)
 	}
 }
 
 
-#[deriving(Decodable, Encodable, Eq, Show)]
+#[deriving(Decodable, Encodable, PartialEq, Show)]
 pub struct Action {
 	pub attitude: Radians,
 	pub missile : u64
 }
 
 impl Action {
-	pub fn from_str(s: &str) -> Result<Action, ~str> {
+	pub fn from_str(s: &str) -> Result<Action, String> {
 		from_json(s)
 	}
 
-	pub fn to_str(&self) -> ~str {
+	pub fn to_str(&self) -> String {
 		to_json(self)
 	}
 }

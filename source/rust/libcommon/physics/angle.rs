@@ -4,7 +4,7 @@ use std::fmt::Formatter;
 use physics::Vec2;
 
 
-#[deriving(Clone, Decodable, Encodable, Eq, Ord, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, PartialOrd, Show)]
 pub struct Radians(pub f64);
 
 impl Radians {

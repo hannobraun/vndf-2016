@@ -15,7 +15,7 @@ use std::io::{
 use std::str;
 
 
-pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, ~str> {
+pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, String> {
 	let json_object = match json::from_str(s) {
 		Ok(object) => object,
 		Err(error) =>
@@ -33,7 +33,7 @@ pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, ~str
 	}
 }
 
-pub fn to_json<'a, T: Encodable<Encoder<'a>, IoError>>(object: T) -> ~str {
+pub fn to_json<'a, T: Encodable<Encoder<'a>, IoError>>(object: T) -> String {
 	let mut m = MemWriter::new();
 		{
 			let mut encoder = Encoder::new(&mut m as &mut Writer);

@@ -12,7 +12,7 @@ use common::protocol::{
 use network::ClientId;
 
 
-#[deriving(Eq, Show)]
+#[deriving(PartialEq, Show)]
 pub enum GameEvent {
 	Init,
 	Update(f64),
@@ -22,7 +22,7 @@ pub enum GameEvent {
 	MissileLaunch(Vec2, Radians)
 }
 
-#[deriving(Eq, Show)]
+#[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
 	Message(Vec<ClientId>, Perception),
 	Close(ClientId, IoError)

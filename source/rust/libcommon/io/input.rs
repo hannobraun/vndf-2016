@@ -21,11 +21,11 @@ impl Input {
 		}
 	}
 
-	pub fn from_json(s: &str) -> Result<Input, ~str> {
+	pub fn from_json(s: &str) -> Result<Input, String> {
 		from_json(s)
 	}
 
-	pub fn to_json(&self) -> ~str {
+	pub fn to_json(&self) -> String {
 		to_json(self)
 	}
 }

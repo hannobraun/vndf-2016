@@ -3,7 +3,7 @@ use physics::{
 	Vec2
 };
 
-#[deriving(Clone, Decodable, Encodable, Eq, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Body {
 	pub position: Vec2,
 	pub velocity: Vec2,

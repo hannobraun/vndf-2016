@@ -7,25 +7,25 @@ use std::os;
 
 
 pub struct Args {
-	pub port      : StrBuf,
+	pub port      : String,
 	pub frame_time: u32
 }
 
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		port      : "34481".to_strbuf(),
+		port      : "34481".to_str(),
 		frame_time: 1000
 	};
 
-	let args_as_strs: Vec<StrBuf> = os::args().iter().map(|s| s.to_strbuf()).collect();
+	let args_as_strs: Vec<String> = os::args().iter().map(|s| s.to_str()).collect();
 
 	let options = [
 		optopt("p", "port", "port to listen on", args.port.as_slice()),
-		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_str())
+		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_str().as_slice())
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)), options);
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(), options);
 
 	let matches = match getopts(args_as_strs.as_slice(), options) {
 		Ok(matches) => matches,

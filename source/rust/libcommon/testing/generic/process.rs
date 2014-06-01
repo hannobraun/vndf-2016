@@ -10,7 +10,7 @@ pub struct Process {
 }
 
 impl Process {
-	pub fn start(path: &str, args: &[~str]) -> Process {
+	pub fn start(path: &str, args: &[String]) -> Process {
 		let mut process = match io::Command::new(path).args(args).spawn() {
 			Ok(process) => process,
 			Err(error)  => fail!("Failed to start process {}: {}", path, error)
@@ -35,7 +35,7 @@ impl Process {
 		}
 	}
 
-	pub fn read_stdout_line(&mut self) -> ~str {
+	pub fn read_stdout_line(&mut self) -> String {
 		match self.stdout.read_line() {
 			Ok(line)   => line,
 			Err(error) => fail!("Failed to read line from stdout: {}", error)

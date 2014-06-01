@@ -23,7 +23,7 @@ type MessageLength = u16;
 static MAX_MSG_LENGTH: MessageLength = std::u16::MAX;
 
 
-#[deriving(Eq, Show)]
+#[deriving(Eq, PartialEq, Show)]
 pub struct Connection {
 	pub fd: c_int,
 
@@ -134,7 +134,7 @@ impl Connection {
 		}
 	}
 
-	pub fn receive_messages(&mut self, handler: |~str|) -> IoResult<()> {
+	pub fn receive_messages(&mut self, handler: |String|) -> IoResult<()> {
 		let result = self.receive(
 			self.in_buffer.slice_from(self.in_buffer_pos));
 

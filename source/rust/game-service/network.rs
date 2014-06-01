@@ -77,7 +77,7 @@ impl Network {
 								None             => return
 							};
 
-							match connection.send_message(message.to_str()) {
+							match connection.send_message(message.to_str().as_slice()) {
 								Ok(())     => (),
 								Err(error) => self.events.send(Close(id, error))
 							}
@@ -117,7 +117,7 @@ impl Network {
 					};
 
 					let result = conn.receive_messages(|raw_message| {
-						let action = match Action::from_str(raw_message) {
+						let action = match Action::from_str(raw_message.as_slice()) {
 							Ok(message) => message,
 
 							Err(error) =>
