@@ -45,5 +45,5 @@ pub fn to_json<'a, T: Encodable<Encoder<'a>, IoError>>(object: T) -> String {
 
 		str::from_utf8(m.get_ref())
 			.expect("expected UTF-8 string")
-			.to_owned()
+			.to_str()
 }
