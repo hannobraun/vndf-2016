@@ -17,7 +17,7 @@ impl Network {
 		let connection = match Connection::connect(address, port) {
 			Ok(connection) => connection,
 			Err(error)     =>
-				exit(format!("Error connecting to server: {}", error))
+				exit(format!("Error connecting to server: {}", error).as_slice())
 		};
 
 		Network {
@@ -30,19 +30,19 @@ impl Network {
 			attitude: input.attitude,
 			missile : input.missile
 		};
-		match self.conn.send_message(action.to_str()) {
+		match self.conn.send_message(action.to_str().as_slice()) {
 			Ok(())     => (),
-			Err(error) => exit(format!("Error sending message: {}", error))
+			Err(error) => exit(format!("Error sending message: {}", error).as_slice())
 		}
 	}
 
 	pub fn receive(&mut self, handler: |Perception|) {
 		let result = self.conn.receive_messages(|message| {
-			let perception = match Perception::from_str(message) {
+			let perception = match Perception::from_str(message.as_slice()) {
 				Ok(perception) => perception,
 
 				Err(error) =>
-					exit(format!("Error decoding message: {}", error))
+					exit(format!("Error decoding message: {}", error).as_slice())
 			};
 
 			handler(perception);
@@ -50,7 +50,7 @@ impl Network {
 
 		match result {
 			Ok(())     => (),
-			Err(error) => exit(format!("Failed to receive message: {}", error))
+			Err(error) => exit(format!("Failed to receive message: {}", error).as_slice())
 		}
 	}
 }

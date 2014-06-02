@@ -45,9 +45,9 @@ fn load_image(image_path: &str) -> Image {
 		},
 
 		image::ImageF32(_) =>
-			exit(format!("Unexpected image type: ImageF32")),
+			exit(format!("Unexpected image type: ImageF32").as_slice()),
 
 		image::Error(message) =>
-			exit(message)
+			exit(message.as_slice())
 	}
 }

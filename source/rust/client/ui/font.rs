@@ -28,7 +28,7 @@ pub struct Font {
 }
 
 pub struct Glyph {
-	pub texture_id: ~str,
+	pub texture_id: String,
 	pub offset    : Vec2,
 	pub advance   : Vec2
 }
@@ -58,7 +58,7 @@ impl Font {
 	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
 		match self.glyphs.find(&c) {
 			Some(glyph) => glyph,
-			None        => exit(format!("No such glyph: {}", c))
+			None        => exit(format!("No such glyph: {}", c).as_slice())
 		}
 	}
 }
@@ -126,7 +126,7 @@ fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 		let Vec2(_, texture_height) = texture.size;
 
 		Glyph {
-			texture_id: "char:" + str::from_char(c),
+			texture_id: "char:".to_str().append(str::from_char(c).as_slice()),
 
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,

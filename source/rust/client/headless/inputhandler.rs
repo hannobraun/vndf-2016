@@ -12,7 +12,7 @@ use error::exit;
 
 
 pub struct InputHandler {
-	input     : Receiver<~str>,
+	input     : Receiver<String>,
 	last_input: Input
 }
 
@@ -26,7 +26,7 @@ impl InputHandler {
 				match stdin.read_line() {
 					Ok(message) => sender.send(message),
 					Err(error)  =>
-						exit(format!("Error reading from stdin: {}", error))
+						exit(format!("Error reading from stdin: {}", error).as_slice())
 				}
 			}
 		});
@@ -47,13 +47,13 @@ impl io::InputHandler for InputHandler {
 					return self.last_input,
 
 				Disconnected =>
-					exit(format!("Error receiving input: {}", error))
+					exit(format!("Error receiving input: {}", error).as_slice())
 			}
 		};
 
-		let input = match Input::from_json(message) {
+		let input = match Input::from_json(message.as_slice()) {
 			Ok(input)  => input,
-			Err(error) => exit(format!("Error decoding input: {}", error))
+			Err(error) => exit(format!("Error decoding input: {}", error).as_slice())
 		};
 
 		self.last_input = input;

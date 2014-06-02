@@ -42,7 +42,7 @@ extern {}
 fn main() {
 	let args = match args::parse() {
 		Some(args) => args,
-		None       => error::exit(format!("Failed to parse arguments"))
+		None       => error::exit(format!("Failed to parse arguments").as_slice())
 	};
 
 	let mut network = Network::connect(

@@ -14,12 +14,12 @@ use ui::Window;
 
 
 pub struct Shaders {
-	programs: HashMap<~str, Program>
+	programs: ShaderMap
 }
 
 pub type Program = GLuint;
 
-type ShaderMap = HashMap<~str, Shader>;
+type ShaderMap = HashMap<String, Shader>;
 type Shader    = GLuint;
 
 
@@ -72,7 +72,7 @@ impl Shaders {
 	pub fn program(&self, key: &str) -> Program {
 		match self.programs.find(&key.to_owned()) {
 			Some(&program) => program,
-			None           => exit(format!("Shader program not found: {}", key))
+			None           => exit(format!("Shader program not found: {}", key).as_slice())
 		}
 	}
 }
@@ -119,14 +119,14 @@ fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 	shaders.insert(path.to_owned(), shader);
 }
 
-fn load_shader(path: &str) -> ~str {
+fn load_shader(path: &str) -> String {
 	match File::open(&Path::new(path)).read_to_str() {
 		Ok(string) => string,
 		Err(error) => fail!("Error loading shader: {}", error)
 	}
 }
 
-fn create_program(id: &str, shaders: &[Shader], programs: &mut HashMap<~str, Program>) {
+fn create_program(id: &str, shaders: &[Shader], programs: &mut HashMap<String, Program>) {
 	let program = gl::CreateProgram();
 	for &shader in shaders.iter() {
 		gl::AttachShader(program, shader);

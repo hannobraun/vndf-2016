@@ -8,8 +8,8 @@ use std::os;
 
 
 pub struct Args {
-	pub address : StrBuf,
-	pub port    : StrBuf,
+	pub address : String,
+	pub port    : String,
 	pub period  : u16,
 	pub headless: bool
 }
@@ -17,27 +17,29 @@ pub struct Args {
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		address : "localhost".to_strbuf(),
-		port    : "34481".to_strbuf(),
+		address : "localhost".to_str(),
+		port    : "34481".to_str(),
 		period  : 1000,
 		headless: false
 	};
 
-	let args_as_strs: Vec<StrBuf> =
+	let args_as_strs: Vec<String> =
 		os::args()
 		.iter()
-		.map(|s| s.to_strbuf())
+		.map(|s| s.to_str())
 		.collect();
 
 	let options = [
 		optopt("a", "address", "server address"     , args.address.as_slice()),
 		optopt("p", "port"   , "server port"        , args.port.as_slice()),
-		optopt("f", "period" , "action period in ms", args.period.to_str()),
+		optopt("f", "period" , "action period in ms", args.period.to_str().as_slice()),
 
 		optflag("h", "headless", "start in headless mode")
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)), options);
+	let usage = usage(
+		format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(),
+		options);
 
 	let matches = match getopts(args_as_strs.tail(), options) {
 		Ok(matches) => matches,

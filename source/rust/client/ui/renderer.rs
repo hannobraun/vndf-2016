@@ -77,7 +77,7 @@ impl io::Renderer for Renderer {
 					_ => "unknown"
 				};
 
-				exit(format!("OpenGL error: {} ({})", error_as_str, error))
+				exit(format!("OpenGL error: {} ({})", error_as_str, error).as_slice())
 			}
 		}
 	}
@@ -214,12 +214,12 @@ impl Renderer {
 			text_position,
 			format!("pos: {:i} / {:i}",
 				body_x as int,
-				body_y as int));
+				body_y as int).as_slice());
 
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
 			text_position,
-			format!("att: {:+04i}", body.attitude.degrees()));
+			format!("att: {:+04i}", body.attitude.degrees()).as_slice());
 	}
 
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
@@ -234,13 +234,13 @@ impl Renderer {
 
 		self.draw_text(
 			Vec2(self.screen_width - 50.0, 40.0),
-			format!("{:+04i}", attitude.degrees()));
+			format!("{:+04i}", attitude.degrees()).as_slice());
 	}
 
 	fn draw_text(&self, mut position: Vec2, text: &str) {
 		for c in text.chars() {
 			let glyph   = self.font.get(c);
-			let texture = self.textures.get(glyph.texture_id);
+			let texture = self.textures.get(glyph.texture_id.as_slice());
 
 			self.draw_texture(
 				position + glyph.offset,

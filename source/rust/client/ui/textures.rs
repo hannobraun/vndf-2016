@@ -10,7 +10,7 @@ use ui::Window;
 
 
 pub struct Textures {
-	map: HashMap<~str, Texture>
+	map: HashMap<String, Texture>
 }
 
 pub struct Texture {
@@ -46,13 +46,13 @@ impl Textures {
 	pub fn get<'a>(&'a self, key: &str) -> &'a Texture {
 		match self.map.find(&key.to_owned()) {
 			Some(texture) => texture,
-			None          => exit(format!("Texture not found: {}", key))
+			None          => exit(format!("Texture not found: {}", key).as_slice())
 		}
 	}
 
-	pub fn add(&mut self, key: ~str, texture: Texture) {
+	pub fn add(&mut self, key: String, texture: Texture) {
 		if self.map.contains_key(&key) {
-			exit(format!("texture already present ({})", key));
+			exit(format!("texture already present ({})", key).as_slice());
 		}
 
 		self.map.insert(key, texture);
