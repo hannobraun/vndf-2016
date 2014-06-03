@@ -1,9 +1,11 @@
 use collections::HashMap;
 
+use common::ecs::components::Ship;
 use common::ecs::infra::{
 	Components,
 	EntityId,
-	EntityTemplate2
+	EntityTemplate2,
+	EntityTemplate3
 };
 use common::physics::{
 	Body,
@@ -26,7 +28,8 @@ pub struct Entities {
 
 	pub bodies       : Components<Body>,
 	pub missiles     : Components<Missile>,
-	pub ship_controls: Components<ShipControl>
+	pub ship_controls: Components<ShipControl>,
+	pub ships        : Components<Ship>,
 }
 
 impl Entities {
@@ -39,7 +42,8 @@ impl Entities {
 
 			bodies       : HashMap::new(),
 			missiles     : HashMap::new(),
-			ship_controls: HashMap::new()
+			ship_controls: HashMap::new(),
+			ships        : HashMap::new(),
 		}
 	}
 
@@ -60,7 +64,8 @@ impl Entities {
 			id,
 			client_id,
 			&mut self.bodies,
-			&mut self.ship_controls);
+			&mut self.ship_controls,
+			&mut self.ships);
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
@@ -72,7 +77,8 @@ impl Entities {
 		self.ship_template.destroy(
 			id,
 			&mut self.bodies,
-			&mut self.ship_controls);
+			&mut self.ship_controls,
+			&mut self.ships);
 	}
 
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
@@ -95,8 +101,8 @@ impl Entities {
 
 struct ShipTemplate;
 
-impl EntityTemplate2<ClientId, Body, ShipControl> for ShipTemplate {
-	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl) {
+impl EntityTemplate3<ClientId, Body, ShipControl, Ship> for ShipTemplate {
+	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl, Ship) {
 		let body = Body {
 			position: Vec2::zero(),
 			velocity: Vec2::zero(),
@@ -108,7 +114,7 @@ impl EntityTemplate2<ClientId, Body, ShipControl> for ShipTemplate {
 			missile_index: 0
 		};
 
-		(body, ship)
+		(body, ship, Ship)
 	}
 }
 
