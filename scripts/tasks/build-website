@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-mkdir -p output/http
-wintersmith build --chdir source/http --output $(pwd)/output/http
