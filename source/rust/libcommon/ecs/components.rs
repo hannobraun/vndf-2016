@@ -8,3 +8,9 @@ impl Missile {
 
 
 pub struct Ship;
+
+impl Ship {
+	pub fn new() -> Ship {
+		Ship
+	}
+}
