@@ -24,9 +24,9 @@ pub struct Entities {
 
 	next_id: EntityId,
 
-	pub bodies  : Components<Body>,
-	pub missiles: Components<Missile>,
-	pub ships   : Components<ShipControl>
+	pub bodies       : Components<Body>,
+	pub missiles     : Components<Missile>,
+	pub ship_controls: Components<ShipControl>
 }
 
 impl Entities {
@@ -37,15 +37,15 @@ impl Entities {
 
 			next_id: 0,
 
-			bodies  : HashMap::new(),
-			missiles: HashMap::new(),
-			ships   : HashMap::new()
+			bodies       : HashMap::new(),
+			missiles     : HashMap::new(),
+			ship_controls: HashMap::new()
 		}
 	}
 
 	pub fn entity_id_from_client_id(&self, client_id: ClientId) -> Option<EntityId> {
-		for (&id, ship) in self.ships.iter() {
-			if ship.client_id == client_id {
+		for (&id, ship_control) in self.ship_controls.iter() {
+			if ship_control.client_id == client_id {
 				return Some(id);
 			}
 		}
@@ -60,7 +60,7 @@ impl Entities {
 			id,
 			client_id,
 			&mut self.bodies,
-			&mut self.ships);
+			&mut self.ship_controls);
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
@@ -72,7 +72,7 @@ impl Entities {
 		self.ship_template.destroy(
 			id,
 			&mut self.bodies,
-			&mut self.ships);
+			&mut self.ship_controls);
 	}
 
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {

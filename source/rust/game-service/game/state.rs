@@ -94,13 +94,13 @@ impl State {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (&id, ship) in self.entities.ships.iter() {
+		for (&id, ship_control) in self.entities.ship_controls.iter() {
 			let perception = Perception {
 				self_id: id,
 
 				ships: self.entities.bodies
 					.iter()
-					.filter(|&(id, _)| self.entities.ships.contains_key(id))
+					.filter(|&(id, _)| self.entities.ship_controls.contains_key(id))
 					.map(|(&id, &body)| (id, body))
 					.collect(),
 
@@ -111,7 +111,8 @@ impl State {
 					.collect()
 			};
 
-			self.network.send(Message(vec!(ship.client_id), perception));
+			self.network.send(
+				Message(vec!(ship_control.client_id), perception));
 		}
 	}
 
@@ -124,19 +125,19 @@ impl State {
 		let body = self.entities.bodies
 			.find_mut(&id)
 			.expect("expected body");
-		let ship = self.entities.ships
+		let ship_control = self.entities.ship_controls
 			.find_mut(&id)
 			.expect("expected ship");
 
 		body.attitude = action.attitude;
 
-		if action.missile > ship.missile_index {
+		if action.missile > ship_control.missile_index {
 			self.events.send(
 				MissileLaunch(
 					body.position,
 					body.attitude))
 		}
-		ship.missile_index = action.missile;
+		ship_control.missile_index = action.missile;
 	}
 
 	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
