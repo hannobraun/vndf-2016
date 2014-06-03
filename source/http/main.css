@@ -73,3 +73,16 @@ div.signature p {
 p.ps {
 	background-color: #ffff00;
 }
+
+table.contact * {
+	text-align    : left;
+	vertical-align: text-top;
+}
+
+table.contact th {
+	padding: 1em;
+}
+
+table.contact p {
+	margin: 0;
+}
