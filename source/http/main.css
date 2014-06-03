@@ -86,3 +86,13 @@ table.contact th {
 table.contact p {
 	margin: 0;
 }
+
+footer {
+	max-width: 34em;
+	margin   : 0 auto;
+
+	margin-top: 2em;
+
+	text-align: center;
+	font-size : 75%;
+}
