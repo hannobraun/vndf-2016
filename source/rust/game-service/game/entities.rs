@@ -114,7 +114,7 @@ impl EntityTemplate3<ClientId, Body, ShipControl, Ship> for ShipTemplate {
 			missile_index: 0
 		};
 
-		(body, ship_control, Ship)
+		(body, ship_control, Ship::new())
 	}
 }
 
