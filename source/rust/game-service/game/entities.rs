@@ -109,12 +109,12 @@ impl EntityTemplate3<ClientId, Body, ShipControl, Ship> for ShipTemplate {
 			attitude: Radians(0.0)
 		};
 
-		let ship = ShipControl {
+		let ship_control = ShipControl {
 			client_id    : client_id,
 			missile_index: 0
 		};
 
-		(body, ship, Ship)
+		(body, ship_control, Ship)
 	}
 }
 
