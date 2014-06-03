@@ -43,8 +43,24 @@ impl State {
 			prepare_receive(&mut self.ships);
 			prepare_receive(&mut self.interpolateds);
 
-			receive(&mut self.ships, &perception.ships);
-			receive(&mut self.interpolateds, &perception.missiles);
+			receive(
+				&mut self.ships,
+				&perception.bodies
+					.iter()
+					.filter(|&(id, _)|
+						perception.ships.contains_key(id))
+					.map(|(&id, &body)|
+						(id, body))
+					.collect());
+			receive(
+				&mut self.interpolateds,
+				&perception.bodies
+					.iter()
+					.filter(|&(id, _)|
+						perception.missiles.contains_key(id))
+					.map(|(&id, &body)|
+						(id, body))
+					.collect());
 		});
 	}
 

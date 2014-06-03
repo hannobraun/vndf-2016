@@ -1,6 +1,11 @@
-use collections::HashMap;
-
-use ecs::infra::EntityId;
+use ecs::components::{
+	Missile,
+	Ship
+};
+use ecs::infra::{
+	Components,
+	EntityId
+};
 use json::{
 	from_json,
 	to_json
@@ -14,8 +19,9 @@ use physics::{
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
 	pub self_id : EntityId,
-	pub ships   : HashMap<EntityId, Body>,
-	pub missiles: HashMap<EntityId, Body>
+	pub bodies  : Components<Body>,
+	pub ships   : Components<Ship>,
+	pub missiles: Components<Missile>,
 }
 
 impl Perception {

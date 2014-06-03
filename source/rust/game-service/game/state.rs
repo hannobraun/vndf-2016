@@ -98,17 +98,9 @@ impl State {
 			let perception = Perception {
 				self_id: id,
 
-				ships: self.entities.bodies
-					.iter()
-					.filter(|&(id, _)| self.entities.ship_controls.contains_key(id))
-					.map(|(&id, &body)| (id, body))
-					.collect(),
-
-				missiles: self.entities.bodies
-					.iter()
-					.filter(|&(id, _)| self.entities.missiles.contains_key(id))
-					.map(|(&id, &body)| (id, body))
-					.collect()
+				bodies  : self.entities.bodies.clone(),
+				ships   : self.entities.ships.clone(),
+				missiles: self.entities.missiles.clone()
 			};
 
 			self.network.send(
