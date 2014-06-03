@@ -17,6 +17,5 @@ For an item to appear on this list, the following requirements must be met:
 * Camera zoom
 * Path prediction
 * UI: Selecting other ships as targets
-* Website: Contact
 * Website: Blog
 * Improve newsletter signup experience
