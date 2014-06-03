@@ -17,8 +17,8 @@ pub trait EntityTemplate2<A, C1, C2> {
 	}
 
 	fn destroy(&self,
-		id: EntityId, c1:
-		&mut Components<C1>,
+		id: EntityId,
+		c1: &mut Components<C1>,
 		c2: &mut Components<C2>) {
 
 		c1.remove(&id);
