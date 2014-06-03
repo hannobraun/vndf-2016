@@ -12,10 +12,15 @@ impl Missile {
 }
 
 
-pub struct Ship;
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+pub struct Ship {
+	dummy: bool // Required to derive Encodable
+}
 
 impl Ship {
 	pub fn new() -> Ship {
-		Ship
+		Ship {
+			dummy: false
+		}
 	}
 }
