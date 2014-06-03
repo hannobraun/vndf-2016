@@ -1,6 +1,9 @@
 use collections::HashMap;
 
-use common::ecs::components::Ship;
+use common::ecs::components::{
+	Missile,
+	Ship
+};
 use common::ecs::infra::{
 	Components,
 	EntityId,
@@ -13,10 +16,7 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::{
-	Missile,
-	ShipControl
-};
+use game::data::ShipControl;
 use network::ClientId;
 
 
