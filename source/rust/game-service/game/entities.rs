@@ -13,7 +13,7 @@ use common::physics::{
 
 use game::data::{
 	Missile,
-	Ship
+	ShipControl
 };
 use network::ClientId;
 
@@ -26,7 +26,7 @@ pub struct Entities {
 
 	pub bodies  : Components<Body>,
 	pub missiles: Components<Missile>,
-	pub ships   : Components<Ship>
+	pub ships   : Components<ShipControl>
 }
 
 impl Entities {
@@ -95,15 +95,15 @@ impl Entities {
 
 struct ShipTemplate;
 
-impl EntityTemplate2<ClientId, Body, Ship> for ShipTemplate {
-	fn create_components(&self, client_id: ClientId) -> (Body, Ship) {
+impl EntityTemplate2<ClientId, Body, ShipControl> for ShipTemplate {
+	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl) {
 		let body = Body {
 			position: Vec2::zero(),
 			velocity: Vec2::zero(),
 			attitude: Radians(0.0)
 		};
 
-		let ship = Ship {
+		let ship = ShipControl {
 			client_id    : client_id,
 			missile_index: 0
 		};
