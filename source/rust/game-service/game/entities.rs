@@ -129,6 +129,6 @@ impl EntityTemplate2<(Vec2, Radians), Body, Missile> for MissileTemplate {
 			attitude: attitude
 		};
 
-		(body, Missile)
+		(body, Missile::new())
 	}
 }
