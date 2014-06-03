@@ -8,6 +8,7 @@ use common::physics::{
 	Radians,
 	Vec2
 };
+use common::protocol;
 use common::protocol::{
 	Action,
 	Perception
@@ -97,10 +98,11 @@ impl State {
 		for (&id, ship_control) in self.entities.ship_controls.iter() {
 			let perception = Perception {
 				self_id: id,
-
-				bodies  : self.entities.bodies.clone(),
-				ships   : self.entities.ships.clone(),
-				missiles: self.entities.missiles.clone()
+				updates: protocol::Entities {
+					bodies  : self.entities.bodies.clone(),
+					ships   : self.entities.ships.clone(),
+					missiles: self.entities.missiles.clone()
+				}
 			};
 
 			self.network.send(

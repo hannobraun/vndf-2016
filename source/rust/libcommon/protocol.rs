@@ -18,10 +18,8 @@ use physics::{
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
-	pub self_id : EntityId,
-	pub bodies  : Components<Body>,
-	pub ships   : Components<Ship>,
-	pub missiles: Components<Missile>,
+	pub self_id: EntityId,
+	pub updates: Entities,
 }
 
 impl Perception {
@@ -32,6 +30,14 @@ impl Perception {
 	pub fn to_str(&self) -> String {
 		to_json(self)
 	}
+}
+
+
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+pub struct Entities {
+	pub bodies  : Components<Body>,
+	pub ships   : Components<Ship>,
+	pub missiles: Components<Missile>,
 }
 
 
