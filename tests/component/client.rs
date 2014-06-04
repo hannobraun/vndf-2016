@@ -28,7 +28,7 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_2 = Vec2(10.0, 0.0);
 
 	let mut perception_1 = Perception {
-		self_id : 0,
+		self_id: 0,
 		updated: Entities {
 			bodies  : HashMap::new(),
 			ships   : HashMap::new(),
@@ -83,7 +83,7 @@ fn the_camera_should_follow_the_ship() {
 	let pos_2 = Vec2(10.0, 0.0);
 
 	let mut perception_1 = Perception {
-		self_id : 0,
+		self_id: 0,
 		updated: Entities {
 			bodies  : HashMap::new(),
 			ships   : HashMap::new(),
