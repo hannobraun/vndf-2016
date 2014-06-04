@@ -45,19 +45,19 @@ impl State {
 
 			receive(
 				&mut self.ships,
-				&perception.updates.bodies
+				&perception.updated.bodies
 					.iter()
 					.filter(|&(id, _)|
-						perception.updates.ships.contains_key(id))
+						perception.updated.ships.contains_key(id))
 					.map(|(&id, &body)|
 						(id, body))
 					.collect());
 			receive(
 				&mut self.interpolateds,
-				&perception.updates.bodies
+				&perception.updated.bodies
 					.iter()
 					.filter(|&(id, _)|
-						perception.updates.missiles.contains_key(id))
+						perception.updated.missiles.contains_key(id))
 					.map(|(&id, &body)|
 						(id, body))
 					.collect());

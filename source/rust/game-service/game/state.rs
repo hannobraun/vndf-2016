@@ -98,7 +98,7 @@ impl State {
 		for (&id, ship_control) in self.entities.ship_controls.iter() {
 			let perception = Perception {
 				self_id: id,
-				updates: protocol::Entities {
+				updated: protocol::Entities {
 					bodies  : self.entities.bodies.clone(),
 					ships   : self.entities.ships.clone(),
 					missiles: self.entities.missiles.clone()

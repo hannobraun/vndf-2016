@@ -19,7 +19,7 @@ use physics::{
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
 	pub self_id: EntityId,
-	pub updates: Entities,
+	pub updated: Entities,
 }
 
 impl Perception {
