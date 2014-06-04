@@ -25,6 +25,17 @@ pub struct Perception {
 }
 
 impl Perception {
+	pub fn new(
+		self_id: EntityId,
+		_      : Option<Entities>,
+		current: Entities) -> Perception {
+
+		Perception {
+			self_id: self_id,
+			updated: current
+		}
+	}
+
 	pub fn from_str(s: &str) -> Result<Perception, String> {
 		from_json(s)
 	}
