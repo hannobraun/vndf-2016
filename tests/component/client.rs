@@ -1,5 +1,3 @@
-use collections::HashMap;
-
 use common::ecs::components::Ship;
 use common::testing::{
 	Client,
@@ -29,11 +27,7 @@ fn it_should_interpolate_between_perceptions() {
 
 	let mut perception_1 = Perception {
 		self_id: 0,
-		updated: Entities {
-			bodies  : HashMap::new(),
-			ships   : HashMap::new(),
-			missiles: HashMap::new()
-		}
+		updated: Entities::new()
 	};
 	perception_1.updated.bodies.insert(0, Body {
 		position: pos_1,
@@ -84,11 +78,7 @@ fn the_camera_should_follow_the_ship() {
 
 	let mut perception_1 = Perception {
 		self_id: 0,
-		updated: Entities {
-			bodies  : HashMap::new(),
-			ships   : HashMap::new(),
-			missiles: HashMap::new()
-		}
+		updated: Entities::new()
 	};
 	perception_1.updated.bodies.insert(0, Body {
 		position: pos_1,
