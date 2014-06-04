@@ -1,3 +1,5 @@
+use collections::HashMap;
+
 use ecs::components::{
 	Missile,
 	Ship
@@ -38,6 +40,16 @@ pub struct Entities {
 	pub bodies  : Components<Body>,
 	pub ships   : Components<Ship>,
 	pub missiles: Components<Missile>,
+}
+
+impl Entities {
+	pub fn new() -> Entities {
+		Entities {
+			bodies  : HashMap::new(),
+			ships   : HashMap::new(),
+			missiles: HashMap::new(),
+		}
+	}
 }
 
 
