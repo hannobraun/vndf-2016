@@ -96,14 +96,11 @@ impl State {
 		}
 
 		for (&id, ship_control) in self.entities.ship_controls.iter() {
-			let perception = Perception {
-				self_id: id,
-				updated: protocol::Entities {
-					bodies  : self.entities.bodies.clone(),
-					ships   : self.entities.ships.clone(),
-					missiles: self.entities.missiles.clone()
-				}
-			};
+			let perception = Perception::new(id, None, protocol::Entities {
+				bodies  : self.entities.bodies.clone(),
+				ships   : self.entities.ships.clone(),
+				missiles: self.entities.missiles.clone()
+			});
 
 			self.network.send(
 				Message(vec!(ship_control.client_id), perception));
