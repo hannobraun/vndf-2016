@@ -7,8 +7,6 @@ use common::ecs::components::{
 use common::ecs::infra::{
 	Components,
 	EntityId,
-	EntityTemplate2,
-	EntityTemplate3
 };
 use common::physics::{
 	Body,
@@ -19,6 +17,18 @@ use common::physics::{
 use game::data::ShipControl;
 use network::ClientId;
 
+
+entity!(Missile<Body, MissileKind>, |args: (Vec2, Radians)| {
+	let (position, attitude) = args;
+
+	let body = Body {
+		position: position,
+		velocity: Vec2::zero(),
+		attitude: attitude
+	};
+
+	(body, MissileKind::new())
+})
 
 entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
 	let body = Body {
@@ -37,8 +47,6 @@ entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
 
 
 pub struct Entities {
-	missile_template: MissileTemplate,
-
 	next_id: EntityId,
 
 	pub bodies       : Components<Body>,
@@ -50,8 +58,6 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
-			missile_template: MissileTemplate,
-
 			next_id: 0,
 
 			bodies       : HashMap::new(),
@@ -98,7 +104,7 @@ impl Entities {
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
 		let id = self.next_id();
 
-		self.missile_template.create(
+		Missile::create(
 			id,
 			(position, attitude),
 			&mut self.bodies,
@@ -109,20 +115,5 @@ impl Entities {
 		let id = self.next_id;
 		self.next_id += 1;
 		id
-	}
-}
-
-
-struct MissileTemplate;
-
-impl EntityTemplate2<(Vec2, Radians), Body, MissileKind> for MissileTemplate {
-	fn create_components(&self, (position, attitude): (Vec2, Radians)) -> (Body, MissileKind) {
-		let body = Body {
-			position: position,
-			velocity: Vec2::zero(),
-			attitude: attitude
-		};
-
-		(body, MissileKind::new())
 	}
 }
