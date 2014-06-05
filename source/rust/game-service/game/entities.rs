@@ -33,7 +33,7 @@ entity!(Missile<Body, Visual, MissileKind>, |args: (Vec2, Radians)| {
 	(body, MissileVisual, MissileKind::new())
 })
 
-entity!(Ship<Body, ShipControl, Visual, ShipKind>, |client_id: ClientId| {
+entity!(Ship<Body, ShipControl, Visual>, |client_id: ClientId| {
 	let body = Body {
 		position: Vec2::zero(),
 		velocity: Vec2::zero(),
@@ -45,7 +45,7 @@ entity!(Ship<Body, ShipControl, Visual, ShipKind>, |client_id: ClientId| {
 		missile_index: 0
 	};
 
-	(body, ship_control, ShipVisual, ShipKind::new())
+	(body, ship_control, ShipVisual)
 })
 
 
@@ -90,8 +90,7 @@ impl Entities {
 			client_id,
 			&mut self.bodies,
 			&mut self.ship_controls,
-			&mut self.visuals,
-			&mut self.ships);
+			&mut self.visuals);
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
@@ -104,8 +103,7 @@ impl Entities {
 			id,
 			&mut self.bodies,
 			&mut self.ship_controls,
-			&mut self.visuals,
-			&mut self.ships);
+			&mut self.visuals);
 	}
 
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
