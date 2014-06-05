@@ -4,6 +4,7 @@ use common::ecs::components::{
 	MissileKind,
 	MissileVisual,
 	ShipKind,
+	ShipVisual,
 	Visual
 };
 use common::ecs::infra::{
@@ -32,7 +33,7 @@ entity!(Missile<Body, Visual, MissileKind>, |args: (Vec2, Radians)| {
 	(body, MissileVisual, MissileKind::new())
 })
 
-entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
+entity!(Ship<Body, ShipControl, Visual, ShipKind>, |client_id: ClientId| {
 	let body = Body {
 		position: Vec2::zero(),
 		velocity: Vec2::zero(),
@@ -44,7 +45,7 @@ entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
 		missile_index: 0
 	};
 
-	(body, ship_control, ShipKind::new())
+	(body, ship_control, ShipVisual, ShipKind::new())
 })
 
 
@@ -89,6 +90,7 @@ impl Entities {
 			client_id,
 			&mut self.bodies,
 			&mut self.ship_controls,
+			&mut self.visuals,
 			&mut self.ships);
 	}
 
@@ -102,6 +104,7 @@ impl Entities {
 			id,
 			&mut self.bodies,
 			&mut self.ship_controls,
+			&mut self.visuals,
 			&mut self.ships);
 	}
 
