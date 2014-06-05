@@ -98,6 +98,7 @@ impl State {
 		for (&id, ship_control) in self.entities.ship_controls.iter() {
 			let perception = Perception::new(id, None, protocol::Entities {
 				bodies  : self.entities.bodies.clone(),
+				visuals : self.entities.visuals.clone(),
 				ships   : self.entities.ships.clone(),
 				missiles: self.entities.missiles.clone()
 			});
