@@ -1,7 +1,7 @@
 use collections::HashMap;
 
 use ecs::components::{
-	Missile,
+	MissileKind,
 	ShipKind
 };
 use ecs::infra::{
@@ -50,7 +50,7 @@ impl Perception {
 pub struct Entities {
 	pub bodies  : Components<Body>,
 	pub ships   : Components<ShipKind>,
-	pub missiles: Components<Missile>,
+	pub missiles: Components<MissileKind>,
 }
 
 impl Entities {

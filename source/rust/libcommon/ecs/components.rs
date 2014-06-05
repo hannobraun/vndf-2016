@@ -1,11 +1,11 @@
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-pub struct Missile {
+pub struct MissileKind {
 	dummy: bool // Required to derive Encodable
 }
 
-impl Missile {
-	pub fn new() -> Missile {
-		Missile {
+impl MissileKind {
+	pub fn new() -> MissileKind {
+		MissileKind {
 			dummy: false
 		}
 	}
