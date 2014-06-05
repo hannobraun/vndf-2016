@@ -226,16 +226,17 @@ fn generate_items(
 	let entity_struct = quote_item!(&*context,
 			struct $entity;
 	);
+	let entity_impl = quote_item!(&*context,
+		impl $entity {
+			pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
+				let ($component_tuple) = $init_block;
+				$inserts
+			}
+		}
+	);
 
 	vec!(
 		entity_struct.unwrap(),
-		quote_item!(&*context,
-			impl $entity {
-				pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
-					let ($component_tuple) = $init_block;
-					$inserts
-				}
-			}
-		).unwrap()
+		entity_impl.unwrap()
 	)
 }
