@@ -51,14 +51,7 @@ fn expand_entity_macro(
 
 	// Done parsing, here we generate snippets for our entity implementation
 	let components_args_names = generate_components_args_names(&components);
-
-	let component_names: Vec<ast::Ident> = components
-		.iter()
-		.enumerate()
-		.map(|(i, _)|
-			ast::Ident::new(token::intern(
-				"c".to_str().append(i.to_str().as_slice()).as_slice())))
-		.collect();
+	let component_names       = generate_component_names(&components);
 
 	let mut components_args: Vec<ast::TokenTree> = Vec::new();
 	for (i, ty) in components.iter().enumerate() {
@@ -167,5 +160,15 @@ fn generate_components_args_names(components: &Vec<@ast::Ty>) -> Vec<ast::Ident>
 		.map(|(i, _)|
 			ast::Ident::new(token::intern(
 				"cs".to_str().append(i.to_str().as_slice()).as_slice())))
+		.collect()
+}
+
+fn generate_component_names(components: &Vec<@ast::Ty>) -> Vec<ast::Ident> {
+	components
+		.iter()
+		.enumerate()
+		.map(|(i, _)|
+			ast::Ident::new(token::intern(
+				"c".to_str().append(i.to_str().as_slice()).as_slice())))
 		.collect()
 }
