@@ -15,7 +15,7 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::ShipControl;
+use game::data::Player;
 use network::ClientId;
 
 
@@ -31,19 +31,19 @@ entity!(Missile<Body, Visual>, |args: (Vec2, Radians)| {
 	(body, MissileVisual)
 })
 
-entity!(Ship<Body, ShipControl, Visual>, |client_id: ClientId| {
+entity!(Ship<Body, Player, Visual>, |client_id: ClientId| {
 	let body = Body {
 		position: Vec2::zero(),
 		velocity: Vec2::zero(),
 		attitude: Radians(0.0)
 	};
 
-	let ship_control = ShipControl {
+	let player = Player {
 		client_id    : client_id,
 		missile_index: 0
 	};
 
-	(body, ship_control, ShipVisual)
+	(body, player, ShipVisual)
 })
 
 
@@ -51,7 +51,7 @@ pub struct Entities {
 	next_id: EntityId,
 
 	pub bodies       : Components<Body>,
-	pub ship_controls: Components<ShipControl>,
+	pub ship_controls: Components<Player>,
 	pub visuals      : Components<Visual>
 }
 
