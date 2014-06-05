@@ -2,7 +2,7 @@ use collections::HashMap;
 
 use common::ecs::components::{
 	Missile,
-	Ship
+	ShipKind
 };
 use common::ecs::infra::{
 	Components,
@@ -29,7 +29,7 @@ pub struct Entities {
 	pub bodies       : Components<Body>,
 	pub missiles     : Components<Missile>,
 	pub ship_controls: Components<ShipControl>,
-	pub ships        : Components<Ship>,
+	pub ships        : Components<ShipKind>,
 }
 
 impl Entities {
@@ -101,8 +101,8 @@ impl Entities {
 
 struct ShipTemplate;
 
-impl EntityTemplate3<ClientId, Body, ShipControl, Ship> for ShipTemplate {
-	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl, Ship) {
+impl EntityTemplate3<ClientId, Body, ShipControl, ShipKind> for ShipTemplate {
+	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl, ShipKind) {
 		let body = Body {
 			position: Vec2::zero(),
 			velocity: Vec2::zero(),
@@ -114,7 +114,7 @@ impl EntityTemplate3<ClientId, Body, ShipControl, Ship> for ShipTemplate {
 			missile_index: 0
 		};
 
-		(body, ship_control, Ship::new())
+		(body, ship_control, ShipKind::new())
 	}
 }
 

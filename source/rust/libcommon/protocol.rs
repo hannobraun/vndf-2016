@@ -2,7 +2,7 @@ use collections::HashMap;
 
 use ecs::components::{
 	Missile,
-	Ship
+	ShipKind
 };
 use ecs::infra::{
 	Components,
@@ -49,7 +49,7 @@ impl Perception {
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Entities {
 	pub bodies  : Components<Body>,
-	pub ships   : Components<Ship>,
+	pub ships   : Components<ShipKind>,
 	pub missiles: Components<Missile>,
 }
 
