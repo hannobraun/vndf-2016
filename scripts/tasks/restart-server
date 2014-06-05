@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-./scripts/tasks/build-common &&
-./scripts/tasks/build-game-service &&
-killall $(basename $GAME_SERVICE_BINARY)
-./$GAME_SERVICE_BINARY 34481 &
