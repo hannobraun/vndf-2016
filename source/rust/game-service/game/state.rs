@@ -95,14 +95,14 @@ impl State {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (&id, ship_control) in self.entities.players.iter() {
+		for (&id, player) in self.entities.players.iter() {
 			let perception = Perception::new(id, None, protocol::Entities {
 				bodies  : self.entities.bodies.clone(),
 				visuals : self.entities.visuals.clone(),
 			});
 
 			self.network.send(
-				Message(vec!(ship_control.client_id), perception));
+				Message(vec!(player.client_id), perception));
 		}
 	}
 
