@@ -2,6 +2,4 @@
 
 source project.conf
 
-FILES=$(find tests source/rust -name *.rs)
-
-$ZWOBOT scripts/tasks/run-tests $FILES
+$ZWOBOT scripts/tasks/run-tests tests source/rust
