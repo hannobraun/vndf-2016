@@ -67,8 +67,8 @@ impl Entities {
 	}
 
 	pub fn entity_id_from_client_id(&self, client_id: ClientId) -> Option<EntityId> {
-		for (&id, ship_control) in self.players.iter() {
-			if ship_control.client_id == client_id {
+		for (&id, player) in self.players.iter() {
+			if player.client_id == client_id {
 				return Some(id);
 			}
 		}
