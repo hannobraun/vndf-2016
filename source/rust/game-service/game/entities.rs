@@ -20,9 +20,24 @@ use game::data::ShipControl;
 use network::ClientId;
 
 
+entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
+	let body = Body {
+		position: Vec2::zero(),
+		velocity: Vec2::zero(),
+		attitude: Radians(0.0)
+	};
+
+	let ship_control = ShipControl {
+		client_id    : client_id,
+		missile_index: 0
+	};
+
+	(body, ship_control, ShipKind::new())
+})
+
+
 pub struct Entities {
 	missile_template: MissileTemplate,
-	ship_template   : ShipTemplate,
 
 	next_id: EntityId,
 
@@ -36,7 +51,6 @@ impl Entities {
 	pub fn new() -> Entities {
 		Entities {
 			missile_template: MissileTemplate,
-			ship_template   : ShipTemplate,
 
 			next_id: 0,
 
@@ -60,7 +74,7 @@ impl Entities {
 	pub fn create_ship(&mut self, client_id: ClientId) {
 		let id = self.next_id();
 
-		self.ship_template.create(
+		Ship::create(
 			id,
 			client_id,
 			&mut self.bodies,
@@ -74,7 +88,7 @@ impl Entities {
 			None     => return
 		};
 
-		self.ship_template.destroy(
+		Ship::destroy(
 			id,
 			&mut self.bodies,
 			&mut self.ship_controls,
@@ -95,26 +109,6 @@ impl Entities {
 		let id = self.next_id;
 		self.next_id += 1;
 		id
-	}
-}
-
-
-struct ShipTemplate;
-
-impl EntityTemplate3<ClientId, Body, ShipControl, ShipKind> for ShipTemplate {
-	fn create_components(&self, client_id: ClientId) -> (Body, ShipControl, ShipKind) {
-		let body = Body {
-			position: Vec2::zero(),
-			velocity: Vec2::zero(),
-			attitude: Radians(0.0)
-		};
-
-		let ship_control = ShipControl {
-			client_id    : client_id,
-			missile_index: 0
-		};
-
-		(body, ship_control, ShipKind::new())
 	}
 }
 

@@ -1,8 +1,13 @@
+#![feature(phase)]
+
+
 extern crate collections;
 extern crate common;
 extern crate getopts;
 extern crate libc;
 extern crate time;
+
+#[phase(syntax)] extern crate ecs_macros;
 
 
 use std::os;
