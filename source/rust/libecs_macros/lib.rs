@@ -62,32 +62,23 @@ fn expand_entity_macro(
 		context,
 		&component_names);
 
-	let mut inserts: Vec<ast::TokenTree> = Vec::new();
-	for (i, arg_name) in components_args_names.iter().enumerate() {
-		let component_name = component_names.get(i);
-
-		inserts.push_all(
-			quote_tokens!(&*context,
-				$arg_name.insert(id, $component_name);
-			).as_slice());
-	}
+	let inserts = generate_inserts(
+		context,
+		&components_args_names,
+		&component_names);
 
 	// Done generating snippets. Now the snippets are put together into the
 	// entity implementation.
 	let macro = EntityMacroResult {
-		items: vec!(
-			quote_item!(&*context,
-				struct $entity;
-			).unwrap(),
-			quote_item!(&*context,
-				impl $entity {
-					pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
-						let ($component_tuple) = $init_block;
-						$inserts
-					}
-				}
-			).unwrap()
-		)
+		items: generate_items(
+			context,
+			entity,
+			arg_name,
+			arg_type,
+			init_block,
+			components_args,
+			component_tuple,
+			inserts)
 	};
 
 	box macro as Box<MacResult>
@@ -197,4 +188,52 @@ fn generate_component_tuple(
 	}
 
 	component_tuple
+}
+
+fn generate_inserts(
+	context              : &ExtCtxt,
+	components_args_names: &Vec<ast::Ident>,
+	component_names      : &Vec<ast::Ident>) -> Vec<ast::TokenTree> {
+
+	let mut inserts = Vec::new();
+
+	for (i, arg_name) in components_args_names.iter().enumerate() {
+		let component_name = component_names.get(i);
+
+		inserts.push_all(
+			quote_tokens!(&*context,
+				$arg_name.insert(id, $component_name);
+			).as_slice());
+	}
+
+	inserts
+}
+
+fn generate_items(
+	context: &ExtCtxt,
+
+	entity    : ast::Ident,
+	arg_name  : ast::Ident,
+	arg_type  : @ast::Ty,
+	init_block: @ast::Block,
+
+	components_args: Vec<ast::TokenTree>,
+	component_tuple: Vec<ast::TokenTree>,
+	inserts        : Vec<ast::TokenTree>
+
+	) -> Vec<@ast::Item> {
+
+	vec!(
+		quote_item!(&*context,
+			struct $entity;
+		).unwrap(),
+		quote_item!(&*context,
+			impl $entity {
+				pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
+					let ($component_tuple) = $init_block;
+					$inserts
+				}
+			}
+		).unwrap()
+	)
 }
