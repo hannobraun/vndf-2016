@@ -2,6 +2,7 @@ use collections::HashMap;
 
 use common::ecs::components::{
 	MissileKind,
+	MissileVisual,
 	ShipKind,
 	Visual
 };
@@ -19,7 +20,7 @@ use game::data::ShipControl;
 use network::ClientId;
 
 
-entity!(Missile<Body, MissileKind>, |args: (Vec2, Radians)| {
+entity!(Missile<Body, Visual, MissileKind>, |args: (Vec2, Radians)| {
 	let (position, attitude) = args;
 
 	let body = Body {
@@ -28,7 +29,7 @@ entity!(Missile<Body, MissileKind>, |args: (Vec2, Radians)| {
 		attitude: attitude
 	};
 
-	(body, MissileKind::new())
+	(body, MissileVisual, MissileKind::new())
 })
 
 entity!(Ship<Body, ShipControl, ShipKind>, |client_id: ClientId| {
@@ -111,6 +112,7 @@ impl Entities {
 			id,
 			(position, attitude),
 			&mut self.bodies,
+			&mut self.visuals,
 			&mut self.missiles);
 	}
 
