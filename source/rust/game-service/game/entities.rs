@@ -20,7 +20,7 @@ use game::data::ShipControl;
 use network::ClientId;
 
 
-entity!(Missile<Body, Visual, MissileKind>, |args: (Vec2, Radians)| {
+entity!(Missile<Body, Visual>, |args: (Vec2, Radians)| {
 	let (position, attitude) = args;
 
 	let body = Body {
@@ -29,7 +29,7 @@ entity!(Missile<Body, Visual, MissileKind>, |args: (Vec2, Radians)| {
 		attitude: attitude
 	};
 
-	(body, MissileVisual, MissileKind::new())
+	(body, MissileVisual)
 })
 
 entity!(Ship<Body, ShipControl, Visual>, |client_id: ClientId| {
@@ -110,8 +110,7 @@ impl Entities {
 			id,
 			(position, attitude),
 			&mut self.bodies,
-			&mut self.visuals,
-			&mut self.missiles);
+			&mut self.visuals);
 	}
 
 	fn next_id(&mut self) -> EntityId {
