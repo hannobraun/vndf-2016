@@ -197,7 +197,8 @@ fn generate_component_tuple(
 fn generate_inserts(
 	context              : &ExtCtxt,
 	components_args_names: &Vec<ast::Ident>,
-	component_names      : &Vec<ast::Ident>) -> Vec<ast::TokenTree> {
+	component_names      : &Vec<ast::Ident>
+	) -> Vec<ast::TokenTree> {
 
 	let mut inserts = Vec::new();
 
