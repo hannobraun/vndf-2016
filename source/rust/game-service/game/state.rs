@@ -115,19 +115,19 @@ impl State {
 		let body = self.entities.bodies
 			.find_mut(&id)
 			.expect("expected body");
-		let ship_control = self.entities.players
+		let player = self.entities.players
 			.find_mut(&id)
 			.expect("expected ship");
 
 		body.attitude = action.attitude;
 
-		if action.missile > ship_control.missile_index {
+		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
 					body.position,
 					body.attitude))
 		}
-		ship_control.missile_index = action.missile;
+		player.missile_index = action.missile;
 	}
 
 	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
