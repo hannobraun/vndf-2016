@@ -223,10 +223,12 @@ fn generate_items(
 
 	) -> Vec<@ast::Item> {
 
-	vec!(
-		quote_item!(&*context,
+	let entity_struct = quote_item!(&*context,
 			struct $entity;
-		).unwrap(),
+	);
+
+	vec!(
+		entity_struct.unwrap(),
 		quote_item!(&*context,
 			impl $entity {
 				pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
