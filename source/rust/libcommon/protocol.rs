@@ -1,9 +1,6 @@
 use collections::HashMap;
 
-use ecs::components::{
-	MissileKind,
-	Visual,
-};
+use ecs::components::Visual;
 use ecs::infra::{
 	Components,
 	EntityId
@@ -50,7 +47,6 @@ impl Perception {
 pub struct Entities {
 	pub bodies  : Components<Body>,
 	pub visuals : Components<Visual>,
-	pub missiles: Components<MissileKind>,
 }
 
 impl Entities {
@@ -58,7 +54,6 @@ impl Entities {
 		Entities {
 			bodies  : HashMap::new(),
 			visuals : HashMap::new(),
-			missiles: HashMap::new(),
 		}
 	}
 }

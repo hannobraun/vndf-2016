@@ -99,7 +99,6 @@ impl State {
 			let perception = Perception::new(id, None, protocol::Entities {
 				bodies  : self.entities.bodies.clone(),
 				visuals : self.entities.visuals.clone(),
-				missiles: self.entities.missiles.clone()
 			});
 
 			self.network.send(
