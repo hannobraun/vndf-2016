@@ -31,11 +31,11 @@ pub fn macro_registrar(register: |ast::Name, SyntaxExtension|) {
 }
 
 
-struct EntityMacro {
+struct EntityMacroResult {
 	items: Vec<@ast::Item>
 }
 
-impl MacResult for EntityMacro {
+impl MacResult for EntityMacroResult {
 	fn make_items(&self) -> Option<SmallVector<@ast::Item>> {
 		Some(SmallVector::many(self.items.clone()))
 	}
@@ -123,7 +123,7 @@ fn expand_entity_macro(
 
 	// Done generating snippets. Now the snippets are put together into the
 	// entity implementation.
-	let macro = EntityMacro {
+	let macro = EntityMacroResult {
 		items: vec!(
 			quote_item!(&*context,
 				struct $entity;
