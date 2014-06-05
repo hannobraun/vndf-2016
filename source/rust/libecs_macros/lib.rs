@@ -62,11 +62,11 @@ fn expand_entity_macro(
 		context,
 		&component_names);
 
-	let mut components_inserts: Vec<ast::TokenTree> = Vec::new();
+	let mut inserts: Vec<ast::TokenTree> = Vec::new();
 	for (i, arg_name) in components_args_names.iter().enumerate() {
 		let component_name = component_names.get(i);
 
-		components_inserts.push_all(
+		inserts.push_all(
 			quote_tokens!(&*context,
 				$arg_name.insert(id, $component_name);
 			).as_slice());
@@ -83,7 +83,7 @@ fn expand_entity_macro(
 				impl $entity {
 					pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
 						let ($component_tuple) = $init_block;
-						$components_inserts
+						$inserts
 					}
 				}
 			).unwrap()
