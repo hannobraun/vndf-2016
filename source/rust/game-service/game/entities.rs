@@ -2,7 +2,8 @@ use collections::HashMap;
 
 use common::ecs::components::{
 	MissileKind,
-	ShipKind
+	ShipKind,
+	Visual
 };
 use common::ecs::infra::{
 	Components,
@@ -53,6 +54,7 @@ pub struct Entities {
 	pub missiles     : Components<MissileKind>,
 	pub ship_controls: Components<ShipControl>,
 	pub ships        : Components<ShipKind>,
+	pub visuals      : Components<Visual>
 }
 
 impl Entities {
@@ -64,6 +66,7 @@ impl Entities {
 			missiles     : HashMap::new(),
 			ship_controls: HashMap::new(),
 			ships        : HashMap::new(),
+			visuals      : HashMap::new(),
 		}
 	}
 
