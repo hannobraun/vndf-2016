@@ -1,6 +1,7 @@
 use collections::HashMap;
 use time;
 
+use common::ecs::components::ShipVisual;
 use common::ecs::infra::{
 	Components,
 	EntityId
@@ -48,7 +49,7 @@ impl State {
 				&perception.updated.bodies
 					.iter()
 					.filter(|&(id, _)|
-						perception.updated.ships.contains_key(id))
+						perception.updated.visuals.get(id) == &ShipVisual)
 					.map(|(&id, &body)|
 						(id, body))
 					.collect());
