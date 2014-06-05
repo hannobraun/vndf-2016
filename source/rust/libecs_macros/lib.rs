@@ -53,20 +53,10 @@ fn expand_entity_macro(
 	let components_args_names = generate_components_args_names(&components);
 	let component_names       = generate_component_names(&components);
 
-	let mut components_args: Vec<ast::TokenTree> = Vec::new();
-	for (i, ty) in components.iter().enumerate() {
-		let arg_name = components_args_names.get(i);
-
-		components_args.push_all(
-			quote_tokens!(&*context,
-				$arg_name: &mut Components<$ty>
-			).as_slice());
-
-		if i + 1 < components.len() {
-			components_args.push_all(
-				quote_tokens!(&*context, ,).as_slice());
-		}
-	}
+	let components_args = generate_components_args(
+		context,
+		&components,
+		&components_args_names);
 
 	let mut components_tuple: Vec<ast::TokenTree> = Vec::new();
 	for (i, name) in component_names.iter().enumerate() {
@@ -171,4 +161,28 @@ fn generate_component_names(components: &Vec<@ast::Ty>) -> Vec<ast::Ident> {
 			ast::Ident::new(token::intern(
 				"c".to_str().append(i.to_str().as_slice()).as_slice())))
 		.collect()
+}
+
+fn generate_components_args(
+	context   : &ExtCtxt,
+	components: &Vec<@ast::Ty>,
+	names     : &Vec<ast::Ident>) -> Vec<ast::TokenTree> {
+
+	let mut components_args = Vec::new();
+
+	for (i, ty) in components.iter().enumerate() {
+		let arg_name = names.get(i);
+
+		components_args.push_all(
+			quote_tokens!(&*context,
+				$arg_name: &mut Components<$ty>
+			).as_slice());
+
+		if i + 1 < components.len() {
+			components_args.push_all(
+				quote_tokens!(&*context, ,).as_slice());
+		}
+	}
+
+	components_args
 }
