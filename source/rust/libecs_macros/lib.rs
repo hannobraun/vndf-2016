@@ -46,30 +46,11 @@ fn expand_entity_macro(
 	_         : codemap::Span,
 	token_tree: &[ast::TokenTree]) -> Box<MacResult> {
 
-	// Parse
-	let mut parser = parse::new_parser_from_tts(
-		context.parse_sess(),
-		context.cfg(),
-		Vec::from_slice(token_tree));
-
-	let entity = parser.parse_ident();
-
-	let component_types = parser.parse_unspanned_seq(
-		&token::LT,
-		&token::GT,
-		seq_sep_trailing_disallowed(token::COMMA),
-		|p| p.parse_ty(true));
-
-	parser.expect(&token::COMMA);
-	parser.expect(&token::BINOP(token::OR));
-	let arg_name = parser.parse_ident();
-	parser.expect(&token::COLON);
-	let arg_type = parser.parse_ty(true);
-	parser.expect(&token::BINOP(token::OR));
-	let init_block = parser.parse_block();
+	let EntityMacro(entity, components, arg_name, arg_type, init_block) =
+		EntityMacro::parse(context, token_tree);
 
 	// Done parsing, here we generate snippets for our entity implementation
-	let components_args_names: Vec<ast::Ident> = component_types
+	let components_args_names: Vec<ast::Ident> = components
 		.iter()
 		.enumerate()
 		.map(|(i, _)|
@@ -77,7 +58,7 @@ fn expand_entity_macro(
 				"cs".to_str().append(i.to_str().as_slice()).as_slice())))
 		.collect();
 
-	let component_names: Vec<ast::Ident> = component_types
+	let component_names: Vec<ast::Ident> = components
 		.iter()
 		.enumerate()
 		.map(|(i, _)|
@@ -86,7 +67,7 @@ fn expand_entity_macro(
 		.collect();
 
 	let mut components_args: Vec<ast::TokenTree> = Vec::new();
-	for (i, ty) in component_types.iter().enumerate() {
+	for (i, ty) in components.iter().enumerate() {
 		let arg_name = components_args_names.get(i);
 
 		components_args.push_all(
@@ -94,7 +75,7 @@ fn expand_entity_macro(
 				$arg_name: &mut Components<$ty>
 			).as_slice());
 
-		if i + 1 < component_types.len() {
+		if i + 1 < components.len() {
 			components_args.push_all(
 				quote_tokens!(&*context, ,).as_slice());
 		}
@@ -140,4 +121,46 @@ fn expand_entity_macro(
 	};
 
 	box macro as Box<MacResult>
+}
+
+
+struct EntityMacro(
+	ast::Ident,
+	Vec<@ast::Ty>,
+	ast::Ident,
+	@ast::Ty,
+	@ast::Block,
+);
+
+impl EntityMacro {
+	fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> EntityMacro {
+		let mut parser = parse::new_parser_from_tts(
+			context.parse_sess(),
+			context.cfg(),
+			Vec::from_slice(token_tree));
+
+		let entity = parser.parse_ident();
+
+		let components = parser.parse_unspanned_seq(
+			&token::LT,
+			&token::GT,
+			seq_sep_trailing_disallowed(token::COMMA),
+			|p| p.parse_ty(true));
+
+		parser.expect(&token::COMMA);
+		parser.expect(&token::BINOP(token::OR));
+		let arg_name = parser.parse_ident();
+		parser.expect(&token::COLON);
+		let arg_type = parser.parse_ty(true);
+		parser.expect(&token::BINOP(token::OR));
+		let init_block = parser.parse_block();
+
+		EntityMacro(
+			entity,
+			components,
+			arg_name,
+			arg_type,
+			init_block
+		)
+	}
 }
