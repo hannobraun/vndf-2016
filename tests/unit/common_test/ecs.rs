@@ -28,16 +28,3 @@ fn it_should_create_an_entity() {
 	assert_eq!(true , components_a.get(&id).x);
 	assert_eq!(false, components_b.get(&id).x);
 }
-
-#[test]
-fn it_should_destroy_an_entity() {
-	let mut components_a: Components<MyComponentA> = HashMap::new();
-	let mut components_b: Components<MyComponentB> = HashMap::new();
-
-	let id = 42;
-	MyEntity::create(id, true, &mut components_a, &mut components_b);
-	MyEntity::destroy(id, &mut components_a, &mut components_b);
-
-	assert_eq!(0, components_a.len());
-	assert_eq!(0, components_b.len());
-}

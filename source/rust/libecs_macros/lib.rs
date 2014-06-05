@@ -66,9 +66,6 @@ fn expand_entity_macro(
 		context,
 		&components_args_names,
 		&component_names);
-	let removes = generate_removes(
-		context,
-		&components_args_names);
 
 	// Done generating snippets. Now the snippets are put together into the
 	// entity implementation.
@@ -81,8 +78,7 @@ fn expand_entity_macro(
 			init_block,
 			components_args,
 			component_tuple,
-			inserts,
-			removes)
+			inserts)
 	};
 
 	box macro as Box<MacResult>
@@ -214,23 +210,6 @@ fn generate_inserts(
 	inserts
 }
 
-fn generate_removes(
-	context              : &ExtCtxt,
-	components_args_names: &Vec<ast::Ident>,
-	) -> Vec<ast::TokenTree> {
-
-	let mut removes = Vec::new();
-
-	for arg_name in components_args_names.iter() {
-		removes.push_all(
-			quote_tokens!(&*context,
-				$arg_name.remove(&id);
-			).as_slice());
-	}
-
-	removes
-}
-
 fn generate_items(
 	context: &ExtCtxt,
 
@@ -242,7 +221,6 @@ fn generate_items(
 	components_args: Vec<ast::TokenTree>,
 	component_tuple: Vec<ast::TokenTree>,
 	inserts        : Vec<ast::TokenTree>,
-	removes        : Vec<ast::TokenTree>,
 
 	) -> Vec<@ast::Item> {
 
@@ -254,10 +232,6 @@ fn generate_items(
 			pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
 				let ($component_tuple) = $init_block;
 				$inserts
-			}
-
-			pub fn destroy(id: EntityId, $components_args) {
-				$removes
 			}
 		}
 	);
