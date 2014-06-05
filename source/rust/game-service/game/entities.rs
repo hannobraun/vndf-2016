@@ -50,9 +50,9 @@ entity!(Ship<Body, Player, Visual>, |client_id: ClientId| {
 pub struct Entities {
 	next_id: EntityId,
 
-	pub bodies       : Components<Body>,
-	pub ship_controls: Components<Player>,
-	pub visuals      : Components<Visual>
+	pub bodies : Components<Body>,
+	pub players: Components<Player>,
+	pub visuals: Components<Visual>
 }
 
 impl Entities {
@@ -60,14 +60,14 @@ impl Entities {
 		Entities {
 			next_id: 0,
 
-			bodies       : HashMap::new(),
-			ship_controls: HashMap::new(),
-			visuals      : HashMap::new(),
+			bodies : HashMap::new(),
+			players: HashMap::new(),
+			visuals: HashMap::new(),
 		}
 	}
 
 	pub fn entity_id_from_client_id(&self, client_id: ClientId) -> Option<EntityId> {
-		for (&id, ship_control) in self.ship_controls.iter() {
+		for (&id, ship_control) in self.players.iter() {
 			if ship_control.client_id == client_id {
 				return Some(id);
 			}
@@ -83,7 +83,7 @@ impl Entities {
 			id,
 			client_id,
 			&mut self.bodies,
-			&mut self.ship_controls,
+			&mut self.players,
 			&mut self.visuals);
 	}
 
@@ -108,7 +108,7 @@ impl Entities {
 
 	pub fn destroy_entity(&mut self, id: EntityId) {
 		self.bodies.remove(&id);
-		self.ship_controls.remove(&id);
+		self.players.remove(&id);
 		self.visuals.remove(&id);
 	}
 

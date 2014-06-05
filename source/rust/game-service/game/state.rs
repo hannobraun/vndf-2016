@@ -95,7 +95,7 @@ impl State {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (&id, ship_control) in self.entities.ship_controls.iter() {
+		for (&id, ship_control) in self.entities.players.iter() {
 			let perception = Perception::new(id, None, protocol::Entities {
 				bodies  : self.entities.bodies.clone(),
 				visuals : self.entities.visuals.clone(),
@@ -115,7 +115,7 @@ impl State {
 		let body = self.entities.bodies
 			.find_mut(&id)
 			.expect("expected body");
-		let ship_control = self.entities.ship_controls
+		let ship_control = self.entities.players
 			.find_mut(&id)
 			.expect("expected ship");
 
