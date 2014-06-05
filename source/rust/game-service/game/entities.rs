@@ -93,11 +93,7 @@ impl Entities {
 			None     => return
 		};
 
-		Ship::destroy(
-			id,
-			&mut self.bodies,
-			&mut self.ship_controls,
-			&mut self.visuals);
+		self.destroy_entity(id);
 	}
 
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
@@ -108,6 +104,12 @@ impl Entities {
 			(position, attitude),
 			&mut self.bodies,
 			&mut self.visuals);
+	}
+
+	pub fn destroy_entity(&mut self, id: EntityId) {
+		self.bodies.remove(&id);
+		self.ship_controls.remove(&id);
+		self.visuals.remove(&id);
 	}
 
 	fn next_id(&mut self) -> EntityId {
