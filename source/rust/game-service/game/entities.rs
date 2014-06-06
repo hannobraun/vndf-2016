@@ -1,6 +1,5 @@
-use collections::HashMap;
-
 use rustecs::{
+	components,
 	Components,
 	EntityId,
 };
@@ -61,9 +60,9 @@ impl Entities {
 		Entities {
 			next_id: 0,
 
-			bodies : HashMap::new(),
-			players: HashMap::new(),
-			visuals: HashMap::new(),
+			bodies : components(),
+			players: components(),
+			visuals: components(),
 		}
 	}
 
