@@ -1,7 +1,7 @@
-use collections::HashMap;
 use time;
 
 use rustecs::{
+	components,
 	Components,
 	EntityId
 };
@@ -35,9 +35,9 @@ impl State {
 		State {
 			self_id: None,
 
-			interpolateds: HashMap::new(),
-			missiles     : HashMap::new(),
-			ships        : HashMap::new(),
+			interpolateds: components(),
+			missiles     : components(),
+			ships        : components(),
 		}
 	}
 
