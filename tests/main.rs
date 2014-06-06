@@ -15,6 +15,7 @@ mod unit {
 	}
 
 	mod ecs_test {
+		mod ecs;
 		mod entity;
 	}
 }
