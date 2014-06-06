@@ -17,6 +17,7 @@ use syntax::parse::token;
 
 mod ecs;
 mod entity;
+mod parse;
 
 
 #[macro_registrar]
