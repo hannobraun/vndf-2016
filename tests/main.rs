@@ -11,7 +11,10 @@ mod unit {
 	mod common_test {
 		mod angle;
 		mod vec;
-		mod ecs;
+	}
+
+	mod ecs_test {
+		mod entity;
 	}
 }
 
