@@ -8,6 +8,7 @@ extern crate gl;
 extern crate glfw;
 extern crate stb_image;
 
+extern crate rustecs;
 extern crate common;
 
 

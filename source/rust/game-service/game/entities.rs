@@ -1,13 +1,14 @@
 use collections::HashMap;
 
+use rustecs::{
+	Components,
+	EntityId,
+};
+
 use common::ecs::components::{
 	MissileVisual,
 	ShipVisual,
 	Visual
-};
-use common::ecs::infra::{
-	Components,
-	EntityId,
 };
 use common::physics::{
 	Body,

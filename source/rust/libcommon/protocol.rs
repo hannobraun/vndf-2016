@@ -1,10 +1,11 @@
 use collections::HashMap;
 
-use ecs::components::Visual;
-use ecs::infra::{
+use rustecs::{
 	Components,
-	EntityId
+	EntityId,
 };
+
+use ecs::components::Visual;
 use json::{
 	from_json,
 	to_json

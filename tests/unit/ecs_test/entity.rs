@@ -1,6 +1,6 @@
 use collections::HashMap;
 
-use common::ecs::infra::{
+use rustecs::{
 	Components,
 	EntityId,
 };
