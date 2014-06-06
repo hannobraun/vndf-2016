@@ -1,6 +1,5 @@
-use collections::HashMap;
-
 use rustecs::{
+	components,
 	Components,
 	EntityId,
 };
@@ -53,8 +52,8 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
-			bodies  : HashMap::new(),
-			visuals : HashMap::new(),
+			bodies  : components(),
+			visuals : components(),
 		}
 	}
 }
