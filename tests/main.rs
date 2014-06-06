@@ -4,7 +4,7 @@
 extern crate collections;
 
 extern crate common;
-#[phase(syntax)] extern crate ecs_macros;
+#[phase(syntax)] extern crate rustecs_macros;
 
 
 mod unit {

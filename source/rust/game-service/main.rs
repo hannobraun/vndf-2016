@@ -7,7 +7,7 @@ extern crate getopts;
 extern crate libc;
 extern crate time;
 
-#[phase(syntax)] extern crate ecs_macros;
+#[phase(syntax)] extern crate rustecs_macros;
 
 
 use std::os;

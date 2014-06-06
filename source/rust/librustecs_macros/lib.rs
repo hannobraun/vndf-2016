@@ -1,4 +1,4 @@
-#![crate_id   = "ecs_macros"]
+#![crate_id   = "rustecs_macros"]
 #![crate_type = "dylib"]
 #![feature(macro_registrar, managed_boxes, quote)]
 
