@@ -99,7 +99,7 @@ fn prepare_receive(interpolateds: &mut Components<Interpolated>) {
 	}
 }
 
-fn receive(interpolateds: &mut Components<Interpolated>, bodies: &HashMap<EntityId, Body>) {
+fn receive(interpolateds: &mut Components<Interpolated>, bodies: &Components<Body>) {
 	let current_time = time::precise_time_ns();
 
 	for (&id, &body) in bodies.iter() {
