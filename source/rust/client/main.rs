@@ -1,4 +1,3 @@
-extern crate collections;
 extern crate getopts;
 extern crate libc;
 extern crate time;
