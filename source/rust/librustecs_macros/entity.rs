@@ -25,7 +25,7 @@ pub fn expand_macro(
 	_         : codemap::Span,
 	token_tree: &[ast::TokenTree]) -> Box<MacResult> {
 
-	let EntityMacro(entity, components, arg_name, arg_type, init_block) =
+	let EntityMacro(entity, components, arg, init_block) =
 		EntityMacro::parse(context, token_tree);
 
 	// Done parsing, here we generate snippets for our entity implementation
@@ -52,8 +52,7 @@ pub fn expand_macro(
 		items: generate_items(
 			context,
 			entity,
-			arg_name,
-			arg_type,
+			arg,
 			init_block,
 			components_args,
 			component_tuple,
@@ -67,8 +66,7 @@ pub fn expand_macro(
 struct EntityMacro(
 	ast::Ident,
 	Vec<@ast::Ty>,
-	ast::Ident,
-	@ast::Ty,
+	ast::Arg,
 	@ast::Block,
 );
 
@@ -89,17 +87,14 @@ impl EntityMacro {
 
 		parser.expect(&token::COMMA);
 		parser.expect(&token::BINOP(token::OR));
-		let arg_name = parser.parse_ident();
-		parser.expect(&token::COLON);
-		let arg_type = parser.parse_ty(true);
+		let arg = parser.parse_arg();
 		parser.expect(&token::BINOP(token::OR));
 		let init_block = parser.parse_block();
 
 		EntityMacro(
 			entity,
 			components,
-			arg_name,
-			arg_type,
+			arg,
 			init_block
 		)
 	}
@@ -193,8 +188,7 @@ fn generate_items(
 	context: &ExtCtxt,
 
 	entity    : ast::Ident,
-	arg_name  : ast::Ident,
-	arg_type  : @ast::Ty,
+	arg       : ast::Arg,
 	init_block: @ast::Block,
 
 	components_args: Vec<ast::TokenTree>,
@@ -208,7 +202,7 @@ fn generate_items(
 	);
 	let entity_impl = quote_item!(&*context,
 		impl $entity {
-			pub fn create(id: EntityId, $arg_name: $arg_type, $components_args) {
+			pub fn create(id: EntityId, $arg, $components_args) {
 				let ($component_tuple) = $init_block;
 				$inserts
 			}
