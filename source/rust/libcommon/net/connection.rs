@@ -213,6 +213,8 @@ impl Connection {
 	}
 
 	pub fn close(&self) {
-		ffi::close(self.fd as int);
+		unsafe {
+			ffi::close(self.fd);
+		}
 	}
 }

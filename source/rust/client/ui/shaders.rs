@@ -1,5 +1,5 @@
-use collections::HashMap;
 use std::c_str::CString;
+use std::collections::HashMap;
 use std::io::File;
 use std::ptr;
 

@@ -1,7 +1,7 @@
 use libc::c_int;
 
 
-pub use std::os::close;
+pub use libc::close;
 
 
 // epoll_create1 flags

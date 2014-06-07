@@ -2,10 +2,7 @@
 #![crate_type = "rlib"]
 
 
-extern crate collections;
-
-
-use collections::HashMap;
+use std::collections::HashMap;
 
 
 pub type EntityId      = u32;

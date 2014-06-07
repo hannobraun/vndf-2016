@@ -5,6 +5,7 @@ use libc::{
 use libc::types::os::common::bsd44;
 
 
+pub use libc::close;
 pub use libc::consts::os::bsd44::{
 	SOCK_STREAM,
 	SOL_SOCKET
@@ -28,7 +29,6 @@ pub use libc::types::os::common::bsd44::{
 	addrinfo,
 	sockaddr
 };
-pub use std::os::close;
 
 
 pub static AF_UNSPEC    : c_int = 0;

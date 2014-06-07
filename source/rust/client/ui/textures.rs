@@ -1,5 +1,5 @@
-use collections::HashMap;
 use libc;
+use std::collections::HashMap;
 
 use gl;
 
