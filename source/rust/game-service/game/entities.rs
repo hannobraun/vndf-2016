@@ -19,9 +19,7 @@ use game::data::Player;
 use network::ClientId;
 
 
-entity!(Missile<Body, Visual>, |args: (Vec2, Radians)| {
-	let (position, attitude) = args;
-
+entity!(Missile<Body, Visual>, |(position, attitude): (Vec2, Radians)| {
 	let body = Body {
 		position: position,
 		velocity: Vec2::zero(),
