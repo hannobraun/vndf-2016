@@ -10,9 +10,11 @@ pub struct World {
 }
 
 impl World {
-	pub fn generate(context: &ExtCtxt, _: &parse::World) -> World {
+	pub fn generate(context: &ExtCtxt, world: &parse::World) -> World {
+		let name = world.name;
+
 		let structure = quote_item!(&*context,
-			pub struct World {
+			pub struct $name {
 				positions: ::rustecs::Components<Position>,
 				visuals  : ::rustecs::Components<Visual>,
 				scores   : ::rustecs::Components<u32>,
@@ -20,9 +22,9 @@ impl World {
 		);
 
 		let implementation = quote_item!(&*context,
-			impl World {
-				pub fn new() -> World {
-					World {
+			impl $name {
+				pub fn new() -> $name {
+					$name {
 						positions: ::rustecs::components(),
 						visuals  : ::rustecs::components(),
 						scores   : ::rustecs::components(),
