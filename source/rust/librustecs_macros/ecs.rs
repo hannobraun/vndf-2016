@@ -6,8 +6,8 @@ use syntax::ext::base::{
 };
 use syntax::util::small_vector::SmallVector;
 
-use generate::World;
-use parse::ECS;
+use generate;
+use parse;
 
 
 pub fn expand(
@@ -16,14 +16,13 @@ pub fn expand(
 	token_tree: &[ast::TokenTree]
 	) -> Box<MacResult> {
 
-	let ecs = ECS::parse(context, token_tree);
-
-	let world = World::generate(context, ecs.worlds.get(0));
+	let parsed_ecs    = parse::ECS::parse(context, token_tree);
+	let generated_ecs = generate::ECS::generate(context, &parsed_ecs);
 
 	let result = MacroResult {
 		items: vec!(
-			world.structure,
-			world.implementation
+			generated_ecs.worlds.get(0).structure,
+			generated_ecs.worlds.get(0).implementation
 		)
 	};
 
