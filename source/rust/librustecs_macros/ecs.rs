@@ -7,7 +7,7 @@ use syntax::ext::base::{
 use syntax::util::small_vector::SmallVector;
 
 use generate;
-use parse;
+use parse::ECS;
 
 
 pub fn expand(
@@ -16,9 +16,9 @@ pub fn expand(
 	token_tree: &[ast::TokenTree]
 	) -> Box<MacResult> {
 
-	let parsed_ecs    = parse::ECS::parse(context, token_tree);
+	let ecs = ECS::parse(context, token_tree);
 
-	let items = generate::items(context, &parsed_ecs);
+	let items = generate::items(context, &ecs);
 
 	let result = MacroResult {
 		items: items
