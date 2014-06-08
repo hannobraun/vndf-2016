@@ -134,8 +134,8 @@ impl Entity {
 
 
 pub struct World {
-	name    : ast::Ident,
-	entities: Vec<ast::Ident>,
+	pub name    : ast::Ident,
+	pub entities: Vec<ast::Ident>,
 }
 
 impl World {
