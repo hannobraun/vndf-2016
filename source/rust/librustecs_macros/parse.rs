@@ -7,9 +7,9 @@ use syntax::parse::token;
 
 
 pub struct ECS {
-	components: Vec<Component>,
-	entities  : Vec<Entity>,
-	worlds    : Vec<World>,
+	pub components: Vec<Component>,
+	pub entities  : Vec<Entity>,
+	pub worlds    : Vec<World>,
 }
 
 impl ECS {
