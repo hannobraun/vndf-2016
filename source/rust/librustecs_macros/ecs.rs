@@ -6,6 +6,7 @@ use syntax::ext::base::{
 };
 use syntax::util::small_vector::SmallVector;
 
+use generate::World;
 use parse::ECS;
 
 
@@ -17,30 +18,12 @@ pub fn expand(
 
 	let ecs = ECS::parse(context, token_tree);
 
-	let world_struct = quote_item!(&*context,
-		pub struct World {
-			positions: ::rustecs::Components<Position>,
-			visuals  : ::rustecs::Components<Visual>,
-			scores   : ::rustecs::Components<u32>,
-		}
-	);
-
-	let world_impl = quote_item!(&*context,
-		impl World {
-			pub fn new() -> World {
-				World {
-					positions: ::rustecs::components(),
-					visuals  : ::rustecs::components(),
-					scores   : ::rustecs::components(),
-				}
-			}
-		}
-	);
+	let world = World::generate(context, ecs.worlds.get(0));
 
 	let result = MacroResult {
 		items: vec!(
-			world_struct.unwrap(),
-			world_impl.unwrap()
+			world.structure,
+			world.implementation
 		)
 	};
 
