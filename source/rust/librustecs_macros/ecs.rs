@@ -17,13 +17,11 @@ pub fn expand(
 	) -> Box<MacResult> {
 
 	let parsed_ecs    = parse::ECS::parse(context, token_tree);
-	let generated_ecs = generate::ECS::generate(context, &parsed_ecs);
+
+	let items = generate::items(context, &parsed_ecs);
 
 	let result = MacroResult {
-		items: vec!(
-			generated_ecs.worlds.get(0).structure,
-			generated_ecs.worlds.get(0).implementation
-		)
+		items: items
 	};
 
 	box result as Box<MacResult>

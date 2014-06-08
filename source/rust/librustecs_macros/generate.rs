@@ -4,22 +4,20 @@ use syntax::ext::base::ExtCtxt;
 use parse;
 
 
-pub struct ECS {
-	pub worlds: Vec<World>
-}
+pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
+	let worlds: Vec<World> = ecs.worlds
+		.iter()
+		.map(|world|
+			World::generate(context, world))
+		.collect();
 
-impl ECS {
-	pub fn generate(context: &ExtCtxt, ecs: &parse::ECS) -> ECS {
-		let worlds = ecs.worlds
-			.iter()
-			.map(|world|
-				World::generate(context, world))
-			.collect();
-
-		ECS {
-			worlds: worlds
-		}
+	let mut items = Vec::new();
+	for world in worlds.iter() {
+		items.push(world.structure);
+		items.push(world.implementation);
 	}
+
+	items
 }
 
 
