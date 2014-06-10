@@ -16,7 +16,7 @@ ecs!(
 			RenderAsMissile
 		)
 	}
-	entity(Ship<Position, Visual, Player>): |score: u32| {
+	entity(Ship<Position, Visual, Score>): |score: u32| {
 		(
 			Position(0.0, 0.0),
 			RenderAsShip,
