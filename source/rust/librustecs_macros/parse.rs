@@ -67,9 +67,9 @@ impl Directive {
 
 
 pub struct Component {
-	name      : ast::Ident,
-	collection: ast::Ident,
-	ty        : @ast::Ty,
+	pub name      : ast::Ident,
+	pub collection: ast::Ident,
+	pub ty        : @ast::Ty,
 }
 
 impl Component {
