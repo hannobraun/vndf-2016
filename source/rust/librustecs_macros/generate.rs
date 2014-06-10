@@ -97,7 +97,7 @@ impl World {
 		context   : &ExtCtxt,
 		world     : &parse::World,
 		entities  : &Vec<Entity>
-		) -> World {
+	) -> World {
 
 		let name  = world.name;
 		let decls = World::component_decls(context, entities);
