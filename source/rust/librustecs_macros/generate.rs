@@ -41,6 +41,7 @@ pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
 pub struct Component {
 	name: String,
 	decl: Vec<ast::TokenTree>,
+	init: Vec<ast::TokenTree>,
 }
 
 impl Component {
@@ -54,9 +55,14 @@ impl Component {
 			$collection: ::rustecs::Components<$ty>,
 		);
 
+		let init = quote_tokens!(&*context,
+			$collection: ::rustecs::components(),
+		);
+
 		Component {
 			name: name,
 			decl: decl,
+			init: init,
 		}
 	}
 }
@@ -102,6 +108,7 @@ impl World {
 
 		let name  = world.name;
 		let decls = World::component_decls(context, &components);
+		let inits = World::component_inits(context, &components);
 
 		let structure = quote_item!(&*context,
 			pub struct $name {
@@ -113,9 +120,7 @@ impl World {
 			impl $name {
 				pub fn new() -> $name {
 					$name {
-						positions: ::rustecs::components(),
-						visuals  : ::rustecs::components(),
-						scores   : ::rustecs::components(),
+						$inits
 					}
 				}
 			}
@@ -150,6 +155,23 @@ impl World {
 
 			tokens.push_all(
 				quote_tokens!(&*context, $decl).as_slice()
+			);
+		}
+
+		tokens
+	}
+
+	fn component_inits(
+		context   : &ExtCtxt,
+		components: &HashMap<String, Component>
+	) -> Vec<ast::TokenTree> {
+		let mut tokens = vec!();
+
+		for (_, component) in components.iter() {
+			let init = &component.init;
+
+			tokens.push_all(
+				quote_tokens!(&*context, $init).as_slice()
 			);
 		}
 
