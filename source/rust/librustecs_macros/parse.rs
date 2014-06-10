@@ -95,10 +95,10 @@ impl Component {
 
 
 pub struct Entity {
-	name      : ast::Ident,
-	components: Vec<ast::Ident>,
-	args      : Vec<ast::Arg>,
-	init_block: @ast::Block,
+	pub name      : ast::Ident,
+	pub components: Vec<ast::Ident>,
+	pub args      : Vec<ast::Arg>,
+	pub init_block: @ast::Block,
 }
 
 impl Entity {
