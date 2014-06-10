@@ -98,9 +98,10 @@ impl World {
 		world     : &parse::World,
 		entities  : &Vec<Entity>
 	) -> World {
+		let components = World::components(entities);
 
 		let name  = world.name;
-		let decls = World::component_decls(context, entities);
+		let decls = World::component_decls(context, &components);
 
 		let structure = quote_item!(&*context,
 			pub struct $name {
@@ -126,18 +127,22 @@ impl World {
 		}
 	}
 
-	fn component_decls(
-		context : &ExtCtxt,
-		entities: &Vec<Entity>
-	) -> Vec<ast::TokenTree> {
-
+	fn components(entities: &Vec<Entity>) -> HashMap<String, Component> {
 		let mut components = HashMap::new();
+
 		for entity in entities.iter() {
 			for (name, component) in entity.components.iter() {
-				components.insert(name, component);
+				components.insert((*name).clone(), (*component).clone());
 			}
 		}
 
+		components
+	}
+
+	fn component_decls(
+		context   : &ExtCtxt,
+		components: &HashMap<String, Component>
+	) -> Vec<ast::TokenTree> {
 		let mut tokens = vec!();
 
 		for (_, component) in components.iter() {
