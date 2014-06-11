@@ -62,7 +62,7 @@ impl Component {
 		let ty         = component.ty;
 
 		let decl = quote_tokens!(&*context,
-			$collection: ::rustecs::Components<$ty>,
+			pub $collection: ::rustecs::Components<$ty>,
 		);
 
 		let init = quote_tokens!(&*context,
