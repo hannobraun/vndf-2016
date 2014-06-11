@@ -39,7 +39,6 @@ fn it_should_initialize_an_empty_world() {
 	assert_eq!(0, world.scores.len());
 }
 
-
 #[test]
 fn it_should_create_entities() {
 	let mut world = World::new();
