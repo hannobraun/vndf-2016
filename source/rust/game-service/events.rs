@@ -9,21 +9,21 @@ use common::protocol::{
 	Perception
 };
 
-use network::ClientId;
+use network::ConnId;
 
 
 #[deriving(PartialEq, Show)]
 pub enum GameEvent {
 	Init,
 	Update(f64),
-	Enter(ClientId),
-	Leave(ClientId),
-	Action(ClientId, Action),
+	Enter(ConnId),
+	Leave(ConnId),
+	Action(ConnId, Action),
 	MissileLaunch(Vec2, Radians)
 }
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ClientId>, Perception),
-	Close(ClientId, IoError)
+	Message(Vec<ConnId>, Perception),
+	Close(ConnId, IoError)
 }

@@ -27,7 +27,7 @@ use events::{
 };
 use game::ecs;
 use game::ecs::World;
-use network::ClientId;
+use network::ConnId;
 
 
 pub struct State {
@@ -83,11 +83,11 @@ impl State {
 		}
 	}
 
-	fn on_enter(&mut self, id: ClientId) {
+	fn on_enter(&mut self, id: ConnId) {
 		self.world.create_ship(id);
 	}
 
-	fn on_leave(&mut self, id: ClientId) {
+	fn on_leave(&mut self, id: ConnId) {
 		ecs::destroy_ship(&mut self.world, id);
 	}
 
@@ -107,7 +107,7 @@ impl State {
 		}
 	}
 
-	fn on_action(&mut self, client_id: ClientId, action: Action) {
+	fn on_action(&mut self, client_id: ConnId, action: Action) {
 		let id = match ecs::entity_id_from_client_id(&self.world, client_id) {
 			Some(id) => id,
 			None     => return

@@ -12,7 +12,7 @@ use common::physics::{
 };
 
 use game::data::Player;
-use network::ClientId;
+use network::ConnId;
 
 
 ecs!(
@@ -29,7 +29,7 @@ ecs!(
 
 		(body, MissileVisual)
 	}
-	entity(Ship<Body, Player, Visual>): |client_id: ClientId| {
+	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
 		let body = Body {
 			position: Vec2::zero(),
 			velocity: Vec2::zero(),
@@ -48,7 +48,7 @@ ecs!(
 )
 
 
-pub fn destroy_ship(world: &mut World, client_id: ClientId) {
+pub fn destroy_ship(world: &mut World, client_id: ConnId) {
 	let id = match entity_id_from_client_id(world, client_id) {
 		Some(id) => id,
 		None     => return
@@ -59,7 +59,7 @@ pub fn destroy_ship(world: &mut World, client_id: ClientId) {
 
 pub fn entity_id_from_client_id(
 	world    : &World,
-	client_id: ClientId
+	client_id: ConnId
 ) -> Option<EntityId> {
 	for (&id, player) in world.players.iter() {
 		if player.client_id == client_id {

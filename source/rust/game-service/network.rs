@@ -23,7 +23,7 @@ use events::{
 };
 
 
-pub type ClientId = u32;
+pub type ConnId = u32;
 
 
 pub struct Network {
@@ -32,7 +32,7 @@ pub struct Network {
 	incoming   : Receiver<NetworkEvent>,
 	epoll      : EPoll,
 	acceptor   : Acceptor,
-	connections: HashMap<ClientId, Connection>
+	connections: HashMap<ConnId, Connection>
 }
 
 impl Network {
@@ -109,7 +109,7 @@ impl Network {
 					to_accept.push(fd);
 				}
 				else {
-					let client_id = fd as ClientId;
+					let client_id = fd as ConnId;
 
 					let conn = match self.connections.find_mut(&client_id) {
 						Some(result) => result,
@@ -124,7 +124,7 @@ impl Network {
 								fail!("Error decoding message: {}", error)
 						};
 
-						game.send(Action(fd as ClientId, action));
+						game.send(Action(fd as ConnId, action));
 					});
 
 					match result {
@@ -152,7 +152,7 @@ impl Network {
 					fail!("Error adding to epoll: {}", error)
 			}
 
-			let client_id = connection.fd as ClientId;
+			let client_id = connection.fd as ConnId;
 			self.connections.insert(client_id, connection);
 			game.send(Enter(client_id));
 		}
