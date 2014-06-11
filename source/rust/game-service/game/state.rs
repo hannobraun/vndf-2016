@@ -132,7 +132,7 @@ impl State {
 	}
 
 	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
-		self.entities.create_missile(position, attitude);
+		self.entities.create_missile((position, attitude));
 	}
 }
 
