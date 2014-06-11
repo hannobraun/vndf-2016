@@ -2,6 +2,7 @@ use rustecs::EntityId;
 
 use common::ecs::{
 	MissileVisual,
+	Player,
 	ShipVisual,
 	Visual
 };
@@ -11,8 +12,6 @@ use common::physics::{
 	Radians,
 	Vec2
 };
-
-use game::data::Player;
 
 
 ecs!(
