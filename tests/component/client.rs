@@ -10,8 +10,8 @@ use common::physics::{
 };
 use common::physics::util;
 use common::protocol::{
-	Entities,
-	Perception
+	Perception,
+	Snapshot,
 };
 
 
@@ -27,7 +27,7 @@ fn it_should_interpolate_between_perceptions() {
 
 	let mut perception_1 = Perception {
 		self_id: 0,
-		updated: Entities::new()
+		updated: Snapshot::new()
 	};
 	perception_1.updated.bodies.insert(0, Body {
 		position: pos_1,
@@ -78,7 +78,7 @@ fn the_camera_should_follow_the_ship() {
 
 	let mut perception_1 = Perception {
 		self_id: 0,
-		updated: Entities::new()
+		updated: Snapshot::new()
 	};
 	perception_1.updated.bodies.insert(0, Body {
 		position: pos_1,

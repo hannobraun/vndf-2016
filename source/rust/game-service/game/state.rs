@@ -97,7 +97,7 @@ impl State {
 		}
 
 		for (&id, player) in self.world.players.iter() {
-			let perception = Perception::new(id, None, protocol::Entities {
+			let perception = Perception::new(id, None, protocol::Snapshot {
 				bodies  : self.world.bodies.clone(),
 				visuals : self.world.visuals.clone(),
 			});

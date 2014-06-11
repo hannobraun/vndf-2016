@@ -18,14 +18,14 @@ use physics::{
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
 	pub self_id: EntityId,
-	pub updated: Entities,
+	pub updated: Snapshot,
 }
 
 impl Perception {
 	pub fn new(
 		self_id: EntityId,
-		_      : Option<Entities>,
-		current: Entities) -> Perception {
+		_      : Option<Snapshot>,
+		current: Snapshot) -> Perception {
 
 		Perception {
 			self_id: self_id,
@@ -44,14 +44,14 @@ impl Perception {
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-pub struct Entities {
+pub struct Snapshot {
 	pub bodies  : Components<Body>,
 	pub visuals : Components<Visual>,
 }
 
-impl Entities {
-	pub fn new() -> Entities {
-		Entities {
+impl Snapshot {
+	pub fn new() -> Snapshot {
+		Snapshot {
 			bodies  : components(),
 			visuals : components(),
 		}
