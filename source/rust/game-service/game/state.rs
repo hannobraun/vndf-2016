@@ -25,6 +25,7 @@ use events::{
 	NetworkEvent,
 	Update
 };
+use game::entities;
 use game::entities::Entities;
 use network::ClientId;
 
@@ -107,7 +108,7 @@ impl State {
 	}
 
 	fn on_action(&mut self, client_id: ClientId, action: Action) {
-		let id = match self.entities.entity_id_from_client_id(client_id) {
+		let id = match entities::entity_id_from_client_id(&self.entities, client_id) {
 			Some(id) => id,
 			None     => return
 		};

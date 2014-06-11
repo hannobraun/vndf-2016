@@ -64,16 +64,6 @@ impl Entities {
 		}
 	}
 
-	pub fn entity_id_from_client_id(&self, client_id: ClientId) -> Option<EntityId> {
-		for (&id, player) in self.players.iter() {
-			if player.client_id == client_id {
-				return Some(id);
-			}
-		}
-
-		None
-	}
-
 	pub fn create_ship(&mut self, client_id: ClientId) {
 		let id = self.next_id();
 
@@ -86,7 +76,7 @@ impl Entities {
 	}
 
 	pub fn destroy_ship(&mut self, client_id: ClientId) {
-		let id = match self.entity_id_from_client_id(client_id) {
+		let id = match entity_id_from_client_id(self, client_id) {
 			Some(id) => id,
 			None     => return
 		};
@@ -115,4 +105,18 @@ impl Entities {
 		self.next_id += 1;
 		id
 	}
+}
+
+
+pub fn entity_id_from_client_id(
+	world    : &Entities,
+	client_id: ClientId
+) -> Option<EntityId> {
+	for (&id, player) in world.players.iter() {
+		if player.client_id == client_id {
+			return Some(id);
+		}
+	}
+
+	None
 }
