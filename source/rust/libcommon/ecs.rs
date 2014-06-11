@@ -13,7 +13,7 @@ pub struct Player {
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Visual {
-	MissileVisual,
+	ShowAsMissile,
 	ShipVisual
 }
 
@@ -30,7 +30,7 @@ ecs!(
 			attitude: attitude
 		};
 
-		(body, MissileVisual)
+		(body, ShowAsMissile)
 	}
 	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
 		let body = Body {
