@@ -1,3 +1,4 @@
+use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
 use syntax::ast;
 use syntax::ext::base::ExtCtxt;
@@ -40,13 +41,21 @@ pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
 #[deriving(Clone)]
 pub struct Component {
 	name: String,
-	decl: Vec<ast::TokenTree>,
-	init: Vec<ast::TokenTree>,
+
+	var_name: ast::Ident,
+	decl    : Vec<ast::TokenTree>,
+	init    : Vec<ast::TokenTree>,
+	insert  : Vec<ast::TokenTree>,
 }
 
 impl Component {
 	fn generate(context: &ExtCtxt, component: &parse::Component) -> Component {
-		let name = token::get_ident(component.name).to_str();
+		let var_name = ast::Ident::new(token::intern(
+			token::get_ident(component.name)
+				.to_str()
+				.as_slice()
+				.to_ascii_lower()
+				.as_slice()));
 
 		let collection = component.collection;
 		let ty         = component.ty;
@@ -59,10 +68,16 @@ impl Component {
 			$collection: ::rustecs::components(),
 		);
 
+		let insert = quote_tokens!(&*context,
+			self.$collection.insert(id, $var_name);
+		);
+
 		Component {
-			name: name,
-			decl: decl,
-			init: init,
+			name    : token::get_ident(component.name).to_str(),
+			var_name: var_name,
+			decl    : decl,
+			init    : init,
+			insert  : insert,
 		}
 	}
 }
@@ -70,11 +85,12 @@ impl Component {
 
 pub struct Entity {
 	components: HashMap<String, Component>,
+	create_fn : Vec<ast::TokenTree>,
 }
 
 impl Entity {
 	fn generate(
-		_             : &ExtCtxt,
+		context       : &ExtCtxt,
 		entity        : &parse::Entity,
 		all_components: &HashMap<String, Component>
 	) -> Entity {
@@ -86,9 +102,85 @@ impl Entity {
 			})
 			.collect();
 
+		let ordered_components: Vec<String> = entity.components
+			.iter()
+			.map(|&ident|
+				token::get_ident(ident).to_str())
+			.collect();
+
+		let create_fn = Entity::create_fn(
+			context,
+			entity,
+			&entity_components,
+			&ordered_components);
+
 		Entity {
-			components: entity_components
+			components: entity_components,
+			create_fn : create_fn,
 		}
+	}
+
+	fn create_fn(
+		context           : &ExtCtxt,
+		entity            : &parse::Entity,
+		components        : &HashMap<String, Component>,
+		ordered_components: &Vec<String>
+	) -> Vec<ast::TokenTree> {
+		let name = ast::Ident::new(token::intern(
+			"create_"
+				.to_str()
+				.append(
+					token::get_ident(entity.name)
+						.to_str()
+						.as_slice()
+						.to_ascii_lower()
+						.as_slice())
+				.as_slice()));
+
+		let mut args = Vec::new();
+		for (i, arg) in entity.args.iter().enumerate() {
+			if i + 1 < entity.args.len() {
+				args.push_all(quote_tokens!(&*context, $arg,).as_slice());
+			}
+			else {
+				args.push_all(quote_tokens!(&*context, $arg).as_slice());
+			}
+		}
+
+		let mut component_names = Vec::new();
+		for (i, name) in ordered_components.iter().enumerate() {
+			let component = components.get(name);
+			let var_name  = component.var_name;
+
+			if i + 1 < components.len() {
+				component_names.push_all(
+					quote_tokens!(&*context, $var_name,).as_slice());
+			}
+			else {
+				component_names.push_all(
+					quote_tokens!(&*context, $var_name).as_slice());
+			}
+		}
+
+		let init_block = entity.init_block;
+
+		let mut inserts = Vec::new();
+		for (_, component) in components.iter() {
+			inserts.push_all(component.insert.as_slice());
+		}
+
+		quote_tokens!(&*context,
+			pub fn $name(&mut self, $args) -> ::rustecs::EntityId {
+				let id = self.next_id;
+				self.next_id += 1;
+
+				let ($component_names) = $init_block;
+
+				$inserts
+
+				id
+			}
+		)
 	}
 }
 
@@ -106,12 +198,14 @@ impl World {
 	) -> World {
 		let components = World::components(entities);
 
-		let name  = world.name;
-		let decls = World::component_decls(context, &components);
-		let inits = World::component_inits(context, &components);
+		let name       = world.name;
+		let decls      = World::component_decls(context, &components);
+		let inits      = World::component_inits(context, &components);
+		let create_fns = World::create_fns(context, entities);
 
 		let structure = quote_item!(&*context,
 			pub struct $name {
+				next_id: ::rustecs::EntityId,
 				$decls
 			}
 		);
@@ -120,9 +214,12 @@ impl World {
 			impl $name {
 				pub fn new() -> $name {
 					$name {
+						next_id: 0,
 						$inits
 					}
 				}
+
+				$create_fns
 			}
 		);
 
@@ -173,6 +270,21 @@ impl World {
 			tokens.push_all(
 				quote_tokens!(&*context, $init).as_slice()
 			);
+		}
+
+		tokens
+	}
+
+	fn create_fns(
+		context: &ExtCtxt,
+		entities: &Vec<Entity>
+	) -> Vec<ast::TokenTree> {
+		let mut tokens = Vec::new();
+
+		for entity in entities.iter() {
+			let create_fn = &entity.create_fn;
+
+			tokens.push_all(quote_tokens!(&*context, $create_fn).as_slice());
 		}
 
 		tokens
