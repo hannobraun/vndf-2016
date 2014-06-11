@@ -16,7 +16,6 @@ use syntax::parse::token;
 
 
 mod ecs;
-mod entity;
 mod generate;
 mod parse;
 
@@ -27,11 +26,6 @@ pub fn macro_registrar(register: |ast::Name, SyntaxExtension|) {
 		expander: ecs::expand,
 		span    : None
 	};
-	let entity_expander = box BasicMacroExpander {
-		expander: entity::expand_macro,
-		span    : None
-	};
 
-	register(token::intern("ecs")   , NormalTT(ecs_expander   , None));
-	register(token::intern("entity"), NormalTT(entity_expander, None));
+	register(token::intern("ecs"), NormalTT(ecs_expander, None));
 }
