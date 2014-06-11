@@ -25,8 +25,8 @@ use events::{
 	NetworkEvent,
 	Update
 };
-use game::entities;
-use game::entities::World;
+use game::ecs;
+use game::ecs::World;
 use network::ClientId;
 
 
@@ -88,7 +88,7 @@ impl State {
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
-		entities::destroy_ship(&mut self.entities, id);
+		ecs::destroy_ship(&mut self.entities, id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
@@ -108,7 +108,7 @@ impl State {
 	}
 
 	fn on_action(&mut self, client_id: ClientId, action: Action) {
-		let id = match entities::entity_id_from_client_id(&self.entities, client_id) {
+		let id = match ecs::entity_id_from_client_id(&self.entities, client_id) {
 			Some(id) => id,
 			None     => return
 		};
