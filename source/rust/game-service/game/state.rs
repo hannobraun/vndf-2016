@@ -3,6 +3,7 @@ use std::comm::{
 	Empty
 };
 
+use common::ecs::World;
 use common::net::ConnId;
 use common::physics::{
 	Body,
@@ -27,7 +28,6 @@ use events::{
 	Update
 };
 use game::ecs;
-use game::ecs::World;
 
 
 pub struct State {

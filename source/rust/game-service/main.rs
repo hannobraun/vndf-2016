@@ -1,12 +1,8 @@
-#![feature(phase)]
-
-
 extern crate getopts;
 extern crate libc;
 extern crate time;
 
 extern crate rustecs;
-#[phase(syntax)] extern crate rustecs_macros;
 extern crate common;
 
 

@@ -1,50 +1,7 @@
 use rustecs::EntityId;
 
-use common::ecs::{
-	MissileVisual,
-	Player,
-	ShipVisual,
-	Visual
-};
+use common::ecs::World;
 use common::net::ConnId;
-use common::physics::{
-	Body,
-	Radians,
-	Vec2
-};
-
-
-ecs!(
-	component(Body, bodies): Body
-	component(Visual, visuals): Visual
-	component(Player, players): Player
-
-	entity(Missile<Body, Visual>): |position: Vec2, attitude: Radians| {
-		let body = Body {
-			position: position,
-			velocity: Vec2::zero(),
-			attitude: attitude
-		};
-
-		(body, MissileVisual)
-	}
-	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
-		let body = Body {
-			position: Vec2::zero(),
-			velocity: Vec2::zero(),
-			attitude: Radians(0.0)
-		};
-
-		let player = Player {
-			client_id    : client_id,
-			missile_index: 0
-		};
-
-		(body, player, ShipVisual)
-	}
-
-	world(World<Missile, Ship>)
-)
 
 
 pub fn destroy_ship(world: &mut World, client_id: ConnId) {
