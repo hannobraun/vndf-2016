@@ -1,4 +1,4 @@
-use common::ecs::components::ShipVisual;
+use common::ecs::ShipVisual;
 use common::testing::{
 	Client,
 	MockGameService

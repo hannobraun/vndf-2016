@@ -4,7 +4,7 @@ use rustecs::{
 	EntityId,
 };
 
-use ecs::components::Visual;
+use ecs::Visual;
 use json::{
 	from_json,
 	to_json

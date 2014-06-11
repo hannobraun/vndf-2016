@@ -1,6 +1,6 @@
 use rustecs::EntityId;
 
-use common::ecs::components::{
+use common::ecs::{
 	MissileVisual,
 	ShipVisual,
 	Visual
