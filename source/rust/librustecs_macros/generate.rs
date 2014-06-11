@@ -287,7 +287,7 @@ impl World {
 	}
 
 	fn create_fns(
-		context: &ExtCtxt,
+		context : &ExtCtxt,
 		entities: &Vec<Entity>
 	) -> Vec<ast::TokenTree> {
 		let mut tokens = Vec::new();
