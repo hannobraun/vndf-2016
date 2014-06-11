@@ -6,7 +6,8 @@ use std::comm::{
 
 use common::net::{
 	Acceptor,
-	Connection
+	Connection,
+	ConnId,
 };
 use common::net::epoll;
 use common::net::epoll::EPoll;
@@ -21,9 +22,6 @@ use events::{
 	Message,
 	NetworkEvent
 };
-
-
-pub type ConnId = u32;
 
 
 pub struct Network {

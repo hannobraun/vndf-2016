@@ -1,4 +1,4 @@
-use network::ConnId;
+use common::net::ConnId;
 
 
 pub struct Player {

@@ -5,6 +5,7 @@ use common::ecs::{
 	ShipVisual,
 	Visual
 };
+use common::net::ConnId;
 use common::physics::{
 	Body,
 	Radians,
@@ -12,7 +13,6 @@ use common::physics::{
 };
 
 use game::data::Player;
-use network::ConnId;
 
 
 ecs!(

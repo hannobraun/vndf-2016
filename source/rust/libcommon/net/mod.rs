@@ -7,3 +7,6 @@ mod connection;
 
 pub mod epoll;
 pub mod ffi;
+
+
+pub type ConnId = u32;

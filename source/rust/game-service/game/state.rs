@@ -3,6 +3,7 @@ use std::comm::{
 	Empty
 };
 
+use common::net::ConnId;
 use common::physics::{
 	Body,
 	Radians,
@@ -27,7 +28,6 @@ use events::{
 };
 use game::ecs;
 use game::ecs::World;
-use network::ConnId;
 
 
 pub struct State {

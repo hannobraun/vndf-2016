@@ -1,5 +1,6 @@
 use std::io::IoError;
 
+use common::net::ConnId;
 use common::physics::{
 	Radians,
 	Vec2
@@ -8,8 +9,6 @@ use common::protocol::{
 	Action,
 	Perception
 };
-
-use network::ConnId;
 
 
 #[deriving(PartialEq, Show)]
