@@ -26,7 +26,7 @@ use events::{
 	Update
 };
 use game::entities;
-use game::entities::Entities;
+use game::entities::World;
 use network::ClientId;
 
 
@@ -36,7 +36,7 @@ pub struct State {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	entities: Entities
+	entities: World
 }
 
 impl State {
@@ -49,7 +49,7 @@ impl State {
 			incoming: receiver,
 			network : network,
 
-			entities: Entities::new()
+			entities: World::new()
 		}
 	}
 

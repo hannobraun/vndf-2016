@@ -44,11 +44,11 @@ ecs!(
 		(body, player, ShipVisual)
 	}
 
-	world(Entities<Missile, Ship>)
+	world(World<Missile, Ship>)
 )
 
 
-pub fn destroy_ship(world: &mut Entities, client_id: ClientId) {
+pub fn destroy_ship(world: &mut World, client_id: ClientId) {
 	let id = match entity_id_from_client_id(world, client_id) {
 		Some(id) => id,
 		None     => return
@@ -58,7 +58,7 @@ pub fn destroy_ship(world: &mut Entities, client_id: ClientId) {
 }
 
 pub fn entity_id_from_client_id(
-	world    : &Entities,
+	world    : &World,
 	client_id: ClientId
 ) -> Option<EntityId> {
 	for (&id, player) in world.players.iter() {
