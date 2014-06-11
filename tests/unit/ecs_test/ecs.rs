@@ -62,3 +62,15 @@ fn it_should_create_entities() {
 	assert_eq!(&RenderAsShip      , world.visuals.get(&ship_id));
 	assert_eq!(&100               , world.scores.get(&ship_id));
 }
+
+#[test]
+fn it_should_destroy_entities() {
+	let mut world = World::new();
+
+	let id = world.create_ship(100);
+	world.destroy_entity(id);
+
+	assert_eq!(0, world.positions.len());
+	assert_eq!(0, world.visuals.len());
+	assert_eq!(0, world.scores.len());
+}

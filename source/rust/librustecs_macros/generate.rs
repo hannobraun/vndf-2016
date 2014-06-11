@@ -46,6 +46,7 @@ pub struct Component {
 	decl    : Vec<ast::TokenTree>,
 	init    : Vec<ast::TokenTree>,
 	insert  : Vec<ast::TokenTree>,
+	remove  : Vec<ast::TokenTree>,
 }
 
 impl Component {
@@ -72,12 +73,17 @@ impl Component {
 			self.$collection.insert(id, $var_name);
 		);
 
+		let remove = quote_tokens!(&*context,
+			self.$collection.remove(&id);
+		);
+
 		Component {
 			name    : token::get_ident(component.name).to_str(),
 			var_name: var_name,
 			decl    : decl,
 			init    : init,
 			insert  : insert,
+			remove  : remove,
 		}
 	}
 }
@@ -202,6 +208,7 @@ impl World {
 		let decls      = World::component_decls(context, &components);
 		let inits      = World::component_inits(context, &components);
 		let create_fns = World::create_fns(context, entities);
+		let removes    = World::removes(&components);
 
 		let structure = quote_item!(&*context,
 			pub struct $name {
@@ -220,6 +227,10 @@ impl World {
 				}
 
 				$create_fns
+
+				pub fn destroy_entity(&mut self, id: ::rustecs::EntityId) {
+					$removes
+				}
 			}
 		);
 
@@ -288,5 +299,15 @@ impl World {
 		}
 
 		tokens
+	}
+
+	fn removes(components: &HashMap<String, Component>) -> Vec<ast::TokenTree> {
+		let mut removes = Vec::new();
+
+		for (_, component) in components.iter() {
+			removes.push_all(component.remove.as_slice());
+		}
+
+		removes
 	}
 }
