@@ -75,15 +75,6 @@ impl Entities {
 			&mut self.visuals);
 	}
 
-	pub fn destroy_ship(&mut self, client_id: ClientId) {
-		let id = match entity_id_from_client_id(self, client_id) {
-			Some(id) => id,
-			None     => return
-		};
-
-		self.destroy_entity(id);
-	}
-
 	pub fn create_missile(&mut self, position: Vec2, attitude: Radians) {
 		let id = self.next_id();
 
@@ -107,6 +98,15 @@ impl Entities {
 	}
 }
 
+
+pub fn destroy_ship(world: &mut Entities, client_id: ClientId) {
+	let id = match entity_id_from_client_id(world, client_id) {
+		Some(id) => id,
+		None     => return
+	};
+
+	world.destroy_entity(id);
+}
 
 pub fn entity_id_from_client_id(
 	world    : &Entities,

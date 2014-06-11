@@ -88,7 +88,7 @@ impl State {
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
-		self.entities.destroy_ship(id);
+		entities::destroy_ship(&mut self.entities, id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
