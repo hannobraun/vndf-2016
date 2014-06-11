@@ -8,7 +8,7 @@ use rustecs::{
 
 use common::ecs::{
 	ShowAsMissile,
-	ShipVisual
+	ShowAsShip
 };
 use common::physics::{
 	Body,
@@ -53,7 +53,7 @@ impl State {
 				&perception.updated.bodies
 					.iter()
 					.filter(|&(id, _)|
-						perception.updated.visuals.get(id) == &ShipVisual)
+						perception.updated.visuals.get(id) == &ShowAsShip)
 					.map(|(&id, &body)|
 						(id, body))
 					.collect());

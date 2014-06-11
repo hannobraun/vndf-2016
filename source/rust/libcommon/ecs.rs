@@ -14,7 +14,7 @@ pub struct Player {
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Visual {
 	ShowAsMissile,
-	ShipVisual
+	ShowAsShip
 }
 
 
@@ -44,7 +44,7 @@ ecs!(
 			missile_index: 0
 		};
 
-		(body, player, ShipVisual)
+		(body, player, ShowAsShip)
 	}
 
 	world(World<Missile, Ship>)

@@ -1,4 +1,4 @@
-use common::ecs::ShipVisual;
+use common::ecs::ShowAsShip;
 use common::testing::{
 	Client,
 	MockGameService
@@ -34,7 +34,7 @@ fn it_should_interpolate_between_perceptions() {
 		velocity: Vec2(10.0, 0.0),
 		attitude: Radians(0.0)
 	});
-	perception_1.updated.visuals.insert(0, ShipVisual);
+	perception_1.updated.visuals.insert(0, ShowAsShip);
 	let mut perception_2 = perception_1.clone();
 	perception_2.updated.bodies.get_mut(&0).position = pos_2;
 
@@ -85,7 +85,7 @@ fn the_camera_should_follow_the_ship() {
 		velocity: Vec2(10.0, 0.0),
 		attitude: Radians(0.0)
 	});
-	perception_1.updated.visuals.insert(0, ShipVisual);
+	perception_1.updated.visuals.insert(0, ShowAsShip);
 	let mut perception_2 = perception_1.clone();
 	perception_2.updated.bodies.get_mut(&0).position = pos_2;
 
