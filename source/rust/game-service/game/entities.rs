@@ -20,7 +20,7 @@ ecs!(
 	component(Visual, visuals): Visual
 	component(Player, players): Player
 
-	entity(Missile<Body, Visual>): |(position, attitude): (Vec2, Radians)| {
+	entity(Missile<Body, Visual>): |position: Vec2, attitude: Radians| {
 		let body = Body {
 			position: position,
 			velocity: Vec2::zero(),
