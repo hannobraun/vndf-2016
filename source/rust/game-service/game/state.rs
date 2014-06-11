@@ -36,7 +36,7 @@ pub struct State {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	entities: World
+	world: World
 }
 
 impl State {
@@ -49,7 +49,7 @@ impl State {
 			incoming: receiver,
 			network : network,
 
-			entities: World::new()
+			world: World::new()
 		}
 	}
 
@@ -84,22 +84,22 @@ impl State {
 	}
 
 	fn on_enter(&mut self, id: ClientId) {
-		self.entities.create_ship(id);
+		self.world.create_ship(id);
 	}
 
 	fn on_leave(&mut self, id: ClientId) {
-		ecs::destroy_ship(&mut self.entities, id);
+		ecs::destroy_ship(&mut self.world, id);
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
-		for (_, body) in self.entities.bodies.mut_iter() {
+		for (_, body) in self.world.bodies.mut_iter() {
 			integrate(body, delta_time_in_s);
 		}
 
-		for (&id, player) in self.entities.players.iter() {
+		for (&id, player) in self.world.players.iter() {
 			let perception = Perception::new(id, None, protocol::Entities {
-				bodies  : self.entities.bodies.clone(),
-				visuals : self.entities.visuals.clone(),
+				bodies  : self.world.bodies.clone(),
+				visuals : self.world.visuals.clone(),
 			});
 
 			self.network.send(
@@ -108,15 +108,15 @@ impl State {
 	}
 
 	fn on_action(&mut self, client_id: ClientId, action: Action) {
-		let id = match ecs::entity_id_from_client_id(&self.entities, client_id) {
+		let id = match ecs::entity_id_from_client_id(&self.world, client_id) {
 			Some(id) => id,
 			None     => return
 		};
 
-		let body = self.entities.bodies
+		let body = self.world.bodies
 			.find_mut(&id)
 			.expect("expected body");
-		let player = self.entities.players
+		let player = self.world.players
 			.find_mut(&id)
 			.expect("expected ship");
 
@@ -132,7 +132,7 @@ impl State {
 	}
 
 	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
-		self.entities.create_missile(position, attitude);
+		self.world.create_missile(position, attitude);
 	}
 }
 
