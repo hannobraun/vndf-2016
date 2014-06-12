@@ -198,7 +198,7 @@ impl World {
 		let name       = world.name;
 		let decls      = World::component_decls(&components);
 		let inits      = World::component_inits(&components);
-		let create_fns = World::create_fns(context, entities);
+		let create_fns = World::create_fns(entities);
 		let removes    = World::removes(&components);
 
 		let structure = quote_item!(&*context,
@@ -267,16 +267,11 @@ impl World {
 		tokens
 	}
 
-	fn create_fns(
-		context : &ExtCtxt,
-		entities: &Vec<Entity>
-	) -> Vec<ast::TokenTree> {
+	fn create_fns(entities: &Vec<Entity>) -> Vec<ast::TokenTree> {
 		let mut tokens = Vec::new();
 
 		for entity in entities.iter() {
-			let create_fn = &entity.create_fn;
-
-			tokens.push_all(quote_tokens!(&*context, $create_fn).as_slice());
+			tokens.push_all(entity.create_fn.as_slice());
 		}
 
 		tokens
