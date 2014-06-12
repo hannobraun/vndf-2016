@@ -29,9 +29,8 @@ pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
 		.collect();
 
 	let mut items = Vec::new();
-	for world in worlds.iter() {
-		items.push(world.structure);
-		items.push(world.implementation);
+	for &World(ref world) in worlds.iter() {
+		items.push_all(world.as_slice());
 	}
 
 	items
@@ -182,10 +181,7 @@ impl Entity {
 }
 
 
-pub struct World {
-	pub structure     : @ast::Item,
-	pub implementation: @ast::Item,
-}
+struct World(Vec<@ast::Item>);
 
 impl World {
 	fn generate(
@@ -225,10 +221,11 @@ impl World {
 			}
 		);
 
-		World {
-			structure     : structure.unwrap(),
-			implementation: implementation.unwrap()
-		}
+		let mut items = Vec::new();
+		items.push(structure.unwrap());
+		items.push(implementation.unwrap());
+
+		World(items)
 	}
 
 	fn components(entities: &Vec<Entity>) -> HashMap<String, Component> {
