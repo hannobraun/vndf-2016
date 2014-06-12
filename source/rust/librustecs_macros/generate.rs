@@ -196,7 +196,7 @@ impl World {
 		let components = World::components(entities);
 
 		let name       = world.name;
-		let decls      = World::component_decls(context, &components);
+		let decls      = World::component_decls(&components);
 		let inits      = World::component_inits(context, &components);
 		let create_fns = World::create_fns(context, entities);
 		let removes    = World::removes(&components);
@@ -244,17 +244,12 @@ impl World {
 	}
 
 	fn component_decls(
-		context   : &ExtCtxt,
 		components: &HashMap<String, Component>
 	) -> Vec<ast::TokenTree> {
 		let mut tokens = vec!();
 
 		for (_, component) in components.iter() {
-			let decl = &component.decl;
-
-			tokens.push_all(
-				quote_tokens!(&*context, $decl).as_slice()
-			);
+			tokens.push_all(component.decl.as_slice());
 		}
 
 		tokens
