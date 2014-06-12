@@ -51,12 +51,8 @@ pub struct Component {
 
 impl Component {
 	fn generate(context: &ExtCtxt, component: &parse::Component) -> Component {
-		let var_name = ast::Ident::new(token::intern(
-			token::get_ident(component.name)
-				.to_str()
-				.as_slice()
-				.to_ascii_lower()
-				.as_slice()));
+		let var_name = ast::Ident::new(
+			token::intern(ident_to_lower(component.name).as_slice()));
 
 		let collection = component.collection;
 		let ty         = component.ty;
@@ -135,12 +131,7 @@ impl Entity {
 		let name = ast::Ident::new(token::intern(
 			"create_"
 				.to_str()
-				.append(
-					token::get_ident(entity.name)
-						.to_str()
-						.as_slice()
-						.to_ascii_lower()
-						.as_slice())
+				.append(ident_to_lower(entity.name).as_slice())
 				.as_slice()));
 
 		let mut args = Vec::new();
@@ -310,4 +301,12 @@ impl World {
 
 		removes
 	}
+}
+
+
+fn ident_to_lower(ident: ast::Ident) -> String {
+	token::get_ident(ident)
+		.to_str()
+		.as_slice()
+		.to_ascii_lower()
 }
