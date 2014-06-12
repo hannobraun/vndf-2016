@@ -23,11 +23,10 @@ type MessageLength = u16;
 static MAX_MSG_LENGTH: MessageLength = std::u16::MAX;
 
 
-#[deriving(Eq, PartialEq, Show)]
 pub struct Connection {
 	pub fd: c_int,
 
-	in_buffer    : ~[u8],
+	in_buffer    : [u8, ..1024],
 	in_buffer_pos: uint
 }
 
@@ -35,7 +34,7 @@ impl Connection {
 	pub fn from_fd(fd: c_int) -> Connection {
 		Connection {
 			fd           : fd,
-			in_buffer    : ~[0, ..1024],
+			in_buffer    : [0, ..1024],
 			in_buffer_pos: 0
 		}
 	}

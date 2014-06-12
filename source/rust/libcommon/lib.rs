@@ -9,7 +9,7 @@ extern crate rand;
 extern crate serialize;
 
 extern crate rustecs;
-#[phase(syntax)]
+#[phase(plugin)]
 extern crate rustecs_macros;
 
 

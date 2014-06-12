@@ -4,7 +4,8 @@
 extern crate collections;
 
 extern crate rustecs;
-#[phase(syntax)] extern crate rustecs_macros;
+#[phase(plugin)]
+extern crate rustecs_macros;
 extern crate common;
 
 
