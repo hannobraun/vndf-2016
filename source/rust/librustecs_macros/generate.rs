@@ -283,7 +283,10 @@ impl World {
 							InternedString::new("Decodable")),
 						context.meta_word(
 							codemap::DUMMY_SP,
-							InternedString::new("Encodable"))))));
+							InternedString::new("Encodable")),
+						context.meta_word(
+							codemap::DUMMY_SP,
+							InternedString::new("Clone"))))));
 
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
