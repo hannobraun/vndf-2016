@@ -277,7 +277,13 @@ impl World {
 							InternedString::new("PartialEq")),
 						context.meta_word(
 							codemap::DUMMY_SP,
-							InternedString::new("Show"))))));
+							InternedString::new("Show")),
+						context.meta_word(
+							codemap::DUMMY_SP,
+							InternedString::new("Decodable")),
+						context.meta_word(
+							codemap::DUMMY_SP,
+							InternedString::new("Encodable"))))));
 
 		let mut items = Vec::new();
 		items.push(structure.unwrap());

@@ -2,6 +2,7 @@
 
 
 extern crate collections;
+extern crate serialize;
 
 extern crate rustecs;
 #[phase(plugin)]

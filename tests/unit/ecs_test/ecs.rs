@@ -1,7 +1,7 @@
-#[deriving(Clone, PartialEq, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 struct Position(f64, f64);
 
-#[deriving(Clone, Eq, PartialEq, Show)]
+#[deriving(Clone, Decodable, Encodable, Eq, PartialEq, Show)]
 enum Visual {
 	RenderAsMissile,
 	RenderAsShip,
