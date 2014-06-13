@@ -15,10 +15,7 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::{
-	Interpolated,
-	Missile
-};
+use game::data::Interpolated;
 use network::Network;
 
 
@@ -26,7 +23,6 @@ pub struct State {
 	self_id: Option<EntityId>,
 
 	interpolateds: Components<Interpolated>,
-	missiles     : Components<Missile>,
 	ships        : Components<Interpolated>
 }
 
@@ -36,7 +32,6 @@ impl State {
 			self_id: None,
 
 			interpolateds: components(),
-			missiles     : components(),
 			ships        : components(),
 		}
 	}
