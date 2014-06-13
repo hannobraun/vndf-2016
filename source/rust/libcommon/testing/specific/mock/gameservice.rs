@@ -1,5 +1,7 @@
 use std::rand::random;
 
+use rustecs::EntityId;
+
 use ecs::SharedWorldEntity;
 use net::{
 	Acceptor,
@@ -38,7 +40,10 @@ impl MockGameService {
 		}
 	}
 
-	pub fn send_perception(&self, perception: &Perception<SharedWorldEntity>) {
+	pub fn send_perception(
+		&self,
+		perception: &Perception<EntityId, SharedWorldEntity>
+	) {
 		for connection in self.clients.iter() {
 			match connection.send_message(perception.to_str().as_slice()) {
 				Ok(())     => (),

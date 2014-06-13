@@ -9,8 +9,6 @@ use serialize::json::{
 };
 use std::io::IoError;
 
-use rustecs::EntityId;
-
 use json::{
 	from_json,
 	to_json
@@ -19,27 +17,32 @@ use physics::Radians;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-pub struct Perception<T> {
-	pub self_id: EntityId,
+pub struct Perception<Id, T> {
+	pub self_id: Id,
 	pub updated: Vec<T>,
 }
 
-impl<'a, T:
-	Decodable<Decoder, DecoderError> +
-	Encodable<Encoder<'a>, IoError>
-> Perception<T> {
+impl<
+	'a,
+	Id:
+		Decodable<Decoder, DecoderError> +
+		Encodable<Encoder<'a>, IoError>,
+	T:
+		Decodable<Decoder, DecoderError> +
+		Encodable<Encoder<'a>, IoError>
+> Perception<Id, T> {
 	pub fn new(
-		self_id: EntityId,
+		self_id: Id,
 		_      : Vec<T>,
 		current: Vec<T>
-	) -> Perception<T> {
+	) -> Perception<Id, T> {
 		Perception {
 			self_id: self_id,
 			updated: current
 		}
 	}
 
-	pub fn from_str(s: &str) -> Result<Perception<T>, String> {
+	pub fn from_str(s: &str) -> Result<Perception<Id, T>, String> {
 		from_json(s)
 	}
 

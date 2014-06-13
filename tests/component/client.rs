@@ -38,7 +38,7 @@ fn it_should_interpolate_between_perceptions() {
 	);
 
 	let perception_1 = Perception::new(
-		0,
+		0u32,
 		entities.clone(),
 		entities.clone()
 	);
@@ -96,7 +96,7 @@ fn the_camera_should_follow_the_ship() {
 	);
 
 	let perception_1 = Perception::new(
-		0,
+		0u32,
 		entities.clone(),
 		entities.clone()
 	);

@@ -1,3 +1,5 @@
+use rustecs::EntityId;
+
 use common::ecs::SharedWorldEntity;
 use common::io::Input;
 use common::net::Connection;
@@ -37,7 +39,10 @@ impl Network {
 		}
 	}
 
-	pub fn receive(&mut self, handler: |Perception<SharedWorldEntity>|) {
+	pub fn receive(
+		&mut self,
+		handler: |Perception<EntityId, SharedWorldEntity>|
+	) {
 		let result = self.conn.receive_messages(|message| {
 			let perception = match Perception::from_str(message.as_slice()) {
 				Ok(perception) => perception,

@@ -1,5 +1,7 @@
 use std::io::IoError;
 
+use rustecs::EntityId;
+
 use common::ecs::SharedWorldEntity;
 use common::net::ConnId;
 use common::physics::{
@@ -24,6 +26,6 @@ pub enum GameEvent {
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ConnId>, Perception<SharedWorldEntity>),
+	Message(Vec<ConnId>, Perception<EntityId, SharedWorldEntity>),
 	Close(ConnId, IoError)
 }
