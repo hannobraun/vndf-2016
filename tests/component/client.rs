@@ -25,20 +25,22 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
+	let entities = vec!(
+		SharedWorldEntity {
+			id: 0,
+			body: Some(Body {
+				position: pos_1,
+				velocity: Vec2(10.0, 0.0),
+				attitude: Radians(0.0)
+			}),
+			visual: Some(ShowAsShip)
+		}
+	);
+
 	let perception_1 = Perception::new(
 		0,
-		None,
-		vec!(
-			SharedWorldEntity {
-				id: 0,
-				body: Some(Body {
-					position: pos_1,
-					velocity: Vec2(10.0, 0.0),
-					attitude: Radians(0.0)
-				}),
-				visual: Some(ShowAsShip)
-			}
-		)
+		Some(entities.clone()),
+		entities.clone()
 	);
 	let mut perception_2 = perception_1.clone();
 	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
@@ -81,20 +83,22 @@ fn the_camera_should_follow_the_ship() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
+	let entities = vec!(
+		SharedWorldEntity {
+			id: 0,
+			body: Some(Body {
+				position: pos_1,
+				velocity: Vec2(10.0, 0.0),
+				attitude: Radians(0.0)
+			}),
+			visual: Some(ShowAsShip)
+		}
+	);
+
 	let perception_1 = Perception::new(
 		0,
-		None,
-		vec!(
-			SharedWorldEntity {
-				id: 0,
-				body: Some(Body {
-					position: pos_1,
-					velocity: Vec2(10.0, 0.0),
-					attitude: Radians(0.0)
-				}),
-				visual: Some(ShowAsShip)
-			}
-		)
+		Some(entities.clone()),
+		entities.clone()
 	);
 	let mut perception_2 = perception_1.clone();
 	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
