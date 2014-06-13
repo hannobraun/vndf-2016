@@ -47,6 +47,7 @@ pub struct Component {
 	var_name   : ast::Ident,
 	decl       : Vec<ast::TokenTree>,
 	init       : Vec<ast::TokenTree>,
+	import     : Vec<ast::TokenTree>,
 	insert     : Vec<ast::TokenTree>,
 	remove     : Vec<ast::TokenTree>,
 	entity_decl: Vec<ast::TokenTree>,
@@ -67,6 +68,16 @@ impl Component {
 
 		let init = quote_tokens!(&*context,
 			$collection: ::rustecs::components(),
+		);
+
+		let import = quote_tokens!(&*context,
+			match entity.$var_name {
+				Some(component) => {
+					let _ = world.$collection.insert(entity.id, component);
+				},
+				None =>
+					()
+			}
 		);
 
 		let insert = quote_tokens!(&*context,
@@ -90,6 +101,7 @@ impl Component {
 			var_name   : var_name,
 			decl       : decl,
 			init       : init,
+			import     : import,
 			insert     : insert,
 			remove     : remove,
 			entity_decl: entity_decl,
@@ -214,6 +226,7 @@ impl World {
 		let name         = world.name;
 		let decls        = World::component_decls(&components);
 		let inits        = World::component_inits(&components);
+		let imports      = World::imports(&components);
 		let create_fns   = World::create_fns(&entities);
 		let removes      = World::removes(&components);
 		let entity_name  = World::entity_name(world.name);
@@ -237,6 +250,25 @@ impl World {
 						next_id : 0,
 						$inits
 					}
+				}
+
+				pub fn from_entities(entities: Vec<$entity_name>) -> $name {
+					let mut world = $name {
+						entities: ::std::collections::HashSet::new(),
+						next_id : 0,
+						$inits
+					};
+
+					for entity in entities.iter() {
+						world.entities.insert(entity.id);
+						if entity.id > world.next_id {
+							world.next_id = entity.id + 1;
+						}
+
+						$imports
+					}
+
+					world
 				}
 
 				$create_fns
@@ -350,6 +382,16 @@ impl World {
 
 		for (_, component) in components.iter() {
 			tokens.push_all(component.init.as_slice());
+		}
+
+		tokens
+	}
+
+	fn imports(components: &HashMap<String, Component>) -> Vec<ast::TokenTree> {
+		let mut tokens = Vec::new();
+
+		for (_, component) in components.iter() {
+			tokens.push_all(component.import.as_slice());
 		}
 
 		tokens

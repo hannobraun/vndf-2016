@@ -111,3 +111,24 @@ fn it_should_export_entities() {
 		}
 	}
 }
+
+#[test]
+fn it_should_import_entities() {
+	let mut old_world = World::new();
+
+	let missile_id = old_world.create_missile(8.0, 12.0);
+	let ship_id    = old_world.create_ship(100);
+
+	let world = World::from_entities(old_world.to_entities());
+
+	assert_eq!(2, world.positions.len());
+	assert_eq!(2, world.visuals.len());
+	assert_eq!(1, world.scores.len());
+
+	assert_eq!(&Position(8.0, 12.0), world.positions.get(&missile_id));
+	assert_eq!(&RenderAsMissile    , world.visuals.get(&missile_id));
+
+	assert_eq!(&Position(0.0, 0.0), world.positions.get(&ship_id));
+	assert_eq!(&RenderAsShip      , world.visuals.get(&ship_id));
+	assert_eq!(&100               , world.scores.get(&ship_id));
+}
