@@ -99,7 +99,9 @@ impl Component {
 }
 
 
+#[deriving(Clone)]
 pub struct Entity {
+	name      : ast::Ident,
 	components: HashMap<String, Component>,
 	create_fn : Vec<ast::TokenTree>,
 }
@@ -131,6 +133,7 @@ impl Entity {
 			&ordered_components);
 
 		Entity {
+			name      : entity.name,
 			components: entity_components,
 			create_fn : create_fn,
 		}
@@ -201,16 +204,17 @@ struct World(Vec<@ast::Item>);
 
 impl World {
 	fn generate(
-		context   : &ExtCtxt,
-		world     : &parse::World,
-		entities  : &Vec<Entity>
+		context     : &ExtCtxt,
+		world       : &parse::World,
+		all_entities: &Vec<Entity>
 	) -> World {
-		let components = World::components(entities);
+		let entities   = World::entities(&world.entities, all_entities);
+		let components = World::components(&entities);
 
 		let name         = world.name;
 		let decls        = World::component_decls(&components);
 		let inits        = World::component_inits(&components);
-		let create_fns   = World::create_fns(entities);
+		let create_fns   = World::create_fns(&entities);
 		let removes      = World::removes(&components);
 		let entity_name  = World::entity_name(world.name);
 		let entity_decls = World::entity_decls(&components);
@@ -294,6 +298,25 @@ impl World {
 		items.push(box (GC) entity);
 
 		World(items)
+	}
+
+	fn entities(
+		entities    : &Vec<ast::Ident>,
+		all_entities: &Vec<Entity>
+	) -> Vec<Entity> {
+		all_entities
+			.iter()
+			.filter(|entity| {
+				for &name in entities.iter() {
+					if entity.name == name {
+						return true;
+					}
+				}
+				return false;
+			})
+			.map(|entity|
+				entity.clone())
+			.collect()
 	}
 
 	fn components(entities: &Vec<Entity>) -> HashMap<String, Component> {
