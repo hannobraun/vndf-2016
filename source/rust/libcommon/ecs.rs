@@ -20,8 +20,21 @@ pub enum Visual {
 
 
 ecs!(
+	// Shared
 	component(Body, bodies): Body
 	component(Visual, visuals): Visual
+
+	entity(SharedMissile<Body, Visual>): |body: Body| {
+		(body, ShowAsMissile)
+	}
+	entity(SharedShip<Body, Visual>): |body: Body| {
+		(body, ShowAsShip)
+	}
+
+	world(SharedWorld<SharedMissile, SharedShip>)
+
+
+	// Server-only
 	component(Player, players): Player
 
 	entity(Missile<Body, Visual>): |position: Vec2, attitude: Radians| {
