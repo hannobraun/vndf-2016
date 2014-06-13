@@ -1,8 +1,11 @@
 use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
 use syntax::ast;
+use syntax::codemap;
 use syntax::ext::base::ExtCtxt;
+use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
+use syntax::parse::token::InternedString;
 
 use parse;
 
@@ -41,11 +44,13 @@ pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
 pub struct Component {
 	name: String,
 
-	var_name: ast::Ident,
-	decl    : Vec<ast::TokenTree>,
-	init    : Vec<ast::TokenTree>,
-	insert  : Vec<ast::TokenTree>,
-	remove  : Vec<ast::TokenTree>,
+	var_name   : ast::Ident,
+	decl       : Vec<ast::TokenTree>,
+	init       : Vec<ast::TokenTree>,
+	insert     : Vec<ast::TokenTree>,
+	remove     : Vec<ast::TokenTree>,
+	entity_decl: Vec<ast::TokenTree>,
+	entity_init: Vec<ast::TokenTree>,
 }
 
 impl Component {
@@ -72,13 +77,23 @@ impl Component {
 			self.$collection.remove(&id);
 		);
 
+		let entity_decl = quote_tokens!(&*context,
+			pub $var_name: Option<$ty>,
+		);
+
+		let entity_init = quote_tokens!(&*context,
+			$var_name: self.$collection.find_copy(id),
+		);
+
 		Component {
-			name    : token::get_ident(component.name).to_str(),
-			var_name: var_name,
-			decl    : decl,
-			init    : init,
-			insert  : insert,
-			remove  : remove,
+			name       : token::get_ident(component.name).to_str(),
+			var_name   : var_name,
+			decl       : decl,
+			init       : init,
+			insert     : insert,
+			remove     : remove,
+			entity_decl: entity_decl,
+			entity_init: entity_init,
 		}
 	}
 }
@@ -172,6 +187,7 @@ impl Entity {
 
 				let ($component_names) = $init_block;
 
+				self.entities.insert(id);
 				$inserts
 
 				id
@@ -191,15 +207,20 @@ impl World {
 	) -> World {
 		let components = World::components(entities);
 
-		let name       = world.name;
-		let decls      = World::component_decls(&components);
-		let inits      = World::component_inits(&components);
-		let create_fns = World::create_fns(entities);
-		let removes    = World::removes(&components);
+		let name         = world.name;
+		let decls        = World::component_decls(&components);
+		let inits        = World::component_inits(&components);
+		let create_fns   = World::create_fns(entities);
+		let removes      = World::removes(&components);
+		let entity_name  = World::entity_name(world.name);
+		let entity_decls = World::entity_decls(&components);
+		let entity_init  = World::entity_init(&components);
 
 		let structure = quote_item!(&*context,
 			pub struct $name {
-				next_id: ::rustecs::EntityId,
+				entities: ::std::collections::HashSet<::rustecs::EntityId>,
+				next_id : ::rustecs::EntityId,
+
 				$decls
 			}
 		);
@@ -208,7 +229,8 @@ impl World {
 			impl $name {
 				pub fn new() -> $name {
 					$name {
-						next_id: 0,
+						entities: ::std::collections::HashSet::new(),
+						next_id : 0,
 						$inits
 					}
 				}
@@ -216,14 +238,51 @@ impl World {
 				$create_fns
 
 				pub fn destroy_entity(&mut self, id: ::rustecs::EntityId) {
+					self.entities.remove(&id);
+
 					$removes
+				}
+
+				pub fn to_entities(&self) -> Vec<$entity_name> {
+					self.entities
+						.iter()
+						.map(|id|
+							$entity_name {
+								id: *id,
+								$entity_init
+							})
+						.collect()
 				}
 			}
 		);
 
+		let mut entity = (*(quote_item!(&*context,
+			pub struct $entity_name {
+				pub id: ::rustecs::EntityId,
+				$entity_decls
+			}
+		).unwrap())).clone();
+
+		// This is a really ugly workaround. It can be removed as soon as this
+		// PR lands: https://github.com/mozilla/rust/pull/14860
+		entity.attrs.push(
+			context.attribute(
+				codemap::DUMMY_SP,
+				context.meta_list(
+					codemap::DUMMY_SP,
+					InternedString::new("deriving"),
+					vec!(
+						context.meta_word(
+							codemap::DUMMY_SP,
+							InternedString::new("PartialEq")),
+						context.meta_word(
+							codemap::DUMMY_SP,
+							InternedString::new("Show"))))));
+
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
 		items.push(implementation.unwrap());
+		items.push(box (GC) entity);
 
 		World(items)
 	}
@@ -282,6 +341,39 @@ impl World {
 		}
 
 		removes
+	}
+
+	fn entity_name(world_name: ast::Ident) -> ast::Ident {
+		let name = token::get_ident(world_name)
+			.to_str()
+			.append("Entity".as_slice());
+
+		ast::Ident::new(
+			token::intern(name.as_slice()))
+	}
+
+	fn entity_decls(
+		components: &HashMap<String, Component>
+	) -> Vec<ast::TokenTree> {
+		let mut decls = Vec::new();
+
+		for (_, component) in components.iter() {
+			decls.push_all(component.entity_decl.as_slice());
+		}
+
+		decls
+	}
+
+	fn entity_init(
+		components: &HashMap<String, Component>
+	) -> Vec<ast::TokenTree> {
+		let mut init = Vec::new();
+
+		for (_, component) in components.iter() {
+			init.push_all(component.entity_init.as_slice());
+		}
+
+		init
 	}
 }
 

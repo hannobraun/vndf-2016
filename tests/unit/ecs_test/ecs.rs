@@ -1,7 +1,7 @@
-#[deriving(PartialEq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 struct Position(f64, f64);
 
-#[deriving(Eq, PartialEq, Show)]
+#[deriving(Clone, Eq, PartialEq, Show)]
 enum Visual {
 	RenderAsMissile,
 	RenderAsShip,
@@ -73,4 +73,41 @@ fn it_should_destroy_entities() {
 	assert_eq!(0, world.positions.len());
 	assert_eq!(0, world.visuals.len());
 	assert_eq!(0, world.scores.len());
+}
+
+#[test]
+fn it_should_export_the_entities() {
+	let mut world = World::new();
+
+	let missile_id = world.create_missile(8.0, 12.0);
+	let ship_id    = world.create_ship(100);
+
+	let entities = world.to_entities();
+
+	assert_eq!(2, entities.len());
+
+	let missile = WorldEntity {
+		id      : missile_id,
+		position: Some(Position(8.0, 12.0)),
+		visual  : Some(RenderAsMissile),
+		score   : None
+	};
+	let ship = WorldEntity {
+		id      : ship_id,
+		position: Some(Position(0.0, 0.0)),
+		visual  : Some(RenderAsShip),
+		score   : Some(100),
+	};
+
+	for &entity in entities.iter() {
+		if entity.id == missile_id {
+			assert_eq!(missile, entity);
+		}
+		else if entity.id == ship_id {
+			assert_eq!(ship, entity);
+		}
+		else {
+			fail!("Unexpected id: {}", entity.id);
+		}
+	}
 }
