@@ -1,5 +1,6 @@
 use std::io::IoError;
 
+use common::ecs::SharedWorldEntity;
 use common::net::ConnId;
 use common::physics::{
 	Radians,
@@ -23,6 +24,6 @@ pub enum GameEvent {
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ConnId>, Perception),
+	Message(Vec<ConnId>, Perception<SharedWorldEntity>),
 	Close(ConnId, IoError)
 }

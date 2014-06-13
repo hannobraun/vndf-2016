@@ -1,4 +1,7 @@
-use common::ecs::ShowAsShip;
+use common::ecs::{
+	SharedWorldEntity,
+	ShowAsShip,
+};
 use common::testing::{
 	Client,
 	MockGameService
@@ -9,10 +12,7 @@ use common::physics::{
 	Vec2
 };
 use common::physics::util;
-use common::protocol::{
-	Perception,
-	Snapshot,
-};
+use common::protocol::Perception;
 
 
 #[test]
@@ -25,18 +25,22 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let mut perception_1 = Perception {
+	let perception_1 = Perception {
 		self_id: 0,
-		updated: Snapshot::new()
+		updated: vec!(
+			SharedWorldEntity {
+				id: 0,
+				body: Some(Body {
+					position: pos_1,
+					velocity: Vec2(10.0, 0.0),
+					attitude: Radians(0.0)
+				}),
+				visual: Some(ShowAsShip)
+			}
+		)
 	};
-	perception_1.updated.bodies.insert(0, Body {
-		position: pos_1,
-		velocity: Vec2(10.0, 0.0),
-		attitude: Radians(0.0)
-	});
-	perception_1.updated.visuals.insert(0, ShowAsShip);
 	let mut perception_2 = perception_1.clone();
-	perception_2.updated.bodies.get_mut(&0).position = pos_2;
+	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
 
 	game_service.send_perception(&perception_1);
 	game_service.send_perception(&perception_2);
@@ -76,18 +80,22 @@ fn the_camera_should_follow_the_ship() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let mut perception_1 = Perception {
+	let perception_1 = Perception {
 		self_id: 0,
-		updated: Snapshot::new()
+		updated: vec!(
+			SharedWorldEntity {
+				id: 0,
+				body: Some(Body {
+					position: pos_1,
+					velocity: Vec2(10.0, 0.0),
+					attitude: Radians(0.0)
+				}),
+				visual: Some(ShowAsShip)
+			}
+		)
 	};
-	perception_1.updated.bodies.insert(0, Body {
-		position: pos_1,
-		velocity: Vec2(10.0, 0.0),
-		attitude: Radians(0.0)
-	});
-	perception_1.updated.visuals.insert(0, ShowAsShip);
 	let mut perception_2 = perception_1.clone();
-	perception_2.updated.bodies.get_mut(&0).position = pos_2;
+	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
 
 	game_service.send_perception(&perception_1);
 	let mut frame_1 = client.frame();

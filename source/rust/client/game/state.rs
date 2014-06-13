@@ -45,21 +45,21 @@ impl State {
 
 			receive(
 				&mut self.ships,
-				&perception.updated.bodies
+				&perception.updated
 					.iter()
-					.filter(|&(id, _)|
-						perception.updated.visuals.get(id) == &ShowAsShip)
-					.map(|(&id, &body)|
-						(id, body))
+					.filter(|entity|
+						entity.visual == Some(ShowAsShip))
+					.map(|entity|
+						(entity.id, entity.body.unwrap()))
 					.collect());
 			receive(
 				&mut self.interpolateds,
-				&perception.updated.bodies
+				&perception.updated
 					.iter()
-					.filter(|&(id, _)|
-						perception.updated.visuals.get(id) == &ShowAsMissile)
-					.map(|(&id, &body)|
-						(id, body))
+					.filter(|entity|
+						entity.visual == Some(ShowAsMissile))
+					.map(|entity|
+						(entity.id, entity.body.unwrap()))
 					.collect());
 		});
 	}

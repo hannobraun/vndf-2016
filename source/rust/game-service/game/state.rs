@@ -3,14 +3,17 @@ use std::comm::{
 	Empty
 };
 
-use common::ecs::World;
+use common::ecs::{
+	SharedWorld,
+	SharedWorldEntity,
+	World
+};
 use common::net::ConnId;
 use common::physics::{
 	Body,
 	Radians,
 	Vec2
 };
-use common::protocol;
 use common::protocol::{
 	Action,
 	Perception
@@ -96,11 +99,25 @@ impl State {
 			integrate(body, delta_time_in_s);
 		}
 
+		let entities =
+			SharedWorld::from_entities(
+				self.world
+					.to_entities()
+					.iter()
+					.map(|entity|
+						SharedWorldEntity {
+							id    : entity.id,
+							body  : entity.body,
+							visual: entity.visual,
+						})
+					.collect())
+			.to_entities();
+
 		for (&id, player) in self.world.players.iter() {
-			let perception = Perception::new(id, None, protocol::Snapshot {
-				bodies  : self.world.bodies.clone(),
-				visuals : self.world.visuals.clone(),
-			});
+			let perception = Perception::new(
+				id,
+				None,
+				entities.clone());
 
 			self.network.send(
 				Message(vec!(player.client_id), perception));
