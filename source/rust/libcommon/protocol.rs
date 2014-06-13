@@ -30,7 +30,7 @@ impl<'a, T:
 > Perception<T> {
 	pub fn new(
 		self_id: EntityId,
-		_      : Option<Vec<T>>,
+		_      : Vec<T>,
 		current: Vec<T>
 	) -> Perception<T> {
 		Perception {

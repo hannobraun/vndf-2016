@@ -39,7 +39,7 @@ fn it_should_interpolate_between_perceptions() {
 
 	let perception_1 = Perception::new(
 		0,
-		Some(entities.clone()),
+		entities.clone(),
 		entities.clone()
 	);
 	let mut perception_2 = perception_1.clone();
@@ -97,7 +97,7 @@ fn the_camera_should_follow_the_ship() {
 
 	let perception_1 = Perception::new(
 		0,
-		Some(entities.clone()),
+		entities.clone(),
 		entities.clone()
 	);
 	let mut perception_2 = perception_1.clone();
