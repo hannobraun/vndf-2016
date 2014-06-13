@@ -6,7 +6,7 @@ use physics::{
 };
 
 
-#[deriving(PartialEq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 pub struct Player {
 	pub client_id    : ConnId,
 	pub missile_index: u64
