@@ -115,6 +115,7 @@ impl State {
 
 		for (&id, player) in self.world.players.iter() {
 			let perception = Perception::new(
+				|entity| entity.id,
 				id,
 				entities.clone(),
 				entities.clone());

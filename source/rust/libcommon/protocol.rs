@@ -32,6 +32,7 @@ impl<
 		Encodable<Encoder<'a>, IoError>
 > Perception<Id, T> {
 	pub fn new(
+		_      : |T| -> Id,
 		self_id: Id,
 		_      : Vec<T>,
 		current: Vec<T>
