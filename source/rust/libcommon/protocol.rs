@@ -31,8 +31,8 @@ impl<'a, T:
 	pub fn new(
 		self_id: EntityId,
 		_      : Option<Vec<T>>,
-		current: Vec<T>) -> Perception<T> {
-
+		current: Vec<T>
+	) -> Perception<T> {
 		Perception {
 			self_id: self_id,
 			updated: current
