@@ -42,11 +42,11 @@ impl State {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			for (_, body) in self.interpolateds.mut_iter() {
-				body.previous_time = body.current_time;
+			for (_, interpolated) in self.interpolateds.mut_iter() {
+				interpolated.previous_time = interpolated.current_time;
 
-				body.previous = body.current;
-				body.current  = None;
+				interpolated.previous = interpolated.current;
+				interpolated.current  = None;
 			}
 
 			let current_time = time::precise_time_ns();
