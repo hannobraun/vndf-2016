@@ -24,6 +24,7 @@ use network::Network;
 pub struct State {
 	self_id: Option<EntityId>,
 
+	bodies       : Components<Body>,
 	interpolateds: Components<Interpolated>,
 	visuals      : Components<Visual>,
 }
@@ -33,6 +34,7 @@ impl State {
 		State {
 			self_id: None,
 
+			bodies       : components(),
 			interpolateds: components(),
 			visuals      : components(),
 		}
@@ -83,8 +85,8 @@ impl State {
 			.collect();
 
 		(
-			interpolate(&ships),
-			interpolate(&missiles))
+			interpolate(&ships   , &mut self.bodies),
+			interpolate(&missiles, &mut self.bodies))
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -102,9 +104,9 @@ impl State {
 }
 
 
-fn interpolate(interpolateds: &HashMap<&EntityId, &Interpolated>) -> Vec<Body> {
+fn interpolate(interpolateds: &HashMap<&EntityId, &Interpolated>, c_bodies: &mut Components<Body>) -> Vec<Body> {
 	let mut bodies = Vec::new();
-	for (_, &interpolated) in interpolateds.iter() {
+	for (&&id, &interpolated) in interpolateds.iter() {
 		let previous = match interpolated.previous {
 			Some(body) => body,
 			None       => continue
@@ -126,9 +128,12 @@ fn interpolate(interpolateds: &HashMap<&EntityId, &Interpolated>) -> Vec<Body> {
 		};
 
 		let mut body = current.clone();
+
 		body.position =
 			previous.position + (current.position - previous.position) * i;
 		bodies.push(body);
+
+		c_bodies.insert(id, body);
 	}
 
 	bodies
