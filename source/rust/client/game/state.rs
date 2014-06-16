@@ -9,7 +9,6 @@ use rustecs::{
 
 use common::ecs::{
 	Interpolated,
-	SharedWorldEntity,
 	ShowAsMissile,
 	ShowAsShip,
 	Visual,
@@ -50,11 +49,23 @@ impl State {
 				body.current  = None;
 			}
 
-			receive(
-				&mut self.interpolateds,
-				&mut self.visuals,
-				&perception.updated
-			);
+			let current_time = time::precise_time_ns();
+			for entity in perception.updated.iter() {
+				let interpolated = self.interpolateds.find_or_insert(
+					entity.id,
+					Interpolated {
+						previous_time: current_time,
+						current_time : current_time,
+
+						previous: None,
+						current : None
+					});
+
+				interpolated.current      = entity.body;
+				interpolated.current_time = current_time;
+
+				self.visuals.insert(entity.id, entity.visual.unwrap());
+			}
 		});
 	}
 
@@ -86,28 +97,6 @@ impl State {
 				*camera = interpolated.current.unwrap().position;
 			}
 		}
-	}
-}
-
-
-fn receive(interpolateds: &mut Components<Interpolated>, visuals: &mut Components<Visual>, entities: &Vec<SharedWorldEntity>) {
-	let current_time = time::precise_time_ns();
-
-	for entity in entities.iter() {
-		let interpolated = interpolateds.find_or_insert(
-			entity.id,
-			Interpolated {
-				previous_time: current_time,
-				current_time : current_time,
-
-				previous: None,
-				current : None
-			});
-
-		interpolated.current      = entity.body;
-		interpolated.current_time = current_time;
-
-		visuals.insert(entity.id, entity.visual.unwrap());
 	}
 }
 
