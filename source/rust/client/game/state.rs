@@ -2,16 +2,15 @@ use std::collections::HashMap;
 use time;
 
 use rustecs::{
-	components,
 	Components,
 	EntityId
 };
 
 use common::ecs::{
+	ClientWorld,
 	Interpolated,
 	ShowAsMissile,
 	ShowAsShip,
-	Visual,
 };
 use common::physics::{
 	Body,
@@ -23,20 +22,14 @@ use network::Network;
 
 pub struct State {
 	self_id: Option<EntityId>,
-
-	bodies       : Components<Body>,
-	interpolateds: Components<Interpolated>,
-	visuals      : Components<Visual>,
+	world  : ClientWorld,
 }
 
 impl State {
 	pub fn new() -> State {
 		State {
 			self_id: None,
-
-			bodies       : components(),
-			interpolateds: components(),
-			visuals      : components(),
+			world  : ClientWorld::new(),
 		}
 	}
 
@@ -44,7 +37,7 @@ impl State {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			for (_, interpolated) in self.interpolateds.mut_iter() {
+			for (_, interpolated) in self.world.interpolateds.mut_iter() {
 				interpolated.previous_time = interpolated.current_time;
 
 				interpolated.previous = interpolated.current;
@@ -53,7 +46,7 @@ impl State {
 
 			let current_time = time::precise_time_ns();
 			for entity in perception.updated.iter() {
-				let interpolated = self.interpolateds.find_or_insert(
+				let interpolated = self.world.interpolateds.find_or_insert(
 					entity.id,
 					Interpolated::new(current_time)
 				);
@@ -61,26 +54,26 @@ impl State {
 				interpolated.current      = entity.body;
 				interpolated.current_time = current_time;
 
-				self.visuals.insert(entity.id, entity.visual.unwrap());
+				self.world.visuals.insert(entity.id, entity.visual.unwrap());
 			}
 		});
 	}
 
 	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
-		let ships = self.interpolateds
+		let ships = self.world.interpolateds
 			.iter()
 			.filter(|&(id, _)|
-				self.visuals.get(id) == &ShowAsShip)
+				self.world.visuals.get(id) == &ShowAsShip)
 			.collect();
-		let missiles = self.interpolateds
+		let missiles = self.world.interpolateds
 			.iter()
 			.filter(|&(id, _)|
-				self.visuals.get(id) == &ShowAsMissile)
+				self.world.visuals.get(id) == &ShowAsMissile)
 			.collect();
 
 		(
-			interpolate(&ships   , &mut self.bodies),
-			interpolate(&missiles, &mut self.bodies))
+			interpolate(&ships   , &mut self.world.bodies),
+			interpolate(&missiles, &mut self.world.bodies))
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -89,7 +82,7 @@ impl State {
 			None     => return
 		};
 
-		for (&id, body) in self.bodies.iter() {
+		for (&id, body) in self.world.bodies.iter() {
 			if id == self_id {
 				*camera = body.position;
 			}
