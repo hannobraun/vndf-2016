@@ -59,7 +59,8 @@ impl State {
 
 						previous: None,
 						current : None
-					});
+					}
+				);
 
 				interpolated.current      = entity.body;
 				interpolated.current_time = current_time;
