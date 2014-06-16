@@ -10,7 +10,8 @@ use common::ecs::{
 	Interpolated,
 	SharedWorldEntity,
 	ShowAsMissile,
-	ShowAsShip
+	ShowAsShip,
+	Visual,
 };
 use common::physics::{
 	Body,
@@ -24,7 +25,8 @@ pub struct State {
 	self_id: Option<EntityId>,
 
 	interpolateds: Components<Interpolated>,
-	ships        : Components<Interpolated>
+	ships        : Components<Interpolated>,
+	visuals      : Components<Visual>,
 }
 
 impl State {
@@ -34,6 +36,7 @@ impl State {
 
 			interpolateds: components(),
 			ships        : components(),
+			visuals      : components(),
 		}
 	}
 
@@ -46,6 +49,7 @@ impl State {
 
 			receive(
 				&mut self.ships,
+				&mut self.visuals,
 				&perception.updated
 					.iter()
 					.filter(|entity|
@@ -55,6 +59,7 @@ impl State {
 					.collect());
 			receive(
 				&mut self.interpolateds,
+				&mut self.visuals,
 				&perception.updated
 					.iter()
 					.filter(|entity|
@@ -95,7 +100,7 @@ fn prepare_receive(interpolateds: &mut Components<Interpolated>) {
 	}
 }
 
-fn receive(interpolateds: &mut Components<Interpolated>, entities: &Vec<SharedWorldEntity>) {
+fn receive(interpolateds: &mut Components<Interpolated>, visuals: &mut Components<Visual>, entities: &Vec<SharedWorldEntity>) {
 	let current_time = time::precise_time_ns();
 
 	for entity in entities.iter() {
@@ -111,6 +116,8 @@ fn receive(interpolateds: &mut Components<Interpolated>, entities: &Vec<SharedWo
 
 		interpolated.current      = entity.body;
 		interpolated.current_time = current_time;
+
+		visuals.insert(entity.id, entity.visual.unwrap());
 	}
 }
 
