@@ -113,15 +113,17 @@ impl State {
 					.collect())
 			.to_entities();
 
-		for (&id, player) in self.world.players.iter() {
+		for (&id, player) in self.world.players.mut_iter() {
 			let perception = Perception::new(
 				|entity| entity.id,
 				id,
-				entities.clone(),
+				player.last_snapshot.clone(),
 				entities.clone());
 
 			self.network.send(
 				Message(vec!(player.client_id), perception));
+
+			player.last_snapshot = entities.clone();
 		}
 	}
 
