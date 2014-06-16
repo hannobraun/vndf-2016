@@ -9,7 +9,8 @@ use physics::{
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Player {
 	pub client_id    : ConnId,
-	pub missile_index: u64
+	pub missile_index: u64,
+	pub last_snapshot: Vec<SharedWorldEntity>
 }
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -55,7 +56,8 @@ ecs!(
 
 		let player = Player {
 			client_id    : client_id,
-			missile_index: 0
+			missile_index: 0,
+			last_snapshot: Vec::new(),
 		};
 
 		(body, player, ShowAsShip)
