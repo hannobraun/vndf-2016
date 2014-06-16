@@ -7,6 +7,15 @@ use physics::{
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+pub struct Interpolated {
+	pub previous_time: u64,
+	pub current_time : u64,
+
+	pub previous: Option<Body>,
+	pub current : Option<Body>
+}
+
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Player {
 	pub client_id    : ConnId,
 	pub missile_index: u64,

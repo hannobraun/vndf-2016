@@ -7,6 +7,7 @@ use rustecs::{
 };
 
 use common::ecs::{
+	Interpolated,
 	ShowAsMissile,
 	ShowAsShip
 };
@@ -15,7 +16,6 @@ use common::physics::{
 	Vec2
 };
 
-use game::data::Interpolated;
 use network::Network;
 
 
