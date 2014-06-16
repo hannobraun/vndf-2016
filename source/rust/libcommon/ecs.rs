@@ -15,6 +15,19 @@ pub struct Interpolated {
 	pub current : Option<Body>
 }
 
+impl Interpolated {
+	pub fn new(current_time: u64) -> Interpolated {
+		Interpolated {
+			previous_time: current_time,
+			current_time : current_time,
+
+			previous: None,
+			current : None
+		}
+	}
+}
+
+
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Player {
 	pub client_id    : ConnId,
