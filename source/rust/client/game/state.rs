@@ -95,9 +95,9 @@ impl State {
 			None     => return
 		};
 
-		for (&id, interpolated) in self.interpolateds.iter() {
-			if id == self_id && interpolated.current.is_some() {
-				*camera = interpolated.current.unwrap().position;
+		for (&id, body) in self.bodies.iter() {
+			if id == self_id {
+				*camera = body.position;
 			}
 		}
 	}
