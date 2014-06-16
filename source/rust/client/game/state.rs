@@ -43,7 +43,13 @@ impl State {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			prepare_receive(&mut self.interpolateds);
+			for (_, body) in self.interpolateds.mut_iter() {
+				body.previous_time = body.current_time;
+
+				body.previous = body.current;
+				body.current  = None;
+			}
+
 			receive(
 				&mut self.interpolateds,
 				&mut self.visuals,
@@ -83,15 +89,6 @@ impl State {
 	}
 }
 
-
-fn prepare_receive(interpolateds: &mut Components<Interpolated>) {
-	for (_, body) in interpolateds.mut_iter() {
-		body.previous_time = body.current_time;
-
-		body.previous = body.current;
-		body.current  = None;
-	}
-}
 
 fn receive(interpolateds: &mut Components<Interpolated>, visuals: &mut Components<Visual>, entities: &Vec<SharedWorldEntity>) {
 	let current_time = time::precise_time_ns();
