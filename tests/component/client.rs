@@ -116,10 +116,14 @@ fn the_camera_should_follow_the_ship() {
 		frame_2 = client.frame();
 	}
 
-	assert_eq!(
-		pos_1,
-		frame_1.camera);
-	assert_eq!(
-		pos_2,
-		frame_2.camera);
+	assert!(
+		util::is_on_line(
+			(pos_1, pos_2),
+			frame_1.camera,
+			16));
+	assert!(
+		util::is_on_line(
+			(pos_1, pos_2),
+			frame_2.camera,
+			16));
 }
