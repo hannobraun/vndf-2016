@@ -259,7 +259,7 @@ impl World {
 						$inits
 					};
 
-					for entity in entities.iter() {
+					for entity in entities.move_iter() {
 						world.entities.insert(entity.id);
 						if entity.id > world.next_id {
 							world.next_id = entity.id + 1;
