@@ -8,6 +8,7 @@ use rustecs::{
 
 use common::ecs::{
 	Interpolated,
+	SharedWorldEntity,
 	ShowAsMissile,
 	ShowAsShip
 };
@@ -49,8 +50,8 @@ impl State {
 					.iter()
 					.filter(|entity|
 						entity.visual == Some(ShowAsShip))
-					.map(|entity|
-						(entity.id, entity.body.unwrap()))
+					.map(|&entity|
+						entity)
 					.collect());
 			receive(
 				&mut self.interpolateds,
@@ -58,8 +59,8 @@ impl State {
 					.iter()
 					.filter(|entity|
 						entity.visual == Some(ShowAsMissile))
-					.map(|entity|
-						(entity.id, entity.body.unwrap()))
+					.map(|&entity|
+						entity)
 					.collect());
 		});
 	}
@@ -94,12 +95,12 @@ fn prepare_receive(interpolateds: &mut Components<Interpolated>) {
 	}
 }
 
-fn receive(interpolateds: &mut Components<Interpolated>, bodies: &Components<Body>) {
+fn receive(interpolateds: &mut Components<Interpolated>, entities: &Vec<SharedWorldEntity>) {
 	let current_time = time::precise_time_ns();
 
-	for (&id, &body) in bodies.iter() {
+	for entity in entities.iter() {
 		let interpolated = interpolateds.find_or_insert(
-			id,
+			entity.id,
 			Interpolated {
 				previous_time: current_time,
 				current_time : current_time,
@@ -108,7 +109,7 @@ fn receive(interpolateds: &mut Components<Interpolated>, bodies: &Components<Bod
 				current : None
 			});
 
-		interpolated.current      = Some(body);
+		interpolated.current      = entity.body;
 		interpolated.current_time = current_time;
 	}
 }
