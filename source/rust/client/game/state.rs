@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use time;
 
 use rustecs::{
@@ -25,7 +26,6 @@ pub struct State {
 	self_id: Option<EntityId>,
 
 	interpolateds: Components<Interpolated>,
-	ships        : Components<Interpolated>,
 	visuals      : Components<Visual>,
 }
 
@@ -35,7 +35,6 @@ impl State {
 			self_id: None,
 
 			interpolateds: components(),
-			ships        : components(),
 			visuals      : components(),
 		}
 	}
@@ -44,36 +43,30 @@ impl State {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			prepare_receive(&mut self.ships);
 			prepare_receive(&mut self.interpolateds);
-
-			receive(
-				&mut self.ships,
-				&mut self.visuals,
-				&perception.updated
-					.iter()
-					.filter(|entity|
-						entity.visual == Some(ShowAsShip))
-					.map(|&entity|
-						entity)
-					.collect());
 			receive(
 				&mut self.interpolateds,
 				&mut self.visuals,
 				&perception.updated
-					.iter()
-					.filter(|entity|
-						entity.visual == Some(ShowAsMissile))
-					.map(|&entity|
-						entity)
-					.collect());
+			);
 		});
 	}
 
 	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
+		let ships = self.interpolateds
+			.iter()
+			.filter(|&(id, _)|
+				self.visuals.get(id) == &ShowAsShip)
+			.collect();
+		let missiles = self.interpolateds
+			.iter()
+			.filter(|&(id, _)|
+				self.visuals.get(id) == &ShowAsMissile)
+			.collect();
+
 		(
-			interpolate(&mut self.ships),
-			interpolate(&mut self.interpolateds))
+			interpolate(&ships),
+			interpolate(&missiles))
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -82,7 +75,7 @@ impl State {
 			None     => return
 		};
 
-		for (&id, interpolated) in self.ships.iter() {
+		for (&id, interpolated) in self.interpolateds.iter() {
 			if id == self_id && interpolated.current.is_some() {
 				*camera = interpolated.current.unwrap().position;
 			}
@@ -122,7 +115,7 @@ fn receive(interpolateds: &mut Components<Interpolated>, visuals: &mut Component
 }
 
 
-fn interpolate(interpolateds: &mut Components<Interpolated>) -> Vec<Body> {
+fn interpolate(interpolateds: &HashMap<&EntityId, &Interpolated>) -> Vec<Body> {
 	let mut bodies = Vec::new();
 	for (_, &interpolated) in interpolateds.iter() {
 		let previous = match interpolated.previous {
