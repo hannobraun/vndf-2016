@@ -86,4 +86,18 @@ ecs!(
 	}
 
 	world(World<Missile, Ship>)
+
+
+	// Client-only
+	component(Interpolated, interpolateds): Interpolated
+
+	entity(ClientEntity<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
+		(
+			body,
+			visual,
+			Interpolated::new(current_time)
+		)
+	}
+
+	world(ClientWorld<ClientEntity>)
 )
