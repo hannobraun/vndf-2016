@@ -1,3 +1,4 @@
+use std::gc::Gc;
 use syntax::ast;
 use syntax::ext::base::ExtCtxt;
 use syntax::parse;
@@ -69,7 +70,7 @@ impl Directive {
 pub struct Component {
 	pub name      : ast::Ident,
 	pub collection: ast::Ident,
-	pub ty        : @ast::Ty,
+	pub ty        : Gc<ast::Ty>,
 }
 
 impl Component {
@@ -98,7 +99,7 @@ pub struct Entity {
 	pub name      : ast::Ident,
 	pub components: Vec<ast::Ident>,
 	pub args      : Vec<ast::Arg>,
-	pub init_block: @ast::Block,
+	pub init_block: Gc<ast::Block>,
 }
 
 impl Entity {

@@ -1,5 +1,9 @@
 use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
+use std::gc::{
+	Gc,
+	GC
+};
 use syntax::ast;
 use syntax::codemap;
 use syntax::ext::base::ExtCtxt;
@@ -10,7 +14,7 @@ use syntax::parse::token::InternedString;
 use parse;
 
 
-pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<@ast::Item> {
+pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<Gc<ast::Item>> {
 	let components: HashMap<String, Component> = ecs.components
 		.iter()
 		.map(|component| {
@@ -212,7 +216,7 @@ impl Entity {
 }
 
 
-struct World(Vec<@ast::Item>);
+struct World(Vec<Gc<ast::Item>>);
 
 impl World {
 	fn generate(
@@ -327,7 +331,7 @@ impl World {
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
 		items.push(implementation.unwrap());
-		items.push(box (GC) entity);
+		items.push(box(GC) entity);
 
 		World(items)
 	}

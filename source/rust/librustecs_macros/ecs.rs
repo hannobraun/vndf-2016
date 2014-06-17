@@ -1,3 +1,4 @@
+use std::gc::Gc;
 use syntax::ast;
 use syntax::codemap;
 use syntax::ext::base::{
@@ -29,11 +30,11 @@ pub fn expand(
 
 
 struct MacroResult {
-	items: Vec<@ast::Item>
+	items: Vec<Gc<ast::Item>>
 }
 
 impl MacResult for MacroResult {
-	fn make_items(&self) -> Option<SmallVector<@ast::Item>> {
+	fn make_items(&self) -> Option<SmallVector<Gc<ast::Item>>> {
 		Some(SmallVector::many(self.items.clone()))
 	}
 }
