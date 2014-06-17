@@ -30,7 +30,7 @@ pub fn parse() -> Option<Args> {
 	let matches = match getopts(args_as_strs.as_slice(), options) {
 		Ok(matches) => matches,
 		Err(fail)   => {
-			print!("{}\n", fail.to_err_msg());
+			print!("{}\n", fail);
 			print!("{}", usage);
 
 			return None
