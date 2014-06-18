@@ -40,7 +40,7 @@ mod test {
 	use super::receive;
 
 	#[test]
-	fn it_should_create_added_entities() {
+	fn it_should_import_added_entities() {
 		let mut world = ClientWorld::new();
 
 		let entity = SharedWorldEntity {
