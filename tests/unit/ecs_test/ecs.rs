@@ -146,7 +146,7 @@ fn it_should_import_single_entities() {
 	assert_eq!(&Position(8.0, 12.0), world.positions.get(&5));
 	assert_eq!(&RenderAsMissile    , world.visuals.get(&5));
 
-	let ship_id = world.import_ship(7, 100);
+	world.import_ship(7, 100);
 
 	assert_eq!(2, world.positions.len());
 	assert_eq!(2, world.visuals.len());
