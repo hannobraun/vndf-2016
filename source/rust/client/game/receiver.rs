@@ -44,7 +44,7 @@ mod test {
 		let mut world = ClientWorld::new();
 
 		let entity = SharedWorldEntity {
-			id    : 0,
+			id    : 5,
 			visual: Some(ShowAsMissile),
 			body  : Some(Body::default()),
 		};
@@ -61,6 +61,6 @@ mod test {
 		let entities = world.to_entities();
 
 		assert_eq!(1, entities.len());
-		assert!(entities.get(0).id == 0);
+		assert!(entities.get(0).id == 5);
 	}
 }
