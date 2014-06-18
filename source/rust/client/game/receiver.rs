@@ -32,6 +32,10 @@ pub fn receive(world: &mut ClientWorld, perception: Perception) {
 		world.interpolateds.get_mut(&entity.id).current      = entity.body;
 		world.interpolateds.get_mut(&entity.id).current_time = current_time;
 	}
+
+	for entity in perception.removed.iter() {
+		world.destroy_entity(entity.id);
+	}
 }
 
 
@@ -102,5 +106,32 @@ mod test {
 			entity.body.unwrap(),
 			world.interpolateds.get(&entity_id).current.unwrap()
 		);
+	}
+
+	#[test]
+	fn it_should_destroy_removed_entities() {
+		let entity_id = 5;
+
+		let mut world = ClientWorld::new();
+		world.import_cliententity(entity_id, Body::default(), ShowAsMissile, 0);
+
+		let entity = SharedWorldEntity {
+			id    : entity_id,
+			visual: Some(ShowAsMissile),
+			body  : Some(Body::default()),
+		};
+
+		let perception = Perception {
+			self_id: 0,
+			added  : vec!(),
+			removed: vec!(entity),
+			updated: vec!(),
+		};
+
+		receive(&mut world, perception);
+
+		assert_eq!(0, world.bodies.len());
+		assert_eq!(0, world.visuals.len());
+		assert_eq!(0, world.interpolateds.len());
 	}
 }
