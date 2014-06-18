@@ -11,4 +11,9 @@ LIB_ARGS=$2
 OUTPUT_ARGS=$3
 SOURCE_FILE=$4
 
-$RUSTC --color=always --debuginfo 2 $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE
+RUST_TEST=/tmp/rust-test-$RANDOM
+mkdir -p $(dirname $RUST_TEST)
+
+$RUSTC --color=always --debuginfo 2 $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE &&
+$RUSTC --color=always --debuginfo 2 --allow dead_code $LIB_ARGS --test -o $RUST_TEST $SOURCE_FILE &&
+$RUST_TEST
