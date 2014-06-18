@@ -299,10 +299,19 @@ impl World {
 			}
 		);
 
+		let entity_impl = quote_item!(&*context,
+			impl ::rustecs::Entity for $entity_name {
+				fn id(&self) -> ::rustecs::EntityId {
+					self.id
+				}
+			}
+		);
+
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
 		items.push(implementation.unwrap());
 		items.push(entity_struct.unwrap());
+		items.push(entity_impl.unwrap());
 
 		World(items)
 	}
