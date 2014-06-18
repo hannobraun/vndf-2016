@@ -1,15 +1,10 @@
 use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
-use std::gc::{
-	Gc,
-	GC
-};
+use std::gc::Gc;
 use syntax::ast;
-use syntax::codemap;
 use syntax::ext::base::ExtCtxt;
 use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
-use syntax::parse::token::InternedString;
 
 use parse;
 
@@ -296,42 +291,18 @@ impl World {
 			}
 		);
 
-		let mut entity = (*(quote_item!(&*context,
+		let entity = quote_item!(&*context,
+			#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 			pub struct $entity_name {
 				pub id: ::rustecs::EntityId,
 				$entity_decls
 			}
-		).unwrap())).clone();
-
-		// This is a really ugly workaround. It can be removed as soon as this
-		// PR lands: https://github.com/mozilla/rust/pull/14860
-		entity.attrs.push(
-			context.attribute(
-				codemap::DUMMY_SP,
-				context.meta_list(
-					codemap::DUMMY_SP,
-					InternedString::new("deriving"),
-					vec!(
-						context.meta_word(
-							codemap::DUMMY_SP,
-							InternedString::new("PartialEq")),
-						context.meta_word(
-							codemap::DUMMY_SP,
-							InternedString::new("Show")),
-						context.meta_word(
-							codemap::DUMMY_SP,
-							InternedString::new("Decodable")),
-						context.meta_word(
-							codemap::DUMMY_SP,
-							InternedString::new("Encodable")),
-						context.meta_word(
-							codemap::DUMMY_SP,
-							InternedString::new("Clone"))))));
+		);
 
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
 		items.push(implementation.unwrap());
-		items.push(box(GC) entity);
+		items.push(entity.unwrap());
 
 		World(items)
 	}
