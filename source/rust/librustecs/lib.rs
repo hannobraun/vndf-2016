@@ -9,11 +9,11 @@ pub type EntityId      = u32;
 pub type Components<T> = HashMap<EntityId, T>;
 
 
-trait Entity {
+pub trait Entity {
 	fn id(&self) -> EntityId;
 }
 
-trait World<E: Entity> {
+pub trait World<E: Entity> {
 	fn new() -> Self;
 
 	fn from_entities(entities: Vec<E>) -> Self;
