@@ -283,6 +283,11 @@ impl World {
 
 				$create_fns
 
+				pub fn import_entity(&mut self, entity: $entity_name) {
+					let world = self;
+					$imports
+				}
+
 				pub fn destroy_entity(&mut self, id: ::rustecs::EntityId) {
 					self.entities.remove(&id);
 
