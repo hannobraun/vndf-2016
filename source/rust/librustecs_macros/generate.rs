@@ -115,6 +115,7 @@ pub struct Entity {
 	name      : ast::Ident,
 	components: HashMap<String, Component>,
 	create_fn : Vec<ast::TokenTree>,
+	import_fn : Vec<ast::TokenTree>,
 }
 
 impl Entity {
@@ -143,10 +144,17 @@ impl Entity {
 			&entity_components,
 			&ordered_components);
 
+		let import_fn = Entity::import_fn(
+			context,
+			entity,
+			&entity_components,
+			&ordered_components);
+
 		Entity {
 			name      : entity.name,
 			components: entity_components,
 			create_fn : create_fn,
+			import_fn : import_fn,
 		}
 	}
 
@@ -208,6 +216,66 @@ impl Entity {
 			}
 		)
 	}
+
+	fn import_fn(
+		context           : &ExtCtxt,
+		entity            : &parse::Entity,
+		components        : &HashMap<String, Component>,
+		ordered_components: &Vec<String>
+	) -> Vec<ast::TokenTree> {
+		let name = ast::Ident::new(token::intern(
+			"import_"
+				.to_str()
+				.append(ident_to_lower(entity.name).as_slice())
+				.as_slice()));
+
+		let mut args = Vec::new();
+		for (i, arg) in entity.args.iter().enumerate() {
+			if i + 1 < entity.args.len() {
+				args.push_all(quote_tokens!(&*context, $arg,).as_slice());
+			}
+			else {
+				args.push_all(quote_tokens!(&*context, $arg).as_slice());
+			}
+		}
+
+		let mut component_names = Vec::new();
+		for (i, name) in ordered_components.iter().enumerate() {
+			let component = components.get(name);
+			let var_name  = component.var_name;
+
+			if i + 1 < components.len() {
+				component_names.push_all(
+					quote_tokens!(&*context, $var_name,).as_slice());
+			}
+			else {
+				component_names.push_all(
+					quote_tokens!(&*context, $var_name).as_slice());
+			}
+		}
+
+		let init_block = entity.init_block;
+
+		let mut inserts = Vec::new();
+		for (_, component) in components.iter() {
+			inserts.push_all(component.insert.as_slice());
+		}
+
+		quote_tokens!(&*context,
+			pub fn $name(&mut self, id: ::rustecs::EntityId, $args) -> ::rustecs::EntityId {
+				if id >= self.next_id {
+					self.next_id = id + 1;
+				}
+
+				let ($component_names) = $init_block;
+
+				self.entities.insert(id);
+				$inserts
+
+				id
+			}
+		)
+	}
 }
 
 
@@ -227,6 +295,7 @@ impl World {
 		let inits        = World::component_inits(&components);
 		let imports      = World::imports(&components);
 		let create_fns   = World::create_fns(&entities);
+		let import_fns   = World::import_fns(&entities);
 		let removes      = World::removes(&components);
 		let entity_name  = World::entity_name(world.name);
 		let entity_decls = World::entity_decls(&components);
@@ -282,6 +351,8 @@ impl World {
 				}
 
 				$create_fns
+
+				$import_fns
 
 				pub fn import_entity(&mut self, entity: $entity_name) {
 					let world = self;
@@ -391,6 +462,16 @@ impl World {
 
 		for entity in entities.iter() {
 			tokens.push_all(entity.create_fn.as_slice());
+		}
+
+		tokens
+	}
+
+	fn import_fns(entities: &Vec<Entity>) -> Vec<ast::TokenTree> {
+		let mut tokens = Vec::new();
+
+		for entity in entities.iter() {
+			tokens.push_all(entity.import_fn.as_slice());
 		}
 
 		tokens
