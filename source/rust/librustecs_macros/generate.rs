@@ -270,14 +270,6 @@ impl World {
 					world
 				}
 
-				$create_fns
-
-				pub fn destroy_entity(&mut self, id: ::rustecs::EntityId) {
-					self.entities.remove(&id);
-
-					$removes
-				}
-
 				pub fn to_entities(&self) -> Vec<$entity_name> {
 					self.entities
 						.iter()
@@ -287,6 +279,14 @@ impl World {
 								$entity_init
 							})
 						.collect()
+				}
+
+				$create_fns
+
+				pub fn destroy_entity(&mut self, id: ::rustecs::EntityId) {
+					self.entities.remove(&id);
+
+					$removes
 				}
 			}
 		);
