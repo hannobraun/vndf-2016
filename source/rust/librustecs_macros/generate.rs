@@ -291,7 +291,7 @@ impl World {
 			}
 		);
 
-		let entity = quote_item!(&*context,
+		let entity_struct = quote_item!(&*context,
 			#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 			pub struct $entity_name {
 				pub id: ::rustecs::EntityId,
@@ -302,7 +302,7 @@ impl World {
 		let mut items = Vec::new();
 		items.push(structure.unwrap());
 		items.push(implementation.unwrap());
-		items.push(entity.unwrap());
+		items.push(entity_struct.unwrap());
 
 		World(items)
 	}
