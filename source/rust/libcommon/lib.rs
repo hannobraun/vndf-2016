@@ -1,6 +1,7 @@
 #![crate_id   = "common"]
 #![crate_type = "rlib"]
 
+#![feature(macro_rules)]
 #![feature(phase)]
 
 

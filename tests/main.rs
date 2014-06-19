@@ -1,4 +1,3 @@
-#![feature(macro_rules)]
 #![feature(phase)]
 
 
@@ -9,6 +8,7 @@ extern crate time;
 extern crate rustecs;
 #[phase(plugin)]
 extern crate rustecs_macros;
+#[phase(plugin, link)]
 extern crate common;
 
 

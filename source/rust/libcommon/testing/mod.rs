@@ -4,6 +4,7 @@ pub use self::specific::rc::client::Client;
 pub use self::specific::rc::gameservice::GameService;
 
 mod generic {
+	pub mod macros;
 	pub mod process;
 }
 mod specific {
