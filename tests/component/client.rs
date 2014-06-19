@@ -22,7 +22,10 @@ macro_rules! while_do(
 			$action
 
 			if ::time::precise_time_ns() - start_time > 1000000000 {
-				fail!("Condition \"$condition\" still true after one second");
+				fail!(
+					"Condition \"{}\" still true after one second",
+					stringify!($condition)
+				);
 			}
 		}
 	})
