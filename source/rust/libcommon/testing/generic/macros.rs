@@ -1,7 +1,7 @@
 #![macro_escape]
 
 #[macro_export]
-macro_rules! while_do(
+macro_rules! wait_while(
 	($condition:expr $action:block) => ({
 		let start_time = ::time::precise_time_ns();
 		while $condition {
