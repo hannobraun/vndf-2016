@@ -302,6 +302,7 @@ impl World {
 		let entity_init  = World::entity_init(&components);
 
 		let structure = quote_item!(&*context,
+			#[deriving(Show)]
 			pub struct $name {
 				entities: ::std::collections::HashSet<::rustecs::EntityId>,
 				next_id : ::rustecs::EntityId,
