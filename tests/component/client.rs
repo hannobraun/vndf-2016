@@ -87,26 +87,29 @@ fn the_camera_should_follow_the_ship() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let entities = vec!(
-		SharedWorldEntity {
-			id: 0,
-			body: Some(Body {
-				position: pos_1,
-				velocity: Vec2(10.0, 0.0),
-				attitude: Radians(0.0)
-			}),
-			visual: Some(ShowAsShip)
-		}
-	);
+	let mut entity = SharedWorldEntity {
+		id: 0,
+		body: Some(Body {
+			position: pos_1,
+			velocity: Vec2(10.0, 0.0),
+			attitude: Radians(0.0)
+		}),
+		visual: Some(ShowAsShip)
+	};
 
 	let perception_1 = Perception::new(
 		|entity| entity.id,
 		0u32,
-		entities.clone(),
-		entities.clone()
+		vec!(entity),
+		vec!(entity)
 	);
-	let mut perception_2 = perception_1.clone();
-	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
+	entity.body.get_mut_ref().position = pos_2;
+	let perception_2 = Perception::new(
+		|entity| entity.id,
+		0u32,
+		vec!(entity),
+		vec!(entity)
+	);
 
 	game_service.send_perception(&perception_1);
 	let mut frame_1 = client.frame();
