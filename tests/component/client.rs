@@ -41,7 +41,12 @@ fn it_should_interpolate_between_perceptions() {
 		vec!(entity),
 		vec!(entity)
 	);
-	let mut perception_2 = perception_1.clone();
+	let mut perception_2 = Perception::new(
+		|entity| entity.id,
+		0u32,
+		vec!(entity),
+		vec!(entity)
+	);
 	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
 
 	game_service.send_perception(&perception_1);
