@@ -25,7 +25,7 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_1 = Vec2::zero();
 	let pos_2 = Vec2(10.0, 0.0);
 
-	let entity = SharedWorldEntity {
+	let mut entity = SharedWorldEntity {
 		id: 0,
 		body: Some(Body {
 			position: pos_1,
@@ -41,13 +41,13 @@ fn it_should_interpolate_between_perceptions() {
 		vec!(entity),
 		vec!(entity)
 	);
-	let mut perception_2 = Perception::new(
+	entity.body.get_mut_ref().position = pos_2;
+	let perception_2 = Perception::new(
 		|entity| entity.id,
 		0u32,
 		vec!(entity),
 		vec!(entity)
 	);
-	perception_2.updated.get_mut(0).body.get_mut_ref().position = pos_2;
 
 	game_service.send_perception(&perception_1);
 	game_service.send_perception(&perception_2);
