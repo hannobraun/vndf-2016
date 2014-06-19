@@ -11,9 +11,9 @@ fn it_should_render_all_connected_clients() {
 
 	let mut frame = client_1.frame();
 
-	while frame.ships.len() == 0 {
+	wait_while!(frame.ships.len() == 0 {
 		frame = client_1.frame();
-	}
+	});
 
 	assert_eq!(
 		1,
@@ -21,9 +21,9 @@ fn it_should_render_all_connected_clients() {
 
 	let mut client_2 = Client::start(game_service.port);
 
-	while frame.ships.len() == 1 {
+	wait_while!(frame.ships.len() == 1 {
 		frame = client_1.frame();
-	}
+	});
 
 	assert_eq!(
 		2,
@@ -31,9 +31,9 @@ fn it_should_render_all_connected_clients() {
 
 	client_2.stop();
 
-	while frame.ships.len() == 2 {
+	wait_while!(frame.ships.len() == 2 {
 		frame = client_1.frame();
-	}
+	});
 
 	assert_eq!(
 		1,
@@ -41,9 +41,9 @@ fn it_should_render_all_connected_clients() {
 
 	let mut client_3 = Client::start(game_service.port);
 
-	while frame.ships.len() == 1 {
+	wait_while!(frame.ships.len() == 1 {
 		frame = client_1.frame();
-	}
+	});
 
 	assert_eq!(
 		2,
