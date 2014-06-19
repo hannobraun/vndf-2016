@@ -76,7 +76,6 @@ fn it_should_interpolate_between_perceptions() {
 	assert!(frame_2.ships.get(0).position != pos_2);
 }
 
-
 #[test]
 fn the_camera_should_follow_the_ship() {
 	let mut game_service = MockGameService::start();
