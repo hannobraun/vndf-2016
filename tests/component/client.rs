@@ -15,6 +15,20 @@ use common::physics::util;
 use common::protocol::Perception;
 
 
+macro_rules! while_do(
+	($condition:expr $action:block) => ({
+		let start_time = ::time::precise_time_ns();
+		while $condition {
+			$action
+
+			if ::time::precise_time_ns() - start_time > 1000000000 {
+				fail!("Condition \"$condition\" still true after one second");
+			}
+		}
+	})
+)
+
+
 #[test]
 fn it_should_interpolate_between_perceptions() {
 	let mut game_service = MockGameService::start();
@@ -55,15 +69,15 @@ fn it_should_interpolate_between_perceptions() {
 	let mut frame_1 = client.frame();
 	let mut frame_2 = client.frame();
 
-	while frame_1.ships.len() == 0 {
+	while_do!(frame_1.ships.len() == 0 {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
-	}
+	});
 
-	while frame_1.ships.get(0).position == pos_1 {
+	while_do!(frame_1.ships.get(0).position == pos_1 {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
-	}
+	});
 
 	assert!(util::is_on_line(
 		(pos_1, pos_2),
@@ -116,10 +130,10 @@ fn the_camera_should_follow_the_ship() {
 	game_service.send_perception(&perception_2);
 	let mut frame_2 = client.frame();
 
-	while frame_2.camera == pos_1 {
+	while_do!(frame_2.camera == pos_1 {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
-	}
+	});
 
 	assert!(
 		util::is_on_line(

@@ -1,8 +1,10 @@
+#![feature(macro_rules)]
 #![feature(phase)]
 
 
 extern crate collections;
 extern crate serialize;
+extern crate time;
 
 extern crate rustecs;
 #[phase(plugin)]
