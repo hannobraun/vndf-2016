@@ -17,6 +17,7 @@ use common::physics::{
 	Vec2
 };
 
+use game::receiver::receive;
 use network::Network;
 
 
@@ -44,18 +45,7 @@ impl State {
 				interpolated.current  = None;
 			}
 
-			let current_time = time::precise_time_ns();
-			for entity in perception.updated.iter() {
-				let interpolated = self.world.interpolateds.find_or_insert(
-					entity.id,
-					Interpolated::new(current_time, entity.body)
-				);
-
-				interpolated.current      = entity.body;
-				interpolated.current_time = current_time;
-
-				self.world.visuals.insert(entity.id, entity.visual.unwrap());
-			}
+			receive(&mut self.world, perception);
 		});
 	}
 
