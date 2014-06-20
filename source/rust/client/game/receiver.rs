@@ -26,7 +26,6 @@ pub fn receive(world: &mut ClientWorld, perception: Perception) {
 	}
 
 	for entity in perception.updated.iter() {
-		*world.bodies.get_mut(&entity.id)  = entity.body.unwrap();
 		*world.visuals.get_mut(&entity.id) = entity.visual.unwrap();
 
 		world.interpolateds.get_mut(&entity.id).current      = entity.body;
