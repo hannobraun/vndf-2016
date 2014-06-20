@@ -48,7 +48,7 @@ impl State {
 			for entity in perception.updated.iter() {
 				let interpolated = self.world.interpolateds.find_or_insert(
 					entity.id,
-					Interpolated::new(current_time)
+					Interpolated::new(current_time, entity.body)
 				);
 
 				interpolated.current      = entity.body;

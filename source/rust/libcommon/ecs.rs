@@ -16,13 +16,13 @@ pub struct Interpolated {
 }
 
 impl Interpolated {
-	pub fn new(current_time: u64) -> Interpolated {
+	pub fn new(current_time: u64, body: Option<Body>) -> Interpolated {
 		Interpolated {
 			previous_time: current_time,
 			current_time : current_time,
 
-			previous: None,
-			current : None
+			previous: body,
+			current : body
 		}
 	}
 }
@@ -95,7 +95,7 @@ ecs!(
 		(
 			body,
 			visual,
-			Interpolated::new(current_time)
+			Interpolated::new(current_time, Some(body))
 		)
 	}
 
