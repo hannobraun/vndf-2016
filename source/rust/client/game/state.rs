@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use time;
 
 use rustecs::{
@@ -9,8 +8,6 @@ use rustecs::{
 use common::ecs::{
 	ClientWorld,
 	Interpolated,
-	ShowAsMissile,
-	ShowAsShip,
 };
 use common::physics::{
 	Body,
@@ -49,21 +46,8 @@ impl State {
 		});
 	}
 
-	pub fn interpolate(&mut self) -> (Vec<Body>, Vec<Body>) {
-		let ships = self.world.interpolateds
-			.iter()
-			.filter(|&(id, _)|
-				self.world.visuals.get(id) == &ShowAsShip)
-			.collect();
-		let missiles = self.world.interpolateds
-			.iter()
-			.filter(|&(id, _)|
-				self.world.visuals.get(id) == &ShowAsMissile)
-			.collect();
-
-		(
-			interpolate(&ships   , &mut self.world.bodies),
-			interpolate(&missiles, &mut self.world.bodies))
+	pub fn interpolate(&mut self) {
+		interpolate(&self.world.interpolateds, &mut self.world.bodies);
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -81,9 +65,9 @@ impl State {
 }
 
 
-fn interpolate(interpolateds: &HashMap<&EntityId, &Interpolated>, c_bodies: &mut Components<Body>) -> Vec<Body> {
+fn interpolate(interpolateds: &Components<Interpolated>, c_bodies: &mut Components<Body>) -> Vec<Body> {
 	let mut bodies = Vec::new();
-	for (&&id, &interpolated) in interpolateds.iter() {
+	for (&id, interpolated) in interpolateds.iter() {
 		let previous = match interpolated.previous {
 			Some(body) => body,
 			None       => continue
