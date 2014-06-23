@@ -22,8 +22,8 @@ use network::Network;
 
 
 pub struct State {
-	self_id: Option<EntityId>,
-	world  : ClientWorld,
+	pub self_id: Option<EntityId>,
+	pub world  : ClientWorld,
 }
 
 impl State {
