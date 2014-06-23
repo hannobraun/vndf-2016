@@ -1,18 +1,9 @@
 use time;
 
-use rustecs::{
-	Components,
-	EntityId
-};
+use rustecs::EntityId;
 
-use common::ecs::{
-	ClientWorld,
-	Interpolated,
-};
-use common::physics::{
-	Body,
-	Vec2
-};
+use common::ecs::ClientWorld;
+use common::physics::Vec2;
 
 use game::receiver::receive;
 use network::Network;
@@ -47,7 +38,34 @@ impl State {
 	}
 
 	pub fn interpolate(&mut self) {
-		interpolate(&self.world.interpolateds, &mut self.world.bodies);
+		for (&id, interpolated) in self.world.interpolateds.iter() {
+			let previous = match interpolated.previous {
+				Some(body) => body,
+				None       => continue
+			};
+			let current = match interpolated.current {
+				Some(body) => body,
+				None       => continue
+			};
+
+			let i = {
+				let diff =
+					(interpolated.current_time - interpolated.previous_time) as f64;
+				if diff <= 0.0 {
+					0.0
+				}
+				else {
+					(time::precise_time_ns() - interpolated.current_time) as f64 / diff
+				}
+			};
+
+			let mut body = current.clone();
+
+			body.position =
+				previous.position + (current.position - previous.position) * i;
+
+			self.world.bodies.insert(id, body);
+		}
 	}
 
 	pub fn update_camera(&self, camera: &mut Vec2) {
@@ -62,40 +80,4 @@ impl State {
 			}
 		}
 	}
-}
-
-
-fn interpolate(interpolateds: &Components<Interpolated>, c_bodies: &mut Components<Body>) -> Vec<Body> {
-	let mut bodies = Vec::new();
-	for (&id, interpolated) in interpolateds.iter() {
-		let previous = match interpolated.previous {
-			Some(body) => body,
-			None       => continue
-		};
-		let current = match interpolated.current {
-			Some(body) => body,
-			None       => continue
-		};
-
-		let i = {
-			let diff =
-				(interpolated.current_time - interpolated.previous_time) as f64;
-			if diff <= 0.0 {
-				0.0
-			}
-			else {
-				(time::precise_time_ns() - interpolated.current_time) as f64 / diff
-			}
-		};
-
-		let mut body = current.clone();
-
-		body.position =
-			previous.position + (current.position - previous.position) * i;
-		bodies.push(body);
-
-		c_bodies.insert(id, body);
-	}
-
-	bodies
 }
