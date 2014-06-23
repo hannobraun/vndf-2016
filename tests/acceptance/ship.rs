@@ -14,9 +14,9 @@ fn it_should_change_direction_according_to_input() {
 
 	let mut frame = client.frame();
 
-	while frame.ships.len() == 0 {
+	wait_while!(frame.ships.len() == 0 {
 		frame = client.frame();
-	}
+	})
 
 	let velocity     = frame.ships.get(0).velocity;
 	let new_velocity = velocity * -1.0;
@@ -26,9 +26,9 @@ fn it_should_change_direction_according_to_input() {
 	input.attitude = new_attitude;
 	client.input(input);
 
-	while frame.ships.get(0).velocity == velocity {
+	wait_while!(frame.ships.get(0).velocity == velocity {
 		frame = client.frame();
-	}
+	})
 
 	assert_eq!(
 		new_velocity.round(16),
@@ -42,17 +42,17 @@ fn it_should_fire_a_missile() {
 
 	let mut frame = client.frame();
 
-	while frame.ships.len() == 0 {
+	wait_while!(frame.ships.len() == 0 {
 		frame = client.frame();
-	}
+	})
 
 	let mut input = Input::default();
 	input.missile = 1;
 	client.input(input);
 
-	while frame.missiles.len() == 0 {
+	wait_while!(frame.missiles.len() == 0 {
 		frame = client.frame();
-	}
+	})
 
 	let distance =
 		(frame.ships.get(0).position - frame.missiles.get(0).position).mag();
