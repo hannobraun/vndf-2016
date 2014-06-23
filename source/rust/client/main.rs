@@ -11,16 +11,18 @@ extern crate rustecs;
 extern crate common;
 
 
+use common::ecs::{
+	ClientWorld,
+	ShowAsMissile,
+	ShowAsShip,
+};
 use common::io::{
 	Frame,
 	Input,
 	InputHandler,
 	Renderer
 };
-use common::physics::{
-	Body,
-	Vec2
-};
+use common::physics::Vec2;
 
 use inputsender::InputSender;
 use network::Network;
@@ -70,15 +72,30 @@ fn main() {
 
 		input_sender.update(input, &mut network);
 
-		let (ships, missiles) = game_state.interpolate();
+		game_state.interpolate();
 
-		let frame = make_frame(input, ships, missiles, camera);
+		let frame = make_frame(input, camera, &game_state.world);
 
 		renderer.render(&frame);
 	}
 }
 
-fn make_frame(input: Input, ships: Vec<Body>, missiles: Vec<Body>, camera: Vec2) -> Frame {
+fn make_frame(input: Input, camera: Vec2, world: &ClientWorld) -> Frame {
+	let ships = world.bodies
+		.iter()
+		.filter(|&(id, _)|
+			world.visuals.get(id) == &ShowAsShip)
+		.map(|(_, &body)|
+			body)
+		.collect();
+	let missiles = world.bodies
+		.iter()
+		.filter(|&(id, _)|
+			world.visuals.get(id) == &ShowAsMissile)
+		.map(|(_, &body)|
+			body)
+		.collect();
+
 	Frame {
 		input   : input,
 		camera  : camera,
