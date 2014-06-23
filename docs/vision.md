@@ -1,6 +1,6 @@
 # Vision
 
-A multiplayer game about freedom, adventure and having to make hard choices.
+A multiplayer game about freedom, adventure and hard choices.
 
 
 ## Inspirations
@@ -25,3 +25,8 @@ A multiplayer game about freedom, adventure and having to make hard choices.
 * A sense of adventure, accompanied by danger. Forward movement, forced upon the
   player by the constraints of the environment. Think of what FTL does, compared
   to the typical sandbox game (Minecraft, Starbound).
+
+
+## Elements
+
+* Realistic orbital mechanics.
