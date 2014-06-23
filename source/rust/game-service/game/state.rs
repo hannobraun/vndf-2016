@@ -158,6 +158,6 @@ impl State {
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	body.velocity = body.attitude.to_vec() * 30.0;
+	body.velocity = body.attitude.to_vec() * body.velocity.mag();
 	body.position = body.position + body.velocity * delta_time_in_s;
 }

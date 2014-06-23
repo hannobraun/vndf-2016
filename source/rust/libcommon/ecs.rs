@@ -63,7 +63,7 @@ ecs!(
 	entity(Missile<Body, Visual>): |position: Vec2, attitude: Radians| {
 		let body = Body {
 			position: position,
-			velocity: Vec2::zero(),
+			velocity: Vec2(60.0, 0.0),
 			attitude: attitude
 		};
 
@@ -72,7 +72,7 @@ ecs!(
 	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
 		let body = Body {
 			position: Vec2::zero(),
-			velocity: Vec2::zero(),
+			velocity: Vec2(30.0, 0.0),
 			attitude: Radians(0.0)
 		};
 
