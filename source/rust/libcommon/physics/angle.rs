@@ -19,7 +19,7 @@ impl Radians {
 			this.sin())
 	}
 
-	pub fn round(&self, precision_in_bits: u8) -> Radians {
+	pub fn round(&self, precision_in_bits: uint) -> Radians {
 		let &Radians(this) = self;
 		let factor = (1 << precision_in_bits) as f64;
 		Radians((this * factor).floor() / factor)

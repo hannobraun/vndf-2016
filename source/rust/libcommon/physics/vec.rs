@@ -43,7 +43,7 @@ impl Vec2 {
 		self * (1.0 / self.mag())
 	}
 
-	pub fn round(&self, precision_in_bits: u8) -> Vec2 {
+	pub fn round(&self, precision_in_bits: uint) -> Vec2 {
 		let &Vec2(x, y) = self;
 		let factor = (1 << precision_in_bits) as f64;
 		Vec2(

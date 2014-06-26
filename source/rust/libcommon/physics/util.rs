@@ -1,7 +1,7 @@
 use physics::Vec2;
 
 
-pub fn is_on_line(line: (Vec2, Vec2), point: Vec2, precision: u8) -> bool {
+pub fn is_on_line(line: (Vec2, Vec2), point: Vec2, precision: uint) -> bool {
 	let (Vec2(x1, y1), Vec2(x2, y2)) = line;
 	let Vec2(px, py) = point;
 

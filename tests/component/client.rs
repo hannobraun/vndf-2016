@@ -60,7 +60,7 @@ fn it_should_interpolate_between_perceptions() {
 		frame_2 = client.frame();
 	});
 
-	wait_while!(frame_1.ships.get(0).position == pos_1 {
+	wait_while!(frame_1.ships.get(0).position == pos_1 && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});
@@ -116,7 +116,7 @@ fn the_camera_should_follow_the_ship() {
 	game_service.send_perception(&perception_2);
 	let mut frame_2 = client.frame();
 
-	wait_while!(frame_2.camera == pos_1 {
+	wait_while!(frame_2.camera == pos_1 && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});

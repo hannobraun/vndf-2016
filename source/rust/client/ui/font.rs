@@ -39,7 +39,7 @@ impl Font {
 		let font_face  = init_font_face();
 		let mut glyphs = HashMap::new();
 
-		for n in range(32, 127) {
+		for n in range(32u, 127) {
 			let c = char::from_u32(n as u32).unwrap();
 
 			let glyph_slot = load_glyph_slot(font_face, c);

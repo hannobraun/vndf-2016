@@ -26,7 +26,7 @@ fn it_should_change_direction_according_to_input() {
 	input.attitude = new_attitude;
 	client.input(input);
 
-	wait_while!(frame.ships.get(0).velocity == velocity {
+	wait_while!(frame.ships.get(0).velocity == velocity && true {
 		frame = client.frame();
 	})
 
