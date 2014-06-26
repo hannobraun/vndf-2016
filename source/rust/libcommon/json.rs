@@ -8,11 +8,7 @@ use serialize::json::{
 	Decoder,
 	DecoderError
 };
-use std::io::{
-	IoError,
-	MemWriter
-};
-use std::str;
+use std::io::IoError;
 
 
 pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, String> {
@@ -34,16 +30,5 @@ pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, Stri
 }
 
 pub fn to_json<'a, T: Encodable<Encoder<'a>, IoError>>(object: T) -> String {
-	let mut m = MemWriter::new();
-	{
-		let mut encoder = Encoder::new(&mut m as &mut Writer);
-		match object.encode(&mut encoder) {
-			Ok(()) => (),
-			Err(e) => fail!("JSON encoding error: {}", e)
-		};
-	}
-
-	str::from_utf8(m.get_ref())
-		.expect("expected UTF-8 string")
-		.to_str()
+	Encoder::str_encode(&object)
 }
