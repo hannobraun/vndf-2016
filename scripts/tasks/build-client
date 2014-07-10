@@ -13,7 +13,7 @@ if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
 	echo "BUILDING rust-freetype"
     ./scripts/tasks/build-rust-freetype
 fi
-if [ ! -f $OUTPUT_LIB_RUST/libgl-* ]; then
+if [ ! -f $OUTPUT_LIB_RUST/libgl.rlib ]; then
 	echo "BUILDING gl-rs"
     ./scripts/tasks/build-gl-rs
 fi

@@ -2,6 +2,8 @@
 
 source project.conf
 
+export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+
 RUSTC_ARGS="-L $(pwd)/$OUTPUT_LIB"
 
 (cd vendor/glfw-rs;

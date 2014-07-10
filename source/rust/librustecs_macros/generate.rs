@@ -96,7 +96,7 @@ impl Component {
 		);
 
 		Component {
-			name       : token::get_ident(component.name).to_str(),
+			name       : token::get_ident(component.name).to_string(),
 			var_name   : var_name,
 			decl       : decl,
 			init       : init,
@@ -127,7 +127,7 @@ impl Entity {
 		let entity_components = entity.components
 			.iter()
 			.map(|&ident| {
-				let name = token::get_ident(ident).to_str();
+				let name = token::get_ident(ident).to_string();
 				(name.clone(), (*all_components.get(&name)).clone())
 			})
 			.collect();
@@ -135,7 +135,7 @@ impl Entity {
 		let ordered_components: Vec<String> = entity.components
 			.iter()
 			.map(|&ident|
-				token::get_ident(ident).to_str())
+				token::get_ident(ident).to_string())
 			.collect();
 
 		let create_fn = Entity::create_fn(
@@ -166,7 +166,7 @@ impl Entity {
 	) -> Vec<ast::TokenTree> {
 		let name = ast::Ident::new(token::intern(
 			"create_"
-				.to_str()
+				.to_string()
 				.append(ident_to_lower(entity.name).as_slice())
 				.as_slice()));
 
@@ -225,7 +225,7 @@ impl Entity {
 	) -> Vec<ast::TokenTree> {
 		let name = ast::Ident::new(token::intern(
 			"import_"
-				.to_str()
+				.to_string()
 				.append(ident_to_lower(entity.name).as_slice())
 				.as_slice()));
 
@@ -490,7 +490,7 @@ impl World {
 
 	fn entity_name(world_name: ast::Ident) -> ast::Ident {
 		let name = token::get_ident(world_name)
-			.to_str()
+			.to_string()
 			.append("Entity".as_slice());
 
 		ast::Ident::new(
@@ -525,7 +525,7 @@ impl World {
 
 fn ident_to_lower(ident: ast::Ident) -> String {
 	token::get_ident(ident)
-		.to_str()
+		.to_string()
 		.as_slice()
 		.to_ascii_lower()
 }

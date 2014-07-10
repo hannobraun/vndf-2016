@@ -66,14 +66,14 @@ impl Font {
 
 fn init_font_face() -> FT_Face {
 	unsafe {
-		let freetype: FT_Library = ptr::null();
-		let init_error = FT_Init_FreeType(&freetype);
+		let mut freetype: FT_Library = ptr::mut_null();
+		let init_error = FT_Init_FreeType(&mut freetype);
 		assert!(init_error == 0);
 
-		let mut font_face: FT_Face = ptr::null();
+		let mut font_face: FT_Face = ptr::mut_null();
 		let face_error = FT_New_Face(
 				freetype,
-				"fonts/amble/Amble-Regular.ttf".to_c_str().unwrap(),
+				"fonts/amble/Amble-Regular.ttf".to_c_str().as_mut_ptr(),
 				0,
 				&mut font_face);
 		assert!(face_error == 0);
@@ -113,7 +113,7 @@ fn make_texture(glyph_slot: FT_GlyphSlot) -> Texture {
 
 		Texture::new_alpha(
 			&vec::raw::from_buf(
-				bitmap.buffer,
+				bitmap.buffer as *const u8,
 				(bitmap.width * bitmap.rows) as uint),
 			Vec2(
 				bitmap.width as f64,
@@ -126,7 +126,7 @@ fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 		let Vec2(_, texture_height) = texture.size;
 
 		Glyph {
-			texture_id: "char:".to_str().append(str::from_char(c).as_slice()),
+			texture_id: "char:".to_string().append(str::from_char(c).as_slice()),
 
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,

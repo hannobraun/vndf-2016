@@ -2,6 +2,8 @@
 
 source project.conf
 
+export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+
 (cd vendor/rust-stb-image; ./configure && make clean && make RUSTC=$RUSTC)
 cp vendor/rust-stb-image/*.rlib $OUTPUT_LIB_RUST
 cp vendor/rust-stb-image/libstb-image.a $OUTPUT_LIB

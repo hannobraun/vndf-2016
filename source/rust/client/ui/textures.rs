@@ -44,7 +44,7 @@ impl Textures {
 	}
 
 	pub fn get<'a>(&'a self, key: &str) -> &'a Texture {
-		match self.map.find(&key.to_str()) {
+		match self.map.find(&key.to_string()) {
 			Some(texture) => texture,
 			None          => exit(format!("Texture not found: {}", key).as_slice())
 		}
@@ -120,7 +120,7 @@ fn create_texture(
 			0,
 			format,
 			gl::UNSIGNED_BYTE,
-			data.as_ptr() as *libc::c_void);
+			data.as_ptr() as *const libc::c_void);
 	}
 
 	assert_eq!(gl::GetError(), gl::NO_ERROR);

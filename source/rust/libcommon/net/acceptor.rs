@@ -47,27 +47,26 @@ impl Acceptor {
 
 
 fn init_socket(port: &str) -> IoResult<c_int> {
-	let hints = ffi::addrinfo {
+	let mut hints = ffi::addrinfo {
 		ai_flags    : ffi::AI_PASSIVE,
 		ai_family   : ffi::AF_UNSPEC,
 		ai_socktype : ffi::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
-		ai_addr     : ptr::null(),
-		ai_canonname: ptr::null(),
-		ai_next     : ptr::null()
+		ai_addr     : ptr::mut_null(),
+		ai_canonname: ptr::mut_null(),
+		ai_next     : ptr::mut_null()
 	};
 
-	let servinfo: *ffi::addrinfo = ptr::null();
+	let mut servinfo: *mut ffi::addrinfo = ptr::mut_null();
 
 	unsafe {
-		let status = port.to_c_str().with_ref(|c_message| {
-			ffi::getaddrinfo(
-				ptr::null(),
-				c_message,
-				&hints,
-				&servinfo)
-		});
+		let status = ffi::getaddrinfo(
+			ptr::mut_null(),
+			port.to_c_str().as_mut_ptr(),
+			&mut hints,
+			&mut servinfo
+		);
 
 		if status != 0 {
 			return Err(IoError::last_error());
@@ -87,7 +86,7 @@ fn init_socket(port: &str) -> IoResult<c_int> {
 			socket_fd,
 			ffi::SOL_SOCKET,
 			ffi::SO_REUSEADDR,
-			&yes as *int as *libc::c_void,
+			&yes as *const int as *const libc::c_void,
 			mem::size_of::<c_int>() as u32);
 
 		if status == -1 {
@@ -96,7 +95,7 @@ fn init_socket(port: &str) -> IoResult<c_int> {
 
 		let status = ffi::bind(
 			socket_fd,
-			(*servinfo).ai_addr,
+			(*servinfo).ai_addr as *const ffi::sockaddr,
 			(*servinfo).ai_addrlen);
 
 		if status != 0 {

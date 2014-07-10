@@ -14,15 +14,15 @@ pub struct Args {
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		port      : "34481".to_str(),
+		port      : "34481".to_string(),
 		frame_time: 1000
 	};
 
-	let args_as_strs: Vec<String> = os::args().iter().map(|s| s.to_str()).collect();
+	let args_as_strs: Vec<String> = os::args().iter().map(|s| s.to_string()).collect();
 
 	let options = [
 		optopt("p", "port", "port to listen on", args.port.as_slice()),
-		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_str().as_slice())
+		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_string().as_slice())
 	];
 
 	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(), options);

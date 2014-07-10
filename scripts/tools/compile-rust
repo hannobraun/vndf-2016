@@ -14,6 +14,8 @@ SOURCE_FILE=$4
 RUST_TEST=/tmp/rust-test-$RANDOM
 mkdir -p $(dirname $RUST_TEST)
 
+export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+
 $RUSTC --color=always --debuginfo 2 $LIB_ARGS $OUTPUT_ARGS $SOURCE_FILE &&
 $RUSTC --color=always --debuginfo 2 --allow dead_code $LIB_ARGS --test -o $RUST_TEST $SOURCE_FILE &&
 $RUST_TEST

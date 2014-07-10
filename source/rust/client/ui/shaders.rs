@@ -42,26 +42,26 @@ impl Shaders {
 		create_program(
 			"ui-overlay",
 			[
-				*shaders.get(&"glsl/ui-overlay.vert".to_str()),
-				*shaders.get(&"glsl/text.frag".to_str())],
+				*shaders.get(&"glsl/ui-overlay.vert".to_string()),
+				*shaders.get(&"glsl/text.frag".to_string())],
 			&mut programs);
 		create_program(
 			"ship-text",
 			[
-				*shaders.get(&"glsl/ship.vert".to_str()),
-				*shaders.get(&"glsl/text.frag".to_str())],
+				*shaders.get(&"glsl/ship.vert".to_string()),
+				*shaders.get(&"glsl/text.frag".to_string())],
 			&mut programs);
 		create_program(
 			"ship-image",
 			[
-				*shaders.get(&"glsl/ship.vert".to_str()),
-				*shaders.get(&"glsl/image.frag".to_str())],
+				*shaders.get(&"glsl/ship.vert".to_string()),
+				*shaders.get(&"glsl/image.frag".to_string())],
 			&mut programs);
 		create_program(
 			"grid",
 			[
-				*shaders.get(&"glsl/grid.vert".to_str()),
-				*shaders.get(&"glsl/grid.frag".to_str())],
+				*shaders.get(&"glsl/grid.vert".to_string()),
+				*shaders.get(&"glsl/grid.frag".to_string())],
 			&mut programs);
 
 		Shaders {
@@ -70,7 +70,7 @@ impl Shaders {
 	}
 
 	pub fn program(&self, key: &str) -> Program {
-		match self.programs.find(&key.to_str()) {
+		match self.programs.find(&key.to_string()) {
 			Some(&program) => program,
 			None           => exit(format!("Shader program not found: {}", key).as_slice())
 		}
@@ -116,11 +116,11 @@ fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 		exit("");
 	}
 
-	shaders.insert(path.to_str(), shader);
+	shaders.insert(path.to_string(), shader);
 }
 
 fn load_shader(path: &str) -> String {
-	match File::open(&Path::new(path)).read_to_str() {
+	match File::open(&Path::new(path)).read_to_string() {
 		Ok(string) => string,
 		Err(error) => fail!("Error loading shader: {}", error)
 	}
@@ -132,5 +132,5 @@ fn create_program(id: &str, shaders: &[Shader], programs: &mut HashMap<String, P
 		gl::AttachShader(program, shader);
 	}
 	gl::LinkProgram(program);
-	programs.insert(id.to_str(), program);
+	programs.insert(id.to_string(), program);
 }

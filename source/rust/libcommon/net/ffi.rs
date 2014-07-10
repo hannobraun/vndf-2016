@@ -39,10 +39,10 @@ pub static MSG_NOSIGNAL : i32   = 0x4000;
 
 extern {
 	pub fn getaddrinfo(
-		name   : *c_char,
-		service: *c_char,
-		req    : *bsd44::addrinfo,
-		pai    : **bsd44::addrinfo) -> c_int;
+		name   : *mut c_char,
+		service: *mut c_char,
+		req    : *mut bsd44::addrinfo,
+		pai    : *mut *mut bsd44::addrinfo) -> c_int;
 
-	pub fn freeaddrinfo(res: *bsd44::addrinfo);
+	pub fn freeaddrinfo(res: *mut bsd44::addrinfo);
 }

@@ -37,7 +37,7 @@ impl EPoll {
 	}
 
 	pub fn add(&self, fd: c_int, events: u32) -> IoResult<()> {
-		let event = ffi::epoll_event {
+		let mut event = ffi::epoll_event {
 			events: events,
 			data  : fd as u64
 		};
@@ -47,7 +47,7 @@ impl EPoll {
 				self.epfd,
 				ffi::EPOLL_CTL_ADD,
 				fd,
-				&event)
+				&mut event)
 		};
 
 		if status == 0 {
@@ -62,7 +62,7 @@ impl EPoll {
 		let number_of_events = unsafe {
 			ffi::epoll_wait(
 				self.epfd,
-				self.event_buffer.as_ptr(),
+				self.event_buffer.as_mut_ptr(),
 				self.event_buffer.len() as i32,
 				timeout_in_ms as i32)
 		};

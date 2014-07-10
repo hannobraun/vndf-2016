@@ -17,8 +17,8 @@ pub struct Args {
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		address : "localhost".to_str(),
-		port    : "34481".to_str(),
+		address : "localhost".to_string(),
+		port    : "34481".to_string(),
 		period  : 1000,
 		headless: false
 	};
@@ -26,13 +26,13 @@ pub fn parse() -> Option<Args> {
 	let args_as_strs: Vec<String> =
 		os::args()
 		.iter()
-		.map(|s| s.to_str())
+		.map(|s| s.to_string())
 		.collect();
 
 	let options = [
 		optopt("a", "address", "server address"     , args.address.as_slice()),
 		optopt("p", "port"   , "server port"        , args.port.as_slice()),
-		optopt("f", "period" , "action period in ms", args.period.to_str().as_slice()),
+		optopt("f", "period" , "action period in ms", args.period.to_string().as_slice()),
 
 		optflag("h", "headless", "start in headless mode")
 	];

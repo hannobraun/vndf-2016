@@ -21,7 +21,7 @@ impl MockGameService {
 	pub fn start() -> MockGameService {
 		let port = random::<u16>() % 10000 + 40000;
 
-		let acceptor = match Acceptor::new(port.to_str().as_slice()) {
+		let acceptor = match Acceptor::new(port.to_string().as_slice()) {
 			Ok(acceptor) => acceptor,
 			Err(error)   => fail!("Error creating acceptor: {}", error)
 		};

@@ -45,7 +45,7 @@ impl Vec2 {
 
 	pub fn round(&self, precision_in_bits: uint) -> Vec2 {
 		let &Vec2(x, y) = self;
-		let factor = (1 << precision_in_bits) as f64;
+		let factor = (1u << precision_in_bits) as f64;
 		Vec2(
 			(x * factor).floor() / factor,
 			(y * factor).floor() / factor)

@@ -40,29 +40,26 @@ impl Connection {
 	}
 
 	pub fn connect(hostname: &str, port: &str) -> IoResult<Connection> {
-		let hints = ffi::addrinfo {
+		let mut hints = ffi::addrinfo {
 			ai_flags    : ffi::AI_PASSIVE,
 			ai_family   : ffi::AF_UNSPEC,
 			ai_socktype : ffi::SOCK_STREAM,
 			ai_protocol : 0,
 			ai_addrlen  : 0,
-			ai_addr     : ptr::null(),
-			ai_canonname: ptr::null(),
-			ai_next     : ptr::null()
+			ai_addr     : ptr::mut_null(),
+			ai_canonname: ptr::mut_null(),
+			ai_next     : ptr::mut_null()
 		};
 
-		let servinfo: *ffi::addrinfo = ptr::null();
+		let mut servinfo: *mut ffi::addrinfo = ptr::mut_null();
 
 		unsafe {
-			let mut status = hostname.to_c_str().with_ref(|c_hostname| {
-				port.to_c_str().with_ref(|c_port| {
-					ffi::getaddrinfo(
-						c_hostname,
-						c_port,
-						&hints,
-						&servinfo)
-				})
-			});
+			let mut status = ffi::getaddrinfo(
+				hostname.to_c_str().as_mut_ptr(),
+				port.to_c_str().as_mut_ptr(),
+				&mut hints,
+				&mut servinfo
+			);
 
 			if status != 0 {
 				return Err(IoError::last_error())
@@ -79,7 +76,7 @@ impl Connection {
 
 			status = ffi::connect(
 				fd,
-				(*servinfo).ai_addr,
+				(*servinfo).ai_addr as *const ffi::sockaddr,
 				(*servinfo).ai_addrlen);
 
 			if status != 0 {
@@ -163,7 +160,7 @@ impl Connection {
 
 			let message = unsafe {
 				str::raw::from_buf_len(
-					(self.in_buffer.as_ptr() as *u8).offset(size_of_length as int),
+					(self.in_buffer.as_ptr() as *const u8).offset(size_of_length as int),
 					(message_length - size_of_length as MessageLength) as uint)
 			};
 

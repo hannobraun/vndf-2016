@@ -173,7 +173,7 @@ impl Renderer {
 				2,
 				gl::FLOAT,
 				0,
-				vertices.as_ptr() as *gl::types::GLvoid);
+				vertices.as_ptr() as *const gl::types::GLvoid);
 		}
 
 		gl::DrawArrays(gl::LINES, 0, 30);
@@ -303,12 +303,12 @@ impl Renderer {
 				3,
 				gl::FLOAT,
 				0,
-				vertices.as_ptr() as *gl::types::GLvoid);
+				vertices.as_ptr() as *const gl::types::GLvoid);
 			gl::TexCoordPointer(
 				2,
 				gl::FLOAT,
 				0,
-				texture_coordinates.as_ptr() as *gl::types::GLvoid);
+				texture_coordinates.as_ptr() as *const gl::types::GLvoid);
 		}
 
 		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);

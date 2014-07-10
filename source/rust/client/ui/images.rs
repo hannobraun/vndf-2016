@@ -27,7 +27,7 @@ pub fn load(textures: &mut Textures) {
 				image.height as f64));
 
 		textures.add(
-			path.to_str(),
+			path.to_string(),
 			texture)
 	}
 }
