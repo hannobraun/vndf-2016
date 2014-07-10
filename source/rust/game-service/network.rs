@@ -75,7 +75,7 @@ impl Network {
 								None             => return
 							};
 
-							match connection.send_message(message.to_str().as_slice()) {
+							match connection.send_message(message.to_string().as_slice()) {
 								Ok(())     => (),
 								Err(error) => self.events.send(Close(id, error))
 							}

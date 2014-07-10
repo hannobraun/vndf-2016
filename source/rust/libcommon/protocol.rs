@@ -108,7 +108,7 @@ impl<
 		from_json(s)
 	}
 
-	pub fn to_str(&self) -> String {
+	pub fn to_string(&self) -> String {
 		to_json(self)
 	}
 }

@@ -45,7 +45,7 @@ impl MockGameService {
 		perception: &Perception<EntityId, SharedWorldEntity>
 	) {
 		for connection in self.clients.iter() {
-			match connection.send_message(perception.to_str().as_slice()) {
+			match connection.send_message(perception.to_string().as_slice()) {
 				Ok(())     => (),
 				Err(error) => fail!("Error sending perception: {}", error)
 			}
