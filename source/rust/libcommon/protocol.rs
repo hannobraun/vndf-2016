@@ -104,7 +104,7 @@ impl<
 		}
 	}
 
-	pub fn from_str(s: &str) -> Result<Perception<Id, T>, String> {
+	pub fn from_string(s: &str) -> Result<Perception<Id, T>, String> {
 		from_json(s)
 	}
 

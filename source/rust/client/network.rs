@@ -44,7 +44,7 @@ impl Network {
 		handler: |Perception<EntityId, SharedWorldEntity>|
 	) {
 		let result = self.conn.receive_messages(|message| {
-			let perception = match Perception::from_str(message.as_slice()) {
+			let perception = match Perception::from_string(message.as_slice()) {
 				Ok(perception) => perception,
 
 				Err(error) =>
