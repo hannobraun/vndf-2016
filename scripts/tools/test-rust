@@ -16,4 +16,4 @@ mkdir -p $(dirname $RUST_TEST)
 
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
 
-$RUSTC $LIB_ARGS --color=always --allow dead_code --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST
+$RUSTC $LIB_ARGS --color=always --allow dead_code --test -o $RUST_TEST $SOURCE_FILE && $RUST_TEST --color=always
