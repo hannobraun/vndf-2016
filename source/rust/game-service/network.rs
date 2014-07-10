@@ -115,7 +115,7 @@ impl Network {
 					};
 
 					let result = conn.receive_messages(|raw_message| {
-						let action = match Action::from_str(raw_message.as_slice()) {
+						let action = match Action::from_string(raw_message.as_slice()) {
 							Ok(message) => message,
 
 							Err(error) =>
