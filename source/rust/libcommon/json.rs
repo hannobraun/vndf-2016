@@ -30,5 +30,5 @@ pub fn from_json<T: Decodable<Decoder, DecoderError>>(s: &str) -> Result<T, Stri
 }
 
 pub fn to_json<'a, T: Encodable<Encoder<'a>, IoError>>(object: T) -> String {
-	Encoder::str_encode(&object)
+	json::encode(&object)
 }
