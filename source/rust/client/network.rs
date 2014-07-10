@@ -33,7 +33,7 @@ impl Network {
 			attitude: input.attitude,
 			missile : input.missile
 		};
-		match self.conn.send_message(action.to_str().as_slice()) {
+		match self.conn.send_message(action.to_string().as_slice()) {
 			Ok(())     => (),
 			Err(error) => exit(format!("Error sending message: {}", error).as_slice())
 		}
