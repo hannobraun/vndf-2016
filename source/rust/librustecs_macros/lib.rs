@@ -1,4 +1,4 @@
-#![crate_id   = "rustecs_macros"]
+#![crate_name = "rustecs_macros"]
 #![crate_type = "dylib"]
 #![feature(plugin_registrar, managed_boxes, quote)]
 
