@@ -1,2 +1,2 @@
-output
-*.sublime-workspace
+/output
+/*.sublime-workspace
