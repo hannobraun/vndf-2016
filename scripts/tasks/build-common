@@ -8,7 +8,7 @@ mkdir -p $OUTPUT_LIB_RUST
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/librustecs_macros/lib.rs &&
+	source/rust/librustecs_macros/src/lib.rs &&
 ./scripts/tools/cargo-build \
 	$RUSTC \
 	$CARGO \
