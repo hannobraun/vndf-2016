@@ -4,11 +4,11 @@ source project.conf
 
 mkdir -p $OUTPUT_LIB_RUST
 
-./scripts/tools/compile-rust \
+./scripts/tools/cargo-build \
 	$RUSTC \
-	"-L $OUTPUT_LIB_RUST" \
-	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/librustecs_macros/src/lib.rs &&
+	$CARGO \
+	$OUTPUT_LIB_RUST \
+	source/rust/librustecs_macros &&
 ./scripts/tools/cargo-build \
 	$RUSTC \
 	$CARGO \
