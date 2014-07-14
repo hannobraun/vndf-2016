@@ -1,0 +1,13 @@
+[package]
+name    = "common"
+version = "0.1.0"
+authors = [ "mail@hannobraun.de" ]
+
+[[lib]]
+name = "common"
+
+[dependencies.rustecs_macros]
+path = "../librustecs_macros"
+
+[dependencies.rustecs]
+path = "../librustecs"
