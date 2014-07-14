@@ -17,5 +17,5 @@ export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
 (
 	cd $SOURCE_DIR;
 	$CARGO build) &&
-mkdir -p $OUTPUT_DIR
+mkdir -p $OUTPUT_DIR &&
 cp $(find $SOURCE_DIR/target -name *.so) $(find $SOURCE_DIR/target -name *.rlib) $OUTPUT_DIR
