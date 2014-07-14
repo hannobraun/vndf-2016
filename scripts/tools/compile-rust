@@ -18,7 +18,7 @@ export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
 
 $RUSTC \
 	--color=always \
-	--debuginfo 2 \
+	--debuginfo=2 \
 	--opt-level=0 \
 	$LIB_ARGS \
 	$OUTPUT_ARGS \
@@ -26,7 +26,7 @@ $RUSTC \
 $RUSTC \
 	--test \
 	--color=always \
-	--debuginfo 2 \
+	--debuginfo=2 \
 	--allow dead_code \
 	$LIB_ARGS \
 	-o $RUST_TEST \
