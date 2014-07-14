@@ -2,7 +2,6 @@
 
 source project.conf
 
-mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $(dirname $GAME_SERVICE_BINARY)
 
 ./scripts/tools/compile-rust \
