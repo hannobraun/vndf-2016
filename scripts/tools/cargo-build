@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 4 ]
+then
+	echo "Usage: $(basename $0) RUSTC CARGO OUTPUT_DIR SOURCE_DIR"
+	exit 1
+fi
+
+RUSTC=$1
+CARGO=$2
+OUTPUT_DIR=$3
+SOURCE_DIR=$4
+
+export PATH=$(dirname $RUSTC):$PATH
+export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+
+(
+	cd $SOURCE_DIR;
+	$CARGO build) &&
+cp $SOURCE_DIR/target/*.rlib $OUTPUT_DIR
