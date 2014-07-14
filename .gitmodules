@@ -19,3 +19,6 @@
 [submodule "vendor/glfw"]
 	path = vendor/glfw
 	url = https://github.com/hannobraun/glfw.git
+[submodule "vendor/cargo"]
+	path = vendor/cargo
+	url = https://github.com/rust-lang/cargo.git
