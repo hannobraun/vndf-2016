@@ -13,7 +13,7 @@ mkdir -p $OUTPUT_LIB_RUST
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/librustecs/lib.rs &&
+	source/rust/librustecs/src/lib.rs &&
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
