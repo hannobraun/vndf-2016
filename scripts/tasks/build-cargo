@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(
+	cd vendor/cargo;
+	git submodule update --init &&
+	make clean-all RUSTC=$RUSTC &&
+	make RUSTC=$RUSTC)
