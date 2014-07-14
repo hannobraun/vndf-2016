@@ -2,8 +2,6 @@
 
 source project.conf
 
-mkdir -p $OUTPUT_LIB_RUST
-
 ./scripts/tools/cargo-build \
 	$RUSTC \
 	$CARGO \
