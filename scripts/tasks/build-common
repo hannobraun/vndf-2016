@@ -9,11 +9,11 @@ mkdir -p $OUTPUT_LIB_RUST
 	"-L $OUTPUT_LIB_RUST" \
 	"--out-dir $OUTPUT_LIB_RUST" \
 	source/rust/librustecs_macros/lib.rs &&
-./scripts/tools/compile-rust \
+./scripts/tools/cargo-build \
 	$RUSTC \
-	"-L $OUTPUT_LIB_RUST" \
-	"--out-dir $OUTPUT_LIB_RUST" \
-	source/rust/librustecs/src/lib.rs &&
+	$CARGO \
+	$OUTPUT_LIB_RUST \
+	source/rust/librustecs &&
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
