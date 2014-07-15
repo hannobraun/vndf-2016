@@ -2,4 +2,5 @@
 
 git submodule update --init &&
 ./scripts/tasks/build-rust &&
+./scripts/tasks/build-cargo &&
 ./scripts/tasks/build-zwobot
