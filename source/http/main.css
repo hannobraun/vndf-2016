@@ -96,3 +96,12 @@ body > footer {
 	text-align: center;
 	font-size : 75%;
 }
+
+nav ul {
+	list-style-type: none;
+}
+
+nav ul li {
+	display: inline;
+	margin : 0.4em;
+}
