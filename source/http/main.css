@@ -74,6 +74,12 @@ p.ps {
 	background-color: #ffff00;
 }
 
+main.blog ul {
+	list-style-type: none;
+
+	padding: 0em;
+}
+
 table.contact * {
 	text-align    : left;
 	vertical-align: text-top;
