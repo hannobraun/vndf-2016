@@ -2,6 +2,8 @@
 
 source project.conf
 
+export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+
 CONTAINER_DIR=output/docker/vndf
 
 ./scripts/init &&
