@@ -93,11 +93,14 @@ table.contact p {
 	margin: 0;
 }
 
+article > header,
 article > footer {
-	margin-top: 4em;
-
 	font-size : 85%;
 	font-style: italic;
+}
+
+article > footer {
+	margin-top: 4em;
 }
 
 body > footer {
