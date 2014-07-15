@@ -87,7 +87,7 @@ table.contact p {
 	margin: 0;
 }
 
-footer {
+body > footer {
 	max-width: 34em;
 	margin   : 0 auto;
 
