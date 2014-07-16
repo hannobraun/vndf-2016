@@ -5,10 +5,8 @@ source project.conf
 mkdir -p $OUTPUT_LIB_RUST
 mkdir -p $OUTPUT_BIN
 
-if [ ! -f $OUTPUT_LIB/libfreetype.a ]; then
-	echo "BUILDING freetype"
-    ./scripts/tasks/build-freetype
-fi
+# The build instructions for the following Rust libraries can be removed once
+# all of them and the client itself are Cargo-fied.
 if [ ! -f $OUTPUT_LIB_RUST/libfreetype* ]; then
 	echo "BUILDING rust-freetype"
     ./scripts/tasks/build-rust-freetype
@@ -17,10 +15,6 @@ if [ ! -f $OUTPUT_LIB_RUST/libgl.rlib ]; then
 	echo "BUILDING gl-rs"
     ./scripts/tasks/build-gl-rs
 fi
-if [ ! -f $OUTPUT_LIB/libglfw* ]; then
-	echo "BUILDING glfw"
-    ./scripts/tasks/build-glfw
-fi
 if [ ! -f $OUTPUT_LIB_RUST/libglfw* ]; then
 	echo "BUILDING glfw-rs"
     ./scripts/tasks/build-glfw-rs
@@ -28,6 +22,16 @@ fi
 if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
 	echo "BUILDING rust-stb-image"
     ./scripts/tasks/build-rust-stb-image
+fi
+
+# These are C libraries. They need to stay here.
+if [ ! -f $OUTPUT_LIB/libfreetype.a ]; then
+	echo "BUILDING freetype"
+	./scripts/tasks/build-freetype
+fi
+if [ ! -f $OUTPUT_LIB/libglfw* ]; then
+	echo "BUILDING glfw"
+	./scripts/tasks/build-glfw
 fi
 
 ./scripts/tools/compile-rust \
