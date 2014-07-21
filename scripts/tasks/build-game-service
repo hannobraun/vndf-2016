@@ -8,4 +8,4 @@ mkdir -p $(dirname $GAME_SERVICE_BINARY)
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
 	"-o $GAME_SERVICE_BINARY" \
-	source/rust/game-service/src/main.rs
+	source/rust/game-service/main.rs
