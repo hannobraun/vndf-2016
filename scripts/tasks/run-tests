@@ -10,4 +10,4 @@ export RUST_TEST_TASKS=1
 ./scripts/tools/test-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST" \
-	tests/main.rs
+	source/rust/tests/main.rs
