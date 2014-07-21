@@ -121,3 +121,10 @@ nav ul li {
 	display: inline;
 	margin : 0.4em;
 }
+
+nav a.current {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-top-style   : solid;
+	border-top-width   : 1px;
+}
