@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-cd vendor/rust
-./configure && make -j 4

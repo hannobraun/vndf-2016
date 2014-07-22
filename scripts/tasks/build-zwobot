@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
-
-(cd vendor/zwobot; ./scripts/build.sh $RUSTC)
