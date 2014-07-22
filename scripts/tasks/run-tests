@@ -3,12 +3,11 @@
 source project.conf
 
 export RUST_TEST_TASKS=1
-export PATH=$(pwd)/output/bin:$PATH
+export PATH=$(pwd)/source/rust/target:$PATH
 
 ./scripts/tasks/build-common &&
-./scripts/tasks/build-game-service &&
-./scripts/tasks/build-client &&
-./scripts/tools/test-rust \
+./scripts/tasks/build-vndf &&
+./scripts/tools/cargo-test \
 	$RUSTC \
-	"-L $OUTPUT_LIB_RUST" \
-	source/rust/tests/main.rs
+	$CARGO \
+	source/rust
