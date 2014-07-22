@@ -12,7 +12,7 @@ pub struct Client {
 impl Client {
 	pub fn start(port: u16) -> Client {
 		let process = Process::start(
-			"output/bin/vndf-client",
+			"vndf-client",
 			[
 				format!("--headless"),
 				format!("--address=localhost"),
