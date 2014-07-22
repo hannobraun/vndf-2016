@@ -11,3 +11,4 @@ RUSTC_ARGS="-L $(pwd)/$OUTPUT_LIB"
 	cd vendor/glfw-rs
 	$CARGO build) &&
 cp vendor/glfw-rs/target/*.rlib $OUTPUT_LIB_RUST
+cp vendor/glfw-rs/target/*.a $OUTPUT_LIB
