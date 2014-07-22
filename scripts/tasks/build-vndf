@@ -2,8 +2,5 @@
 
 source project.conf
 
-export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
-export PATH=$(dirname $RUSTC):$(dirname $CARGO):$PATH
-
 cd source/rust
 cargo build
