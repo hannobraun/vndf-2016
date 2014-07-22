@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-cd source/rust
-cargo build
