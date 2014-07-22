@@ -3,6 +3,7 @@
 source project.conf
 
 export RUST_TEST_TASKS=1
+export PATH=$(pwd)/output/bin:$PATH
 
 ./scripts/tasks/build-common &&
 ./scripts/tasks/build-game-service &&
