@@ -3,11 +3,13 @@
 source project.conf
 
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+export PATH=$(dirname $RUSTC):$PATH
 
 RUSTFLAGS="-L $(pwd)/$OUTPUT_LIB"
 
-(cd vendor/rust-freetype;
-	./configure &&
-	make clean &&
-	make RUSTC=$RUSTC RUSTFLAGS="$RUSTFLAGS")
-cp vendor/rust-freetype/*.rlib $OUTPUT_LIB_RUST
+mkdir -p $OUTPUT_LIB_RUST
+
+(
+	cd vendor/rust-freetype
+	$CARGO build) &&
+cp vendor/rust-freetype/target/*.rlib $OUTPUT_LIB_RUST
