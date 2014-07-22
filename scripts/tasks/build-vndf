@@ -5,7 +5,5 @@ source project.conf
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
 export PATH=$(dirname $RUSTC):$PATH
 
-./scripts/tools/cargo-build \
-	$RUSTC \
-	$CARGO \
-	source/rust
+cd source/rust
+$CARGO build
