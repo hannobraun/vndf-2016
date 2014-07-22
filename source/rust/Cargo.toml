@@ -1,0 +1,30 @@
+[package]
+name    = "vndf"
+version = "0.1.0"
+authors = [ "mail@hannobraun.de" ]
+
+[[bin]]
+name = "vndf-game-service"
+path = "game-service/main.rs"
+
+[[bin]]
+name = "vndf-client"
+path = "client/main.rs"
+
+[dependencies.common]
+path = "libcommon"
+
+[dependencies.rustecs]
+path = "librustecs"
+
+[dependencies.gl]
+path = "../../vendor/gl-rs"
+
+[dependencies.glfw]
+path = "../../vendor/glfw-rs"
+
+[dependencies.freetype]
+path = "../../vendor/rust-freetype"
+
+[dependencies.stb_image]
+path = "../../vendor/rust-stb-image"
