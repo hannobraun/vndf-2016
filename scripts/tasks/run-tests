@@ -3,7 +3,7 @@
 source project.conf
 
 export LD_LIBRARY_PATH=$RUST_LIB_PATH
-export PATH=$(pwd)/source/rust/target:$RUST_PATH:$(dirname $CARGO):$PATH
+export PATH=$(pwd)/source/rust/target:$RUST_PATH:$PATH
 export RUST_TEST_TASKS=1
 
 (
