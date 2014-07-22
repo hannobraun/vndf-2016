@@ -13,7 +13,7 @@ impl GameService {
 		let port = random::<u16>() % 10000 + 40000;
 
 		let mut process = Process::start(
-			"output/bin/vndf-game-service",
+			"vndf-game-service",
 			[
 				"--port".to_string(), port.to_string(),
 				"--frame-time".to_string(), "10".to_string()]);
