@@ -10,8 +10,6 @@ RUSTC=$1
 CARGO=$2
 SOURCE_DIR=$3
 
-export PATH=$(dirname $RUSTC):$PATH
-
 (
 	cd $SOURCE_DIR
 	$CARGO build)
