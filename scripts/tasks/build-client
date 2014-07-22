@@ -24,12 +24,6 @@ if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
     ./scripts/tasks/build-rust-stb-image
 fi
 
-# These are C libraries. They need to stay here.
-if [ ! -f $OUTPUT_LIB/libglfw* ]; then
-	echo "BUILDING glfw"
-	./scripts/tasks/build-glfw
-fi
-
 ./scripts/tools/compile-rust \
 	$RUSTC \
 	"-L $OUTPUT_LIB_RUST -L $OUTPUT_LIB" \
