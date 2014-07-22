@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-$ZWOBOT scripts/tasks/run-tests tests source/rust
