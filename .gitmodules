@@ -10,9 +10,6 @@
 [submodule "vendor/gl-rs"]
 	path = vendor/gl-rs
 	url = https://github.com/hannobraun/gl-rs.git
-[submodule "vendor/zwobot"]
-	path = vendor/zwobot
-	url = https://github.com/hannobraun/zwobot.git
 [submodule "vendor/cargo"]
 	path = vendor/cargo
 	url = https://github.com/rust-lang/cargo.git
