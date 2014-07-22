@@ -25,10 +25,6 @@ if [ ! -f $OUTPUT_LIB_RUST/libstb* ]; then
 fi
 
 # These are C libraries. They need to stay here.
-if [ ! -f $OUTPUT_LIB/libfreetype.a ]; then
-	echo "BUILDING freetype"
-	./scripts/tasks/build-freetype
-fi
 if [ ! -f $OUTPUT_LIB/libglfw* ]; then
 	echo "BUILDING glfw"
 	./scripts/tasks/build-glfw
