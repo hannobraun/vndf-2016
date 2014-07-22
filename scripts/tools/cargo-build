@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 4 ]
+if [ $# -ne 3 ]
 then
-	echo "Usage: $(basename $0) RUSTC CARGO OUTPUT_DIR SOURCE_DIR"
+	echo "Usage: $(basename $0) RUSTC CARGO SOURCE_DIR"
 	exit 1
 fi
 
 RUSTC=$1
 CARGO=$2
-OUTPUT_DIR=$3
-SOURCE_DIR=$4
+SOURCE_DIR=$3
 
 export PATH=$(dirname $RUSTC):$PATH
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
