@@ -15,5 +15,5 @@ export PATH=$(dirname $RUSTC):$PATH
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
 
 (
-	cd $SOURCE_DIR;
+	cd $SOURCE_DIR
 	$CARGO build)
