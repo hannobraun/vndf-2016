@@ -3,10 +3,11 @@
 source project.conf
 
 export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+export PATH=$(dirname $RUSTC):$PATH
 
 RUSTC_ARGS="-L $(pwd)/$OUTPUT_LIB"
 
-(cd vendor/glfw-rs;
-	make clean &&
-	make RUSTC="$RUSTC $RUSTC_ARGS" RUSTDOC="$RUSTDOC") &&
-cp vendor/glfw-rs/lib/*.rlib $OUTPUT_LIB_RUST
+(
+	cd vendor/glfw-rs
+	$CARGO build) &&
+cp vendor/glfw-rs/target/*.rlib $OUTPUT_LIB_RUST
