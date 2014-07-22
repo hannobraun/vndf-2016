@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-./scripts/tools/cargo-build \
-	$RUSTC \
-	$CARGO \
-	$OUTPUT_LIB_RUST \
-	source/rust/libcommon
