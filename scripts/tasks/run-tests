@@ -8,8 +8,5 @@ export RUST_TEST_TASKS=1
 
 (
 	cd source/rust
-	cargo build) &&
-./scripts/tools/cargo-test \
-	$RUSTC \
-	$CARGO \
-	source/rust
+	cargo build &&
+	cargo test)
