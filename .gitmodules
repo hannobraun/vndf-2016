@@ -19,3 +19,6 @@
 [submodule "vendor/cargo"]
 	path = vendor/cargo
 	url = https://github.com/rust-lang/cargo.git
+[submodule "vendor/rust-env"]
+	path = vendor/rust-env
+	url = https://github.com/hannobraun/rust-env.git
