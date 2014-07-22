@@ -5,7 +5,6 @@ source project.conf
 export RUST_TEST_TASKS=1
 export PATH=$(pwd)/source/rust/target:$PATH
 
-./scripts/tasks/build-common &&
 ./scripts/tasks/build-vndf &&
 ./scripts/tools/cargo-test \
 	$RUSTC \
