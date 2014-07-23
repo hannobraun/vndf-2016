@@ -1,6 +1,6 @@
 use std::io::timer::sleep;
 
-use events::{
+use gameservice::events::{
 	GameEvent,
 	Update
 };

@@ -8,15 +8,20 @@ extern crate common;
 
 use std::os;
 
-use events::Init;
-use network::Network;
+use gameservice::args;
+use gameservice::events::Init;
+use gameservice::game;
+use gameservice::network::Network;
+use gameservice::updater;
 
 
-mod args;
-mod events;
-mod game;
-mod network;
-mod updater;
+mod gameservice {
+	pub mod args;
+	pub mod events;
+	pub mod game;
+	pub mod network;
+	pub mod updater;
+}
 
 
 fn main() {

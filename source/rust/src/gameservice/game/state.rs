@@ -19,7 +19,7 @@ use common::protocol::{
 	Perception
 };
 
-use events::{
+use gameservice::events::{
 	Action,
 	Enter,
 	GameEvent,
@@ -30,7 +30,7 @@ use events::{
 	NetworkEvent,
 	Update
 };
-use game::ecs;
+use gameservice::game::ecs;
 
 
 pub struct State {

@@ -5,7 +5,7 @@ authors = [ "mail@hannobraun.de" ]
 
 [[bin]]
 name = "vndf-game-service"
-path = "src/gameservice/main.rs"
+path = "src/vndf-game-service.rs"
 
 [[bin]]
 name = "vndf-client"

@@ -13,7 +13,7 @@ use common::net::epoll;
 use common::net::epoll::EPoll;
 use common::protocol::Action;
 
-use events::{
+use gameservice::events::{
 	Action,
 	Close,
 	Enter,
