@@ -21,10 +21,6 @@ mod run;
 mod ui;
 
 
-#[link(name = "stb-image", kind = "static")]
-extern {}
-
-
 fn main() {
 	run::run();
 }
