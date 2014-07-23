@@ -9,8 +9,8 @@ use gl::types::{
 	GLuint
 };
 
-use error::exit;
-use ui::Window;
+use client::error::exit;
+use client::ui::Window;
 
 
 pub struct Shaders {

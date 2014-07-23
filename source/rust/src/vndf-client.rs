@@ -11,16 +11,9 @@ extern crate rustecs;
 extern crate common;
 
 
-mod args;
-mod error;
-mod game;
-mod headless;
-mod inputsender;
-mod network;
-mod run;
-mod ui;
+mod client;
 
 
 fn main() {
-	run::run();
+	client::run::run();
 }

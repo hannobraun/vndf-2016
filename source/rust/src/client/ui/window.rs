@@ -2,7 +2,7 @@ use gl;
 use glfw;
 use glfw::Context;
 
-use error::exit;
+use client::error::exit;
 
 
 pub struct Window {

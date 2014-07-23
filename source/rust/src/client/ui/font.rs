@@ -19,8 +19,8 @@ use freetype::freetype::{
 
 use common::physics::Vec2;
 
-use error::exit;
-use ui::{Texture, Textures};
+use client::error::exit;
+use client::ui::{Texture, Textures};
 
 
 pub struct Font {

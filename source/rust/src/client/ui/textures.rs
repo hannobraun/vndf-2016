@@ -5,8 +5,8 @@ use gl;
 
 use common::physics::Vec2;
 
-use error::exit;
-use ui::Window;
+use client::error::exit;
+use client::ui::Window;
 
 
 pub struct Textures {

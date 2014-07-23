@@ -2,7 +2,7 @@ use time;
 
 use common::io::Input;
 
-use network::Network;
+use client::network::Network;
 
 
 pub struct InputSender {

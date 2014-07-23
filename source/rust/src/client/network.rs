@@ -8,7 +8,7 @@ use common::protocol::{
 	Perception
 };
 
-use error::exit;
+use client::error::exit;
 
 
 pub struct Network {

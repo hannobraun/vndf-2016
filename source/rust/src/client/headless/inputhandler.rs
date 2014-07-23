@@ -8,7 +8,7 @@ use std::comm::{
 use common::io;
 use common::io::Input;
 
-use error::exit;
+use client::error::exit;
 
 
 pub struct InputHandler {

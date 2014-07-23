@@ -7,7 +7,7 @@ use common::io;
 use common::io::Input;
 use common::physics::Radians;
 
-use ui::Window;
+use client::ui::Window;
 
 
 pub struct InputHandler {

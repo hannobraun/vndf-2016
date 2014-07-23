@@ -5,8 +5,8 @@ use rustecs::EntityId;
 use common::ecs::ClientWorld;
 use common::physics::Vec2;
 
-use game::receiver::receive;
-use network::Network;
+use client::game::receiver::receive;
+use client::network::Network;
 
 
 pub struct State {

@@ -9,7 +9,7 @@ path = "src/vndf-game-service.rs"
 
 [[bin]]
 name = "vndf-client"
-path = "src/client/main.rs"
+path = "src/vndf-client.rs"
 
 [dependencies.common]
 path = "libcommon"

@@ -11,13 +11,13 @@ use common::io::{
 };
 use common::physics::Vec2;
 
-use args;
-use error;
-use game;
-use headless;
-use inputsender::InputSender;
-use network::Network;
-use ui;
+use client::args;
+use client::error;
+use client::game;
+use client::headless;
+use client::inputsender::InputSender;
+use client::network::Network;
+use client::ui;
 
 
 pub fn run() {

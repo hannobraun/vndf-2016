@@ -10,15 +10,15 @@ use common::physics::{
 	Vec2
 };
 
-use error::exit;
-use ui::{
+use client::error::exit;
+use client::ui::{
 	Font,
 	Shaders,
 	Texture,
 	Textures,
 	Window
 };
-use ui::shaders;
+use client::ui::shaders;
 
 
 pub struct Renderer {
