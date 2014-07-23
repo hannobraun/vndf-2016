@@ -15,13 +15,7 @@ use gameservice::network::Network;
 use gameservice::updater;
 
 
-mod gameservice {
-	pub mod args;
-	pub mod events;
-	pub mod game;
-	pub mod network;
-	pub mod updater;
-}
+mod gameservice;
 
 
 fn main() {
