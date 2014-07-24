@@ -9,9 +9,9 @@ CONTAINER_DIR=output/docker/vndf
 
 ./scripts/init &&
 rm -rf output &&
-./scripts/tasks/build-common &&
-./scripts/tasks/build-game-service &&
-./scripts/tasks/build-client &&
+(
+	cd source/rust
+	cargo build) &&
 ./scripts/tasks/arrange-client &&
 ./scripts/tasks/package-client &&
 mkdir -p $CONTAINER_DIR &&
