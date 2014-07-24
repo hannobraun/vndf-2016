@@ -2,7 +2,8 @@
 
 source project.conf
 
-export LD_LIBRARY_PATH=$(dirname $RUSTC)/../lib
+export LD_LIBRARY_PATH=$RUST_LIB_PATH
+export PATH=$(pwd)/source/rust/target:$RUST_PATH:$PATH
 
 CONTAINER_DIR=output/docker/vndf
 
