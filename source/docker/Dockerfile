@@ -8,7 +8,7 @@ RUN apt-get install -y nginx
 
 ADD http /srv/http
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
-ADD bin/vndf-game-service /opt/vndf-game-service
+ADD target/vndf-game-service /opt/vndf-game-service
 ADD upstart/vndf-game-service.conf /etc/init/vndf-game-service.conf
 ADD upstart/nginx.conf /etc/init/nginx.conf
 
