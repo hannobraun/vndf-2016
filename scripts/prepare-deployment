@@ -20,4 +20,4 @@ cp -r source/http $CONTAINER_DIR &&
 cp -r source/nginx $CONTAINER_DIR &&
 cp -r source/upstart $CONTAINER_DIR &&
 cp $CLIENT_ARCHIVE $CONTAINER_DIR/http &&
-cp -r output/bin $CONTAINER_DIR
+cp -r $RUST_TARGET $CONTAINER_DIR
