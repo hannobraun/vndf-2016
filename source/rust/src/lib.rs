@@ -7,13 +7,9 @@ extern crate gl;
 extern crate glfw;
 extern crate stb_image;
 
-extern crate rustecs;
 extern crate common;
+extern crate rustecs;
 
 
-mod client;
-
-
-fn main() {
-	client::run::run();
-}
+pub mod client;
+pub mod gameservice;
