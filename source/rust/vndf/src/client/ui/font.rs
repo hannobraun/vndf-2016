@@ -1,7 +1,6 @@
 use std::char;
 use std::collections::HashMap;
 use std::ptr;
-use std::str;
 use std::vec;
 
 use freetype::freetype::{
@@ -126,7 +125,7 @@ fn make_glyph(c: char, glyph_slot: FT_GlyphSlot, texture: Texture) -> Glyph {
 		let Vec2(_, texture_height) = texture.size;
 
 		Glyph {
-			texture_id: "char:".to_string().append(str::from_char(c).as_slice()),
+			texture_id: "char:".to_string().append(c.to_string().as_slice()),
 
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,
