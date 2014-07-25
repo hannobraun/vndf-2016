@@ -1,4 +1,4 @@
-use common::physics::Vec2;
+use vndf::common::physics::Vec2;
 
 
 #[test]

@@ -7,8 +7,8 @@ use std::io::{
 use std::mem;
 use std::ptr;
 
-use net::Connection;
-use net::ffi;
+use common::net::Connection;
+use common::net::ffi;
 
 
 pub struct Acceptor {

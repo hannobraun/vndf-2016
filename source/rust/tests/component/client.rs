@@ -1,18 +1,18 @@
-use common::ecs::{
+use vndf::common::ecs::{
 	SharedWorldEntity,
 	ShowAsShip,
 };
-use common::testing::{
+use vndf::common::testing::{
 	Client,
 	MockGameService
 };
-use common::physics::{
+use vndf::common::physics::{
 	Body,
 	Radians,
 	Vec2
 };
-use common::physics::util;
-use common::protocol::Perception;
+use vndf::common::physics::util;
+use vndf::common::protocol::Perception;
 
 
 #[test]

@@ -1,5 +1,5 @@
-use net::ConnId;
-use physics::{
+use common::net::ConnId;
+use common::physics::{
 	Body,
 	Radians,
 	Vec2,

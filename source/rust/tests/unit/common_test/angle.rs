@@ -1,6 +1,6 @@
 use std::f64;
 
-use common::physics::{Radians, Vec2};
+use vndf::common::physics::{Radians, Vec2};
 
 
 #[test]

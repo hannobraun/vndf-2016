@@ -1,8 +1,8 @@
-use json::{
+use common::json::{
 	from_json,
 	to_json
 };
-use physics::Radians;
+use common::physics::Radians;
 
 
 #[deriving(Decodable, Encodable, Show)]

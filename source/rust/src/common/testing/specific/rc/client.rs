@@ -1,8 +1,8 @@
-use io::{
+use common::io::{
 	Frame,
 	Input
 };
-use testing::Process;
+use common::testing::Process;
 
 
 pub struct Client {

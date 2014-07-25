@@ -3,11 +3,11 @@ name    = "vndf"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
-[dependencies.common]
-path = "libcommon"
-
 [dependencies.rustecs]
 path = "librustecs"
+
+[dependencies.rustecs_macros]
+path = "librustecs_macros"
 
 [dependencies.gl]
 path = "../../vendor/gl-rs"

@@ -15,7 +15,7 @@ use std::os;
 use std::ptr;
 use std::str;
 
-use net::ffi;
+use common::net::ffi;
 
 
 type MessageLength = u16;

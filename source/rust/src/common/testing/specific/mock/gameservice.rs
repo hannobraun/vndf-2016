@@ -2,12 +2,12 @@ use std::rand::random;
 
 use rustecs::EntityId;
 
-use ecs::SharedWorldEntity;
-use net::{
+use common::ecs::SharedWorldEntity;
+use common::net::{
 	Acceptor,
 	Connection
 };
-use protocol::Perception;
+use common::protocol::Perception;
 
 
 pub struct MockGameService {

@@ -1,9 +1,9 @@
-use json::{
+use common::json::{
 	from_json,
 	to_json
 };
-use io::Input;
-use physics::{
+use common::io::Input;
+use common::physics::{
 	Body,
 	Vec2
 };

@@ -1,4 +1,4 @@
-use physics::Vec2;
+use common::physics::Vec2;
 
 
 pub fn is_on_line(line: (Vec2, Vec2), point: Vec2, precision: uint) -> bool {

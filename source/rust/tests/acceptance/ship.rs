@@ -1,7 +1,7 @@
-use common::io::Input;
-use common::physics::Radians;
+use vndf::common::io::Input;
+use vndf::common::physics::Radians;
 
-use common::testing::{
+use vndf::common::testing::{
 	Client,
 	GameService
 };

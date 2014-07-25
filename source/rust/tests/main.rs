@@ -9,7 +9,7 @@ extern crate rustecs;
 #[phase(plugin)]
 extern crate rustecs_macros;
 #[phase(plugin, link)]
-extern crate common;
+extern crate vndf;
 
 
 mod unit {
