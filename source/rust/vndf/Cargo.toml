@@ -4,19 +4,19 @@ version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
 [dependencies.rustecs]
-path = "librustecs"
+path = "../librustecs"
 
 [dependencies.rustecs_macros]
-path = "librustecs_macros"
+path = "../librustecs_macros"
 
 [dependencies.gl]
-path = "../../vendor/gl-rs"
+path = "../../../vendor/gl-rs"
 
 [dependencies.glfw]
-path = "../../vendor/glfw-rs"
+path = "../../../vendor/glfw-rs"
 
 [dependencies.freetype]
-path = "../../vendor/rust-freetype"
+path = "../../../vendor/rust-freetype"
 
 [dependencies.stb_image]
-path = "../../vendor/rust-stb-image"
+path = "../../../vendor/rust-stb-image"
