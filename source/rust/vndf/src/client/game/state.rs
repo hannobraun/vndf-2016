@@ -1,12 +1,10 @@
 use time;
 
-use rustecs::EntityId;
-
-use common::ecs::ClientWorld;
-
 use client::game::receiver::receive;
 use client::network::Network;
+use common::ecs::ClientWorld;
 use physics::Vec2;
+use rustecs::EntityId;
 
 
 pub struct State {
