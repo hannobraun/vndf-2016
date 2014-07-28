@@ -54,7 +54,7 @@ fn it_should_fire_a_missile() {
 	})
 
 	let distance =
-		(frame.ships.get(0).position - frame.missiles.get(0).position).mag();
+		(frame.ships[0].position - frame.missiles[0].position).mag();
 
 	print!("distance: {}\n", distance);
 	assert!(distance < 5.0);
