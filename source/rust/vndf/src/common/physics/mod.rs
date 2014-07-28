@@ -1,9 +1,9 @@
-pub use common::physics::angle::{
+pub use self::angle::{
 	Degrees,
 	Radians
 };
-pub use common::physics::body::Body;
-pub use common::physics::vec::Vec2;
+pub use self::body::Body;
+pub use self::vec::Vec2;
 
 
 mod angle;
