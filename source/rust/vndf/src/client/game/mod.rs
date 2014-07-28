@@ -1,4 +1,4 @@
 pub use self::state::State;
 
-mod receiver;
-mod state;
+pub mod receiver;
+pub mod state;
