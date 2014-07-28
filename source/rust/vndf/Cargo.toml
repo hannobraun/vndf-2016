@@ -19,6 +19,9 @@ test = false
 [dependencies.epoll]
 path = "../epoll"
 
+[dependencies.net]
+path = "../net"
+
 [dependencies.physics]
 path = "../physics"
 

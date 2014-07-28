@@ -1,3 +1,6 @@
+extern crate libc;
+
+
 pub use self::acceptor::Acceptor;
 pub use self::connection::Connection;
 
