@@ -1,4 +1,4 @@
-pub use common::net::epoll::wrapper::EPoll;
+pub use self::wrapper::EPoll;
 
 
 mod wrapper;
