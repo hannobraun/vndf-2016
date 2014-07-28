@@ -1,7 +1,5 @@
-use common::json::{
-	from_json,
-	to_json
-};
+use serialize::json;
+
 use common::io::Input;
 use physics::{
 	Body,
@@ -18,11 +16,11 @@ pub struct Frame {
 }
 
 impl Frame {
-	pub fn from_json(s: &str) -> Result<Frame, String> {
-		from_json(s)
+	pub fn from_json(s: &str) -> json::DecodeResult<Frame> {
+		json::decode(s)
 	}
 
 	pub fn to_json(&self) -> String {
-		to_json(self)
+		json::encode(self)
 	}
 }
