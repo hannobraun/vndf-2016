@@ -1,10 +1,9 @@
 use vndf::common::io::Input;
-use vndf::physics::Radians;
-
 use vndf::common::testing::{
 	Client,
 	GameService
 };
+use vndf::physics::Radians;
 
 
 #[test]
