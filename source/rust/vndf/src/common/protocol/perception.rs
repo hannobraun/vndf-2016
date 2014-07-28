@@ -2,6 +2,7 @@ use serialize::{
 	Decodable,
 	Encodable,
 };
+use serialize::json;
 use serialize::json::{
 	Decoder,
 	DecoderError,
@@ -9,10 +10,7 @@ use serialize::json::{
 };
 use std::io::IoError;
 
-use common::json::{
-	from_json,
-	to_json
-};
+use common::json::from_json;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -108,6 +106,6 @@ impl<
 	}
 
 	pub fn to_string(&self) -> String {
-		to_json(self)
+		json::encode(self)
 	}
 }
