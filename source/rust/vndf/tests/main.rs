@@ -13,6 +13,10 @@ extern crate vndf;
 
 
 mod unit {
+	mod client_test {
+		mod receiver;
+	}
+
 	mod common_test {
 		mod angle;
 		mod protocol;
