@@ -11,6 +11,10 @@ test = false
 name = "vndf-game-service"
 test = false
 
+[[lib]]
+name = "vndf"
+test = false
+
 [dependencies.rustecs]
 path = "../librustecs"
 
