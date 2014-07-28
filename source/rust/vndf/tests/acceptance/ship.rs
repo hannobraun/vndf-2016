@@ -1,5 +1,5 @@
 use vndf::common::io::Input;
-use vndf::common::physics::Radians;
+use vndf::physics::Radians;
 
 use vndf::common::testing::{
 	Client,

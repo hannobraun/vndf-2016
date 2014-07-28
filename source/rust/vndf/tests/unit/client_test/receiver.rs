@@ -4,11 +4,11 @@ use vndf::common::ecs::{
 	SharedWorldEntity,
 	ShowAsMissile,
 };
-use vndf::common::physics::{
+use vndf::common::protocol::Perception;
+use vndf::physics::{
 	Body,
 	Vec2
 };
-use vndf::common::protocol::Perception;
 
 
 #[test]

@@ -5,9 +5,9 @@ use glfw;
 
 use common::io;
 use common::io::Input;
-use common::physics::Radians;
 
 use client::ui::Window;
+use physics::Radians;
 
 
 pub struct InputHandler {

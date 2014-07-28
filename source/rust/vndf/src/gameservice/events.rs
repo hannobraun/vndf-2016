@@ -4,13 +4,13 @@ use rustecs::EntityId;
 
 use common::ecs::SharedWorldEntity;
 use common::net::ConnId;
-use common::physics::{
-	Radians,
-	Vec2
-};
 use common::protocol::{
 	Action,
 	Perception
+};
+use physics::{
+	Radians,
+	Vec2
 };
 
 

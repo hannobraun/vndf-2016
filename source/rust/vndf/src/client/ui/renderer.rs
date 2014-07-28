@@ -4,11 +4,6 @@ use gl;
 
 use common::io;
 use common::io::Frame;
-use common::physics::{
-	Body,
-	Radians,
-	Vec2
-};
 
 use client::error::exit;
 use client::ui::{
@@ -19,6 +14,11 @@ use client::ui::{
 	Window
 };
 use client::ui::shaders;
+use physics::{
+	Body,
+	Radians,
+	Vec2
+};
 
 
 pub struct Renderer {

@@ -1,5 +1,5 @@
 use common::net::ConnId;
-use common::physics::{
+use physics::{
 	Body,
 	Radians,
 	Vec2,

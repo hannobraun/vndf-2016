@@ -16,10 +16,9 @@ use freetype::freetype::{
 	FT_RENDER_MODE_NORMAL,
 	FT_Set_Pixel_Sizes};
 
-use common::physics::Vec2;
-
 use client::error::exit;
 use client::ui::{Texture, Textures};
+use physics::Vec2;
 
 
 pub struct Font {

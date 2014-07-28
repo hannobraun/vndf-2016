@@ -3,7 +3,7 @@ use common::json::{
 	to_json
 };
 use common::io::Input;
-use common::physics::{
+use physics::{
 	Body,
 	Vec2
 };

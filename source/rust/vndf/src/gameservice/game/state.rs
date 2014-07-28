@@ -9,11 +9,6 @@ use common::ecs::{
 	World
 };
 use common::net::ConnId;
-use common::physics::{
-	Body,
-	Radians,
-	Vec2
-};
 use common::protocol::{
 	Action,
 	Perception
@@ -31,6 +26,11 @@ use gameservice::events::{
 	Update
 };
 use gameservice::game::ecs;
+use physics::{
+	Body,
+	Radians,
+	Vec2
+};
 
 
 pub struct State {

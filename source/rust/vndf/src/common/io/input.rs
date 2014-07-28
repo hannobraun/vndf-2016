@@ -2,7 +2,7 @@ use common::json::{
 	from_json,
 	to_json
 };
-use common::physics::Radians;
+use physics::Radians;
 
 
 #[deriving(Decodable, Encodable, Show)]

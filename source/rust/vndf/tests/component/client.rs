@@ -6,13 +6,13 @@ use vndf::common::testing::{
 	Client,
 	MockGameService
 };
-use vndf::common::physics::{
+use vndf::common::protocol::Perception;
+use vndf::physics::{
 	Body,
 	Radians,
+	util,
 	Vec2
 };
-use vndf::common::physics::util;
-use vndf::common::protocol::Perception;
 
 
 #[test]

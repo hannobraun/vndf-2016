@@ -3,10 +3,9 @@ use std::collections::HashMap;
 
 use gl;
 
-use common::physics::Vec2;
-
 use client::error::exit;
 use client::ui::Window;
+use physics::Vec2;
 
 
 pub struct Textures {

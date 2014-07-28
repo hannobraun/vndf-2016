@@ -9,7 +9,6 @@ use common::io::{
 	InputHandler,
 	Renderer
 };
-use common::physics::Vec2;
 
 use client::args;
 use client::error;
@@ -18,6 +17,7 @@ use client::headless;
 use client::inputsender::InputSender;
 use client::network::Network;
 use client::ui;
+use physics::Vec2;
 
 
 pub fn run() {
