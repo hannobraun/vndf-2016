@@ -2,11 +2,11 @@ use rustecs::EntityId;
 
 use common::ecs::SharedWorldEntity;
 use common::io::Input;
-use common::net::Connection;
 use common::protocol::{
 	Action,
 	Perception
 };
+use net::Connection;
 
 use client::error::exit;
 

@@ -8,7 +8,6 @@ use common::ecs::{
 	SharedWorldEntity,
 	World
 };
-use common::net::ConnId;
 use common::protocol::{
 	Action,
 	Perception
@@ -25,6 +24,7 @@ use gameservice::events::{
 	Update
 };
 use gameservice::game::ecs;
+use net::ConnId;
 use physics::{
 	Body,
 	Radians,

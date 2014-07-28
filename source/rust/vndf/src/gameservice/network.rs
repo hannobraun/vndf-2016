@@ -4,11 +4,6 @@ use std::comm::{
 	Empty
 };
 
-use common::net::{
-	Acceptor,
-	Connection,
-	ConnId,
-};
 use common::protocol::Action;
 use epoll;
 use epoll::EPoll;
@@ -20,6 +15,11 @@ use gameservice::events::{
 	Leave,
 	Message,
 	NetworkEvent
+};
+use net::{
+	Acceptor,
+	Connection,
+	ConnId,
 };
 
 

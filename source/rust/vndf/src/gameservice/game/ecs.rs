@@ -1,7 +1,7 @@
 use rustecs::EntityId;
 
 use common::ecs::World;
-use common::net::ConnId;
+use net::ConnId;
 
 
 pub fn destroy_ship(world: &mut World, client_id: ConnId) {

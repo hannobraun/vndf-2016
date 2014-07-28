@@ -1,4 +1,4 @@
-use common::net::ConnId;
+use net::ConnId;
 use physics::{
 	Body,
 	Radians,

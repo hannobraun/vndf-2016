@@ -3,11 +3,11 @@ use std::io::IoError;
 use rustecs::EntityId;
 
 use common::ecs::SharedWorldEntity;
-use common::net::ConnId;
 use common::protocol::{
 	Action,
 	Perception
 };
+use net::ConnId;
 use physics::{
 	Radians,
 	Vec2
