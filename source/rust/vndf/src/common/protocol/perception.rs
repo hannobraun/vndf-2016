@@ -6,11 +6,10 @@ use serialize::json;
 use serialize::json::{
 	Decoder,
 	DecoderError,
+	DecodeResult,
 	Encoder,
 };
 use std::io::IoError;
-
-use common::json::from_json;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -101,8 +100,8 @@ impl<
 		}
 	}
 
-	pub fn from_string(s: &str) -> Result<Perception<Id, T>, String> {
-		from_json(s)
+	pub fn from_string(s: &str) -> DecodeResult<Perception<Id, T>> {
+		json::decode(s)
 	}
 
 	pub fn to_string(&self) -> String {
