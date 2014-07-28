@@ -9,9 +9,9 @@ use common::net::{
 	Connection,
 	ConnId,
 };
-use common::net::epoll;
-use common::net::epoll::EPoll;
 use common::protocol::Action;
+use epoll;
+use epoll::EPoll;
 
 use gameservice::events::{
 	Action,
