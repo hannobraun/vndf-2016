@@ -13,7 +13,6 @@ use common::protocol::{
 	Action,
 	Perception
 };
-
 use gameservice::events::{
 	Action,
 	Enter,
