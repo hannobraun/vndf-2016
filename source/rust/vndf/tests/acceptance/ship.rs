@@ -17,7 +17,7 @@ fn it_should_change_direction_according_to_input() {
 		frame = client.frame();
 	})
 
-	let velocity     = frame.ships.get(0).velocity;
+	let velocity     = frame.ships[0].velocity;
 	let new_velocity = velocity * -1.0;
 	let new_attitude = Radians::from_vec(new_velocity);
 
