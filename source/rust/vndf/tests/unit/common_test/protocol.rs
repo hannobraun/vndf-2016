@@ -1,4 +1,4 @@
-use vndf::common::protocol::Perception;
+use vndf::protocol::Perception;
 
 
 #[test]

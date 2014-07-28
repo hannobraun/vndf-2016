@@ -4,7 +4,6 @@ use std::comm::{
 	Empty
 };
 
-use common::protocol::Action;
 use epoll;
 use epoll::EPoll;
 use gameservice::events::{
@@ -21,6 +20,7 @@ use net::{
 	Connection,
 	ConnId,
 };
+use protocol::Action;
 
 
 pub struct Network {

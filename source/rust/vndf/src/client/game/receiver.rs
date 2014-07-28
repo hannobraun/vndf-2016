@@ -6,7 +6,7 @@ use common::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
 };
-use common::protocol;
+use protocol;
 
 
 

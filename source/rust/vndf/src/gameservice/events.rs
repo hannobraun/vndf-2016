@@ -1,14 +1,14 @@
 use std::io::IoError;
 
 use common::ecs::SharedWorldEntity;
-use common::protocol::{
-	Action,
-	Perception
-};
 use net::ConnId;
 use physics::{
 	Radians,
 	Vec2
+};
+use protocol::{
+	Action,
+	Perception
 };
 use rustecs::EntityId;
 

@@ -1,11 +1,11 @@
 use std::rand::random;
 
 use common::ecs::SharedWorldEntity;
-use common::protocol::Perception;
 use net::{
 	Acceptor,
 	Connection
 };
+use protocol::Perception;
 use rustecs::EntityId;
 
 

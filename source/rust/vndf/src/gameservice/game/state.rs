@@ -8,10 +8,6 @@ use common::ecs::{
 	SharedWorldEntity,
 	World
 };
-use common::protocol::{
-	Action,
-	Perception
-};
 use gameservice::events::{
 	Action,
 	Enter,
@@ -29,6 +25,10 @@ use physics::{
 	Body,
 	Radians,
 	Vec2
+};
+use protocol::{
+	Action,
+	Perception
 };
 
 
