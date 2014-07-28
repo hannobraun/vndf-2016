@@ -1,7 +1,5 @@
 use std::io::IoError;
 
-use rustecs::EntityId;
-
 use common::ecs::SharedWorldEntity;
 use common::protocol::{
 	Action,
@@ -12,6 +10,7 @@ use physics::{
 	Radians,
 	Vec2
 };
+use rustecs::EntityId;
 
 
 #[deriving(PartialEq, Show)]
