@@ -4,7 +4,7 @@ use std::io::{
 	IoResult
 };
 
-use common::net::epoll::ffi;
+use super::ffi;
 
 
 pub struct EPoll {
