@@ -1,5 +1,5 @@
-pub use common::net::acceptor::Acceptor;
-pub use common::net::connection::Connection;
+pub use self::acceptor::Acceptor;
+pub use self::connection::Connection;
 
 
 mod acceptor;
