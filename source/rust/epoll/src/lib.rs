@@ -1,3 +1,6 @@
+extern crate libc;
+
+
 pub use self::wrapper::EPoll;
 
 

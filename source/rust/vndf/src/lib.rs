@@ -12,6 +12,7 @@ extern crate gl;
 extern crate glfw;
 extern crate stb_image;
 
+extern crate epoll;
 extern crate physics;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
@@ -19,5 +20,4 @@ extern crate rustecs;
 
 pub mod client;
 pub mod common;
-pub mod epoll;
 pub mod gameservice;

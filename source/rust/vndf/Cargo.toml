@@ -15,6 +15,10 @@ test = false
 name = "vndf"
 test = false
 
+
+[dependencies.epoll]
+path = "../epoll"
+
 [dependencies.physics]
 path = "../physics"
 
@@ -23,6 +27,7 @@ path = "../librustecs"
 
 [dependencies.rustecs_macros]
 path = "../librustecs_macros"
+
 
 [dependencies.gl]
 path = "../../../vendor/gl-rs"
