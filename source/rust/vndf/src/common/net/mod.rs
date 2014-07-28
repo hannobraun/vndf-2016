@@ -4,9 +4,9 @@ pub use self::connection::Connection;
 
 mod acceptor;
 mod connection;
+mod ffi;
 
 pub mod epoll;
-pub mod ffi;
 
 
 pub type ConnId = u32;
