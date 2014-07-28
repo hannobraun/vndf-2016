@@ -1,7 +1,7 @@
 use std::fmt;
 use std::fmt::Formatter;
 
-use common::physics::Vec2;
+use super::Vec2;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, PartialOrd, Show)]
