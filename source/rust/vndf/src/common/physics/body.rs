@@ -3,6 +3,7 @@ use super::{
 	Vec2
 };
 
+
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Body {
 	pub position: Vec2,
