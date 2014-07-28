@@ -1,7 +1,5 @@
-use common::json::{
-	from_json,
-	to_json
-};
+use serialize::json;
+
 use physics::Radians;
 
 
@@ -21,11 +19,11 @@ impl Input {
 		}
 	}
 
-	pub fn from_json(s: &str) -> Result<Input, String> {
-		from_json(s)
+	pub fn from_json(s: &str) -> json::DecodeResult<Input> {
+		json::decode(s)
 	}
 
 	pub fn to_json(&self) -> String {
-		to_json(self)
+		json::encode(self)
 	}
 }
