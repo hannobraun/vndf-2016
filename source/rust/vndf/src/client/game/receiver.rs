@@ -10,7 +10,7 @@ use common::protocol;
 
 
 
-type Perception = protocol::Perception<EntityId, SharedWorldEntity>;
+pub type Perception = protocol::Perception<EntityId, SharedWorldEntity>;
 
 
 pub fn receive(world: &mut ClientWorld, perception: Perception) {
