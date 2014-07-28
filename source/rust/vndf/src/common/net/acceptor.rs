@@ -4,8 +4,10 @@ use std::io::{
 	IoError,
 	IoResult
 };
-use std::mem;
-use std::ptr;
+use std::{
+	mem,
+	ptr
+};
 
 use super::{
 	Connection,
