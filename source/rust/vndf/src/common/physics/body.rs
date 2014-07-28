@@ -1,4 +1,4 @@
-use common::physics::{
+use super::{
 	Radians,
 	Vec2
 };
