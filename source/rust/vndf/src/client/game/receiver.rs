@@ -1,12 +1,11 @@
 use time;
 
-use rustecs::EntityId;
-
 use common::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
 };
 use protocol;
+use rustecs::EntityId;
 
 
 
