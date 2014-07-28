@@ -1,6 +1,5 @@
 use serialize::json;
 
-use common::json::from_json;
 use physics::Radians;
 
 
@@ -11,8 +10,8 @@ pub struct Action {
 }
 
 impl Action {
-	pub fn from_string(s: &str) -> Result<Action, String> {
-		from_json(s)
+	pub fn from_string(s: &str) -> json::DecodeResult<Action> {
+		json::decode(s)
 	}
 
 	pub fn to_string(&self) -> String {
