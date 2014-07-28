@@ -1,5 +1,5 @@
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-struct Position(f64, f64);
+pub struct Position(f64, f64);
 
 #[deriving(Clone, Decodable, Encodable, Eq, PartialEq, Show)]
 pub enum Visual {
