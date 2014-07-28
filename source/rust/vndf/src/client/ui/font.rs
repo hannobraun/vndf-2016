@@ -14,10 +14,14 @@ use freetype::freetype::{
 	FT_New_Face,
 	FT_Render_Glyph,
 	FT_RENDER_MODE_NORMAL,
-	FT_Set_Pixel_Sizes};
+	FT_Set_Pixel_Sizes
+};
 
 use client::error::exit;
-use client::ui::{Texture, Textures};
+use client::ui::{
+	Texture,
+	Textures
+};
 use physics::Vec2;
 
 
