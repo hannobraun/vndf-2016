@@ -1,3 +1,6 @@
+extern crate serialize;
+
+
 pub use self::angle::{
 	Degrees,
 	Radians

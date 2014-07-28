@@ -1,3 +1,7 @@
+use physics::{
+	Body,
+	Vec2
+};
 use vndf::client::game::receiver::receive;
 use vndf::common::ecs::{
 	ClientWorld,
@@ -5,10 +9,6 @@ use vndf::common::ecs::{
 	ShowAsMissile,
 };
 use vndf::common::protocol::Perception;
-use vndf::physics::{
-	Body,
-	Vec2
-};
 
 
 #[test]

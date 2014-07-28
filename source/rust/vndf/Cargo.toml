@@ -15,6 +15,9 @@ test = false
 name = "vndf"
 test = false
 
+[dependencies.physics]
+path = "../physics"
+
 [dependencies.rustecs]
 path = "../librustecs"
 

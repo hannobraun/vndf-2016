@@ -1,3 +1,9 @@
+use physics::{
+	Body,
+	Radians,
+	util,
+	Vec2
+};
 use vndf::common::ecs::{
 	SharedWorldEntity,
 	ShowAsShip,
@@ -7,12 +13,6 @@ use vndf::common::testing::{
 	MockGameService
 };
 use vndf::common::protocol::Perception;
-use vndf::physics::{
-	Body,
-	Radians,
-	util,
-	Vec2
-};
 
 
 #[test]

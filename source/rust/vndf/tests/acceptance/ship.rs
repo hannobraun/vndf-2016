@@ -1,9 +1,9 @@
+use physics::Radians;
 use vndf::common::io::Input;
 use vndf::common::testing::{
 	Client,
 	GameService
 };
-use vndf::physics::Radians;
 
 
 #[test]

@@ -1,6 +1,6 @@
 use std::f64;
 
-use vndf::physics::{
+use physics::{
 	Radians,
 	Vec2
 };
