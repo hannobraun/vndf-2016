@@ -1,5 +1,3 @@
-use rustecs::EntityId;
-
 use client::error::exit;
 use common::ecs::SharedWorldEntity;
 use common::io::Input;
@@ -8,6 +6,7 @@ use protocol::{
 	Action,
 	Perception
 };
+use rustecs::EntityId;
 
 
 
