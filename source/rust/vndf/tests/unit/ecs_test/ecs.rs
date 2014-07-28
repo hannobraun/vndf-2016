@@ -2,7 +2,7 @@
 struct Position(f64, f64);
 
 #[deriving(Clone, Decodable, Encodable, Eq, PartialEq, Show)]
-enum Visual {
+pub enum Visual {
 	RenderAsMissile,
 	RenderAsShip,
 }
