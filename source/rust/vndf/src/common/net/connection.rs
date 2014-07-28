@@ -11,9 +11,11 @@ use std::mem::{
 	size_of,
 	transmute
 };
-use std::os;
-use std::ptr;
-use std::str;
+use std::{
+	os,
+	ptr,
+	str,
+};
 
 use super::ffi;
 
