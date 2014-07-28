@@ -1,7 +1,6 @@
-use common::json::{
-	from_json,
-	to_json
-};
+use serialize::json;
+
+use common::json::from_json;
 use physics::Radians;
 
 
@@ -17,6 +16,6 @@ impl Action {
 	}
 
 	pub fn to_string(&self) -> String {
-		to_json(self)
+		json::encode(self)
 	}
 }
