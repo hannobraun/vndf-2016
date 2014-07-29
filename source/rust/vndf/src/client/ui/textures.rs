@@ -4,8 +4,9 @@ use std::collections::HashMap;
 use gl;
 
 use client::error::exit;
-use client::ui::Window;
 use physics::Vec2;
+
+use super::Window;
 
 
 pub struct Textures {
