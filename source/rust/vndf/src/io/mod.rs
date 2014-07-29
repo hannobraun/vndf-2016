@@ -1,10 +1,64 @@
-pub use self::frame::Frame;
-pub use self::input::Input;
-pub use self::inputhandler::InputHandler;
-pub use self::renderer::Renderer;
+use serialize::json;
+
+use physics::{
+	Body,
+	Radians,
+	Vec2,
+};
+
 
 pub mod cli;
-pub mod frame;
-pub mod input;
-pub mod inputhandler;
-pub mod renderer;
+
+
+pub trait Renderer {
+	fn render(&mut self, frame: &Frame);
+}
+
+pub trait InputHandler {
+	fn input(&mut self) -> Input;
+}
+
+
+#[deriving(Decodable, Encodable, Show)]
+pub struct Frame {
+	pub input   : Input,
+	pub camera  : Vec2,
+	pub ships   : Vec<Body>,
+	pub missiles: Vec<Body>
+}
+
+impl Frame {
+	pub fn from_json(s: &str) -> json::DecodeResult<Frame> {
+		json::decode(s)
+	}
+
+	pub fn to_json(&self) -> String {
+		json::encode(self)
+	}
+}
+
+
+#[deriving(Decodable, Encodable, Show)]
+pub struct Input {
+	pub exit    : bool,
+	pub attitude: Radians,
+	pub missile : u64
+}
+
+impl Input {
+	pub fn default() -> Input {
+		Input {
+			exit    : false,
+			attitude: Radians(0.0),
+			missile : 0
+		}
+	}
+
+	pub fn from_json(s: &str) -> json::DecodeResult<Input> {
+		json::decode(s)
+	}
+
+	pub fn to_json(&self) -> String {
+		json::encode(self)
+	}
+}
