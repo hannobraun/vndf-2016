@@ -21,7 +21,7 @@ extern crate rustecs;
 
 pub mod client;
 pub mod game;
-pub mod gameservice;
+pub mod game_service;
 pub mod io;
 pub mod protocol;
 pub mod test_infra;

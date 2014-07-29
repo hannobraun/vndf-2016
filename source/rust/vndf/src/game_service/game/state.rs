@@ -8,7 +8,7 @@ use game::ecs::{
 	SharedWorldEntity,
 	World
 };
-use gameservice::events::{
+use game_service::events::{
 	Action,
 	Enter,
 	GameEvent,
@@ -19,7 +19,7 @@ use gameservice::events::{
 	NetworkEvent,
 	Update
 };
-use gameservice::game::ecs;
+use game_service::game::ecs;
 use net::ConnId;
 use physics::{
 	Body,

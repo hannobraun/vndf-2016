@@ -6,7 +6,7 @@ use std::comm::{
 
 use epoll;
 use epoll::EPoll;
-use gameservice::events::{
+use game_service::events::{
 	Action,
 	Close,
 	Enter,
