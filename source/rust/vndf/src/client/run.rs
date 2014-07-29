@@ -1,8 +1,3 @@
-use common::ecs::{
-	ClientWorld,
-	ShowAsMissile,
-	ShowAsShip,
-};
 use common::io::{
 	Frame,
 	Input,
@@ -17,6 +12,11 @@ use client::headless;
 use client::inputsender::InputSender;
 use client::network::Network;
 use client::ui;
+use game::ecs::{
+	ClientWorld,
+	ShowAsMissile,
+	ShowAsShip,
+};
 use physics::Vec2;
 
 

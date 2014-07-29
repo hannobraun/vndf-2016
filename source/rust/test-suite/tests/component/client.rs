@@ -4,7 +4,7 @@ use physics::{
 	util,
 	Vec2
 };
-use vndf::common::ecs::{
+use vndf::game::ecs::{
 	SharedWorldEntity,
 	ShowAsShip,
 };

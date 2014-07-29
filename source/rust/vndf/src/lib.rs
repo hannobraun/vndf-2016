@@ -21,5 +21,6 @@ extern crate rustecs;
 
 pub mod client;
 pub mod common;
+pub mod game;
 pub mod gameservice;
 pub mod protocol;

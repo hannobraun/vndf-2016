@@ -1,6 +1,6 @@
 use time;
 
-use common::ecs::{
+use game::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
 };

@@ -3,7 +3,7 @@ use physics::{
 	Vec2
 };
 use vndf::client::game::receiver::receive;
-use vndf::common::ecs::{
+use vndf::game::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
 	ShowAsMissile,

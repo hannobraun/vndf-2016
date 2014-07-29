@@ -1,6 +1,6 @@
 use std::io::IoError;
 
-use common::ecs::SharedWorldEntity;
+use game::ecs::SharedWorldEntity;
 use net::ConnId;
 use physics::{
 	Radians,

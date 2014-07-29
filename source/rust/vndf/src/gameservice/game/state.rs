@@ -3,7 +3,7 @@ use std::comm::{
 	Empty
 };
 
-use common::ecs::{
+use game::ecs::{
 	SharedWorld,
 	SharedWorldEntity,
 	World

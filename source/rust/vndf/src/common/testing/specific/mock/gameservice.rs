@@ -1,6 +1,6 @@
 use std::rand::random;
 
-use common::ecs::SharedWorldEntity;
+use game::ecs::SharedWorldEntity;
 use net::{
 	Acceptor,
 	Connection

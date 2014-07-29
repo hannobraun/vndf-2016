@@ -1,6 +1,6 @@
 use rustecs::EntityId;
 
-use common::ecs::World;
+use game::ecs::World;
 use net::ConnId;
 
 
