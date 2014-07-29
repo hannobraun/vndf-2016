@@ -8,11 +8,11 @@ use vndf::game::ecs::{
 	SharedWorldEntity,
 	ShowAsShip,
 };
-use vndf::common::testing::{
+use vndf::protocol::Perception;
+use vndf::test_tools::{
 	Client,
 	MockGameService
 };
-use vndf::protocol::Perception;
 
 
 #[test]
