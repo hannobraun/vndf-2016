@@ -12,13 +12,13 @@ pub use self::textures::{Texture, Textures};
 pub use self::window::Window;
 
 
-pub mod font;
-pub mod images;
-pub mod inputhandler;
-pub mod renderer;
-pub mod shaders;
-pub mod textures;
-pub mod window;
+mod font;
+mod images;
+mod inputhandler;
+mod renderer;
+mod shaders;
+mod textures;
+mod window;
 
 
 pub fn init() -> (Box<io::InputHandler>, Box<io::Renderer>) {
