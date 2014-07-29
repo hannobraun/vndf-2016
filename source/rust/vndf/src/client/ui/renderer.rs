@@ -2,15 +2,7 @@ use std::rc::Rc;
 
 use gl;
 
-
 use client::error::exit;
-use client::ui::{
-	Font,
-	Shaders,
-	Texture,
-	Textures,
-	Window
-};
 use client::ui::shaders;
 use io;
 use io::Frame;
@@ -18,6 +10,14 @@ use physics::{
 	Body,
 	Radians,
 	Vec2
+};
+
+use super::{
+	Font,
+	Shaders,
+	Texture,
+	Textures,
+	Window
 };
 
 
