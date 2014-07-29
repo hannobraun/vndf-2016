@@ -2,7 +2,7 @@ use common::io::{
 	Frame,
 	Input
 };
-use common::testing::Process;
+use test_infra::Process;
 
 
 pub struct Client {

@@ -24,4 +24,5 @@ pub mod common;
 pub mod game;
 pub mod gameservice;
 pub mod protocol;
+pub mod test_infra;
 pub mod test_tools;

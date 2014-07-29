@@ -1,6 +1,6 @@
 use std::rand::random;
 
-use common::testing::Process;
+use test_infra::Process;
 
 
 pub struct GameService {
