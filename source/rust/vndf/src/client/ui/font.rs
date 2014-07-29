@@ -18,11 +18,12 @@ use freetype::freetype::{
 };
 
 use client::error::exit;
-use client::ui::{
+use physics::Vec2;
+
+use super::{
 	Texture,
 	Textures
 };
-use physics::Vec2;
 
 
 pub struct Font {
