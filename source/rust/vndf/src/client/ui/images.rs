@@ -1,8 +1,12 @@
 use stb_image::image;
 
 use client::error::exit;
-use client::ui::{Texture, Textures};
 use physics::Vec2;
+
+use super::{
+	Texture,
+	Textures
+};
 
 
 struct Image {
