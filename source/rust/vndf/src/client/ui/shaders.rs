@@ -10,7 +10,8 @@ use gl::types::{
 };
 
 use client::error::exit;
-use client::ui::Window;
+
+use super::Window;
 
 
 pub struct Shaders {
