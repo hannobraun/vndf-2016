@@ -1,4 +1,4 @@
-use common::io;
+use io;
 
 use self::inputhandler::InputHandler;
 use self::renderer::Renderer;

@@ -2,8 +2,6 @@ use std::rc::Rc;
 
 use gl;
 
-use common::io;
-use common::io::Frame;
 
 use client::error::exit;
 use client::ui::{
@@ -14,6 +12,8 @@ use client::ui::{
 	Window
 };
 use client::ui::shaders;
+use io;
+use io::Frame;
 use physics::{
 	Body,
 	Radians,

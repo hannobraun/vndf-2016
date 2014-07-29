@@ -1,5 +1,5 @@
 use physics::Radians;
-use vndf::common::io::Input;
+use vndf::io::Input;
 use vndf::test_tools::{
 	Client,
 	GameService

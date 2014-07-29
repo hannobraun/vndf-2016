@@ -5,10 +5,9 @@ use std::comm::{
 	Receiver
 };
 
-use common::io;
-use common::io::Input;
-
 use client::error::exit;
+use io;
+use io::Input;
 
 
 pub struct InputHandler {

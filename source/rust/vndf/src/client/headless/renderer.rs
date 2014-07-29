@@ -1,5 +1,5 @@
-use common::io;
-use common::io::Frame;
+use io;
+use io::Frame;
 
 
 pub struct Renderer;

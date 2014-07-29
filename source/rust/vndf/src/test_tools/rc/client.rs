@@ -1,4 +1,4 @@
-use common::io::{
+use io::{
 	Frame,
 	Input
 };

@@ -1,6 +1,6 @@
 use serialize::json;
 
-use common::io::Input;
+use io::Input;
 use physics::{
 	Body,
 	Vec2
