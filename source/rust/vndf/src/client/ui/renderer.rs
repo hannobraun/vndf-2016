@@ -3,7 +3,6 @@ use std::rc::Rc;
 use gl;
 
 use client::error::exit;
-use client::ui::shaders;
 use io;
 use io::Frame;
 use physics::{
@@ -13,6 +12,7 @@ use physics::{
 };
 
 use super::{
+	shaders,
 	Font,
 	Shaders,
 	Texture,
