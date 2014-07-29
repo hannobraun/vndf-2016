@@ -1,10 +1,3 @@
-use common::io::{
-	Frame,
-	Input,
-	InputHandler,
-	Renderer
-};
-
 use client::args;
 use client::error;
 use client::game;
@@ -12,6 +5,12 @@ use client::headless;
 use client::inputsender::InputSender;
 use client::network::Network;
 use client::ui;
+use common::io::{
+	Frame,
+	Input,
+	InputHandler,
+	Renderer
+};
 use game::ecs::{
 	ClientWorld,
 	ShowAsMissile,
