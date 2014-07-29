@@ -3,10 +3,11 @@ use std::rc::Rc;
 
 use glfw;
 
-use client::ui::Window;
 use io;
 use io::Input;
 use physics::Radians;
+
+use super::Window;
 
 
 pub struct InputHandler {
