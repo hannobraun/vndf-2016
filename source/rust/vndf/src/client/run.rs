@@ -1,7 +1,6 @@
 use client::args;
 use client::error;
 use client::game;
-use client::headless;
 use client::inputsender::InputSender;
 use client::network::Network;
 use client::ui;
@@ -11,6 +10,7 @@ use game::ecs::{
 	ShowAsShip,
 };
 use io::{
+	cli,
 	Frame,
 	Input,
 	InputHandler,
@@ -30,7 +30,7 @@ pub fn run() {
 		args.port.as_slice());
 
 	let (mut input_handler, mut renderer) = if args.headless {
-		headless::init()
+		cli::init()
 	}
 	else {
 		ui::init()
