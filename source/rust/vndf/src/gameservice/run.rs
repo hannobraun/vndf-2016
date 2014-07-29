@@ -1,10 +1,10 @@
 use std::os;
 
-use gameservice::args;
-use gameservice::events::Init;
-use gameservice::game;
-use gameservice::network::Network;
-use gameservice::updater;
+use super::args;
+use super::events::Init;
+use super::game;
+use super::network::Network;
+use super::updater;
 
 
 pub fn run() {
