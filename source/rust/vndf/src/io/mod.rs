@@ -8,6 +8,7 @@ use physics::{
 
 
 pub mod cli;
+pub mod desktop;
 
 
 pub trait Renderer {

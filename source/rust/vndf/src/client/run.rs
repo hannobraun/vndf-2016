@@ -3,7 +3,6 @@ use client::error;
 use client::game;
 use client::inputsender::InputSender;
 use client::network::Network;
-use client::ui;
 use game::ecs::{
 	ClientWorld,
 	ShowAsMissile,
@@ -11,6 +10,7 @@ use game::ecs::{
 };
 use io::{
 	cli,
+	desktop,
 	Frame,
 	Input,
 	InputHandler,
@@ -33,7 +33,7 @@ pub fn run() {
 		cli::init()
 	}
 	else {
-		ui::init()
+		desktop::init()
 	};
 
 	let mut game_state   = game::State::new();
