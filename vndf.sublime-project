@@ -3,7 +3,11 @@
 	[
 		{
 			"path": ".",
-			"file_exclude_patterns": ["vendor/*", "output/*"]
+			"file_exclude_patterns": [
+				"vendor/*",
+				"output/*",
+				"source/**/target"
+			]
 		}
 	]
 }
