@@ -7,11 +7,9 @@ export PATH=$(pwd)/source/rust/target:$RUST_PATH:$PATH
 
 CONTAINER_DIR=output/docker/vndf
 
-./scripts/init &&
 rm -rf output &&
-(
-	cd source/rust
-	cargo build) &&
+./scripts/init &&
+./scripts/tasks/run-tests &&
 ./scripts/tasks/arrange-client &&
 ./scripts/tasks/package-client &&
 mkdir -p $CONTAINER_DIR &&
