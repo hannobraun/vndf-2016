@@ -1,0 +1,75 @@
+[root]
+name = "test-suite"
+version = "0.1.0"
+dependencies = [
+ "rustecs 0.1.0",
+ "rustecs_macros 0.1.0",
+ "vndf 0.1.0",
+]
+
+[[package]]
+name = "epoll"
+version = "0.1.0"
+
+[[package]]
+name = "freetype"
+version = "0.1.0"
+
+[[package]]
+name = "gl"
+version = "0.0.1"
+dependencies = [
+ "gl_generator 0.0.1",
+]
+
+[[package]]
+name = "gl_generator"
+version = "0.0.1"
+dependencies = [
+ "sax-rs 0.0.1 (git+https://github.com/bjz/sax-rs#732694833170377dbbf24a1646b749af0abbd394)",
+]
+
+[[package]]
+name = "glfw"
+version = "0.0.1"
+
+[[package]]
+name = "net"
+version = "0.1.0"
+
+[[package]]
+name = "physics"
+version = "0.1.0"
+
+[[package]]
+name = "rustecs"
+version = "0.1.0"
+
+[[package]]
+name = "rustecs_macros"
+version = "0.1.0"
+
+[[package]]
+name = "sax-rs"
+version = "0.0.1"
+source = "git+https://github.com/bjz/sax-rs#732694833170377dbbf24a1646b749af0abbd394"
+
+[[package]]
+name = "stb_image"
+version = "0.0.1"
+
+[[package]]
+name = "vndf"
+version = "0.1.0"
+dependencies = [
+ "epoll 0.1.0",
+ "freetype 0.1.0",
+ "gl 0.0.1",
+ "glfw 0.0.1",
+ "net 0.1.0",
+ "physics 0.1.0",
+ "rustecs 0.1.0",
+ "rustecs_macros 0.1.0",
+ "stb_image 0.0.1",
+]
+
