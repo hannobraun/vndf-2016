@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::ptr;
 use std::vec;
 
-use freetype::freetype::{
+use freetype::ffi::{
 	FT_Face,
 	FT_Get_Char_Index,
 	FT_GlyphSlot,

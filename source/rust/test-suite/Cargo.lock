@@ -12,8 +12,9 @@ name = "epoll"
 version = "0.1.0"
 
 [[package]]
-name = "freetype"
-version = "0.1.0"
+name = "freetype-rs"
+version = "0.0.0"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de"
 
 [[package]]
 name = "gl"
@@ -64,7 +65,7 @@ name = "vndf"
 version = "0.1.0"
 dependencies = [
  "epoll 0.1.0",
- "freetype 0.1.0",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de)",
  "gl 0.0.1",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#c2a580e1a27d5e51b879c5b3f57b906b89309d43)",
  "net 0.1.0",
