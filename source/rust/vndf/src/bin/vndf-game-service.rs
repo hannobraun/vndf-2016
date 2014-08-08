@@ -2,5 +2,5 @@ extern crate vndf;
 
 
 fn main() {
-	vndf::gameservice::run::run();
+	vndf::game_service::run::run();
 }
