@@ -1,6 +1,3 @@
-[submodule "vendor/glfw-rs"]
-	path = vendor/glfw-rs
-	url = https://github.com/hannobraun/glfw-rs.git
 [submodule "vendor/rust-freetype"]
 	path = vendor/rust-freetype
 	url = https://github.com/hannobraun/rust-freetype.git
