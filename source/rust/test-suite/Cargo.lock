@@ -59,6 +59,7 @@ version = "0.1.0"
 [[package]]
 name = "stb_image"
 version = "0.0.1"
+source = "git+https://github.com/hannobraun/rust-stb-image.git#f8c9dffdba1f0f0e74251bdfa0c61e02550f54d4"
 
 [[package]]
 name = "vndf"
@@ -72,6 +73,6 @@ dependencies = [
  "physics 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
- "stb_image 0.0.1",
+ "stb_image 0.0.1 (git+https://github.com/hannobraun/rust-stb-image.git#f8c9dffdba1f0f0e74251bdfa0c61e02550f54d4)",
 ]
 
