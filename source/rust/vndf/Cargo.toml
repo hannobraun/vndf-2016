@@ -36,7 +36,7 @@ path = "../librustecs_macros"
 path = "../../../vendor/gl-rs"
 
 [dependencies.glfw]
-path = "../../../vendor/glfw-rs"
+git = "https://github.com/bjz/glfw-rs.git"
 
 [dependencies.freetype]
 path = "../../../vendor/rust-freetype"

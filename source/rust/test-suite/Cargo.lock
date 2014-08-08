@@ -32,6 +32,7 @@ dependencies = [
 [[package]]
 name = "glfw"
 version = "0.0.1"
+source = "git+https://github.com/bjz/glfw-rs.git#c2a580e1a27d5e51b879c5b3f57b906b89309d43"
 
 [[package]]
 name = "net"
@@ -65,7 +66,7 @@ dependencies = [
  "epoll 0.1.0",
  "freetype 0.1.0",
  "gl 0.0.1",
- "glfw 0.0.1",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#c2a580e1a27d5e51b879c5b3f57b906b89309d43)",
  "net 0.1.0",
  "physics 0.1.0",
  "rustecs 0.1.0",
