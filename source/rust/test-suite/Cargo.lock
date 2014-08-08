@@ -27,7 +27,7 @@ dependencies = [
 name = "gl_generator"
 version = "0.0.1"
 dependencies = [
- "sax-rs 0.0.1 (git+https://github.com/bjz/sax-rs#732694833170377dbbf24a1646b749af0abbd394)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#bf50add39f2419742f624676bed8c93307bd863d)",
 ]
 
 [[package]]
@@ -44,17 +44,17 @@ name = "physics"
 version = "0.1.0"
 
 [[package]]
+name = "rust-xml"
+version = "0.1.0"
+source = "git+https://github.com/netvl/rust-xml#bf50add39f2419742f624676bed8c93307bd863d"
+
+[[package]]
 name = "rustecs"
 version = "0.1.0"
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-
-[[package]]
-name = "sax-rs"
-version = "0.0.1"
-source = "git+https://github.com/bjz/sax-rs#732694833170377dbbf24a1646b749af0abbd394"
 
 [[package]]
 name = "stb_image"
