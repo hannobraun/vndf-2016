@@ -5,7 +5,7 @@ dependencies = [
  "epoll 0.1.0",
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de)",
  "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#3289367cc6853e5b073f0cc01f697763f46e56ce)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
  "net 0.1.0",
  "physics 0.1.0",
  "rustecs 0.1.0",
@@ -39,16 +39,16 @@ dependencies = [
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#3289367cc6853e5b073f0cc01f697763f46e56ce"
+source = "git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0"
 dependencies = [
- "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#3289367cc6853e5b073f0cc01f697763f46e56ce)",
+ "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
  "semver 0.0.1 (git+https://github.com/rust-lang/semver#e17191f51d543529a6f07e6731802b77977fcef8)",
 ]
 
 [[package]]
 name = "link_glfw"
 version = "0.1.0"
-source = "git+https://github.com/bjz/glfw-rs.git#3289367cc6853e5b073f0cc01f697763f46e56ce"
+source = "git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0"
 
 [[package]]
 name = "net"
