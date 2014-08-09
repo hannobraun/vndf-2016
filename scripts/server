@@ -2,6 +2,5 @@
 
 source project.conf
 
-./scripts/tasks/build-common &&
-./scripts/tasks/build-game-service &&
-./$GAME_SERVICE_BINARY 34481
+./scripts/tasks/build-vndf &&
+$GAME_SERVICE_BINARY 34481
