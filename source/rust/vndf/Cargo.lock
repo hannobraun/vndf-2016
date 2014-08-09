@@ -10,7 +10,7 @@ dependencies = [
  "physics 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
- "stb_image 0.0.1 (git+https://github.com/hannobraun/rust-stb-image.git#f8c9dffdba1f0f0e74251bdfa0c61e02550f54d4)",
+ "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6)",
 ]
 
 [[package]]
@@ -79,5 +79,5 @@ source = "git+https://github.com/rust-lang/semver#e17191f51d543529a6f07e6731802b
 [[package]]
 name = "stb_image"
 version = "0.0.1"
-source = "git+https://github.com/hannobraun/rust-stb-image.git#f8c9dffdba1f0f0e74251bdfa0c61e02550f54d4"
+source = "git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6"
 
