@@ -2,7 +2,7 @@
 
 source project.conf
 
-export PATH=$(pwd)/source/rust/vndf/target/test:$PATH
+export PATH=$RUST_TARGET/test:$PATH
 export RUST_TEST_TASKS=1
 
 cd source/rust/vndf
