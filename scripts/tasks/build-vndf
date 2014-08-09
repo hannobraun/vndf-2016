@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+cd $RUST_SOURCE
+cargo build
