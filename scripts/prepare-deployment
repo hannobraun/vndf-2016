@@ -2,7 +2,7 @@
 
 source project.conf
 
-export PATH=$(pwd)/source/rust/target:$RUST_PATH:$PATH
+export PATH=$RUST_TARGET:$PATH
 
 CONTAINER_DIR=output/docker/vndf
 
