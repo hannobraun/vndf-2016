@@ -32,6 +32,5 @@ pub fn init() -> Box<Platform> {
 		.create()
 		.expect("failed to create window");
 
-	print!("!\n");
 	box DesktopPlatform as Box<Platform>
 }
