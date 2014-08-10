@@ -18,8 +18,8 @@ struct CliPlatform {
 }
 
 impl Platform for CliPlatform {
-	fn input(&mut self) -> Input {
-		self.input_handler.input()
+	fn input(&mut self) -> Result<Input, String> {
+		Ok(self.input_handler.input())
 	}
 
 	fn render(&mut self, frame: &Frame) {

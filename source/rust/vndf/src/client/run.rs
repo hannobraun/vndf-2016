@@ -43,7 +43,10 @@ pub fn run() {
 		game_state.receive_updates(&mut network);
 		game_state.update_camera(&mut camera);
 
-		let input = platform.input();
+		let input = match platform.input() {
+			Ok(input)  => input,
+			Err(error) => fail!("Error reading input: {}", error)
+		};
 		should_close = input.exit;
 
 		input_sender.update(input, &mut network);
