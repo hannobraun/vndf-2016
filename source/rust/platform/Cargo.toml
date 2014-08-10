@@ -2,3 +2,16 @@
 name    = "platform"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
+
+
+[dependencies.gl]
+path = "../../../vendor/gl-rs"
+
+[dependencies.glfw]
+git = "https://github.com/bjz/glfw-rs.git"
+
+[dependencies.freetype-rs]
+git = "https://github.com/PistonDevelopers/freetype-rs.git"
+
+[dependencies.stb_image]
+git = "https://github.com/mozilla-servo/rust-stb-image.git"

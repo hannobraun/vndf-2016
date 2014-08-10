@@ -31,21 +31,11 @@ path = "../platform"
 [dependencies.platform_cli]
 path = "../platform_cli"
 
+[dependencies.platform_desktop]
+path = "../platform_desktop"
+
 [dependencies.rustecs]
 path = "../librustecs"
 
 [dependencies.rustecs_macros]
 path = "../librustecs_macros"
-
-
-[dependencies.gl]
-path = "../../../vendor/gl-rs"
-
-[dependencies.glfw]
-git = "https://github.com/bjz/glfw-rs.git"
-
-[dependencies.freetype-rs]
-git = "https://github.com/PistonDevelopers/freetype-rs.git"
-
-[dependencies.stb_image]
-git = "https://github.com/mozilla-servo/rust-stb-image.git"
