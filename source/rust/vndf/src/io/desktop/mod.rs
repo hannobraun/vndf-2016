@@ -15,7 +15,10 @@ pub use self::font::{
 	Font,
 	Glyph,
 };
-pub use self::shaders::Shaders;
+pub use self::shaders::{
+	Program,
+	Shaders,
+};
 pub use self::textures::{Texture, Textures};
 pub use self::window::Window;
 
