@@ -15,7 +15,6 @@ use physics::{
 pub trait Platform {
 	fn input(&mut self) -> Result<Input, String>;
 	fn render(&mut self, frame: &Frame);
-	fn get_error(&mut self) -> Result<(), String>;
 }
 
 

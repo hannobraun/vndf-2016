@@ -59,10 +59,6 @@ impl Platform for DesktopPlatform {
 	fn render(&mut self, frame: &Frame) {
 		self.renderer.render(frame)
 	}
-
-	fn get_error(&mut self) -> Result<(), String> {
-		Ok(())
-	}
 }
 
 
