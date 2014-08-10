@@ -18,9 +18,7 @@ struct CliPlatform {
 	renderer     : Renderer,
 }
 
-impl Platform for CliPlatform {}
-
-impl io::InputHandler for CliPlatform {
+impl Platform for CliPlatform {
 	fn input(&mut self) -> Input {
 		self.input_handler.input()
 	}

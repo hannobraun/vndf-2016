@@ -31,9 +31,7 @@ struct DesktopPlatform {
 	renderer     : Renderer,
 }
 
-impl Platform for DesktopPlatform {}
-
-impl io::InputHandler for DesktopPlatform {
+impl Platform for DesktopPlatform {
 	fn input(&mut self) -> Input {
 		self.input_handler.input()
 	}

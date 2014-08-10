@@ -3,7 +3,6 @@ use std::rc::Rc;
 
 use glfw;
 
-use io;
 use io::Input;
 use physics::Radians;
 
@@ -24,10 +23,8 @@ impl InputHandler {
 			missile : 0
 		}
 	}
-}
 
-impl io::InputHandler for InputHandler {
-	fn input(&mut self) -> Input {
+	pub fn input(&mut self) -> Input {
 		self.window.poll_events();
 
 		let angular_velocity = 0.01;

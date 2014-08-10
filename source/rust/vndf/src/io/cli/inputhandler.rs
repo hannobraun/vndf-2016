@@ -6,7 +6,6 @@ use std::comm::{
 };
 
 use client::error::exit;
-use io;
 use io::Input;
 
 
@@ -35,10 +34,8 @@ impl InputHandler {
 			last_input: Input::default()
 		}
 	}
-}
 
-impl io::InputHandler for InputHandler {
-	fn input(&mut self) -> Input {
+	pub fn input(&mut self) -> Input {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
