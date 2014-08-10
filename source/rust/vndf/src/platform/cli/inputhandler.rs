@@ -49,7 +49,7 @@ impl InputHandler {
 
 		let input = match Input::from_json(message.as_slice()) {
 			Ok(input)  => input,
-			Err(error) => exit(format!("Error decoding input: {}", error).as_slice())
+			Err(error) => return Err(format!("Error decoding input: {}", error))
 		};
 
 		self.last_input = input;
