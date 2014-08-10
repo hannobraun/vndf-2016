@@ -1,4 +1,3 @@
-use io;
 use io::{
 	Frame,
 	Input,
@@ -22,9 +21,7 @@ impl Platform for CliPlatform {
 	fn input(&mut self) -> Input {
 		self.input_handler.input()
 	}
-}
 
-impl io::Renderer for CliPlatform {
 	fn render(&mut self, frame: &Frame) {
 		self.renderer.render(frame)
 	}

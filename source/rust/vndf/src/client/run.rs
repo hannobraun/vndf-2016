@@ -13,7 +13,6 @@ use io::{
 	desktop,
 	Frame,
 	Input,
-	Renderer
 };
 use physics::Vec2;
 

@@ -3,7 +3,6 @@ use std::rc::Rc;
 use gl;
 
 use client::error::exit;
-use io;
 use io::Frame;
 use physics::{
 	Body,
@@ -34,8 +33,28 @@ pub struct Renderer {
 	program: shaders::Program
 }
 
-impl io::Renderer for Renderer {
-	fn render(&mut self, frame: &Frame) {
+impl Renderer {
+	pub fn new(
+		window  : Rc<Window>,
+		shaders : Shaders,
+		textures: Textures,
+		font    : Font) -> Renderer {
+
+		Renderer {
+			screen_width : window.width as f64,
+			screen_height: window.height as f64,
+
+			window  : window,
+			shaders : shaders,
+			textures: textures,
+			font    : font,
+
+			camera : Vec2::zero(),
+			program: 0
+		}
+	}
+
+	pub fn render(&mut self, frame: &Frame) {
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 
 		self.camera = frame.camera;
@@ -79,28 +98,6 @@ impl io::Renderer for Renderer {
 
 				exit(format!("OpenGL error: {} ({})", error_as_str, error).as_slice())
 			}
-		}
-	}
-}
-
-impl Renderer {
-	pub fn new(
-		window  : Rc<Window>,
-		shaders : Shaders,
-		textures: Textures,
-		font    : Font) -> Renderer {
-
-		Renderer {
-			screen_width : window.width as f64,
-			screen_height: window.height as f64,
-
-			window  : window,
-			shaders : shaders,
-			textures: textures,
-			font    : font,
-
-			camera : Vec2::zero(),
-			program: 0
 		}
 	}
 

@@ -35,9 +35,7 @@ impl Platform for DesktopPlatform {
 	fn input(&mut self) -> Input {
 		self.input_handler.input()
 	}
-}
 
-impl io::Renderer for DesktopPlatform {
 	fn render(&mut self, frame: &io::Frame) {
 		self.renderer.render(frame)
 	}

@@ -1,4 +1,3 @@
-use io;
 use io::Frame;
 
 
@@ -8,10 +7,8 @@ impl Renderer {
 	pub fn new() -> Renderer {
 		Renderer
 	}
-}
 
-impl io::Renderer for Renderer {
-	fn render(&mut self, frame: &Frame) {
+	pub fn render(&mut self, frame: &Frame) {
 		print!("{}\n", frame.to_json());
 	}
 }

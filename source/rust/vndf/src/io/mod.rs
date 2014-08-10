@@ -11,11 +11,8 @@ pub mod cli;
 pub mod desktop;
 
 
-pub trait Platform : Renderer {
+pub trait Platform {
 	fn input(&mut self) -> Input;
-}
-
-pub trait Renderer {
 	fn render(&mut self, frame: &Frame);
 }
 
