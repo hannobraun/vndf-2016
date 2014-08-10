@@ -43,7 +43,7 @@ impl InputHandler {
 					return Ok(self.last_input),
 
 				Disconnected =>
-					exit(format!("Error receiving input: {}", error).as_slice())
+					return Err(format!("Error receiving input: {}", error))
 			}
 		};
 
