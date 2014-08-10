@@ -2,7 +2,6 @@ use std::rc::Rc;
 
 use gl;
 
-use client::error::exit;
 use physics::{
 	Body,
 	Radians,
@@ -96,7 +95,7 @@ impl Renderer {
 					_ => "unknown"
 				};
 
-				exit(format!("OpenGL error: {} ({})", error_as_str, error).as_slice())
+				fail!(format!("OpenGL error: {} ({})", error_as_str, error))
 			}
 		}
 	}
