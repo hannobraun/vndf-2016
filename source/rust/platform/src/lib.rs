@@ -1,4 +1,3 @@
-extern crate libc;
 extern crate serialize;
 
 extern crate physics;
