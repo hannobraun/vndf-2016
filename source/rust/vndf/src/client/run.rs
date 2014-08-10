@@ -1,5 +1,4 @@
 use client::args;
-use client::error;
 use client::game;
 use client::inputsender::InputSender;
 use client::network::Network;
@@ -20,7 +19,7 @@ use platform_desktop;
 pub fn run() {
 	let args = match args::parse() {
 		Some(args) => args,
-		None       => error::exit(format!("Failed to parse arguments").as_slice())
+		None       => fail!(format!("Failed to parse arguments"))
 	};
 
 	let mut network = Network::connect(
