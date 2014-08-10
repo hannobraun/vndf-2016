@@ -2,8 +2,6 @@ use gl;
 use glfw;
 use glfw::Context;
 
-use client::error::exit;
-
 
 pub struct Window {
 	pub width : u32,
@@ -17,7 +15,7 @@ impl Window {
 	pub fn create(width: u32, height: u32) -> Window {
 		let glfw = match glfw::init(glfw::FAIL_ON_ERRORS) {
 			Ok(glfw)   => glfw,
-			Err(error) => exit(format!("{}", error).as_slice())
+			Err(error) => fail!(format!("{}", error))
 		};
 
 		glfw.window_hint(glfw::ContextVersion(3, 0));
