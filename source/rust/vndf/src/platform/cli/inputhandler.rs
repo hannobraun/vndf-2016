@@ -5,7 +5,6 @@ use std::comm::{
 	Receiver
 };
 
-use client::error::exit;
 use platform::Input;
 
 
@@ -24,7 +23,9 @@ impl InputHandler {
 				match stdin.read_line() {
 					Ok(message) => sender.send(message),
 					Err(error)  =>
-						exit(format!("Error reading from stdin: {}", error).as_slice())
+						// Failing is enough. The next call to input will return
+						// an error due to the disconnected channel.
+						fail!(format!("Error reading from stdin: {}", error))
 				}
 			}
 		});
