@@ -3,5 +3,13 @@ name    = "platform_gfxrs"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
+
 [dependencies.platform]
 path = "../platform"
+
+
+[dependencies.gfx]
+git = "http://github.com/gfx-rs/gfx-rs"
+
+[dependencies.glfw_platform]
+git = "http://github.com/gfx-rs/gfx-rs"
