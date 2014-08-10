@@ -46,7 +46,7 @@ impl Textures {
 	pub fn get<'a>(&'a self, key: &str) -> &'a Texture {
 		match self.map.find(&key.to_string()) {
 			Some(texture) => texture,
-			None          => exit(format!("Texture not found: {}", key).as_slice())
+			None          => fail!(format!("Texture not found: {}", key))
 		}
 	}
 
