@@ -17,7 +17,6 @@ use freetype::ffi::{
 	FT_Set_Pixel_Sizes
 };
 
-use client::error::exit;
 use physics::Vec2;
 
 use super::{
@@ -61,7 +60,7 @@ impl Font {
 	pub fn get<'a>(&'a self, c: char) -> &'a Glyph {
 		match self.glyphs.find(&c) {
 			Some(glyph) => glyph,
-			None        => exit(format!("No such glyph: {}", c).as_slice())
+			None        => fail!(format!("No such glyph: {}", c))
 		}
 	}
 }
