@@ -29,7 +29,7 @@ pub fn run() {
 		args.address.as_slice(),
 		args.port.as_slice());
 
-	let (mut input_handler, mut renderer) = if args.headless {
+	let mut platform = if args.headless {
 		cli::init()
 	}
 	else {
@@ -45,7 +45,7 @@ pub fn run() {
 		game_state.receive_updates(&mut network);
 		game_state.update_camera(&mut camera);
 
-		let input = input_handler.input();
+		let input = platform.input();
 		should_close = input.exit;
 
 		input_sender.update(input, &mut network);
@@ -54,7 +54,7 @@ pub fn run() {
 
 		let frame = make_frame(input, camera, &game_state.world);
 
-		renderer.render(&frame);
+		platform.render(&frame);
 	}
 }
 

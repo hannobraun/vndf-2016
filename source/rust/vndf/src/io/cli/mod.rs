@@ -1,4 +1,9 @@
 use io;
+use io::{
+	Frame,
+	Input,
+	Platform,
+};
 
 use self::inputhandler::InputHandler;
 use self::renderer::Renderer;
@@ -8,8 +13,31 @@ mod inputhandler;
 mod renderer;
 
 
-pub fn init() -> (Box<io::InputHandler>, Box<io::Renderer>) {
-	(
-		box InputHandler::new() as Box<io::InputHandler>,
-		box Renderer::new() as Box<io::Renderer>)
+struct CliPlatform {
+	input_handler: InputHandler,
+	renderer     : Renderer,
+}
+
+impl Platform for CliPlatform {}
+
+impl io::InputHandler for CliPlatform {
+	fn input(&mut self) -> Input {
+		self.input_handler.input()
+	}
+}
+
+impl io::Renderer for CliPlatform {
+	fn render(&mut self, frame: &Frame) {
+		self.renderer.render(frame)
+	}
+}
+
+
+pub fn init() -> Box<Platform> {
+	box
+		CliPlatform {
+			input_handler: InputHandler::new(),
+			renderer     : Renderer::new(),
+		}
+	as Box<Platform>
 }

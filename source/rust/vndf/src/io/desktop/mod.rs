@@ -1,6 +1,11 @@
 use std::rc::Rc;
 
 use io;
+use io::{
+	Frame,
+	Input,
+	Platform,
+};
 
 use self::inputhandler::InputHandler;
 use self::renderer::Renderer;
@@ -21,7 +26,27 @@ mod textures;
 mod window;
 
 
-pub fn init() -> (Box<io::InputHandler>, Box<io::Renderer>) {
+struct DesktopPlatform {
+	input_handler: InputHandler,
+	renderer     : Renderer,
+}
+
+impl Platform for DesktopPlatform {}
+
+impl io::InputHandler for DesktopPlatform {
+	fn input(&mut self) -> Input {
+		self.input_handler.input()
+	}
+}
+
+impl io::Renderer for DesktopPlatform {
+	fn render(&mut self, frame: &io::Frame) {
+		self.renderer.render(frame)
+	}
+}
+
+
+pub fn init() -> Box<Platform> {
 	let screen_width  = 800;
 	let screen_height = 600;
 
@@ -32,11 +57,15 @@ pub fn init() -> (Box<io::InputHandler>, Box<io::Renderer>) {
 
 	images::load(&mut textures);
 
-	(
-		box InputHandler::new(window.clone()) as Box<io::InputHandler>,
-		box Renderer::new(
-			window.clone(),
-			shaders,
-			textures,
-			font) as Box<io::Renderer>)
+	box
+		DesktopPlatform {
+			input_handler: InputHandler::new(window.clone()),
+			renderer     : Renderer::new(
+				window.clone(),
+				shaders,
+				textures,
+				font
+			)
+		}
+	as Box<Platform>
 }
