@@ -1,11 +1,6 @@
 extern crate libc;
 extern crate serialize;
 
-extern crate freetype;
-extern crate gl;
-extern crate glfw;
-extern crate stb_image;
-
 extern crate physics;
 
 
@@ -14,9 +9,6 @@ pub use platform::{
 	Input,
 	Platform,
 };
-
-
-pub mod desktop;
 
 
 mod platform {

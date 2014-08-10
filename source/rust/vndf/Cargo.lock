@@ -3,16 +3,13 @@ name = "vndf"
 version = "0.1.0"
 dependencies = [
  "epoll 0.1.0",
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de)",
- "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
  "net 0.1.0",
  "physics 0.1.0",
  "platform 0.1.0",
  "platform_cli 0.1.0",
+ "platform_desktop 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
- "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6)",
 ]
 
 [[package]]
@@ -35,7 +32,7 @@ dependencies = [
 name = "gl_generator"
 version = "0.0.1"
 dependencies = [
- "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#bf50add39f2419742f624676bed8c93307bd863d)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#74d774629eee9f2eef41bbdb44ffc02535085375)",
 ]
 
 [[package]]
@@ -63,15 +60,31 @@ version = "0.1.0"
 [[package]]
 name = "platform"
 version = "0.1.0"
+dependencies = [
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de)",
+ "gl 0.0.1",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
+ "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6)",
+]
 
 [[package]]
 name = "platform_cli"
 version = "0.1.0"
+dependencies = [
+ "platform 0.1.0",
+]
+
+[[package]]
+name = "platform_desktop"
+version = "0.1.0"
+dependencies = [
+ "platform 0.1.0",
+]
 
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/netvl/rust-xml#bf50add39f2419742f624676bed8c93307bd863d"
+source = "git+https://github.com/netvl/rust-xml#74d774629eee9f2eef41bbdb44ffc02535085375"
 
 [[package]]
 name = "rustecs"

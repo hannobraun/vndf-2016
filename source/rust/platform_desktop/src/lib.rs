@@ -1,3 +1,14 @@
+extern crate libc;
+
+extern crate freetype;
+extern crate gl;
+extern crate glfw;
+extern crate stb_image;
+
+extern crate physics;
+extern crate platform;
+
+
 use std::rc::Rc;
 
 use platform::{

@@ -10,11 +10,11 @@ use game::ecs::{
 };
 use physics::Vec2;
 use platform::{
-	desktop,
 	Frame,
 	Input,
 };
 use platform_cli;
+use platform_desktop;
 
 
 pub fn run() {
@@ -31,7 +31,7 @@ pub fn run() {
 		platform_cli::init()
 	}
 	else {
-		desktop::init()
+		platform_desktop::init()
 	};
 
 	let mut game_state   = game::State::new();
