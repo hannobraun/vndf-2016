@@ -35,12 +35,12 @@ impl InputHandler {
 		}
 	}
 
-	pub fn input(&mut self) -> Input {
+	pub fn input(&mut self) -> Result<Input, String> {
 		let message = match self.input.try_recv() {
 			Ok(message) => message,
 			Err(error)  => match error {
 				Empty =>
-					return self.last_input,
+					return Ok(self.last_input),
 
 				Disconnected =>
 					exit(format!("Error receiving input: {}", error).as_slice())
@@ -54,6 +54,6 @@ impl InputHandler {
 
 		self.last_input = input;
 
-		input
+		Ok(input)
 	}
 }
