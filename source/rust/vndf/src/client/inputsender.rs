@@ -1,7 +1,7 @@
 use time;
 
 use client::network::Network;
-use io::Input;
+use platform::Input;
 
 
 pub struct InputSender {

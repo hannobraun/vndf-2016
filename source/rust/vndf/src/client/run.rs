@@ -8,13 +8,13 @@ use game::ecs::{
 	ShowAsMissile,
 	ShowAsShip,
 };
-use io::{
+use physics::Vec2;
+use platform::{
 	cli,
 	desktop,
 	Frame,
 	Input,
 };
-use physics::Vec2;
 
 
 pub fn run() {

@@ -1,4 +1,4 @@
-use io::Frame;
+use platform::Frame;
 
 
 pub struct Renderer;

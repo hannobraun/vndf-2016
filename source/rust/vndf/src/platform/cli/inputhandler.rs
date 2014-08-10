@@ -6,7 +6,7 @@ use std::comm::{
 };
 
 use client::error::exit;
-use io::Input;
+use platform::Input;
 
 
 pub struct InputHandler {

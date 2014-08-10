@@ -1,7 +1,6 @@
 use std::rc::Rc;
 
-use io;
-use io::{
+use platform::{
 	Frame,
 	Input,
 	Platform,
@@ -46,7 +45,7 @@ impl Platform for DesktopPlatform {
 		self.input_handler.input()
 	}
 
-	fn render(&mut self, frame: &io::Frame) {
+	fn render(&mut self, frame: &Frame) {
 		self.renderer.render(frame)
 	}
 }

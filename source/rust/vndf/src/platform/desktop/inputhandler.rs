@@ -3,8 +3,8 @@ use std::rc::Rc;
 
 use glfw;
 
-use io::Input;
 use physics::Radians;
+use platform::Input;
 
 use super::Window;
 

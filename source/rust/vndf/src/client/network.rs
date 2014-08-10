@@ -1,6 +1,6 @@
 use client::error::exit;
 use game::ecs::SharedWorldEntity;
-use io::Input;
+use platform::Input;
 use net::Connection;
 use protocol::{
 	Action,

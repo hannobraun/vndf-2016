@@ -1,4 +1,4 @@
-use io::{
+use platform::{
 	Frame,
 	Input,
 	Platform,

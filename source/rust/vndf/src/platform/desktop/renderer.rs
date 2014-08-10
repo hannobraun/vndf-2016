@@ -3,12 +3,12 @@ use std::rc::Rc;
 use gl;
 
 use client::error::exit;
-use io::Frame;
 use physics::{
 	Body,
 	Radians,
 	Vec2
 };
+use platform::Frame;
 
 use super::{
 	shaders,
