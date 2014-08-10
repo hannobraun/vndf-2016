@@ -25,6 +25,9 @@ path = "../net"
 [dependencies.physics]
 path = "../physics"
 
+[dependencies.platform]
+path = "../platform"
+
 [dependencies.rustecs]
 path = "../librustecs"
 
