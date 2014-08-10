@@ -9,8 +9,6 @@ use gl::types::{
 	GLuint
 };
 
-use client::error::exit;
-
 use super::Window;
 
 
@@ -115,7 +113,7 @@ fn create_shader(kind: GLenum, path: &str, shaders: &mut ShaderMap) {
 		print!("Error compiling shader {}:\n\n", path);
 		print!("{}\n", c_str.as_str().unwrap());
 
-		exit("");
+		fail!();
 	}
 
 	shaders.insert(path.to_string(), shader);
