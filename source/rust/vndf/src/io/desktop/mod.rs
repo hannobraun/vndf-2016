@@ -11,7 +11,10 @@ use self::inputhandler::InputHandler;
 use self::renderer::Renderer;
 
 
-pub use self::font::Font;
+pub use self::font::{
+	Font,
+	Glyph,
+};
 pub use self::shaders::Shaders;
 pub use self::textures::{Texture, Textures};
 pub use self::window::Window;
