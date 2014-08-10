@@ -8,10 +8,8 @@ extern crate time;
 extern crate physics;
 extern crate platform;
 extern crate rustecs;
-#[phase(plugin)]
-extern crate rustecs_macros;
-#[phase(plugin, link)]
-extern crate vndf;
+#[phase(plugin)] extern crate rustecs_macros;
+#[phase(plugin, link)] extern crate vndf;
 
 
 mod unit {
