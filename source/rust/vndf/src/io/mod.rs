@@ -11,6 +11,10 @@ pub mod cli;
 pub mod desktop;
 
 
+pub trait Platform : InputHandler + Renderer {
+
+}
+
 pub trait Renderer {
 	fn render(&mut self, frame: &Frame);
 }
