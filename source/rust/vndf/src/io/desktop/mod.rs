@@ -20,6 +20,7 @@ pub use self::shaders::{
 	Shaders,
 };
 pub use self::textures::{
+	Name,
 	Texture,
 	Textures
 };
