@@ -1,0 +1,4 @@
+[package]
+name    = "platform_cli"
+version = "0.1.0"
+authors = [ "mail@hannobraun.de" ]

@@ -1,3 +1,6 @@
+extern crate platform;
+
+
 use platform::{
 	Frame,
 	Input,

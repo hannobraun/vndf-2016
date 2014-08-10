@@ -28,6 +28,9 @@ path = "../physics"
 [dependencies.platform]
 path = "../platform"
 
+[dependencies.platform_cli]
+path = "../platform_cli"
+
 [dependencies.rustecs]
 path = "../librustecs"
 

@@ -16,7 +16,6 @@ pub use platform::{
 };
 
 
-pub mod cli;
 pub mod desktop;
 
 

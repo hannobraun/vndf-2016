@@ -10,11 +10,11 @@ use game::ecs::{
 };
 use physics::Vec2;
 use platform::{
-	cli,
 	desktop,
 	Frame,
 	Input,
 };
+use platform_cli;
 
 
 pub fn run() {
@@ -28,7 +28,7 @@ pub fn run() {
 		args.port.as_slice());
 
 	let mut platform = if args.headless {
-		cli::init()
+		platform_cli::init()
 	}
 	else {
 		desktop::init()

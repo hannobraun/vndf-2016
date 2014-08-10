@@ -9,6 +9,7 @@ dependencies = [
  "net 0.1.0",
  "physics 0.1.0",
  "platform 0.1.0",
+ "platform_cli 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
  "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6)",
@@ -61,6 +62,10 @@ version = "0.1.0"
 
 [[package]]
 name = "platform"
+version = "0.1.0"
+
+[[package]]
+name = "platform_cli"
 version = "0.1.0"
 
 [[package]]
