@@ -19,7 +19,10 @@ pub use self::shaders::{
 	Program,
 	Shaders,
 };
-pub use self::textures::{Texture, Textures};
+pub use self::textures::{
+	Texture,
+	Textures
+};
 pub use self::window::Window;
 
 
