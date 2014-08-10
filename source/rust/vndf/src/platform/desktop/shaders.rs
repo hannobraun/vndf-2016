@@ -73,7 +73,8 @@ impl Shaders {
 	pub fn program(&self, key: &str) -> Program {
 		match self.programs.find(&key.to_string()) {
 			Some(&program) => program,
-			None           => exit(format!("Shader program not found: {}", key).as_slice())
+			None =>
+				fail!(format!("Shader program not found: {}", key))
 		}
 	}
 }
