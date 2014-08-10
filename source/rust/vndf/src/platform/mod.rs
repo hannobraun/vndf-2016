@@ -14,6 +14,7 @@ pub mod desktop;
 pub trait Platform {
 	fn input(&mut self) -> Input;
 	fn render(&mut self, frame: &Frame);
+	fn get_error(&mut self) -> Result<(), String>;
 }
 
 
