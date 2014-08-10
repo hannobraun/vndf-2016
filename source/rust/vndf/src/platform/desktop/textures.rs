@@ -3,7 +3,6 @@ use std::collections::HashMap;
 
 use gl;
 
-use client::error::exit;
 use physics::Vec2;
 
 use super::Window;
@@ -52,7 +51,7 @@ impl Textures {
 
 	pub fn add(&mut self, key: String, texture: Texture) {
 		if self.map.contains_key(&key) {
-			exit(format!("texture already present ({})", key).as_slice());
+			fail!(format!("texture already present ({})", key));
 		}
 
 		self.map.insert(key, texture);
