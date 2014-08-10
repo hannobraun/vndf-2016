@@ -27,6 +27,7 @@ pub fn init() -> Box<Platform> {
 
 	let (mut window, events) = glfw_platform::WindowBuilder::new(&glfw)
 		.title("Von Neumann Defense Force *EARLY PROTOTYPE*")
+		.size(800, 600)
 		.try_modern_context_hints()
 		.create()
 		.expect("failed to create window");
