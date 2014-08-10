@@ -1,6 +1,5 @@
 use stb_image::image;
 
-use client::error::exit;
 use physics::Vec2;
 
 use super::{
@@ -22,7 +21,10 @@ pub fn load(textures: &mut Textures) {
 		"images/spaceship.png");
 
 	for &path in paths.iter() {
-		let image   = load_image(path);
+		let image = match load_image(path) {
+			Ok(image)  => image,
+			Err(error) => fail!(error)
+		};
 		let texture = Texture::new_rgb(
 			&image.data,
 			Vec2(
@@ -35,22 +37,23 @@ pub fn load(textures: &mut Textures) {
 	}
 }
 
-fn load_image(image_path: &str) -> Image {
+fn load_image(image_path: &str) -> Result<Image, String> {
 	match image::load(&Path::new(image_path)) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;
 
-			Image {
+			Ok(Image {
 				data  : image.data,
 				width : width,
-				height: height }
+				height: height
+			})
 		},
 
 		image::ImageF32(_) =>
-			exit(format!("Unexpected image type: ImageF32").as_slice()),
+			Err(format!("Unexpected image type: ImageF32")),
 
 		image::Error(message) =>
-			exit(message.as_slice())
+			Err(message)
 	}
 }
