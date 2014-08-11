@@ -16,6 +16,7 @@ use platform::{
 struct DesktopPlatform {
 	glfw  : glfw::Glfw,
 	window: glfw::Window,
+	events: sync::comm::Receiver<(f64,glfw::WindowEvent)>,
 }
 
 impl Platform for DesktopPlatform {
@@ -24,6 +25,15 @@ impl Platform for DesktopPlatform {
 
 		let mut input = Input::default();
 		input.exit = self.window.should_close();
+
+		for (_, event) in glfw::flush_messages(&self.events) {
+			match event {
+				glfw::KeyEvent(glfw::KeyEscape, _, glfw::Press, _) =>
+					input.exit = true,
+
+				_ => {},
+			}
+		}
 
 		Ok(input)
 	}
@@ -42,10 +52,13 @@ pub fn init() -> Box<Platform> {
 		.create()
 		.expect("failed to create window");
 
+	window.set_key_polling(true);
+
 	box
 		DesktopPlatform {
 			glfw  : glfw,
 			window: window,
+			events: events,
 		}
 	as Box<Platform>
 }
