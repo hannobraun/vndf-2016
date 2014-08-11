@@ -19,7 +19,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#6ecf47969c6001817e960ddf9dfe605308022a5b"
 
 [[package]]
 name = "gl"
@@ -75,7 +75,7 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#15ca57d5e1a67a3da746d71efb05062d870fe5de)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#6ecf47969c6001817e960ddf9dfe605308022a5b)",
  "gl 0.0.1",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
  "platform 0.1.0",
