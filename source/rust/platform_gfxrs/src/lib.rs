@@ -43,11 +43,14 @@ impl Platform for DesktopPlatform {
 
 
 pub fn init() -> Box<Platform> {
+	let width  = 800;
+	let height = 600;
+
 	let glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 
 	let (mut window, events) = glfw_platform::WindowBuilder::new(&glfw)
 		.title("Von Neumann Defense Force *EARLY PROTOTYPE*")
-		.size(800, 600)
+		.size(width, height)
 		.try_modern_context_hints()
 		.create()
 		.expect("failed to create window");
