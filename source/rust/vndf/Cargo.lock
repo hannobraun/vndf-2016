@@ -38,16 +38,16 @@ dependencies = [
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0"
+source = "git+https://github.com/bjz/glfw-rs.git#df29ebf1316114f4ffa5c73c99781bdbbbbc7ab6"
 dependencies = [
- "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
- "semver 0.0.1 (git+https://github.com/rust-lang/semver#e17191f51d543529a6f07e6731802b77977fcef8)",
+ "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#df29ebf1316114f4ffa5c73c99781bdbbbbc7ab6)",
+ "semver 0.0.1 (git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f)",
 ]
 
 [[package]]
 name = "link_glfw"
 version = "0.1.0"
-source = "git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0"
+source = "git+https://github.com/bjz/glfw-rs.git#df29ebf1316114f4ffa5c73c99781bdbbbbc7ab6"
 
 [[package]]
 name = "net"
@@ -77,9 +77,9 @@ version = "0.1.0"
 dependencies = [
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#6ecf47969c6001817e960ddf9dfe605308022a5b)",
  "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#b98b8abdbd6877e511d798a09a64cc442b474ea0)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#df29ebf1316114f4ffa5c73c99781bdbbbbc7ab6)",
  "platform 0.1.0",
- "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6)",
+ "stb_image 0.0.1 (git+https://github.com/mozilla-servo/rust-stb-image.git#4fd755a37a3eb443b6b35c37f042cd7d2a1aebf8)",
 ]
 
 [[package]]
@@ -98,10 +98,10 @@ version = "0.1.0"
 [[package]]
 name = "semver"
 version = "0.0.1"
-source = "git+https://github.com/rust-lang/semver#e17191f51d543529a6f07e6731802b77977fcef8"
+source = "git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f"
 
 [[package]]
 name = "stb_image"
 version = "0.0.1"
-source = "git+https://github.com/mozilla-servo/rust-stb-image.git#cf5cd961f5d952501c21ce64d1fcc293144a96f6"
+source = "git+https://github.com/mozilla-servo/rust-stb-image.git#4fd755a37a3eb443b6b35c37f042cd7d2a1aebf8"
 
