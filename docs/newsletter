@@ -1,6 +1,7 @@
 Rules:
 
-- Emphasize (<em>) mentions of <em>Von Neumann Defense Force</em>
+- Emphasize (<em>) mentions of <em>Von Neumann Defense Force</em> and
+  <em>VNDF</em>, except in titles.
 - Remove subscription information from header and footer in email version
 - Remove links to subscription in newsletter version
 
