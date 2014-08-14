@@ -24,6 +24,11 @@ stories that will no longer be current for the next newsletter.
 - Sort stories into time-sensitive (needs to go out with next newsletter) and
 time-independent (can be used as filler for any newsletter).
 
+News resources:
+- General: http://www.reddit.com/r/space/
+- Rosetta: http://blogs.esa.int/rosetta/
+- New Horizons: http://pluto.jhuapl.edu/index.php
+
 
 # Plans
 
@@ -43,7 +48,3 @@ News for any month:
 - http://www.reddit.com/r/space/comments/2bs3i7/all_known_bodies_in_our_solar_system_with_a/
 - http://www.esa.int/Our_Activities/Space_Science/Rosetta/Rosetta_arrives_at_comet_destination
   (include link to Rosetta blogs)
-
-News resources:
-- Rosetta: http://blogs.esa.int/rosetta/
-- New Horizons: http://pluto.jhuapl.edu/index.php
