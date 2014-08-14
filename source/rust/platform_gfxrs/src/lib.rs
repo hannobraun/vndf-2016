@@ -1,10 +1,18 @@
+#![feature(unsafe_destructor)]
+
+
 extern crate sync;
 
+extern crate device;
+extern crate gfx;
 extern crate glfw;
 extern crate glfw_platform;
+extern crate render;
 
 extern crate platform;
 
+
+use glfw_platform::BuilderExtension;
 
 use platform::{
 	Frame,
@@ -17,6 +25,7 @@ struct DesktopPlatform {
 	glfw  : glfw::Glfw,
 	window: glfw::Window,
 	events: sync::comm::Receiver<(f64,glfw::WindowEvent)>,
+	device: device::Device<render::resource::handle::Handle,device::gl::GlBackEnd,glfw_platform::Platform<glfw::RenderContext>>,
 }
 
 impl Platform for DesktopPlatform {
@@ -38,7 +47,16 @@ impl Platform for DesktopPlatform {
 		Ok(input)
 	}
 
-	fn render(&mut self, frame: &Frame) {}
+	fn render(&mut self, frame: &Frame) {
+		self.device.update();
+	}
+}
+
+// This is a workaround for https://github.com/gfx-rs/gfx-rs/issues/204. It
+// should be possible to remove this pretty soon.
+#[unsafe_destructor]
+impl Drop for DesktopPlatform {
+	fn drop(&mut self) {}
 }
 
 
@@ -57,11 +75,36 @@ pub fn init() -> Box<Platform> {
 
 	window.set_key_polling(true);
 
+	let mut device = gfx::build()
+		.with_glfw_window(&mut window)
+		.with_queue_size(1)
+		.spawn(proc(r) render(r, width as u16, height as u16))
+		.unwrap();
+
 	box
 		DesktopPlatform {
 			glfw  : glfw,
 			window: window,
 			events: events,
+			device: device,
 		}
 	as Box<Platform>
+}
+
+fn render(mut renderer: gfx::Renderer, width: u16, height: u16) {
+	let frame = gfx::Frame::new(width, height);
+
+	let clear = gfx::ClearData {
+		color: Some(gfx::Color([0.3, 0.3, 0.3, 1.0])),
+		depth: None,
+		stencil: None,
+	};
+
+	while !renderer.should_finish() {
+		renderer.clear(clear, frame);
+		renderer.end_frame();
+		for err in renderer.errors() {
+			println!("Renderer error: {}", err);
+		}
+	}
 }
