@@ -46,5 +46,3 @@ News for September:
 News for any month:
 - Asteroid video by Scott Manley
 - http://www.reddit.com/r/space/comments/2bs3i7/all_known_bodies_in_our_solar_system_with_a/
-- http://www.esa.int/Our_Activities/Space_Science/Rosetta/Rosetta_arrives_at_comet_destination
-  (include link to Rosetta blogs)
