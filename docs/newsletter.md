@@ -13,7 +13,11 @@ template.
 stories that will no longer be current for the next newsletter.
 1. Write email version of newsletter. Use previous newsletter as template.
   1. Remove subscription information from header and footer
+  1. Remove anchor links
   1. Remove links to subscription in newsletter version
+  1. Replace relative links with absolute ones
+  1. Update link to online version
+1. Send preview version of newsletter to yourself. Check all links.
 1. Send email version of newsletter.
 1. Link online version in blog and deploy change.
 
