@@ -1,7 +1,7 @@
 # Rules
 
-- Emphasize (<em>) mentions of <em>Von Neumann Defense Force</em> and
-  <em>VNDF</em>, except in titles.
+- Emphasize mentions of `<em>Von Neumann Defense Force</em>` and
+  `<em>VNDF</em>`, except in titles.
 
 # Procedures
 
