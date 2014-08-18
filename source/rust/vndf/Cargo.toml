@@ -11,7 +11,7 @@ test = false
 name = "vndf-game-service"
 test = false
 
-[[lib]]
+[lib]
 name = "vndf"
 test = false
 
