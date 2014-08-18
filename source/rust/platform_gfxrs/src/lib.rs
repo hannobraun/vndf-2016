@@ -6,7 +6,6 @@ extern crate sync;
 extern crate device;
 extern crate gfx;
 extern crate glfw;
-extern crate render;
 
 extern crate platform;
 
