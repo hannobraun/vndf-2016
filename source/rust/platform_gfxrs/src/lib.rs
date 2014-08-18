@@ -69,13 +69,6 @@ impl Platform for DesktopPlatform {
 	}
 }
 
-// This is a workaround for https://github.com/gfx-rs/gfx-rs/issues/204. It
-// should be possible to remove this pretty soon.
-#[unsafe_destructor]
-impl Drop for DesktopPlatform {
-	fn drop(&mut self) {}
-}
-
 
 pub fn init() -> Box<Platform> {
 	let width  = 800;
