@@ -61,15 +61,15 @@ pub fn run() {
 fn make_frame(input: Input, camera: Vec2, world: &ClientWorld) -> Frame {
 	let ships = world.bodies
 		.iter()
-		.filter(|&(id, _)|
-			world.visuals.get(id) == &ShowAsShip)
+		.filter(|&(&id, _)|
+			world.visuals[id] == ShowAsShip)
 		.map(|(_, &body)|
 			body)
 		.collect();
 	let missiles = world.bodies
 		.iter()
-		.filter(|&(id, _)|
-			world.visuals.get(id) == &ShowAsMissile)
+		.filter(|&(&id, _)|
+			world.visuals[id] == ShowAsMissile)
 		.map(|(_, &body)|
 			body)
 		.collect();
