@@ -94,7 +94,7 @@ pub fn init() -> Box<Platform> {
 	window.make_current();
 	window.set_key_polling(true);
 
-	let mut device = gfx::GlDevice::new(|s| glfw.get_proc_address(s));
+	let device = gfx::GlDevice::new(|s| glfw.get_proc_address(s));
 
 	box
 		DesktopPlatform {
