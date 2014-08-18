@@ -1,6 +1,3 @@
-#![feature(unsafe_destructor)]
-
-
 extern crate sync;
 
 extern crate device;
