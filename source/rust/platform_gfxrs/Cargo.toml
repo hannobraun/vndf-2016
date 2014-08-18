@@ -11,5 +11,5 @@ path = "../platform"
 [dependencies.gfx]
 git = "http://github.com/gfx-rs/gfx-rs"
 
-[dependencies.glfw_platform]
-git = "http://github.com/gfx-rs/gfx-rs"
+[dependencies.glfw]
+git = "https://github.com/bjz/glfw-rs.git"

@@ -6,13 +6,16 @@ extern crate sync;
 extern crate device;
 extern crate gfx;
 extern crate glfw;
-extern crate glfw_platform;
 extern crate render;
 
 extern crate platform;
 
 
-use glfw_platform::BuilderExtension;
+use gfx::{
+	Device,
+	DeviceHelper,
+};
+use glfw::Context;
 
 use platform::{
 	Frame,
@@ -25,7 +28,7 @@ struct DesktopPlatform {
 	glfw  : glfw::Glfw,
 	window: glfw::Window,
 	events: sync::comm::Receiver<(f64,glfw::WindowEvent)>,
-	device: device::Device<render::resource::handle::Handle,device::gl::GlBackEnd,glfw_platform::Platform<glfw::RenderContext>>,
+	device: device::gl::GlDevice,
 }
 
 impl Platform for DesktopPlatform {
@@ -48,7 +51,22 @@ impl Platform for DesktopPlatform {
 	}
 
 	fn render(&mut self, frame: &Frame) {
-		self.device.update();
+		let (width, height) = self.window.get_framebuffer_size();
+
+		let frame = gfx::Frame::new(width as u16, height as u16);
+		let mut list = self.device.create_draw_list();
+
+		list.clear(
+			gfx::ClearData {
+				color: Some(gfx::Color([0.3, 0.3, 0.3, 1.0])),
+				depth: None,
+				stencil: None,
+			},
+			&frame
+		);
+
+		self.device.submit(list.as_slice());
+        self.window.swap_buffers();
 	}
 }
 
@@ -66,20 +84,18 @@ pub fn init() -> Box<Platform> {
 
 	let glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 
-	let (mut window, events) = glfw_platform::WindowBuilder::new(&glfw)
-		.title("Von Neumann Defense Force *EARLY PROTOTYPE*")
-		.size(width, height)
-		.try_modern_context_hints()
-		.create()
+	let (window, events) = glfw
+		.create_window(
+			width,
+			height,
+			"Von Neumann Defense Force *EARLY PROTOTYPE*",
+			glfw::Windowed)
 		.expect("failed to create window");
 
+	window.make_current();
 	window.set_key_polling(true);
 
-	let mut device = gfx::build()
-		.with_glfw_window(&mut window)
-		.with_queue_size(1)
-		.spawn(proc(r) render(r, width as u16, height as u16))
-		.unwrap();
+	let mut device = gfx::GlDevice::new(|s| glfw.get_proc_address(s));
 
 	box
 		DesktopPlatform {
@@ -89,22 +105,4 @@ pub fn init() -> Box<Platform> {
 			device: device,
 		}
 	as Box<Platform>
-}
-
-fn render(mut renderer: gfx::Renderer, width: u16, height: u16) {
-	let frame = gfx::Frame::new(width, height);
-
-	let clear = gfx::ClearData {
-		color: Some(gfx::Color([0.3, 0.3, 0.3, 1.0])),
-		depth: None,
-		stencil: None,
-	};
-
-	while !renderer.should_finish() {
-		renderer.clear(clear, frame);
-		renderer.end_frame();
-		for err in renderer.errors() {
-			println!("Renderer error: {}", err);
-		}
-	}
 }
