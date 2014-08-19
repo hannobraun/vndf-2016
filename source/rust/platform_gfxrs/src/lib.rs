@@ -61,6 +61,7 @@ struct Vertex {
 
 
 struct DesktopPlatform {
+	device: device::gl::GlDevice,
 	window: Window,
 }
 
@@ -79,7 +80,7 @@ impl Platform for DesktopPlatform {
 			self.window.width,
 			self.window.height
 		);
-		let mut list = self.window.device.create_draw_list();
+		let mut list = self.device.create_draw_list();
 
 		let state = gfx::DrawState::new();
 		let vertex_data = vec![
@@ -87,8 +88,8 @@ impl Platform for DesktopPlatform {
 			Vertex { pos: [ 0.5, -0.5 ], color: [0.0, 1.0, 0.0]  },
 			Vertex { pos: [ 0.0, 0.5 ], color: [0.0, 0.0, 1.0]  }
 		];
-		let mesh = self.window.device.create_mesh(vertex_data);
-		let program: gfx::shade::EmptyProgram = self.window.device.link_program(
+		let mesh = self.device.create_mesh(vertex_data);
+		let program: gfx::shade::EmptyProgram = self.device.link_program(
 			VERTEX_SRC.clone(), FRAGMENT_SRC.clone()).unwrap();
 
 		list.clear(
@@ -103,7 +104,7 @@ impl Platform for DesktopPlatform {
 		list.draw(&mesh, mesh.get_slice(), &frame, &program, &state)
 			.unwrap();
 
-		self.window.device.submit(list.as_slice());
+		self.device.submit(list.as_slice());
         self.window.swap_buffers();
 	}
 }
@@ -114,6 +115,7 @@ pub fn init() -> Box<Platform> {
 
 	box
 		DesktopPlatform {
+			device: window.new_device(),
 			window: window,
 		}
 	as Box<Platform>

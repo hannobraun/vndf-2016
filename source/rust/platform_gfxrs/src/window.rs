@@ -7,7 +7,6 @@ use glfw::Context;
 pub struct Window {
 	pub width : u16,
 	pub height: u16,
-	pub device: device::gl::GlDevice,
 
 	glfw       : glfw::Glfw,
 	glfw_window: glfw::Window
@@ -38,11 +37,14 @@ impl Window {
 		Window {
 			width : width,
 			height: height,
-			device: gfx::GlDevice::new(|s| glfw.get_proc_address(s)),
 
 			glfw       : glfw,
 			glfw_window: window
 		}
+	}
+
+	pub fn new_device(&self) -> device::gl::GlDevice {
+		gfx::GlDevice::new(|s| self.glfw.get_proc_address(s))
 	}
 
 	pub fn key_pressed(&self, key: glfw::Key) -> bool {
