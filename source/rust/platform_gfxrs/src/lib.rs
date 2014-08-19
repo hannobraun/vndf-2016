@@ -73,6 +73,10 @@ pub fn init() -> Box<Platform> {
 
 	let glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 
+	glfw.window_hint(glfw::ContextVersion(3, 2));
+	glfw.window_hint(glfw::OpenglForwardCompat(true));
+	glfw.window_hint(glfw::OpenglProfile(glfw::OpenGlCoreProfile));
+
 	let (window, events) = glfw
 		.create_window(
 			width,
