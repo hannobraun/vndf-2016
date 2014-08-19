@@ -12,7 +12,7 @@ use window::Window;
 
 #[vertex_format]
 struct Vertex {
-	pos: [f32, ..2],
+	pos  : [f32, ..2],
 	color: [f32, ..3],
 }
 
