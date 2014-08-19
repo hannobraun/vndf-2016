@@ -5,8 +5,8 @@ use glfw::Context;
 
 
 pub struct Window {
-	pub width : u32,
-	pub height: u32,
+	pub width : u16,
+	pub height: u16,
 	pub device: device::gl::GlDevice,
 
 	glfw       : glfw::Glfw,
@@ -14,7 +14,7 @@ pub struct Window {
 }
 
 impl Window {
-	pub fn create(width: u32, height: u32) -> Window {
+	pub fn create(width: u16, height: u16) -> Window {
 		let glfw = match glfw::init(glfw::FAIL_ON_ERRORS) {
 			Ok(glfw)   => glfw,
 			Err(error) => fail!(format!("{}", error))
@@ -26,7 +26,8 @@ impl Window {
 
 		let (window, _) =
 			glfw.create_window(
-				width, height,
+				width as u32,
+				height as u32,
 				"Von Neumann Defense Force *EARLY PROTOTYPE*",
 				glfw::Windowed
 			)

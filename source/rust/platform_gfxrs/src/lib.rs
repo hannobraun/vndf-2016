@@ -76,8 +76,8 @@ impl Platform for DesktopPlatform {
 
 	fn render(&mut self, frame: &Frame) {
 		let frame = gfx::Frame::new(
-			self.window.width as u16,
-			self.window.height as u16
+			self.window.width,
+			self.window.height
 		);
 		let mut list = self.window.device.create_draw_list();
 
