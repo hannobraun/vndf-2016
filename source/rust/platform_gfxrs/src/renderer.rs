@@ -67,8 +67,12 @@ impl Renderer {
 		let state = gfx::DrawState::new();
 		let mesh  = self.device.create_mesh(vertex_data);
 
-		let program: gfx::shade::EmptyProgram = self.device.link_program(
-			VERTEX_SRC.clone(), FRAGMENT_SRC.clone()).unwrap();
+		let program: gfx::shade::EmptyProgram =
+			self.device.link_program(
+				VERTEX_SRC.clone(),
+				FRAGMENT_SRC.clone()
+			)
+			.unwrap();
 
 		renderer.clear(
 			gfx::ClearData {
