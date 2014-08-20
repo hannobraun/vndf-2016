@@ -86,7 +86,7 @@ impl Renderer {
 		let frame = gfx::Frame::new(self.window.width, self.window.height);
 		let state = gfx::DrawState::new();
 
-		let program: Program =
+		let grid_program: Program =
 			self.device.link_program(
 				GRID_VERTEX_SHADER.clone(),
 				GRID_FRAGMENT_SHADER.clone()
@@ -112,7 +112,7 @@ impl Renderer {
 				&grid_mesh,
 				grid_mesh.get_slice(),
 				&frame,
-				(&program, &params),
+				(&grid_program, &params),
 				&state
 			)
 			.unwrap();
