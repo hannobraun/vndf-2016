@@ -15,15 +15,32 @@ struct Vertex {
 	pos: [f32, ..2],
 }
 
+#[shader_param(Program)]
+struct Params {
+	screen_size: [f32, ..2],
+	camera_pos : [f32, ..2],
+}
+
 
 static VERTEX_SRC: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		uniform vec2 screen_size;
+		uniform vec2 camera_pos;
+
 		in vec2 pos;
 
 		void main() {
-			gl_Position = vec4(pos, 0.0, 1.0);
+			mat4 m = mat4(
+				2.0 / screen_size.x,                 0.0,  0.0 , 0.0,
+				                0.0, 2.0 / screen_size.y,  0.0 , 0.0,
+				                0.0,                 0.0, -0.01, 0.0,
+				               -1.0,                -1.0,  0.0 , 1.0);
+
+			vec2 camera_trans = screen_size * 0.5 - camera_pos;
+
+			gl_Position = m * vec4(pos + camera_trans, 0.0, 1.0);
 		}
 	"
 };
@@ -56,9 +73,9 @@ impl Renderer {
 
 	pub fn render(&mut self) {
 		let vertex_data = vec![
-			Vertex { pos: [ -0.5, -0.5 ] },
-			Vertex { pos: [  0.5, -0.5 ] },
-			Vertex { pos: [  0.0,  0.5 ] }
+			Vertex { pos: [ -200.0, -150.0 ] },
+			Vertex { pos: [  200.0, -150.0 ] },
+			Vertex { pos: [    0.0,  150.0 ] }
 		];
 
 		let mut renderer = self.device.create_renderer();
@@ -67,12 +84,17 @@ impl Renderer {
 		let state = gfx::DrawState::new();
 		let mesh  = self.device.create_mesh(vertex_data);
 
-		let program: gfx::shade::EmptyProgram =
+		let program: Program =
 			self.device.link_program(
 				VERTEX_SRC.clone(),
 				FRAGMENT_SRC.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
+
+		let params = Params {
+			screen_size: [self.window.width as f32, self.window.height as f32],
+			camera_pos : [0.0, 0.0],
+		};
 
 		renderer.clear(
 			gfx::ClearData {
@@ -88,7 +110,7 @@ impl Renderer {
 				&mesh,
 				mesh.get_slice(),
 				&frame,
-				&program,
+				(&program, &params),
 				&state
 			)
 			.unwrap();
