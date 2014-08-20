@@ -54,6 +54,12 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self) {
+		let vertex_data = vec![
+			Vertex { pos: [ -0.5, -0.5 ] },
+			Vertex { pos: [  0.5, -0.5 ] },
+			Vertex { pos: [  0.0,  0.5 ] }
+		];
+
 		let frame = gfx::Frame::new(
 			self.window.width,
 			self.window.height
@@ -61,11 +67,6 @@ impl Renderer {
 		let mut renderer = self.device.create_renderer();
 
 		let state = gfx::DrawState::new();
-		let vertex_data = vec![
-			Vertex { pos: [ -0.5, -0.5 ] },
-			Vertex { pos: [  0.5, -0.5 ] },
-			Vertex { pos: [  0.0,  0.5 ] }
-		];
 		let mesh = self.device.create_mesh(vertex_data);
 		let program: gfx::shade::EmptyProgram = self.device.link_program(
 			VERTEX_SRC.clone(), FRAGMENT_SRC.clone()).unwrap();
