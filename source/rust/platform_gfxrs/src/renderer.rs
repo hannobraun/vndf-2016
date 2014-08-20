@@ -8,7 +8,6 @@ use gfx::{
 	mod,
 	Device,
 	DeviceHelper,
-	DrawState,
 };
 use render::front::Renderer as GfxRenderer;
 use render::mesh::{
@@ -74,7 +73,7 @@ pub struct Renderer {
 	window  : Rc<Window>,
 
 	frame: GfxFrame,
-	state: DrawState,
+	state: gfx::DrawState,
 }
 
 impl Renderer {
