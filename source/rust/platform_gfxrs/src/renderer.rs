@@ -60,7 +60,7 @@ impl Renderer {
 			self.window.width,
 			self.window.height
 		);
-		let mut list = self.device.create_draw_list();
+		let mut renderer = self.device.create_renderer();
 
 		let state = gfx::DrawState::new();
 		let vertex_data = vec![
@@ -72,7 +72,7 @@ impl Renderer {
 		let program: gfx::shade::EmptyProgram = self.device.link_program(
 			VERTEX_SRC.clone(), FRAGMENT_SRC.clone()).unwrap();
 
-		list.clear(
+		renderer.clear(
 			gfx::ClearData {
 				color  : Some(gfx::Color([0.0, 0.0, 0.0, 1.0])),
 				depth  : None,
@@ -81,10 +81,10 @@ impl Renderer {
 			&frame
 		);
 
-		list.draw(&mesh, mesh.get_slice(), &frame, &program, &state)
+		renderer.draw(&mesh, mesh.get_slice(), &frame, &program, &state)
 			.unwrap();
 
-		self.device.submit(list.as_slice());
+		self.device.submit(renderer.as_buffer());
         self.window.swap_buffers();
 	}
 }
