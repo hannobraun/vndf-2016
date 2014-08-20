@@ -17,13 +17,15 @@ struct Vertex {
 
 
 static VERTEX_SRC: gfx::ShaderSource = shaders! {
-GLSL_150: b"
-	#version 150 core
-	in vec2 pos;
-	void main() {
-		gl_Position = vec4(pos, 0.0, 1.0);
-	}
-"
+	GLSL_150: b"
+		#version 150 core
+
+		in vec2 pos;
+
+		void main() {
+			gl_Position = vec4(pos, 0.0, 1.0);
+		}
+	"
 };
 
 static FRAGMENT_SRC: gfx::ShaderSource = shaders! {
