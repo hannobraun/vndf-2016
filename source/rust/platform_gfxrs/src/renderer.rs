@@ -79,7 +79,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self) {
-		let vertex_data = vec![
+		let grid_data = vec![
 			Vertex { pos: [ -700.0, -600.0 ] },
 			Vertex { pos: [ -700.0,  600.0 ] },
 			Vertex { pos: [ -500.0, -600.0 ] },
@@ -117,11 +117,11 @@ impl Renderer {
 
 		let frame  = gfx::Frame::new(self.window.width, self.window.height);
 		let state  = gfx::DrawState::new();
-		let buffer = self.device.create_buffer_static(&vertex_data);
+		let buffer = self.device.create_buffer_static(&grid_data);
 
 		let mesh = Mesh {
 			prim_type   : Line,
-			num_vertices: vertex_data.len() as u32,
+			num_vertices: grid_data.len() as u32,
 			attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
 		};
 
