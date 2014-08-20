@@ -29,9 +29,11 @@ GLSL_150: b"
 static FRAGMENT_SRC: gfx::ShaderSource = shaders! {
 GLSL_150: b"
 	#version 150 core
-	out vec4 o_Color;
+
+	out vec4 out_color;
+
 	void main() {
-		o_Color = vec4(0.0, 0.0, 1.0, 1.0);
+		out_color = vec4(0.0, 0.0, 1.0, 1.0);
 	}
 	"
 };
