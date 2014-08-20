@@ -9,6 +9,7 @@ use gfx::{
 	Device,
 	DeviceHelper,
 };
+use render::front::Renderer as GfxRenderer;
 use render::mesh::{
 	Mesh,
 	VertexFormat,
@@ -66,22 +67,25 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 pub struct Renderer {
-	device: device::gl::GlDevice,
-	window: Rc<Window>,
+	device  : device::gl::GlDevice,
+	renderer: GfxRenderer,
+	window  : Rc<Window>,
 }
 
 impl Renderer {
 	pub fn new(window: Rc<Window>) -> Renderer {
+		let mut device   = window.new_device();
+		let     renderer = device.create_renderer();
+
 		Renderer {
-			device: window.new_device(),
-			window: window,
+			device  : device,
+			renderer: renderer,
+			window  : window,
 		}
 	}
 
 	pub fn render(&mut self) {
 		let (grid_mesh, grid_program) = init_grid(&mut self.device);
-
-		let mut renderer = self.device.create_renderer();
 
 		let frame = gfx::Frame::new(self.window.width, self.window.height);
 		let state = gfx::DrawState::new();
@@ -91,7 +95,7 @@ impl Renderer {
 			camera_pos : [0.0, 0.0],
 		};
 
-		renderer.clear(
+		self.renderer.clear(
 			gfx::ClearData {
 				color  : Some(gfx::Color([0.0, 0.0, 0.0, 1.0])),
 				depth  : None,
@@ -100,7 +104,7 @@ impl Renderer {
 			&frame
 		);
 
-		renderer
+		self.renderer
 			.draw(
 				&grid_mesh,
 				grid_mesh.get_slice(),
@@ -110,7 +114,7 @@ impl Renderer {
 			)
 			.unwrap();
 
-		self.device.submit(renderer.as_buffer());
+		self.device.submit(self.renderer.as_buffer());
         self.window.swap_buffers();
 	}
 }
