@@ -32,7 +32,7 @@ dependencies = [
 name = "gl_generator"
 version = "0.0.1"
 dependencies = [
- "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#b2531b0f2c1e3448402a5ed0f814fc1cc31af345)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#361fc1ac28422186a97b377ad9c1d571a2b36f6a)",
 ]
 
 [[package]]
@@ -85,7 +85,7 @@ dependencies = [
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/netvl/rust-xml#b2531b0f2c1e3448402a5ed0f814fc1cc31af345"
+source = "git+https://github.com/netvl/rust-xml#361fc1ac28422186a97b377ad9c1d571a2b36f6a"
 
 [[package]]
 name = "rustecs"
