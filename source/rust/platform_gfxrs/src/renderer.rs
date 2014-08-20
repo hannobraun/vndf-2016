@@ -159,7 +159,7 @@ fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, Program) {
 		attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
 	};
 
-	let program: Program =
+	let program =
 		device.link_program(
 			GRID_VERTEX_SHADER.clone(),
 			GRID_FRAGMENT_SHADER.clone()
