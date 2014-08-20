@@ -79,51 +79,12 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self) {
-		let grid_data = vec![
-			Vertex { pos: [ -700.0, -600.0 ] },
-			Vertex { pos: [ -700.0,  600.0 ] },
-			Vertex { pos: [ -500.0, -600.0 ] },
-			Vertex { pos: [ -500.0,  600.0 ] },
-			Vertex { pos: [ -300.0, -600.0 ] },
-			Vertex { pos: [ -300.0,  600.0 ] },
-			Vertex { pos: [ -100.0, -600.0 ] },
-			Vertex { pos: [ -100.0,  600.0 ] },
-			Vertex { pos: [  100.0, -600.0 ] },
-			Vertex { pos: [  100.0,  600.0 ] },
-			Vertex { pos: [  300.0, -600.0 ] },
-			Vertex { pos: [  300.0,  600.0 ] },
-			Vertex { pos: [  500.0, -600.0 ] },
-			Vertex { pos: [  500.0,  600.0 ] },
-			Vertex { pos: [  700.0, -600.0 ] },
-			Vertex { pos: [  700.0,  600.0 ] },
-
-			Vertex { pos: [ -700.0, -600.0 ] },
-			Vertex { pos: [  700.0, -600.0 ] },
-			Vertex { pos: [ -700.0, -400.0 ] },
-			Vertex { pos: [  700.0, -400.0 ] },
-			Vertex { pos: [ -700.0, -200.0 ] },
-			Vertex { pos: [  700.0, -200.0 ] },
-			Vertex { pos: [ -700.0,    0.0 ] },
-			Vertex { pos: [  700.0,    0.0 ] },
-			Vertex { pos: [ -700.0,  200.0 ] },
-			Vertex { pos: [  700.0,  200.0 ] },
-			Vertex { pos: [ -700.0,  400.0 ] },
-			Vertex { pos: [  700.0,  400.0 ] },
-			Vertex { pos: [ -700.0,  600.0 ] },
-			Vertex { pos: [  700.0,  600.0 ] },
-		];
+		let grid_mesh = init_grid(&mut self.device);
 
 		let mut renderer = self.device.create_renderer();
 
-		let frame  = gfx::Frame::new(self.window.width, self.window.height);
-		let state  = gfx::DrawState::new();
-		let buffer = self.device.create_buffer_static(&grid_data);
-
-		let grid_mesh = Mesh {
-			prim_type   : Line,
-			num_vertices: grid_data.len() as u32,
-			attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
-		};
+		let frame = gfx::Frame::new(self.window.width, self.window.height);
+		let state = gfx::DrawState::new();
 
 		let program: Program =
 			self.device.link_program(
@@ -158,5 +119,50 @@ impl Renderer {
 
 		self.device.submit(renderer.as_buffer());
         self.window.swap_buffers();
+	}
+}
+
+
+fn init_grid(device: &mut device::gl::GlDevice) -> Mesh {
+	let grid_data = vec![
+		Vertex { pos: [ -700.0, -600.0 ] },
+		Vertex { pos: [ -700.0,  600.0 ] },
+		Vertex { pos: [ -500.0, -600.0 ] },
+		Vertex { pos: [ -500.0,  600.0 ] },
+		Vertex { pos: [ -300.0, -600.0 ] },
+		Vertex { pos: [ -300.0,  600.0 ] },
+		Vertex { pos: [ -100.0, -600.0 ] },
+		Vertex { pos: [ -100.0,  600.0 ] },
+		Vertex { pos: [  100.0, -600.0 ] },
+		Vertex { pos: [  100.0,  600.0 ] },
+		Vertex { pos: [  300.0, -600.0 ] },
+		Vertex { pos: [  300.0,  600.0 ] },
+		Vertex { pos: [  500.0, -600.0 ] },
+		Vertex { pos: [  500.0,  600.0 ] },
+		Vertex { pos: [  700.0, -600.0 ] },
+		Vertex { pos: [  700.0,  600.0 ] },
+
+		Vertex { pos: [ -700.0, -600.0 ] },
+		Vertex { pos: [  700.0, -600.0 ] },
+		Vertex { pos: [ -700.0, -400.0 ] },
+		Vertex { pos: [  700.0, -400.0 ] },
+		Vertex { pos: [ -700.0, -200.0 ] },
+		Vertex { pos: [  700.0, -200.0 ] },
+		Vertex { pos: [ -700.0,    0.0 ] },
+		Vertex { pos: [  700.0,    0.0 ] },
+		Vertex { pos: [ -700.0,  200.0 ] },
+		Vertex { pos: [  700.0,  200.0 ] },
+		Vertex { pos: [ -700.0,  400.0 ] },
+		Vertex { pos: [  700.0,  400.0 ] },
+		Vertex { pos: [ -700.0,  600.0 ] },
+		Vertex { pos: [  700.0,  600.0 ] },
+	];
+
+	let buffer = device.create_buffer_static(&grid_data);
+
+	Mesh {
+		prim_type   : Line,
+		num_vertices: grid_data.len() as u32,
+		attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
 	}
 }
