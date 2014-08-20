@@ -83,7 +83,14 @@ impl Renderer {
 			&frame
 		);
 
-		renderer.draw(&mesh, mesh.get_slice(), &frame, &program, &state)
+		renderer
+			.draw(
+				&mesh,
+				mesh.get_slice(),
+				&frame,
+				&program,
+				&state
+			)
 			.unwrap();
 
 		self.device.submit(renderer.as_buffer());
