@@ -85,7 +85,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self) {
-		let (grid_mesh, grid_program) = init_grid(&mut self.device);
+		let grid = init_grid(&mut self.device);
 
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
@@ -103,10 +103,10 @@ impl Renderer {
 
 		self.renderer
 			.draw(
-				&grid_mesh,
-				grid_mesh.get_slice(),
+				&grid.mesh,
+				grid.mesh.get_slice(),
 				&self.frame,
-				(&grid_program, &params),
+				(&grid.program, &params),
 				&self.state
 			)
 			.unwrap();
@@ -117,7 +117,12 @@ impl Renderer {
 }
 
 
-fn init_grid(device: &mut gfx::GlDevice) -> (gfx::Mesh, GridProgram) {
+struct Grid {
+	mesh   : gfx::Mesh,
+	program: GridProgram,
+}
+
+fn init_grid(device: &mut gfx::GlDevice) -> Grid {
 	let grid_data = vec![
 		Vertex { pos: [ -700.0, -600.0 ] },
 		Vertex { pos: [ -700.0,  600.0 ] },
@@ -161,5 +166,8 @@ fn init_grid(device: &mut gfx::GlDevice) -> (gfx::Mesh, GridProgram) {
 		)
 		.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-	(mesh, program)
+	Grid {
+		mesh   : mesh,
+		program: program,
+	}
 }
