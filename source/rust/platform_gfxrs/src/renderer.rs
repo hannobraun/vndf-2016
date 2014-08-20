@@ -29,7 +29,7 @@ struct GridParams {
 }
 
 
-static VERTEX_SRC: gfx::ShaderSource = shaders! {
+static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -52,7 +52,7 @@ static VERTEX_SRC: gfx::ShaderSource = shaders! {
 	"
 };
 
-static FRAGMENT_SRC: gfx::ShaderSource = shaders! {
+static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -127,8 +127,8 @@ impl Renderer {
 
 		let program: Program =
 			self.device.link_program(
-				VERTEX_SRC.clone(),
-				FRAGMENT_SRC.clone()
+				GRID_VERTEX_SHADER.clone(),
+				GRID_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
