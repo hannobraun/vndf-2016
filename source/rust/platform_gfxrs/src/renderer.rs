@@ -14,6 +14,7 @@ use render::mesh::{
 	Mesh,
 	VertexFormat,
 };
+use render::target::Frame as GfxFrame;
 
 use window::Window;
 
@@ -70,6 +71,8 @@ pub struct Renderer {
 	device  : device::gl::GlDevice,
 	renderer: GfxRenderer,
 	window  : Rc<Window>,
+
+	frame: GfxFrame,
 }
 
 impl Renderer {
@@ -77,17 +80,20 @@ impl Renderer {
 		let mut device   = window.new_device();
 		let     renderer = device.create_renderer();
 
+		let frame = gfx::Frame::new(window.width, window.height);
+
 		Renderer {
 			device  : device,
 			renderer: renderer,
 			window  : window,
+
+			frame: frame,
 		}
 	}
 
 	pub fn render(&mut self) {
 		let (grid_mesh, grid_program) = init_grid(&mut self.device);
 
-		let frame = gfx::Frame::new(self.window.width, self.window.height);
 		let state = gfx::DrawState::new();
 
 		let params = GridParams {
@@ -101,14 +107,14 @@ impl Renderer {
 				depth  : None,
 				stencil: None,
 			},
-			&frame
+			&self.frame
 		);
 
 		self.renderer
 			.draw(
 				&grid_mesh,
 				grid_mesh.get_slice(),
-				&frame,
+				&self.frame,
 				(&grid_program, &params),
 				&state
 			)
