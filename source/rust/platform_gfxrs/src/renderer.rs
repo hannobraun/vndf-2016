@@ -79,19 +79,12 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self) {
-		let grid_mesh = init_grid(&mut self.device);
+		let (grid_mesh, grid_program) = init_grid(&mut self.device);
 
 		let mut renderer = self.device.create_renderer();
 
 		let frame = gfx::Frame::new(self.window.width, self.window.height);
 		let state = gfx::DrawState::new();
-
-		let grid_program: Program =
-			self.device.link_program(
-				GRID_VERTEX_SHADER.clone(),
-				GRID_FRAGMENT_SHADER.clone()
-			)
-			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
@@ -123,7 +116,7 @@ impl Renderer {
 }
 
 
-fn init_grid(device: &mut device::gl::GlDevice) -> Mesh {
+fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, Program) {
 	let grid_data = vec![
 		Vertex { pos: [ -700.0, -600.0 ] },
 		Vertex { pos: [ -700.0,  600.0 ] },
@@ -160,9 +153,18 @@ fn init_grid(device: &mut device::gl::GlDevice) -> Mesh {
 
 	let buffer = device.create_buffer_static(&grid_data);
 
-	Mesh {
+	let mesh = Mesh {
 		prim_type   : Line,
 		num_vertices: grid_data.len() as u32,
 		attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
-	}
+	};
+
+	let program: Program =
+		device.link_program(
+			GRID_VERTEX_SHADER.clone(),
+			GRID_FRAGMENT_SHADER.clone()
+		)
+		.unwrap_or_else(|error| fail!("error linking program: {}", error));
+
+	(mesh, program)
 }
