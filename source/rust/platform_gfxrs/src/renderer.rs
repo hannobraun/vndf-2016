@@ -1,6 +1,5 @@
 use std::rc::Rc;
 
-use device;
 use gfx::{
 	mod,
 	Device,
@@ -60,7 +59,7 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 pub struct Renderer {
-	device  : device::gl::GlDevice,
+	device  : gfx::GlDevice,
 	renderer: gfx::Renderer,
 	window  : Rc<Window>,
 
@@ -119,7 +118,7 @@ impl Renderer {
 }
 
 
-fn init_grid(device: &mut device::gl::GlDevice) -> (gfx::Mesh, GridProgram) {
+fn init_grid(device: &mut gfx::GlDevice) -> (gfx::Mesh, GridProgram) {
 	let grid_data = vec![
 		Vertex { pos: [ -700.0, -600.0 ] },
 		Vertex { pos: [ -700.0,  600.0 ] },
