@@ -119,7 +119,7 @@ impl Renderer {
 		let state  = gfx::DrawState::new();
 		let buffer = self.device.create_buffer_static(&grid_data);
 
-		let mesh = Mesh {
+		let grid_mesh = Mesh {
 			prim_type   : Line,
 			num_vertices: grid_data.len() as u32,
 			attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
@@ -148,8 +148,8 @@ impl Renderer {
 
 		renderer
 			.draw(
-				&mesh,
-				mesh.get_slice(),
+				&grid_mesh,
+				grid_mesh.get_slice(),
 				&frame,
 				(&program, &params),
 				&state
