@@ -8,6 +8,7 @@ use gfx::{
 	mod,
 	Device,
 	DeviceHelper,
+	DrawState,
 };
 use render::front::Renderer as GfxRenderer;
 use render::mesh::{
@@ -73,6 +74,7 @@ pub struct Renderer {
 	window  : Rc<Window>,
 
 	frame: GfxFrame,
+	state: DrawState,
 }
 
 impl Renderer {
@@ -81,6 +83,7 @@ impl Renderer {
 		let     renderer = device.create_renderer();
 
 		let frame = gfx::Frame::new(window.width, window.height);
+		let state = gfx::DrawState::new();
 
 		Renderer {
 			device  : device,
@@ -88,13 +91,12 @@ impl Renderer {
 			window  : window,
 
 			frame: frame,
+			state: state,
 		}
 	}
 
 	pub fn render(&mut self) {
 		let (grid_mesh, grid_program) = init_grid(&mut self.device);
-
-		let state = gfx::DrawState::new();
 
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
@@ -116,7 +118,7 @@ impl Renderer {
 				grid_mesh.get_slice(),
 				&self.frame,
 				(&grid_program, &params),
-				&state
+				&self.state
 			)
 			.unwrap();
 
