@@ -9,7 +9,6 @@ use gfx::{
 	Device,
 	DeviceHelper,
 };
-use render::front::Renderer as GfxRenderer;
 use render::mesh::VertexFormat;
 
 use window::Window;
@@ -65,7 +64,7 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 pub struct Renderer {
 	device  : device::gl::GlDevice,
-	renderer: GfxRenderer,
+	renderer: gfx::Renderer,
 	window  : Rc<Window>,
 
 	frame: gfx::Frame,
