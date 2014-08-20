@@ -13,7 +13,6 @@ use window::Window;
 #[vertex_format]
 struct Vertex {
 	pos  : [f32, ..2],
-	color: [f32, ..3],
 }
 
 
@@ -63,9 +62,9 @@ impl Renderer {
 
 		let state = gfx::DrawState::new();
 		let vertex_data = vec![
-			Vertex { pos: [ -0.5, -0.5 ], color: [1.0, 0.0, 0.0] },
-			Vertex { pos: [  0.5, -0.5 ], color: [0.0, 1.0, 0.0] },
-			Vertex { pos: [  0.0,  0.5 ], color: [0.0, 0.0, 1.0] }
+			Vertex { pos: [ -0.5, -0.5 ] },
+			Vertex { pos: [  0.5, -0.5 ] },
+			Vertex { pos: [  0.0,  0.5 ] }
 		];
 		let mesh = self.device.create_mesh(vertex_data);
 		let program: gfx::shade::EmptyProgram = self.device.link_program(
