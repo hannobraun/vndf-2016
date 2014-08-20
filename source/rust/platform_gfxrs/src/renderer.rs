@@ -1,10 +1,17 @@
 use std::rc::Rc;
 
-use device;
+use device::{
+	mod,
+	Line
+};
 use gfx::{
 	mod,
 	Device,
 	DeviceHelper,
+};
+use render::mesh::{
+	Mesh,
+	VertexFormat,
 };
 
 use window::Window;
@@ -73,16 +80,50 @@ impl Renderer {
 
 	pub fn render(&mut self) {
 		let vertex_data = vec![
-			Vertex { pos: [ -200.0, -150.0 ] },
-			Vertex { pos: [  200.0, -150.0 ] },
-			Vertex { pos: [    0.0,  150.0 ] }
+			Vertex { pos: [ -700.0, -600.0 ] },
+			Vertex { pos: [ -700.0,  600.0 ] },
+			Vertex { pos: [ -500.0, -600.0 ] },
+			Vertex { pos: [ -500.0,  600.0 ] },
+			Vertex { pos: [ -300.0, -600.0 ] },
+			Vertex { pos: [ -300.0,  600.0 ] },
+			Vertex { pos: [ -100.0, -600.0 ] },
+			Vertex { pos: [ -100.0,  600.0 ] },
+			Vertex { pos: [  100.0, -600.0 ] },
+			Vertex { pos: [  100.0,  600.0 ] },
+			Vertex { pos: [  300.0, -600.0 ] },
+			Vertex { pos: [  300.0,  600.0 ] },
+			Vertex { pos: [  500.0, -600.0 ] },
+			Vertex { pos: [  500.0,  600.0 ] },
+			Vertex { pos: [  700.0, -600.0 ] },
+			Vertex { pos: [  700.0,  600.0 ] },
+
+			Vertex { pos: [ -700.0, -600.0 ] },
+			Vertex { pos: [  700.0, -600.0 ] },
+			Vertex { pos: [ -700.0, -400.0 ] },
+			Vertex { pos: [  700.0, -400.0 ] },
+			Vertex { pos: [ -700.0, -200.0 ] },
+			Vertex { pos: [  700.0, -200.0 ] },
+			Vertex { pos: [ -700.0,    0.0 ] },
+			Vertex { pos: [  700.0,    0.0 ] },
+			Vertex { pos: [ -700.0,  200.0 ] },
+			Vertex { pos: [  700.0,  200.0 ] },
+			Vertex { pos: [ -700.0,  400.0 ] },
+			Vertex { pos: [  700.0,  400.0 ] },
+			Vertex { pos: [ -700.0,  600.0 ] },
+			Vertex { pos: [  700.0,  600.0 ] },
 		];
 
 		let mut renderer = self.device.create_renderer();
 
-		let frame = gfx::Frame::new(self.window.width, self.window.height);
-		let state = gfx::DrawState::new();
-		let mesh  = self.device.create_mesh(vertex_data);
+		let frame  = gfx::Frame::new(self.window.width, self.window.height);
+		let state  = gfx::DrawState::new();
+		let buffer = self.device.create_buffer_static(&vertex_data);
+
+		let mesh = Mesh {
+			prim_type   : Line,
+			num_vertices: vertex_data.len() as u32,
+			attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
+		};
 
 		let program: Program =
 			self.device.link_program(
