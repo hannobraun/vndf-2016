@@ -20,9 +20,7 @@ static VERTEX_SRC: gfx::ShaderSource = shaders! {
 GLSL_150: b"
 	#version 150 core
 	in vec2 pos;
-	out vec4 v_Color;
 	void main() {
-		v_Color = vec4(0.0, 0.0, 1.0, 1.0);
 		gl_Position = vec4(pos, 0.0, 1.0);
 	}
 "
@@ -31,10 +29,9 @@ GLSL_150: b"
 static FRAGMENT_SRC: gfx::ShaderSource = shaders! {
 GLSL_150: b"
 	#version 150 core
-	in vec4 v_Color;
 	out vec4 o_Color;
 	void main() {
-		o_Color = v_Color;
+		o_Color = vec4(0.0, 0.0, 1.0, 1.0);
 	}
 	"
 };
