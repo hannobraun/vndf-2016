@@ -14,7 +14,6 @@ use render::mesh::{
 	Mesh,
 	VertexFormat,
 };
-use render::target::Frame as GfxFrame;
 
 use window::Window;
 
@@ -72,7 +71,7 @@ pub struct Renderer {
 	renderer: GfxRenderer,
 	window  : Rc<Window>,
 
-	frame: GfxFrame,
+	frame: gfx::Frame,
 	state: gfx::DrawState,
 }
 
