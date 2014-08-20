@@ -1,4 +1,3 @@
-use device;
 use gfx;
 use glfw;
 use glfw::Context;
@@ -43,7 +42,7 @@ impl Window {
 		}
 	}
 
-	pub fn new_device(&self) -> device::gl::GlDevice {
+	pub fn new_device(&self) -> gfx::GlDevice {
 		gfx::GlDevice::new(|s| self.glfw.get_proc_address(s))
 	}
 
