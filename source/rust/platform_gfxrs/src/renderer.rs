@@ -23,7 +23,7 @@ struct Vertex {
 }
 
 #[shader_param(Program)]
-struct Params {
+struct GridParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
 }
@@ -132,7 +132,7 @@ impl Renderer {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-		let params = Params {
+		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [0.0, 0.0],
 		};
