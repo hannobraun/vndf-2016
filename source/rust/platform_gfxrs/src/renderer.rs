@@ -10,10 +10,7 @@ use gfx::{
 	DeviceHelper,
 };
 use render::front::Renderer as GfxRenderer;
-use render::mesh::{
-	Mesh,
-	VertexFormat,
-};
+use render::mesh::VertexFormat;
 
 use window::Window;
 
@@ -126,7 +123,7 @@ impl Renderer {
 }
 
 
-fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, GridProgram) {
+fn init_grid(device: &mut device::gl::GlDevice) -> (gfx::Mesh, GridProgram) {
 	let grid_data = vec![
 		Vertex { pos: [ -700.0, -600.0 ] },
 		Vertex { pos: [ -700.0,  600.0 ] },
@@ -163,7 +160,7 @@ fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, GridProgram) {
 
 	let buffer = device.create_buffer_static(&grid_data);
 
-	let mesh = Mesh {
+	let mesh = gfx::Mesh {
 		prim_type   : Line,
 		num_vertices: grid_data.len() as u32,
 		attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
