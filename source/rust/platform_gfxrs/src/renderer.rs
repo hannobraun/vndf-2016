@@ -64,6 +64,8 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 	state: gfx::DrawState,
+
+	grid: Grid,
 }
 
 impl Renderer {
@@ -74,6 +76,8 @@ impl Renderer {
 		let frame = gfx::Frame::new(window.width, window.height);
 		let state = gfx::DrawState::new();
 
+		let grid = init_grid(&mut device);
+
 		Renderer {
 			device  : device,
 			renderer: renderer,
@@ -81,12 +85,12 @@ impl Renderer {
 
 			frame: frame,
 			state: state,
+
+			grid: grid,
 		}
 	}
 
 	pub fn render(&mut self) {
-		let grid = init_grid(&mut self.device);
-
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [0.0, 0.0],
@@ -103,10 +107,10 @@ impl Renderer {
 
 		self.renderer
 			.draw(
-				&grid.mesh,
-				grid.mesh.get_slice(),
+				&self.grid.mesh,
+				self.grid.mesh.get_slice(),
 				&self.frame,
-				(&grid.program, &params),
+				(&self.grid.program, &params),
 				&self.state
 			)
 			.unwrap();
