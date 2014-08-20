@@ -22,7 +22,7 @@ struct Vertex {
 	pos: [f32, ..2],
 }
 
-#[shader_param(Program)]
+#[shader_param(GridProgram)]
 struct GridParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
@@ -116,7 +116,7 @@ impl Renderer {
 }
 
 
-fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, Program) {
+fn init_grid(device: &mut device::gl::GlDevice) -> (Mesh, GridProgram) {
 	let grid_data = vec![
 		Vertex { pos: [ -700.0, -600.0 ] },
 		Vertex { pos: [ -700.0,  600.0 ] },
