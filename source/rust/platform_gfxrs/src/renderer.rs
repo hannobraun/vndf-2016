@@ -1,9 +1,6 @@
 use std::rc::Rc;
 
-use device::{
-	mod,
-	Line
-};
+use device;
 use gfx::{
 	mod,
 	Device,
@@ -157,13 +154,7 @@ fn init_grid(device: &mut device::gl::GlDevice) -> (gfx::Mesh, GridProgram) {
 		Vertex { pos: [  700.0,  600.0 ] },
 	];
 
-	let buffer = device.create_buffer_static(&grid_data);
-
-	let mesh = gfx::Mesh {
-		prim_type   : Line,
-		num_vertices: grid_data.len() as u32,
-		attributes  : VertexFormat::generate(None::<Vertex>, buffer.raw()),
-	};
+	let mesh = device.create_mesh(grid_data, gfx::Line);
 
 	let program =
 		device.link_program(
