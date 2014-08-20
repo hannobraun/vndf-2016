@@ -60,14 +60,12 @@ impl Renderer {
 			Vertex { pos: [  0.0,  0.5 ] }
 		];
 
-		let frame = gfx::Frame::new(
-			self.window.width,
-			self.window.height
-		);
 		let mut renderer = self.device.create_renderer();
 
+		let frame = gfx::Frame::new(self.window.width, self.window.height);
 		let state = gfx::DrawState::new();
-		let mesh = self.device.create_mesh(vertex_data);
+		let mesh  = self.device.create_mesh(vertex_data);
+
 		let program: gfx::shade::EmptyProgram = self.device.link_program(
 			VERTEX_SRC.clone(), FRAGMENT_SRC.clone()).unwrap();
 
