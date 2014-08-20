@@ -5,7 +5,6 @@ use gfx::{
 	Device,
 	DeviceHelper,
 };
-use render::mesh::VertexFormat;
 
 use window::Window;
 
