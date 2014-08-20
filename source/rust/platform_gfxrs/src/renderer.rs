@@ -72,7 +72,7 @@ impl Renderer {
 				VERTEX_SRC.clone(),
 				FRAGMENT_SRC.clone()
 			)
-			.unwrap();
+			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		renderer.clear(
 			gfx::ClearData {
