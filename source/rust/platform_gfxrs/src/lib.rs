@@ -6,6 +6,7 @@ extern crate sync;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
 extern crate glfw;
+extern crate stb_image;
 
 extern crate physics;
 extern crate platform;
@@ -29,6 +30,7 @@ use renderer::Renderer;
 use window::Window;
 
 
+mod images;
 mod inputhandler;
 mod renderer;
 mod window;

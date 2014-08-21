@@ -13,3 +13,6 @@ git = "http://github.com/gfx-rs/gfx-rs"
 
 [dependencies.glfw]
 git = "https://github.com/bjz/glfw-rs.git"
+
+[dependencies.stb_image]
+git = "https://github.com/hannobraun/rust-stb-image.git"
