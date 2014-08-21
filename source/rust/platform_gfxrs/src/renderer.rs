@@ -169,7 +169,7 @@ impl Renderer {
 		self.draw_grid(&frame.camera);
 
 		for body in frame.ships.iter() {
-			self.draw_ship(body, &frame.camera);
+			self.draw_craft(body, &frame.camera);
 		}
 
 		self.device.submit(self.renderer.as_buffer());
@@ -198,7 +198,7 @@ impl Renderer {
 			.unwrap();
 	}
 
-	fn draw_ship(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
+	fn draw_craft(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
 		let Vec2(ship_x, ship_y) = body.position;
 
 		let params = ShipParams {
