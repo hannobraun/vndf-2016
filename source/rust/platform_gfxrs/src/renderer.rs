@@ -5,6 +5,7 @@ use gfx::{
 	Device,
 	DeviceHelper,
 };
+use gfx::tex::TextureInfo;
 
 use physics::{
 	Body,
@@ -31,6 +32,7 @@ struct ShipParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
 	ship_pos   : [f32, ..2],
+	tex        : gfx::shade::TextureParam,
 }
 
 
@@ -78,6 +80,9 @@ static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec2 ship_pos;
 
 		in vec2 position;
+		in vec2 tex_coord;
+
+		out vec2 tex_coord_f;
 
 		void main()
 		{
@@ -91,6 +96,25 @@ static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 translated = position + ship_pos + camera_trans;
 			gl_Position = m * vec4(translated, 0.0, 1.0);
+
+			tex_coord_f = tex_coord;
+		}
+	"
+};
+
+static TEXTURE_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform sampler2D tex;
+
+		in vec2 tex_coord_f;
+
+		out vec4 out_color;
+
+		void main()
+		{
+			out_color = texture(tex, tex_coord_f);
 		}
 	"
 };
@@ -177,10 +201,28 @@ impl Renderer {
 	fn draw_ship(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
 		let Vec2(ship_x, ship_y) = body.position;
 
+		let texture_info = TextureInfo {
+			width       : 48,
+			height      : 48,
+			depth       : 1,
+			mipmap_range: (0, -1),
+			kind        : gfx::tex::Texture2D,
+			format      : gfx::tex::RGBA8,
+		};
+
+		let texture = self.device.create_texture(texture_info).unwrap();
+		self.device.update_texture(
+			&texture,
+			&texture_info.to_image_info(),
+			&Vec::from_elem(48*48*4, 0x77u8)
+		)
+		.unwrap();
+
 		let params = ShipParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [ship_x as f32, ship_y as f32],
+			tex        : (texture, None)
 		};
 
 		self.renderer
@@ -273,7 +315,7 @@ impl Ship {
 		let program =
 			device.link_program(
 				SHIP_VERTEX_SHADER.clone(),
-				GRID_FRAGMENT_SHADER.clone()
+				TEXTURE_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
