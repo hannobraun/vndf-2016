@@ -92,11 +92,6 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		let params = GridParams {
-			screen_size: [self.window.width as f32, self.window.height as f32],
-			camera_pos : [0.0, 0.0],
-		};
-
 		self.renderer.clear(
 			gfx::ClearData {
 				color  : Some(gfx::Color([0.0, 0.0, 0.0, 1.0])),
@@ -105,6 +100,18 @@ impl Renderer {
 			},
 			&self.frame
 		);
+
+		self.draw_grid();
+
+		self.device.submit(self.renderer.as_buffer());
+        self.window.swap_buffers();
+	}
+
+	fn draw_grid(&mut self) {
+		let params = GridParams {
+			screen_size: [self.window.width as f32, self.window.height as f32],
+			camera_pos : [0.0, 0.0],
+		};
 
 		self.renderer
 			.draw(
@@ -115,9 +122,6 @@ impl Renderer {
 				&self.state
 			)
 			.unwrap();
-
-		self.device.submit(self.renderer.as_buffer());
-        self.window.swap_buffers();
 	}
 }
 
