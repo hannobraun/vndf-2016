@@ -6,6 +6,7 @@ use gfx::{
 	DeviceHelper,
 };
 
+use platform::Frame;
 use window::Window;
 
 
@@ -90,7 +91,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self) {
+	pub fn render(&mut self, frame: &Frame) {
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [0.0, 0.0],

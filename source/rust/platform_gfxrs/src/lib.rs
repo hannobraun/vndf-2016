@@ -47,7 +47,7 @@ impl Platform for DesktopPlatform {
 	}
 
 	fn render(&mut self, frame: &Frame) {
-		self.renderer.render();
+		self.renderer.render(frame);
 	}
 }
 
