@@ -216,3 +216,34 @@ impl Grid {
 		}
 	}
 }
+
+
+struct Ship {
+	mesh   : gfx::Mesh,
+	program: ShipProgram,
+}
+
+impl Ship {
+	fn new(device: &mut gfx::GlDevice) -> Ship {
+		let vertices = vec![
+			Vertex { pos: [  0.0,  0.0 ] },
+			Vertex { pos: [ 48.0,  0.0 ] },
+			Vertex { pos: [  0.0, 48.0 ] },
+			Vertex { pos: [ 48.0, 48.0 ] },
+		];
+
+		let mesh = device.create_mesh(vertices, gfx::TriangleStrip);
+
+		let program =
+			device.link_program(
+				SHIP_VERTEX_SHADER.clone(),
+				GRID_FRAGMENT_SHADER.clone()
+			)
+			.unwrap_or_else(|error| fail!("error linking program: {}", error));
+
+		Ship {
+			mesh   : mesh,
+			program: program,
+		}
+	}
+}
