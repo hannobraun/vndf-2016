@@ -151,7 +151,12 @@ impl Renderer {
 		self.window.swap_buffers();
 	}
 
-	fn draw_grid(&mut self, &Vec2(camera_x, camera_y): &Vec2) {
+	fn draw_grid(&mut self, camera: &Vec2) {
+		let &Vec2(mut camera_x, mut camera_y) = camera;
+
+		camera_x = camera_x % 200.0;
+		camera_y = camera_y % 200.0;
+
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
