@@ -16,7 +16,7 @@ use window::Window;
 
 #[vertex_format]
 struct Vertex {
-	pos: [f32, ..2],
+	position: [f32, ..2],
 }
 
 #[shader_param(GridProgram)]
@@ -40,7 +40,7 @@ static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec2 screen_size;
 		uniform vec2 camera_pos;
 
-		in vec2 pos;
+		in vec2 position;
 
 		void main() {
 			mat4 m = mat4(
@@ -51,7 +51,7 @@ static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
-			gl_Position = m * vec4(pos + camera_trans, 0.0, 1.0);
+			gl_Position = m * vec4(position + camera_trans, 0.0, 1.0);
 		}
 	"
 };
@@ -76,7 +76,7 @@ static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec2 camera_pos;
 		uniform vec2 ship_pos;
 
-		in vec2 pos;
+		in vec2 position;
 
 		void main()
 		{
@@ -88,7 +88,7 @@ static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
-			vec2 translated = pos + ship_pos + camera_trans;
+			vec2 translated = position + ship_pos + camera_trans;
 			gl_Position = m * vec4(translated, 0.0, 1.0);
 		}
 	"
@@ -203,37 +203,37 @@ struct Grid {
 impl Grid {
 	fn new(device: &mut gfx::GlDevice) -> Grid {
 		let grid_data = vec![
-			Vertex { pos: [ -700.0, -600.0 ] },
-			Vertex { pos: [ -700.0,  600.0 ] },
-			Vertex { pos: [ -500.0, -600.0 ] },
-			Vertex { pos: [ -500.0,  600.0 ] },
-			Vertex { pos: [ -300.0, -600.0 ] },
-			Vertex { pos: [ -300.0,  600.0 ] },
-			Vertex { pos: [ -100.0, -600.0 ] },
-			Vertex { pos: [ -100.0,  600.0 ] },
-			Vertex { pos: [  100.0, -600.0 ] },
-			Vertex { pos: [  100.0,  600.0 ] },
-			Vertex { pos: [  300.0, -600.0 ] },
-			Vertex { pos: [  300.0,  600.0 ] },
-			Vertex { pos: [  500.0, -600.0 ] },
-			Vertex { pos: [  500.0,  600.0 ] },
-			Vertex { pos: [  700.0, -600.0 ] },
-			Vertex { pos: [  700.0,  600.0 ] },
+			Vertex { position: [ -700.0, -600.0 ] },
+			Vertex { position: [ -700.0,  600.0 ] },
+			Vertex { position: [ -500.0, -600.0 ] },
+			Vertex { position: [ -500.0,  600.0 ] },
+			Vertex { position: [ -300.0, -600.0 ] },
+			Vertex { position: [ -300.0,  600.0 ] },
+			Vertex { position: [ -100.0, -600.0 ] },
+			Vertex { position: [ -100.0,  600.0 ] },
+			Vertex { position: [  100.0, -600.0 ] },
+			Vertex { position: [  100.0,  600.0 ] },
+			Vertex { position: [  300.0, -600.0 ] },
+			Vertex { position: [  300.0,  600.0 ] },
+			Vertex { position: [  500.0, -600.0 ] },
+			Vertex { position: [  500.0,  600.0 ] },
+			Vertex { position: [  700.0, -600.0 ] },
+			Vertex { position: [  700.0,  600.0 ] },
 
-			Vertex { pos: [ -700.0, -600.0 ] },
-			Vertex { pos: [  700.0, -600.0 ] },
-			Vertex { pos: [ -700.0, -400.0 ] },
-			Vertex { pos: [  700.0, -400.0 ] },
-			Vertex { pos: [ -700.0, -200.0 ] },
-			Vertex { pos: [  700.0, -200.0 ] },
-			Vertex { pos: [ -700.0,    0.0 ] },
-			Vertex { pos: [  700.0,    0.0 ] },
-			Vertex { pos: [ -700.0,  200.0 ] },
-			Vertex { pos: [  700.0,  200.0 ] },
-			Vertex { pos: [ -700.0,  400.0 ] },
-			Vertex { pos: [  700.0,  400.0 ] },
-			Vertex { pos: [ -700.0,  600.0 ] },
-			Vertex { pos: [  700.0,  600.0 ] },
+			Vertex { position: [ -700.0, -600.0 ] },
+			Vertex { position: [  700.0, -600.0 ] },
+			Vertex { position: [ -700.0, -400.0 ] },
+			Vertex { position: [  700.0, -400.0 ] },
+			Vertex { position: [ -700.0, -200.0 ] },
+			Vertex { position: [  700.0, -200.0 ] },
+			Vertex { position: [ -700.0,    0.0 ] },
+			Vertex { position: [  700.0,    0.0 ] },
+			Vertex { position: [ -700.0,  200.0 ] },
+			Vertex { position: [  700.0,  200.0 ] },
+			Vertex { position: [ -700.0,  400.0 ] },
+			Vertex { position: [  700.0,  400.0 ] },
+			Vertex { position: [ -700.0,  600.0 ] },
+			Vertex { position: [  700.0,  600.0 ] },
 		];
 
 		let mesh = device.create_mesh(grid_data, gfx::Line);
@@ -261,10 +261,10 @@ struct Ship {
 impl Ship {
 	fn new(device: &mut gfx::GlDevice) -> Ship {
 		let vertices = vec![
-			Vertex { pos: [  0.0,  0.0 ] },
-			Vertex { pos: [ 48.0,  0.0 ] },
-			Vertex { pos: [  0.0, 48.0 ] },
-			Vertex { pos: [ 48.0, 48.0 ] },
+			Vertex { position: [  0.0,  0.0 ] },
+			Vertex { position: [ 48.0,  0.0 ] },
+			Vertex { position: [  0.0, 48.0 ] },
+			Vertex { position: [ 48.0, 48.0 ] },
 		];
 
 		let mesh = device.create_mesh(vertices, gfx::TriangleStrip);
