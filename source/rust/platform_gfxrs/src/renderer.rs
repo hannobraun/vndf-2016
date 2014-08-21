@@ -22,6 +22,13 @@ struct GridParams {
 	camera_pos : [f32, ..2],
 }
 
+#[shader_param(ShipProgram)]
+struct ShipParams {
+	screen_size: [f32, ..2],
+	camera_pos : [f32, ..2],
+	ship_pos   : [f32, ..2],
+}
+
 
 static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
@@ -54,6 +61,32 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 		void main() {
 			out_color = vec4(1.0, 1.0, 1.0, 1.0);
+		}
+	"
+};
+
+static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform vec2 screen_size;
+		uniform vec2 camera_pos;
+		uniform vec2 ship_pos;
+
+		in vec2 pos;
+
+		void main()
+		{
+			mat4 m = mat4(
+				2.0 / screen_size.x,                 0.0,  0.0 , 0.0,
+				                0.0, 2.0 / screen_size.y,  0.0 , 0.0,
+				                0.0,                 0.0, -0.01, 0.0,
+				               -1.0,                -1.0,  0.0 , 1.0);
+
+			vec2 camera_trans = screen_size * 0.5 - camera_pos;
+
+			vec2 translated = pos + ship_pos + camera_trans;
+			gl_Position = m * vec4(translated, 0.0, 1.0);
 		}
 	"
 };
