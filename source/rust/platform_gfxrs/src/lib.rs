@@ -19,6 +19,7 @@ use gfx::{
 };
 use glfw::Context;
 
+use inputhandler::InputHandler;
 use platform::{
 	Frame,
 	Input,
@@ -28,23 +29,20 @@ use renderer::Renderer;
 use window::Window;
 
 
+mod inputhandler;
 mod renderer;
 mod window;
 
 
 struct DesktopPlatform {
-	renderer: Renderer,
-	window  : Rc<Window>,
+	input_handler: InputHandler,
+	renderer     : Renderer,
+	window       : Rc<Window>,
 }
 
 impl Platform for DesktopPlatform {
 	fn input(&mut self) -> Result<Input, String> {
-		self.window.poll_events();
-
-		let mut input = Input::default();
-		input.exit = self.window.should_close();
-
-		Ok(input)
+		Ok(self.input_handler.input())
 	}
 
 	fn render(&mut self, frame: &Frame) {
@@ -54,13 +52,17 @@ impl Platform for DesktopPlatform {
 
 
 pub fn init() -> Box<Platform> {
-	let window   = Rc::new(Window::create(800, 600));
-	let renderer = Renderer::new(window.clone());
+	let window = Rc::new(Window::create(800, 600));
+
+	let input_handler = InputHandler::new(window.clone());
+	let renderer      = Renderer::new(window.clone());
 
 	box
 		DesktopPlatform {
 			window  : window,
-			renderer: renderer,
+
+			input_handler: input_handler,
+			renderer     : renderer,
 		}
 	as Box<Platform>
 }
