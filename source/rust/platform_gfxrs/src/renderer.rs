@@ -78,7 +78,7 @@ impl Renderer {
 		let frame = gfx::Frame::new(window.width, window.height);
 		let state = gfx::DrawState::new();
 
-		let grid = init_grid(&mut device);
+		let grid = Grid::new(&mut device);
 
 		Renderer {
 			device  : device,
@@ -132,52 +132,54 @@ struct Grid {
 	program: GridProgram,
 }
 
-fn init_grid(device: &mut gfx::GlDevice) -> Grid {
-	let grid_data = vec![
-		Vertex { pos: [ -700.0, -600.0 ] },
-		Vertex { pos: [ -700.0,  600.0 ] },
-		Vertex { pos: [ -500.0, -600.0 ] },
-		Vertex { pos: [ -500.0,  600.0 ] },
-		Vertex { pos: [ -300.0, -600.0 ] },
-		Vertex { pos: [ -300.0,  600.0 ] },
-		Vertex { pos: [ -100.0, -600.0 ] },
-		Vertex { pos: [ -100.0,  600.0 ] },
-		Vertex { pos: [  100.0, -600.0 ] },
-		Vertex { pos: [  100.0,  600.0 ] },
-		Vertex { pos: [  300.0, -600.0 ] },
-		Vertex { pos: [  300.0,  600.0 ] },
-		Vertex { pos: [  500.0, -600.0 ] },
-		Vertex { pos: [  500.0,  600.0 ] },
-		Vertex { pos: [  700.0, -600.0 ] },
-		Vertex { pos: [  700.0,  600.0 ] },
+impl Grid {
+	fn new(device: &mut gfx::GlDevice) -> Grid {
+		let grid_data = vec![
+			Vertex { pos: [ -700.0, -600.0 ] },
+			Vertex { pos: [ -700.0,  600.0 ] },
+			Vertex { pos: [ -500.0, -600.0 ] },
+			Vertex { pos: [ -500.0,  600.0 ] },
+			Vertex { pos: [ -300.0, -600.0 ] },
+			Vertex { pos: [ -300.0,  600.0 ] },
+			Vertex { pos: [ -100.0, -600.0 ] },
+			Vertex { pos: [ -100.0,  600.0 ] },
+			Vertex { pos: [  100.0, -600.0 ] },
+			Vertex { pos: [  100.0,  600.0 ] },
+			Vertex { pos: [  300.0, -600.0 ] },
+			Vertex { pos: [  300.0,  600.0 ] },
+			Vertex { pos: [  500.0, -600.0 ] },
+			Vertex { pos: [  500.0,  600.0 ] },
+			Vertex { pos: [  700.0, -600.0 ] },
+			Vertex { pos: [  700.0,  600.0 ] },
 
-		Vertex { pos: [ -700.0, -600.0 ] },
-		Vertex { pos: [  700.0, -600.0 ] },
-		Vertex { pos: [ -700.0, -400.0 ] },
-		Vertex { pos: [  700.0, -400.0 ] },
-		Vertex { pos: [ -700.0, -200.0 ] },
-		Vertex { pos: [  700.0, -200.0 ] },
-		Vertex { pos: [ -700.0,    0.0 ] },
-		Vertex { pos: [  700.0,    0.0 ] },
-		Vertex { pos: [ -700.0,  200.0 ] },
-		Vertex { pos: [  700.0,  200.0 ] },
-		Vertex { pos: [ -700.0,  400.0 ] },
-		Vertex { pos: [  700.0,  400.0 ] },
-		Vertex { pos: [ -700.0,  600.0 ] },
-		Vertex { pos: [  700.0,  600.0 ] },
-	];
+			Vertex { pos: [ -700.0, -600.0 ] },
+			Vertex { pos: [  700.0, -600.0 ] },
+			Vertex { pos: [ -700.0, -400.0 ] },
+			Vertex { pos: [  700.0, -400.0 ] },
+			Vertex { pos: [ -700.0, -200.0 ] },
+			Vertex { pos: [  700.0, -200.0 ] },
+			Vertex { pos: [ -700.0,    0.0 ] },
+			Vertex { pos: [  700.0,    0.0 ] },
+			Vertex { pos: [ -700.0,  200.0 ] },
+			Vertex { pos: [  700.0,  200.0 ] },
+			Vertex { pos: [ -700.0,  400.0 ] },
+			Vertex { pos: [  700.0,  400.0 ] },
+			Vertex { pos: [ -700.0,  600.0 ] },
+			Vertex { pos: [  700.0,  600.0 ] },
+		];
 
-	let mesh = device.create_mesh(grid_data, gfx::Line);
+		let mesh = device.create_mesh(grid_data, gfx::Line);
 
-	let program =
-		device.link_program(
-			GRID_VERTEX_SHADER.clone(),
-			GRID_FRAGMENT_SHADER.clone()
-		)
-		.unwrap_or_else(|error| fail!("error linking program: {}", error));
+		let program =
+			device.link_program(
+				GRID_VERTEX_SHADER.clone(),
+				GRID_FRAGMENT_SHADER.clone()
+			)
+			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-	Grid {
-		mesh   : mesh,
-		program: program,
+		Grid {
+			mesh   : mesh,
+			program: program,
+		}
 	}
 }
