@@ -201,28 +201,11 @@ impl Renderer {
 	fn draw_ship(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
 		let Vec2(ship_x, ship_y) = body.position;
 
-		let texture_info = TextureInfo {
-			width       : 48,
-			height      : 48,
-			depth       : 1,
-			mipmap_range: (0, -1),
-			kind        : gfx::tex::Texture2D,
-			format      : gfx::tex::RGBA8,
-		};
-
-		let texture = self.device.create_texture(texture_info).unwrap();
-		self.device.update_texture(
-			&texture,
-			&texture_info.to_image_info(),
-			&Vec::from_elem(48*48*4, 0x77u8)
-		)
-		.unwrap();
-
 		let params = ShipParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [ship_x as f32, ship_y as f32],
-			tex        : (texture, None)
+			tex        : (self.ship.texture, None)
 		};
 
 		self.renderer
@@ -299,6 +282,7 @@ impl Grid {
 struct Ship {
 	mesh   : gfx::Mesh,
 	program: ShipProgram,
+	texture: gfx::TextureHandle
 }
 
 impl Ship {
@@ -319,9 +303,27 @@ impl Ship {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
+		let texture_info = TextureInfo {
+			width       : 48,
+			height      : 48,
+			depth       : 1,
+			mipmap_range: (0, -1),
+			kind        : gfx::tex::Texture2D,
+			format      : gfx::tex::RGBA8,
+		};
+
+		let texture = device.create_texture(texture_info).unwrap();
+		device.update_texture(
+			&texture,
+			&texture_info.to_image_info(),
+			&Vec::from_elem(48*48*4, 0x77u8)
+		)
+		.unwrap();
+
 		Ship {
 			mesh   : mesh,
 			program: program,
+			texture: texture,
 		}
 	}
 }
