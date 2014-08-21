@@ -6,7 +6,10 @@ use gfx::{
 	DeviceHelper,
 };
 
-use physics::Vec2;
+use physics::{
+	Body,
+	Vec2,
+};
 use platform::Frame;
 use window::Window;
 
@@ -101,6 +104,7 @@ pub struct Renderer {
 	state: gfx::DrawState,
 
 	grid: Grid,
+	ship: Ship,
 }
 
 impl Renderer {
@@ -112,6 +116,7 @@ impl Renderer {
 		let state = gfx::DrawState::new();
 
 		let grid = Grid::new(&mut device);
+		let ship = Ship::new(&mut device);
 
 		Renderer {
 			device  : device,
@@ -122,6 +127,7 @@ impl Renderer {
 			state: state,
 
 			grid: grid,
+			ship: ship,
 		}
 	}
 
@@ -136,6 +142,10 @@ impl Renderer {
 		);
 
 		self.draw_grid(&frame.camera);
+
+		for body in frame.ships.iter() {
+			self.draw_ship(body, &frame.camera);
+		}
 
 		self.device.submit(self.renderer.as_buffer());
 		self.window.swap_buffers();
@@ -153,6 +163,26 @@ impl Renderer {
 				self.grid.mesh.get_slice(),
 				&self.frame,
 				(&self.grid.program, &params),
+				&self.state
+			)
+			.unwrap();
+	}
+
+	fn draw_ship(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
+		let Vec2(ship_x, ship_y) = body.position;
+
+		let params = ShipParams {
+			screen_size: [self.window.width as f32, self.window.height as f32],
+			camera_pos : [camera_x as f32, camera_y as f32],
+			ship_pos   : [ship_x as f32, ship_y as f32],
+		};
+
+		self.renderer
+			.draw(
+				&self.ship.mesh,
+				self.ship.mesh.get_slice(),
+				&self.frame,
+				(&self.ship.program, &params),
 				&self.state
 			)
 			.unwrap();
