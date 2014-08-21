@@ -104,7 +104,7 @@ impl Renderer {
 		self.draw_grid();
 
 		self.device.submit(self.renderer.as_buffer());
-        self.window.swap_buffers();
+		self.window.swap_buffers();
 	}
 
 	fn draw_grid(&mut self) {
