@@ -7,6 +7,7 @@ extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
 extern crate glfw;
 
+extern crate physics;
 extern crate platform;
 
 

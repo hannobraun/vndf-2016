@@ -6,6 +6,7 @@ use gfx::{
 	DeviceHelper,
 };
 
+use physics::Vec2;
 use platform::Frame;
 use window::Window;
 
@@ -101,16 +102,16 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.draw_grid();
+		self.draw_grid(&frame.camera);
 
 		self.device.submit(self.renderer.as_buffer());
 		self.window.swap_buffers();
 	}
 
-	fn draw_grid(&mut self) {
+	fn draw_grid(&mut self, &Vec2(camera_x, camera_y): &Vec2) {
 		let params = GridParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
-			camera_pos : [0.0, 0.0],
+			camera_pos : [camera_x as f32, camera_y as f32],
 		};
 
 		self.renderer
