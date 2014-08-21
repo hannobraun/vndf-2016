@@ -263,9 +263,9 @@ impl Ship {
 	fn new(device: &mut gfx::GlDevice) -> Ship {
 		let vertices = vec![
 			Vertex { position: [  0.0,  0.0 ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { position: [ 48.0,  0.0 ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { position: [  0.0, 48.0 ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { position: [ 48.0, 48.0 ], tex_coord: [ 0.0, 0.0 ] },
+			Vertex { position: [ 48.0,  0.0 ], tex_coord: [ 1.0, 0.0 ] },
+			Vertex { position: [  0.0, 48.0 ], tex_coord: [ 0.0, 1.0 ] },
+			Vertex { position: [ 48.0, 48.0 ], tex_coord: [ 1.0, 1.0 ] },
 		];
 
 		let mesh = device.create_mesh(vertices, gfx::TriangleStrip);
