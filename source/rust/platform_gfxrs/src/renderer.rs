@@ -133,7 +133,7 @@ pub struct Renderer {
 	state: gfx::DrawState,
 
 	grid: Grid,
-	ship: Ship,
+	ship: Craft,
 
 	textures: Textures,
 }
@@ -148,7 +148,7 @@ impl Renderer {
 			.blend(gfx::BlendAlpha);
 
 		let grid = Grid::new(&mut device);
-		let ship = Ship::new(&mut device);
+		let ship = Craft::new(&mut device);
 
 		let textures = create_textures(&mut device, images);
 
@@ -320,14 +320,14 @@ impl Grid {
 }
 
 
-struct Ship {
+struct Craft {
 	mesh   : gfx::Mesh,
 	program: ShipProgram,
 	offset : Vec2,
 }
 
-impl Ship {
-	fn new(device: &mut gfx::GlDevice) -> Ship {
+impl Craft {
+	fn new(device: &mut gfx::GlDevice) -> Craft {
 		let vertices = vec![
 			Vertex { position: [  0.0,  0.0 ], tex_coord: [ 0.0, 1.0 ] },
 			Vertex { position: [ 48.0,  0.0 ], tex_coord: [ 1.0, 1.0 ] },
@@ -344,7 +344,7 @@ impl Ship {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-		Ship {
+		Craft {
 			mesh   : mesh,
 			program: program,
 			offset : Vec2(-24.0, -24.0),
