@@ -55,9 +55,10 @@ impl Platform for DesktopPlatform {
 
 pub fn init() -> Box<Platform> {
 	let window = Rc::new(Window::create(800, 600));
+	let images = images::load();
 
 	let input_handler = InputHandler::new(window.clone());
-	let renderer      = Renderer::new(window.clone());
+	let renderer      = Renderer::new(window.clone(), images);
 
 	box
 		DesktopPlatform {

@@ -7,6 +7,7 @@ use gfx::{
 };
 use gfx::tex::TextureInfo;
 
+use images::Images;
 use physics::{
 	Body,
 	Vec2,
@@ -133,7 +134,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(window: Rc<Window>) -> Renderer {
+	pub fn new(window: Rc<Window>, images: Images) -> Renderer {
 		let mut device   = window.new_device();
 		let     renderer = device.create_renderer();
 
