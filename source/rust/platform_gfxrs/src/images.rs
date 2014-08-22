@@ -8,9 +8,9 @@ use physics::Vec2;
 pub type Images = HashMap<String, Image>;
 
 struct Image {
-	data  : Vec<u8>,
-	width : uint,
-	height: uint
+	pub data  : Vec<u8>,
+	pub width : uint,
+	pub height: uint
 }
 
 
