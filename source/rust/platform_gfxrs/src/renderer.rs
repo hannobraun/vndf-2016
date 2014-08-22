@@ -149,7 +149,7 @@ impl Renderer {
 		let grid = Grid::new(&mut device);
 		let ship = Ship::new(&mut device);
 
-		let textures = create_textures(&mut device);
+		let textures = create_textures(&mut device, images);
 
 		Renderer {
 			device  : device,
@@ -210,12 +210,13 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
 		let Vec2(ship_x, ship_y) = body.position;
+		let texture = self.textures["images/spaceship.png".to_string()];
 
 		let params = ShipParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [ship_x as f32, ship_y as f32],
-			tex        : (self.textures["ship".to_string()], None)
+			tex        : (texture, None)
 		};
 
 		self.renderer
@@ -231,27 +232,29 @@ impl Renderer {
 }
 
 
-fn create_textures(device: &mut gfx::GlDevice) -> Textures {
+fn create_textures(device: &mut gfx::GlDevice, images: Images) -> Textures {
 	let mut textures = HashMap::new();
 
-	let texture_info = TextureInfo {
-		width       : 48,
-		height      : 48,
-		depth       : 1,
-		mipmap_range: (0, -1),
-		kind        : gfx::tex::Texture2D,
-		format      : gfx::tex::RGBA8,
-	};
+	for (path, image) in images.move_iter() {
+		let texture_info = TextureInfo {
+			width       : image.width as u16,
+			height      : image.height as u16,
+			depth       : 1,
+			mipmap_range: (0, -1),
+			kind        : gfx::tex::Texture2D,
+			format      : gfx::tex::RGBA8,
+		};
 
-	let texture = device.create_texture(texture_info).unwrap();
-	device.update_texture(
-		&texture,
-		&texture_info.to_image_info(),
-		&Vec::from_elem(48*48*4, 0x77u8)
-	)
-	.unwrap();
+		let texture = device.create_texture(texture_info).unwrap();
+		device.update_texture(
+			&texture,
+			&texture_info.to_image_info(),
+			&image.data
+		)
+		.unwrap();
 
-	textures.insert("ship".to_string(), texture);
+		textures.insert(path, texture);
+	}
 
 	textures
 }
