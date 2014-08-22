@@ -210,7 +210,7 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
-		let Vec2(pos_x, pos_y) = body.position + Vec2(-24.0, -24.0);
+		let Vec2(pos_x, pos_y) = body.position + self.ship.offset;
 		let texture = self.textures["images/spaceship.png".to_string()];
 
 		let params = ShipParams {
@@ -322,6 +322,7 @@ impl Grid {
 struct Ship {
 	mesh   : gfx::Mesh,
 	program: ShipProgram,
+	offset : Vec2,
 }
 
 impl Ship {
@@ -345,6 +346,7 @@ impl Ship {
 		Ship {
 			mesh   : mesh,
 			program: program,
+			offset : Vec2(-24.0, -24.0),
 		}
 	}
 }
