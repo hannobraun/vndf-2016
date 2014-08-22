@@ -144,7 +144,8 @@ impl Renderer {
 		let     renderer = device.create_renderer();
 
 		let frame = gfx::Frame::new(window.width, window.height);
-		let state = gfx::DrawState::new();
+		let state = gfx::DrawState::new()
+			.blend(gfx::BlendAlpha);
 
 		let grid = Grid::new(&mut device);
 		let ship = Ship::new(&mut device);
