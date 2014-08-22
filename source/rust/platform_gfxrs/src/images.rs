@@ -5,7 +5,7 @@ use stb_image::image;
 use physics::Vec2;
 
 
-type Images = HashMap<String, Image>;
+pub type Images = HashMap<String, Image>;
 
 struct Image {
 	data  : Vec<u8>,
