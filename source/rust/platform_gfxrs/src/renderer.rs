@@ -210,13 +210,13 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
-		let Vec2(ship_x, ship_y) = body.position;
+		let Vec2(pos_x, pos_y) = body.position;
 		let texture = self.textures["images/spaceship.png".to_string()];
 
 		let params = ShipParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
-			ship_pos   : [ship_x as f32, ship_y as f32],
+			ship_pos   : [pos_x as f32, pos_y as f32],
 			tex        : (texture, None)
 		};
 
