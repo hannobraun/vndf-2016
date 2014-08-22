@@ -209,8 +209,9 @@ impl Renderer {
 			.unwrap();
 	}
 
-	fn draw_craft(&mut self, body: &Body, &Vec2(camera_x, camera_y): &Vec2) {
+	fn draw_craft(&mut self, body: &Body, camera: &Vec2) {
 		let Vec2(pos_x, pos_y) = body.position + self.ship.offset;
+		let &Vec2(camera_x, camera_y) = camera;
 		let texture = self.textures["images/spaceship.png".to_string()];
 
 		let params = ShipParams {
