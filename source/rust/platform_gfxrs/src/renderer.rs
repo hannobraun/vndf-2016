@@ -8,7 +8,10 @@ use gfx::{
 };
 use gfx::tex::TextureInfo;
 
-use images::Images;
+use images::{
+	Image,
+	Images,
+};
 use physics::{
 	Body,
 	Vec2,
@@ -36,8 +39,6 @@ struct ShipParams {
 	ship_pos   : [f32, ..2],
 	tex        : gfx::shade::TextureParam,
 }
-
-type Textures = HashMap<String, gfx::TextureHandle>;
 
 
 static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
@@ -132,10 +133,8 @@ pub struct Renderer {
 	frame: gfx::Frame,
 	state: gfx::DrawState,
 
-	grid: Grid,
-	ship: Craft,
-
-	textures: Textures,
+	grid  : Grid,
+	crafts: HashMap<String, Craft>,
 }
 
 impl Renderer {
@@ -148,9 +147,11 @@ impl Renderer {
 			.blend(gfx::BlendAlpha);
 
 		let grid = Grid::new(&mut device);
-		let ship = Craft::new(&mut device);
 
-		let textures = create_textures(&mut device, images);
+		let mut crafts = HashMap::new();
+		for (path, image) in images.move_iter() {
+			crafts.insert(path, Craft::new(&mut device, image));
+		}
 
 		Renderer {
 			device  : device,
@@ -160,10 +161,8 @@ impl Renderer {
 			frame: frame,
 			state: state,
 
-			grid: grid,
-			ship: ship,
-
-			textures: textures,
+			grid  : grid,
+			crafts: crafts,
 		}
 	}
 
@@ -210,55 +209,28 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Vec2) {
-		let Vec2(pos_x, pos_y) = body.position + self.ship.offset;
+		let ref craft = self.crafts["images/spaceship.png".to_string()];
+
+		let Vec2(pos_x, pos_y) = body.position + craft.offset;
 		let &Vec2(camera_x, camera_y) = camera;
-		let texture = self.textures["images/spaceship.png".to_string()];
 
 		let params = ShipParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [pos_x as f32, pos_y as f32],
-			tex        : (texture, None)
+			tex        : (craft.texture, None)
 		};
 
 		self.renderer
 			.draw(
-				&self.ship.mesh,
-				self.ship.mesh.get_slice(),
+				&craft.mesh,
+				craft.mesh.get_slice(),
 				&self.frame,
-				(&self.ship.program, &params),
+				(&craft.program, &params),
 				&self.state
 			)
 			.unwrap();
 	}
-}
-
-
-fn create_textures(device: &mut gfx::GlDevice, images: Images) -> Textures {
-	let mut textures = HashMap::new();
-
-	for (path, image) in images.move_iter() {
-		let texture_info = TextureInfo {
-			width       : image.width as u16,
-			height      : image.height as u16,
-			depth       : 1,
-			mipmap_range: (0, -1),
-			kind        : gfx::tex::Texture2D,
-			format      : gfx::tex::RGBA8,
-		};
-
-		let texture = device.create_texture(texture_info).unwrap();
-		device.update_texture(
-			&texture,
-			&texture_info.to_image_info(),
-			&image.data
-		)
-		.unwrap();
-
-		textures.insert(path, texture);
-	}
-
-	textures
 }
 
 
@@ -323,11 +295,12 @@ impl Grid {
 struct Craft {
 	mesh   : gfx::Mesh,
 	program: ShipProgram,
+	texture: gfx::TextureHandle,
 	offset : Vec2,
 }
 
 impl Craft {
-	fn new(device: &mut gfx::GlDevice) -> Craft {
+	fn new(device: &mut gfx::GlDevice, image: Image) -> Craft {
 		let vertices = vec![
 			Vertex { position: [  0.0,  0.0 ], tex_coord: [ 0.0, 1.0 ] },
 			Vertex { position: [ 48.0,  0.0 ], tex_coord: [ 1.0, 1.0 ] },
@@ -344,9 +317,27 @@ impl Craft {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
+		let texture_info = TextureInfo {
+			width       : image.width as u16,
+			height      : image.height as u16,
+			depth       : 1,
+			mipmap_range: (0, -1),
+			kind        : gfx::tex::Texture2D,
+			format      : gfx::tex::RGBA8,
+		};
+
+		let texture = device.create_texture(texture_info).unwrap();
+		device.update_texture(
+			&texture,
+			&texture_info.to_image_info(),
+			&image.data
+		)
+		.unwrap();
+
 		Craft {
 			mesh   : mesh,
 			program: program,
+			texture: texture,
 			offset : Vec2(-24.0, -24.0),
 		}
 	}
