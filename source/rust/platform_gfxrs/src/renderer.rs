@@ -231,6 +231,32 @@ impl Renderer {
 }
 
 
+fn create_textures(device: &mut gfx::GlDevice) -> Textures {
+	let mut textures = HashMap::new();
+
+	let texture_info = TextureInfo {
+		width       : 48,
+		height      : 48,
+		depth       : 1,
+		mipmap_range: (0, -1),
+		kind        : gfx::tex::Texture2D,
+		format      : gfx::tex::RGBA8,
+	};
+
+	let texture = device.create_texture(texture_info).unwrap();
+	device.update_texture(
+		&texture,
+		&texture_info.to_image_info(),
+		&Vec::from_elem(48*48*4, 0x77u8)
+	)
+	.unwrap();
+
+	textures.insert("ship".to_string(), texture);
+
+	textures
+}
+
+
 struct Grid {
 	mesh   : gfx::Mesh,
 	program: GridProgram,
@@ -286,32 +312,6 @@ impl Grid {
 			program: program,
 		}
 	}
-}
-
-
-fn create_textures(device: &mut gfx::GlDevice) -> Textures {
-	let mut textures = HashMap::new();
-
-	let texture_info = TextureInfo {
-		width       : 48,
-		height      : 48,
-		depth       : 1,
-		mipmap_range: (0, -1),
-		kind        : gfx::tex::Texture2D,
-		format      : gfx::tex::RGBA8,
-	};
-
-	let texture = device.create_texture(texture_info).unwrap();
-	device.update_texture(
-		&texture,
-		&texture_info.to_image_info(),
-		&Vec::from_elem(48*48*4, 0x77u8)
-	)
-	.unwrap();
-
-	textures.insert("ship".to_string(), texture);
-
-	textures
 }
 
 
