@@ -182,6 +182,10 @@ impl Renderer {
 			self.draw_craft(body, &frame.camera, "images/spaceship.png");
 		}
 
+		for body in frame.missiles.iter() {
+			self.draw_craft(body, &frame.camera, "images/missile.png");
+		}
+
 		self.device.submit(self.renderer.as_buffer());
 		self.window.swap_buffers();
 	}
