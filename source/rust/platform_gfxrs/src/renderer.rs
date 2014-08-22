@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::rc::Rc;
 
 use gfx::{
@@ -35,6 +36,8 @@ struct ShipParams {
 	ship_pos   : [f32, ..2],
 	tex        : gfx::shade::TextureParam,
 }
+
+type Textures = HashMap<String, gfx::TextureHandle>;
 
 
 static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
@@ -131,6 +134,8 @@ pub struct Renderer {
 
 	grid: Grid,
 	ship: Ship,
+
+	textures: Textures,
 }
 
 impl Renderer {
@@ -144,6 +149,8 @@ impl Renderer {
 		let grid = Grid::new(&mut device);
 		let ship = Ship::new(&mut device);
 
+		let textures = create_textures(&mut device);
+
 		Renderer {
 			device  : device,
 			renderer: renderer,
@@ -154,6 +161,8 @@ impl Renderer {
 
 			grid: grid,
 			ship: ship,
+
+			textures: textures,
 		}
 	}
 
@@ -206,7 +215,7 @@ impl Renderer {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [ship_x as f32, ship_y as f32],
-			tex        : (self.ship.texture, None)
+			tex        : (self.textures["ship".to_string()], None)
 		};
 
 		self.renderer
@@ -280,10 +289,35 @@ impl Grid {
 }
 
 
+fn create_textures(device: &mut gfx::GlDevice) -> Textures {
+	let mut textures = HashMap::new();
+
+	let texture_info = TextureInfo {
+		width       : 48,
+		height      : 48,
+		depth       : 1,
+		mipmap_range: (0, -1),
+		kind        : gfx::tex::Texture2D,
+		format      : gfx::tex::RGBA8,
+	};
+
+	let texture = device.create_texture(texture_info).unwrap();
+	device.update_texture(
+		&texture,
+		&texture_info.to_image_info(),
+		&Vec::from_elem(48*48*4, 0x77u8)
+	)
+	.unwrap();
+
+	textures.insert("ship".to_string(), texture);
+
+	textures
+}
+
+
 struct Ship {
 	mesh   : gfx::Mesh,
 	program: ShipProgram,
-	texture: gfx::TextureHandle
 }
 
 impl Ship {
@@ -304,27 +338,9 @@ impl Ship {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-		let texture_info = TextureInfo {
-			width       : 48,
-			height      : 48,
-			depth       : 1,
-			mipmap_range: (0, -1),
-			kind        : gfx::tex::Texture2D,
-			format      : gfx::tex::RGBA8,
-		};
-
-		let texture = device.create_texture(texture_info).unwrap();
-		device.update_texture(
-			&texture,
-			&texture_info.to_image_info(),
-			&Vec::from_elem(48*48*4, 0x77u8)
-		)
-		.unwrap();
-
 		Ship {
 			mesh   : mesh,
 			program: program,
-			texture: texture,
 		}
 	}
 }
