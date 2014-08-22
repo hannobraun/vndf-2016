@@ -7,7 +7,7 @@ use physics::Vec2;
 
 pub type Images = HashMap<String, Image>;
 
-struct Image {
+pub struct Image {
 	pub data  : Vec<u8>,
 	pub width : uint,
 	pub height: uint
