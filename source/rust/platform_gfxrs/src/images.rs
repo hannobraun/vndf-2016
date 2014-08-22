@@ -5,6 +5,8 @@ use stb_image::image;
 use physics::Vec2;
 
 
+type Images = HashMap<String, Image>;
+
 struct Image {
 	data  : Vec<u8>,
 	width : uint,
@@ -12,7 +14,7 @@ struct Image {
 }
 
 
-pub fn load() -> HashMap<String, Image> {
+pub fn load() -> Images {
 	let paths = vec!(
 		"images/missile.png",
 		"images/spaceship.png");
