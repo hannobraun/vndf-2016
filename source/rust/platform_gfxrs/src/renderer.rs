@@ -179,7 +179,7 @@ impl Renderer {
 		self.draw_grid(&frame.camera);
 
 		for body in frame.ships.iter() {
-			self.draw_craft(body, &frame.camera);
+			self.draw_craft(body, &frame.camera, "images/spaceship.png");
 		}
 
 		self.device.submit(self.renderer.as_buffer());
@@ -208,8 +208,8 @@ impl Renderer {
 			.unwrap();
 	}
 
-	fn draw_craft(&mut self, body: &Body, camera: &Vec2) {
-		let ref craft = self.crafts["images/spaceship.png".to_string()];
+	fn draw_craft(&mut self, body: &Body, camera: &Vec2, craft_id: &str) {
+		let ref craft = self.crafts[craft_id.to_string()];
 
 		let Vec2(pos_x, pos_y) = body.position + craft.offset;
 		let &Vec2(camera_x, camera_y) = camera;
