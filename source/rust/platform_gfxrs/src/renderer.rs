@@ -341,7 +341,7 @@ impl Craft {
 			mesh   : mesh,
 			program: program,
 			texture: texture,
-			offset : Vec2(-24.0, -24.0),
+			offset : Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
 		}
 	}
 }
