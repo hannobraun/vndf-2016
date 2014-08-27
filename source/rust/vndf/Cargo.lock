@@ -19,7 +19,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#fe78eb8a5ac3c5b68bde515ee4aa4a5c09300688"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#493646a8dc47ce498e181bb0aeb4c89682ad86f5"
 
 [[package]]
 name = "gl"
@@ -32,22 +32,22 @@ dependencies = [
 name = "gl_generator"
 version = "0.0.1"
 dependencies = [
- "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#361fc1ac28422186a97b377ad9c1d571a2b36f6a)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#3a3f37e7014e591394329790565d63d6743c6901)",
 ]
 
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#dd1631883033c743cb041e35580196244b2a0c86"
+source = "git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651"
 dependencies = [
- "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#dd1631883033c743cb041e35580196244b2a0c86)",
+ "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651)",
  "semver 0.0.1 (git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f)",
 ]
 
 [[package]]
 name = "link_glfw"
 version = "0.1.0"
-source = "git+https://github.com/bjz/glfw-rs.git#dd1631883033c743cb041e35580196244b2a0c86"
+source = "git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651"
 
 [[package]]
 name = "net"
@@ -75,9 +75,9 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#fe78eb8a5ac3c5b68bde515ee4aa4a5c09300688)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#493646a8dc47ce498e181bb0aeb4c89682ad86f5)",
  "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#dd1631883033c743cb041e35580196244b2a0c86)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651)",
  "platform 0.1.0",
  "stb_image 0.0.1 (git+https://github.com/hannobraun/rust-stb-image.git#4a9e3ed031e31e934226d3ce152e76e0bb2a1620)",
 ]
@@ -85,7 +85,7 @@ dependencies = [
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/netvl/rust-xml#361fc1ac28422186a97b377ad9c1d571a2b36f6a"
+source = "git+https://github.com/netvl/rust-xml#3a3f37e7014e591394329790565d63d6743c6901"
 
 [[package]]
 name = "rustecs"
