@@ -20,19 +20,21 @@ use platform::Frame;
 use window::Window;
 
 
+type Graphics = gfx::Graphics<gfx::GlDevice>;
+
 #[vertex_format]
 struct Vertex {
 	position : [f32, ..2],
 	tex_coord: [f32, ..2],
 }
 
-#[shader_param(GridProgram)]
+#[shader_param(GridBatch)]
 struct GridParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
 }
 
-#[shader_param(ShipProgram)]
+#[shader_param(ShipBatch)]
 struct ShipParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
@@ -126,12 +128,10 @@ static TEXTURE_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 pub struct Renderer {
-	device  : gfx::GlDevice,
-	renderer: gfx::Renderer,
+	graphics: Graphics,
 	window  : Rc<Window>,
 
 	frame: gfx::Frame,
-	state: gfx::DrawState,
 
 	grid  : Grid,
 	crafts: HashMap<String, Craft>,
@@ -139,27 +139,22 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(window: Rc<Window>, images: Images) -> Renderer {
-		let mut device   = window.new_device();
-		let     renderer = device.create_renderer();
+		let mut graphics = gfx::Graphics::new(window.new_device());
 
 		let frame = gfx::Frame::new(window.width, window.height);
-		let state = gfx::DrawState::new()
-			.blend(gfx::BlendAlpha);
 
-		let grid = Grid::new(&mut device);
+		let grid = Grid::new(&mut graphics);
 
 		let mut crafts = HashMap::new();
 		for (path, image) in images.move_iter() {
-			crafts.insert(path, Craft::new(&mut device, image));
+			crafts.insert(path, Craft::new(&mut graphics, image));
 		}
 
 		Renderer {
-			device  : device,
-			renderer: renderer,
+			graphics: graphics,
 			window  : window,
 
 			frame: frame,
-			state: state,
 
 			grid  : grid,
 			crafts: crafts,
@@ -167,9 +162,9 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		self.renderer.clear(
+		self.graphics.clear(
 			gfx::ClearData {
-				color  : Some(gfx::Color([0.0, 0.0, 0.0, 1.0])),
+				color  : Some([0.0, 0.0, 0.0, 1.0]),
 				depth  : None,
 				stencil: None,
 			},
@@ -186,7 +181,7 @@ impl Renderer {
 			self.draw_craft(body, &frame.camera, "images/missile.png");
 		}
 
-		self.device.submit(self.renderer.as_buffer());
+		self.graphics.end_frame();
 		self.window.swap_buffers();
 	}
 
@@ -201,15 +196,11 @@ impl Renderer {
 			camera_pos : [camera_x as f32, camera_y as f32],
 		};
 
-		self.renderer
-			.draw(
-				&self.grid.mesh,
-				self.grid.mesh.get_slice(),
-				&self.frame,
-				(&self.grid.program, &params),
-				&self.state
-			)
-			.unwrap();
+		self.graphics.draw(
+			&self.grid.batch,
+			&params,
+			&self.frame
+		);
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Vec2, craft_id: &str) {
@@ -225,26 +216,22 @@ impl Renderer {
 			tex        : (craft.texture, None)
 		};
 
-		self.renderer
-			.draw(
-				&craft.mesh,
-				craft.mesh.get_slice(),
-				&self.frame,
-				(&craft.program, &params),
-				&self.state
-			)
-			.unwrap();
+		self.graphics.draw(
+			&craft.batch,
+			&params,
+			&self.frame
+		);
 	}
 }
 
 
 struct Grid {
-	mesh   : gfx::Mesh,
-	program: GridProgram,
+	mesh : gfx::Mesh,
+	batch: GridBatch,
 }
 
 impl Grid {
-	fn new(device: &mut gfx::GlDevice) -> Grid {
+	fn new(graphics: &mut Graphics) -> Grid {
 		let grid_data = vec![
 			Vertex { position: [ -700.0, -600.0 ], tex_coord: [ 0.0, 0.0 ] },
 			Vertex { position: [ -700.0,  600.0 ], tex_coord: [ 0.0, 0.0 ] },
@@ -279,18 +266,28 @@ impl Grid {
 			Vertex { position: [  700.0,  600.0 ], tex_coord: [ 0.0, 0.0 ] },
 		];
 
-		let mesh = device.create_mesh(grid_data, gfx::Line);
+		let mesh  = graphics.device.create_mesh(grid_data);
+		let slice = mesh.get_slice(gfx::Line);
 
-		let program =
-			device.link_program(
+		let program = graphics.device
+			.link_program(
 				GRID_VERTEX_SHADER.clone(),
 				GRID_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
+		let batch = graphics
+			.make_batch(
+				&mesh,
+				slice,
+				&program,
+				&gfx::DrawState::new().blend(gfx::BlendAlpha)
+			)
+			.unwrap();
+
 		Grid {
-			mesh   : mesh,
-			program: program,
+			mesh : mesh,
+			batch: batch,
 		}
 	}
 }
@@ -298,13 +295,13 @@ impl Grid {
 
 struct Craft {
 	mesh   : gfx::Mesh,
-	program: ShipProgram,
+	batch  : ShipBatch,
 	texture: gfx::TextureHandle,
 	offset : Vec2,
 }
 
 impl Craft {
-	fn new(device: &mut gfx::GlDevice, image: Image) -> Craft {
+	fn new(graphics: &mut Graphics, image: Image) -> Craft {
 		let w = image.width  as f32;
 		let h = image.height as f32;
 
@@ -315,35 +312,45 @@ impl Craft {
 			Vertex { position: [ w  , h   ], tex_coord: [ 1.0, 0.0 ] },
 		];
 
-		let mesh = device.create_mesh(vertices, gfx::TriangleStrip);
+		let mesh  = graphics.device.create_mesh(vertices);
+		let slice = mesh.get_slice(gfx::TriangleStrip);
 
-		let program =
-			device.link_program(
+		let program = graphics.device
+			.link_program(
 				SHIP_VERTEX_SHADER.clone(),
 				TEXTURE_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		let texture_info = TextureInfo {
-			width       : image.width as u16,
-			height      : image.height as u16,
-			depth       : 1,
-			mipmap_range: (0, -1),
-			kind        : gfx::tex::Texture2D,
-			format      : gfx::tex::RGBA8,
+			width : image.width as u16,
+			height: image.height as u16,
+			depth : 1,
+			levels: -1,
+			kind  : gfx::tex::Texture2D,
+			format: gfx::tex::RGBA8,
 		};
 
-		let texture = device.create_texture(texture_info).unwrap();
-		device.update_texture(
+		let texture = graphics.device.create_texture(texture_info).unwrap();
+		graphics.device.update_texture(
 			&texture,
 			&texture_info.to_image_info(),
 			&image.data
 		)
 		.unwrap();
 
+		let batch = graphics
+			.make_batch(
+				&mesh,
+				slice,
+				&program,
+				&gfx::DrawState::new().blend(gfx::BlendAlpha)
+			)
+			.unwrap();
+
 		Craft {
 			mesh   : mesh,
-			program: program,
+			batch  : batch,
 			texture: texture,
 			offset : Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
 		}
