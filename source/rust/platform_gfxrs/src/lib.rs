@@ -34,7 +34,6 @@ mod window;
 struct DesktopPlatform {
 	input_handler: InputHandler,
 	renderer     : Renderer,
-	window       : Rc<Window>,
 }
 
 impl Platform for DesktopPlatform {
@@ -57,8 +56,6 @@ pub fn init() -> Box<Platform + 'static> {
 
 	box
 		DesktopPlatform {
-			window  : window,
-
 			input_handler: input_handler,
 			renderer     : renderer,
 		}
