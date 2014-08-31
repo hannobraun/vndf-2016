@@ -15,12 +15,6 @@ extern crate platform;
 
 use std::rc::Rc;
 
-use gfx::{
-	Device,
-	DeviceHelper,
-};
-use glfw::Context;
-
 use inputhandler::InputHandler;
 use platform::{
 	Frame,
