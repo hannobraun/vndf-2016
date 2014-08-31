@@ -51,14 +51,14 @@ impl<
 
 		while !(p.is_none() && c.is_none()) {
 			if p.is_none() {
-				added.push(c.take_unwrap());
+				added.push(c.take().unwrap());
 
 				c = current.next();
 
 				continue;
 			}
 			if c.is_none() {
-				removed.push(p.take_unwrap());
+				removed.push(p.take().unwrap());
 
 				p = current.next();
 
@@ -69,7 +69,7 @@ impl<
 			let c_id = get_id(c.get_ref());
 
 			if p_id == c_id {
-				updated.push(c.take_unwrap());
+				updated.push(c.take().unwrap());
 
 				p = previous.next();
 				c = current.next();
@@ -77,14 +77,14 @@ impl<
 				continue;
 			}
 			if p_id < c_id {
-				removed.push(p.take_unwrap());
+				removed.push(p.take().unwrap());
 
 				p = previous.next();
 
 				continue;
 			}
 			if p_id > c_id {
-				added.push(c.take_unwrap());
+				added.push(c.take().unwrap());
 
 				c = current.next();
 
