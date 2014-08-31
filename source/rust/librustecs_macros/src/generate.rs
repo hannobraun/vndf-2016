@@ -182,7 +182,7 @@ impl Entity {
 
 		let mut component_names = Vec::new();
 		for (i, name) in ordered_components.iter().enumerate() {
-			let component = components.get(name);
+			let ref component = components[name.clone()];
 			let var_name  = component.var_name;
 
 			if i + 1 < components.len() {
