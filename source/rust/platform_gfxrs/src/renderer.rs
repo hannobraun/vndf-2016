@@ -227,7 +227,6 @@ impl Renderer {
 
 
 struct Grid {
-	mesh : gfx::Mesh,
 	batch: GridBatch,
 }
 
@@ -287,7 +286,6 @@ impl Grid {
 			.unwrap();
 
 		Grid {
-			mesh : mesh,
 			batch: batch,
 		}
 	}
