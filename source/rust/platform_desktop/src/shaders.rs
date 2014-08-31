@@ -41,26 +41,26 @@ impl Shaders {
 		create_program(
 			"ui-overlay",
 			[
-				*shaders.get(&"glsl/ui-overlay.vert".to_string()),
-				*shaders.get(&"glsl/text.frag".to_string())],
+				shaders["glsl/ui-overlay.vert".to_string()],
+				shaders["glsl/text.frag".to_string()]],
 			&mut programs);
 		create_program(
 			"ship-text",
 			[
-				*shaders.get(&"glsl/ship.vert".to_string()),
-				*shaders.get(&"glsl/text.frag".to_string())],
+				shaders["glsl/ship.vert".to_string()],
+				shaders["glsl/text.frag".to_string()]],
 			&mut programs);
 		create_program(
 			"ship-image",
 			[
-				*shaders.get(&"glsl/ship.vert".to_string()),
-				*shaders.get(&"glsl/image.frag".to_string())],
+				shaders["glsl/ship.vert".to_string()],
+				shaders["glsl/image.frag".to_string()]],
 			&mut programs);
 		create_program(
 			"grid",
 			[
-				*shaders.get(&"glsl/grid.vert".to_string()),
-				*shaders.get(&"glsl/grid.frag".to_string())],
+				shaders["glsl/grid.vert".to_string()],
+				shaders["glsl/grid.frag".to_string()]],
 			&mut programs);
 
 		Shaders {
