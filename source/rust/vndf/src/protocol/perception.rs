@@ -65,8 +65,8 @@ impl<
 				continue;
 			}
 
-			let p_id = get_id(p.get_ref());
-			let c_id = get_id(c.get_ref());
+			let p_id = get_id(p.as_ref().unwrap());
+			let c_id = get_id(c.as_ref().unwrap());
 
 			if p_id == c_id {
 				updated.push(c.take().unwrap());
