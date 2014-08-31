@@ -2,8 +2,6 @@ use std::collections::HashMap;
 
 use stb_image::image;
 
-use physics::Vec2;
-
 
 pub type Images = HashMap<String, Image>;
 
