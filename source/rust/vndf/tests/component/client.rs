@@ -41,7 +41,7 @@ fn it_should_interpolate_between_perceptions() {
 		vec!(),
 		vec!(entity)
 	);
-	entity.body.get_mut_ref().position = pos_2;
+	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
 		|entity| entity.id,
 		0u32,
@@ -102,7 +102,7 @@ fn the_camera_should_follow_the_ship() {
 		vec!(),
 		vec!(entity)
 	);
-	entity.body.get_mut_ref().position = pos_2;
+	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
 		|entity| entity.id,
 		0u32,
