@@ -48,7 +48,7 @@ fn it_should_update_entities() {
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
 	};
-	entity.body.get_mut_ref().position = Vec2(5.0, 8.0);
+	entity.body.as_mut().unwrap().position = Vec2(5.0, 8.0);
 
 	let perception = Perception {
 		self_id: 0,
