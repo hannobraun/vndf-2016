@@ -293,7 +293,6 @@ impl Grid {
 
 
 struct Craft {
-	mesh   : gfx::Mesh,
 	batch  : ShipBatch,
 	texture: gfx::TextureHandle,
 	offset : Vec2,
@@ -348,7 +347,6 @@ impl Craft {
 			.unwrap();
 
 		Craft {
-			mesh   : mesh,
 			batch  : batch,
 			texture: texture,
 			offset : Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
