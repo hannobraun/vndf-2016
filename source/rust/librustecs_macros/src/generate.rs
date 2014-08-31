@@ -128,7 +128,7 @@ impl Entity {
 			.iter()
 			.map(|&ident| {
 				let name = token::get_ident(ident).to_string();
-				(name.clone(), (*all_components.get(&name)).clone())
+				(name.clone(), all_components[name].clone())
 			})
 			.collect();
 
