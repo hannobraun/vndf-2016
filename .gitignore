@@ -1,3 +1,7 @@
 /*.sublime-workspace
+
 /source/rust/**/target
+/source/rust/**/Cargo.lock
+!/source/rust/vndf/Cargo.lock
+
 /output
