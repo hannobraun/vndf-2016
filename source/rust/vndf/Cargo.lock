@@ -19,7 +19,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#493646a8dc47ce498e181bb0aeb4c89682ad86f5"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#70698cb9cc1a89ceff6e265e53f2346076f38a7f"
 
 [[package]]
 name = "gl"
@@ -32,22 +32,27 @@ dependencies = [
 name = "gl_generator"
 version = "0.0.1"
 dependencies = [
- "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#3a3f37e7014e591394329790565d63d6743c6901)",
+ "khronos_api 0.0.1",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#418a3776922e545a7c33b1f68d9c8c513dc5c80b)",
 ]
 
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651"
+source = "git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec"
 dependencies = [
- "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651)",
+ "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
  "semver 0.0.1 (git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f)",
 ]
 
 [[package]]
+name = "khronos_api"
+version = "0.0.1"
+
+[[package]]
 name = "link_glfw"
 version = "0.1.0"
-source = "git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651"
+source = "git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec"
 
 [[package]]
 name = "net"
@@ -75,17 +80,17 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#493646a8dc47ce498e181bb0aeb4c89682ad86f5)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#70698cb9cc1a89ceff6e265e53f2346076f38a7f)",
  "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#d7e8b092037ad03f2be3beab6207789058061651)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
  "platform 0.1.0",
- "stb_image 0.0.1 (git+https://github.com/hannobraun/rust-stb-image.git#4a9e3ed031e31e934226d3ce152e76e0bb2a1620)",
+ "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#996791025c00b20c0435e9b4cd0e5358934fd93a)",
 ]
 
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/netvl/rust-xml#3a3f37e7014e591394329790565d63d6743c6901"
+source = "git+https://github.com/netvl/rust-xml#418a3776922e545a7c33b1f68d9c8c513dc5c80b"
 
 [[package]]
 name = "rustecs"
@@ -102,6 +107,6 @@ source = "git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fb
 
 [[package]]
 name = "stb_image"
-version = "0.0.1"
-source = "git+https://github.com/hannobraun/rust-stb-image.git#4a9e3ed031e31e934226d3ce152e76e0bb2a1620"
+version = "0.1.0"
+source = "git+https://github.com/servo/rust-stb-image.git#996791025c00b20c0435e9b4cd0e5358934fd93a"
 

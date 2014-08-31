@@ -31,7 +31,7 @@ impl Platform for CliPlatform {
 }
 
 
-pub fn init() -> Box<Platform> {
+pub fn init() -> Box<Platform + 'static> {
 	box
 		CliPlatform {
 			input_handler: InputHandler::new(),

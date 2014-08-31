@@ -15,8 +15,7 @@ pub fn expand(
 	context   : &mut ExtCtxt,
 	_         : codemap::Span,
 	token_tree: &[ast::TokenTree]
-	) -> Box<MacResult> {
-
+) -> Box<MacResult + 'static> {
 	let ecs = ECS::parse(context, token_tree);
 
 	let items = generate::items(context, &ecs);

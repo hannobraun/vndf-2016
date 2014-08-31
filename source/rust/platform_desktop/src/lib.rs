@@ -62,7 +62,7 @@ impl Platform for DesktopPlatform {
 }
 
 
-pub fn init() -> Box<Platform> {
+pub fn init() -> Box<Platform + 'static> {
 	let screen_width  = 800;
 	let screen_height = 600;
 
