@@ -3,6 +3,7 @@
 
 extern crate sync;
 
+extern crate device;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
 extern crate glfw;
@@ -53,7 +54,7 @@ impl Platform for DesktopPlatform {
 }
 
 
-pub fn init() -> Box<Platform> {
+pub fn init() -> Box<Platform + 'static> {
 	let window = Rc::new(Window::create(800, 600));
 	let images = images::load();
 
