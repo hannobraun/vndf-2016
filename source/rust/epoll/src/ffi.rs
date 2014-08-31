@@ -25,6 +25,7 @@ pub static EPOLLONESHOT: u32 = 1 << 30;
 
 
 #[allow(non_camel_case_types)]
+#[repr(C)]
 pub struct epoll_event {
 	pub events: u32,
 	pub data  : epoll_data
