@@ -21,13 +21,13 @@ impl EPoll {
 		};
 
 		if epfd >= 0 {
-			let emptyEvent = ffi::epoll_event {
+			let empty_event = ffi::epoll_event {
 				events: 0,
 				data  : 0 };
 
 			Ok(EPoll {
 				epfd          : epfd,
-				event_buffer  : [emptyEvent, ..1024],
+				event_buffer  : [empty_event, ..1024],
 				results_buffer: Vec::new()
 			})
 		}
