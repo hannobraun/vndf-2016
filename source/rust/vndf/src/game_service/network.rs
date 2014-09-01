@@ -3,6 +3,7 @@ use std::comm::{
 	Disconnected,
 	Empty
 };
+use std::io;
 
 use epoll;
 use epoll::EPoll;
@@ -81,8 +82,14 @@ impl Network {
 						}
 					},
 
-					Close(id, _) => match self.connections.pop(&id) {
+					Close(id, error) => match self.connections.pop(&id) {
 						Some(conn) => {
+							let _ =
+								write!(
+									io::stderr(),
+									"Closing connection due to error: {}\n",
+									error
+								);
 							conn.close();
 							game.send(Leave(id));
 						},
