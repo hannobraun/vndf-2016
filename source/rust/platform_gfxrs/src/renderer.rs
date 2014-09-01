@@ -278,9 +278,9 @@ impl Grid {
 
 		let batch = graphics
 			.make_batch(
+				&program,
 				&mesh,
 				slice,
-				&program,
 				&gfx::DrawState::new().blend(gfx::BlendAlpha)
 			)
 			.unwrap();
@@ -339,9 +339,9 @@ impl Craft {
 
 		let batch = graphics
 			.make_batch(
+				&program,
 				&mesh,
 				slice,
-				&program,
 				&gfx::DrawState::new().blend(gfx::BlendAlpha)
 			)
 			.unwrap();
