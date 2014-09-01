@@ -78,7 +78,7 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	"
 };
 
-static SHIP_VERTEX_SHADER: gfx::ShaderSource = shaders! {
+static CRAFT_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -314,7 +314,7 @@ impl Craft {
 
 		let program = graphics.device
 			.link_program(
-				SHIP_VERTEX_SHADER.clone(),
+				CRAFT_VERTEX_SHADER.clone(),
 				TEXTURE_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
