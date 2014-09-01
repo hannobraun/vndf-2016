@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 use std::rc::Rc;
 
-use device::GlCommandBuffer;
 use gfx::{
 	mod,
 	Device,
@@ -21,7 +20,7 @@ use platform::Frame;
 use window::Window;
 
 
-type Graphics = gfx::Graphics<gfx::GlDevice, GlCommandBuffer>;
+type Graphics = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
 
 #[vertex_format]
 struct Vertex {

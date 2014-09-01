@@ -3,7 +3,6 @@
 
 extern crate sync;
 
-extern crate device;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
 extern crate glfw;
