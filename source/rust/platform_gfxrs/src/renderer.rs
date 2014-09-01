@@ -35,7 +35,7 @@ struct GridParams {
 }
 
 #[shader_param(CraftBatch)]
-struct ShipParams {
+struct CraftParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
 	ship_pos   : [f32, ..2],
@@ -209,7 +209,7 @@ impl Renderer {
 		let Vec2(pos_x, pos_y) = body.position + craft.offset;
 		let &Vec2(camera_x, camera_y) = camera;
 
-		let params = ShipParams {
+		let params = CraftParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			ship_pos   : [pos_x as f32, pos_y as f32],
