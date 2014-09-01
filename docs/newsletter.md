@@ -46,7 +46,7 @@ Topic ideas:
 
 
 News for September:
-- ...
+- http://www.theregister.co.uk/2014/08/30/nasa_to_reformat_opportunity_rovers_memory_from_125_meeellion_miles_away/
 
 News for any month:
 - Asteroid video by Scott Manley
