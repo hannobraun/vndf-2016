@@ -17,6 +17,7 @@ a:hover {
 }
 
 main {
+	display  : block;
 	max-width: 34em;
 	margin   : 0 auto;
 }
