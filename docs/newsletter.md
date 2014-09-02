@@ -32,6 +32,7 @@ News resources:
 - General: http://www.reddit.com/r/space/
 - Rosetta: http://blogs.esa.int/rosetta/
 - New Horizons: http://pluto.jhuapl.edu/index.php
+- Dawn: http://dawn.jpl.nasa.gov/
 - Cassini: http://saturn.jpl.nasa.gov/
 
 
