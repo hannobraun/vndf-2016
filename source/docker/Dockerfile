@@ -15,4 +15,4 @@ ADD upstart/nginx.conf /etc/init/nginx.conf
 EXPOSE 80
 EXPOSE 34481
 
-CMD ["init"]
+CMD ["/sbin/init"]
