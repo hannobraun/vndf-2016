@@ -301,12 +301,22 @@ struct Texture {
 
 impl Texture {
 	fn from_image(graphics: &mut Graphics, image: Image) -> Texture {
-		Texture::new(graphics, image)
+		Texture::new(
+			graphics,
+			image.width as f32,
+			image.height as f32,
+			&image.data
+		)
 	}
 
-	fn new(graphics: &mut Graphics, image: Image) -> Texture {
-		let w = image.width  as f32;
-		let h = image.height as f32;
+	fn new(
+		graphics    : &mut Graphics,
+		image_width : f32,
+		image_height: f32,
+		data        : &Vec<u8>,
+	) -> Texture {
+		let w = image_width;
+		let h = image_height;
 
 		let vertices = vec![
 			Vertex { position: [ 0.0, 0.0 ], tex_coord: [ 0.0, 1.0 ] },
@@ -326,8 +336,8 @@ impl Texture {
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		let texture_info = TextureInfo {
-			width : image.width as u16,
-			height: image.height as u16,
+			width : image_width as u16,
+			height: image_height as u16,
 			depth : 1,
 			levels: -1,
 			kind  : gfx::tex::Texture2D,
@@ -338,7 +348,7 @@ impl Texture {
 		graphics.device.update_texture(
 			&texture,
 			&texture_info.to_image_info(),
-			&image.data
+			data
 		)
 		.unwrap();
 
