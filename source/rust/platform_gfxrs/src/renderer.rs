@@ -317,14 +317,11 @@ impl Texture {
 		data    : &Vec<u8>,
 		format  : gfx::tex::Format,
 	) -> Texture {
-		let w = width;
-		let h = height;
-
 		let vertices = vec![
-			Vertex { position: [ 0.0, 0.0 ], tex_coord: [ 0.0, 1.0 ] },
-			Vertex { position: [ w  , 0.0 ], tex_coord: [ 1.0, 1.0 ] },
-			Vertex { position: [ 0.0, h   ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { position: [ w  , h   ], tex_coord: [ 1.0, 0.0 ] },
+			Vertex { position: [   0.0, 0.0    ], tex_coord: [ 0.0, 1.0 ] },
+			Vertex { position: [ width, 0.0    ], tex_coord: [ 1.0, 1.0 ] },
+			Vertex { position: [   0.0, height ], tex_coord: [ 0.0, 0.0 ] },
+			Vertex { position: [ width, height ], tex_coord: [ 1.0, 0.0 ] },
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
@@ -366,7 +363,7 @@ impl Texture {
 		Texture {
 			batch : batch,
 			handle: texture,
-			offset: Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
+			offset: Vec2(-width as f64 / 2.0, -height as f64 / 2.0),
 		}
 	}
 }
