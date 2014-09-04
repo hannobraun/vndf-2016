@@ -147,9 +147,9 @@ impl Renderer {
 
 		let grid = Grid::new(&mut graphics);
 
-		let mut crafts = HashMap::new();
+		let mut textures = HashMap::new();
 		for (path, image) in images.move_iter() {
-			crafts.insert(path, Texture::from_image(&mut graphics, image));
+			textures.insert(path, Texture::from_image(&mut graphics, image));
 		}
 
 		Renderer {
@@ -159,7 +159,7 @@ impl Renderer {
 			frame: frame,
 
 			grid    : grid,
-			textures: crafts,
+			textures: textures,
 		}
 	}
 
