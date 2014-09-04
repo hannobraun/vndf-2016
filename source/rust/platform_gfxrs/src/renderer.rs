@@ -149,7 +149,7 @@ impl Renderer {
 
 		let mut crafts = HashMap::new();
 		for (path, image) in images.move_iter() {
-			crafts.insert(path, Texture::new(&mut graphics, image));
+			crafts.insert(path, Texture::from_image(&mut graphics, image));
 		}
 
 		Renderer {
