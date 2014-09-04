@@ -3,6 +3,7 @@
 
 extern crate sync;
 
+extern crate freetype;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
 extern crate glfw;
@@ -24,6 +25,7 @@ use renderer::Renderer;
 use window::Window;
 
 
+mod font;
 mod images;
 mod inputhandler;
 mod renderer;
@@ -48,10 +50,11 @@ impl Platform for DesktopPlatform {
 
 pub fn init() -> Box<Platform + 'static> {
 	let window = Rc::new(Window::create(800, 600));
+	let font   = font::load();
 	let images = images::load();
 
 	let input_handler = InputHandler::new(window.clone());
-	let renderer      = Renderer::new(window.clone(), images);
+	let renderer      = Renderer::new(window.clone(), images, font);
 
 	box
 		DesktopPlatform {

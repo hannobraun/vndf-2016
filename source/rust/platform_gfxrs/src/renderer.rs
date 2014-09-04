@@ -9,6 +9,7 @@ use gfx::{
 };
 use gfx::tex::TextureInfo;
 
+use font::Font;
 use images::{
 	Image,
 	Images,
@@ -139,7 +140,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(window: Rc<Window>, images: Images) -> Renderer {
+	pub fn new(window: Rc<Window>, images: Images, font: Font) -> Renderer {
 		let mut graphics = gfx::Graphics::new(window.new_device());
 
 		let frame = gfx::Frame::new(window.width, window.height);
