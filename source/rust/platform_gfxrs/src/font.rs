@@ -23,6 +23,8 @@ use physics::Vec2;
 pub type Font = HashMap<char, Glyph>;
 
 pub struct Glyph {
+	pub data   : Vec<u8>,
+	pub size   : Vec2,
 	pub offset : Vec2,
 	pub advance: Vec2,
 }
@@ -93,12 +95,20 @@ fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
 
 fn make_glyph(c: char, glyph_slot: FT_GlyphSlot) -> Glyph {
 	unsafe {
-		let bitmap_height = (*glyph_slot).bitmap.rows;
+		let bitmap = (*glyph_slot).bitmap;
 
 		Glyph {
+			data: vec::raw::from_buf(
+				bitmap.buffer as *const u8,
+				(bitmap.width * bitmap.rows) as uint
+			),
+			size: Vec2(
+				bitmap.width as f64,
+				bitmap.rows as f64,
+			),
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,
-				(*glyph_slot).bitmap_top as f64 - bitmap_height as f64
+				(*glyph_slot).bitmap_top as f64 - bitmap.rows as f64
 			),
 			advance: Vec2(
 				(*glyph_slot).advance.x as f64 / 64.0,
