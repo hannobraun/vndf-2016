@@ -40,7 +40,7 @@ struct GridParams {
 struct CraftParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
-	craft_pos  : [f32, ..2],
+	texture_pos: [f32, ..2],
 	tex        : gfx::shade::TextureParam,
 }
 
@@ -86,7 +86,7 @@ static TEXTURE_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		uniform vec2 screen_size;
 		uniform vec2 camera_pos;
-		uniform vec2 craft_pos;
+		uniform vec2 texture_pos;
 
 		in vec2 position;
 		in vec2 tex_coord;
@@ -103,7 +103,7 @@ static TEXTURE_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
-			vec2 translated = position + craft_pos + camera_trans;
+			vec2 translated = position + texture_pos + camera_trans;
 			gl_Position = m * vec4(translated, 0.0, 1.0);
 
 			tex_coord_f = tex_coord;
@@ -214,7 +214,7 @@ impl Renderer {
 		let params = CraftParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
-			craft_pos  : [pos_x as f32, pos_y as f32],
+			texture_pos: [pos_x as f32, pos_y as f32],
 			tex        : (craft.texture, None)
 		};
 
