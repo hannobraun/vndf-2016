@@ -19,7 +19,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#70698cb9cc1a89ceff6e265e53f2346076f38a7f"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#5def8011ef4f80fdc88c052ec5591491c67c9def"
 
 [[package]]
 name = "gl"
@@ -42,7 +42,7 @@ version = "0.0.1"
 source = "git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec"
 dependencies = [
  "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
- "semver 0.0.1 (git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f)",
+ "semver 0.0.1 (git+https://github.com/rust-lang/semver#df163f7b22686493b037eee1f1f9d1a2742f9bbe)",
 ]
 
 [[package]]
@@ -80,7 +80,7 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#70698cb9cc1a89ceff6e265e53f2346076f38a7f)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5def8011ef4f80fdc88c052ec5591491c67c9def)",
  "gl 0.0.1",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
  "platform 0.1.0",
@@ -103,7 +103,7 @@ version = "0.1.0"
 [[package]]
 name = "semver"
 version = "0.0.1"
-source = "git+https://github.com/rust-lang/semver#c78b40d7fdf8acd99b503e6ce394fbcf9eb8982f"
+source = "git+https://github.com/rust-lang/semver#df163f7b22686493b037eee1f1f9d1a2742f9bbe"
 
 [[package]]
 name = "stb_image"
