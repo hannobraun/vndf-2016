@@ -300,6 +300,10 @@ struct Texture {
 }
 
 impl Texture {
+	fn from_image(graphics: &mut Graphics, image: Image) -> Texture {
+		Texture::new(graphics, image)
+	}
+
 	fn new(graphics: &mut Graphics, image: Image) -> Texture {
 		let w = image.width  as f32;
 		let h = image.height as f32;
