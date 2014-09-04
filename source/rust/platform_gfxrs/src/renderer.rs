@@ -36,7 +36,7 @@ struct GridParams {
 	camera_pos : [f32, ..2],
 }
 
-#[shader_param(CraftBatch)]
+#[shader_param(TextureBatch)]
 struct TextureParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
@@ -294,7 +294,7 @@ impl Grid {
 
 
 struct Texture {
-	batch  : CraftBatch,
+	batch  : TextureBatch,
 	texture: gfx::TextureHandle,
 	offset : Vec2,
 }
