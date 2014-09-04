@@ -5,6 +5,7 @@ use gfx::{
 	mod,
 	Device,
 	DeviceHelper,
+	ToSlice,
 };
 use gfx::tex::TextureInfo;
 
@@ -266,7 +267,7 @@ impl Grid {
 		];
 
 		let mesh  = graphics.device.create_mesh(grid_data);
-		let slice = mesh.get_slice(gfx::Line);
+		let slice = mesh.to_slice(gfx::Line);
 
 		let program = graphics.device
 			.link_program(
@@ -310,7 +311,7 @@ impl Craft {
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
-		let slice = mesh.get_slice(gfx::TriangleStrip);
+		let slice = mesh.to_slice(gfx::TriangleStrip);
 
 		let program = graphics.device
 			.link_program(
