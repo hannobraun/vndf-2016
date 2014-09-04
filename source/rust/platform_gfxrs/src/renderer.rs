@@ -215,7 +215,7 @@ impl Renderer {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera_x as f32, camera_y as f32],
 			texture_pos: [pos_x as f32, pos_y as f32],
-			tex        : (texture.texture, None)
+			tex        : (texture.handle, None)
 		};
 
 		self.graphics.draw(
@@ -294,9 +294,9 @@ impl Grid {
 
 
 struct Texture {
-	batch  : TextureBatch,
-	texture: gfx::TextureHandle,
-	offset : Vec2,
+	batch : TextureBatch,
+	handle: gfx::TextureHandle,
+	offset: Vec2,
 }
 
 impl Texture {
@@ -364,9 +364,9 @@ impl Texture {
 			.unwrap();
 
 		Texture {
-			batch  : batch,
-			texture: texture,
-			offset : Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
+			batch : batch,
+			handle: texture,
+			offset: Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
 		}
 	}
 }
