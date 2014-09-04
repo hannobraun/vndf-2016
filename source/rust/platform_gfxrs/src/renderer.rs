@@ -136,7 +136,7 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	grid  : Grid,
-	crafts: HashMap<String, Craft>,
+	crafts: HashMap<String, Texture>,
 }
 
 impl Renderer {
@@ -149,7 +149,7 @@ impl Renderer {
 
 		let mut crafts = HashMap::new();
 		for (path, image) in images.move_iter() {
-			crafts.insert(path, Craft::new(&mut graphics, image));
+			crafts.insert(path, Texture::new(&mut graphics, image));
 		}
 
 		Renderer {
@@ -293,14 +293,14 @@ impl Grid {
 }
 
 
-struct Craft {
+struct Texture {
 	batch  : CraftBatch,
 	texture: gfx::TextureHandle,
 	offset : Vec2,
 }
 
-impl Craft {
-	fn new(graphics: &mut Graphics, image: Image) -> Craft {
+impl Texture {
+	fn new(graphics: &mut Graphics, image: Image) -> Texture {
 		let w = image.width  as f32;
 		let h = image.height as f32;
 
@@ -347,7 +347,7 @@ impl Craft {
 			)
 			.unwrap();
 
-		Craft {
+		Texture {
 			batch  : batch,
 			texture: texture,
 			offset : Vec2(-w as f64 / 2.0, -h as f64 / 2.0),
