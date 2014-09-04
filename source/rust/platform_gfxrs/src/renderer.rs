@@ -135,8 +135,8 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	grid  : Grid,
-	crafts: HashMap<String, Texture>,
+	grid    : Grid,
+	textures: HashMap<String, Texture>,
 }
 
 impl Renderer {
@@ -158,8 +158,8 @@ impl Renderer {
 
 			frame: frame,
 
-			grid  : grid,
-			crafts: crafts,
+			grid    : grid,
+			textures: crafts,
 		}
 	}
 
@@ -206,7 +206,7 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Vec2, craft_id: &str) {
-		let ref craft = self.crafts[craft_id.to_string()];
+		let ref craft = self.textures[craft_id.to_string()];
 
 		let Vec2(pos_x, pos_y) = body.position + craft.offset;
 		let &Vec2(camera_x, camera_y) = camera;
