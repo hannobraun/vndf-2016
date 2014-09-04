@@ -311,14 +311,14 @@ impl Texture {
 	}
 
 	fn new(
-		graphics    : &mut Graphics,
-		image_width : f32,
-		image_height: f32,
-		data        : &Vec<u8>,
-		format      : gfx::tex::Format,
+		graphics: &mut Graphics,
+		width   : f32,
+		height  : f32,
+		data    : &Vec<u8>,
+		format  : gfx::tex::Format,
 	) -> Texture {
-		let w = image_width;
-		let h = image_height;
+		let w = width;
+		let h = height;
 
 		let vertices = vec![
 			Vertex { position: [ 0.0, 0.0 ], tex_coord: [ 0.0, 1.0 ] },
@@ -338,8 +338,8 @@ impl Texture {
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		let texture_info = TextureInfo {
-			width : image_width as u16,
-			height: image_height as u16,
+			width : width as u16,
+			height: height as u16,
 			depth : 1,
 			levels: -1,
 			kind  : gfx::tex::Texture2D,
