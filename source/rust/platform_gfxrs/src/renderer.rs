@@ -205,8 +205,8 @@ impl Renderer {
 		);
 	}
 
-	fn draw_craft(&mut self, body: &Body, camera: &Vec2, craft_id: &str) {
-		let ref texture = self.textures[craft_id.to_string()];
+	fn draw_craft(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
+		let ref texture = self.textures[texture_id.to_string()];
 
 		let Vec2(pos_x, pos_y) = body.position + texture.offset;
 		let &Vec2(camera_x, camera_y) = camera;
