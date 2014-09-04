@@ -29,7 +29,9 @@ stories that will no longer be current for the next newsletter.
 time-independent (can be used as filler for any newsletter).
 
 News resources:
-- General: http://www.reddit.com/r/space/
+- General:
+  - http://www.reddit.com/r/space/
+  - http://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q
 - Rosetta: http://blogs.esa.int/rosetta/
 - New Horizons: http://pluto.jhuapl.edu/index.php
 - Dawn: http://dawn.jpl.nasa.gov/
