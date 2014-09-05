@@ -38,7 +38,7 @@ pub fn load() -> Font {
 		let c = char::from_u32(n as u32).unwrap();
 
 		let glyph_slot = load_glyph_slot(font_face, c);
-		let glyph      = make_glyph(c, glyph_slot);
+		let glyph      = make_glyph(glyph_slot);
 
 		font.insert(c, glyph);
 	}
@@ -93,7 +93,7 @@ fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
 	}
 }
 
-fn make_glyph(c: char, glyph_slot: FT_GlyphSlot) -> Glyph {
+fn make_glyph(glyph_slot: FT_GlyphSlot) -> Glyph {
 	unsafe {
 		let bitmap = (*glyph_slot).bitmap;
 
