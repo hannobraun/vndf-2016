@@ -84,7 +84,7 @@ dependencies = [
  "gl 0.0.1",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
  "platform 0.1.0",
- "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#996791025c00b20c0435e9b4cd0e5358934fd93a)",
+ "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c)",
 ]
 
 [[package]]
@@ -108,5 +108,5 @@ source = "git+https://github.com/rust-lang/semver#df163f7b22686493b037eee1f1f9d1
 [[package]]
 name = "stb_image"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-stb-image.git#996791025c00b20c0435e9b4cd0e5358934fd93a"
+source = "git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c"
 
