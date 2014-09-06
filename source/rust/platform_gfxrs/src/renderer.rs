@@ -166,10 +166,11 @@ impl Renderer {
 	pub fn render(&mut self, frame: &Frame) {
 		self.graphics.clear(
 			gfx::ClearData {
-				color  : Some([0.0, 0.0, 0.0, 1.0]),
-				depth  : None,
-				stencil: None,
+				color  : [0.0, 0.0, 0.0, 1.0],
+				depth  : 0.0,
+				stencil: 0,
 			},
+			gfx::Color,
 			&self.frame
 		);
 
