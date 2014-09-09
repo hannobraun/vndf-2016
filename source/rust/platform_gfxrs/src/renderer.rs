@@ -316,8 +316,8 @@ impl Texture {
 		let data = Vec::from_fn(
 			glyph.data.len() * 4,
 			|i| {
-				if i + 1 % 4 == 0 {
-					glyph.data[i]
+				if (i + 1) % 4 == 0 {
+					glyph.data[i / 4]
 				}
 				else {
 					255
