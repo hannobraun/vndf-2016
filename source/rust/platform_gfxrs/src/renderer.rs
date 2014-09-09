@@ -386,6 +386,7 @@ impl Texture {
 			width as f32,
 			height as f32,
 			&data,
+			false,
 		)
 	}
 
@@ -395,6 +396,7 @@ impl Texture {
 			image.width as f32,
 			image.height as f32,
 			&image.data,
+			true,
 		)
 	}
 
@@ -403,6 +405,7 @@ impl Texture {
 		width   : f32,
 		height  : f32,
 		data    : &Vec<u8>,
+		center  : bool,
 	) -> Texture {
 		let vertices = vec![
 			Vertex { position: [   0.0, 0.0    ], tex_coord: [ 0.0, 1.0 ] },
@@ -454,13 +457,14 @@ impl Texture {
 			)
 			.unwrap();
 
-		let size = Vec2(width as f64, height as f64);
+		let size   = Vec2(width as f64, height as f64);
+		let offset = if center { size * -0.5 } else { Vec2(0.0, 0.0) };
 
 		Texture {
 			batch : batch,
 			param : (texture, Some(sampler)),
 			size  : size,
-			offset: size * -0.5,
+			offset: offset,
 		}
 	}
 }
