@@ -9,7 +9,10 @@ use gfx::{
 };
 use gfx::tex::TextureInfo;
 
-use font::Font;
+use font::{
+	Font,
+	Glyph,
+};
 use images::{
 	Image,
 	Images,
@@ -150,6 +153,12 @@ impl Renderer {
 		let mut textures = HashMap::new();
 		for (path, image) in images.move_iter() {
 			textures.insert(path, Texture::from_image(&mut graphics, image));
+		}
+		for (c, glyph) in font.move_iter() {
+			textures.insert(
+				c.to_string(),
+				Texture::from_glyph(&mut graphics, glyph)
+			);
 		}
 
 		Renderer {
@@ -301,6 +310,30 @@ struct Texture {
 }
 
 impl Texture {
+	fn from_glyph(graphics: &mut Graphics, glyph: Glyph) -> Texture {
+		let Vec2(width, height) = glyph.size;
+
+		let data = Vec::from_fn(
+			glyph.data.len() * 4,
+			|i| {
+				if i + 1 % 4 == 0 {
+					glyph.data[i]
+				}
+				else {
+					255
+				}
+			}
+		);
+
+		Texture::new(
+			graphics,
+			width as f32,
+			height as f32,
+			&data,
+			gfx::tex::RGBA8,
+		)
+	}
+
 	fn from_image(graphics: &mut Graphics, image: Image) -> Texture {
 		Texture::new(
 			graphics,
