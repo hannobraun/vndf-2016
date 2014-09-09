@@ -219,8 +219,8 @@ impl Renderer {
 		self.draw_texture(body, camera, texture_id);
 	}
 
-	fn draw_texture(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
-		let ref texture = self.textures[texture_id.to_string()];
+	fn draw_texture(&mut self, body: &Body, camera: &Vec2, id: &str) {
+		let ref texture = self.textures[id.to_string()];
 
 		let Vec2(pos_x, pos_y) = body.position + texture.offset;
 		let &Vec2(camera_x, camera_y) = camera;
