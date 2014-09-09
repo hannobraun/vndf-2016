@@ -34,6 +34,16 @@ impl Vec2 {
 		Vec2(0.0, 0.0)
 	}
 
+	pub fn x(&self) -> f64 {
+		let &Vec2(x, _) = self;
+		x
+	}
+
+	pub fn y(&self) -> f64 {
+		let &Vec2(_, y) = self;
+		y
+	}
+
 	pub fn mag(&self) -> f64 {
 		let &Vec2(x, y) = self;
 		(x*x + y*y).sqrt()
