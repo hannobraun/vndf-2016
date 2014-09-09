@@ -227,7 +227,7 @@ impl Renderer {
 		let texture = self.textures[texture_id.to_string()];
 		self.draw_texture(&body.position, camera, &texture);
 
-		let mut text_position = body.position + texture.size;
+		let mut text_position = body.position + texture.size + texture.offset;
 		self.draw_text(
 			text_position,
 			camera,
