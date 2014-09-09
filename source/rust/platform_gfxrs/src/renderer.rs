@@ -228,6 +228,27 @@ impl Renderer {
 		self.draw_texture(&body.position, camera, &texture);
 	}
 
+	fn draw_text(&mut self, mut position: Vec2, camera: &Vec2, text: &str) {
+		for c in text.chars() {
+			let (offset, advance) = {
+				let ref glyph = self.glyphs[c];
+				(glyph.offset, glyph.advance)
+			};
+
+			if c != ' ' {
+				let texture = self.textures[c.to_string()];
+
+				self.draw_texture(
+					&(position + offset),
+					camera,
+					&texture
+				);
+			}
+
+			position = position + advance;
+		}
+	}
+
 	fn draw_texture(
 		&mut self,
 		position: &Vec2,
