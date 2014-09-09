@@ -310,6 +310,7 @@ impl Grid {
 struct Texture {
 	batch : TextureBatch,
 	param : gfx::shade::TextureParam,
+	size  : Vec2,
 	offset: Vec2,
 }
 
@@ -408,6 +409,7 @@ impl Texture {
 		Texture {
 			batch : batch,
 			param : (texture, Some(sampler)),
+			size  : Vec2(width as f64, height as f64),
 			offset: Vec2(-width as f64 / 2.0, -height as f64 / 2.0),
 		}
 	}
