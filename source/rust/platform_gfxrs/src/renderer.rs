@@ -186,11 +186,11 @@ impl Renderer {
 		self.draw_grid(&frame.camera);
 
 		for body in frame.ships.iter() {
-			self.draw_texture(body, &frame.camera, "images/spaceship.png");
+			self.draw_craft(body, &frame.camera, "images/spaceship.png");
 		}
 
 		for body in frame.missiles.iter() {
-			self.draw_texture(body, &frame.camera, "images/missile.png");
+			self.draw_craft(body, &frame.camera, "images/missile.png");
 		}
 
 		self.graphics.end_frame();
@@ -213,6 +213,10 @@ impl Renderer {
 			&params,
 			&self.frame
 		);
+	}
+
+	fn draw_craft(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
+		self.draw_texture(body, camera, texture_id);
 	}
 
 	fn draw_texture(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
