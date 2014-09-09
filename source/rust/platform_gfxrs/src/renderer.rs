@@ -140,6 +140,8 @@ pub struct Renderer {
 
 	grid    : Grid,
 	textures: HashMap<String, Texture>,
+
+	glyphs: HashMap<char, Glyph>,
 }
 
 impl Renderer {
@@ -150,6 +152,7 @@ impl Renderer {
 
 		let grid = Grid::new(&mut graphics);
 
+		let mut glyphs   = HashMap::new();
 		let mut textures = HashMap::new();
 		for (path, image) in images.move_iter() {
 			textures.insert(path, Texture::from_image(&mut graphics, image));
@@ -159,6 +162,7 @@ impl Renderer {
 				c.to_string(),
 				Texture::from_glyph(&mut graphics, &glyph)
 			);
+			glyphs.insert(c, glyph);
 		}
 
 		Renderer {
@@ -169,6 +173,8 @@ impl Renderer {
 
 			grid    : grid,
 			textures: textures,
+
+			glyphs: glyphs,
 		}
 	}
 
