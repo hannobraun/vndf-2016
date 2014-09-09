@@ -377,9 +377,9 @@ impl Texture {
 			format: format,
 		};
 
-		let texture = graphics.device.create_texture(texture_info).unwrap();
+		let handle = graphics.device.create_texture(texture_info).unwrap();
 		graphics.device.update_texture(
-			&texture,
+			&handle,
 			&texture_info.to_image_info(),
 			data
 		)
@@ -396,7 +396,7 @@ impl Texture {
 
 		Texture {
 			batch : batch,
-			handle: texture,
+			handle: handle,
 			offset: Vec2(-width as f64 / 2.0, -height as f64 / 2.0),
 		}
 	}
