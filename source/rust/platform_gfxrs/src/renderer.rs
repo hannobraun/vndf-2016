@@ -454,11 +454,13 @@ impl Texture {
 			)
 			.unwrap();
 
+		let size = Vec2(width as f64, height as f64);
+
 		Texture {
 			batch : batch,
 			param : (texture, Some(sampler)),
-			size  : Vec2(width as f64, height as f64),
-			offset: Vec2(-width as f64 / 2.0, -height as f64 / 2.0),
+			size  : size,
+			offset: size * -0.5,
 		}
 	}
 }
