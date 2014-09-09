@@ -226,6 +226,24 @@ impl Renderer {
 	fn draw_craft(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
 		let texture = self.textures[texture_id.to_string()];
 		self.draw_texture(&body.position, camera, &texture);
+
+		let mut text_position = body.position + texture.size;
+		self.draw_text(
+			text_position,
+			camera,
+			format!("pos: {:i} / {:i}",
+				body.position.x() as int,
+				body.position.y() as int
+			)
+			.as_slice()
+		);
+
+		text_position = text_position - Vec2(0.0, 15.0);
+		self.draw_text(
+			text_position,
+			camera,
+			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
+		);
 	}
 
 	fn draw_text(&mut self, mut position: Vec2, camera: &Vec2, text: &str) {
