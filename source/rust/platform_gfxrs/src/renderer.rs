@@ -158,10 +158,12 @@ impl Renderer {
 			textures.insert(path, Texture::from_image(&mut graphics, image));
 		}
 		for (c, glyph) in font.move_iter() {
-			textures.insert(
-				c.to_string(),
-				Texture::from_glyph(&mut graphics, &glyph)
-			);
+			if c != ' ' {
+				textures.insert(
+					c.to_string(),
+					Texture::from_glyph(&mut graphics, &glyph)
+				);
+			}
 			glyphs.insert(c, glyph);
 		}
 

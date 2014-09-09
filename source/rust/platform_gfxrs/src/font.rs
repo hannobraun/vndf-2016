@@ -37,10 +37,6 @@ pub fn load() -> Font {
 	for n in range(32u, 127) {
 		let c = char::from_u32(n as u32).unwrap();
 
-		if c == ' ' {
-			continue;
-		}
-
 		let glyph_slot = load_glyph_slot(font_face, c);
 		let glyph      = make_glyph(glyph_slot);
 
