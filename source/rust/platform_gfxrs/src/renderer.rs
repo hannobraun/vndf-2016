@@ -157,7 +157,7 @@ impl Renderer {
 		for (c, glyph) in font.move_iter() {
 			textures.insert(
 				c.to_string(),
-				Texture::from_glyph(&mut graphics, glyph)
+				Texture::from_glyph(&mut graphics, &glyph)
 			);
 		}
 
@@ -319,7 +319,7 @@ struct Texture {
 }
 
 impl Texture {
-	fn from_glyph(graphics: &mut Graphics, glyph: Glyph) -> Texture {
+	fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Texture {
 		let Vec2(width, height) = glyph.size;
 
 		let data = Vec::from_fn(
