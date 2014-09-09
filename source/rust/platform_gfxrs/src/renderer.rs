@@ -385,6 +385,13 @@ impl Texture {
 		)
 		.unwrap();
 
+		let sampler = graphics.device.create_sampler(
+			gfx::tex::SamplerInfo::new(
+				gfx::tex::Bilinear,
+				gfx::tex::Clamp
+			)
+		);
+
 		let batch = graphics
 			.make_batch(
 				&program,
@@ -396,7 +403,7 @@ impl Texture {
 
 		Texture {
 			batch : batch,
-			param : (texture, None),
+			param : (texture, Some(sampler)),
 			offset: Vec2(-width as f64 / 2.0, -height as f64 / 2.0),
 		}
 	}
