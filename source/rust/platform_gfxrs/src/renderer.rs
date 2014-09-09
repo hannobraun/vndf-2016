@@ -386,7 +386,6 @@ impl Texture {
 			width as f32,
 			height as f32,
 			&data,
-			gfx::tex::RGBA8,
 		)
 	}
 
@@ -396,7 +395,6 @@ impl Texture {
 			image.width as f32,
 			image.height as f32,
 			&image.data,
-			gfx::tex::RGBA8,
 		)
 	}
 
@@ -405,7 +403,6 @@ impl Texture {
 		width   : f32,
 		height  : f32,
 		data    : &Vec<u8>,
-		format  : gfx::tex::Format,
 	) -> Texture {
 		let vertices = vec![
 			Vertex { position: [   0.0, 0.0    ], tex_coord: [ 0.0, 1.0 ] },
@@ -430,7 +427,7 @@ impl Texture {
 			depth : 1,
 			levels: -1,
 			kind  : gfx::tex::Texture2D,
-			format: format,
+			format: gfx::tex::RGBA8,
 		};
 
 		let texture = graphics.device.create_texture(texture_info).unwrap();
