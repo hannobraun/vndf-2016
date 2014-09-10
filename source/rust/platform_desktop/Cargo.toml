@@ -1,5 +1,5 @@
 [package]
-name    = "platform_gfxrs"
+name    = "platform_desktop"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 

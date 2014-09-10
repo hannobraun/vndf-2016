@@ -7,7 +7,7 @@ dependencies = [
  "physics 0.1.0",
  "platform 0.1.0",
  "platform_cli 0.1.0",
- "platform_gfxrs 0.1.0",
+ "platform_desktop 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
 ]
@@ -103,7 +103,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "platform_gfxrs"
+name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
