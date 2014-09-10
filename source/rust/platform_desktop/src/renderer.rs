@@ -30,21 +30,21 @@ type Graphics = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
 
 #[vertex_format]
 struct Vertex {
-	position : [f32, ..2],
+	position : [f32, ..3],
 	tex_coord: [f32, ..2],
 }
 
 impl Vertex {
 	fn for_grid(position: [f32, ..2]) -> Vertex {
 		Vertex {
-			position : position,
+			position : [position[0], position[1], 0.0],
 			tex_coord: [0.0, 0.0],
 		}
 	}
 
 	fn for_texture(position: [f32, ..2], tex_coord: [f32, ..2]) -> Vertex {
 		Vertex {
-			position : position,
+			position : [position[0], position[1], 0.0],
 			tex_coord: tex_coord,
 		}
 	}
@@ -73,7 +73,7 @@ static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec2 screen_size;
 		uniform vec2 camera_pos;
 
-		in vec2 position;
+		in vec3 position;
 
 		void main() {
 			mat4 m = mat4(
@@ -84,7 +84,7 @@ static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
-			gl_Position = m * vec4(position + camera_trans, 0.0, 1.0);
+			gl_Position = m * vec4(position + vec3(camera_trans, 0.0), 1.0);
 		}
 	"
 };
@@ -109,7 +109,7 @@ static TEXTURE_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec2 camera_pos;
 		uniform vec2 texture_pos;
 
-		in vec2 position;
+		in vec3 position;
 		in vec2 tex_coord;
 
 		out vec2 tex_coord_f;
@@ -124,8 +124,9 @@ static TEXTURE_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
-			vec2 translated = position + texture_pos + camera_trans;
-			gl_Position = m * vec4(translated, 0.0, 1.0);
+			vec3 translated =
+				position + vec3(texture_pos, 0.0) + vec3(camera_trans, 0.0);
+			gl_Position = m * vec4(translated, 1.0);
 
 			tex_coord_f = tex_coord;
 		}
