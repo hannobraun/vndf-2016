@@ -35,7 +35,7 @@ struct Vertex {
 }
 
 impl Vertex {
-	fn new_grid_vertex(position: [f32, ..2]) -> Vertex {
+	fn for_grid(position: [f32, ..2]) -> Vertex {
 		Vertex {
 			position : position,
 			tex_coord: [0.0, 0.0],
@@ -338,37 +338,37 @@ struct Grid {
 impl Grid {
 	fn new(graphics: &mut Graphics) -> Grid {
 		let grid_data = vec![
-			Vertex::new_grid_vertex([ -700.0, -600.0 ]),
-			Vertex::new_grid_vertex([ -700.0,  600.0 ]),
-			Vertex::new_grid_vertex([ -500.0, -600.0 ]),
-			Vertex::new_grid_vertex([ -500.0,  600.0 ]),
-			Vertex::new_grid_vertex([ -300.0, -600.0 ]),
-			Vertex::new_grid_vertex([ -300.0,  600.0 ]),
-			Vertex::new_grid_vertex([ -100.0, -600.0 ]),
-			Vertex::new_grid_vertex([ -100.0,  600.0 ]),
-			Vertex::new_grid_vertex([  100.0, -600.0 ]),
-			Vertex::new_grid_vertex([  100.0,  600.0 ]),
-			Vertex::new_grid_vertex([  300.0, -600.0 ]),
-			Vertex::new_grid_vertex([  300.0,  600.0 ]),
-			Vertex::new_grid_vertex([  500.0, -600.0 ]),
-			Vertex::new_grid_vertex([  500.0,  600.0 ]),
-			Vertex::new_grid_vertex([  700.0, -600.0 ]),
-			Vertex::new_grid_vertex([  700.0,  600.0 ]),
+			Vertex::for_grid([ -700.0, -600.0 ]),
+			Vertex::for_grid([ -700.0,  600.0 ]),
+			Vertex::for_grid([ -500.0, -600.0 ]),
+			Vertex::for_grid([ -500.0,  600.0 ]),
+			Vertex::for_grid([ -300.0, -600.0 ]),
+			Vertex::for_grid([ -300.0,  600.0 ]),
+			Vertex::for_grid([ -100.0, -600.0 ]),
+			Vertex::for_grid([ -100.0,  600.0 ]),
+			Vertex::for_grid([  100.0, -600.0 ]),
+			Vertex::for_grid([  100.0,  600.0 ]),
+			Vertex::for_grid([  300.0, -600.0 ]),
+			Vertex::for_grid([  300.0,  600.0 ]),
+			Vertex::for_grid([  500.0, -600.0 ]),
+			Vertex::for_grid([  500.0,  600.0 ]),
+			Vertex::for_grid([  700.0, -600.0 ]),
+			Vertex::for_grid([  700.0,  600.0 ]),
 
-			Vertex::new_grid_vertex([ -700.0, -600.0 ]),
-			Vertex::new_grid_vertex([  700.0, -600.0 ]),
-			Vertex::new_grid_vertex([ -700.0, -400.0 ]),
-			Vertex::new_grid_vertex([  700.0, -400.0 ]),
-			Vertex::new_grid_vertex([ -700.0, -200.0 ]),
-			Vertex::new_grid_vertex([  700.0, -200.0 ]),
-			Vertex::new_grid_vertex([ -700.0,    0.0 ]),
-			Vertex::new_grid_vertex([  700.0,    0.0 ]),
-			Vertex::new_grid_vertex([ -700.0,  200.0 ]),
-			Vertex::new_grid_vertex([  700.0,  200.0 ]),
-			Vertex::new_grid_vertex([ -700.0,  400.0 ]),
-			Vertex::new_grid_vertex([  700.0,  400.0 ]),
-			Vertex::new_grid_vertex([ -700.0,  600.0 ]),
-			Vertex::new_grid_vertex([  700.0,  600.0 ]),
+			Vertex::for_grid([ -700.0, -600.0 ]),
+			Vertex::for_grid([  700.0, -600.0 ]),
+			Vertex::for_grid([ -700.0, -400.0 ]),
+			Vertex::for_grid([  700.0, -400.0 ]),
+			Vertex::for_grid([ -700.0, -200.0 ]),
+			Vertex::for_grid([  700.0, -200.0 ]),
+			Vertex::for_grid([ -700.0,    0.0 ]),
+			Vertex::for_grid([  700.0,    0.0 ]),
+			Vertex::for_grid([ -700.0,  200.0 ]),
+			Vertex::for_grid([  700.0,  200.0 ]),
+			Vertex::for_grid([ -700.0,  400.0 ]),
+			Vertex::for_grid([  700.0,  400.0 ]),
+			Vertex::for_grid([ -700.0,  600.0 ]),
+			Vertex::for_grid([  700.0,  600.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(grid_data);
