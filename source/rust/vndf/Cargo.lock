@@ -19,7 +19,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#b596ffeacec31d5b7f2a6dae9c829dac6ea7529e"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542"
 
 [[package]]
 name = "gl"
@@ -39,9 +39,9 @@ dependencies = [
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec"
+source = "git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350"
 dependencies = [
- "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
+ "link_glfw 0.1.0 (git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350)",
  "semver 0.0.1 (git+https://github.com/rust-lang/semver#df163f7b22686493b037eee1f1f9d1a2742f9bbe)",
 ]
 
@@ -52,7 +52,7 @@ version = "0.0.1"
 [[package]]
 name = "link_glfw"
 version = "0.1.0"
-source = "git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec"
+source = "git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350"
 
 [[package]]
 name = "net"
@@ -80,9 +80,9 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#b596ffeacec31d5b7f2a6dae9c829dac6ea7529e)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
  "gl 0.0.1",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#90c56d4809c115170ba3110c847253bfdc11e7ec)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350)",
  "platform 0.1.0",
  "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c)",
 ]
