@@ -1,3 +1,0 @@
-[submodule "vendor/gl-rs"]
-	path = vendor/gl-rs
-	url = https://github.com/hannobraun/gl-rs.git
