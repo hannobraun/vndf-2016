@@ -32,7 +32,7 @@ path = "../platform"
 path = "../platform_cli"
 
 [dependencies.platform_gfxrs]
-path = "../platform_gfxrs"
+path = "../platform_desktop"
 
 [dependencies.rustecs]
 path = "../librustecs"
