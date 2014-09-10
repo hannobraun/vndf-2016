@@ -1,6 +1,7 @@
 #![feature(phase)]
 
 
+extern crate cgmath;
 extern crate freetype;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
