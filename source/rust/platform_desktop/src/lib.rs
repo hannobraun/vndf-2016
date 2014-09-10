@@ -1,8 +1,6 @@
 #![feature(phase)]
 
 
-extern crate sync;
-
 extern crate freetype;
 extern crate gfx;
 #[phase(plugin)] extern crate gfx_macros;
