@@ -19,6 +19,7 @@ use images::{
 };
 use physics::{
 	Body,
+	Radians,
 	Vec2,
 };
 use platform::Frame;
@@ -201,6 +202,8 @@ impl Renderer {
 			self.draw_craft(body, &frame.camera, "images/missile.png");
 		}
 
+		self.draw_ui_overlay(frame.input.attitude);
+
 		self.graphics.end_frame();
 		self.window.swap_buffers();
 	}
@@ -243,6 +246,32 @@ impl Renderer {
 			text_position,
 			camera,
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
+		);
+	}
+
+	fn draw_ui_overlay(&mut self, attitude: Radians) {
+		let camera = Vec2(0.0, 0.0);
+
+		let left   = -(self.window.width as f64) / 2.0;
+		let right  = -left;
+		let bottom = -(self.window.height as f64) / 2.0;
+
+
+		self.draw_text(
+			Vec2(left + 20.0, bottom + 40.0),
+			&camera,
+			"Change course with the left and right cursor keys"
+		);
+		self.draw_text(
+			Vec2(left + 20.0, bottom + 20.0),
+			&camera,
+			"Shoot missiles with Enter"
+		);
+
+		self.draw_text(
+			Vec2(right - 50.0, bottom + 40.0),
+			&camera,
+			format!("{:+04i}", attitude.degrees()).as_slice()
 		);
 	}
 
