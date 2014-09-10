@@ -13,6 +13,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "cgmath"
+version = "0.0.1"
+source = "git+https://github.com/bjz/cgmath-rs.git#9ade4ce92d639d2a67c0932816ff26f9ec516616"
+
+[[package]]
 name = "device"
 version = "0.1.0"
 source = "git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722"
@@ -106,6 +111,7 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#9ade4ce92d639d2a67c0932816ff26f9ec516616)",
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
  "gfx 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350)",

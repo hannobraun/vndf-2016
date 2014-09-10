@@ -8,6 +8,9 @@ authors = [ "mail@hannobraun.de" ]
 path = "../platform"
 
 
+[dependencies.cgmath]
+git = "https://github.com/bjz/cgmath-rs.git"
+
 [dependencies.freetype-rs]
 git = "https://github.com/PistonDevelopers/freetype-rs.git"
 
