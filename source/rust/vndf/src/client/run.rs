@@ -13,7 +13,7 @@ use platform::{
 	Input,
 };
 use platform_cli;
-use platform_desktop;
+use platform_gfxrs;
 
 
 pub fn run() {
@@ -30,7 +30,7 @@ pub fn run() {
 		platform_cli::init()
 	}
 	else {
-		platform_desktop::init()
+		platform_gfxrs::init()
 	};
 
 	let mut game_state   = game::State::new();

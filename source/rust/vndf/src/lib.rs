@@ -12,7 +12,7 @@ extern crate net;
 extern crate physics;
 extern crate platform;
 extern crate platform_cli;
-extern crate platform_desktop;
+extern crate platform_gfxrs;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
 

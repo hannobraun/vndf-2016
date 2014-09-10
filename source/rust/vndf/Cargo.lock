@@ -7,9 +7,17 @@ dependencies = [
  "physics 0.1.0",
  "platform 0.1.0",
  "platform_cli 0.1.0",
- "platform_desktop 0.1.0",
+ "platform_gfxrs 0.1.0",
  "rustecs 0.1.0",
  "rustecs_macros 0.1.0",
+]
+
+[[package]]
+name = "device"
+version = "0.1.0"
+source = "git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722"
+dependencies = [
+ "gfx_gl 0.1.0 (git+https://github.com/gfx-rs/gfx_gl.git#52bb510e9e76cd3c0aed7b6aa678c03059d630a6)",
 ]
 
 [[package]]
@@ -22,17 +30,34 @@ version = "0.0.0"
 source = "git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542"
 
 [[package]]
-name = "gl"
-version = "0.0.1"
+name = "gfx"
+version = "0.1.0"
+source = "git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722"
 dependencies = [
- "gl_generator 0.0.1",
+ "device 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
+ "gfx_macros 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
+ "render 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
 ]
+
+[[package]]
+name = "gfx_gl"
+version = "0.1.0"
+source = "git+https://github.com/gfx-rs/gfx_gl.git#52bb510e9e76cd3c0aed7b6aa678c03059d630a6"
+dependencies = [
+ "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs.git#6461b7c9cdef8695b9fb4d1b6a380886475989df)",
+]
+
+[[package]]
+name = "gfx_macros"
+version = "0.1.0"
+source = "git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722"
 
 [[package]]
 name = "gl_generator"
 version = "0.0.1"
+source = "git+https://github.com/bjz/gl-rs.git#6461b7c9cdef8695b9fb4d1b6a380886475989df"
 dependencies = [
- "khronos_api 0.0.1",
+ "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git#6461b7c9cdef8695b9fb4d1b6a380886475989df)",
  "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#418a3776922e545a7c33b1f68d9c8c513dc5c80b)",
 ]
 
@@ -48,6 +73,7 @@ dependencies = [
 [[package]]
 name = "khronos_api"
 version = "0.0.1"
+source = "git+https://github.com/bjz/gl-rs.git#6461b7c9cdef8695b9fb4d1b6a380886475989df"
 
 [[package]]
 name = "link_glfw"
@@ -77,14 +103,22 @@ dependencies = [
 ]
 
 [[package]]
-name = "platform_desktop"
+name = "platform_gfxrs"
 version = "0.1.0"
 dependencies = [
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
- "gl 0.0.1",
+ "gfx 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#72f97a8b04e715c4551f922272a14514cf6c7350)",
  "platform 0.1.0",
  "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c)",
+]
+
+[[package]]
+name = "render"
+version = "0.1.0"
+source = "git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722"
+dependencies = [
+ "device 0.1.0 (git+http://github.com/gfx-rs/gfx-rs#59cbf0934609022ba50a6169f49f301e5dd9f722)",
 ]
 
 [[package]]
