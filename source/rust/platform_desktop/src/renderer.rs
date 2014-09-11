@@ -236,7 +236,7 @@ impl Renderer {
 	}
 
 	fn draw_grid(&mut self, camera: &Camera) {
-		let camera_position = Vec2(
+		let camera_center = Vec2(
 			camera.position.x() % 200.0,
 			camera.position.y() % 200.0,
 		);
@@ -248,13 +248,13 @@ impl Renderer {
 		);
 		let view: Matrix4<f32> = Matrix4::look_at(
 			&Point3::new(
-				camera_position.x() as f32 - 500.0,
-				camera_position.y() as f32 - 500.0,
+				camera_center.x() as f32 - 500.0,
+				camera_center.y() as f32 - 500.0,
 				500.0
 			),
 			&Point3::new(
-				camera_position.x() as f32,
-				camera_position.y() as f32,
+				camera_center.x() as f32,
+				camera_center.y() as f32,
 				0.0
 			),
 			&Vector3::new(0.0, 0.0, 1.0),
