@@ -54,6 +54,7 @@ impl Neg<Radians> for Radians {
 }
 
 
+#[deriving(Show)]
 pub struct Degrees(pub f64);
 
 impl Degrees {
