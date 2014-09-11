@@ -40,7 +40,7 @@ pub fn run() {
 	let mut should_close = false;
 	while !should_close {
 		game_state.receive_updates(&mut network);
-		game_state.update_camera(&mut camera.position);
+		game_state.update_camera(&mut camera.center);
 
 		let input = match platform.input() {
 			Ok(input)  => input,

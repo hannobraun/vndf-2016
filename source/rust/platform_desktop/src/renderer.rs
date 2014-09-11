@@ -216,7 +216,7 @@ impl Renderer {
 		for body in frame.ships.iter() {
 			self.draw_craft(
 				body,
-				&frame.camera.position,
+				&frame.camera.center,
 				"images/spaceship.png"
 			);
 		}
@@ -224,7 +224,7 @@ impl Renderer {
 		for body in frame.missiles.iter() {
 			self.draw_craft(
 				body,
-				&frame.camera.position,
+				&frame.camera.center,
 				"images/missile.png"
 			);
 		}
@@ -237,8 +237,8 @@ impl Renderer {
 
 	fn draw_grid(&mut self, camera: &Camera) {
 		let camera_center = Vec2(
-			camera.position.x() % 200.0,
-			camera.position.y() % 200.0,
+			camera.center.x() % 200.0,
+			camera.center.y() % 200.0,
 		);
 		let (Radians(phi), Radians(theta)) = camera.perspective;
 

@@ -68,14 +68,14 @@ impl Input {
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Camera {
-	pub position   : Vec2,
+	pub center     : Vec2,
 	pub perspective: (Radians, Radians),
 }
 
 impl Camera {
 	pub fn new() -> Camera {
 		Camera {
-			position   : Vec2::zero(),
+			center     : Vec2::zero(),
 			perspective: (Radians(0.0), Radians(0.0)),
 		}
 	}
