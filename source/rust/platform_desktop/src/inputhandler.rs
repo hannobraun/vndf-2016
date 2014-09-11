@@ -82,8 +82,9 @@ impl InputHandler {
 
 		input.exit     = self.window.should_close();
 		input.attitude = self.attitude;
-		input.camera   = self.camera_angle;
 		input.missile  = self.missile;
+
+		input.camera_angle = self.camera_angle;
 
 		input
 	}

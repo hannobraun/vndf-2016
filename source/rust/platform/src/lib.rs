@@ -42,8 +42,9 @@ impl Frame {
 pub struct Input {
 	pub exit    : bool,
 	pub attitude: Radians,
-	pub camera  : (Radians, Radians),
 	pub missile : u64,
+
+	pub camera_angle: (Radians, Radians),
 }
 
 impl Input {
@@ -51,8 +52,9 @@ impl Input {
 		Input {
 			exit    : false,
 			attitude: Radians(0.0),
-			camera  : (Radians(0.0), Radians(0.0)),
 			missile : 0,
+
+			camera_angle: (Radians(0.0), Radians(0.0)),
 		}
 	}
 

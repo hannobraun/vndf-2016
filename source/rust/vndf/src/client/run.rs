@@ -47,7 +47,7 @@ pub fn run() {
 			Err(error) => fail!("Error reading input: {}", error)
 		};
 		should_close = input.exit;
-		camera.perspective = input.camera;
+		camera.perspective = input.camera_angle;
 
 		input_sender.update(input, &mut network);
 
