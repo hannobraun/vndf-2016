@@ -16,7 +16,8 @@ impl Radians {
 		let &Radians(this) = self;
 		Vec2(
 			this.cos(),
-			this.sin())
+			this.sin(),
+		)
 	}
 
 	pub fn round(&self, precision_in_bits: uint) -> Radians {
