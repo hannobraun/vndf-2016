@@ -7,6 +7,7 @@ use serialize::json;
 
 use physics::{
 	Body,
+	Degrees,
 	Radians,
 	Vec2,
 };
@@ -41,7 +42,8 @@ impl Frame {
 pub struct Input {
 	pub exit    : bool,
 	pub attitude: Radians,
-	pub missile : u64
+	pub camera  : (Radians, Radians),
+	pub missile : u64,
 }
 
 impl Input {
@@ -49,7 +51,8 @@ impl Input {
 		Input {
 			exit    : false,
 			attitude: Radians(0.0),
-			missile : 0
+			camera  : (Radians(0.0), Radians(0.0)),
+			missile : 0,
 		}
 	}
 
