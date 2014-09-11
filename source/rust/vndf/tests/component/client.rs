@@ -125,10 +125,14 @@ fn the_camera_should_follow_the_ship() {
 		util::is_on_line(
 			(pos_1, pos_2),
 			frame_1.camera.position,
-			16));
+			16
+		)
+	);
 	assert!(
 		util::is_on_line(
 			(pos_1, pos_2),
 			frame_2.camera.position,
-			16));
+			16
+		)
+	);
 }
