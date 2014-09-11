@@ -22,7 +22,7 @@ pub trait Platform {
 #[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
 	pub input   : Input,
-	pub camera  : Vec2,
+	pub camera  : Camera,
 	pub ships   : Vec<Body>,
 	pub missiles: Vec<Body>
 }
@@ -63,4 +63,10 @@ impl Input {
 	pub fn to_json(&self) -> String {
 		json::encode(self)
 	}
+}
+
+
+#[deriving(Decodable, Encodable, Show)]
+pub struct Camera {
+	pub position: Vec2,
 }

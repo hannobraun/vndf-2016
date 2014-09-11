@@ -208,14 +208,22 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.draw_grid(&frame.camera);
+		self.draw_grid(&frame.camera.position);
 
 		for body in frame.ships.iter() {
-			self.draw_craft(body, &frame.camera, "images/spaceship.png");
+			self.draw_craft(
+				body,
+				&frame.camera.position,
+				"images/spaceship.png"
+			);
 		}
 
 		for body in frame.missiles.iter() {
-			self.draw_craft(body, &frame.camera, "images/missile.png");
+			self.draw_craft(
+				body,
+				&frame.camera.position,
+				"images/missile.png"
+			);
 		}
 
 		self.draw_ui_overlay(frame.input.attitude);

@@ -116,7 +116,7 @@ fn the_camera_should_follow_the_ship() {
 	game_service.send_perception(&perception_2);
 	let mut frame_2 = client.frame();
 
-	wait_while!(frame_2.camera == pos_1 && true {
+	wait_while!(frame_2.camera.position == pos_1 && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});
@@ -124,11 +124,11 @@ fn the_camera_should_follow_the_ship() {
 	assert!(
 		util::is_on_line(
 			(pos_1, pos_2),
-			frame_1.camera,
+			frame_1.camera.position,
 			16));
 	assert!(
 		util::is_on_line(
 			(pos_1, pos_2),
-			frame_2.camera,
+			frame_2.camera.position,
 			16));
 }

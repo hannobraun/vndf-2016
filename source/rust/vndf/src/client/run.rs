@@ -9,6 +9,7 @@ use game::ecs::{
 };
 use physics::Vec2;
 use platform::{
+	Camera,
 	Frame,
 	Input,
 };
@@ -76,7 +77,7 @@ fn make_frame(input: Input, camera: Vec2, world: &ClientWorld) -> Frame {
 
 	Frame {
 		input   : input,
-		camera  : camera,
+		camera  : Camera { position: camera },
 		ships   : ships,
 		missiles: missiles
 	}
