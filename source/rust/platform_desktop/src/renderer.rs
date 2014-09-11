@@ -240,6 +240,11 @@ impl Renderer {
 			camera.position.x() % 200.0,
 			camera.position.y() % 200.0,
 		);
+		let (Radians(phi), Radians(theta)) = camera.perspective;
+
+		let x = 500.0 * theta.sin() * phi.cos();
+		let y = 500.0 * theta.sin() * phi.sin();
+		let z = 500.0 * theta.cos();
 
 		let projection = cgmath::perspective(
 			Deg { s: 45.0f32 },
@@ -248,9 +253,9 @@ impl Renderer {
 		);
 		let view: Matrix4<f32> = Matrix4::look_at(
 			&Point3::new(
-				camera_center.x() as f32 - 500.0,
-				camera_center.y() as f32 - 500.0,
-				500.0
+				(camera_center.x() + x) as f32,
+				(camera_center.y() + y) as f32,
+				z as f32,
 			),
 			&Point3::new(
 				camera_center.x() as f32,
