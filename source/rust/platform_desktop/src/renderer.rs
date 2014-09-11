@@ -233,12 +233,16 @@ impl Renderer {
 		let projection = cgmath::perspective(
 			Deg { s: 45.0f32 },
 			self.window.width as f32 / self.window.height as f32,
-			0.01, 1000.0,
+			0.01, 100000.0,
 		);
 		let view: Matrix4<f32> = Matrix4::look_at(
-			&Point3::new(camera_x as f32, camera_y as f32, 800.0),
+			&Point3::new(
+				camera_x as f32 - 500.0,
+				camera_y as f32 - 500.0,
+				500.0
+			),
 			&Point3::new(camera_x as f32, camera_y as f32, 0.0),
-			&Vector3::new(0.0, 1.0, 0.0),
+			&Vector3::new(0.0, 0.0, 1.0),
 		);
 
 		let params = GridParams {
