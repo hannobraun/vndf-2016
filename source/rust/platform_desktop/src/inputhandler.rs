@@ -67,6 +67,13 @@ impl InputHandler {
 			*self.camera.mut1() = self.camera.val1() - Radians(camera_speed);
 		}
 
+		if self.camera.val1() <= Degrees(0.0).to_radians() {
+			*self.camera.mut1() = Degrees(1.0).to_radians();
+		}
+		if self.camera.val1() >= Degrees(180.0).to_radians() {
+			*self.camera.mut1() = Degrees(179.0).to_radians();
+		}
+
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
