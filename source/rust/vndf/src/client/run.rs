@@ -48,6 +48,7 @@ pub fn run() {
 		};
 		should_close = input.exit;
 		camera.perspective = input.camera_angle;
+		camera.distance = input.camera_distance;
 
 		input_sender.update(input, &mut network);
 

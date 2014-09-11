@@ -44,7 +44,8 @@ pub struct Input {
 	pub attitude: Radians,
 	pub missile : u64,
 
-	pub camera_angle: (Radians, Radians),
+	pub camera_angle   : (Radians, Radians),
+	pub camera_distance: f64,
 }
 
 impl Input {
@@ -54,7 +55,8 @@ impl Input {
 			attitude: Radians(0.0),
 			missile : 0,
 
-			camera_angle: (Radians(0.0), Radians(0.0)),
+			camera_angle   : (Radians(0.0), Radians(0.0)),
+			camera_distance: 500.0,
 		}
 	}
 

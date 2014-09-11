@@ -16,7 +16,8 @@ pub struct InputHandler {
 	attitude: Radians,
 	missile : u64,
 
-	camera_angle: (Radians, Radians),
+	camera_angle   : (Radians, Radians),
+	camera_distance: f64,
 }
 
 impl InputHandler {
@@ -28,7 +29,8 @@ impl InputHandler {
 			attitude: Radians(0.0),
 			missile : 0,
 
-			camera_angle: (angle, angle),
+			camera_angle   : (angle, angle),
+			camera_distance: 500.0,
 		}
 	}
 
@@ -78,13 +80,22 @@ impl InputHandler {
 			*self.camera_angle.mut1() = Degrees(179.0).to_radians();
 		}
 
+		let camera_speed = 10.0;
+		if self.window.key_pressed(glfw::KeyR) {
+			self.camera_distance -= camera_speed;
+		}
+		if self.window.key_pressed(glfw::KeyF) {
+			self.camera_distance += camera_speed;
+		}
+
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
 		input.attitude = self.attitude;
 		input.missile  = self.missile;
 
-		input.camera_angle = self.camera_angle;
+		input.camera_angle    = self.camera_angle;
+		input.camera_distance = self.camera_distance;
 
 		input
 	}
