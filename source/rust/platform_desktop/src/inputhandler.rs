@@ -53,7 +53,7 @@ impl InputHandler {
 			self.missile += 1;
 		}
 
-		let camera_speed = 1.0;
+		let camera_speed = 0.05;
 		if self.window.key_pressed(glfw::KeyA) {
 			*self.camera.mut0() = self.camera.val0() - Radians(camera_speed);
 		}
