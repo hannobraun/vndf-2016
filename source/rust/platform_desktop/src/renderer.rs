@@ -233,10 +233,10 @@ impl Renderer {
 	}
 
 	fn draw_grid(&mut self, camera: &Vec2) {
-		let &Vec2(mut camera_x, mut camera_y) = camera;
-
-		camera_x = camera_x % 200.0;
-		camera_y = camera_y % 200.0;
+		let camera_position = Vec2(
+			camera.x() % 200.0,
+			camera.y() % 200.0,
+		);
 
 		let projection = cgmath::perspective(
 			Deg { s: 45.0f32 },
@@ -245,11 +245,15 @@ impl Renderer {
 		);
 		let view: Matrix4<f32> = Matrix4::look_at(
 			&Point3::new(
-				camera_x as f32 - 500.0,
-				camera_y as f32 - 500.0,
+				camera_position.x() as f32 - 500.0,
+				camera_position.y() as f32 - 500.0,
 				500.0
 			),
-			&Point3::new(camera_x as f32, camera_y as f32, 0.0),
+			&Point3::new(
+				camera_position.x() as f32,
+				camera_position.y() as f32,
+				0.0
+			),
 			&Vector3::new(0.0, 0.0, 1.0),
 		);
 
