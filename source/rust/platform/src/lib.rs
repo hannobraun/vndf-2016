@@ -70,3 +70,11 @@ impl Input {
 pub struct Camera {
 	pub position: Vec2,
 }
+
+impl Camera {
+	pub fn new() -> Camera {
+		Camera {
+			position: Vec2::zero(),
+		}
+	}
+}

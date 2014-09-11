@@ -7,7 +7,6 @@ use game::ecs::{
 	ShowAsMissile,
 	ShowAsShip,
 };
-use physics::Vec2;
 use platform::{
 	Camera,
 	Frame,
@@ -36,7 +35,7 @@ pub fn run() {
 
 	let mut game_state   = game::State::new();
 	let mut input_sender = InputSender::new(args.period as u64);
-	let mut camera       = Camera { position: Vec2::zero() };
+	let mut camera       = Camera::new();
 
 	let mut should_close = false;
 	while !should_close {
