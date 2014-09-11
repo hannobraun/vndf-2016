@@ -61,10 +61,10 @@ impl InputHandler {
 			*self.camera.mut0() = self.camera.val0() + Radians(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyS) {
-			*self.camera.mut1() = self.camera.val1() - Radians(camera_speed);
+			*self.camera.mut1() = self.camera.val1() + Radians(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyW) {
-			*self.camera.mut1() = self.camera.val1() + Radians(camera_speed);
+			*self.camera.mut1() = self.camera.val1() - Radians(camera_speed);
 		}
 
 		let mut input = Input::default();
