@@ -12,19 +12,23 @@ use window::Window;
 
 
 pub struct InputHandler {
-	window   : Rc<Window>,
-	attitude : Radians,
-	camera   : (Radians, Radians),
-	missile  : u64,
+	window  : Rc<Window>,
+	attitude: Radians,
+	missile : u64,
+
+	camera_angle: (Radians, Radians),
 }
 
 impl InputHandler {
 	pub fn new(window: Rc<Window>) -> InputHandler {
+		let angle = Degrees(45.0).to_radians();
+
 		InputHandler {
 			window  : window,
 			attitude: Radians(0.0),
-			camera  : (Degrees(45.0).to_radians(), Degrees(45.0).to_radians()),
 			missile : 0,
+
+			camera_angle: (angle, angle),
 		}
 	}
 
@@ -55,30 +59,30 @@ impl InputHandler {
 
 		let camera_speed = 0.05;
 		if self.window.key_pressed(glfw::KeyA) {
-			*self.camera.mut0() = self.camera.val0() - Radians(camera_speed);
+			*self.camera_angle.mut0() = self.camera_angle.val0() - Radians(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyD) {
-			*self.camera.mut0() = self.camera.val0() + Radians(camera_speed);
+			*self.camera_angle.mut0() = self.camera_angle.val0() + Radians(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyS) {
-			*self.camera.mut1() = self.camera.val1() + Radians(camera_speed);
+			*self.camera_angle.mut1() = self.camera_angle.val1() + Radians(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyW) {
-			*self.camera.mut1() = self.camera.val1() - Radians(camera_speed);
+			*self.camera_angle.mut1() = self.camera_angle.val1() - Radians(camera_speed);
 		}
 
-		if self.camera.val1() <= Degrees(0.0).to_radians() {
-			*self.camera.mut1() = Degrees(1.0).to_radians();
+		if self.camera_angle.val1() <= Degrees(0.0).to_radians() {
+			*self.camera_angle.mut1() = Degrees(1.0).to_radians();
 		}
-		if self.camera.val1() >= Degrees(180.0).to_radians() {
-			*self.camera.mut1() = Degrees(179.0).to_radians();
+		if self.camera_angle.val1() >= Degrees(180.0).to_radians() {
+			*self.camera_angle.mut1() = Degrees(179.0).to_radians();
 		}
 
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
 		input.attitude = self.attitude;
-		input.camera   = self.camera;
+		input.camera   = self.camera_angle;
 		input.missile  = self.missile;
 
 		input
