@@ -30,7 +30,10 @@ use physics::{
 	Radians,
 	Vec2,
 };
-use platform::Frame;
+use platform::{
+	Camera,
+	Frame,
+};
 use window::Window;
 
 
@@ -208,7 +211,7 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.draw_grid(&frame.camera.position);
+		self.draw_grid(&frame.camera);
 
 		for body in frame.ships.iter() {
 			self.draw_craft(
@@ -232,10 +235,10 @@ impl Renderer {
 		self.window.swap_buffers();
 	}
 
-	fn draw_grid(&mut self, camera: &Vec2) {
+	fn draw_grid(&mut self, camera: &Camera) {
 		let camera_position = Vec2(
-			camera.x() % 200.0,
-			camera.y() % 200.0,
+			camera.position.x() % 200.0,
+			camera.position.y() % 200.0,
 		);
 
 		let projection = cgmath::perspective(
