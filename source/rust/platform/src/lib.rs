@@ -70,6 +70,7 @@ impl Input {
 pub struct Camera {
 	pub center     : Vec2,
 	pub perspective: (Radians, Radians),
+	pub distance   : f64,
 }
 
 impl Camera {
@@ -77,6 +78,7 @@ impl Camera {
 		Camera {
 			center     : Vec2::zero(),
 			perspective: (Radians(0.0), Radians(0.0)),
+			distance   : 500.0,
 		}
 	}
 }

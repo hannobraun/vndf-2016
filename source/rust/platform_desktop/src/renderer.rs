@@ -242,9 +242,9 @@ impl Renderer {
 		);
 		let (Radians(phi), Radians(theta)) = camera.perspective;
 
-		let x = 500.0 * theta.sin() * phi.cos();
-		let y = 500.0 * theta.sin() * phi.sin();
-		let z = 500.0 * theta.cos();
+		let x = camera.distance * theta.sin() * phi.cos();
+		let y = camera.distance * theta.sin() * phi.sin();
+		let z = camera.distance * theta.cos();
 
 		let projection = cgmath::perspective(
 			Deg { s: 45.0f32 },
