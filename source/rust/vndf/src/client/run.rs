@@ -36,12 +36,12 @@ pub fn run() {
 
 	let mut game_state   = game::State::new();
 	let mut input_sender = InputSender::new(args.period as u64);
-	let mut camera       = Vec2::zero();
+	let mut camera       = Camera { position: Vec2::zero() };
 
 	let mut should_close = false;
 	while !should_close {
 		game_state.receive_updates(&mut network);
-		game_state.update_camera(&mut camera);
+		game_state.update_camera(&mut camera.position);
 
 		let input = match platform.input() {
 			Ok(input)  => input,
@@ -59,7 +59,7 @@ pub fn run() {
 	}
 }
 
-fn make_frame(input: Input, camera: Vec2, world: &ClientWorld) -> Frame {
+fn make_frame(input: Input, camera: Camera, world: &ClientWorld) -> Frame {
 	let ships = world.bodies
 		.iter()
 		.filter(|&(&id, _)|
@@ -77,7 +77,7 @@ fn make_frame(input: Input, camera: Vec2, world: &ClientWorld) -> Frame {
 
 	Frame {
 		input   : input,
-		camera  : Camera { position: camera },
+		camera  : camera,
 		ships   : ships,
 		missiles: missiles
 	}
