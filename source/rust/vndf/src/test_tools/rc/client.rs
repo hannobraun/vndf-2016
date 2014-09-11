@@ -39,7 +39,10 @@ impl Client {
 		let line = self.process.read_stdout_line();
 		match Frame::from_json(line.as_slice()) {
 			Ok(frame)  => frame,
-			Err(error) => fail!("Error decoding frame: {}", error)
+			Err(error) => fail!(
+				"Error decoding frame. Error: {}; Frame: {}",
+				error, line
+			)
 		}
 	}
 }
