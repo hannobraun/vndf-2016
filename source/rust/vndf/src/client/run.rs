@@ -1,5 +1,5 @@
 use client::args;
-use client::game;
+use client::gamestate::State;
 use client::inputsender::InputSender;
 use client::network::Network;
 use game::ecs::{
@@ -33,7 +33,7 @@ pub fn run() {
 		platform_desktop::init()
 	};
 
-	let mut game_state   = game::State::new();
+	let mut game_state   = State::new();
 	let mut input_sender = InputSender::new(args.period as u64);
 	let mut camera       = Camera::new();
 
