@@ -3,6 +3,7 @@ name = "vndf"
 version = "0.1.0"
 dependencies = [
  "epoll 0.1.0",
+ "game 0.1.0",
  "net 0.1.0",
  "physics 0.1.0",
  "platform 0.1.0",
@@ -35,6 +36,13 @@ version = "0.1.0"
 name = "freetype-rs"
 version = "0.0.0"
 source = "git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542"
+
+[[package]]
+name = "game"
+version = "0.1.0"
+dependencies = [
+ "rustecs_macros 0.1.0",
+]
 
 [[package]]
 name = "gfx"

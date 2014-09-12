@@ -1,14 +1,14 @@
+use game::ecs::{
+	ClientWorld,
+	SharedWorldEntity,
+	ShowAsMissile,
+};
 use physics::{
 	Body,
 	Vec2
 };
 use protocol::Perception;
 use vndf::client::game::receiver::receive;
-use vndf::game::ecs::{
-	ClientWorld,
-	SharedWorldEntity,
-	ShowAsMissile,
-};
 
 
 #[test]

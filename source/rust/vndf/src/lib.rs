@@ -8,6 +8,7 @@ extern crate serialize;
 extern crate time;
 
 extern crate epoll;
+extern crate game;
 extern crate net;
 extern crate physics;
 extern crate platform;
@@ -20,6 +21,5 @@ extern crate test_infra;
 
 
 pub mod client;
-pub mod game;
 pub mod game_service;
 pub mod test_tools;

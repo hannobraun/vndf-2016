@@ -19,6 +19,9 @@ test = false
 [dependencies.epoll]
 path = "../epoll"
 
+[dependencies.game]
+path = "../game"
+
 [dependencies.net]
 path = "../net"
 

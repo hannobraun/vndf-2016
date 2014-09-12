@@ -1,3 +1,7 @@
+use game::ecs::{
+	SharedWorldEntity,
+	ShowAsShip,
+};
 use physics::{
 	Body,
 	Radians,
@@ -5,10 +9,6 @@ use physics::{
 	Vec2
 };
 use protocol::Perception;
-use vndf::game::ecs::{
-	SharedWorldEntity,
-	ShowAsShip,
-};
 use vndf::test_tools::{
 	Client,
 	MockGameService
