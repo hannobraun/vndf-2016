@@ -9,3 +9,12 @@ name = "test_tools"
 
 [dependencies.game]
 path = "../game"
+
+[dependencies.platform]
+path = "../platform"
+
+[dependencies.protocol]
+path = "../protocol"
+
+[dependencies.test_infra]
+path = "../test_infra"

@@ -5,3 +5,7 @@ authors = [ "mail@hannobraun.de" ]
 
 [lib]
 name = "protocol"
+
+
+[dependencies.physics]
+path = "../physics"
