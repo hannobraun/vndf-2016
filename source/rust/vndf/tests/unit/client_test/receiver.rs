@@ -8,7 +8,7 @@ use physics::{
 	Vec2
 };
 use protocol::Perception;
-use vndf::client::game::receiver::receive;
+use vndf::client::receiver::receive;
 
 
 #[test]

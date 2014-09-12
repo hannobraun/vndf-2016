@@ -1,7 +1,7 @@
 use time;
 
-use client::game::receiver::receive;
 use client::network::Network;
+use client::receiver::receive;
 use game::ecs::ClientWorld;
 use physics::Vec2;
 use rustecs::EntityId;
