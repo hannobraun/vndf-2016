@@ -48,3 +48,6 @@ path = "../librustecs_macros"
 
 [dependencies.test_infra]
 path = "../test_infra"
+
+[dependencies.test_tools]
+path = "../test_tools"

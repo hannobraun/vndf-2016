@@ -22,4 +22,3 @@ extern crate test_infra;
 
 pub mod client;
 pub mod game_service;
-pub mod test_tools;

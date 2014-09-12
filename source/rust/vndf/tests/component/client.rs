@@ -9,7 +9,7 @@ use physics::{
 	Vec2
 };
 use protocol::Perception;
-use vndf::test_tools::{
+use test_tools::{
 	Client,
 	MockGameService
 };

@@ -12,6 +12,7 @@ extern crate protocol;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
 #[phase(plugin)] extern crate test_infra;
+extern crate test_tools;
 extern crate vndf;
 
 

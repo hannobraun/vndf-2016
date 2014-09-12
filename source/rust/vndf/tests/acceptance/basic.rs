@@ -1,4 +1,4 @@
-use vndf::test_tools::{
+use test_tools::{
 	Client,
 	GameService
 };
