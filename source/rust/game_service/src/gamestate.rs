@@ -8,18 +8,6 @@ use game::ecs::{
 	SharedWorldEntity,
 	World
 };
-use game_service::ecs;
-use game_service::events::{
-	Action,
-	Enter,
-	GameEvent,
-	Init,
-	Leave,
-	Message,
-	MissileLaunch,
-	NetworkEvent,
-	Update
-};
 use net::ConnId;
 use physics::{
 	Body,
@@ -29,6 +17,19 @@ use physics::{
 use protocol::{
 	Action,
 	Perception
+};
+
+use super::ecs;
+use super::events::{
+	Action,
+	Enter,
+	GameEvent,
+	Init,
+	Leave,
+	Message,
+	MissileLaunch,
+	NetworkEvent,
+	Update
 };
 
 

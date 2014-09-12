@@ -5,6 +5,7 @@ dependencies = [
  "client 0.1.0",
  "epoll 0.1.0",
  "game 0.1.0",
+ "game_service 0.1.0",
  "net 0.1.0",
  "physics 0.1.0",
  "platform 0.1.0",
@@ -49,6 +50,10 @@ version = "0.1.0"
 dependencies = [
  "rustecs_macros 0.1.0",
 ]
+
+[[package]]
+name = "game_service"
+version = "0.1.0"
 
 [[package]]
 name = "gfx"

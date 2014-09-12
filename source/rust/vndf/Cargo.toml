@@ -11,10 +11,6 @@ test = false
 name = "vndf-game-service"
 test = false
 
-[lib]
-name = "vndf"
-test = false
-
 
 [dependencies.client]
 path = "../client"
@@ -24,6 +20,9 @@ path = "../epoll"
 
 [dependencies.game]
 path = "../game"
+
+[dependencies.game_service]
+path = "../game_service"
 
 [dependencies.net]
 path = "../net"

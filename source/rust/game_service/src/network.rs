@@ -7,7 +7,14 @@ use std::io;
 
 use epoll;
 use epoll::EPoll;
-use game_service::events::{
+use net::{
+	Acceptor,
+	Connection,
+	ConnId,
+};
+use protocol::Action;
+
+use super::events::{
 	Action,
 	Close,
 	Enter,
@@ -16,12 +23,6 @@ use game_service::events::{
 	Message,
 	NetworkEvent
 };
-use net::{
-	Acceptor,
-	Connection,
-	ConnId,
-};
-use protocol::Action;
 
 
 pub struct Network {

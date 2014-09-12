@@ -1,7 +1,7 @@
 use std::io::timer::sleep;
 use std::time::Duration;
 
-use game_service::events::{
+use super::events::{
 	GameEvent,
 	Update
 };
