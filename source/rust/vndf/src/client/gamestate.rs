@@ -7,14 +7,14 @@ use physics::Vec2;
 use rustecs::EntityId;
 
 
-pub struct State {
+pub struct GameState {
 	pub self_id: Option<EntityId>,
 	pub world  : ClientWorld,
 }
 
-impl State {
-	pub fn new() -> State {
-		State {
+impl GameState {
+	pub fn new() -> GameState {
+		GameState {
 			self_id: None,
 			world  : ClientWorld::new(),
 		}
