@@ -16,6 +16,9 @@ name = "vndf"
 test = false
 
 
+[dependencies.client]
+path = "../client"
+
 [dependencies.epoll]
 path = "../epoll"
 

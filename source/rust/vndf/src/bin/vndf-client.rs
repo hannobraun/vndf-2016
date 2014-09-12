@@ -1,6 +1,6 @@
-extern crate vndf;
+extern crate client;
 
 
 fn main() {
-	vndf::client::run::run();
+	client::run::run();
 }

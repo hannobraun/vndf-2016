@@ -1,3 +1,4 @@
+use client::receiver::receive;
 use game::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
@@ -8,7 +9,6 @@ use physics::{
 	Vec2
 };
 use protocol::Perception;
-use vndf::client::receiver::receive;
 
 
 #[test]

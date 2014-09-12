@@ -5,6 +5,7 @@ extern crate collections;
 extern crate serialize;
 extern crate time;
 
+extern crate client;
 extern crate game;
 extern crate physics;
 extern crate platform;
