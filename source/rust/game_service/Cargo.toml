@@ -5,3 +5,13 @@ authors = [ "mail@hannobraun.de" ]
 
 [lib]
 name = "game_service"
+
+
+[dependencies.game]
+path = "../game"
+
+[dependencies.epoll]
+path = "../epoll"
+
+[dependencies.protocol]
+path = "../protocol"

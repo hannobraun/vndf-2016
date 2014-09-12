@@ -5,3 +5,13 @@ authors = [ "mail@hannobraun.de" ]
 
 [lib]
 name = "client"
+
+
+[dependencies.platform]
+path = "../platform"
+
+[dependencies.platform_cli]
+path = "../platform_cli"
+
+[dependencies.platform_desktop]
+path = "../platform_desktop"

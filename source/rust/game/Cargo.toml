@@ -6,5 +6,15 @@ authors = [ "mail@hannobraun.de" ]
 [lib]
 name = "game"
 
+
+[dependencies.net]
+path = "../net"
+
+[dependencies.physics]
+path = "../physics"
+
+[dependencies.rustecs]
+path = "../librustecs"
+
 [dependencies.rustecs_macros]
 path = "../librustecs_macros"
