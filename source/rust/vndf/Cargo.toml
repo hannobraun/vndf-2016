@@ -15,38 +15,8 @@ test = false
 [dependencies.client]
 path = "../client"
 
-[dependencies.epoll]
-path = "../epoll"
-
-[dependencies.game]
-path = "../game"
-
 [dependencies.game_service]
 path = "../game_service"
-
-[dependencies.net]
-path = "../net"
-
-[dependencies.physics]
-path = "../physics"
-
-[dependencies.platform]
-path = "../platform"
-
-[dependencies.platform_cli]
-path = "../platform_cli"
-
-[dependencies.platform_desktop]
-path = "../platform_desktop"
-
-[dependencies.protocol]
-path = "../protocol"
-
-[dependencies.rustecs]
-path = "../librustecs"
-
-[dependencies.rustecs_macros]
-path = "../librustecs_macros"
 
 [dependencies.test_infra]
 path = "../test_infra"
