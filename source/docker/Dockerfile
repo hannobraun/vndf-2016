@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER Hanno Braun, hb@hannobraun.de
+MAINTAINER Hanno Braun, mail@hannobraun.de
 
 RUN apt-get update
 RUN apt-get dist-upgrade -y
