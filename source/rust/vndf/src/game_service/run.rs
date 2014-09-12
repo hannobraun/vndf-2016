@@ -2,7 +2,7 @@ use std::os;
 
 use super::args;
 use super::events::Init;
-use super::game::GameState;
+use super::gamestate::GameState;
 use super::network::Network;
 use super::updater;
 
