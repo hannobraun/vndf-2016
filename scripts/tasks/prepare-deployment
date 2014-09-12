@@ -4,8 +4,6 @@ source project.conf
 
 export PATH=$RUST_TARGET:$PATH
 
-CONTAINER_DIR=output/docker/vndf
-
 rm -rf output &&
 ./scripts/init &&
 ./scripts/tasks/run-tests &&
