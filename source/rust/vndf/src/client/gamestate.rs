@@ -1,10 +1,11 @@
 use time;
 
-use client::network::Network;
-use client::receiver::receive;
 use game::ecs::ClientWorld;
 use physics::Vec2;
 use rustecs::EntityId;
+
+use super::network::Network;
+use super::receiver::receive;
 
 
 pub struct GameState {
