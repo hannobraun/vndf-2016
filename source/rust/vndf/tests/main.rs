@@ -7,6 +7,7 @@ extern crate time;
 
 extern crate physics;
 extern crate platform;
+extern crate protocol;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
 #[phase(plugin)] extern crate test_infra;

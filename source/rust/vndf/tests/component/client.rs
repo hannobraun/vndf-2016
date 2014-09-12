@@ -4,11 +4,11 @@ use physics::{
 	util,
 	Vec2
 };
+use protocol::Perception;
 use vndf::game::ecs::{
 	SharedWorldEntity,
 	ShowAsShip,
 };
-use vndf::protocol::Perception;
 use vndf::test_tools::{
 	Client,
 	MockGameService

@@ -1,0 +1,7 @@
+[package]
+name    = "protocol"
+version = "0.1.0"
+authors = [ "mail@hannobraun.de" ]
+
+[lib]
+name = "protocol"
