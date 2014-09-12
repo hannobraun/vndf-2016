@@ -10,7 +10,7 @@ extern crate platform;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
 #[phase(plugin)] extern crate test_infra;
-#[phase(plugin, link)] extern crate vndf;
+extern crate vndf;
 
 
 mod unit {
