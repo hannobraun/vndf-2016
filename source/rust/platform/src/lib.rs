@@ -7,7 +7,6 @@ use serialize::json;
 
 use physics::{
 	Body,
-	Degrees,
 	Radians,
 	Vec2,
 };
