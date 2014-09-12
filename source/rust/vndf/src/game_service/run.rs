@@ -2,7 +2,7 @@ use std::os;
 
 use super::args;
 use super::events::Init;
-use super::game;
+use super::game::GameState;
 use super::network::Network;
 use super::updater;
 
@@ -18,7 +18,7 @@ pub fn run() {
 	};
 
 	let mut network    = Network::new(args.port.as_slice());
-	let mut game_state = game::State::new(network.events.clone());
+	let mut game_state = GameState::new(network.events.clone());
 
 	let frame_time_in_ms = args.frame_time;
 

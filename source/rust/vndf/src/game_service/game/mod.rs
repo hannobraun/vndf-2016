@@ -1,3 +1,3 @@
-pub use self::gamestate::State;
+pub use self::gamestate::GameState;
 
 mod gamestate;

@@ -32,7 +32,7 @@ use protocol::{
 };
 
 
-pub struct State {
+pub struct GameState {
 	pub events: Sender<GameEvent>,
 
 	incoming: Receiver<GameEvent>,
@@ -41,11 +41,11 @@ pub struct State {
 	world: World
 }
 
-impl State {
-	pub fn new(network: Sender<NetworkEvent>) -> State {
+impl GameState {
+	pub fn new(network: Sender<NetworkEvent>) -> GameState {
 		let (sender, receiver) = channel();
 
-		State {
+		GameState {
 			events  : sender,
 
 			incoming: receiver,
