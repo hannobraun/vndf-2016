@@ -43,7 +43,7 @@ impl Window {
 	}
 
 	pub fn new_device(&self) -> gfx::GlDevice {
-		gfx::GlDevice::new(|s| self.glfw.get_proc_address(s))
+		gfx::GlDevice::new(|s| self.glfw_window.get_proc_address(s))
 	}
 
 	pub fn key_pressed(&self, key: glfw::Key) -> bool {
