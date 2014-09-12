@@ -1,7 +1,8 @@
 use time;
 
-use client::network::Network;
 use platform::Input;
+
+use super::network::Network;
 
 
 pub struct InputSender {
