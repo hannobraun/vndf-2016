@@ -15,7 +15,7 @@ git = "https://github.com/bjz/cgmath-rs.git"
 git = "https://github.com/PistonDevelopers/freetype-rs.git"
 
 [dependencies.gfx]
-git = "http://github.com/gfx-rs/gfx-rs"
+git = "https://github.com/gfx-rs/gfx-rs"
 
 [dependencies.glfw]
 git = "https://github.com/bjz/glfw-rs.git"
