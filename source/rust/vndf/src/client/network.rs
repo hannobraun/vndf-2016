@@ -1,4 +1,3 @@
-use client::error::exit;
 use game::ecs::SharedWorldEntity;
 use platform::Input;
 use net::Connection;
@@ -7,6 +6,8 @@ use protocol::{
 	Perception
 };
 use rustecs::EntityId;
+
+use super::error::exit;
 
 
 
