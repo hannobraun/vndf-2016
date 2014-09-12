@@ -15,11 +15,11 @@ extern crate platform_cli;
 extern crate platform_desktop;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
+extern crate test_infra;
 
 
 pub mod client;
 pub mod game;
 pub mod game_service;
 pub mod protocol;
-pub mod test_infra;
 pub mod test_tools;

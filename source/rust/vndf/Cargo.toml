@@ -39,3 +39,6 @@ path = "../librustecs"
 
 [dependencies.rustecs_macros]
 path = "../librustecs_macros"
+
+[dependencies.test_infra]
+path = "../test_infra"
