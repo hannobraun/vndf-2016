@@ -1,7 +1,3 @@
-use client::args;
-use client::gamestate::GameState;
-use client::inputsender::InputSender;
-use client::network::Network;
 use game::ecs::{
 	ClientWorld,
 	ShowAsMissile,
@@ -14,6 +10,11 @@ use platform::{
 };
 use platform_cli;
 use platform_desktop;
+
+use super::args;
+use super::gamestate::GameState;
+use super::inputsender::InputSender;
+use super::network::Network;
 
 
 pub fn run() {
