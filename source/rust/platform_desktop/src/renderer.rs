@@ -67,7 +67,7 @@ struct GridParams {
 	transform: [[f32, ..4], ..4],
 }
 
-#[shader_param(TextureBatch)]
+#[shader_param(IconBatch)]
 struct TextureParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
@@ -426,7 +426,7 @@ impl Grid {
 
 
 struct Icon {
-	batch : TextureBatch,
+	batch : IconBatch,
 	param : gfx::shade::TextureParam,
 	size  : Vec2,
 	offset: Vec2,
