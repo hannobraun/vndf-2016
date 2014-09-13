@@ -268,18 +268,18 @@ impl Renderer {
 
 		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
-			&transform.mul(&translation(text_position)),
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
 				body.position.y() as int
 			)
-			.as_slice()
+			.as_slice(),
+			&transform.mul(&translation(text_position)),
 		);
 
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
+			format!("att: {:+04i}", body.attitude.degrees()).as_slice(),
 			&transform.mul(&translation(text_position)),
-			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
 		);
 	}
 
@@ -298,21 +298,21 @@ impl Renderer {
 
 
 		self.draw_text(
+			"Change course with the left and right cursor keys",
 			&projection.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
-			"Change course with the left and right cursor keys"
 		);
 		self.draw_text(
+			"Shoot missiles with Enter",
 			&projection.mul(&translation(Vec2(left + 20.0, bottom + 20.0))),
-			"Shoot missiles with Enter"
 		);
 
 		self.draw_text(
+			format!("{:+04i}", attitude.degrees()).as_slice(),
 			&projection.mul(&translation(Vec2(right - 50.0, bottom + 40.0))),
-			format!("{:+04i}", attitude.degrees()).as_slice()
 		);
 	}
 
-	fn draw_text(&mut self, transform: &Matrix4<f32>, text: &str) {
+	fn draw_text(&mut self, text: &str, transform: &Matrix4<f32>) {
 		let mut total_advance = Vec2::zero();
 
 		for c in text.chars() {
