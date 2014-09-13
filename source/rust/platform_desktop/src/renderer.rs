@@ -248,12 +248,9 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
-		let transform = {
-			let projection = self.ortho();
-			let view = translation(body.position - camera.center);
-
-			projection.mul(&view)
-		};
+		let transform = self.ortho()
+			.mul(&translation(-camera.center))
+			.mul(&translation(body.position));
 
 		self.draw_icon(&icon, &transform);
 
