@@ -284,7 +284,7 @@ impl Renderer {
 		let mut text_position = body.position + texture.size + texture.offset;
 		self.draw_text(
 			text_position,
-			&camera.center,
+			camera,
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
 				body.position.y() as int
@@ -295,13 +295,13 @@ impl Renderer {
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
 			text_position,
-			&camera.center,
+			camera,
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
 		);
 	}
 
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
-		let camera = Vec2(0.0, 0.0);
+		let camera = Camera::new();
 
 		let left   = -(self.window.width as f64) / 2.0;
 		let right  = -left;
@@ -326,7 +326,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_text(&mut self, mut position: Vec2, camera: &Vec2, text: &str) {
+	fn draw_text(&mut self, mut position: Vec2, camera: &Camera, text: &str) {
 		for c in text.chars() {
 			let (offset, advance) = {
 				let ref glyph = self.glyphs[c];
@@ -338,7 +338,7 @@ impl Renderer {
 
 				self.draw_texture(
 					&(position + offset),
-					camera,
+					&camera.center,
 					&texture
 				);
 			}
