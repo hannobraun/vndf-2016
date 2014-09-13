@@ -158,8 +158,8 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	grid    : Grid,
-	textures: HashMap<String, Icon>,
+	grid : Grid,
+	icons: HashMap<String, Icon>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -193,8 +193,8 @@ impl Renderer {
 
 			frame: frame,
 
-			grid    : grid,
-			textures: textures,
+			grid : grid,
+			icons: textures,
 
 			glyphs: glyphs,
 		}
@@ -266,7 +266,7 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, texture_id: &str) {
-		let texture = self.textures[texture_id.to_string()];
+		let texture = self.icons[texture_id.to_string()];
 		self.draw_icon(&body.position, camera, &texture);
 
 		let mut text_position = body.position + texture.size + texture.offset;
@@ -322,7 +322,7 @@ impl Renderer {
 			};
 
 			if c != ' ' {
-				let texture = self.textures[c.to_string()];
+				let texture = self.icons[c.to_string()];
 
 				self.draw_icon(
 					&(position + offset),
