@@ -172,14 +172,14 @@ impl Renderer {
 
 		let grid = Grid::new(&mut graphics);
 
-		let mut glyphs   = HashMap::new();
-		let mut textures = HashMap::new();
+		let mut glyphs = HashMap::new();
+		let mut icons  = HashMap::new();
 		for (path, image) in images.move_iter() {
-			textures.insert(path, Icon::from_image(&mut graphics, image));
+			icons.insert(path, Icon::from_image(&mut graphics, image));
 		}
 		for (c, glyph) in font.move_iter() {
 			if c != ' ' {
-				textures.insert(
+				icons.insert(
 					c.to_string(),
 					Icon::from_glyph(&mut graphics, &glyph)
 				);
@@ -194,7 +194,7 @@ impl Renderer {
 			frame: frame,
 
 			grid : grid,
-			icons: textures,
+			icons: icons,
 
 			glyphs: glyphs,
 		}
