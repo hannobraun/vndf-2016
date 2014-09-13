@@ -346,7 +346,7 @@ impl Renderer {
 					projection.mul(&view)
 				};
 
-				let offset_transform = Matrix4::from_translation(&Vector3::new(
+				let translation = Matrix4::from_translation(&Vector3::new(
 					offset.x() as f32,
 					offset.y() as f32,
 					0.0,
@@ -354,7 +354,7 @@ impl Renderer {
 
 				self.draw_icon(
 					&icon,
-					&transform.mul(&offset_transform),
+					&transform.mul(&translation),
 				);
 			}
 
