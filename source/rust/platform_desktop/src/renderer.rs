@@ -68,10 +68,8 @@ struct GridParams {
 
 #[shader_param(IconBatch)]
 struct IconParams {
-	screen_size: [f32, ..2],
-	camera_pos : [f32, ..2],
-	icon_pos   : [f32, ..2],
-	tex        : gfx::shade::TextureParam,
+	transform: [[f32, ..4], ..4],
+	tex      : gfx::shade::TextureParam,
 }
 
 
@@ -105,9 +103,7 @@ static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
-		uniform vec2 screen_size;
-		uniform vec2 camera_pos;
-		uniform vec2 icon_pos;
+		uniform mat4 transform;
 
 		in vec3 position;
 		in vec2 tex_coord;
@@ -116,18 +112,7 @@ static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		void main()
 		{
-			mat4 m = mat4(
-				2.0 / screen_size.x,                 0.0,  0.0 , 0.0,
-				                0.0, 2.0 / screen_size.y,  0.0 , 0.0,
-				                0.0,                 0.0, -0.01, 0.0,
-				               -1.0,                -1.0,  0.0 , 1.0);
-
-			vec2 camera_trans = screen_size * 0.5 - camera_pos;
-
-			vec3 translated =
-				position + vec3(icon_pos, 0.0) + vec3(camera_trans, 0.0);
-			gl_Position = m * vec4(translated, 1.0);
-
+			gl_Position = transform * vec4(position, 1.0);
 			tex_coord_f = tex_coord;
 		}
 	"
@@ -342,11 +327,22 @@ impl Renderer {
 	) {
 		let Vec2(pos_x, pos_y) = position + icon.offset;
 
+		let projection = cgmath::ortho(
+			-(self.window.width  as f32) / 2.0,
+			  self.window.width  as f32  / 2.0,
+			-(self.window.height as f32) / 2.0,
+			  self.window.height as f32  / 2.0,
+			-1.0, 1.0,
+		);
+		let view = Matrix4::from_translation(&Vector3::new(
+			(pos_x - camera.center.x()) as f32,
+			(pos_y - camera.center.y()) as f32,
+			0.0,
+		));
+
 		let params = IconParams {
-			screen_size: [self.window.width as f32, self.window.height as f32],
-			camera_pos : [camera.center.x() as f32, camera.center.y() as f32],
-			icon_pos   : [pos_x as f32, pos_y as f32],
-			tex        : icon.param,
+			transform: projection.mul(&view).into_fixed(),
+			tex      : icon.param,
 		};
 
 		self.graphics.draw(
