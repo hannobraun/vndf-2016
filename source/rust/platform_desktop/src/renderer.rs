@@ -185,11 +185,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		let projection = cgmath::perspective(
-			Deg { s: 45.0f32 },
-			self.window.width as f32 / self.window.height as f32,
-			0.01, 100000.0,
-		);
+		let projection = self.perspective();
 
 		self.graphics.clear(
 			gfx::ClearData {
@@ -345,6 +341,14 @@ impl Renderer {
 			&params,
 			&self.frame
 		);
+	}
+
+	fn perspective(&self) -> Matrix4<f32> {
+		cgmath::perspective(
+			Deg { s: 45.0f32 },
+			self.window.width as f32 / self.window.height as f32,
+			0.01, 100000.0,
+		)
 	}
 }
 
