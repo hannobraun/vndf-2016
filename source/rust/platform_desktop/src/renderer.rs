@@ -251,7 +251,26 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
-		self.draw_icon(&body.position, camera, &icon);
+		let transform = {
+			let Vec2(pos_x, pos_y) = body.position + icon.offset;
+
+			let projection = cgmath::ortho(
+				-(self.window.width  as f32) / 2.0,
+				  self.window.width  as f32  / 2.0,
+				-(self.window.height as f32) / 2.0,
+				  self.window.height as f32  / 2.0,
+				-1.0, 1.0,
+			);
+			let view = Matrix4::from_translation(&Vector3::new(
+				(pos_x - camera.center.x()) as f32,
+				(pos_y - camera.center.y()) as f32,
+				0.0,
+			));
+
+			projection.mul(&view)
+		};
+
+		self.draw_icon(&transform, &icon);
 
 		let mut text_position = body.position + icon.size + icon.offset;
 		self.draw_text(
@@ -308,9 +327,27 @@ impl Renderer {
 			if c != ' ' {
 				let icon = self.icons[c.to_string()];
 
+				let transform = {
+					let Vec2(pos_x, pos_y) = position + icon.offset + offset;
+
+					let projection = cgmath::ortho(
+						-(self.window.width  as f32) / 2.0,
+						  self.window.width  as f32  / 2.0,
+						-(self.window.height as f32) / 2.0,
+						  self.window.height as f32  / 2.0,
+						-1.0, 1.0,
+					);
+					let view = Matrix4::from_translation(&Vector3::new(
+						(pos_x - camera.center.x()) as f32,
+						(pos_y - camera.center.y()) as f32,
+						0.0,
+					));
+
+					projection.mul(&view)
+				};
+
 				self.draw_icon(
-					&(position + offset),
-					camera,
+					&transform,
 					&icon
 				);
 			}
@@ -319,29 +356,9 @@ impl Renderer {
 		}
 	}
 
-	fn draw_icon(
-		&mut self,
-		position: &Vec2,
-		camera  : &Camera,
-		icon    : &Icon,
-	) {
-		let Vec2(pos_x, pos_y) = position + icon.offset;
-
-		let projection = cgmath::ortho(
-			-(self.window.width  as f32) / 2.0,
-			  self.window.width  as f32  / 2.0,
-			-(self.window.height as f32) / 2.0,
-			  self.window.height as f32  / 2.0,
-			-1.0, 1.0,
-		);
-		let view = Matrix4::from_translation(&Vector3::new(
-			(pos_x - camera.center.x()) as f32,
-			(pos_y - camera.center.y()) as f32,
-			0.0,
-		));
-
+	fn draw_icon(&mut self, transform: &Matrix4<f32>, icon: &Icon) {
 		let params = IconParams {
-			transform: projection.mul(&view).into_fixed(),
+			transform: transform.into_fixed(),
 			tex      : icon.param,
 		};
 
