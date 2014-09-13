@@ -284,20 +284,13 @@ impl Renderer {
 	}
 
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
-		let camera = Camera::new();
-
-		let transform = {
-			let projection = cgmath::ortho(
-				-(self.window.width  as f32) / 2.0,
-				  self.window.width  as f32  / 2.0,
-				-(self.window.height as f32) / 2.0,
-				  self.window.height as f32  / 2.0,
-				-1.0, 1.0,
-			);
-			let view = translation(-camera.center);
-
-			projection.mul(&view)
-		};
+		let projection = cgmath::ortho(
+			-(self.window.width  as f32) / 2.0,
+			  self.window.width  as f32  / 2.0,
+			-(self.window.height as f32) / 2.0,
+			  self.window.height as f32  / 2.0,
+			-1.0, 1.0,
+		);
 
 		let left   = -(self.window.width as f64) / 2.0;
 		let right  = -left;
@@ -305,16 +298,16 @@ impl Renderer {
 
 
 		self.draw_text(
-			&transform.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
+			&projection.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
 			"Change course with the left and right cursor keys"
 		);
 		self.draw_text(
-			&transform.mul(&translation(Vec2(left + 20.0, bottom + 20.0))),
+			&projection.mul(&translation(Vec2(left + 20.0, bottom + 20.0))),
 			"Shoot missiles with Enter"
 		);
 
 		self.draw_text(
-			&transform.mul(&translation(Vec2(right - 50.0, bottom + 40.0))),
+			&projection.mul(&translation(Vec2(right - 50.0, bottom + 40.0))),
 			format!("{:+04i}", attitude.degrees()).as_slice()
 		);
 	}
