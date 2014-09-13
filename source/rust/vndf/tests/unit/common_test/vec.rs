@@ -23,6 +23,14 @@ fn it_should_scale_a_vector() {
 }
 
 #[test]
+fn it_should_negate_a_vector() {
+	assert_eq!(
+		Vec2(-1.0, -2.0),
+		-Vec2(1.0, 2.0)
+	);
+}
+
+#[test]
 fn it_should_compute_a_vectors_magnitude() {
 	assert_eq!(
 		5.0,

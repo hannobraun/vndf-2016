@@ -29,6 +29,16 @@ impl Mul<f64, Vec2> for Vec2 {
 	}
 }
 
+impl Neg<Vec2> for Vec2 {
+	fn neg(&self) -> Vec2 {
+		let &Vec2(x, y) = self;
+		Vec2(
+			-x,
+			-y
+		)
+	}
+}
+
 impl Vec2 {
 	pub fn zero() -> Vec2 {
 		Vec2(0.0, 0.0)
