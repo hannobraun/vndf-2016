@@ -279,7 +279,7 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, texture_id: &str) {
 		let texture = self.textures[texture_id.to_string()];
-		self.draw_texture(&body.position, &camera.center, &texture);
+		self.draw_texture(&body.position, camera, &texture);
 
 		let mut text_position = body.position + texture.size + texture.offset;
 		self.draw_text(
@@ -338,7 +338,7 @@ impl Renderer {
 
 				self.draw_texture(
 					&(position + offset),
-					&camera.center,
+					camera,
 					&texture
 				);
 			}
@@ -350,14 +350,14 @@ impl Renderer {
 	fn draw_texture(
 		&mut self,
 		position: &Vec2,
-		camera  : &Vec2,
+		camera  : &Camera,
 		texture : &Texture
 	) {
 		let Vec2(pos_x, pos_y) = position + texture.offset;
 
 		let params = TextureParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
-			camera_pos : [camera.x() as f32, camera.y() as f32],
+			camera_pos : [camera.center.x() as f32, camera.center.y() as f32],
 			texture_pos: [pos_x as f32, pos_y as f32],
 			tex        : texture.param,
 		};
