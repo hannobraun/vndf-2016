@@ -222,7 +222,7 @@ impl Renderer {
 		for body in frame.ships.iter() {
 			self.draw_craft(
 				body,
-				&frame.camera.center,
+				&frame.camera,
 				"images/spaceship.png"
 			);
 		}
@@ -230,7 +230,7 @@ impl Renderer {
 		for body in frame.missiles.iter() {
 			self.draw_craft(
 				body,
-				&frame.camera.center,
+				&frame.camera,
 				"images/missile.png"
 			);
 		}
@@ -277,14 +277,14 @@ impl Renderer {
 		);
 	}
 
-	fn draw_craft(&mut self, body: &Body, camera: &Vec2, texture_id: &str) {
+	fn draw_craft(&mut self, body: &Body, camera: &Camera, texture_id: &str) {
 		let texture = self.textures[texture_id.to_string()];
-		self.draw_texture(&body.position, camera, &texture);
+		self.draw_texture(&body.position, &camera.center, &texture);
 
 		let mut text_position = body.position + texture.size + texture.offset;
 		self.draw_text(
 			text_position,
-			camera,
+			&camera.center,
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
 				body.position.y() as int
@@ -295,7 +295,7 @@ impl Renderer {
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
 			text_position,
-			camera,
+			&camera.center,
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
 		);
 	}
