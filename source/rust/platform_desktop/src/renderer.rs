@@ -328,7 +328,7 @@ impl Renderer {
 				let icon = self.icons[c.to_string()];
 
 				let transform = {
-					let Vec2(pos_x, pos_y) = position + offset;
+					let Vec2(pos_x, pos_y) = position;
 
 					let projection = cgmath::ortho(
 						-(self.window.width  as f32) / 2.0,
@@ -346,9 +346,15 @@ impl Renderer {
 					projection.mul(&view)
 				};
 
+				let offset_transform = Matrix4::from_translation(&Vector3::new(
+					offset.x() as f32,
+					offset.y() as f32,
+					0.0,
+				));
+
 				self.draw_icon(
 					&icon,
-					&transform,
+					&transform.mul(&offset_transform),
 				);
 			}
 
