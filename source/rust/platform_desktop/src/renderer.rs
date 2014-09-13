@@ -266,10 +266,9 @@ impl Renderer {
 
 		self.draw_icon(&icon, &transform);
 
-		let mut text_position = body.position + icon.size + icon.offset;
+		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
-			text_position,
-			camera,
+			&transform.mul(&translation(text_position)),
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
 				body.position.y() as int
@@ -279,8 +278,7 @@ impl Renderer {
 
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
-			text_position,
-			camera,
+			&transform.mul(&translation(text_position)),
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice()
 		);
 	}
@@ -288,30 +286,6 @@ impl Renderer {
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
 		let camera = Camera::new();
 
-		let left   = -(self.window.width as f64) / 2.0;
-		let right  = -left;
-		let bottom = -(self.window.height as f64) / 2.0;
-
-
-		self.draw_text(
-			Vec2(left + 20.0, bottom + 40.0),
-			&camera,
-			"Change course with the left and right cursor keys"
-		);
-		self.draw_text(
-			Vec2(left + 20.0, bottom + 20.0),
-			&camera,
-			"Shoot missiles with Enter"
-		);
-
-		self.draw_text(
-			Vec2(right - 50.0, bottom + 40.0),
-			&camera,
-			format!("{:+04i}", attitude.degrees()).as_slice()
-		);
-	}
-
-	fn draw_text(&mut self, position: Vec2, camera: &Camera, text: &str) {
 		let transform = {
 			let projection = cgmath::ortho(
 				-(self.window.width  as f32) / 2.0,
@@ -320,11 +294,32 @@ impl Renderer {
 				  self.window.height as f32  / 2.0,
 				-1.0, 1.0,
 			);
-			let view = translation(position - camera.center);
+			let view = translation(-camera.center);
 
 			projection.mul(&view)
 		};
 
+		let left   = -(self.window.width as f64) / 2.0;
+		let right  = -left;
+		let bottom = -(self.window.height as f64) / 2.0;
+
+
+		self.draw_text(
+			&transform.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
+			"Change course with the left and right cursor keys"
+		);
+		self.draw_text(
+			&transform.mul(&translation(Vec2(left + 20.0, bottom + 20.0))),
+			"Shoot missiles with Enter"
+		);
+
+		self.draw_text(
+			&transform.mul(&translation(Vec2(right - 50.0, bottom + 40.0))),
+			format!("{:+04i}", attitude.degrees()).as_slice()
+		);
+	}
+
+	fn draw_text(&mut self, transform: &Matrix4<f32>, text: &str) {
 		let mut total_advance = Vec2::zero();
 
 		for c in text.chars() {
