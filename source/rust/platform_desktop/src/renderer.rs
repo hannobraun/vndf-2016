@@ -318,6 +318,23 @@ impl Renderer {
 	}
 
 	fn draw_text(&mut self, position: Vec2, camera: &Camera, text: &str) {
+		let transform = {
+			let projection = cgmath::ortho(
+				-(self.window.width  as f32) / 2.0,
+				  self.window.width  as f32  / 2.0,
+				-(self.window.height as f32) / 2.0,
+				  self.window.height as f32  / 2.0,
+				-1.0, 1.0,
+			);
+			let view = Matrix4::from_translation(&Vector3::new(
+				(position.x() - camera.center.x()) as f32,
+				(position.y() - camera.center.y()) as f32,
+				0.0,
+			));
+
+			projection.mul(&view)
+		};
+
 		let mut total_advance = Vec2::zero();
 
 		for c in text.chars() {
@@ -328,23 +345,6 @@ impl Renderer {
 
 			if c != ' ' {
 				let icon = self.icons[c.to_string()];
-
-				let transform = {
-					let projection = cgmath::ortho(
-						-(self.window.width  as f32) / 2.0,
-						  self.window.width  as f32  / 2.0,
-						-(self.window.height as f32) / 2.0,
-						  self.window.height as f32  / 2.0,
-						-1.0, 1.0,
-					);
-					let view = Matrix4::from_translation(&Vector3::new(
-						(position.x() - camera.center.x()) as f32,
-						(position.y() - camera.center.y()) as f32,
-						0.0,
-					));
-
-					projection.mul(&view)
-				};
 
 				let translation = Matrix4::from_translation(&Vector3::new(
 					(offset.x() + total_advance.x()) as f32,
