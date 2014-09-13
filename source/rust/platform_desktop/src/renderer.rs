@@ -53,7 +53,7 @@ impl Vertex {
 		}
 	}
 
-	fn for_texture(position: [f32, ..3], tex_coord: [f32, ..2]) -> Vertex {
+	fn for_icon(position: [f32, ..3], tex_coord: [f32, ..2]) -> Vertex {
 		Vertex {
 			position : position,
 			tex_coord: tex_coord,
@@ -475,10 +475,10 @@ impl Icon {
 		center  : bool,
 	) -> Icon {
 		let vertices = vec![
-			Vertex::for_texture([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::for_texture([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::for_texture([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::for_texture([ width, height, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::for_icon([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::for_icon([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::for_icon([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::for_icon([ width, height, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
