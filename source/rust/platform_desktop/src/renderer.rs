@@ -68,7 +68,7 @@ struct GridParams {
 }
 
 #[shader_param(IconBatch)]
-struct TextureParams {
+struct IconParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
 	texture_pos: [f32, ..2],
@@ -343,7 +343,7 @@ impl Renderer {
 	) {
 		let Vec2(pos_x, pos_y) = position + icon.offset;
 
-		let params = TextureParams {
+		let params = IconParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera.center.x() as f32, camera.center.y() as f32],
 			texture_pos: [pos_x as f32, pos_y as f32],
