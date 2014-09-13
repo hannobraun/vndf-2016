@@ -15,7 +15,6 @@ use gfx::{
 	DeviceHelper,
 	ToSlice,
 };
-use gfx::tex::TextureInfo;
 
 use font::{
 	Font,
@@ -491,7 +490,7 @@ impl Icon {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-		let texture_info = TextureInfo {
+		let texture_info = gfx::tex::TextureInfo {
 			width : width as u16,
 			height: height as u16,
 			depth : 1,
