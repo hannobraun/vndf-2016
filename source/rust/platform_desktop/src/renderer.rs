@@ -270,7 +270,7 @@ impl Renderer {
 			projection.mul(&view)
 		};
 
-		self.draw_icon(&transform, &icon);
+		self.draw_icon(&icon, &transform);
 
 		let mut text_position = body.position + icon.size + icon.offset;
 		self.draw_text(
@@ -347,8 +347,8 @@ impl Renderer {
 				};
 
 				self.draw_icon(
+					&icon,
 					&transform,
-					&icon
 				);
 			}
 
@@ -356,7 +356,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_icon(&mut self, transform: &Matrix4<f32>, icon: &Icon) {
+	fn draw_icon(&mut self, icon: &Icon, transform: &Matrix4<f32>) {
 		let params = IconParams {
 			transform: transform.into_fixed(),
 			tex      : icon.param,
