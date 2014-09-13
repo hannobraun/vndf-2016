@@ -71,7 +71,7 @@ struct GridParams {
 struct IconParams {
 	screen_size: [f32, ..2],
 	camera_pos : [f32, ..2],
-	texture_pos: [f32, ..2],
+	icon_pos   : [f32, ..2],
 	tex        : gfx::shade::TextureParam,
 }
 
@@ -108,7 +108,7 @@ static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		uniform vec2 screen_size;
 		uniform vec2 camera_pos;
-		uniform vec2 texture_pos;
+		uniform vec2 icon_pos;
 
 		in vec3 position;
 		in vec2 tex_coord;
@@ -126,7 +126,7 @@ static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 			vec2 camera_trans = screen_size * 0.5 - camera_pos;
 
 			vec3 translated =
-				position + vec3(texture_pos, 0.0) + vec3(camera_trans, 0.0);
+				position + vec3(icon_pos, 0.0) + vec3(camera_trans, 0.0);
 			gl_Position = m * vec4(translated, 1.0);
 
 			tex_coord_f = tex_coord;
@@ -346,7 +346,7 @@ impl Renderer {
 		let params = IconParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera.center.x() as f32, camera.center.y() as f32],
-			texture_pos: [pos_x as f32, pos_y as f32],
+			icon_pos   : [pos_x as f32, pos_y as f32],
 			tex        : icon.param,
 		};
 
