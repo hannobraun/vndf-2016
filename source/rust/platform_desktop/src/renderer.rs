@@ -339,19 +339,19 @@ impl Renderer {
 		&mut self,
 		position: &Vec2,
 		camera  : &Camera,
-		texture : &Icon,
+		icon    : &Icon,
 	) {
-		let Vec2(pos_x, pos_y) = position + texture.offset;
+		let Vec2(pos_x, pos_y) = position + icon.offset;
 
 		let params = TextureParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
 			camera_pos : [camera.center.x() as f32, camera.center.y() as f32],
 			texture_pos: [pos_x as f32, pos_y as f32],
-			tex        : texture.param,
+			tex        : icon.param,
 		};
 
 		self.graphics.draw(
-			&texture.batch,
+			&icon.batch,
 			&params,
 			&self.frame
 		);
