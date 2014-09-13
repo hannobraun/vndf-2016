@@ -354,11 +354,10 @@ impl Renderer {
 		texture : &Texture
 	) {
 		let Vec2(pos_x, pos_y) = position + texture.offset;
-		let &Vec2(camera_x, camera_y) = camera;
 
 		let params = TextureParams {
 			screen_size: [self.window.width as f32, self.window.height as f32],
-			camera_pos : [camera_x as f32, camera_y as f32],
+			camera_pos : [camera.x() as f32, camera.y() as f32],
 			texture_pos: [pos_x as f32, pos_y as f32],
 			tex        : texture.param,
 		};
