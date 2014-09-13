@@ -266,10 +266,10 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
-		let texture = self.icons[icon_id.to_string()];
-		self.draw_icon(&body.position, camera, &texture);
+		let icon = self.icons[icon_id.to_string()];
+		self.draw_icon(&body.position, camera, &icon);
 
-		let mut text_position = body.position + texture.size + texture.offset;
+		let mut text_position = body.position + icon.size + icon.offset;
 		self.draw_text(
 			text_position,
 			camera,
