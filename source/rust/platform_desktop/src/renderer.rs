@@ -317,7 +317,9 @@ impl Renderer {
 		);
 	}
 
-	fn draw_text(&mut self, mut position: Vec2, camera: &Camera, text: &str) {
+	fn draw_text(&mut self, position: Vec2, camera: &Camera, text: &str) {
+		let mut total_advance = Vec2::zero();
+
 		for c in text.chars() {
 			let (offset, advance) = {
 				let ref glyph = self.glyphs[c];
@@ -336,8 +338,8 @@ impl Renderer {
 						-1.0, 1.0,
 					);
 					let view = Matrix4::from_translation(&Vector3::new(
-						(position.x() - camera.center.x()) as f32,
-						(position.y() - camera.center.y()) as f32,
+						(position.x() + total_advance.x() - camera.center.x()) as f32,
+						(position.y() + total_advance.y() - camera.center.y()) as f32,
 						0.0,
 					));
 
@@ -356,7 +358,7 @@ impl Renderer {
 				);
 			}
 
-			position = position + advance;
+			total_advance = total_advance + advance;
 		}
 	}
 
