@@ -252,7 +252,7 @@ impl Renderer {
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
 		let transform = {
-			let Vec2(pos_x, pos_y) = body.position + icon.offset;
+			let Vec2(pos_x, pos_y) = body.position;
 
 			let projection = cgmath::ortho(
 				-(self.window.width  as f32) / 2.0,
@@ -328,7 +328,7 @@ impl Renderer {
 				let icon = self.icons[c.to_string()];
 
 				let transform = {
-					let Vec2(pos_x, pos_y) = position + icon.offset + offset;
+					let Vec2(pos_x, pos_y) = position + offset;
 
 					let projection = cgmath::ortho(
 						-(self.window.width  as f32) / 2.0,
@@ -357,8 +357,14 @@ impl Renderer {
 	}
 
 	fn draw_icon(&mut self, icon: &Icon, transform: &Matrix4<f32>) {
+		let icon_offset = Matrix4::from_translation(&Vector3::new(
+			icon.offset.x() as f32,
+			icon.offset.y() as f32,
+			0.0,
+		));
+
 		let params = IconParams {
-			transform: transform.into_fixed(),
+			transform: transform.mul(&icon_offset).into_fixed(),
 			tex      : icon.param,
 		};
 
