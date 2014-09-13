@@ -338,8 +338,8 @@ impl Renderer {
 						-1.0, 1.0,
 					);
 					let view = Matrix4::from_translation(&Vector3::new(
-						(position.x() + total_advance.x() - camera.center.x()) as f32,
-						(position.y() + total_advance.y() - camera.center.y()) as f32,
+						(position.x() - camera.center.x()) as f32,
+						(position.y() - camera.center.y()) as f32,
 						0.0,
 					));
 
@@ -347,8 +347,8 @@ impl Renderer {
 				};
 
 				let translation = Matrix4::from_translation(&Vector3::new(
-					offset.x() as f32,
-					offset.y() as f32,
+					(offset.x() + total_advance.x()) as f32,
+					(offset.y() + total_advance.y()) as f32,
 					0.0,
 				));
 
