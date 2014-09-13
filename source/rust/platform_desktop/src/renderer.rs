@@ -259,11 +259,7 @@ impl Renderer {
 				  self.window.height as f32  / 2.0,
 				-1.0, 1.0,
 			);
-			let view = Matrix4::from_translation(&Vector3::new(
-				(body.position.x() - camera.center.x()) as f32,
-				(body.position.y() - camera.center.y()) as f32,
-				0.0,
-			));
+			let view = translation(body.position - camera.center);
 
 			projection.mul(&view)
 		};
@@ -324,11 +320,7 @@ impl Renderer {
 				  self.window.height as f32  / 2.0,
 				-1.0, 1.0,
 			);
-			let view = Matrix4::from_translation(&Vector3::new(
-				(position.x() - camera.center.x()) as f32,
-				(position.y() - camera.center.y()) as f32,
-				0.0,
-			));
+			let view = translation(position - camera.center);
 
 			projection.mul(&view)
 		};
@@ -344,15 +336,9 @@ impl Renderer {
 			if c != ' ' {
 				let icon = self.icons[c.to_string()];
 
-				let translation = Matrix4::from_translation(&Vector3::new(
-					(offset.x() + total_advance.x()) as f32,
-					(offset.y() + total_advance.y()) as f32,
-					0.0,
-				));
-
 				self.draw_icon(
 					&icon,
-					&transform.mul(&translation),
+					&transform.mul(&translation(offset + total_advance)),
 				);
 			}
 
@@ -361,14 +347,8 @@ impl Renderer {
 	}
 
 	fn draw_icon(&mut self, icon: &Icon, transform: &Matrix4<f32>) {
-		let icon_offset = Matrix4::from_translation(&Vector3::new(
-			icon.offset.x() as f32,
-			icon.offset.y() as f32,
-			0.0,
-		));
-
 		let params = IconParams {
-			transform: transform.mul(&icon_offset).into_fixed(),
+			transform: transform.mul(&translation(icon.offset)).into_fixed(),
 			tex      : icon.param,
 		};
 
@@ -579,4 +559,12 @@ fn camera_to_transform(camera: &Camera) -> Matrix4<f32> {
 		),
 		&Vector3::new(0.0, 0.0, 1.0),
 	)
+}
+
+fn translation(vec: Vec2) -> Matrix4<f32> {
+	Matrix4::from_translation(&Vector3::new(
+		vec.x() as f32,
+		vec.y() as f32,
+		0.0,
+	))
 }
