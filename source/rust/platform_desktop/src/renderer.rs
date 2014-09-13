@@ -159,7 +159,7 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	grid    : Grid,
-	textures: HashMap<String, Texture>,
+	textures: HashMap<String, Icon>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -175,13 +175,13 @@ impl Renderer {
 		let mut glyphs   = HashMap::new();
 		let mut textures = HashMap::new();
 		for (path, image) in images.move_iter() {
-			textures.insert(path, Texture::from_image(&mut graphics, image));
+			textures.insert(path, Icon::from_image(&mut graphics, image));
 		}
 		for (c, glyph) in font.move_iter() {
 			if c != ' ' {
 				textures.insert(
 					c.to_string(),
-					Texture::from_glyph(&mut graphics, &glyph)
+					Icon::from_glyph(&mut graphics, &glyph)
 				);
 			}
 			glyphs.insert(c, glyph);
@@ -339,7 +339,7 @@ impl Renderer {
 		&mut self,
 		position: &Vec2,
 		camera  : &Camera,
-		texture : &Texture
+		texture : &Icon,
 	) {
 		let Vec2(pos_x, pos_y) = position + texture.offset;
 
@@ -425,15 +425,15 @@ impl Grid {
 }
 
 
-struct Texture {
+struct Icon {
 	batch : TextureBatch,
 	param : gfx::shade::TextureParam,
 	size  : Vec2,
 	offset: Vec2,
 }
 
-impl Texture {
-	fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Texture {
+impl Icon {
+	fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Icon {
 		let Vec2(width, height) = glyph.size;
 
 		let data = Vec::from_fn(
@@ -448,7 +448,7 @@ impl Texture {
 			}
 		);
 
-		Texture::new(
+		Icon::new(
 			graphics,
 			width as f32,
 			height as f32,
@@ -457,8 +457,8 @@ impl Texture {
 		)
 	}
 
-	fn from_image(graphics: &mut Graphics, image: Image) -> Texture {
-		Texture::new(
+	fn from_image(graphics: &mut Graphics, image: Image) -> Icon {
+		Icon::new(
 			graphics,
 			image.width as f32,
 			image.height as f32,
@@ -473,7 +473,7 @@ impl Texture {
 		height  : f32,
 		data    : &Vec<u8>,
 		center  : bool,
-	) -> Texture {
+	) -> Icon {
 		let vertices = vec![
 			Vertex::for_texture([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::for_texture([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -527,7 +527,7 @@ impl Texture {
 		let size   = Vec2(width as f64, height as f64);
 		let offset = if center { size * -0.5 } else { Vec2(0.0, 0.0) };
 
-		Texture {
+		Icon {
 			batch : batch,
 			param : (texture, Some(sampler)),
 			size  : size,
