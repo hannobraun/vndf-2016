@@ -201,6 +201,12 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
+		let projection = cgmath::perspective(
+			Deg { s: 45.0f32 },
+			self.window.width as f32 / self.window.height as f32,
+			0.01, 100000.0,
+		);
+
 		self.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.0, 1.0],
@@ -211,7 +217,7 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.draw_grid(&frame.camera);
+		self.draw_grid(&frame.camera, projection);
 
 		for body in frame.ships.iter() {
 			self.draw_craft(
@@ -235,7 +241,7 @@ impl Renderer {
 		self.window.swap_buffers();
 	}
 
-	fn draw_grid(&mut self, camera: &Camera) {
+	fn draw_grid(&mut self, camera: &Camera, projection: Matrix4<f32>) {
 		let camera_center = Vec2(
 			camera.center.x() % 200.0,
 			camera.center.y() % 200.0,
@@ -246,11 +252,6 @@ impl Renderer {
 		let y = camera.distance * theta.sin() * phi.sin();
 		let z = camera.distance * theta.cos();
 
-		let projection = cgmath::perspective(
-			Deg { s: 45.0f32 },
-			self.window.width as f32 / self.window.height as f32,
-			0.01, 100000.0,
-		);
 		let view: Matrix4<f32> = Matrix4::look_at(
 			&Point3::new(
 				(camera_center.x() + x) as f32,
