@@ -249,13 +249,7 @@ impl Renderer {
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
 		let transform = {
-			let projection = cgmath::ortho(
-				-(self.window.width  as f32) / 2.0,
-				  self.window.width  as f32  / 2.0,
-				-(self.window.height as f32) / 2.0,
-				  self.window.height as f32  / 2.0,
-				-1.0, 1.0,
-			);
+			let projection = self.ortho();
 			let view = translation(body.position - camera.center);
 
 			projection.mul(&view)
@@ -281,13 +275,7 @@ impl Renderer {
 	}
 
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
-		let projection = cgmath::ortho(
-			-(self.window.width  as f32) / 2.0,
-			  self.window.width  as f32  / 2.0,
-			-(self.window.height as f32) / 2.0,
-			  self.window.height as f32  / 2.0,
-			-1.0, 1.0,
-		);
+		let projection = self.ortho();
 
 		let left   = -(self.window.width as f64) / 2.0;
 		let right  = -left;
@@ -342,6 +330,16 @@ impl Renderer {
 			&params,
 			&self.frame
 		);
+	}
+
+	fn ortho(&self) -> Transform {
+		cgmath::ortho(
+			-(self.window.width  as f32) / 2.0,
+			  self.window.width  as f32  / 2.0,
+			-(self.window.height as f32) / 2.0,
+			  self.window.height as f32  / 2.0,
+			-1.0, 1.0,
+		)
 	}
 
 	fn perspective(&self) -> Transform {
