@@ -267,7 +267,7 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, texture_id: &str) {
 		let texture = self.textures[texture_id.to_string()];
-		self.draw_texture(&body.position, camera, &texture);
+		self.draw_icon(&body.position, camera, &texture);
 
 		let mut text_position = body.position + texture.size + texture.offset;
 		self.draw_text(
@@ -324,7 +324,7 @@ impl Renderer {
 			if c != ' ' {
 				let texture = self.textures[c.to_string()];
 
-				self.draw_texture(
+				self.draw_icon(
 					&(position + offset),
 					camera,
 					&texture
@@ -335,7 +335,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_texture(
+	fn draw_icon(
 		&mut self,
 		position: &Vec2,
 		camera  : &Camera,
