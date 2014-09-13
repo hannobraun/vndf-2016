@@ -134,7 +134,7 @@ static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	"
 };
 
-static TEXTURE_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
+static ICON_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -487,7 +487,7 @@ impl Icon {
 		let program = graphics.device
 			.link_program(
 				ICON_VERTEX_SHADER.clone(),
-				TEXTURE_FRAGMENT_SHADER.clone()
+				ICON_FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
