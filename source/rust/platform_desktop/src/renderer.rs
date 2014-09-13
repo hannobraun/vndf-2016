@@ -322,12 +322,12 @@ impl Renderer {
 			};
 
 			if c != ' ' {
-				let texture = self.icons[c.to_string()];
+				let icon = self.icons[c.to_string()];
 
 				self.draw_icon(
 					&(position + offset),
 					camera,
-					&texture
+					&icon
 				);
 			}
 
