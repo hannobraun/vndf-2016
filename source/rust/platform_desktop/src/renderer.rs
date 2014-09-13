@@ -328,8 +328,6 @@ impl Renderer {
 				let icon = self.icons[c.to_string()];
 
 				let transform = {
-					let Vec2(pos_x, pos_y) = position;
-
 					let projection = cgmath::ortho(
 						-(self.window.width  as f32) / 2.0,
 						  self.window.width  as f32  / 2.0,
@@ -338,8 +336,8 @@ impl Renderer {
 						-1.0, 1.0,
 					);
 					let view = Matrix4::from_translation(&Vector3::new(
-						(pos_x - camera.center.x()) as f32,
-						(pos_y - camera.center.y()) as f32,
+						(position.x() - camera.center.x()) as f32,
+						(position.y() - camera.center.y()) as f32,
 						0.0,
 					));
 
