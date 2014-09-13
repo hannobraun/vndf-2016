@@ -36,7 +36,8 @@ use platform::{
 use window::Window;
 
 
-type Graphics = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
+type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
+type Transform = Matrix4<f32>;
 
 #[vertex_format]
 struct Vertex {
@@ -221,7 +222,7 @@ impl Renderer {
 		self.window.swap_buffers();
 	}
 
-	fn draw_grid(&mut self, camera: &Camera, projection: Matrix4<f32>) {
+	fn draw_grid(&mut self, camera: &Camera, projection: Transform) {
 		let grid_camera = Camera {
 			center: Vec2(
 				camera.center.x() % 200.0,
@@ -308,7 +309,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_text(&mut self, text: &str, transform: &Matrix4<f32>) {
+	fn draw_text(&mut self, text: &str, transform: &Transform) {
 		let mut total_advance = Vec2::zero();
 
 		for c in text.chars() {
@@ -330,7 +331,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_icon(&mut self, icon: &Icon, transform: &Matrix4<f32>) {
+	fn draw_icon(&mut self, icon: &Icon, transform: &Transform) {
 		let params = IconParams {
 			transform: transform.mul(&translation(icon.offset)).into_fixed(),
 			tex      : icon.param,
@@ -343,7 +344,7 @@ impl Renderer {
 		);
 	}
 
-	fn perspective(&self) -> Matrix4<f32> {
+	fn perspective(&self) -> Transform {
 		cgmath::perspective(
 			Deg { s: 45.0f32 },
 			self.window.width as f32 / self.window.height as f32,
@@ -531,7 +532,7 @@ impl Icon {
 }
 
 
-fn camera_to_transform(camera: &Camera) -> Matrix4<f32> {
+fn camera_to_transform(camera: &Camera) -> Transform {
 	let (Radians(phi), Radians(theta)) = camera.perspective;
 
 	let x = camera.distance * theta.sin() * phi.cos();
@@ -553,7 +554,7 @@ fn camera_to_transform(camera: &Camera) -> Matrix4<f32> {
 	)
 }
 
-fn translation(vec: Vec2) -> Matrix4<f32> {
+fn translation(vec: Vec2) -> Transform {
 	Matrix4::from_translation(&Vector3::new(
 		vec.x() as f32,
 		vec.y() as f32,
