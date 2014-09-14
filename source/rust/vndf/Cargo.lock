@@ -75,7 +75,7 @@ name = "gfx_gl"
 version = "0.1.0"
 source = "git+https://github.com/gfx-rs/gfx_gl.git#52bb510e9e76cd3c0aed7b6aa678c03059d630a6"
 dependencies = [
- "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs.git#24812747cd2a1adb0f8e774ba3cdf607c4f76f5c)",
+ "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs.git#45ae781b36f7bf344dd51e6921b3cfded9009b68)",
 ]
 
 [[package]]
@@ -86,9 +86,9 @@ source = "git+https://github.com/gfx-rs/gfx-rs#931c574439a03dc6d14dec99cef0a9446
 [[package]]
 name = "gl_generator"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#24812747cd2a1adb0f8e774ba3cdf607c4f76f5c"
+source = "git+https://github.com/bjz/gl-rs.git#45ae781b36f7bf344dd51e6921b3cfded9009b68"
 dependencies = [
- "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git#24812747cd2a1adb0f8e774ba3cdf607c4f76f5c)",
+ "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git#45ae781b36f7bf344dd51e6921b3cfded9009b68)",
  "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml#418a3776922e545a7c33b1f68d9c8c513dc5c80b)",
 ]
 
@@ -104,7 +104,7 @@ dependencies = [
 [[package]]
 name = "khronos_api"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#24812747cd2a1adb0f8e774ba3cdf607c4f76f5c"
+source = "git+https://github.com/bjz/gl-rs.git#45ae781b36f7bf344dd51e6921b3cfded9009b68"
 
 [[package]]
 name = "link_glfw"
