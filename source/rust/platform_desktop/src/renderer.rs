@@ -355,7 +355,7 @@ struct Grid {
 
 impl Grid {
 	fn new(graphics: &mut Graphics) -> Grid {
-		let grid_data = vec![
+		let grid_data = [
 			Vertex::for_grid([ -700.0, -600.0, 0.0 ]),
 			Vertex::for_grid([ -700.0,  600.0, 0.0 ]),
 			Vertex::for_grid([ -500.0, -600.0, 0.0 ]),
@@ -442,7 +442,7 @@ impl Icon {
 			graphics,
 			width as f32,
 			height as f32,
-			&data,
+			data.as_slice(),
 			false,
 		)
 	}
@@ -452,7 +452,7 @@ impl Icon {
 			graphics,
 			image.width as f32,
 			image.height as f32,
-			&image.data,
+			image.data.as_slice(),
 			true,
 		)
 	}
@@ -461,10 +461,10 @@ impl Icon {
 		graphics: &mut Graphics,
 		width   : f32,
 		height  : f32,
-		data    : &Vec<u8>,
+		data    : &[u8],
 		center  : bool,
 	) -> Icon {
-		let vertices = vec![
+		let vertices = [
 			Vertex::for_icon([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::for_icon([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
 			Vertex::for_icon([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
