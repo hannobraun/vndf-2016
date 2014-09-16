@@ -75,6 +75,16 @@ p.ps {
 	background-color: #ffff00;
 }
 
+a.image img {
+	width: 100%;
+}
+
+a.image p {
+	font-size : 70%;
+	text-align: center;
+	margin-top: 0;
+}
+
 main.news ul {
 	list-style-type: none;
 
