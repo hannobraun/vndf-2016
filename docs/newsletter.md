@@ -3,6 +3,7 @@
 - Emphasize mentions of `<em>Von Neumann Defense Force</em>` and
   `<em>VNDF</em>`, except in titles.
 
+
 # Procedures
 
 ## Writing
@@ -42,17 +43,14 @@ News resources:
 
 Topic ideas:
 - An article about each game that inspires VNDF:
-  - EVE Online
+  - EVE Online (done)
   - Kerbal Space Program
   - DayZ
   - FTL
 
-
-News for September:
-- http://www.theregister.co.uk/2014/08/30/nasa_to_reformat_opportunity_rovers_memory_from_125_meeellion_miles_away/
-- http://indiatoday.intoday.in/story/mars-mission-300-days-on-23-more-days-to-go/1/380496.html
+News for October:
+- ...
 
 News for any month:
 - Asteroid video by Scott Manley
-- http://www.reddit.com/r/space/comments/2bs3i7/all_known_bodies_in_our_solar_system_with_a/
 - https://kheckeroth.com/solarSystem/
