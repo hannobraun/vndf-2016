@@ -271,7 +271,7 @@ impl Renderer {
 
 		self.draw_icon(&icon, &transform);
 
-		let mut text_position = (icon.size + icon.offset).to_vector2_f32();
+		let mut text_position = icon.size + icon.offset.to_vector2_f32();
 		self.draw_text(
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
@@ -439,7 +439,7 @@ impl Grid {
 struct Icon {
 	batch : IconBatch,
 	param : gfx::shade::TextureParam,
-	size  : Vec2,
+	size  : Vector2<f32>,
 	offset: Vec2,
 }
 
@@ -535,8 +535,8 @@ impl Icon {
 			)
 			.unwrap();
 
-		let size   = Vec2(width as f64, height as f64);
-		let offset = if center { size * -0.5 } else { Vec2(0.0, 0.0) };
+		let size   = Vector2::new(width as f32, height as f32);
+		let offset = if center { Vec2(size[0] as f64, size[1] as f64) * -0.5 } else { Vec2(0.0, 0.0) };
 
 		Icon {
 			batch : batch,
