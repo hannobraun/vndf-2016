@@ -316,7 +316,7 @@ impl Renderer {
 	}
 
 	fn draw_text(&mut self, text: &str, transform: &Transform) {
-		let mut total_advance = Vec2::zero();
+		let mut total_advance = Vector2::zero();
 
 		for c in text.chars() {
 			let (offset, advance) = {
@@ -329,11 +329,11 @@ impl Renderer {
 
 				self.draw_icon(
 					&icon,
-					&transform.mul(&Matrix4::from_translation(&(offset + total_advance).to_vector3_f32())),
+					&transform.mul(&Matrix4::from_translation(&(offset.to_vector3_f32() + total_advance.extend(0.0)))),
 				);
 			}
 
-			total_advance = total_advance + advance;
+			total_advance = total_advance + advance.to_vector2_f32();
 		}
 	}
 
