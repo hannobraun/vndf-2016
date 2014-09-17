@@ -248,9 +248,25 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
-		let transform = self.ortho()
-			.mul(&translation(-camera.center))
+		let mut transform = self.perspective()
+			.mul(&camera_to_transform(camera))
 			.mul(&translation(body.position));
+
+		// Remove any rotation from the transform, so the icons always face the
+		// camera. I don't like this solution.
+		transform[0][0] = 3.0;
+		transform[0][1] = 0.0;
+		transform[0][2] = 0.0;
+		transform[0][3] = 0.0;
+		transform[1][0] = 0.0;
+		transform[1][1] = 3.0;
+		transform[1][2] = 0.0;
+		transform[1][3] = 0.0;
+		transform[2][0] = 0.0;
+		transform[2][1] = 0.0;
+		transform[2][2] = 3.0;
+		transform[2][3] = 0.0;
+		transform[3][3] = 1000.0;
 
 		self.draw_icon(&icon, &transform);
 
