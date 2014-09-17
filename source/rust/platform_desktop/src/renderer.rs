@@ -7,6 +7,7 @@ use cgmath::{
 	FixedArray,
 	Matrix4,
 	Point3,
+	Vector2,
 	Vector3,
 };
 use gfx::{
@@ -270,20 +271,20 @@ impl Renderer {
 
 		self.draw_icon(&icon, &transform);
 
-		let mut text_position = icon.size + icon.offset;
+		let mut text_position = (icon.size + icon.offset).to_vector2_f32();
 		self.draw_text(
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
 				body.position.y() as int
 			)
 			.as_slice(),
-			&transform.mul(&Matrix4::from_translation(&text_position.to_vector3_f32())),
+			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
 		);
 
-		text_position = text_position - Vec2(0.0, 15.0);
+		text_position = text_position - Vector2::new(0.0, 15.0);
 		self.draw_text(
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice(),
-			&transform.mul(&Matrix4::from_translation(&text_position.to_vector3_f32())),
+			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
 		);
 	}
 
