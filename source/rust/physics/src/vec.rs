@@ -1,3 +1,6 @@
+use cgmath::Vector3;
+
+
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Vec2(pub f64, pub f64);
 
@@ -69,5 +72,10 @@ impl Vec2 {
 		Vec2(
 			(x * factor).floor() / factor,
 			(y * factor).floor() / factor)
+	}
+
+	// Temporary function to ease the transition away from our own math code.
+	pub fn to_vector_f32(&self) -> Vector3<f32> {
+		Vector3::new(self.x() as f32, self.y() as f32, 0.0)
 	}
 }

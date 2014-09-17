@@ -1,3 +1,4 @@
+extern crate cgmath;
 extern crate serialize;
 
 
