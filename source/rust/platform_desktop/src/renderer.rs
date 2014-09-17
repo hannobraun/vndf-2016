@@ -296,6 +296,10 @@ impl Renderer {
 
 
 		self.draw_text(
+			"Move camera with WASD; change zoom with R and F",
+			&projection.mul(&translation(Vec2(left + 20.0, bottom + 60.0)))
+		);
+		self.draw_text(
 			"Change course with the left and right cursor keys",
 			&projection.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
 		);
