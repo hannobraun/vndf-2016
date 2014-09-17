@@ -272,7 +272,7 @@ impl Renderer {
 
 		self.draw_icon(&icon, &transform);
 
-		let mut text_position = icon.size + icon.offset.to_vector2_f32();
+		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
 			format!("pos: {:i} / {:i}",
 				body.position.x() as int,
@@ -340,7 +340,7 @@ impl Renderer {
 
 	fn draw_icon(&mut self, icon: &Icon, transform: &Transform) {
 		let params = IconParams {
-			transform: transform.mul(&Matrix4::from_translation(&icon.offset.to_vector3_f32())).into_fixed(),
+			transform: transform.mul(&Matrix4::from_translation(&icon.offset.extend(0.0))).into_fixed(),
 			tex      : icon.param,
 		};
 
@@ -441,7 +441,7 @@ struct Icon {
 	batch : IconBatch,
 	param : gfx::shade::TextureParam,
 	size  : Vector2<f32>,
-	offset: Vec2,
+	offset: Vector2<f32>,
 }
 
 impl Icon {
@@ -543,7 +543,7 @@ impl Icon {
 			batch : batch,
 			param : (texture, Some(sampler)),
 			size  : size,
-			offset: Vec2(offset[0] as f64, offset[1] as f64),
+			offset: offset,
 		}
 	}
 }
