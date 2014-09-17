@@ -7,6 +7,7 @@ use cgmath::{
 	FixedArray,
 	Matrix4,
 	Point3,
+	Vector,
 	Vector2,
 	Vector3,
 };
@@ -536,13 +537,13 @@ impl Icon {
 			.unwrap();
 
 		let size   = Vector2::new(width as f32, height as f32);
-		let offset = if center { Vec2(size[0] as f64, size[1] as f64) * -0.5 } else { Vec2(0.0, 0.0) };
+		let offset = if center { size.mul_s(-0.5) } else { Vector2::zero() };
 
 		Icon {
 			batch : batch,
 			param : (texture, Some(sampler)),
 			size  : size,
-			offset: offset,
+			offset: Vec2(offset[0] as f64, offset[1] as f64),
 		}
 	}
 }
