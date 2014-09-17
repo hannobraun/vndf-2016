@@ -446,8 +446,6 @@ struct Icon {
 
 impl Icon {
 	fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Icon {
-		let Vec2(width, height) = glyph.size;
-
 		let data = Vec::from_fn(
 			glyph.data.len() * 4,
 			|i| {
@@ -462,8 +460,8 @@ impl Icon {
 
 		Icon::new(
 			graphics,
-			width as f32,
-			height as f32,
+			glyph.size.x() as f32,
+			glyph.size.y() as f32,
 			data.as_slice(),
 			false,
 		)
