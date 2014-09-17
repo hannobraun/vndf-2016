@@ -1,4 +1,7 @@
-use cgmath::Vector3;
+use cgmath::{
+	Vector2,
+	Vector3,
+};
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -74,7 +77,10 @@ impl Vec2 {
 			(y * factor).floor() / factor)
 	}
 
-	// Temporary function to ease the transition away from our own math code.
+	// Temporary methods to ease the transition away from our own math code.
+	pub fn to_vector2_f32(&self) -> Vector2<f32> {
+		Vector2::new(self.x() as f32, self.y() as f32)
+	}
 	pub fn to_vector3_f32(&self) -> Vector3<f32> {
 		Vector3::new(self.x() as f32, self.y() as f32, 0.0)
 	}
