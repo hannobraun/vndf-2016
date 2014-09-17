@@ -2,6 +2,7 @@ use time;
 
 use game::ecs::ClientWorld;
 use physics::Vec2;
+use platform::Camera;
 use rustecs::EntityId;
 
 use super::network::Network;
@@ -67,7 +68,7 @@ impl GameState {
 		}
 	}
 
-	pub fn update_camera(&self, camera: &mut Vec2) {
+	pub fn update_camera(&self, camera: &mut Camera) {
 		let self_id = match self.self_id {
 			Some(id) => id,
 			None     => return
@@ -75,7 +76,7 @@ impl GameState {
 
 		for (&id, body) in self.world.bodies.iter() {
 			if id == self_id {
-				*camera = body.position;
+				camera.center = body.position;
 			}
 		}
 	}
