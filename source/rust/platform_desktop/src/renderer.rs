@@ -291,27 +291,27 @@ impl Renderer {
 	fn draw_ui_overlay(&mut self, attitude: Radians) {
 		let projection = self.ortho();
 
-		let left   = -(self.window.width as f64) / 2.0;
+		let left   = -(self.window.width as f32) / 2.0;
 		let right  = -left;
-		let bottom = -(self.window.height as f64) / 2.0;
+		let bottom = -(self.window.height as f32) / 2.0;
 
 
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
-			&projection.mul(&Matrix4::from_translation(&Vec2(left + 20.0, bottom + 60.0).to_vector3_f32()))
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 60.0).extend(0.0)))
 		);
 		self.draw_text(
 			"Change course with the left and right cursor keys",
-			&projection.mul(&Matrix4::from_translation(&Vec2(left + 20.0, bottom + 40.0).to_vector3_f32())),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 40.0).extend(0.0))),
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
-			&projection.mul(&Matrix4::from_translation(&Vec2(left + 20.0, bottom + 20.0).to_vector3_f32())),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 20.0).extend(0.0))),
 		);
 
 		self.draw_text(
 			format!("{:+04i}", attitude.degrees()).as_slice(),
-			&projection.mul(&Matrix4::from_translation(&Vec2(right - 50.0, bottom + 40.0).to_vector3_f32())),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 50.0, bottom + 40.0).extend(0.0))),
 		);
 	}
 
