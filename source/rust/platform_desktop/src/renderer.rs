@@ -250,7 +250,7 @@ impl Renderer {
 		let icon = self.icons[icon_id.to_string()];
 		let mut transform = self.perspective()
 			.mul(&camera_to_transform(camera))
-			.mul(&translation(body.position));
+			.mul(&translation(&body.position.to_vector_f32()));
 
 		// Remove any rotation from the transform, so the icons always face the
 		// camera. I don't like this solution.
@@ -277,13 +277,13 @@ impl Renderer {
 				body.position.y() as int
 			)
 			.as_slice(),
-			&transform.mul(&translation(text_position)),
+			&transform.mul(&translation(&text_position.to_vector_f32())),
 		);
 
 		text_position = text_position - Vec2(0.0, 15.0);
 		self.draw_text(
 			format!("att: {:+04i}", body.attitude.degrees()).as_slice(),
-			&transform.mul(&translation(text_position)),
+			&transform.mul(&translation(&text_position.to_vector_f32())),
 		);
 	}
 
@@ -297,20 +297,20 @@ impl Renderer {
 
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
-			&projection.mul(&translation(Vec2(left + 20.0, bottom + 60.0)))
+			&projection.mul(&translation(&Vec2(left + 20.0, bottom + 60.0).to_vector_f32()))
 		);
 		self.draw_text(
 			"Change course with the left and right cursor keys",
-			&projection.mul(&translation(Vec2(left + 20.0, bottom + 40.0))),
+			&projection.mul(&translation(&Vec2(left + 20.0, bottom + 40.0).to_vector_f32())),
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
-			&projection.mul(&translation(Vec2(left + 20.0, bottom + 20.0))),
+			&projection.mul(&translation(&Vec2(left + 20.0, bottom + 20.0).to_vector_f32())),
 		);
 
 		self.draw_text(
 			format!("{:+04i}", attitude.degrees()).as_slice(),
-			&projection.mul(&translation(Vec2(right - 50.0, bottom + 40.0))),
+			&projection.mul(&translation(&Vec2(right - 50.0, bottom + 40.0).to_vector_f32())),
 		);
 	}
 
@@ -328,7 +328,7 @@ impl Renderer {
 
 				self.draw_icon(
 					&icon,
-					&transform.mul(&translation(offset + total_advance)),
+					&transform.mul(&translation(&(offset + total_advance).to_vector_f32())),
 				);
 			}
 
@@ -338,7 +338,7 @@ impl Renderer {
 
 	fn draw_icon(&mut self, icon: &Icon, transform: &Transform) {
 		let params = IconParams {
-			transform: transform.mul(&translation(icon.offset)).into_fixed(),
+			transform: transform.mul(&translation(&icon.offset.to_vector_f32())).into_fixed(),
 			tex      : icon.param,
 		};
 
@@ -569,10 +569,6 @@ fn camera_to_transform(camera: &Camera) -> Transform {
 	)
 }
 
-fn translation(vec: Vec2) -> Transform {
-	Matrix4::from_translation(&Vector3::new(
-		vec.x() as f32,
-		vec.y() as f32,
-		0.0,
-	))
+fn translation(vec: &Vector3<f32>) -> Transform {
+	Matrix4::from_translation(vec)
 }
