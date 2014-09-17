@@ -1,10 +1,10 @@
-use std::gc::Gc;
 use syntax::ast;
 use syntax::ext::base::ExtCtxt;
 use syntax::parse;
 use syntax::parse::common::seq_sep_trailing_disallowed;
 use syntax::parse::parser::Parser;
 use syntax::parse::token;
+use syntax::ptr::P;
 
 
 pub struct ECS {
@@ -70,7 +70,7 @@ impl Directive {
 pub struct Component {
 	pub name      : ast::Ident,
 	pub collection: ast::Ident,
-	pub ty        : Gc<ast::Ty>,
+	pub ty        : P<ast::Ty>,
 }
 
 impl Component {
@@ -99,7 +99,7 @@ pub struct Entity {
 	pub name      : ast::Ident,
 	pub components: Vec<ast::Ident>,
 	pub args      : Vec<ast::Arg>,
-	pub init_block: Gc<ast::Block>,
+	pub init_block: P<ast::Block>,
 }
 
 impl Entity {

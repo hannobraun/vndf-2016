@@ -1,15 +1,15 @@
 use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
-use std::gc::Gc;
 use syntax::ast;
 use syntax::ext::base::ExtCtxt;
 use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
+use syntax::ptr::P;
 
 use parse;
 
 
-pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<Gc<ast::Item>> {
+pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<P<ast::Item>> {
 	let components: HashMap<String, Component> = ecs.components
 		.iter()
 		.map(|component| {
@@ -58,8 +58,8 @@ impl Component {
 		let var_name = ast::Ident::new(
 			token::intern(ident_to_lower(component.name).as_slice()));
 
-		let collection = component.collection;
-		let ty         = component.ty;
+		let     collection = component.collection;
+		let ref ty         = component.ty;
 
 		let decl = quote_tokens!(&*context,
 			pub $collection: ::rustecs::Components<$ty>,
@@ -195,7 +195,7 @@ impl Entity {
 			}
 		}
 
-		let init_block = entity.init_block;
+		let ref init_block = entity.init_block;
 
 		let mut inserts = Vec::new();
 		for (_, component) in components.iter() {
@@ -254,7 +254,7 @@ impl Entity {
 			}
 		}
 
-		let init_block = entity.init_block;
+		let ref init_block = entity.init_block;
 
 		let mut inserts = Vec::new();
 		for (_, component) in components.iter() {
@@ -279,7 +279,7 @@ impl Entity {
 }
 
 
-struct World(Vec<Gc<ast::Item>>);
+struct World(Vec<P<ast::Item>>);
 
 impl World {
 	fn generate(
