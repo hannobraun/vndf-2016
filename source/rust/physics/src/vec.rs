@@ -75,7 +75,7 @@ impl Vec2 {
 	}
 
 	// Temporary function to ease the transition away from our own math code.
-	pub fn to_vector_f32(&self) -> Vector3<f32> {
+	pub fn to_vector3_f32(&self) -> Vector3<f32> {
 		Vector3::new(self.x() as f32, self.y() as f32, 0.0)
 	}
 }
