@@ -1,10 +1,12 @@
 use std::io::IoError;
 
-use cgmath::Vector2;
+use cgmath::{
+	Rad,
+	Vector2,
+};
 
 use game::ecs::SharedWorldEntity;
 use net::ConnId;
-use physics::Radians;
 use protocol::{
 	Action,
 	Perception
@@ -19,7 +21,7 @@ pub enum GameEvent {
 	Enter(ConnId),
 	Leave(ConnId),
 	Action(ConnId, Action),
-	MissileLaunch(Vector2<f64>, Radians)
+	MissileLaunch(Vector2<f64>, Rad<f64>)
 }
 
 #[deriving(PartialEq, Show)]

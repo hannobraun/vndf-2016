@@ -81,7 +81,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, rad(attitude.s()))
+							self.on_missile_launch(position, attitude)
 					}
 				},
 
@@ -153,7 +153,7 @@ impl GameState {
 			self.events.send(
 				MissileLaunch(
 					body.position,
-					body.attitude
+					rad(body.attitude.s()),
 				)
 			)
 		}
