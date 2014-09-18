@@ -19,10 +19,7 @@ use game::ecs::{
 	World
 };
 use net::ConnId;
-use physics::{
-	Body,
-	Radians,
-};
+use physics::Body;
 use protocol::{
 	Action,
 	Perception
