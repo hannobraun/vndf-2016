@@ -1,6 +1,10 @@
 use std::f64;
 use std::rc::Rc;
 
+use cgmath::{
+	rad,
+	Rad,
+};
 use glfw;
 
 use physics::{
@@ -13,7 +17,7 @@ use window::Window;
 
 pub struct InputHandler {
 	window  : Rc<Window>,
-	attitude: Radians,
+	attitude: Rad<f64>,
 	missile : u64,
 
 	camera_angle   : (Radians, Radians),
@@ -26,7 +30,7 @@ impl InputHandler {
 
 		InputHandler {
 			window  : window,
-			attitude: Radians(0.0),
+			attitude: Rad::zero(),
 			missile : 0,
 
 			camera_angle   : (angle, angle),
@@ -47,12 +51,12 @@ impl InputHandler {
 			attitude_change -= angular_velocity;
 		}
 
-		self.attitude = self.attitude + Radians(attitude_change);
-		while self.attitude > Radians(f64::consts::PI) {
-			self.attitude = self.attitude - Radians(f64::consts::PI * 2.0)
+		self.attitude = self.attitude + rad(attitude_change);
+		while self.attitude > rad(f64::consts::PI) {
+			self.attitude = self.attitude - rad(f64::consts::PI * 2.0)
 		}
-		while self.attitude < -Radians(f64::consts::PI) {
-			self.attitude = self.attitude + Radians(f64::consts::PI * 2.0)
+		while self.attitude < -rad(f64::consts::PI) {
+			self.attitude = self.attitude + rad(f64::consts::PI * 2.0)
 		}
 
 		if self.window.key_pressed(glfw::KeyEnter) {
@@ -98,7 +102,7 @@ impl InputHandler {
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
-		input.attitude = self.attitude;
+		input.attitude = Radians(self.attitude.s);
 		input.missile  = self.missile;
 
 		input.camera_angle    = self.camera_angle;
