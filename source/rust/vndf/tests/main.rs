@@ -25,7 +25,6 @@ mod unit {
 
 	mod common_test {
 		mod protocol;
-		mod vec;
 	}
 
 	mod ecs_test {
