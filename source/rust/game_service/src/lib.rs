@@ -1,5 +1,7 @@
 extern crate getopts;
 
+extern crate cgmath;
+
 extern crate epoll;
 extern crate game;
 extern crate net;

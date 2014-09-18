@@ -74,7 +74,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, attitude)
+							self.on_missile_launch(Vec2(position[0], position[1]), attitude)
 					}
 				},
 
@@ -145,7 +145,7 @@ impl GameState {
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
-					body.position,
+					body.position.to_vector2_f64(),
 					body.attitude
 				)
 			)
