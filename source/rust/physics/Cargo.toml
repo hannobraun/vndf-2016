@@ -2,3 +2,7 @@
 name    = "physics"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
+
+
+[dependencies.cgmath]
+git = "https://github.com/bjz/cgmath-rs.git"
