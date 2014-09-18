@@ -26,7 +26,7 @@ pub type Font = HashMap<char, Glyph>;
 pub struct Glyph {
 	pub data   : Vec<u8>,
 	pub size   : Vector2<f32>,
-	pub offset : Vec2,
+	pub offset : Vector2<f32>,
 	pub advance: Vec2,
 }
 
@@ -107,9 +107,9 @@ fn make_glyph(glyph_slot: FT_GlyphSlot) -> Glyph {
 				bitmap.width as f32,
 				bitmap.rows as f32,
 			),
-			offset: Vec2(
-				(*glyph_slot).bitmap_left as f64,
-				(*glyph_slot).bitmap_top as f64 - bitmap.rows as f64
+			offset: Vector2::new(
+				(*glyph_slot).bitmap_left as f32,
+				(*glyph_slot).bitmap_top as f32 - bitmap.rows as f32
 			),
 			advance: Vec2(
 				(*glyph_slot).advance.x as f64 / 64.0,

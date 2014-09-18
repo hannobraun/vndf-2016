@@ -329,7 +329,7 @@ impl Renderer {
 
 				self.draw_icon(
 					&icon,
-					&transform.mul(&Matrix4::from_translation(&(offset.to_vector3_f32() + total_advance.extend(0.0)))),
+					&transform.mul(&Matrix4::from_translation(&(offset.extend(0.0) + total_advance.extend(0.0)))),
 				);
 			}
 
