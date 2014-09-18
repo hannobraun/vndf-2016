@@ -1,4 +1,7 @@
-use cgmath::Vector2;
+use cgmath::{
+	Rad,
+	Vector2,
+};
 
 use game::ecs::{
 	SharedWorldEntity,
@@ -6,7 +9,6 @@ use game::ecs::{
 };
 use physics::{
 	Body,
-	Radians,
 	util,
 };
 use protocol::Perception;
@@ -31,7 +33,7 @@ fn it_should_interpolate_between_perceptions() {
 		body: Some(Body {
 			position: pos_1,
 			velocity: Vector2::new(10.0, 0.0),
-			attitude: Radians(0.0)
+			attitude: Rad::zero(),
 		}),
 		visual: Some(ShowAsShip)
 	};
@@ -92,7 +94,7 @@ fn the_camera_should_follow_the_ship() {
 		body: Some(Body {
 			position: pos_1,
 			velocity: Vector2::new(10.0, 0.0),
-			attitude: Radians(0.0)
+			attitude: Rad::zero(),
 		}),
 		visual: Some(ShowAsShip)
 	};

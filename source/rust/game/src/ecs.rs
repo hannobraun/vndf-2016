@@ -4,10 +4,7 @@ use cgmath::{
 };
 
 use net::ConnId;
-use physics::{
-	Body,
-	Radians,
-};
+use physics::Body;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -68,7 +65,7 @@ ecs!(
 		let body = Body {
 			position: position,
 			velocity: Vector2::new(60.0, 0.0),
-			attitude: Radians(attitude.s),
+			attitude: attitude,
 		};
 
 		(body, ShowAsMissile)
@@ -77,7 +74,7 @@ ecs!(
 		let body = Body {
 			position: Vector2::zero(),
 			velocity: Vector2::new(30.0, 0.0),
-			attitude: Radians(0.0)
+			attitude: Rad::zero(),
 		};
 
 		let player = Player {

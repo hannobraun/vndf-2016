@@ -1,13 +1,14 @@
-use cgmath::Vector2;
-
-use super::Radians;
+use cgmath::{
+	Rad,
+	Vector2,
+};
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Body {
 	pub position: Vector2<f64>,
 	pub velocity: Vector2<f64>,
-	pub attitude: Radians
+	pub attitude: Rad<f64>,
 }
 
 impl Body {
@@ -15,7 +16,7 @@ impl Body {
 		Body {
 			position: Vector2::zero(),
 			velocity: Vector2::zero(),
-			attitude: Radians(0.0)
+			attitude: Rad::zero(),
 		}
 	}
 }

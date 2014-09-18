@@ -6,6 +6,8 @@ use std::comm::{
 use cgmath::{
 	rad,
 	EuclideanVector,
+	Matrix,
+	Matrix2,
 	Rad,
 	Vector,
 	Vector2,
@@ -147,13 +149,13 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected ship");
 
-		body.attitude = action.attitude;
+		body.attitude = rad(action.attitude.s());
 
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
 					body.position,
-					rad(body.attitude.s()),
+					body.attitude,
 				)
 			)
 		}
@@ -167,6 +169,8 @@ impl GameState {
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	body.velocity = body.attitude.to_vec().to_vector2_f64().mul_s(body.velocity.length());
+	let attitude_vec = Matrix2::from_angle(body.attitude)
+		.mul_v(&Vector2::new(1.0, 0.0));
+	body.velocity = attitude_vec.mul_s(body.velocity.length());
 	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 }
