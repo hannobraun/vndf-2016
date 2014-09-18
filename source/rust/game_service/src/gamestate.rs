@@ -6,6 +6,7 @@ use std::comm::{
 use cgmath::{
 	rad,
 	EuclideanVector,
+	Rad,
 	Vector,
 	Vector2,
 };
@@ -80,7 +81,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, attitude)
+							self.on_missile_launch(position, rad(attitude.s()))
 					}
 				},
 
@@ -159,8 +160,8 @@ impl GameState {
 		player.missile_index = action.missile;
 	}
 
-	fn on_missile_launch(&mut self, position: Vector2<f64>, attitude: Radians) {
-		self.world.create_missile(position, rad(attitude.s()));
+	fn on_missile_launch(&mut self, position: Vector2<f64>, attitude: Rad<f64>) {
+		self.world.create_missile(position, attitude);
 	}
 }
 
