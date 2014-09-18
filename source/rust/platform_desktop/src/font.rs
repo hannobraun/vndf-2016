@@ -18,8 +18,6 @@ use freetype::ffi::{
 	FT_Set_Pixel_Sizes
 };
 
-use physics::Vec2;
-
 
 pub type Font = HashMap<char, Glyph>;
 
@@ -27,7 +25,7 @@ pub struct Glyph {
 	pub data   : Vec<u8>,
 	pub size   : Vector2<f32>,
 	pub offset : Vector2<f32>,
-	pub advance: Vec2,
+	pub advance: Vector2<f32>,
 }
 
 
@@ -111,9 +109,9 @@ fn make_glyph(glyph_slot: FT_GlyphSlot) -> Glyph {
 				(*glyph_slot).bitmap_left as f32,
 				(*glyph_slot).bitmap_top as f32 - bitmap.rows as f32
 			),
-			advance: Vec2(
-				(*glyph_slot).advance.x as f64 / 64.0,
-				(*glyph_slot).advance.y as f64 / 64.0
+			advance: Vector2::new(
+				(*glyph_slot).advance.x as f32 / 64.0,
+				(*glyph_slot).advance.y as f32 / 64.0
 			),
 		}
 	}

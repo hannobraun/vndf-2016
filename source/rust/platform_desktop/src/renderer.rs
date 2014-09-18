@@ -333,7 +333,7 @@ impl Renderer {
 				);
 			}
 
-			total_advance = total_advance + advance.to_vector2_f32();
+			total_advance = total_advance + advance;
 		}
 	}
 
