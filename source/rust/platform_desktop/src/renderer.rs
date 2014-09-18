@@ -7,6 +7,7 @@ use cgmath::{
 	FixedArray,
 	Matrix4,
 	Point3,
+	Rad,
 	ToDeg,
 	Vector,
 	Vector2,
@@ -27,10 +28,7 @@ use images::{
 	Image,
 	Images,
 };
-use physics::{
-	Body,
-	Radians,
-};
+use physics::Body;
 use platform::{
 	Camera,
 	Frame,
@@ -218,7 +216,7 @@ impl Renderer {
 			);
 		}
 
-		self.draw_ui_overlay(Radians(frame.input.attitude.s));
+		self.draw_ui_overlay(frame.input.attitude);
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();
@@ -292,7 +290,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_ui_overlay(&mut self, attitude: Radians) {
+	fn draw_ui_overlay(&mut self, attitude: Rad<f64>) {
 		let projection = self.ortho();
 
 		let left   = -(self.window.width as f32) / 2.0;
@@ -314,7 +312,7 @@ impl Renderer {
 		);
 
 		self.draw_text(
-			format!("{:+04i}", attitude.degrees()).as_slice(),
+			format!("{:+04i}", attitude.to_deg().s as int).as_slice(),
 			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 50.0, bottom + 40.0).extend(0.0))),
 		);
 	}
