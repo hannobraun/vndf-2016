@@ -24,7 +24,6 @@ mod unit {
 	}
 
 	mod common_test {
-		mod angle;
 		mod protocol;
 		mod vec;
 	}
