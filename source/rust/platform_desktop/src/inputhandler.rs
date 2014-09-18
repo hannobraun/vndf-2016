@@ -2,8 +2,10 @@ use std::f64;
 use std::rc::Rc;
 
 use cgmath::{
+	deg,
 	rad,
 	Rad,
+	ToRad,
 };
 use glfw;
 
@@ -20,13 +22,13 @@ pub struct InputHandler {
 	attitude: Rad<f64>,
 	missile : u64,
 
-	camera_angle   : (Radians, Radians),
+	camera_angle   : (Rad<f64>, Rad<f64>),
 	camera_distance: f64,
 }
 
 impl InputHandler {
 	pub fn new(window: Rc<Window>) -> InputHandler {
-		let angle = Degrees(45.0).to_radians();
+		let angle = deg(45.0).to_rad();
 
 		InputHandler {
 			window  : window,
@@ -65,23 +67,23 @@ impl InputHandler {
 
 		let camera_speed = 0.05;
 		if self.window.key_pressed(glfw::KeyA) {
-			*self.camera_angle.mut0() = self.camera_angle.val0() - Radians(camera_speed);
+			*self.camera_angle.mut0() = self.camera_angle.val0() - rad(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyD) {
-			*self.camera_angle.mut0() = self.camera_angle.val0() + Radians(camera_speed);
+			*self.camera_angle.mut0() = self.camera_angle.val0() + rad(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyS) {
-			*self.camera_angle.mut1() = self.camera_angle.val1() + Radians(camera_speed);
+			*self.camera_angle.mut1() = self.camera_angle.val1() + rad(camera_speed);
 		}
 		if self.window.key_pressed(glfw::KeyW) {
-			*self.camera_angle.mut1() = self.camera_angle.val1() - Radians(camera_speed);
+			*self.camera_angle.mut1() = self.camera_angle.val1() - rad(camera_speed);
 		}
 
-		if self.camera_angle.val1() <= Degrees(0.0).to_radians() {
-			*self.camera_angle.mut1() = Degrees(1.0).to_radians();
+		if self.camera_angle.val1() <= deg(0.0).to_rad() {
+			*self.camera_angle.mut1() = deg(1.0).to_rad();
 		}
-		if self.camera_angle.val1() >= Degrees(180.0).to_radians() {
-			*self.camera_angle.mut1() = Degrees(179.0).to_radians();
+		if self.camera_angle.val1() >= deg(180.0).to_rad() {
+			*self.camera_angle.mut1() = deg(179.0).to_rad();
 		}
 
 		let camera_speed = 10.0;
@@ -105,7 +107,7 @@ impl InputHandler {
 		input.attitude = Radians(self.attitude.s);
 		input.missile  = self.missile;
 
-		input.camera_angle    = self.camera_angle;
+		input.camera_angle    = (Radians(self.camera_angle.val0().s), Radians(self.camera_angle.val1().s));
 		input.camera_distance = self.camera_distance;
 
 		input
