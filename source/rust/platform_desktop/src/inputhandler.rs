@@ -9,10 +9,6 @@ use cgmath::{
 };
 use glfw;
 
-use physics::{
-	Degrees,
-	Radians,
-};
 use platform::Input;
 use window::Window;
 
