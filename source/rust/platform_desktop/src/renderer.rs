@@ -459,8 +459,8 @@ impl Icon {
 
 		Icon::new(
 			graphics,
-			glyph.size.x() as f32,
-			glyph.size.y() as f32,
+			glyph.size[0],
+			glyph.size[1],
 			data.as_slice(),
 			false,
 		)

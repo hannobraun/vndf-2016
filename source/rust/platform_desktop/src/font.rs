@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use std::ptr;
 use std::vec;
 
+use cgmath::Vector2;
 use freetype::ffi::{
 	FT_Face,
 	FT_Get_Char_Index,
@@ -24,7 +25,7 @@ pub type Font = HashMap<char, Glyph>;
 
 pub struct Glyph {
 	pub data   : Vec<u8>,
-	pub size   : Vec2,
+	pub size   : Vector2<f32>,
 	pub offset : Vec2,
 	pub advance: Vec2,
 }
@@ -102,9 +103,9 @@ fn make_glyph(glyph_slot: FT_GlyphSlot) -> Glyph {
 				bitmap.buffer as *const u8,
 				(bitmap.width * bitmap.rows) as uint
 			),
-			size: Vec2(
-				bitmap.width as f64,
-				bitmap.rows as f64,
+			size: Vector2::new(
+				bitmap.width as f32,
+				bitmap.rows as f32,
 			),
 			offset: Vec2(
 				(*glyph_slot).bitmap_left as f64,
