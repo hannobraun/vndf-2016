@@ -1,7 +1,6 @@
 use game::ecs::SharedWorldEntity;
 use platform::Input;
 use net::Connection;
-use physics::Radians;
 use protocol::{
 	Action,
 	Perception
