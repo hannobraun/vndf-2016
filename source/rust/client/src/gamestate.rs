@@ -1,7 +1,6 @@
 use time;
 
 use game::ecs::ClientWorld;
-use physics::Vec2;
 use platform::Camera;
 use rustecs::EntityId;
 
