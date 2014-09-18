@@ -14,7 +14,6 @@ use net::ConnId;
 use physics::{
 	Body,
 	Radians,
-	Vec2
 };
 use protocol::{
 	Action,
@@ -156,7 +155,7 @@ impl GameState {
 	}
 
 	fn on_missile_launch(&mut self, position: Vector2<f64>, attitude: Radians) {
-		self.world.create_missile(Vec2(position[0], position[1]), attitude);
+		self.world.create_missile(position, attitude);
 	}
 }
 

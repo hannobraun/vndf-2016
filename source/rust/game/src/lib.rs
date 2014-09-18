@@ -3,6 +3,8 @@
 
 extern crate serialize;
 
+extern crate cgmath;
+
 extern crate net;
 extern crate physics;
 extern crate rustecs;
