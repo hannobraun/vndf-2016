@@ -29,7 +29,6 @@ use images::{
 use physics::{
 	Body,
 	Radians,
-	Vec2,
 };
 use platform::{
 	Camera,
