@@ -218,7 +218,7 @@ impl Renderer {
 			);
 		}
 
-		self.draw_ui_overlay(frame.input.attitude);
+		self.draw_ui_overlay(Radians(frame.input.attitude.s));
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();

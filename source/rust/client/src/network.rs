@@ -1,6 +1,7 @@
 use game::ecs::SharedWorldEntity;
 use platform::Input;
 use net::Connection;
+use physics::Radians;
 use protocol::{
 	Action,
 	Perception
@@ -30,7 +31,7 @@ impl Network {
 
 	pub fn send(&mut self, input: Input) {
 		let action = Action {
-			attitude: input.attitude,
+			attitude: Radians(input.attitude.s),
 			missile : input.missile
 		};
 		match self.conn.send_message(action.to_string().as_slice()) {

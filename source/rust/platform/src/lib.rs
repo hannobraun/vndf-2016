@@ -7,7 +7,10 @@ extern crate physics;
 
 use serialize::json;
 
-use cgmath::Vector2;
+use cgmath::{
+	Rad,
+	Vector2,
+};
 
 use physics::{
 	Body,
@@ -43,7 +46,7 @@ impl Frame {
 #[deriving(Decodable, Encodable, Show)]
 pub struct Input {
 	pub exit    : bool,
-	pub attitude: Radians,
+	pub attitude: Rad<f64>,
 	pub missile : u64,
 
 	pub camera_angle   : (Radians, Radians),
@@ -54,7 +57,7 @@ impl Input {
 	pub fn default() -> Input {
 		Input {
 			exit    : false,
-			attitude: Radians(0.0),
+			attitude: Rad::zero(),
 			missile : 0,
 
 			camera_angle   : (Radians(0.0), Radians(0.0)),

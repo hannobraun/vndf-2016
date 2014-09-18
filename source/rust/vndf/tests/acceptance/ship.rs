@@ -2,12 +2,9 @@ use cgmath::{
 	ApproxEq,
 	EuclideanVector,
 	Vector,
+	Vector2,
 };
 
-use physics::{
-	Radians,
-	Vec2,
-};
 use platform::Input;
 use test_tools::{
 	Client,
@@ -28,7 +25,7 @@ fn it_should_change_direction_according_to_input() {
 
 	let velocity     = frame.ships[0].velocity;
 	let new_velocity = velocity.mul_s(-1.0);
-	let new_attitude = Radians::from_vec(Vec2(new_velocity[0], new_velocity[1]));
+	let new_attitude = new_velocity.angle(&Vector2::new(1.0, 0.0));
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;

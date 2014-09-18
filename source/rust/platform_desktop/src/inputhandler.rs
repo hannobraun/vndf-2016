@@ -104,7 +104,7 @@ impl InputHandler {
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
-		input.attitude = Radians(self.attitude.s);
+		input.attitude = self.attitude;
 		input.missile  = self.missile;
 
 		input.camera_angle    = (Radians(self.camera_angle.val0().s), Radians(self.camera_angle.val1().s));
