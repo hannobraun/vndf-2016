@@ -3,6 +3,8 @@ use std::comm::{
 	Empty
 };
 
+use cgmath::Vector2;
+
 use game::ecs::{
 	SharedWorld,
 	SharedWorldEntity,
@@ -74,7 +76,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(Vec2(position[0], position[1]), attitude)
+							self.on_missile_launch(position, attitude)
 					}
 				},
 
@@ -153,8 +155,8 @@ impl GameState {
 		player.missile_index = action.missile;
 	}
 
-	fn on_missile_launch(&mut self, position: Vec2, attitude: Radians) {
-		self.world.create_missile(position, attitude);
+	fn on_missile_launch(&mut self, position: Vector2<f64>, attitude: Radians) {
+		self.world.create_missile(Vec2(position[0], position[1]), attitude);
 	}
 }
 
