@@ -76,7 +76,7 @@ impl GameState {
 
 		for (&id, body) in self.world.bodies.iter() {
 			if id == self_id {
-				camera.center = body.position;
+				camera.center = body.position.to_vector2_f64();
 			}
 		}
 	}

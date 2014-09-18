@@ -1,14 +1,17 @@
 extern crate serialize;
 
+extern crate cgmath;
+
 extern crate physics;
 
 
 use serialize::json;
 
+use cgmath::Vector2;
+
 use physics::{
 	Body,
 	Radians,
-	Vec2,
 };
 
 
@@ -71,7 +74,7 @@ impl Input {
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Camera {
-	pub center     : Vec2,
+	pub center     : Vector2<f64>,
 	pub perspective: (Radians, Radians),
 	pub distance   : f64,
 }
@@ -79,7 +82,7 @@ pub struct Camera {
 impl Camera {
 	pub fn new() -> Camera {
 		Camera {
-			center     : Vec2::zero(),
+			center     : Vector2::zero(),
 			perspective: (Radians(0.0), Radians(0.0)),
 			distance   : 500.0,
 		}

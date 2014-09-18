@@ -226,9 +226,9 @@ impl Renderer {
 
 	fn draw_grid(&mut self, camera: &Camera, projection: Transform) {
 		let grid_camera = Camera {
-			center: Vec2(
-				camera.center.x() % 200.0,
-				camera.center.y() % 200.0,
+			center: Vector2::new(
+				camera.center[0] % 200.0,
+				camera.center[1] % 200.0,
 			),
 
 			perspective: camera.perspective,
@@ -556,13 +556,13 @@ fn camera_to_transform(camera: &Camera) -> Transform {
 
 	Matrix4::look_at(
 		&Point3::new(
-			(camera.center.x() + x) as f32,
-			(camera.center.y() + y) as f32,
+			(camera.center[0] + x) as f32,
+			(camera.center[1] + y) as f32,
 			z as f32,
 		),
 		&Point3::new(
-			camera.center.x() as f32,
-			camera.center.y() as f32,
+			camera.center[0] as f32,
+			camera.center[1] as f32,
 			0.0
 		),
 		&Vector3::new(0.0, 0.0, 1.0),
