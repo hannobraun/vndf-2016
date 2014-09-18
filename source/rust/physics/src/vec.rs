@@ -81,6 +81,9 @@ impl Vec2 {
 	pub fn to_vector2_f32(&self) -> Vector2<f32> {
 		Vector2::new(self.x() as f32, self.y() as f32)
 	}
+	pub fn to_vector2_f64(&self) -> Vector2<f64> {
+		Vector2::new(self.x(), self.y())
+	}
 	pub fn to_vector3_f32(&self) -> Vector3<f32> {
 		Vector3::new(self.x() as f32, self.y() as f32, 0.0)
 	}
