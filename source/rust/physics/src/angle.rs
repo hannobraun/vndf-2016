@@ -30,6 +30,11 @@ impl Radians {
 		let &Radians(this) = self;
 		Degrees(this.to_degrees())
 	}
+
+	pub fn s(&self) -> f64 {
+		let &Radians(s) = self;
+		s
+	}
 }
 
 impl Add<Radians, Radians> for Radians {
