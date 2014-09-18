@@ -3,6 +3,7 @@ use game::ecs::{
 	ShowAsMissile,
 	ShowAsShip,
 };
+use physics::Radians;
 use platform::{
 	Camera,
 	Frame,
@@ -48,7 +49,7 @@ pub fn run() {
 			Err(error) => fail!("Error reading input: {}", error)
 		};
 		should_close = input.exit;
-		camera.perspective = input.camera_angle;
+		camera.perspective = (Radians(input.camera_angle.val0().s), Radians(input.camera_angle.val1().s));
 		camera.distance = input.camera_distance;
 
 		input_sender.update(input, &mut network);

@@ -49,7 +49,7 @@ pub struct Input {
 	pub attitude: Rad<f64>,
 	pub missile : u64,
 
-	pub camera_angle   : (Radians, Radians),
+	pub camera_angle   : (Rad<f64>, Rad<f64>),
 	pub camera_distance: f64,
 }
 
@@ -60,7 +60,7 @@ impl Input {
 			attitude: Rad::zero(),
 			missile : 0,
 
-			camera_angle   : (Radians(0.0), Radians(0.0)),
+			camera_angle   : (Rad::zero(), Rad::zero()),
 			camera_distance: 500.0,
 		}
 	}

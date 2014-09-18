@@ -107,7 +107,7 @@ impl InputHandler {
 		input.attitude = self.attitude;
 		input.missile  = self.missile;
 
-		input.camera_angle    = (Radians(self.camera_angle.val0().s), Radians(self.camera_angle.val1().s));
+		input.camera_angle    = self.camera_angle;
 		input.camera_distance = self.camera_distance;
 
 		input
