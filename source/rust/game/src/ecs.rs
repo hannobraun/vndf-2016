@@ -1,4 +1,7 @@
-use cgmath::Vector2;
+use cgmath::{
+	Rad,
+	Vector2,
+};
 
 use net::ConnId;
 use physics::{
@@ -61,11 +64,11 @@ ecs!(
 	// Server-only
 	component(Player, players): Player
 
-	entity(Missile<Body, Visual>): |position: Vector2<f64>, attitude: Radians| {
+	entity(Missile<Body, Visual>): |position: Vector2<f64>, attitude: Rad<f64>| {
 		let body = Body {
 			position: position,
 			velocity: Vector2::new(60.0, 0.0),
-			attitude: attitude
+			attitude: Radians(attitude.s),
 		};
 
 		(body, ShowAsMissile)
