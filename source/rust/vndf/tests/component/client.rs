@@ -8,7 +8,6 @@ use physics::{
 	Body,
 	Radians,
 	util,
-	Vec2
 };
 use protocol::Perception;
 use test_tools::{
@@ -31,7 +30,7 @@ fn it_should_interpolate_between_perceptions() {
 		id: 0,
 		body: Some(Body {
 			position: pos_1,
-			velocity: Vec2(10.0, 0.0),
+			velocity: Vector2::new(10.0, 0.0),
 			attitude: Radians(0.0)
 		}),
 		visual: Some(ShowAsShip)
@@ -92,7 +91,7 @@ fn the_camera_should_follow_the_ship() {
 		id: 0,
 		body: Some(Body {
 			position: pos_1,
-			velocity: Vec2(10.0, 0.0),
+			velocity: Vector2::new(10.0, 0.0),
 			attitude: Radians(0.0)
 		}),
 		visual: Some(ShowAsShip)

@@ -4,6 +4,7 @@ use std::comm::{
 };
 
 use cgmath::{
+	EuclideanVector,
 	Vector,
 	Vector2,
 };
@@ -164,6 +165,6 @@ impl GameState {
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	body.velocity = body.attitude.to_vec() * body.velocity.mag();
-	body.position = (body.position + body.velocity.to_vector2_f64()).mul_s(delta_time_in_s);
+	body.velocity = body.attitude.to_vec().to_vector2_f64().mul_s(body.velocity.length());
+	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 }

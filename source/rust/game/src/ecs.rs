@@ -4,7 +4,6 @@ use net::ConnId;
 use physics::{
 	Body,
 	Radians,
-	Vec2,
 };
 
 
@@ -65,7 +64,7 @@ ecs!(
 	entity(Missile<Body, Visual>): |position: Vector2<f64>, attitude: Radians| {
 		let body = Body {
 			position: position,
-			velocity: Vec2(60.0, 0.0),
+			velocity: Vector2::new(60.0, 0.0),
 			attitude: attitude
 		};
 
@@ -74,7 +73,7 @@ ecs!(
 	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
 		let body = Body {
 			position: Vector2::zero(),
-			velocity: Vec2(30.0, 0.0),
+			velocity: Vector2::new(30.0, 0.0),
 			attitude: Radians(0.0)
 		};
 

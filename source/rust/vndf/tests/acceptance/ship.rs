@@ -1,6 +1,13 @@
-use cgmath::EuclideanVector;
+use cgmath::{
+	ApproxEq,
+	EuclideanVector,
+	Vector,
+};
 
-use physics::Radians;
+use physics::{
+	Radians,
+	Vec2,
+};
 use platform::Input;
 use test_tools::{
 	Client,
@@ -20,8 +27,8 @@ fn it_should_change_direction_according_to_input() {
 	})
 
 	let velocity     = frame.ships[0].velocity;
-	let new_velocity = velocity * -1.0;
-	let new_attitude = Radians::from_vec(new_velocity);
+	let new_velocity = velocity.mul_s(-1.0);
+	let new_attitude = Radians::from_vec(Vec2(new_velocity[0], new_velocity[1]));
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;
@@ -31,9 +38,9 @@ fn it_should_change_direction_according_to_input() {
 		frame = client.frame();
 	})
 
-	assert_eq!(
-		new_velocity.round(16),
-		frame.ships.get(0).velocity.round(16));
+	print!("{}, {}\n", new_velocity, frame.ships.get(0).velocity);
+
+	assert!(new_velocity.approx_eq_eps(&frame.ships.get(0).velocity, &1e-4));
 }
 
 #[test]
