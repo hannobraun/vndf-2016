@@ -146,7 +146,9 @@ impl GameState {
 			self.events.send(
 				MissileLaunch(
 					body.position,
-					body.attitude))
+					body.attitude
+				)
+			)
 		}
 		player.missile_index = action.missile;
 	}
