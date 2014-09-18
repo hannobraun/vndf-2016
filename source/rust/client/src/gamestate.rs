@@ -63,7 +63,7 @@ impl GameState {
 			let mut body = current.clone();
 
 			body.position =
-				(previous.position + (current.position - previous.position)).mul_s(i);
+				previous.position + (current.position - previous.position).mul_s(i);
 
 			self.world.bodies.insert(id, body);
 		}
