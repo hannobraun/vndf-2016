@@ -67,11 +67,11 @@ fn it_should_interpolate_between_perceptions() {
 
 	assert!(util::is_on_line(
 		(pos_1, pos_2),
-		frame_1.ships.get(0).position,
+		frame_1.ships.get(0).position.to_vector2_f64(),
 		16));
 	assert!(util::is_on_line(
 		(pos_1, pos_2),
-		frame_2.ships.get(0).position,
+		frame_2.ships.get(0).position.to_vector2_f64(),
 		16));
 	assert!(frame_2.ships.get(0).position != pos_2);
 }
@@ -124,14 +124,14 @@ fn the_camera_should_follow_the_ship() {
 	assert!(
 		util::is_on_line(
 			(pos_1, pos_2),
-			frame_1.camera.center,
+			frame_1.camera.center.to_vector2_f64(),
 			16
 		)
 	);
 	assert!(
 		util::is_on_line(
 			(pos_1, pos_2),
-			frame_2.camera.center,
+			frame_2.camera.center.to_vector2_f64(),
 			16
 		)
 	);
