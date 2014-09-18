@@ -1,5 +1,7 @@
 extern crate serialize;
 
+extern crate cgmath;
+
 extern crate physics;
 
 

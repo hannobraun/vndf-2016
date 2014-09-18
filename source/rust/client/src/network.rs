@@ -31,7 +31,7 @@ impl Network {
 
 	pub fn send(&mut self, input: Input) {
 		let action = Action {
-			attitude: Radians(input.attitude.s),
+			attitude: input.attitude,
 			missile : input.missile
 		};
 		match self.conn.send_message(action.to_string().as_slice()) {

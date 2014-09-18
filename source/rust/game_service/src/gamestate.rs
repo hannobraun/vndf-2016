@@ -149,7 +149,7 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected ship");
 
-		body.attitude = rad(action.attitude.s());
+		body.attitude = action.attitude;
 
 		if action.missile > player.missile_index {
 			self.events.send(

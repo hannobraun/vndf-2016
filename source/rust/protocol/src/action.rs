@@ -1,11 +1,11 @@
 use serialize::json;
 
-use physics::Radians;
+use cgmath::Rad;
 
 
 #[deriving(Decodable, Encodable, PartialEq, Show)]
 pub struct Action {
-	pub attitude: Radians,
+	pub attitude: Rad<f64>,
 	pub missile : u64
 }
 
