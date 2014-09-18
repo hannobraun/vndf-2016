@@ -551,11 +551,11 @@ impl Icon {
 
 
 fn camera_to_transform(camera: &Camera) -> Transform {
-	let (Radians(phi), Radians(theta)) = camera.perspective;
+	let (phi, theta) = camera.perspective;
 
-	let x = camera.distance * theta.sin() * phi.cos();
-	let y = camera.distance * theta.sin() * phi.sin();
-	let z = camera.distance * theta.cos();
+	let x = camera.distance * theta.s.sin() * phi.s.cos();
+	let y = camera.distance * theta.s.sin() * phi.s.sin();
+	let z = camera.distance * theta.s.cos();
 
 	Matrix4::look_at(
 		&Point3::new(

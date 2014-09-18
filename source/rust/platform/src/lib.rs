@@ -12,10 +12,7 @@ use cgmath::{
 	Vector2,
 };
 
-use physics::{
-	Body,
-	Radians,
-};
+use physics::Body;
 
 
 pub trait Platform {
@@ -78,7 +75,7 @@ impl Input {
 #[deriving(Decodable, Encodable, Show)]
 pub struct Camera {
 	pub center     : Vector2<f64>,
-	pub perspective: (Radians, Radians),
+	pub perspective: (Rad<f64>, Rad<f64>),
 	pub distance   : f64,
 }
 
@@ -86,7 +83,7 @@ impl Camera {
 	pub fn new() -> Camera {
 		Camera {
 			center     : Vector2::zero(),
-			perspective: (Radians(0.0), Radians(0.0)),
+			perspective: (Rad::zero(), Rad::zero()),
 			distance   : 500.0,
 		}
 	}
