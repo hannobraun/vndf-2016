@@ -30,7 +30,7 @@ fn it_should_interpolate_between_perceptions() {
 	let mut entity = SharedWorldEntity {
 		id: 0,
 		body: Some(Body {
-			position: Vec2(pos_1[0], pos_1[1]),
+			position: pos_1,
 			velocity: Vec2(10.0, 0.0),
 			attitude: Radians(0.0)
 		}),
@@ -43,7 +43,7 @@ fn it_should_interpolate_between_perceptions() {
 		vec!(),
 		vec!(entity)
 	);
-	entity.body.as_mut().unwrap().position = Vec2(pos_2[0], pos_2[1]);
+	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
 		|entity| entity.id,
 		0u32,
@@ -62,20 +62,20 @@ fn it_should_interpolate_between_perceptions() {
 		frame_2 = client.frame();
 	});
 
-	wait_while!(frame_1.ships.get(0).position == Vec2(pos_1[0], pos_1[1]) && true {
+	wait_while!(frame_1.ships.get(0).position == pos_1 && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});
 
 	assert!(util::is_on_line(
 		(pos_1, pos_2),
-		frame_1.ships.get(0).position.to_vector2_f64(),
+		frame_1.ships.get(0).position,
 		16));
 	assert!(util::is_on_line(
 		(pos_1, pos_2),
-		frame_2.ships.get(0).position.to_vector2_f64(),
+		frame_2.ships.get(0).position,
 		16));
-	assert!(frame_2.ships.get(0).position != Vec2(pos_2[0], pos_2[1]));
+	assert!(frame_2.ships.get(0).position != pos_2);
 }
 
 #[test]
@@ -91,7 +91,7 @@ fn the_camera_should_follow_the_ship() {
 	let mut entity = SharedWorldEntity {
 		id: 0,
 		body: Some(Body {
-			position: Vec2(pos_1[0], pos_1[1]),
+			position: pos_1,
 			velocity: Vec2(10.0, 0.0),
 			attitude: Radians(0.0)
 		}),
@@ -104,7 +104,7 @@ fn the_camera_should_follow_the_ship() {
 		vec!(),
 		vec!(entity)
 	);
-	entity.body.as_mut().unwrap().position = Vec2(pos_2[0], pos_2[1]);
+	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
 		|entity| entity.id,
 		0u32,

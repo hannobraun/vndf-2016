@@ -251,7 +251,7 @@ impl Renderer {
 		let icon = self.icons[icon_id.to_string()];
 		let mut transform = self.perspective()
 			.mul(&camera_to_transform(camera))
-			.mul(&Matrix4::from_translation(&body.position.to_vector3_f32()));
+			.mul(&Matrix4::from_translation(&Vector3::new(body.position[0] as f32, body.position[1] as f32, 0.0)));
 
 		// Remove any rotation from the transform, so the icons always face the
 		// camera. I don't like this solution.
@@ -274,8 +274,8 @@ impl Renderer {
 		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
 			format!("pos: {:i} / {:i}",
-				body.position.x() as int,
-				body.position.y() as int
+				body.position[0] as int,
+				body.position[1] as int
 			)
 			.as_slice(),
 			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),

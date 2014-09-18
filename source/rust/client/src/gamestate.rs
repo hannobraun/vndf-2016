@@ -1,5 +1,7 @@
 use time;
 
+use cgmath::Vector;
+
 use game::ecs::ClientWorld;
 use platform::Camera;
 use rustecs::EntityId;
@@ -61,7 +63,7 @@ impl GameState {
 			let mut body = current.clone();
 
 			body.position =
-				previous.position + (current.position - previous.position) * i;
+				(previous.position + (current.position - previous.position)).mul_s(i);
 
 			self.world.bodies.insert(id, body);
 		}
@@ -75,7 +77,7 @@ impl GameState {
 
 		for (&id, body) in self.world.bodies.iter() {
 			if id == self_id {
-				camera.center = body.position.to_vector2_f64();
+				camera.center = body.position;
 			}
 		}
 	}

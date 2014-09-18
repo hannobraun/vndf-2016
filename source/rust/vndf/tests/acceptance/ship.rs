@@ -1,3 +1,5 @@
+use cgmath::EuclideanVector;
+
 use physics::Radians;
 use platform::Input;
 use test_tools::{
@@ -54,7 +56,7 @@ fn it_should_fire_a_missile() {
 	})
 
 	let distance =
-		(frame.ships[0].position - frame.missiles[0].position).mag();
+		(frame.ships[0].position - frame.missiles[0].position).length();
 
 	print!("distance: {}\n", distance);
 	assert!(distance < 5.0);

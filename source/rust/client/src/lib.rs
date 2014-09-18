@@ -2,6 +2,8 @@ extern crate getopts;
 extern crate libc;
 extern crate time;
 
+extern crate cgmath;
+
 extern crate game;
 extern crate net;
 extern crate physics;

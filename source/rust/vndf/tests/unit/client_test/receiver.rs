@@ -1,13 +1,12 @@
+use cgmath::Vector2;
+
 use client::receiver::receive;
 use game::ecs::{
 	ClientWorld,
 	SharedWorldEntity,
 	ShowAsMissile,
 };
-use physics::{
-	Body,
-	Vec2
-};
+use physics::Body;
 use protocol::Perception;
 
 
@@ -48,7 +47,7 @@ fn it_should_update_entities() {
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
 	};
-	entity.body.as_mut().unwrap().position = Vec2(5.0, 8.0);
+	entity.body.as_mut().unwrap().position = Vector2::new(5.0, 8.0);
 
 	let perception = Perception {
 		self_id: 0,

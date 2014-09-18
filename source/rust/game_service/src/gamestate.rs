@@ -3,7 +3,10 @@ use std::comm::{
 	Empty
 };
 
-use cgmath::Vector2;
+use cgmath::{
+	Vector,
+	Vector2,
+};
 
 use game::ecs::{
 	SharedWorld,
@@ -146,7 +149,7 @@ impl GameState {
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
-					body.position.to_vector2_f64(),
+					body.position,
 					body.attitude
 				)
 			)
@@ -162,5 +165,5 @@ impl GameState {
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	body.velocity = body.attitude.to_vec() * body.velocity.mag();
-	body.position = body.position + body.velocity * delta_time_in_s;
+	body.position = (body.position + body.velocity.to_vector2_f64()).mul_s(delta_time_in_s);
 }
