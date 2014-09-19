@@ -1,8 +1,3 @@
-use cgmath::{
-	Rotation3,
-	Vector3,
-};
-
 use game::ecs::SharedWorldEntity;
 use platform::Input;
 use net::Connection;
