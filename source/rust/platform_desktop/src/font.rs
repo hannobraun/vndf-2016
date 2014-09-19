@@ -47,11 +47,11 @@ pub fn load() -> Font {
 
 fn init_font_face() -> FT_Face {
 	unsafe {
-		let mut freetype: FT_Library = ptr::mut_null();
+		let mut freetype: FT_Library = ptr::null_mut();
 		let init_error = FT_Init_FreeType(&mut freetype);
 		assert!(init_error == 0);
 
-		let mut font_face: FT_Face = ptr::mut_null();
+		let mut font_face: FT_Face = ptr::null_mut();
 		let face_error = FT_New_Face(
 				freetype,
 				"fonts/amble/Amble-Regular.ttf".to_c_str().as_ptr(),
