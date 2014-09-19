@@ -1,7 +1,7 @@
 use std::io::IoError;
 
 use cgmath::{
-	Rad,
+	Quaternion,
 	Vector3,
 };
 
@@ -21,7 +21,7 @@ pub enum GameEvent {
 	Enter(ConnId),
 	Leave(ConnId),
 	Action(ConnId, Action),
-	MissileLaunch(Vector3<f64>, Rad<f64>)
+	MissileLaunch(Vector3<f64>, Quaternion<f64>)
 }
 
 #[deriving(PartialEq, Show)]

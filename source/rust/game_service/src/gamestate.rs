@@ -84,7 +84,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), attitude))
+							self.on_missile_launch(position, attitude)
 					}
 				},
 
@@ -156,7 +156,7 @@ impl GameState {
 			self.events.send(
 				MissileLaunch(
 					body.position,
-					body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0)).angle(&Vector3::new(1.0, 0.0, 0.0)),
+					body.attitude,
 				)
 			)
 		}
