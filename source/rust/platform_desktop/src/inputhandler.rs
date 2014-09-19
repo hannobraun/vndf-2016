@@ -43,8 +43,8 @@ impl InputHandler {
 		self.window.poll_events();
 
 		let angular_velocity = 0.01;
-		let mut attitude_change_z = 0.0;
 
+		let mut attitude_change_z = 0.0;
 		if self.window.key_pressed(glfw::KeyLeft) {
 			attitude_change_z += angular_velocity;
 		}
@@ -52,8 +52,18 @@ impl InputHandler {
 			attitude_change_z -= angular_velocity;
 		}
 
-		let attitude_change_z_q = Rotation3::from_angle_z(rad(attitude_change_z));
-		self.attitude = self.attitude.mul_q(&attitude_change_z_q);
+		let mut attitude_change_y = 0.0;
+		if self.window.key_pressed(glfw::KeyUp) {
+			attitude_change_y += angular_velocity;
+		}
+		if self.window.key_pressed(glfw::KeyDown) {
+			attitude_change_y -= angular_velocity;
+		}
+
+		let attitude_change_q = Quaternion::identity()
+			.mul_q(&Rotation3::from_angle_z(rad(attitude_change_z)))
+			.mul_q(&Rotation3::from_angle_y(rad(attitude_change_y)));
+		self.attitude = self.attitude.mul_q(&attitude_change_q);
 
 
 		if self.window.key_pressed(glfw::KeyEnter) {
