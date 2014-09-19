@@ -567,7 +567,7 @@ fn camera_to_transform(camera: &Camera) -> Transform {
 		&Point3::new(
 			camera.center[0] as f32,
 			camera.center[1] as f32,
-			0.0
+			camera.center[2] as f32,
 		),
 		&Vector3::new(0.0, 0.0, 1.0),
 	)
