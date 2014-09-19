@@ -1,18 +1,20 @@
-use cgmath::Vector2;
+use cgmath::{
+	ApproxEq,
+	EuclideanVector,
+	Line3,
+	Point,
+	Point3,
+	Vector2,
+};
 
 
-pub fn is_on_line(line: (Vector2<f64>, Vector2<f64>), point: Vector2<f64>, precision: uint) -> bool {
-	let (l1, l2) = line;
+pub fn is_on_line(line: Line3<f64>, point: Point3<f64>) -> bool {
+	if line.origin.approx_eq(&point) {
+		return true;
+	}
 
-	let x1 = l1[0];
-	let y1 = l1[1];
-	let x2 = l2[0];
-	let y2 = l2[1];
-	let px = point[0];
-	let py = point[1];
+	let origin_to_dest  = line.dest.to_vec() - line.origin.to_vec();
+	let origin_to_point = point.to_vec() - line.origin.to_vec();
 
-	let factor = (1u << precision) as f64;
-	let x      = (x2 - x1) * (py - y1) - (y2 - y1) * (px - x1);
-
-	(x * factor).floor() / factor == 0.0
+	return origin_to_dest.normalize().approx_eq(&origin_to_point.normalize());
 }

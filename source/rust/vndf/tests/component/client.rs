@@ -1,4 +1,6 @@
 use cgmath::{
+	Line,
+	Point,
 	Rad,
 	Vector3,
 };
@@ -69,13 +71,19 @@ fn it_should_interpolate_between_perceptions() {
 	});
 
 	assert!(util::is_on_line(
-		(pos_1.truncate(), pos_2.truncate()),
-		frame_1.ships.get(0).position.truncate(),
-		16));
+		Line::new(
+			Point::from_vec(&pos_1),
+			Point::from_vec(&pos_2),
+		),
+		Point::from_vec(&frame_1.ships.get(0).position),
+	));
 	assert!(util::is_on_line(
-		(pos_1.truncate(), pos_2.truncate()),
-		frame_2.ships.get(0).position.truncate(),
-		16));
+		Line::new(
+			Point::from_vec(&pos_1),
+			Point::from_vec(&pos_2),
+		),
+		Point::from_vec(&frame_2.ships.get(0).position),
+	));
 	assert!(frame_2.ships.get(0).position != pos_2);
 }
 
@@ -124,18 +132,18 @@ fn the_camera_should_follow_the_ship() {
 		frame_2 = client.frame();
 	});
 
-	assert!(
-		util::is_on_line(
-			(pos_1.truncate(), pos_2.truncate()),
-			frame_1.camera.center.truncate(),
-			16
-		)
-	);
-	assert!(
-		util::is_on_line(
-			(pos_1.truncate(), pos_2.truncate()),
-			frame_2.camera.center.truncate(),
-			16
-		)
-	);
+	assert!(util::is_on_line(
+		Line::new(
+			Point::from_vec(&pos_1),
+			Point::from_vec(&pos_2),
+		),
+		Point::from_vec(&frame_1.camera.center),
+	));
+	assert!(util::is_on_line(
+		Line::new(
+			Point::from_vec(&pos_1),
+			Point::from_vec(&pos_2),
+		),
+		Point::from_vec(&frame_2.camera.center),
+	));
 }
