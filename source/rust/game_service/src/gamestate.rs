@@ -99,7 +99,7 @@ impl GameState {
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
-		for (_, body) in self.world.bodies.mut_iter() {
+		for (_, body) in self.world.bodies.iter_mut() {
 			integrate(body, delta_time_in_s);
 		}
 
@@ -117,7 +117,7 @@ impl GameState {
 					.collect())
 			.to_entities();
 
-		for (&id, player) in self.world.players.mut_iter() {
+		for (&id, player) in self.world.players.iter_mut() {
 			let perception = Perception::new(
 				|entity| entity.id,
 				id,
