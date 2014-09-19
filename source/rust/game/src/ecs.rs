@@ -1,5 +1,5 @@
 use cgmath::{
-	Rad,
+	Quaternion,
 	Vector2,
 	Vector3,
 };
@@ -62,7 +62,7 @@ ecs!(
 	// Server-only
 	component(Player, players): Player
 
-	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Rad<f64>| {
+	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let body = Body {
 			position: position,
 			velocity: Vector3::new(60.0, 0.0, 0.0),
@@ -75,7 +75,7 @@ ecs!(
 		let body = Body {
 			position: Vector3::zero(),
 			velocity: Vector3::new(30.0, 0.0, 0.0),
-			attitude: Rad::zero(),
+			attitude: Quaternion::zero(),
 		};
 
 		let player = Player {

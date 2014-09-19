@@ -1,7 +1,7 @@
 use cgmath::{
 	Line,
 	Point,
-	Rad,
+	Quaternion,
 	Vector3,
 };
 
@@ -35,7 +35,7 @@ fn it_should_interpolate_between_perceptions() {
 		body: Some(Body {
 			position: pos_1,
 			velocity: Vector3::new(10.0, 0.0, 0.0),
-			attitude: Rad::zero(),
+			attitude: Quaternion::zero(),
 		}),
 		visual: Some(ShowAsShip)
 	};
@@ -102,7 +102,7 @@ fn the_camera_should_follow_the_ship() {
 		body: Some(Body {
 			position: pos_1,
 			velocity: Vector3::new(10.0, 0.0, 0.0),
-			attitude: Rad::zero(),
+			attitude: Quaternion::zero(),
 		}),
 		visual: Some(ShowAsShip)
 	};

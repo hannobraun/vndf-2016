@@ -8,7 +8,10 @@ use cgmath::{
 	EuclideanVector,
 	Matrix,
 	Matrix2,
+	Quaternion,
 	Rad,
+	Rotation,
+	Rotation3,
 	Vector,
 	Vector2,
 	Vector3,
@@ -81,7 +84,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, attitude)
+							self.on_missile_launch(position, Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), attitude))
 					}
 				},
 
@@ -147,28 +150,28 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected ship");
 
-		body.attitude = action.attitude;
+		body.attitude = Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), action.attitude);
 
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
 					body.position,
-					body.attitude,
+					body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0)).angle(&Vector3::new(1.0, 0.0, 0.0)),
 				)
 			)
 		}
 		player.missile_index = action.missile;
 	}
 
-	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Rad<f64>) {
+	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Quaternion<f64>) {
 		self.world.create_missile(position, attitude);
 	}
 }
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	let attitude_vec = Matrix2::from_angle(body.attitude)
-		.mul_v(&Vector2::new(1.0, 0.0));
-	body.velocity = attitude_vec.extend(0.0).mul_s(body.velocity.length());
+	let attitude_vec =
+		body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
+	body.velocity = attitude_vec.mul_s(body.velocity.length());
 	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 }

@@ -283,10 +283,7 @@ impl Renderer {
 
 		text_position = text_position - Vector2::new(0.0, 15.0);
 		self.draw_text(
-			format!("att: {:+04i}",
-				body.attitude.to_deg().s as int
-			)
-			.as_slice(),
+			format!("att: {}", body.attitude).as_slice(),
 			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
 		);
 	}
