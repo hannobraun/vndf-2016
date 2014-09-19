@@ -28,8 +28,9 @@ fn it_should_change_direction_according_to_input() {
 	})
 
 	let velocity = frame.ships[0].velocity;
-	let new_attitude: Quaternion<f64> =
-		Rotation3::from_angle_z(Rad::turn_div_2());
+	let new_attitude = Quaternion::identity()
+		.mul_q(&Rotation3::from_angle_z(Rad::turn_div_4()))
+		.mul_q(&Rotation3::from_angle_y(Rad::turn_div_4()));
 	let new_velocity = new_attitude
 		.rotate_vector(&Vector3::new(1.0, 0.0, 0.0))
 		.mul_s(velocity.length());
