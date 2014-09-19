@@ -1,11 +1,11 @@
 use serialize::json;
 
-use cgmath::Rad;
+use cgmath::Quaternion;
 
 
 #[deriving(Decodable, Encodable, PartialEq, Show)]
 pub struct Action {
-	pub attitude: Rad<f64>,
+	pub attitude: Quaternion<f64>,
 	pub missile : u64
 }
 

@@ -150,7 +150,7 @@ impl GameState {
 			.find_mut(&id)
 			.expect("expected ship");
 
-		body.attitude = Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), action.attitude);
+		body.attitude = action.attitude;
 
 		if action.missile > player.missile_index {
 			self.events.send(
