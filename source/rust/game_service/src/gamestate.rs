@@ -81,7 +81,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position.extend(0.0), attitude)
+							self.on_missile_launch(position, attitude)
 					}
 				},
 
@@ -152,7 +152,7 @@ impl GameState {
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
-					body.position.truncate(),
+					body.position,
 					body.attitude,
 				)
 			)
