@@ -4,6 +4,7 @@ use std::rc::Rc;
 use cgmath::{
 	deg,
 	rad,
+	Quaternion,
 	Rad,
 	Rotation3,
 	ToRad,
@@ -17,7 +18,7 @@ use window::Window;
 
 pub struct InputHandler {
 	window  : Rc<Window>,
-	attitude: Rad<f64>,
+	attitude: Quaternion<f64>,
 	missile : u64,
 
 	camera_angle   : (Rad<f64>, Rad<f64>),
@@ -30,7 +31,7 @@ impl InputHandler {
 
 		InputHandler {
 			window  : window,
-			attitude: Rad::zero(),
+			attitude: Quaternion::identity(),
 			missile : 0,
 
 			camera_angle   : (angle, angle),
@@ -51,13 +52,9 @@ impl InputHandler {
 			attitude_change -= angular_velocity;
 		}
 
-		self.attitude = self.attitude + rad(attitude_change);
-		while self.attitude > rad(f64::consts::PI) {
-			self.attitude = self.attitude - rad(f64::consts::PI * 2.0)
-		}
-		while self.attitude < -rad(f64::consts::PI) {
-			self.attitude = self.attitude + rad(f64::consts::PI * 2.0)
-		}
+		let attitude_change_q = Rotation3::from_angle_z(rad(attitude_change));
+		self.attitude = self.attitude.mul_q(&attitude_change_q);
+
 
 		if self.window.key_pressed(glfw::KeyEnter) {
 			self.missile += 1;
@@ -102,7 +99,7 @@ impl InputHandler {
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
-		input.attitude = Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), self.attitude);
+		input.attitude = self.attitude;
 		input.missile  = self.missile;
 
 		input.camera_angle    = self.camera_angle;
