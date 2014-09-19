@@ -9,7 +9,7 @@ use serialize::json;
 
 use cgmath::{
 	Rad,
-	Vector2,
+	Vector3,
 };
 
 use physics::Body;
@@ -74,7 +74,7 @@ impl Input {
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Camera {
-	pub center     : Vector2<f64>,
+	pub center     : Vector3<f64>,
 	pub perspective: (Rad<f64>, Rad<f64>),
 	pub distance   : f64,
 }
@@ -82,7 +82,7 @@ pub struct Camera {
 impl Camera {
 	pub fn new() -> Camera {
 		Camera {
-			center     : Vector2::zero(),
+			center     : Vector3::zero(),
 			perspective: (Rad::zero(), Rad::zero()),
 			distance   : 500.0,
 		}

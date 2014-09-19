@@ -224,9 +224,10 @@ impl Renderer {
 
 	fn draw_grid(&mut self, camera: &Camera, projection: Transform) {
 		let grid_camera = Camera {
-			center: Vector2::new(
+			center: Vector3::new(
 				camera.center[0] % 200.0,
 				camera.center[1] % 200.0,
+				camera.center[2],
 			),
 
 			perspective: camera.perspective,
