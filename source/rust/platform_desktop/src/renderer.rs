@@ -252,7 +252,11 @@ impl Renderer {
 		let icon = self.icons[icon_id.to_string()];
 		let mut transform = self.perspective()
 			.mul(&camera_to_transform(camera))
-			.mul(&Matrix4::from_translation(&Vector3::new(body.position[0] as f32, body.position[1] as f32, 0.0)));
+			.mul(&Matrix4::from_translation(&Vector3::new(
+				body.position[0] as f32,
+				body.position[1] as f32,
+				body.position[2] as f32,
+			)));
 
 		// Remove any rotation from the transform, so the icons always face the
 		// camera. I don't like this solution.
