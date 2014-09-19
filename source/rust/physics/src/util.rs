@@ -4,7 +4,6 @@ use cgmath::{
 	Line3,
 	Point,
 	Point3,
-	Vector2,
 };
 
 

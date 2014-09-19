@@ -1,6 +1,5 @@
 use cgmath::{
 	Quaternion,
-	Vector2,
 	Vector3,
 };
 
