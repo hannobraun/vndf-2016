@@ -36,8 +36,8 @@ impl Acceptor {
 		let fd = unsafe {
 			ffi::accept(
 				self.fd,
-				ptr::mut_null(),
-				ptr::mut_null())
+				ptr::null_mut(),
+				ptr::null_mut())
 		};
 
 		if fd >= 0 {
@@ -57,16 +57,16 @@ fn init_socket(port: &str) -> IoResult<c_int> {
 		ai_socktype : ffi::SOCK_STREAM,
 		ai_protocol : 0,
 		ai_addrlen  : 0,
-		ai_addr     : ptr::mut_null(),
-		ai_canonname: ptr::mut_null(),
-		ai_next     : ptr::mut_null()
+		ai_addr     : ptr::null_mut(),
+		ai_canonname: ptr::null_mut(),
+		ai_next     : ptr::null_mut()
 	};
 
-	let mut servinfo: *mut ffi::addrinfo = ptr::mut_null();
+	let mut servinfo: *mut ffi::addrinfo = ptr::null_mut();
 
 	unsafe {
 		let status = ffi::getaddrinfo(
-			ptr::mut_null(),
+			ptr::null_mut(),
 			port.to_c_str().as_mut_ptr(),
 			&mut hints,
 			&mut servinfo
