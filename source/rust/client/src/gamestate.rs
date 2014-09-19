@@ -27,7 +27,7 @@ impl GameState {
 		network.receive(|perception| {
 			self.self_id = Some(perception.self_id);
 
-			for (_, interpolated) in self.world.interpolateds.mut_iter() {
+			for (_, interpolated) in self.world.interpolateds.iter_mut() {
 				interpolated.previous_time = interpolated.current_time;
 
 				interpolated.previous = interpolated.current;
