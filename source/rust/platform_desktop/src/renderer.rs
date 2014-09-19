@@ -8,8 +8,6 @@ use cgmath::{
 	Matrix4,
 	Point3,
 	Quaternion,
-	Rad,
-	ToDeg,
 	Vector,
 	Vector2,
 	Vector3,
