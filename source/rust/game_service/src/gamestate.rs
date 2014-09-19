@@ -169,6 +169,6 @@ impl GameState {
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	let attitude_vec = Matrix2::from_angle(body.attitude)
 		.mul_v(&Vector2::new(1.0, 0.0));
-	body.velocity = attitude_vec.mul_s(body.velocity.length());
-	body.position = (body.position + body.velocity.extend(0.0)).mul_s(delta_time_in_s);
+	body.velocity = attitude_vec.extend(0.0).mul_s(body.velocity.length());
+	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 }

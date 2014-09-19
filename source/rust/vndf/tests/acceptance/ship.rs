@@ -2,7 +2,7 @@ use cgmath::{
 	ApproxEq,
 	EuclideanVector,
 	Vector,
-	Vector2,
+	Vector3,
 };
 
 use platform::Input;
@@ -25,7 +25,7 @@ fn it_should_change_direction_according_to_input() {
 
 	let velocity     = frame.ships[0].velocity;
 	let new_velocity = velocity.mul_s(-1.0);
-	let new_attitude = new_velocity.angle(&Vector2::new(1.0, 0.0));
+	let new_attitude = new_velocity.angle(&Vector3::new(1.0, 0.0, 0.0));
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;
