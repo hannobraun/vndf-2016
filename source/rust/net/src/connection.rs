@@ -48,12 +48,12 @@ impl Connection {
 			ai_socktype : ffi::SOCK_STREAM,
 			ai_protocol : 0,
 			ai_addrlen  : 0,
-			ai_addr     : ptr::mut_null(),
-			ai_canonname: ptr::mut_null(),
-			ai_next     : ptr::mut_null()
+			ai_addr     : ptr::null_mut(),
+			ai_canonname: ptr::null_mut(),
+			ai_next     : ptr::null_mut()
 		};
 
-		let mut servinfo: *mut ffi::addrinfo = ptr::mut_null();
+		let mut servinfo: *mut ffi::addrinfo = ptr::null_mut();
 
 		unsafe {
 			let mut status = ffi::getaddrinfo(
