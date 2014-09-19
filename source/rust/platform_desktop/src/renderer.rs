@@ -158,10 +158,10 @@ impl Renderer {
 
 		let mut glyphs = HashMap::new();
 		let mut icons  = HashMap::new();
-		for (path, image) in images.move_iter() {
+		for (path, image) in images.into_iter() {
 			icons.insert(path, Icon::from_image(&mut graphics, image));
 		}
-		for (c, glyph) in font.move_iter() {
+		for (c, glyph) in font.into_iter() {
 			if c != ' ' {
 				icons.insert(
 					c.to_string(),
