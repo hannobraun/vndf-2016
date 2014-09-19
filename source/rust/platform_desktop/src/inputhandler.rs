@@ -1,4 +1,3 @@
-use std::f64;
 use std::rc::Rc;
 
 use cgmath::{
@@ -8,7 +7,6 @@ use cgmath::{
 	Rad,
 	Rotation3,
 	ToRad,
-	Vector3,
 };
 use glfw;
 
