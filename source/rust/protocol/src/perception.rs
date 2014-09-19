@@ -39,8 +39,8 @@ impl<
 		previous.sort_by(|a, b| get_id(a).cmp(&get_id(b)));
 		current.sort_by(|a, b| get_id(a).cmp(&get_id(b)));
 
-		let mut previous = previous.move_iter();
-		let mut current  = current.move_iter();
+		let mut previous = previous.into_iter();
+		let mut current  = current.into_iter();
 
 		let mut added   = Vec::new();
 		let mut removed = Vec::new();
