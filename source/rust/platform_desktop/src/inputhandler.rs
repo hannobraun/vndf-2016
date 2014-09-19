@@ -43,17 +43,17 @@ impl InputHandler {
 		self.window.poll_events();
 
 		let angular_velocity = 0.01;
-		let mut attitude_change = 0.0;
+		let mut attitude_change_z = 0.0;
 
 		if self.window.key_pressed(glfw::KeyLeft) {
-			attitude_change += angular_velocity;
+			attitude_change_z += angular_velocity;
 		}
 		if self.window.key_pressed(glfw::KeyRight) {
-			attitude_change -= angular_velocity;
+			attitude_change_z -= angular_velocity;
 		}
 
-		let attitude_change_q = Rotation3::from_angle_z(rad(attitude_change));
-		self.attitude = self.attitude.mul_q(&attitude_change_q);
+		let attitude_change_z_q = Rotation3::from_angle_z(rad(attitude_change_z));
+		self.attitude = self.attitude.mul_q(&attitude_change_z_q);
 
 
 		if self.window.key_pressed(glfw::KeyEnter) {
