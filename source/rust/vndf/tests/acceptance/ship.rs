@@ -35,8 +35,6 @@ fn it_should_change_direction_according_to_input() {
 		frame = client.frame();
 	})
 
-	print!("{}, {}\n", new_velocity, frame.ships.get(0).velocity);
-
 	assert!(new_velocity.approx_eq_eps(&frame.ships.get(0).velocity, &1e-4));
 }
 
