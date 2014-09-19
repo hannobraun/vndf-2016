@@ -5,7 +5,9 @@ use cgmath::{
 	deg,
 	rad,
 	Rad,
+	Rotation3,
 	ToRad,
+	Vector3,
 };
 use glfw;
 
@@ -100,7 +102,7 @@ impl InputHandler {
 		let mut input = Input::default();
 
 		input.exit     = self.window.should_close();
-		input.attitude = self.attitude;
+		input.attitude = Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), self.attitude);
 		input.missile  = self.missile;
 
 		input.camera_angle    = self.camera_angle;

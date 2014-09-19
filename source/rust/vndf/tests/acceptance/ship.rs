@@ -1,6 +1,10 @@
 use cgmath::{
 	ApproxEq,
 	EuclideanVector,
+	Quaternion,
+	Rad,
+	Rotation,
+	Rotation3,
 	Vector,
 	Vector3,
 };
@@ -23,9 +27,12 @@ fn it_should_change_direction_according_to_input() {
 		frame = client.frame();
 	})
 
-	let velocity     = frame.ships[0].velocity;
-	let new_velocity = velocity.mul_s(-1.0);
-	let new_attitude = new_velocity.angle(&Vector3::new(1.0, 0.0, 0.0));
+	let velocity = frame.ships[0].velocity;
+	let new_attitude: Quaternion<f64> =
+		Rotation3::from_angle_z(Rad::turn_div_2());
+	let new_velocity = new_attitude
+		.rotate_vector(&Vector3::new(1.0, 0.0, 0.0))
+		.mul_s(velocity.length());
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;

@@ -7,6 +7,7 @@ use cgmath::{
 	FixedArray,
 	Matrix4,
 	Point3,
+	Quaternion,
 	Rad,
 	ToDeg,
 	Vector,
@@ -288,7 +289,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_ui_overlay(&mut self, attitude: Rad<f64>) {
+	fn draw_ui_overlay(&mut self, attitude: Quaternion<f64>) {
 		let projection = self.ortho();
 
 		let left   = -(self.window.width as f32) / 2.0;
@@ -310,7 +311,7 @@ impl Renderer {
 		);
 
 		self.draw_text(
-			format!("{:+04i}", attitude.to_deg().s as int).as_slice(),
+			format!("{}", attitude).as_slice(),
 			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 50.0, bottom + 40.0).extend(0.0))),
 		);
 	}

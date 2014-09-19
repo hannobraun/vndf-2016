@@ -35,7 +35,7 @@ impl Network {
 
 	pub fn send(&mut self, input: Input) {
 		let action = Action {
-			attitude: Rotation3::from_axis_angle(&Vector3::new(0.0, 0.0, 1.0), input.attitude),
+			attitude: input.attitude,
 			missile : input.missile
 		};
 		match self.conn.send_message(action.to_string().as_slice()) {

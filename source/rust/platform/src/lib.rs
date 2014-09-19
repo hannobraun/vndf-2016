@@ -8,6 +8,7 @@ extern crate physics;
 use serialize::json;
 
 use cgmath::{
+	Quaternion,
 	Rad,
 	Vector3,
 };
@@ -43,7 +44,7 @@ impl Frame {
 #[deriving(Decodable, Encodable, Show)]
 pub struct Input {
 	pub exit    : bool,
-	pub attitude: Rad<f64>,
+	pub attitude: Quaternion<f64>,
 	pub missile : u64,
 
 	pub camera_angle   : (Rad<f64>, Rad<f64>),
@@ -54,7 +55,7 @@ impl Input {
 	pub fn default() -> Input {
 		Input {
 			exit    : false,
-			attitude: Rad::zero(),
+			attitude: Quaternion::zero(),
 			missile : 0,
 
 			camera_angle   : (Rad::zero(), Rad::zero()),
