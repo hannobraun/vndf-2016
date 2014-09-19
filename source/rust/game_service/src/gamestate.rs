@@ -4,16 +4,10 @@ use std::comm::{
 };
 
 use cgmath::{
-	rad,
 	EuclideanVector,
-	Matrix,
-	Matrix2,
 	Quaternion,
-	Rad,
 	Rotation,
-	Rotation3,
 	Vector,
-	Vector2,
 	Vector3,
 };
 
