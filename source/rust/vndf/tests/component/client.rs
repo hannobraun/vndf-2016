@@ -1,6 +1,7 @@
 use cgmath::{
 	Rad,
 	Vector2,
+	Vector3,
 };
 
 use game::ecs::{
@@ -25,8 +26,8 @@ fn it_should_interpolate_between_perceptions() {
 
 	game_service.accept_client();
 
-	let pos_1 = Vector2::zero();
-	let pos_2 = Vector2::new(10.0, 0.0);
+	let pos_1 = Vector3::zero();
+	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = SharedWorldEntity {
 		id: 0,
@@ -69,12 +70,12 @@ fn it_should_interpolate_between_perceptions() {
 	});
 
 	assert!(util::is_on_line(
-		(pos_1, pos_2),
-		frame_1.ships.get(0).position,
+		(pos_1.truncate(), pos_2.truncate()),
+		frame_1.ships.get(0).position.truncate(),
 		16));
 	assert!(util::is_on_line(
-		(pos_1, pos_2),
-		frame_2.ships.get(0).position,
+		(pos_1.truncate(), pos_2.truncate()),
+		frame_2.ships.get(0).position.truncate(),
 		16));
 	assert!(frame_2.ships.get(0).position != pos_2);
 }
@@ -86,8 +87,8 @@ fn the_camera_should_follow_the_ship() {
 
 	game_service.accept_client();
 
-	let pos_1 = Vector2::zero();
-	let pos_2 = Vector2::new(10.0, 0.0);
+	let pos_1 = Vector3::zero();
+	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = SharedWorldEntity {
 		id: 0,
@@ -119,21 +120,21 @@ fn the_camera_should_follow_the_ship() {
 	game_service.send_perception(&perception_2);
 	let mut frame_2 = client.frame();
 
-	wait_while!(frame_2.camera.center == pos_1 && true {
+	wait_while!(frame_2.camera.center == pos_1.truncate() && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});
 
 	assert!(
 		util::is_on_line(
-			(pos_1, pos_2),
+			(pos_1.truncate(), pos_2.truncate()),
 			frame_1.camera.center,
 			16
 		)
 	);
 	assert!(
 		util::is_on_line(
-			(pos_1, pos_2),
+			(pos_1.truncate(), pos_2.truncate()),
 			frame_2.camera.center,
 			16
 		)

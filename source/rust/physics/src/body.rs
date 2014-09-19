@@ -1,12 +1,13 @@
 use cgmath::{
 	Rad,
 	Vector2,
+	Vector3,
 };
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Body {
-	pub position: Vector2<f64>,
+	pub position: Vector3<f64>,
 	pub velocity: Vector2<f64>,
 	pub attitude: Rad<f64>,
 }
@@ -14,7 +15,7 @@ pub struct Body {
 impl Body {
 	pub fn default() -> Body {
 		Body {
-			position: Vector2::zero(),
+			position: Vector3::zero(),
 			velocity: Vector2::zero(),
 			attitude: Rad::zero(),
 		}

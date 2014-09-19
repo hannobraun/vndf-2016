@@ -1,6 +1,7 @@
 use cgmath::{
 	Rad,
 	Vector2,
+	Vector3,
 };
 
 use net::ConnId;
@@ -61,7 +62,7 @@ ecs!(
 	// Server-only
 	component(Player, players): Player
 
-	entity(Missile<Body, Visual>): |position: Vector2<f64>, attitude: Rad<f64>| {
+	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Rad<f64>| {
 		let body = Body {
 			position: position,
 			velocity: Vector2::new(60.0, 0.0),
@@ -72,7 +73,7 @@ ecs!(
 	}
 	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
 		let body = Body {
-			position: Vector2::zero(),
+			position: Vector3::zero(),
 			velocity: Vector2::new(30.0, 0.0),
 			attitude: Rad::zero(),
 		};

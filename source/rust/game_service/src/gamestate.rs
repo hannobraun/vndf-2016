@@ -11,6 +11,7 @@ use cgmath::{
 	Rad,
 	Vector,
 	Vector2,
+	Vector3,
 };
 
 use game::ecs::{
@@ -80,7 +81,7 @@ impl GameState {
 						Action(client_id, action) =>
 							self.on_action(client_id, action),
 						MissileLaunch(position, attitude) =>
-							self.on_missile_launch(position, attitude)
+							self.on_missile_launch(position.extend(0.0), attitude)
 					}
 				},
 
@@ -151,7 +152,7 @@ impl GameState {
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
-					body.position,
+					body.position.truncate(),
 					body.attitude,
 				)
 			)
@@ -159,7 +160,7 @@ impl GameState {
 		player.missile_index = action.missile;
 	}
 
-	fn on_missile_launch(&mut self, position: Vector2<f64>, attitude: Rad<f64>) {
+	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Rad<f64>) {
 		self.world.create_missile(position, attitude);
 	}
 }
@@ -169,5 +170,5 @@ fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	let attitude_vec = Matrix2::from_angle(body.attitude)
 		.mul_v(&Vector2::new(1.0, 0.0));
 	body.velocity = attitude_vec.mul_s(body.velocity.length());
-	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
+	body.position = (body.position + body.velocity.extend(0.0)).mul_s(delta_time_in_s);
 }
