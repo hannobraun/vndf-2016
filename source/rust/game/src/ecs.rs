@@ -62,11 +62,10 @@ ecs!(
 	component(Player, players): Player
 
 	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
-		let body = Body {
-			position: position,
-			velocity: Vector3::new(60.0, 0.0, 0.0),
-			attitude: attitude,
-		};
+		let mut body = Body::default();
+		body.position = position;
+		body.velocity = Vector3::new(60.0, 0.0, 0.0);
+		body.attitude = attitude;
 
 		(body, ShowAsMissile)
 	}
