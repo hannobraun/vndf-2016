@@ -316,7 +316,11 @@ impl Renderer {
 
 		self.draw_text(
 			format!("{}", input.attitude).as_slice(),
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 50.0, bottom + 40.0).extend(0.0))),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, bottom + 40.0).extend(0.0))),
+		);
+		self.draw_text(
+			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, bottom + 20.0).extend(0.0))),
 		);
 	}
 
