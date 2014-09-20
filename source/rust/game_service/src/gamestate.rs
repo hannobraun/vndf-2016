@@ -146,6 +146,10 @@ impl GameState {
 
 		body.attitude = action.attitude;
 
+		let attitude_vec =
+			body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
+		body.force = attitude_vec.mul_s(10.0);
+
 		if action.missile > player.missile_index {
 			self.events.send(
 				MissileLaunch(
@@ -164,10 +168,6 @@ impl GameState {
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	let attitude_vec =
-		body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
-	body.force = attitude_vec.mul_s(10.0);
-
 	body.velocity = (body.velocity + body.force).mul_s(delta_time_in_s);
 	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 	body.force    = Vector3::zero();
