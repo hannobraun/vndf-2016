@@ -168,7 +168,7 @@ impl GameState {
 
 
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	body.velocity = (body.velocity + body.force).mul_s(delta_time_in_s);
-	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
+	body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
+	body.position = body.position + body.velocity.mul_s(delta_time_in_s);
 	body.force    = Vector3::zero();
 }
