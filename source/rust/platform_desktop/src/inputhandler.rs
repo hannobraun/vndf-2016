@@ -19,6 +19,9 @@ pub struct InputHandler {
 	attitude: Quaternion<f64>,
 	missile : u64,
 
+	thrust    : bool,
+	thrust_key: bool,
+
 	camera_angle   : (Rad<f64>, Rad<f64>),
 	camera_distance: f64,
 }
@@ -31,6 +34,9 @@ impl InputHandler {
 			window  : window,
 			attitude: Quaternion::identity(),
 			missile : 0,
+
+			thrust    : false,
+			thrust_key: false,
 
 			camera_angle   : (angle, angle),
 			camera_distance: 500.0,
@@ -62,6 +68,13 @@ impl InputHandler {
 			.mul_q(&Rotation3::from_angle_z(rad(attitude_change_z)))
 			.mul_q(&Rotation3::from_angle_y(rad(attitude_change_y)));
 		self.attitude = self.attitude.mul_q(&attitude_change_q);
+
+
+		let thrust_key = self.window.key_pressed(glfw::KeySpace);
+		if thrust_key && !self.thrust_key {
+			self.thrust = !self.thrust;
+		}
+		self.thrust_key = thrust_key;
 
 
 		if self.window.key_pressed(glfw::KeyEnter) {
@@ -108,6 +121,7 @@ impl InputHandler {
 
 		input.exit     = self.window.should_close();
 		input.attitude = self.attitude;
+		input.thrust   = self.thrust;
 		input.missile  = self.missile;
 
 		input.camera_angle    = self.camera_angle;
