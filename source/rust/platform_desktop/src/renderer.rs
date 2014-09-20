@@ -306,7 +306,7 @@ impl Renderer {
 			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 60.0).extend(0.0)))
 		);
 		self.draw_text(
-			"Change course with the cursor keys",
+			"Change attitude with the cursor keys, toggle thrust with Space",
 			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 40.0).extend(0.0))),
 		);
 		self.draw_text(
