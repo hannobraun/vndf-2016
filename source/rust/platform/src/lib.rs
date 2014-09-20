@@ -45,6 +45,7 @@ impl Frame {
 pub struct Input {
 	pub exit    : bool,
 	pub attitude: Quaternion<f64>,
+	pub thrust  : bool,
 	pub missile : u64,
 
 	pub camera_angle   : (Rad<f64>, Rad<f64>),
@@ -56,6 +57,7 @@ impl Input {
 		Input {
 			exit    : false,
 			attitude: Quaternion::zero(),
+			thrust  : false,
 			missile : 0,
 
 			camera_angle   : (Rad::zero(), Rad::zero()),
