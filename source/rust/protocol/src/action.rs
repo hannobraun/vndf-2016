@@ -6,6 +6,7 @@ use cgmath::Quaternion;
 #[deriving(Decodable, Encodable, PartialEq, Show)]
 pub struct Action {
 	pub attitude: Quaternion<f64>,
+	pub thrust  : bool,
 	pub missile : u64
 }
 
