@@ -31,6 +31,7 @@ use physics::Body;
 use platform::{
 	Camera,
 	Frame,
+	Input,
 };
 use window::Window;
 
@@ -215,7 +216,7 @@ impl Renderer {
 			);
 		}
 
-		self.draw_ui_overlay(frame.input.attitude);
+		self.draw_ui_overlay(frame.input);
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();
@@ -292,7 +293,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_ui_overlay(&mut self, attitude: Quaternion<f64>) {
+	fn draw_ui_overlay(&mut self, input: Input) {
 		let projection = self.ortho();
 
 		let left   = -(self.window.width as f32) / 2.0;
@@ -314,7 +315,7 @@ impl Renderer {
 		);
 
 		self.draw_text(
-			format!("{}", attitude).as_slice(),
+			format!("{}", input.attitude).as_slice(),
 			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 50.0, bottom + 40.0).extend(0.0))),
 		);
 	}
