@@ -70,11 +70,8 @@ ecs!(
 		(body, ShowAsMissile)
 	}
 	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
-		let body = Body {
-			position: Vector3::zero(),
-			velocity: Vector3::new(30.0, 0.0, 0.0),
-			attitude: Quaternion::zero(),
-		};
+		let mut body = Body::default();
+		body.velocity = Vector3::new(30.0, 0.0, 0.0);
 
 		let player = Player {
 			client_id    : client_id,
