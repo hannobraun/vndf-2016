@@ -7,7 +7,7 @@ use cgmath::Quaternion;
 pub struct Action {
 	pub attitude: Quaternion<f64>,
 	pub thrust  : bool,
-	pub missile : u64
+	pub missile : u64,
 }
 
 impl Action {
