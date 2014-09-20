@@ -166,6 +166,7 @@ impl GameState {
 fn integrate(body: &mut Body, delta_time_in_s: f64) {
 	let attitude_vec =
 		body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
-	body.velocity = attitude_vec.mul_s(body.velocity.length());
+	let acceleration = attitude_vec.mul_s(10.0);
+	body.velocity = (body.velocity + acceleration).mul_s(delta_time_in_s);
 	body.position = (body.position + body.velocity).mul_s(delta_time_in_s);
 }

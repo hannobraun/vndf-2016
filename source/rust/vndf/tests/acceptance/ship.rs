@@ -1,11 +1,9 @@
 use cgmath::{
-	ApproxEq,
 	EuclideanVector,
 	Quaternion,
 	Rad,
 	Rotation,
 	Rotation3,
-	Vector,
 	Vector3,
 };
 
@@ -27,23 +25,34 @@ fn it_should_change_direction_according_to_input() {
 		frame = client.frame();
 	})
 
-	let velocity = frame.ships[0].velocity;
+	let old_velocity = frame.ships[0].velocity;
+	let old_attitude = frame.ships[0].attitude;
 	let new_attitude = Quaternion::identity()
-		.mul_q(&Rotation3::from_angle_z(Rad::turn_div_4()))
-		.mul_q(&Rotation3::from_angle_y(Rad::turn_div_4()));
-	let new_velocity = new_attitude
-		.rotate_vector(&Vector3::new(1.0, 0.0, 0.0))
-		.mul_s(velocity.length());
+		.mul_q(&Rotation3::from_angle_z(Rad::turn_div_6()))
+		.mul_q(&Rotation3::from_angle_y(Rad::turn_div_6()));
+
+	// If we picked the old attitude as the new attitude by accident, this would
+	// mess up the test.
+	assert!(old_attitude != new_attitude);
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;
 	client.input(input);
 
-	wait_while!(frame.ships.get(0).velocity == velocity && true {
+	wait_while!(frame.ships.get(0).attitude == old_attitude && true {
 		frame = client.frame();
 	})
 
-	assert!(new_velocity.approx_eq_eps(&frame.ships.get(0).velocity, &1e-4));
+	let new_velocity = frame.ships[0].velocity;
+	let attitude_vec = new_attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
+
+	let old_angle = attitude_vec.angle(&old_velocity);
+	let new_angle = attitude_vec.angle(&new_velocity);
+
+	// Without being to specific about the thrust we produce and the integration
+	// method used, we can certainly assume that the angle between velocity and
+	// attitude should have been reduced.
+	assert!(new_angle < old_angle);
 }
 
 #[test]
