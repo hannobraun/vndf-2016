@@ -148,7 +148,12 @@ impl GameState {
 
 		let attitude_vec =
 			body.attitude.rotate_vector(&Vector3::new(1.0, 0.0, 0.0));
-		body.force = attitude_vec.mul_s(10.0);
+		body.force = if action.thrust {
+			attitude_vec.mul_s(10.0)
+		}
+		else {
+			Vector3::zero()
+		};
 
 		if action.missile > player.missile_index {
 			self.events.send(

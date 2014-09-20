@@ -1,5 +1,7 @@
 use cgmath::{
 	EuclideanVector,
+	Line,
+	Point,
 	Quaternion,
 	Rad,
 	Rotation,
@@ -7,6 +9,7 @@ use cgmath::{
 	Vector3,
 };
 
+use physics::util;
 use platform::Input;
 use test_tools::{
 	Client,
@@ -15,7 +18,38 @@ use test_tools::{
 
 
 #[test]
-fn it_should_change_direction_according_to_input() {
+fn it_should_fly_straight_without_thrust_applied() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port);
+
+	let mut frame = client.frame();
+
+	wait_while!(frame.ships.len() == 0 {
+		frame = client.frame();
+	})
+
+	let old_position = frame.ships[0].position;
+	let old_velocity = frame.ships[0].velocity;
+
+	wait_while!(frame.ships.get(0).position == old_position && true {
+		frame = client.frame();
+	})
+
+	let new_position = frame.ships[0].position;
+	let new_velocity = frame.ships[0].velocity;
+
+	assert_eq!(old_velocity, new_velocity);
+	assert!(util::is_on_line(
+		Line::new(
+			Point::from_vec(&old_position),
+			Point::from_vec(&(old_position + old_velocity)),
+		),
+		Point::from_vec(&new_position),
+	));
+}
+
+#[test]
+fn it_should_change_velocity_according_to_thrust() {
 	let     game_service = GameService::start();
 	let mut client       = Client::start(game_service.port);
 
@@ -37,6 +71,7 @@ fn it_should_change_direction_according_to_input() {
 
 	let mut input  = Input::default();
 	input.attitude = new_attitude;
+	input.thrust   = true;
 	client.input(input);
 
 	wait_while!(frame.ships.get(0).attitude == old_attitude && true {
