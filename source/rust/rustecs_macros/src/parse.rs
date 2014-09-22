@@ -11,7 +11,8 @@ pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> Vec<Entity> {
 	let mut parser = parse::new_parser_from_tts(
 		context.parse_sess(),
 		context.cfg(),
-		Vec::from_slice(token_tree));
+		Vec::from_slice(token_tree)
+	);
 
 	let mut entities = Vec::new();
 
