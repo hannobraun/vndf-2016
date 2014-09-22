@@ -1,8 +1,8 @@
 use cgmath::Vector3;
 
+use client::ecs::ClientWorld;
 use client::receiver::receive;
 use game::ecs::{
-	ClientWorld,
 	SharedWorldEntity,
 	ShowAsMissile,
 };

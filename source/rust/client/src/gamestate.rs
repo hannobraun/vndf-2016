@@ -2,10 +2,10 @@ use time;
 
 use cgmath::Vector;
 
-use game::ecs::ClientWorld;
 use platform::Camera;
 use rustecs::EntityId;
 
+use super::ecs::ClientWorld;
 use super::network::Network;
 use super::receiver::receive;
 

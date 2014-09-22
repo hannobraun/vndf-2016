@@ -1,5 +1,4 @@
 use game::ecs::{
-	ClientWorld,
 	ShowAsMissile,
 	ShowAsShip,
 };
@@ -12,6 +11,7 @@ use platform_cli;
 use platform_desktop;
 
 use super::args;
+use super::ecs::ClientWorld;
 use super::gamestate::GameState;
 use super::inputsender::InputSender;
 use super::network::Network;

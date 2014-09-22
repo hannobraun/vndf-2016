@@ -1,11 +1,10 @@
 use time;
 
-use game::ecs::{
-	ClientWorld,
-	SharedWorldEntity,
-};
+use game::ecs::SharedWorldEntity;
 use protocol;
 use rustecs::EntityId;
+
+use super::ecs::ClientWorld;
 
 
 
