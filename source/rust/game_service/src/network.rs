@@ -15,13 +15,9 @@ use net::{
 use protocol::Action;
 
 use super::events::{
-	Action,
-	Close,
-	Enter,
+	mod,
 	GameEvent,
-	Leave,
-	Message,
-	NetworkEvent
+	NetworkEvent,
 };
 
 
@@ -69,7 +65,7 @@ impl Network {
 		loop {
 			match self.incoming.try_recv() {
 				Ok(event) => match event {
-					Message(recipients, message) => {
+					events::Message(recipients, message) => {
 						for &id in recipients.iter() {
 							let connection = match self.connections.find(&id) {
 								Some(connection) => connection,
@@ -78,12 +74,12 @@ impl Network {
 
 							match connection.send_message(message.to_string().as_slice()) {
 								Ok(())     => (),
-								Err(error) => self.events.send(Close(id, error))
+								Err(error) => self.events.send(events::Close(id, error))
 							}
 						}
 					},
 
-					Close(id, error) => match self.connections.pop(&id) {
+					events::Close(id, error) => match self.connections.pop(&id) {
 						Some(conn) => {
 							let _ =
 								write!(
@@ -92,7 +88,7 @@ impl Network {
 									error
 								);
 							conn.close();
-							game.send(Leave(id));
+							game.send(events::Leave(id));
 						},
 
 						None => ()
@@ -129,12 +125,12 @@ impl Network {
 								fail!("Error decoding message: {}", error)
 						};
 
-						game.send(Action(fd as ConnId, action));
+						game.send(events::Action(fd as ConnId, action));
 					});
 
 					match result {
 						Ok(())     => (),
-						Err(error) => self.events.send(Close(client_id, error))
+						Err(error) => self.events.send(events::Close(client_id, error))
 					}
 				}
 			},
@@ -159,7 +155,7 @@ impl Network {
 
 			let client_id = connection.fd as ConnId;
 			self.connections.insert(client_id, connection);
-			game.send(Enter(client_id));
+			game.send(events::Enter(client_id));
 		}
 	}
 }
