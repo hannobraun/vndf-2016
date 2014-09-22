@@ -17,9 +17,8 @@ pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> Vec<Entity> {
 	let mut entities = Vec::new();
 
 	loop {
-		match Directive::parse(&mut parser) {
-			EntityDirective(entity)       => entities.push(entity),
-		}
+		parser.parse_ident();
+		entities.push(Entity::parse(&mut parser));
 
 		if parser.eat(&token::EOF) {
 			break;
@@ -27,24 +26,6 @@ pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> Vec<Entity> {
 	}
 
 	entities
-}
-
-
-enum Directive {
-	EntityDirective(Entity),
-}
-
-impl Directive {
-	fn parse(parser: &mut Parser) -> Directive {
-		let ident = parser.parse_ident();
-
-		match parser.id_to_interned_str(ident).get() {
-			"entity"    => EntityDirective(Entity::parse(parser)),
-
-			ident @ _ =>
-				parser.fatal(format!("Unexpected identifier: {}", ident).as_slice())
-		}
-	}
 }
 
 
