@@ -308,7 +308,6 @@ impl World {
 		let entities   = World::entities(&world.entities, all_entities);
 		let components = World::components(&entities);
 
-		let name         = world.name;
 		let decls        = World::component_decls(&components);
 		let inits        = World::component_inits(&components);
 		let imports      = World::imports(&components);
@@ -320,7 +319,7 @@ impl World {
 
 		let structure = quote_item!(&*context,
 			#[deriving(Show)]
-			pub struct $name {
+			pub struct World {
 				entities: ::std::collections::HashSet<::rustecs::EntityId>,
 				next_id : ::rustecs::EntityId,
 
@@ -329,17 +328,17 @@ impl World {
 		);
 
 		let implementation = quote_item!(&*context,
-			impl $name {
-				pub fn new() -> $name {
-					$name {
+			impl World {
+				pub fn new() -> World {
+					World {
 						entities: ::std::collections::HashSet::new(),
 						next_id : 0,
 						$inits
 					}
 				}
 
-				pub fn from_entities(entities: Vec<Entity>) -> $name {
-					let mut world = $name {
+				pub fn from_entities(entities: Vec<Entity>) -> World {
+					let mut world = World {
 						entities: ::std::collections::HashSet::new(),
 						next_id : 0,
 						$inits
