@@ -14,13 +14,7 @@ use parse;
 
 
 pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<P<ast::Item>> {
-	let components: HashMap<String, Component> = ecs.components
-		.iter()
-		.map(|component| {
-			let component = Component::generate(context, component);
-			(component.name.clone(), component)
-		})
-		.collect();
+	let components = Component::generate_components(context, &ecs.entities);
 
 	let entities: Vec<Entity> = ecs.entities
 		.iter()
@@ -58,13 +52,31 @@ pub struct Component {
 }
 
 impl Component {
-	fn generate(context: &ExtCtxt, component: &parse::Component) -> Component {
-		let ty = component.name;
+	fn generate_components(
+		context : &ExtCtxt,
+		entities: &Vec<parse::Entity>
+	) -> HashMap<String, Component> {
+		let mut components = HashMap::new();
+
+		for entity in entities.iter() {
+			for &name in entity.components.iter() {
+				let component = Component::generate(context, name);
+				components.insert(
+					component.name.clone(),
+					component,
+				);
+			}
+		}
+
+		components
+	}
+
+	fn generate(context: &ExtCtxt, ty: ast::Ident) -> Component {
 		let var_name = ast::Ident::new(
-			token::intern(camel_to_snake_case(component.name).as_slice()));
+			token::intern(camel_to_snake_case(ty).as_slice()));
 
 		let collection = ast::Ident::new(token::intern(
-			type_to_collection_name(component.name).as_slice()
+			type_to_collection_name(ty).as_slice()
 		));
 
 		let decl = quote_tokens!(&*context,
@@ -102,7 +114,7 @@ impl Component {
 		);
 
 		Component {
-			name       : token::get_ident(component.name).to_string(),
+			name       : token::get_ident(ty).to_string(),
 			var_name   : var_name,
 			decl       : decl,
 			init       : init,

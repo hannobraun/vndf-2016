@@ -8,7 +8,6 @@ use syntax::ptr::P;
 
 
 pub struct ECS {
-	pub components: Vec<Component>,
 	pub entities  : Vec<Entity>,
 	pub worlds    : Vec<World>,
 }
@@ -20,13 +19,11 @@ impl ECS {
 			context.cfg(),
 			Vec::from_slice(token_tree));
 
-		let mut components = Vec::new();
 		let mut entities   = Vec::new();
 		let mut worlds     = Vec::new();
 
 		loop {
 			match Directive::parse(&mut parser) {
-				ComponentDirective(component) => components.push(component),
 				EntityDirective(entity)       => entities.push(entity),
 				WorldDirective(world)         => worlds.push(world),
 			}
@@ -37,7 +34,6 @@ impl ECS {
 		}
 
 		ECS {
-			components: components,
 			entities  : entities,
 			worlds    : worlds,
 		}
@@ -46,7 +42,6 @@ impl ECS {
 
 
 enum Directive {
-	ComponentDirective(Component),
 	EntityDirective(Entity),
 	WorldDirective(World),
 }
@@ -56,29 +51,11 @@ impl Directive {
 		let ident = parser.parse_ident();
 
 		match parser.id_to_interned_str(ident).get() {
-			"component" => ComponentDirective(Component::parse(parser)),
 			"entity"    => EntityDirective(Entity::parse(parser)),
 			"world"     => WorldDirective(World::parse(parser)),
 
 			ident @ _ =>
 				parser.fatal(format!("Unexpected identifier: {}", ident).as_slice())
-		}
-	}
-}
-
-
-pub struct Component {
-	pub name      : ast::Ident,
-}
-
-impl Component {
-	fn parse(parser: &mut Parser) -> Component {
-		parser.expect(&token::LPAREN);
-		let name = parser.parse_ident();
-		parser.expect(&token::RPAREN);
-
-		Component {
-			name      : name,
 		}
 	}
 }

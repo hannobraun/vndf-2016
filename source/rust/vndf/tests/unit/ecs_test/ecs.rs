@@ -11,10 +11,6 @@ type Score = u32;
 
 
 ecs!(
-	component(Position)
-	component(Visual)
-	component(Score)
-
 	entity(Missile<Position, Visual>): |x: f64, y: f64| {
 		(
 			Position(x, y),
