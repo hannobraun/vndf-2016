@@ -14,7 +14,7 @@ pub enum Visual {
 }
 
 
-ecs!(
+world!(
 	Missile(Body, Visual): |body: Body| {
 		(body, ShowAsMissile)
 	}

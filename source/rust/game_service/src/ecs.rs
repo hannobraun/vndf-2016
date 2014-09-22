@@ -22,7 +22,7 @@ pub struct Player {
 }
 
 
-ecs!(
+world!(
 	Missile(Body, Visual): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let mut body = Body::default();
 		body.position = position;

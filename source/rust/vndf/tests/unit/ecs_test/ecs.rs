@@ -10,7 +10,7 @@ pub enum Visual {
 type Score = u32;
 
 
-ecs!(
+world!(
 	Missile(Position, Visual): |x: f64, y: f64| {
 		(
 			Position(x, y),

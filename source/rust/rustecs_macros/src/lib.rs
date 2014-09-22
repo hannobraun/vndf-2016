@@ -15,5 +15,5 @@ mod parse;
 
 #[plugin_registrar]
 pub fn plugin_registrar(reg: &mut Registry) {
-	reg.register_macro("ecs", ecs::expand);
+	reg.register_macro("world", ecs::expand);
 }

@@ -24,7 +24,7 @@ impl Interpolated {
 }
 
 
-ecs!(
+world!(
 	Craft(Body, Visual, Interpolated): |body: Body, visual: Visual, current_time: u64| {
 		(
 			body,
