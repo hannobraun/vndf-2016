@@ -17,3 +17,19 @@ pub fn camel_to_snake_case(ident: ast::Ident) -> String {
 
 	snake_case
 }
+
+pub fn type_to_collection_name(ident: ast::Ident) -> String {
+	pluralize(camel_to_snake_case(ident))
+}
+
+fn pluralize(s: String) -> String {
+	let mut p = s.clone();
+
+	if s.as_slice().ends_with("y") {
+		p.pop_char();
+		p.append("ies")
+	}
+	else {
+		s.append("s")
+	}
+}

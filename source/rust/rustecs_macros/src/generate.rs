@@ -6,7 +6,10 @@ use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
 use syntax::ptr::P;
 
-use names::camel_to_snake_case;
+use names::{
+	camel_to_snake_case,
+	type_to_collection_name,
+};
 use parse;
 
 
@@ -59,8 +62,10 @@ impl Component {
 		let var_name = ast::Ident::new(
 			token::intern(camel_to_snake_case(component.name).as_slice()));
 
-		let     collection = component.collection;
-		let ref ty         = component.ty;
+		let collection = ast::Ident::new(token::intern(
+			type_to_collection_name(component.name).as_slice()
+		));
+		let ref ty = component.ty;
 
 		let decl = quote_tokens!(&*context,
 			pub $collection: ::rustecs::Components<$ty>,

@@ -8,9 +8,9 @@ pub enum Visual {
 }
 
 ecs!(
-	component(Position, positions): Position
-	component(Visual, visuals): Visual
-	component(Score, scores): u32
+	component(Position): Position
+	component(Visual): Visual
+	component(Score): u32
 
 	entity(Missile<Position, Visual>): |x: f64, y: f64| {
 		(

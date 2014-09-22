@@ -69,18 +69,13 @@ impl Directive {
 
 pub struct Component {
 	pub name      : ast::Ident,
-	pub collection: ast::Ident,
 	pub ty        : P<ast::Ty>,
 }
 
 impl Component {
 	fn parse(parser: &mut Parser) -> Component {
 		parser.expect(&token::LPAREN);
-
 		let name = parser.parse_ident();
-		parser.expect(&token::COMMA);
-		let collection = parser.parse_ident();
-
 		parser.expect(&token::RPAREN);
 		parser.expect(&token::COLON);
 
@@ -88,7 +83,6 @@ impl Component {
 
 		Component {
 			name      : name,
-			collection: collection,
 			ty        : ty,
 		}
 	}
