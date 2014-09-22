@@ -85,13 +85,13 @@ fn it_should_export_entities() {
 
 	assert_eq!(2, entities.len());
 
-	let missile = WorldEntity {
+	let missile = Entity {
 		id      : missile_id,
 		position: Some(Position(8.0, 12.0)),
 		visual  : Some(RenderAsMissile),
 		score   : None
 	};
-	let ship = WorldEntity {
+	let ship = Entity {
 		id      : ship_id,
 		position: Some(Position(0.0, 0.0)),
 		visual  : Some(RenderAsShip),

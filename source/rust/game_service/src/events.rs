@@ -5,7 +5,7 @@ use cgmath::{
 	Vector3,
 };
 
-use game::ecs::SharedWorldEntity;
+use game::ecs::Entity;
 use net::ConnId;
 use protocol;
 use rustecs::EntityId;
@@ -23,6 +23,6 @@ pub enum GameEvent {
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ConnId>, protocol::Perception<EntityId, SharedWorldEntity>),
+	Message(Vec<ConnId>, protocol::Perception<EntityId, Entity>),
 	Close(ConnId, IoError)
 }

@@ -3,7 +3,7 @@ use cgmath::Vector3;
 use client::ecs::World;
 use client::receiver::receive;
 use game::ecs::{
-	SharedWorldEntity,
+	Entity,
 	ShowAsMissile,
 };
 use physics::Body;
@@ -14,7 +14,7 @@ use protocol::Perception;
 fn it_should_import_added_entities() {
 	let mut world = World::new();
 
-	let entity = SharedWorldEntity {
+	let entity = Entity {
 		id    : 5,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
@@ -42,7 +42,7 @@ fn it_should_update_entities() {
 	let mut world = World::new();
 	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
 
-	let mut entity = SharedWorldEntity {
+	let mut entity = Entity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
@@ -71,7 +71,7 @@ fn it_should_destroy_removed_entities() {
 	let mut world = World::new();
 	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
 
-	let entity = SharedWorldEntity {
+	let entity = Entity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),

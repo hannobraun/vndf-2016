@@ -1,6 +1,6 @@
 use time;
 
-use game::ecs::SharedWorldEntity;
+use game::ecs::Entity;
 use protocol;
 use rustecs::EntityId;
 
@@ -8,7 +8,7 @@ use super::ecs::World;
 
 
 
-pub type Perception = protocol::Perception<EntityId, SharedWorldEntity>;
+pub type Perception = protocol::Perception<EntityId, Entity>;
 
 
 pub fn receive(world: &mut World, perception: Perception) {

@@ -13,7 +13,7 @@ use cgmath::{
 
 use game::ecs::{
 	SharedWorld,
-	SharedWorldEntity,
+	Entity,
 };
 use net::ConnId;
 use physics::Body;
@@ -105,7 +105,7 @@ impl GameState {
 					.to_entities()
 					.iter()
 					.map(|entity|
-						SharedWorldEntity {
+						Entity {
 							id    : entity.id,
 							body  : entity.body,
 							visual: entity.visual,

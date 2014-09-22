@@ -1,6 +1,6 @@
 use std::rand::random;
 
-use game::ecs::SharedWorldEntity;
+use game::ecs::Entity;
 use net::{
 	Acceptor,
 	Connection
@@ -41,7 +41,7 @@ impl MockGameService {
 
 	pub fn send_perception(
 		&self,
-		perception: &Perception<EntityId, SharedWorldEntity>
+		perception: &Perception<EntityId, Entity>
 	) {
 		for connection in self.clients.iter() {
 			match connection.send_message(perception.to_string().as_slice()) {

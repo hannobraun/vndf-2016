@@ -315,7 +315,6 @@ impl World {
 		let create_fns   = World::create_fns(&entities);
 		let import_fns   = World::import_fns(&entities);
 		let removes      = World::removes(&components);
-		let entity_name  = World::entity_name(world.name);
 		let entity_decls = World::entity_decls(&components);
 		let entity_init  = World::entity_init(&components);
 
@@ -339,7 +338,7 @@ impl World {
 					}
 				}
 
-				pub fn from_entities(entities: Vec<$entity_name>) -> $name {
+				pub fn from_entities(entities: Vec<Entity>) -> $name {
 					let mut world = $name {
 						entities: ::std::collections::HashSet::new(),
 						next_id : 0,
@@ -358,11 +357,11 @@ impl World {
 					world
 				}
 
-				pub fn to_entities(&self) -> Vec<$entity_name> {
+				pub fn to_entities(&self) -> Vec<Entity> {
 					self.entities
 						.iter()
 						.map(|id|
-							$entity_name {
+							Entity {
 								id: *id,
 								$entity_init
 							})
@@ -383,7 +382,7 @@ impl World {
 
 		let entity_struct = quote_item!(&*context,
 			#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-			pub struct $entity_name {
+			pub struct Entity {
 				pub id: ::rustecs::EntityId,
 				$entity_decls
 			}
@@ -490,15 +489,6 @@ impl World {
 		}
 
 		removes
-	}
-
-	fn entity_name(world_name: ast::Ident) -> ast::Ident {
-		let name = token::get_ident(world_name)
-			.to_string()
-			.append("Entity".as_slice());
-
-		ast::Ident::new(
-			token::intern(name.as_slice()))
 	}
 
 	fn entity_decls(

@@ -3,8 +3,8 @@ use cgmath::{
 	Vector3,
 };
 
+use game::ecs::Entity as SharedEntity;
 use game::ecs::{
-	SharedWorldEntity,
 	ShowAsMissile,
 	ShowAsShip,
 	Visual,
@@ -18,7 +18,7 @@ use rustecs::EntityId;
 pub struct Player {
 	pub client_id    : ConnId,
 	pub missile_index: u64,
-	pub last_snapshot: Vec<SharedWorldEntity>
+	pub last_snapshot: Vec<SharedEntity>
 }
 
 

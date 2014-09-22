@@ -5,7 +5,7 @@ use cgmath::{
 };
 
 use game::ecs::{
-	SharedWorldEntity,
+	Entity,
 	ShowAsShip,
 };
 use physics::{
@@ -29,7 +29,7 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_1 = Vector3::zero();
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
-	let mut entity = SharedWorldEntity {
+	let mut entity = Entity {
 		id: 0,
 		body: Some({
 			let mut body = Body::default();
@@ -97,7 +97,7 @@ fn the_camera_should_follow_the_ship() {
 	let pos_1 = Vector3::zero();
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
-	let mut entity = SharedWorldEntity {
+	let mut entity = Entity {
 		id: 0,
 		body: Some({
 			let mut body = Body::default();
