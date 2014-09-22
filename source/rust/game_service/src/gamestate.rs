@@ -14,7 +14,6 @@ use cgmath::{
 use game::ecs::{
 	SharedWorld,
 	SharedWorldEntity,
-	World
 };
 use net::ConnId;
 use physics::Body;
@@ -23,7 +22,10 @@ use protocol::{
 	Perception
 };
 
-use super::ecs;
+use super::ecs::{
+	mod,
+	World,
+};
 use super::events::{
 	mod,
 	GameEvent,

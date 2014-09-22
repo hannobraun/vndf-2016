@@ -30,13 +30,6 @@ impl Interpolated {
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-pub struct Player {
-	pub client_id    : ConnId,
-	pub missile_index: u64,
-	pub last_snapshot: Vec<SharedWorldEntity>
-}
-
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Visual {
 	ShowAsMissile,
 	ShowAsShip
@@ -52,31 +45,6 @@ ecs!(
 	}
 
 	world(SharedWorld<Missile, Ship>)
-)
-
-ecs!(
-	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
-		let mut body = Body::default();
-		body.position = position;
-		body.velocity = Vector3::new(60.0, 0.0, 0.0);
-		body.attitude = attitude;
-
-		(body, ShowAsMissile)
-	}
-	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
-		let mut body = Body::default();
-		body.velocity = Vector3::new(30.0, 0.0, 0.0);
-
-		let player = Player {
-			client_id    : client_id,
-			missile_index: 0,
-			last_snapshot: Vec::new(),
-		};
-
-		(body, player, ShowAsShip)
-	}
-
-	world(World<Missile, Ship>)
 )
 
 ecs!(

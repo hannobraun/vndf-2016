@@ -1,4 +1,8 @@
+#![feature(phase)]
+
+
 extern crate getopts;
+extern crate serialize;
 
 extern crate cgmath;
 
@@ -8,6 +12,7 @@ extern crate net;
 extern crate physics;
 extern crate protocol;
 extern crate rustecs;
+#[phase(plugin)] extern crate rustecs_macros;
 
 
 pub mod args;

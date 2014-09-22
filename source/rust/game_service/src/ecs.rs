@@ -1,7 +1,51 @@
+use cgmath::{
+	Quaternion,
+	Vector3,
+};
+
+use game::ecs::{
+	SharedWorldEntity,
+	ShowAsMissile,
+	ShowAsShip,
+	Visual,
+};
+use net::ConnId;
+use physics::Body;
 use rustecs::EntityId;
 
-use game::ecs::World;
-use net::ConnId;
+
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+pub struct Player {
+	pub client_id    : ConnId,
+	pub missile_index: u64,
+	pub last_snapshot: Vec<SharedWorldEntity>
+}
+
+
+ecs!(
+	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
+		let mut body = Body::default();
+		body.position = position;
+		body.velocity = Vector3::new(60.0, 0.0, 0.0);
+		body.attitude = attitude;
+
+		(body, ShowAsMissile)
+	}
+	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
+		let mut body = Body::default();
+		body.velocity = Vector3::new(30.0, 0.0, 0.0);
+
+		let player = Player {
+			client_id    : client_id,
+			missile_index: 0,
+			last_snapshot: Vec::new(),
+		};
+
+		(body, player, ShowAsShip)
+	}
+
+	world(World<Missile, Ship>)
+)
 
 
 pub fn destroy_ship(world: &mut World, client_id: ConnId) {
