@@ -1,7 +1,3 @@
-#![crate_name = "rustecs"]
-#![crate_type = "rlib"]
-
-
 use std::collections::HashMap;
 
 
