@@ -17,4 +17,4 @@ path = "../physics"
 path = "../rustecs"
 
 [dependencies.rustecs_macros]
-path = "../librustecs_macros"
+path = "../rustecs_macros"
