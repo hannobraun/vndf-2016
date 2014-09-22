@@ -40,7 +40,7 @@ fn it_should_update_entities() {
 	let entity_id = 5;
 
 	let mut world = ClientWorld::new();
-	world.import_cliententity(entity_id, Body::default(), ShowAsMissile, 0);
+	world.import_client_entity(entity_id, Body::default(), ShowAsMissile, 0);
 
 	let mut entity = SharedWorldEntity {
 		id    : entity_id,
@@ -69,7 +69,7 @@ fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
 	let mut world = ClientWorld::new();
-	world.import_cliententity(entity_id, Body::default(), ShowAsMissile, 0);
+	world.import_client_entity(entity_id, Body::default(), ShowAsMissile, 0);
 
 	let entity = SharedWorldEntity {
 		id    : entity_id,

@@ -16,7 +16,7 @@ pub fn receive(world: &mut ClientWorld, perception: Perception) {
 	let current_time = time::precise_time_ns();
 
 	for entity in perception.added.iter() {
-		world.import_cliententity(
+		world.import_client_entity(
 			entity.id,
 			entity.body.unwrap(),
 			entity.visual.unwrap(),
