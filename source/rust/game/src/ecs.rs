@@ -44,7 +44,6 @@ pub enum Visual {
 
 
 ecs!(
-	// Shared
 	entity(SharedMissile<Body, Visual>): |body: Body| {
 		(body, ShowAsMissile)
 	}
@@ -53,9 +52,9 @@ ecs!(
 	}
 
 	world(SharedWorld<SharedMissile, SharedShip>)
+)
 
-
-	// Server-only
+ecs!(
 	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let mut body = Body::default();
 		body.position = position;
@@ -78,9 +77,9 @@ ecs!(
 	}
 
 	world(World<Missile, Ship>)
+)
 
-
-	// Client-only
+ecs!(
 	entity(ClientEntity<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
 		(
 			body,
