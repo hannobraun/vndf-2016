@@ -282,7 +282,11 @@ impl Renderer {
 
 		text_position = text_position - Vector2::new(0.0, 15.0);
 		self.draw_text(
-			format!("att: {}", body.attitude).as_slice(),
+			format!("vel: {:i} / {:i} / {:i}",
+				body.velocity.x as int,
+				body.velocity.y as int,
+				body.velocity.z as int,
+			).as_slice(),
 			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
 		);
 	}
