@@ -7,10 +7,7 @@ use cgmath::{
 
 use game::ecs::SharedWorldEntity;
 use net::ConnId;
-use protocol::{
-	Action,
-	Perception
-};
+use protocol;
 use rustecs::EntityId;
 
 
@@ -20,12 +17,12 @@ pub enum GameEvent {
 	Update(f64),
 	Enter(ConnId),
 	Leave(ConnId),
-	Action(ConnId, Action),
+	Action(ConnId, protocol::Action),
 	MissileLaunch(Vector3<f64>, Quaternion<f64>)
 }
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ConnId>, Perception<EntityId, SharedWorldEntity>),
+	Message(Vec<ConnId>, protocol::Perception<EntityId, SharedWorldEntity>),
 	Close(ConnId, IoError)
 }
