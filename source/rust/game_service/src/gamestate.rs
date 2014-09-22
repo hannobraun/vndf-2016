@@ -25,15 +25,9 @@ use protocol::{
 
 use super::ecs;
 use super::events::{
-	Action,
-	Enter,
+	mod,
 	GameEvent,
-	Init,
-	Leave,
-	Message,
-	MissileLaunch,
 	NetworkEvent,
-	Update
 };
 
 
@@ -67,17 +61,17 @@ impl GameState {
 					print!("Incoming event: {}\n", event);
 
 					match event {
-						Init =>
+						events::Init =>
 							(), // nothing do do, it just exists for the logging
-						Enter(client_id) =>
+						events::Enter(client_id) =>
 							self.on_enter(client_id),
-						Leave(client_id) =>
+						events::Leave(client_id) =>
 							self.on_leave(client_id),
-						Update(frame_time_in_s) =>
+						events::Update(frame_time_in_s) =>
 							self.on_update(frame_time_in_s),
-						Action(client_id, action) =>
+						events::Action(client_id, action) =>
 							self.on_action(client_id, action),
-						MissileLaunch(position, attitude) =>
+						events::MissileLaunch(position, attitude) =>
 							self.on_missile_launch(position, attitude)
 					}
 				},
@@ -125,7 +119,7 @@ impl GameState {
 				entities.clone());
 
 			self.network.send(
-				Message(vec!(player.client_id), perception));
+				events::Message(vec!(player.client_id), perception));
 
 			player.last_snapshot = entities.clone();
 		}
@@ -157,7 +151,7 @@ impl GameState {
 
 		if action.missile > player.missile_index {
 			self.events.send(
-				MissileLaunch(
+				events::MissileLaunch(
 					body.position,
 					body.attitude,
 				)
