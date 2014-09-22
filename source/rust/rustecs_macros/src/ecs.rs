@@ -8,7 +8,7 @@ use syntax::ptr::P;
 use syntax::util::small_vector::SmallVector;
 
 use generate;
-use parse::ECS;
+use parse::parse;
 
 
 pub fn expand(
@@ -16,7 +16,7 @@ pub fn expand(
 	_         : codemap::Span,
 	token_tree: &[ast::TokenTree]
 ) -> Box<MacResult + 'static> {
-	let ecs = ECS::parse(context, token_tree);
+	let ecs = parse(context, token_tree);
 
 	let items = generate::items(context, &ecs);
 

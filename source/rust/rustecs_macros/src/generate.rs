@@ -13,10 +13,10 @@ use names::{
 use parse;
 
 
-pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<P<ast::Item>> {
-	let components = Component::generate_components(context, &ecs.entities);
+pub fn items(context: &ExtCtxt, ecs: &Vec<parse::Entity>) -> Vec<P<ast::Item>> {
+	let components = Component::generate_components(context, ecs);
 
-	let entities: Vec<Entity> = ecs.entities
+	let entities: Vec<Entity> = ecs
 		.iter()
 		.map(|entity|
 			Entity::generate(context, entity, &components))

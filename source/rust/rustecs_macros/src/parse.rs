@@ -7,33 +7,25 @@ use syntax::parse::token;
 use syntax::ptr::P;
 
 
-pub struct ECS {
-	pub entities  : Vec<Entity>,
-}
+pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> Vec<Entity> {
+	let mut parser = parse::new_parser_from_tts(
+		context.parse_sess(),
+		context.cfg(),
+		Vec::from_slice(token_tree));
 
-impl ECS {
-	pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> ECS {
-		let mut parser = parse::new_parser_from_tts(
-			context.parse_sess(),
-			context.cfg(),
-			Vec::from_slice(token_tree));
+	let mut entities = Vec::new();
 
-		let mut entities = Vec::new();
-
-		loop {
-			match Directive::parse(&mut parser) {
-				EntityDirective(entity)       => entities.push(entity),
-			}
-
-			if parser.eat(&token::EOF) {
-				break;
-			}
+	loop {
+		match Directive::parse(&mut parser) {
+			EntityDirective(entity)       => entities.push(entity),
 		}
 
-		ECS {
-			entities  : entities,
+		if parser.eat(&token::EOF) {
+			break;
 		}
 	}
+
+	entities
 }
 
 
