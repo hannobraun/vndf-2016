@@ -43,7 +43,7 @@ pub fn items(context: &ExtCtxt, ecs: &parse::ECS) -> Vec<P<ast::Item>> {
 }
 
 
-#[deriving(Clone)]
+#[deriving(Clone, Show)]
 pub struct Component {
 	name: String,
 
