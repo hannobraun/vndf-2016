@@ -3,7 +3,7 @@ use syntax::ast;
 use syntax::parse::token;
 
 
-pub fn ident_to_lower(ident: ast::Ident) -> String {
+pub fn camel_to_snake_case(ident: ast::Ident) -> String {
 	let camel_case = token::get_ident(ident).to_string().into_ascii();
 
 	let mut snake_case = String::new();

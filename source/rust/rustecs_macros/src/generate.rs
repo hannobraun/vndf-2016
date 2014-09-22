@@ -6,7 +6,7 @@ use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
 use syntax::ptr::P;
 
-use names::ident_to_lower;
+use names::camel_to_snake_case;
 use parse;
 
 
@@ -57,7 +57,7 @@ pub struct Component {
 impl Component {
 	fn generate(context: &ExtCtxt, component: &parse::Component) -> Component {
 		let var_name = ast::Ident::new(
-			token::intern(ident_to_lower(component.name).as_slice()));
+			token::intern(camel_to_snake_case(component.name).as_slice()));
 
 		let     collection = component.collection;
 		let ref ty         = component.ty;
@@ -168,7 +168,7 @@ impl Entity {
 		let name = ast::Ident::new(token::intern(
 			"create_"
 				.to_string()
-				.append(ident_to_lower(entity.name).as_slice())
+				.append(camel_to_snake_case(entity.name).as_slice())
 				.as_slice()));
 
 		let mut args = Vec::new();
@@ -227,7 +227,7 @@ impl Entity {
 		let name = ast::Ident::new(token::intern(
 			"import_"
 				.to_string()
-				.append(ident_to_lower(entity.name).as_slice())
+				.append(camel_to_snake_case(entity.name).as_slice())
 				.as_slice()));
 
 		let mut args = Vec::new();
