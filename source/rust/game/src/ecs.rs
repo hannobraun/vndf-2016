@@ -80,7 +80,7 @@ ecs!(
 )
 
 ecs!(
-	entity(ClientEntity<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
+	entity(Craft<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
 		(
 			body,
 			visual,
@@ -88,5 +88,5 @@ ecs!(
 		)
 	}
 
-	world(ClientWorld<ClientEntity>)
+	world(ClientWorld<Craft>)
 )
