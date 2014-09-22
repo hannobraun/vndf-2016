@@ -272,9 +272,9 @@ impl Renderer {
 		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
-				body.position[0] as int,
-				body.position[1] as int,
-				body.position[2] as int,
+				body.position.x as int,
+				body.position.y as int,
+				body.position.z as int,
 			)
 			.as_slice(),
 			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
