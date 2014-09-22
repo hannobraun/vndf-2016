@@ -24,8 +24,6 @@ ecs!(
 			score
 		)
 	}
-
-	world(World<Missile, Ship>)
 )
 
 

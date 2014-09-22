@@ -9,7 +9,6 @@ use syntax::ptr::P;
 
 pub struct ECS {
 	pub entities  : Vec<Entity>,
-	pub worlds    : Vec<World>,
 }
 
 impl ECS {
@@ -20,12 +19,10 @@ impl ECS {
 			Vec::from_slice(token_tree));
 
 		let mut entities   = Vec::new();
-		let mut worlds     = Vec::new();
 
 		loop {
 			match Directive::parse(&mut parser) {
 				EntityDirective(entity)       => entities.push(entity),
-				WorldDirective(world)         => worlds.push(world),
 			}
 
 			if parser.eat(&token::EOF) {
@@ -35,7 +32,6 @@ impl ECS {
 
 		ECS {
 			entities  : entities,
-			worlds    : worlds,
 		}
 	}
 }
@@ -43,7 +39,6 @@ impl ECS {
 
 enum Directive {
 	EntityDirective(Entity),
-	WorldDirective(World),
 }
 
 impl Directive {
@@ -52,7 +47,6 @@ impl Directive {
 
 		match parser.id_to_interned_str(ident).get() {
 			"entity"    => EntityDirective(Entity::parse(parser)),
-			"world"     => WorldDirective(World::parse(parser)),
 
 			ident @ _ =>
 				parser.fatal(format!("Unexpected identifier: {}", ident).as_slice())
@@ -95,32 +89,6 @@ impl Entity {
 			components: components,
 			args      : args,
 			init_block: init_block
-		}
-	}
-}
-
-
-pub struct World {
-	pub name    : ast::Ident,
-	pub entities: Vec<ast::Ident>,
-}
-
-impl World {
-	fn parse(parser: &mut Parser) -> World {
-		parser.expect(&token::LPAREN);
-
-		let name = parser.parse_ident();
-		let entities = parser.parse_unspanned_seq(
-			&token::LT,
-			&token::GT,
-			seq_sep_trailing_disallowed(token::COMMA),
-			|p| p.parse_ident());
-
-		parser.expect(&token::RPAREN);
-
-		World {
-			name    : name,
-			entities: entities,
 		}
 	}
 }

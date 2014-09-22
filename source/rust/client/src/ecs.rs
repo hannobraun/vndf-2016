@@ -32,6 +32,4 @@ ecs!(
 			Interpolated::new(current_time, Some(body))
 		)
 	}
-
-	world(World<Craft>)
 )

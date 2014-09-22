@@ -1,4 +1,4 @@
-#![feature(plugin_registrar, quote)]
+#![feature(plugin_registrar, quote, tuple_indexing)]
 
 
 extern crate rustc;

@@ -43,8 +43,6 @@ ecs!(
 
 		(body, player, ShowAsShip)
 	}
-
-	world(World<Missile, Ship>)
 )
 
 

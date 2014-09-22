@@ -21,6 +21,4 @@ ecs!(
 	entity(Ship<Body, Visual>): |body: Body| {
 		(body, ShowAsShip)
 	}
-
-	world(World<Missile, Ship>)
 )
