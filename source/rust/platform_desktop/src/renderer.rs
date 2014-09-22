@@ -5,12 +5,14 @@ use cgmath::{
 	mod,
 	Deg,
 	FixedArray,
+	Matrix,
 	Matrix4,
 	Point3,
 	Quaternion,
 	Vector,
 	Vector2,
 	Vector3,
+	Vector4,
 };
 use gfx::{
 	mod,
@@ -249,29 +251,21 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
-		let mut transform = self.perspective()
+		let mut screen_position = self.perspective()
 			.mul(&camera_to_transform(camera))
-			.mul(&Matrix4::from_translation(&Vector3::new(
+			.mul_v(&Vector4::new(
 				body.position[0] as f32,
 				body.position[1] as f32,
 				body.position[2] as f32,
-			)));
+				1.0,
+			));
 
-		// Remove any rotation from the transform, so the icons always face the
-		// camera. I don't like this solution.
-		transform[0][0] = 3.0;
-		transform[0][1] = 0.0;
-		transform[0][2] = 0.0;
-		transform[0][3] = 0.0;
-		transform[1][0] = 0.0;
-		transform[1][1] = 3.0;
-		transform[1][2] = 0.0;
-		transform[1][3] = 0.0;
-		transform[2][0] = 0.0;
-		transform[2][1] = 0.0;
-		transform[2][2] = 3.0;
-		transform[2][3] = 0.0;
-		transform[3][3] = 1000.0;
+		let mut transform = self.ortho()
+			.mul(&Matrix4::from_translation(&Vector3::new(
+				screen_position.x / screen_position.w * self.window.width as f32,
+				screen_position.y / screen_position.w * self.window.height as f32,
+				0.0,
+			)));
 
 		self.draw_icon(&icon, &transform);
 
