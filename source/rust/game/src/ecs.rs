@@ -44,14 +44,14 @@ pub enum Visual {
 
 
 ecs!(
-	entity(SharedMissile<Body, Visual>): |body: Body| {
+	entity(Missile<Body, Visual>): |body: Body| {
 		(body, ShowAsMissile)
 	}
-	entity(SharedShip<Body, Visual>): |body: Body| {
+	entity(Ship<Body, Visual>): |body: Body| {
 		(body, ShowAsShip)
 	}
 
-	world(SharedWorld<SharedMissile, SharedShip>)
+	world(SharedWorld<Missile, Ship>)
 )
 
 ecs!(
