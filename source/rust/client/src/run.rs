@@ -11,7 +11,7 @@ use platform_cli;
 use platform_desktop;
 
 use super::args;
-use super::ecs::ClientWorld;
+use super::ecs::World;
 use super::gamestate::GameState;
 use super::inputsender::InputSender;
 use super::network::Network;
@@ -61,7 +61,7 @@ pub fn run() {
 	}
 }
 
-fn make_frame(input: Input, camera: Camera, world: &ClientWorld) -> Frame {
+fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 	let ships = world.bodies
 		.iter()
 		.filter(|&(&id, _)|

@@ -33,5 +33,5 @@ ecs!(
 		)
 	}
 
-	world(ClientWorld<Craft>)
+	world(World<Craft>)
 )

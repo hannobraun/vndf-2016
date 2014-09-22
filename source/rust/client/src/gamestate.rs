@@ -5,21 +5,21 @@ use cgmath::Vector;
 use platform::Camera;
 use rustecs::EntityId;
 
-use super::ecs::ClientWorld;
+use super::ecs::World;
 use super::network::Network;
 use super::receiver::receive;
 
 
 pub struct GameState {
 	pub self_id: Option<EntityId>,
-	pub world  : ClientWorld,
+	pub world  : World,
 }
 
 impl GameState {
 	pub fn new() -> GameState {
 		GameState {
 			self_id: None,
-			world  : ClientWorld::new(),
+			world  : World::new(),
 		}
 	}
 

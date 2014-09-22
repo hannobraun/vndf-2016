@@ -1,6 +1,6 @@
 use cgmath::Vector3;
 
-use client::ecs::ClientWorld;
+use client::ecs::World;
 use client::receiver::receive;
 use game::ecs::{
 	SharedWorldEntity,
@@ -12,7 +12,7 @@ use protocol::Perception;
 
 #[test]
 fn it_should_import_added_entities() {
-	let mut world = ClientWorld::new();
+	let mut world = World::new();
 
 	let entity = SharedWorldEntity {
 		id    : 5,
@@ -39,7 +39,7 @@ fn it_should_import_added_entities() {
 fn it_should_update_entities() {
 	let entity_id = 5;
 
-	let mut world = ClientWorld::new();
+	let mut world = World::new();
 	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
 
 	let mut entity = SharedWorldEntity {
@@ -68,7 +68,7 @@ fn it_should_update_entities() {
 fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
-	let mut world = ClientWorld::new();
+	let mut world = World::new();
 	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
 
 	let entity = SharedWorldEntity {
