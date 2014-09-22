@@ -18,7 +18,7 @@ impl ECS {
 			context.cfg(),
 			Vec::from_slice(token_tree));
 
-		let mut entities   = Vec::new();
+		let mut entities = Vec::new();
 
 		loop {
 			match Directive::parse(&mut parser) {
