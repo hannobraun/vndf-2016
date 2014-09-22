@@ -15,10 +15,10 @@ pub enum Visual {
 
 
 ecs!(
-	entity(Missile<Body, Visual>): |body: Body| {
+	Missile(Body, Visual): |body: Body| {
 		(body, ShowAsMissile)
 	}
-	entity(Ship<Body, Visual>): |body: Body| {
+	Ship(Body, Visual): |body: Body| {
 		(body, ShowAsShip)
 	}
 )

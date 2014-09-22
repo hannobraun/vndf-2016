@@ -17,7 +17,6 @@ pub fn parse(context: &ExtCtxt, token_tree: &[ast::TokenTree]) -> Vec<Entity> {
 	let mut entities = Vec::new();
 
 	loop {
-		parser.parse_ident();
 		entities.push(Entity::parse(&mut parser));
 
 		if parser.eat(&token::EOF) {
@@ -38,16 +37,13 @@ pub struct Entity {
 
 impl Entity {
 	fn parse(parser: &mut Parser) -> Entity {
-		parser.expect(&token::LPAREN);
-
 		let name = parser.parse_ident();
 		let components = parser.parse_unspanned_seq(
-			&token::LT,
-			&token::GT,
+			&token::LPAREN,
+			&token::RPAREN,
 			seq_sep_trailing_disallowed(token::COMMA),
 			|p| p.parse_ident());
 
-		parser.expect(&token::RPAREN);
 		parser.expect(&token::COLON);
 
 		let args = parser.parse_unspanned_seq(

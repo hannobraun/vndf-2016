@@ -25,7 +25,7 @@ impl Interpolated {
 
 
 ecs!(
-	entity(Craft<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
+	Craft(Body, Visual, Interpolated): |body: Body, visual: Visual, current_time: u64| {
 		(
 			body,
 			visual,

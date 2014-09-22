@@ -11,13 +11,13 @@ type Score = u32;
 
 
 ecs!(
-	entity(Missile<Position, Visual>): |x: f64, y: f64| {
+	Missile(Position, Visual): |x: f64, y: f64| {
 		(
 			Position(x, y),
 			RenderAsMissile
 		)
 	}
-	entity(Ship<Position, Visual, Score>): |score: u32| {
+	Ship(Position, Visual, Score): |score: u32| {
 		(
 			Position(0.0, 0.0),
 			RenderAsShip,

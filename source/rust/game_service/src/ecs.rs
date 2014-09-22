@@ -23,7 +23,7 @@ pub struct Player {
 
 
 ecs!(
-	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
+	Missile(Body, Visual): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let mut body = Body::default();
 		body.position = position;
 		body.velocity = Vector3::new(60.0, 0.0, 0.0);
@@ -31,7 +31,7 @@ ecs!(
 
 		(body, ShowAsMissile)
 	}
-	entity(Ship<Body, Player, Visual>): |client_id: ConnId| {
+	Ship(Body, Player, Visual): |client_id: ConnId| {
 		let mut body = Body::default();
 		body.velocity = Vector3::new(30.0, 0.0, 0.0);
 
