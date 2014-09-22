@@ -11,10 +11,8 @@ use cgmath::{
 	Vector3,
 };
 
-use game::ecs::{
-	SharedWorld,
-	Entity,
-};
+use game::ecs::World as SharedWorld;
+use game::ecs::Entity;
 use net::ConnId;
 use physics::Body;
 use protocol::{

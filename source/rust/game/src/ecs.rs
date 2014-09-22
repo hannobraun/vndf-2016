@@ -22,5 +22,5 @@ ecs!(
 		(body, ShowAsShip)
 	}
 
-	world(SharedWorld<Missile, Ship>)
+	world(World<Missile, Ship>)
 )
