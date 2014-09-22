@@ -45,8 +45,8 @@ pub enum Visual {
 
 ecs!(
 	// Shared
-	component(Body): Body
-	component(Visual): Visual
+	component(Body)
+	component(Visual)
 
 	entity(SharedMissile<Body, Visual>): |body: Body| {
 		(body, ShowAsMissile)
@@ -59,7 +59,7 @@ ecs!(
 
 
 	// Server-only
-	component(Player): Player
+	component(Player)
 
 	entity(Missile<Body, Visual>): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let mut body = Body::default();
@@ -86,7 +86,7 @@ ecs!(
 
 
 	// Client-only
-	component(Interpolated): Interpolated
+	component(Interpolated)
 
 	entity(ClientEntity<Body, Visual, Interpolated>): |body: Body, visual: Visual, current_time: u64| {
 		(

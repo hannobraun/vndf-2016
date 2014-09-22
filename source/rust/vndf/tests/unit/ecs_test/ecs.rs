@@ -7,10 +7,13 @@ pub enum Visual {
 	RenderAsShip,
 }
 
+type Score = u32;
+
+
 ecs!(
-	component(Position): Position
-	component(Visual): Visual
-	component(Score): u32
+	component(Position)
+	component(Visual)
+	component(Score)
 
 	entity(Missile<Position, Visual>): |x: f64, y: f64| {
 		(

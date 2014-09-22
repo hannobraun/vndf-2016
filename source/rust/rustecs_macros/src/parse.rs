@@ -69,7 +69,6 @@ impl Directive {
 
 pub struct Component {
 	pub name      : ast::Ident,
-	pub ty        : P<ast::Ty>,
 }
 
 impl Component {
@@ -77,13 +76,9 @@ impl Component {
 		parser.expect(&token::LPAREN);
 		let name = parser.parse_ident();
 		parser.expect(&token::RPAREN);
-		parser.expect(&token::COLON);
-
-		let ty = parser.parse_ty(false);
 
 		Component {
 			name      : name,
-			ty        : ty,
 		}
 	}
 }

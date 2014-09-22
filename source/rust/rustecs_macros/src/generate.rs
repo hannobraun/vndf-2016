@@ -59,13 +59,13 @@ pub struct Component {
 
 impl Component {
 	fn generate(context: &ExtCtxt, component: &parse::Component) -> Component {
+		let ty = component.name;
 		let var_name = ast::Ident::new(
 			token::intern(camel_to_snake_case(component.name).as_slice()));
 
 		let collection = ast::Ident::new(token::intern(
 			type_to_collection_name(component.name).as_slice()
 		));
-		let ref ty = component.ty;
 
 		let decl = quote_tokens!(&*context,
 			pub $collection: ::rustecs::Components<$ty>,
