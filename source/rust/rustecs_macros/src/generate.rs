@@ -6,6 +6,7 @@ use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
 use syntax::ptr::P;
 
+use names::ident_to_lower;
 use parse;
 
 
@@ -520,12 +521,4 @@ impl World {
 
 		init
 	}
-}
-
-
-fn ident_to_lower(ident: ast::Ident) -> String {
-	token::get_ident(ident)
-		.to_string()
-		.as_slice()
-		.to_ascii_lower()
 }

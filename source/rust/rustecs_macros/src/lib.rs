@@ -11,6 +11,7 @@ use rustc::plugin::registry::Registry;
 
 mod ecs;
 mod generate;
+mod names;
 mod parse;
 
 
