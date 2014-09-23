@@ -250,7 +250,7 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
-		let mut screen_position = self.perspective()
+		let screen_position = self.perspective()
 			.mul(&camera_to_transform(camera))
 			.mul_v(&Vector4::new(
 				body.position[0] as f32,
@@ -259,7 +259,7 @@ impl Renderer {
 				1.0,
 			));
 
-		let mut transform = self.ortho()
+		let transform = self.ortho()
 			.mul(&Matrix4::from_translation(&Vector3::new(
 				screen_position.x / screen_position.w * self.window.width as f32,
 				screen_position.y / screen_position.w * self.window.height as f32,
