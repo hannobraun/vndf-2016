@@ -12,6 +12,7 @@ pub mod renderer;
 
 mod grid;
 mod icon;
+mod planet;
 
 
 type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
