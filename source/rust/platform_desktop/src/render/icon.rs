@@ -60,7 +60,7 @@ static ICON_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 #[shader_param(IconBatch)]
-struct IconParams {
+struct Params {
 	transform: [[f32, ..4], ..4],
 	tex      : gfx::shade::TextureParam,
 }
@@ -180,7 +180,7 @@ impl Icon {
 		frame    : &Frame,
 		transform: &Transform,
 	) {
-		let params = IconParams {
+		let params = Params {
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
 			tex      : self.param,
 		};
