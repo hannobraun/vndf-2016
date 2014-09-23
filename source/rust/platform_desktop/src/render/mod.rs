@@ -1,4 +1,12 @@
+use cgmath::Matrix4;
+use gfx;
+
+
 pub mod renderer;
+
+
+type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
+type Transform = Matrix4<f32>;
 
 
 #[vertex_format]

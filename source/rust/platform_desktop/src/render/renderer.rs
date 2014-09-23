@@ -36,11 +36,11 @@ use platform::{
 };
 use window::Window;
 
-use super::Vertex;
-
-
-type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
-type Transform = Matrix4<f32>;
+use super::{
+	Graphics,
+	Transform,
+	Vertex,
+};
 
 
 #[shader_param(GridBatch)]
