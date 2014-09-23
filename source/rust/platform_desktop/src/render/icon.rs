@@ -60,9 +60,9 @@ static ICON_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 #[shader_param(IconBatch)]
-pub struct IconParams {
-	pub transform: [[f32, ..4], ..4],
-	pub tex      : gfx::shade::TextureParam,
+struct IconParams {
+	transform: [[f32, ..4], ..4],
+	tex      : gfx::shade::TextureParam,
 }
 
 
