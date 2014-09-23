@@ -32,10 +32,7 @@ use super::{
 	Graphics,
 	Transform,
 };
-use super::grid::{
-	Grid,
-	GridParams,
-};
+use super::grid::Grid;
 use super::icon::{
 	Icon,
 	IconParams,
@@ -103,7 +100,12 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.draw_grid(&frame.camera, projection);
+		self.grid.draw(
+			&mut self.graphics,
+			&self.frame,
+			&frame.camera,
+			projection
+		);
 
 		for body in frame.ships.iter() {
 			self.draw_craft(
@@ -125,31 +127,6 @@ impl Renderer {
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();
-	}
-
-	fn draw_grid(&mut self, camera: &Camera, projection: Transform) {
-		let grid_camera = Camera {
-			center: Vector3::new(
-				camera.center[0] % 200.0,
-				camera.center[1] % 200.0,
-				camera.center[2],
-			),
-
-			perspective: camera.perspective,
-			distance   : camera.distance,
-		};
-
-		let view = camera_to_transform(&grid_camera);
-
-		let params = GridParams {
-			transform: projection.mul(&view).into_fixed(),
-		};
-
-		self.graphics.draw(
-			&self.grid.batch,
-			&params,
-			&self.frame
-		);
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {

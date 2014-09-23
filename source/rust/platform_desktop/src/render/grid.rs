@@ -1,11 +1,20 @@
+use cgmath::{
+	FixedArray,
+	Vector3,
+};
 use gfx::{
 	mod,
 	DeviceHelper,
+	Frame,
 	ToSlice,
 };
 
+use platform::Camera;
+
 use super::{
+	camera_to_transform,
 	Graphics,
+	Transform,
 	Vertex,
 };
 
@@ -105,5 +114,36 @@ impl Grid {
 		Grid {
 			batch: batch,
 		}
+	}
+
+	pub fn draw(
+		&mut self,
+		graphics  : &mut Graphics,
+		frame     : &Frame,
+		camera    : &Camera,
+		projection: Transform,
+	) {
+		let grid_camera = Camera {
+			center: Vector3::new(
+				camera.center[0] % 200.0,
+				camera.center[1] % 200.0,
+				camera.center[2],
+			),
+
+			perspective: camera.perspective,
+			distance   : camera.distance,
+		};
+
+		let view = camera_to_transform(&grid_camera);
+
+		let params = GridParams {
+			transform: projection.mul(&view).into_fixed(),
+		};
+
+		graphics.draw(
+			&self.batch,
+			&params,
+			frame
+		);
 	}
 }
