@@ -171,6 +171,9 @@ source = "git+https://github.com/tomaka/rust-xml#fdc021b2bfec7855866b964f4595599
 [[package]]
 name = "rustecs"
 version = "0.1.0"
+dependencies = [
+ "rustecs_macros 0.1.0",
+]
 
 [[package]]
 name = "rustecs_macros"

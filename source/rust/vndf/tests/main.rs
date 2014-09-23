@@ -26,10 +26,6 @@ mod unit {
 	mod common_test {
 		mod protocol;
 	}
-
-	mod ecs_test {
-		mod ecs;
-	}
 }
 
 mod component {

@@ -1,3 +1,12 @@
+#![feature(phase)]
+
+
+extern crate serialize;
+
+extern crate rustecs;
+#[phase(plugin)] extern crate rustecs_macros;
+
+
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Position(f64, f64);
 
