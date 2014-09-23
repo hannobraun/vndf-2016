@@ -27,9 +27,7 @@ use window::Window;
 mod font;
 mod images;
 mod inputhandler;
-mod render {
-	pub mod renderer;
-}
+mod render;
 mod window;
 
 
