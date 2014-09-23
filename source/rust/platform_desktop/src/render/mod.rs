@@ -25,17 +25,17 @@ pub struct Vertex {
 }
 
 impl Vertex {
+	fn new(position: [f32, ..3], tex_coord: [f32, ..2]) -> Vertex {
+		Vertex {
+			position : position,
+			tex_coord: tex_coord,
+		}
+	}
+
 	fn without_tex(position: [f32, ..3]) -> Vertex {
 		Vertex {
 			position : position,
 			tex_coord: [0.0, 0.0],
-		}
-	}
-
-	fn for_icon(position: [f32, ..3], tex_coord: [f32, ..2]) -> Vertex {
-		Vertex {
-			position : position,
-			tex_coord: tex_coord,
 		}
 	}
 }

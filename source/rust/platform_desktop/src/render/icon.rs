@@ -114,10 +114,10 @@ impl Icon {
 		center  : bool,
 	) -> Icon {
 		let vertices = [
-			Vertex::for_icon([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::for_icon([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::for_icon([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::for_icon([ width, height, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([ width, height, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
