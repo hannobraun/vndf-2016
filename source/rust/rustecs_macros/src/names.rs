@@ -1,4 +1,3 @@
-use std::ascii::StrAsciiExt;
 use syntax::ast;
 use syntax::parse::token;
 

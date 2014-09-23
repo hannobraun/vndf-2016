@@ -1,8 +1,6 @@
-use std::ascii::StrAsciiExt;
 use std::collections::HashMap;
 use syntax::ast;
 use syntax::ext::base::ExtCtxt;
-use syntax::ext::build::AstBuilder;
 use syntax::parse::token;
 use syntax::ptr::P;
 
