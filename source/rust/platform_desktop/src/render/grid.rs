@@ -47,8 +47,8 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 #[shader_param(GridBatch)]
-pub struct GridParams {
-	pub transform: [[f32, ..4], ..4],
+struct GridParams {
+	transform: [[f32, ..4], ..4],
 }
 
 
