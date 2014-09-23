@@ -10,12 +10,6 @@ use super::{
 };
 
 
-#[shader_param(GridBatch)]
-pub struct GridParams {
-	pub transform: [[f32, ..4], ..4],
-}
-
-
 static GRID_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
@@ -41,6 +35,12 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 		}
 	"
 };
+
+
+#[shader_param(GridBatch)]
+pub struct GridParams {
+	pub transform: [[f32, ..4], ..4],
+}
 
 
 pub struct Grid {
