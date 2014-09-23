@@ -18,13 +18,6 @@ use super::{
 };
 
 
-#[shader_param(IconBatch)]
-pub struct IconParams {
-	pub transform: [[f32, ..4], ..4],
-	pub tex      : gfx::shade::TextureParam,
-}
-
-
 static ICON_VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
@@ -60,6 +53,13 @@ static ICON_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 		}
 	"
 };
+
+
+#[shader_param(IconBatch)]
+pub struct IconParams {
+	pub transform: [[f32, ..4], ..4],
+	pub tex      : gfx::shade::TextureParam,
+}
 
 
 pub struct Icon {
