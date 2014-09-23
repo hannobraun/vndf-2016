@@ -47,8 +47,8 @@ version = "0.1.0"
 dependencies = [
  "net 0.1.0",
  "physics 0.1.0",
- "rustecs 0.1.0",
- "rustecs_macros 0.1.0",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9)",
 ]
 
 [[package]]
@@ -171,13 +171,15 @@ source = "git+https://github.com/tomaka/rust-xml#fdc021b2bfec7855866b964f4595599
 [[package]]
 name = "rustecs"
 version = "0.1.0"
+source = "git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9"
 dependencies = [
- "rustecs_macros 0.1.0",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9)",
 ]
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
+source = "git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9"
 
 [[package]]
 name = "semver"

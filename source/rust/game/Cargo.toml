@@ -14,7 +14,7 @@ path = "../net"
 path = "../physics"
 
 [dependencies.rustecs]
-path = "../rustecs"
+git = "https://github.com/hannobraun/rustecs.git"
 
 [dependencies.rustecs_macros]
-path = "../rustecs_macros"
+git = "https://github.com/hannobraun/rustecs.git"
