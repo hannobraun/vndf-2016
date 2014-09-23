@@ -47,7 +47,7 @@ static GRID_FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 
 #[shader_param(GridBatch)]
-struct GridParams {
+struct Params {
 	transform: [[f32, ..4], ..4],
 }
 
@@ -136,7 +136,7 @@ impl Grid {
 
 		let view = camera_to_transform(&grid_camera);
 
-		let params = GridParams {
+		let params = Params {
 			transform: projection.mul(&view).into_fixed(),
 		};
 
