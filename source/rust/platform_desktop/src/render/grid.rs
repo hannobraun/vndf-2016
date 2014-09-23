@@ -53,7 +53,7 @@ struct Params {
 
 
 pub struct Grid {
-	pub batch: GridBatch,
+	batch: GridBatch,
 }
 
 impl Grid {
