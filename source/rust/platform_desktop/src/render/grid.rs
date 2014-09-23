@@ -117,7 +117,7 @@ impl Grid {
 	}
 
 	pub fn draw(
-		&mut self,
+		&self,
 		graphics  : &mut Graphics,
 		frame     : &Frame,
 		camera    : &Camera,

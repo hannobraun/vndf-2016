@@ -4,7 +4,6 @@ use std::rc::Rc;
 use cgmath::{
 	mod,
 	Deg,
-	FixedArray,
 	Matrix,
 	Matrix4,
 	Vector,
@@ -33,10 +32,7 @@ use super::{
 	Transform,
 };
 use super::grid::Grid;
-use super::icon::{
-	Icon,
-	IconParams,
-};
+use super::icon::Icon;
 
 
 pub struct Renderer {
@@ -147,7 +143,11 @@ impl Renderer {
 				0.0,
 			)));
 
-		self.draw_icon(&icon, &transform);
+		icon.draw(
+			&mut self.graphics,
+			&self.frame,
+			&transform
+		);
 
 		let mut text_position = icon.size + icon.offset;
 		self.draw_text(
@@ -214,27 +214,15 @@ impl Renderer {
 			if c != ' ' {
 				let icon = self.icons[c.to_string()];
 
-				self.draw_icon(
-					&icon,
+				icon.draw(
+					&mut self.graphics,
+					&self.frame,
 					&transform.mul(&Matrix4::from_translation(&(offset.extend(0.0) + total_advance.extend(0.0)))),
 				);
 			}
 
 			total_advance = total_advance + advance;
 		}
-	}
-
-	fn draw_icon(&mut self, icon: &Icon, transform: &Transform) {
-		let params = IconParams {
-			transform: transform.mul(&Matrix4::from_translation(&icon.offset.extend(0.0))).into_fixed(),
-			tex      : icon.param,
-		};
-
-		self.graphics.draw(
-			&icon.batch,
-			&params,
-			&self.frame
-		);
 	}
 
 	fn ortho(&self) -> Transform {

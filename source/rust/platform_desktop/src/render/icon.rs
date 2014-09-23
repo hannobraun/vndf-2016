@@ -1,4 +1,6 @@
 use cgmath::{
+	FixedArray,
+	Matrix4,
 	Vector,
 	Vector2,
 };
@@ -6,6 +8,7 @@ use gfx::{
 	mod,
 	Device,
 	DeviceHelper,
+	Frame,
 	ToSlice,
 };
 
@@ -14,6 +17,7 @@ use images::Image;
 
 use super::{
 	Graphics,
+	Transform,
 	Vertex,
 };
 
@@ -168,5 +172,23 @@ impl Icon {
 			size  : size,
 			offset: offset,
 		}
+	}
+
+	pub fn draw(
+		&self,
+		graphics : &mut Graphics,
+		frame    : &Frame,
+		transform: &Transform,
+	) {
+		let params = IconParams {
+			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
+			tex      : self.param,
+		};
+
+		graphics.draw(
+			&self.batch,
+			&params,
+			frame
+		);
 	}
 }
