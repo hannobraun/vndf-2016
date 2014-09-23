@@ -25,7 +25,7 @@ pub struct Vertex {
 }
 
 impl Vertex {
-	fn for_grid(position: [f32, ..3]) -> Vertex {
+	fn without_tex(position: [f32, ..3]) -> Vertex {
 		Vertex {
 			position : position,
 			tex_coord: [0.0, 0.0],
