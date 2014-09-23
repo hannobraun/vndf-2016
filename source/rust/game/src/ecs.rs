@@ -1,9 +1,3 @@
-use cgmath::{
-	Quaternion,
-	Vector3,
-};
-
-use net::ConnId;
 use physics::Body;
 
 
