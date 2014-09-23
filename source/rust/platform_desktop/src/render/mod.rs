@@ -4,6 +4,8 @@ use gfx;
 
 pub mod renderer;
 
+mod grid;
+
 
 type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
 type Transform = Matrix4<f32>;
