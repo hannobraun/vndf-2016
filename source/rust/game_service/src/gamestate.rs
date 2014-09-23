@@ -4,7 +4,6 @@ use std::comm::{
 };
 
 use cgmath::{
-	EuclideanVector,
 	Quaternion,
 	Rotation,
 	Vector,
