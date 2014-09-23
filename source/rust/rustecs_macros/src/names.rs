@@ -7,11 +7,11 @@ pub fn camel_to_snake_case(ident: ast::Ident) -> String {
 
 	let mut snake_case = String::new();
 	for (i, c) in camel_case.iter().enumerate() {
-		if c.is_upper() && i != 0 {
+		if c.is_uppercase() && i != 0 {
 			snake_case = snake_case.append("_");
 		}
 
-		snake_case.push_char(c.to_lower().to_char());
+		snake_case.push_char(c.to_lowercase().to_char());
 	}
 
 	snake_case
