@@ -5,6 +5,7 @@ use gfx;
 pub mod renderer;
 
 mod grid;
+mod icon;
 
 
 type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
