@@ -33,6 +33,7 @@ use super::{
 };
 use super::grid::Grid;
 use super::icon::Icon;
+use super::planet::Planet;
 
 
 pub struct Renderer {
@@ -41,8 +42,9 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	grid : Grid,
-	icons: HashMap<String, Icon>,
+	grid  : Grid,
+	planet: Planet,
+	icons : HashMap<String, Icon>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -53,7 +55,8 @@ impl Renderer {
 
 		let frame = gfx::Frame::new(window.width, window.height);
 
-		let grid = Grid::new(&mut graphics);
+		let grid   = Grid::new(&mut graphics);
+		let planet = Planet::new(&mut graphics, 300.0, 300.0);
 
 		let mut glyphs = HashMap::new();
 		let mut icons  = HashMap::new();
@@ -76,8 +79,9 @@ impl Renderer {
 
 			frame: frame,
 
-			grid : grid,
-			icons: icons,
+			grid  : grid,
+			planet: planet,
+			icons : icons,
 
 			glyphs: glyphs,
 		}
@@ -101,6 +105,12 @@ impl Renderer {
 			&self.frame,
 			&frame.camera,
 			projection
+		);
+
+		self.planet.draw(
+			&mut self.graphics,
+			&self.frame,
+			projection.mul(&camera_to_transform(&frame.camera))
 		);
 
 		for body in frame.ships.iter() {
