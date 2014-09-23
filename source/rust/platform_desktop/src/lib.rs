@@ -20,14 +20,16 @@ use platform::{
 	Input,
 	Platform,
 };
-use renderer::Renderer;
+use render::renderer::Renderer;
 use window::Window;
 
 
 mod font;
 mod images;
 mod inputhandler;
-mod renderer;
+mod render {
+	pub mod renderer;
+}
 mod window;
 
 
