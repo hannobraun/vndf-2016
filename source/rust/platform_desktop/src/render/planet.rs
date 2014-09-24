@@ -14,7 +14,6 @@ use gfx::{
 use platform::Camera;
 
 use super::{
-	camera_to_transform,
 	Graphics,
 	Transform,
 	Vertex,
@@ -101,7 +100,7 @@ impl Planet {
 		camera    : &Camera,
 	) {
 		let transform = projection
-			.mul(&camera_to_transform(camera))
+			.mul(&camera.to_transform())
 			.mul(&Matrix4::from_translation(&self.offset.extend(0.0)));
 
 		let params = Params {

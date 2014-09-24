@@ -12,7 +12,6 @@ use gfx::{
 use platform::Camera;
 
 use super::{
-	camera_to_transform,
 	Graphics,
 	Transform,
 	Vertex,
@@ -134,10 +133,8 @@ impl Grid {
 			distance   : camera.distance,
 		};
 
-		let view = camera_to_transform(&grid_camera);
-
 		let params = Params {
-			transform: projection.mul(&view).into_fixed(),
+			transform: projection.mul(&grid_camera.to_transform()).into_fixed(),
 		};
 
 		graphics.draw(

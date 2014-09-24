@@ -8,6 +8,8 @@ extern crate physics;
 use serialize::json;
 
 use cgmath::{
+	Matrix4,
+	Point3,
 	Quaternion,
 	Rad,
 	Vector3,
@@ -89,5 +91,27 @@ impl Camera {
 			perspective: (Rad::zero(), Rad::zero()),
 			distance   : 500.0,
 		}
+	}
+
+	pub fn to_transform(&self) -> Matrix4<f32> {
+		let (phi, theta) = self.perspective;
+
+		let x = self.distance * theta.s.sin() * phi.s.cos();
+		let y = self.distance * theta.s.sin() * phi.s.sin();
+		let z = self.distance * theta.s.cos();
+
+		Matrix4::look_at(
+			&Point3::new(
+				(self.center[0] + x) as f32,
+				(self.center[1] + y) as f32,
+				(self.center[2] + z) as f32,
+			),
+			&Point3::new(
+				self.center[0] as f32,
+				self.center[1] as f32,
+				self.center[2] as f32,
+			),
+			&Vector3::new(0.0, 0.0, 1.0),
+		)
 	}
 }

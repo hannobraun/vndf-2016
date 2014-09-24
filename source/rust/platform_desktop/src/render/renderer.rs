@@ -27,7 +27,6 @@ use platform::{
 use window::Window;
 
 use super::{
-	camera_to_transform,
 	Graphics,
 	Transform,
 };
@@ -141,7 +140,7 @@ impl Renderer {
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let icon = self.icons[icon_id.to_string()];
 		let screen_position = self.perspective()
-			.mul(&camera_to_transform(camera))
+			.mul(&camera.to_transform())
 			.mul_v(&Vector4::new(
 				body.position[0] as f32,
 				body.position[1] as f32,
