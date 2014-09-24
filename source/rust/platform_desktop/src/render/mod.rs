@@ -53,7 +53,7 @@ fn camera_to_transform(camera: &Camera) -> Transform {
 		&Point3::new(
 			(camera.center[0] + x) as f32,
 			(camera.center[1] + y) as f32,
-			z as f32,
+			(camera.center[2] + z) as f32,
 		),
 		&Point3::new(
 			camera.center[0] as f32,
