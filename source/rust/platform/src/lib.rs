@@ -93,18 +93,24 @@ impl Camera {
 		}
 	}
 
-	pub fn to_transform(&self) -> Matrix4<f32> {
+	pub fn eye(&self) -> Vector3<f64> {
 		let (phi, theta) = self.perspective;
 
-		let x = self.distance * theta.s.sin() * phi.s.cos();
-		let y = self.distance * theta.s.sin() * phi.s.sin();
-		let z = self.distance * theta.s.cos();
+		self.center + Vector3::new(
+			self.distance * theta.s.sin() * phi.s.cos(),
+			self.distance * theta.s.sin() * phi.s.sin(),
+			self.distance * theta.s.cos(),
+		)
+	}
+
+	pub fn to_transform(&self) -> Matrix4<f32> {
+		let eye = self.eye();
 
 		Matrix4::look_at(
 			&Point3::new(
-				(self.center[0] + x) as f32,
-				(self.center[1] + y) as f32,
-				(self.center[2] + z) as f32,
+				eye.x as f32,
+				eye.y as f32,
+				eye.z as f32,
 			),
 			&Point3::new(
 				self.center[0] as f32,
