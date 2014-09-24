@@ -11,7 +11,10 @@ use gfx::{
 	ToSlice,
 };
 
+use platform::Camera;
+
 use super::{
+	camera_to_transform,
 	Graphics,
 	Transform,
 	Vertex,
@@ -92,12 +95,17 @@ impl Planet {
 
 	pub fn draw(
 		&self,
-		graphics : &mut Graphics,
-		frame    : &Frame,
-		transform: Transform,
+		graphics  : &mut Graphics,
+		frame     : &Frame,
+		projection: Transform,
+		camera    : &Camera,
 	) {
+		let transform = projection
+			.mul(&camera_to_transform(camera))
+			.mul(&Matrix4::from_translation(&self.offset.extend(0.0)));
+
 		let params = Params {
-			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
+			transform: transform.into_fixed(),
 		};
 
 		graphics.draw(

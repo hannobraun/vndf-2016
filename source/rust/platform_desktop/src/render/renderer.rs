@@ -107,10 +107,13 @@ impl Renderer {
 			projection
 		);
 
+
+
 		self.planet.draw(
 			&mut self.graphics,
 			&self.frame,
-			projection.mul(&camera_to_transform(&frame.camera))
+			projection,
+			&frame.camera,
 		);
 
 		for body in frame.ships.iter() {
