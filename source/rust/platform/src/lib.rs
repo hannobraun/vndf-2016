@@ -113,9 +113,9 @@ impl Camera {
 				eye.z as f32,
 			),
 			&Point3::new(
-				self.center[0] as f32,
-				self.center[1] as f32,
-				self.center[2] as f32,
+				self.center.x as f32,
+				self.center.y as f32,
+				self.center.z as f32,
 			),
 			&Vector3::new(0.0, 0.0, 1.0),
 		)
