@@ -48,6 +48,10 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		uniform mat4  projection;
+		uniform float distance_to_eye;
+		uniform float radius;
+
 		in vec2 point;
 
 		out vec4 out_color;
@@ -72,6 +76,19 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 			// The final color is just composed from the two previous
 			// computations.
 			out_color = vec4(color, a);
+
+			// If we're outside the circle, we're done. Otherwise, the following
+			// will mess up the depth buffer.
+			if (r > r2) {
+				return;
+			}
+
+			// Since this is a billboard, we need a bit of math to set the depth
+			// buffer value as if it were a sphere.
+			float depth  = distance_to_eye - sqrt(r2*r2 - r*r) * radius;
+			float A      = projection[2].z;
+			float B      = projection[3].z;
+			gl_FragDepth = 0.5*(-A*depth + B) / depth + 0.5;
 		}
 	"
 };
@@ -79,9 +96,11 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 #[shader_param(Batch)]
 struct Params {
-	radius   : f32,
-	transform: [[f32, ..4], ..4],
+	radius    : f32,
+	projection: [[f32, ..4], ..4],
+	transform : [[f32, ..4], ..4],
 
+	distance_to_eye   : f32,
 	camera_right_world: [f32, ..3],
 	camera_up_world   : [f32, ..3],
 }
@@ -157,9 +176,11 @@ impl Planet {
 		let transform = projection.mul(&view);
 
 		let params = Params {
-			radius   : self.radius,
-			transform: transform.into_fixed(),
+			radius    : self.radius,
+			projection: projection.into_fixed(),
+			transform : transform.into_fixed(),
 
+			distance_to_eye   : camera.eye().length() as f32,
 			camera_right_world: camera_right_world.into_fixed(),
 			camera_up_world   : camera_up_world.into_fixed(),
 		};
