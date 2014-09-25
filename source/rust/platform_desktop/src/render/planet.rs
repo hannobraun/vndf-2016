@@ -1,7 +1,6 @@
 use cgmath::{
 	EuclideanVector,
 	FixedArray,
-	Vector2,
 	Vector3,
 };
 use gfx::{
@@ -24,10 +23,10 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
-		uniform vec2 size;
-		uniform mat4 transform;
-		uniform vec3 camera_right_world;
-		uniform vec3 camera_up_world;
+		uniform float radius;
+		uniform mat4  transform;
+		uniform vec3  camera_right_world;
+		uniform vec3  camera_up_world;
 
 		in vec3 position;
 
@@ -36,8 +35,8 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		void main() {
 			vec3 position2 =
 				vec3(0.0, 0.0, 0.0)
-				+ camera_right_world * position.x * size.x
-				+ camera_up_world * position.y * size.y;
+				+ camera_right_world * position.x * radius
+				+ camera_up_world * position.y * radius;
 
 			gl_Position = transform * vec4(position2, 1.0);
 			point = position.xy;
@@ -80,7 +79,7 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 #[shader_param(Batch)]
 struct Params {
-	size     : [f32, ..2],
+	radius   : f32,
 	transform: [[f32, ..4], ..4],
 
 	camera_right_world: [f32, ..3],
@@ -90,15 +89,14 @@ struct Params {
 
 pub struct Planet {
 	batch : Batch,
-	size  : Vector2<f32>,
+	radius: f32,
 }
 
 impl Planet {
 	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-		width     : f32,
-		height    : f32,
+		radius    : f32,
 	) -> Planet {
 		let vertices = [
 			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
@@ -128,7 +126,7 @@ impl Planet {
 
 		Planet {
 			batch : batch,
-			size  : Vector2::new(width, height),
+			radius: radius,
 		}
 	}
 
@@ -159,7 +157,7 @@ impl Planet {
 		let transform = projection.mul(&view);
 
 		let params = Params {
-			size     : self.size.into_fixed(),
+			radius   : self.radius,
 			transform: transform.into_fixed(),
 
 			camera_right_world: camera_right_world.into_fixed(),

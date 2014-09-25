@@ -58,7 +58,7 @@ impl Renderer {
 			.depth(gfx::state::Less, true);
 
 		let grid   = Grid::new(&mut graphics, &draw_state);
-		let planet = Planet::new(&mut graphics, &draw_state, 5000.0, 5000.0);
+		let planet = Planet::new(&mut graphics, &draw_state, 2576.0);
 
 		let mut glyphs = HashMap::new();
 		let mut icons  = HashMap::new();
