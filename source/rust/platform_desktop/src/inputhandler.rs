@@ -113,9 +113,6 @@ impl InputHandler {
 		if self.camera_distance < 10.0 {
 			self.camera_distance = 10.0;
 		}
-		if self.camera_distance > 600.0 {
-			self.camera_distance = 600.0;
-		}
 
 		let mut input = Input::default();
 
