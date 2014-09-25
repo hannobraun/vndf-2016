@@ -94,7 +94,12 @@ pub struct Planet {
 }
 
 impl Planet {
-	pub fn new(graphics: &mut Graphics, width: f32, height: f32) -> Planet {
+	pub fn new(
+		graphics  : &mut Graphics,
+		draw_state: &gfx::DrawState,
+		width     : f32,
+		height    : f32,
+	) -> Planet {
 		let vertices = [
 			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
@@ -117,7 +122,7 @@ impl Planet {
 				&program,
 				&mesh,
 				slice,
-				&gfx::DrawState::new().blend(gfx::BlendAlpha)
+				draw_state,
 			)
 			.unwrap();
 
