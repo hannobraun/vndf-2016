@@ -58,8 +58,10 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 			float r = length(point);
 
+			float atmosphere_height = 0.05;
+
 			float r2 = 0.5;
-			float r1 = r2 - 0.05;
+			float r1 = r2 - atmosphere_height;
 
 			float a = 1.0 - (1.0 / (r2 - r1) * (r - r1));
 
