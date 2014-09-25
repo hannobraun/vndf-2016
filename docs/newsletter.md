@@ -52,6 +52,7 @@ News for October:
 - http://www.abc.net.au/news/2014-09-21/japanese-construction-giants-promise-space-elevator-by-2050/5756206
 - http://www.nytimes.com/2014/09/22/science/space/nasa-craft-mars.html
 - Maven and MOM arriving at Mars
+- http://www.reddit.com/r/space/comments/2hdei3/actual_colour_photograph_of_comet_67p_contrast/
 
 News for any month:
 - Asteroid video by Scott Manley
