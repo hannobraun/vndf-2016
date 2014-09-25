@@ -33,6 +33,7 @@ world!(
 	}
 	Ship(Body, Player, Visual): |client_id: ConnId| {
 		let mut body = Body::default();
+		body.position = Vector3::new(3000.0, 0.0, 0.0);
 		body.velocity = Vector3::new(300.0, 0.0, 0.0);
 
 		let player = Player {
