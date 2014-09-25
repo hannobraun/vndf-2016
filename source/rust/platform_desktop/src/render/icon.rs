@@ -89,6 +89,7 @@ impl Icon {
 
 		Icon::new(
 			graphics,
+			&gfx::DrawState::new().blend(gfx::BlendAlpha),
 			glyph.size[0],
 			glyph.size[1],
 			data.as_slice(),
@@ -99,6 +100,7 @@ impl Icon {
 	pub fn from_image(graphics: &mut Graphics, image: Image) -> Icon {
 		Icon::new(
 			graphics,
+			&gfx::DrawState::new().blend(gfx::BlendAlpha),
 			image.width as f32,
 			image.height as f32,
 			image.data.as_slice(),
@@ -107,11 +109,12 @@ impl Icon {
 	}
 
 	fn new(
-		graphics: &mut Graphics,
-		width   : f32,
-		height  : f32,
-		data    : &[u8],
-		center  : bool,
+		graphics  : &mut Graphics,
+		draw_state: &gfx::DrawState,
+		width     : f32,
+		height    : f32,
+		data      : &[u8],
+		center    : bool,
 	) -> Icon {
 		let vertices = [
 			Vertex::new([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
@@ -159,7 +162,7 @@ impl Icon {
 				&program,
 				&mesh,
 				slice,
-				&gfx::DrawState::new().blend(gfx::BlendAlpha)
+				draw_state,
 			)
 			.unwrap();
 
