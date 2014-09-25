@@ -70,7 +70,7 @@ impl Renderer {
 			if c != ' ' {
 				icons.insert(
 					c.to_string(),
-					Icon::from_glyph(&mut graphics, &glyph)
+					Icon::from_glyph(&mut graphics, &draw_state, &glyph)
 				);
 			}
 			glyphs.insert(c, glyph);

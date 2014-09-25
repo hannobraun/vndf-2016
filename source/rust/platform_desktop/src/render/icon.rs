@@ -74,7 +74,11 @@ pub struct Icon {
 }
 
 impl Icon {
-	pub fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Icon {
+	pub fn from_glyph(
+		graphics  : &mut Graphics,
+		draw_state: &gfx::DrawState,
+		glyph     : &Glyph
+	) -> Icon {
 		let data = Vec::from_fn(
 			glyph.data.len() * 4,
 			|i| {
@@ -89,7 +93,7 @@ impl Icon {
 
 		Icon::new(
 			graphics,
-			&gfx::DrawState::new().blend(gfx::BlendAlpha),
+			draw_state,
 			glyph.size[0],
 			glyph.size[1],
 			data.as_slice(),
