@@ -56,9 +56,13 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 		void main() {
 			float r = length(point);
 
+			// Lighten the circle a bit towards the center to give the
+			// perception of roundness and depth.
 			vec3 base_color = vec3(0.0, 0.45, 0.0);
 			vec3 color      = base_color * (1.0 - r * 0.5);
 
+			// At the edges, the planet should not be completely solid, to give
+			// the appearance of an atmosphere.
 			float atmosphere_height = 0.03;
 
 			float r2 = 0.5;
@@ -66,6 +70,8 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 			float a = 1.0 - (1.0 / (r2 - r1) * (r - r1));
 
+			// The final color is just composed from the two previous
+			// computations.
 			out_color = vec4(color, a);
 		}
 	"
