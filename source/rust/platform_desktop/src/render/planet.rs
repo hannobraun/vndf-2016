@@ -54,7 +54,7 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 		out vec4 out_color;
 
 		void main() {
-			vec3 color = vec3(1.0, 1.0, 1.0);
+			vec3 color = vec3(0.0, 0.45, 0.0);
 
 			float r = length(point);
 
