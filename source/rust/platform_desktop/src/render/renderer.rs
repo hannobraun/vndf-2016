@@ -55,7 +55,7 @@ impl Renderer {
 		let frame = gfx::Frame::new(window.width, window.height);
 
 		let grid   = Grid::new(&mut graphics);
-		let planet = Planet::new(&mut graphics, 300.0, 300.0);
+		let planet = Planet::new(&mut graphics, 5000.0, 5000.0);
 
 		let mut glyphs = HashMap::new();
 		let mut icons  = HashMap::new();
