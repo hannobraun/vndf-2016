@@ -31,6 +31,8 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		in vec3 position;
 
+		out vec2 point;
+
 		void main() {
 			vec3 position2 =
 				vec3(0.0, 0.0, 0.0)
@@ -38,6 +40,7 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 				+ camera_up_world * position.y * size.y;
 
 			gl_Position = transform * vec4(position2, 1.0);
+			point = position.xy;
 		}
 	"
 };
@@ -46,10 +49,21 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		in vec2 point;
+
 		out vec4 out_color;
 
 		void main() {
-			out_color = vec4(1.0, 1.0, 1.0, 1.0);
+			vec3 color = vec3(1.0, 1.0, 1.0);
+
+			float r = length(point);
+
+			float r2 = 0.5;
+			float r1 = r2 - 0.05;
+
+			float a = 1.0 - (1.0 / (r2 - r1) * (r - r1));
+
+			out_color = vec4(color, a);
 		}
 	"
 };
