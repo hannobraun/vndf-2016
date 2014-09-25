@@ -38,7 +38,7 @@ impl InputHandler {
 			thrust    : false,
 			thrust_key: false,
 
-			camera_angle   : (angle, angle),
+			camera_angle   : (-angle, angle),
 			camera_distance: 10000.0,
 		}
 	}
