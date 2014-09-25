@@ -53,7 +53,9 @@ impl Renderer {
 		let mut graphics = gfx::Graphics::new(window.new_device());
 
 		let frame      = gfx::Frame::new(window.width, window.height);
-		let draw_state = gfx::DrawState::new().blend(gfx::BlendAlpha);
+		let draw_state = gfx::DrawState::new()
+			.blend(gfx::BlendAlpha)
+			.depth(gfx::state::Less, true);
 
 		let grid   = Grid::new(&mut graphics, &draw_state);
 		let planet = Planet::new(&mut graphics, &draw_state, 5000.0, 5000.0);
@@ -96,10 +98,10 @@ impl Renderer {
 		self.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.0, 1.0],
-				depth  : 0.0,
+				depth  : 1.0,
 				stencil: 0,
 			},
-			gfx::Color,
+			gfx::Color | gfx::Depth,
 			&self.frame
 		);
 
