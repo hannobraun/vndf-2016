@@ -97,10 +97,14 @@ impl Icon {
 		)
 	}
 
-	pub fn from_image(graphics: &mut Graphics, image: Image) -> Icon {
+	pub fn from_image(
+		graphics  : &mut Graphics,
+		draw_state: &gfx::DrawState,
+		image     : Image
+	) -> Icon {
 		Icon::new(
 			graphics,
-			&gfx::DrawState::new().blend(gfx::BlendAlpha),
+			draw_state,
 			image.width as f32,
 			image.height as f32,
 			image.data.as_slice(),
