@@ -54,6 +54,7 @@ impl Renderer {
 
 		let frame      = gfx::Frame::new(window.width, window.height);
 		let draw_state = gfx::DrawState::new()
+			.multi_sample()
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 

@@ -21,6 +21,7 @@ impl Window {
 		glfw.window_hint(glfw::ContextVersion(3, 2));
 		glfw.window_hint(glfw::OpenglForwardCompat(true));
 		glfw.window_hint(glfw::OpenglProfile(glfw::OpenGlCoreProfile));
+		glfw.window_hint(glfw::Samples(16));
 
 		let (window, _) =
 			glfw.create_window(
