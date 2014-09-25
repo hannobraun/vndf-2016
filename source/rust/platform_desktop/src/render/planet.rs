@@ -66,8 +66,8 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 			// Lighten the circle a bit towards the center to give the
 			// perception of roundness and depth.
-			vec3 base_color = vec3(0.0, 0.45, 0.0);
-			vec3 color      = base_color * (1.0 - r * 0.5);
+			vec3 base_color = vec3(0.8, 0.68, 0.27);
+			vec3 color      = base_color * (1.0 - r * 0.2);
 
 			// At the edges, the planet should not be completely solid, to give
 			// the appearance of an atmosphere.
