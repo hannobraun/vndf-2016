@@ -64,7 +64,7 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 			// the appearance of an atmosphere.
 			float atmosphere_height = 0.03;
 
-			float r2 = 0.5;
+			float r2 = 1.0;
 			float r1 = r2 - atmosphere_height;
 
 			float a = 1.0 - (1.0 / (r2 - r1) * (r - r1));
@@ -99,10 +99,10 @@ impl Planet {
 		radius    : f32,
 	) -> Planet {
 		let vertices = [
-			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -0.5,  0.5, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  0.5,  0.5, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
