@@ -57,7 +57,7 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 		out vec4 out_color;
 
 		void main() {
-			float atmosphere_height = 0.03;
+			float atmosphere_height = 0.06;
 
 			float r2 = 1.0;
 			float r1 = r2 - atmosphere_height;
