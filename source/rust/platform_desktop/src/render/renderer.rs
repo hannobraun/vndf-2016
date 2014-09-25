@@ -52,9 +52,10 @@ impl Renderer {
 	pub fn new(window: Rc<Window>, images: Images, font: Font) -> Renderer {
 		let mut graphics = gfx::Graphics::new(window.new_device());
 
-		let frame = gfx::Frame::new(window.width, window.height);
+		let frame      = gfx::Frame::new(window.width, window.height);
+		let draw_state = gfx::DrawState::new().blend(gfx::BlendAlpha);
 
-		let grid   = Grid::new(&mut graphics);
+		let grid   = Grid::new(&mut graphics, &draw_state);
 		let planet = Planet::new(&mut graphics, 5000.0, 5000.0);
 
 		let mut glyphs = HashMap::new();

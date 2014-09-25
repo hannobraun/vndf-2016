@@ -56,7 +56,7 @@ pub struct Grid {
 }
 
 impl Grid {
-	pub fn new(graphics: &mut Graphics) -> Grid {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Grid {
 		let grid_data = [
 			Vertex::without_tex([ -5000.0, -5000.0, 0.0 ]),
 			Vertex::without_tex([ -5000.0,  5000.0, 0.0 ]),
@@ -100,7 +100,7 @@ impl Grid {
 				&program,
 				&mesh,
 				slice,
-				&gfx::DrawState::new().blend(gfx::BlendAlpha)
+				draw_state,
 			)
 			.unwrap();
 
