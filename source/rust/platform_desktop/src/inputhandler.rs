@@ -39,7 +39,7 @@ impl InputHandler {
 			thrust_key: false,
 
 			camera_angle   : (angle, angle),
-			camera_distance: 500.0,
+			camera_distance: 10000.0,
 		}
 	}
 
@@ -102,7 +102,7 @@ impl InputHandler {
 			*self.camera_angle.mut1() = deg(179.0).to_rad();
 		}
 
-		let camera_speed = 10.0;
+		let camera_speed = 100.0;
 		if self.window.key_pressed(glfw::KeyR) {
 			self.camera_distance -= camera_speed;
 		}
