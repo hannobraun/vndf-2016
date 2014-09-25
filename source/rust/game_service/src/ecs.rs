@@ -26,14 +26,14 @@ world!(
 	Missile(Body, Visual): |position: Vector3<f64>, attitude: Quaternion<f64>| {
 		let mut body = Body::default();
 		body.position = position;
-		body.velocity = Vector3::new(60.0, 0.0, 0.0);
+		body.velocity = Vector3::new(600.0, 0.0, 0.0);
 		body.attitude = attitude;
 
 		(body, ShowAsMissile)
 	}
 	Ship(Body, Player, Visual): |client_id: ConnId| {
 		let mut body = Body::default();
-		body.velocity = Vector3::new(30.0, 0.0, 0.0);
+		body.velocity = Vector3::new(300.0, 0.0, 0.0);
 
 		let player = Player {
 			client_id    : client_id,
