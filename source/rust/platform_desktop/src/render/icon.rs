@@ -28,14 +28,14 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		uniform mat4 transform;
 
-		in vec3 position;
+		in vec3 vertex;
 		in vec2 tex_coord;
 
 		out vec2 tex_coord_f;
 
 		void main()
 		{
-			gl_Position = transform * vec4(position, 1.0);
+			gl_Position = transform * vec4(vertex, 1.0);
 			tex_coord_f = tex_coord;
 		}
 	"

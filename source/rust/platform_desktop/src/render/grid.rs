@@ -24,10 +24,10 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		uniform mat4 transform;
 
-		in vec3 position;
+		in vec3 vertex;
 
 		void main() {
-			gl_Position = transform * vec4(position, 1.0);
+			gl_Position = transform * vec4(vertex, 1.0);
 		}
 	"
 };

@@ -28,18 +28,18 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		uniform vec3  camera_right_world;
 		uniform vec3  camera_up_world;
 
-		in vec3 position;
+		in vec3 vertex;
 
 		out vec2 point;
 
 		void main() {
 			vec3 position2 =
 				vec3(0.0, 0.0, 0.0)
-				+ camera_right_world * position.x * radius
-				+ camera_up_world * position.y * radius;
+				+ camera_right_world * vertex.x * radius
+				+ camera_up_world * vertex.y * radius;
 
 			gl_Position = transform * vec4(position2, 1.0);
-			point = position.xy;
+			point = vertex.xy;
 		}
 	"
 };
