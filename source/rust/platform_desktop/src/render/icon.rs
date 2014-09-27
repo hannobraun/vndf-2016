@@ -26,6 +26,7 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		uniform vec2 size;
 		uniform mat4 transform;
 
 		in vec3 vertex;
@@ -35,7 +36,14 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 
 		void main()
 		{
-			gl_Position = transform * vec4(vertex, 1.0);
+			gl_Position =
+				transform
+				* vec4(
+					vertex.x * size.x,
+					vertex.y * size.y,
+					vertex.z,
+					1.0
+				);
 			tex_coord_f = tex_coord;
 		}
 	"
@@ -61,6 +69,7 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 #[shader_param(IconBatch)]
 struct Params {
+	size     : [f32, ..2],
 	transform: [[f32, ..4], ..4],
 	tex      : gfx::shade::TextureParam,
 }
@@ -125,10 +134,10 @@ impl Icon {
 		center    : bool,
 	) -> Icon {
 		let vertices = [
-			Vertex::new([   0.0,    0.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([ width,    0.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([   0.0, height, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([ width, height, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([ 1.0, 0.0, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([ 0.0, 1.0, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([ 1.0, 1.0, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
@@ -192,6 +201,7 @@ impl Icon {
 		transform: &Transform,
 	) {
 		let params = Params {
+			size     : self.size.into_fixed(),
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
 			tex      : self.param,
 		};
