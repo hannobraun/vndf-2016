@@ -193,9 +193,9 @@ impl Renderer {
 	fn draw_ui_overlay(&mut self, input: Input) {
 		let projection = self.ortho();
 
-		let left   = -(self.window.width as f32) / 2.0;
+		let left   = -self.window.size.x / 2.0;
 		let right  = -left;
-		let bottom = -(self.window.height as f32) / 2.0;
+		let bottom = -self.window.size.y / 2.0;
 
 
 		self.draw_text(
