@@ -257,7 +257,7 @@ impl Renderer {
 	fn perspective(&self) -> Transform {
 		cgmath::perspective(
 			Deg { s: 45.0f32 },
-			self.window.width as f32 / self.window.height as f32,
+			self.window.size.x / self.window.size.y,
 			10.0, 100000.0,
 		)
 	}
