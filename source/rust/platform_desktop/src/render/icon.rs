@@ -39,8 +39,7 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 			gl_Position =
 				transform
 				* vec4(
-					vertex.x * size.x,
-					vertex.y * size.y,
+					vertex.xy * size.xy,
 					vertex.z,
 					1.0
 				);
