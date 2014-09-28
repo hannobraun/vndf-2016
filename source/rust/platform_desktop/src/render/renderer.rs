@@ -154,11 +154,12 @@ impl Renderer {
 				body.position[2] as f32,
 				1.0,
 			));
+		let screen_position = screen_position.div_s(screen_position.w);
 
 		let transform = self.ortho()
 			.mul(&Matrix4::from_translation(&Vector3::new(
-				screen_position.x / screen_position.w * self.window.size.x,
-				screen_position.y / screen_position.w * self.window.size.y,
+				screen_position.x / self.window.size.x,
+				screen_position.y / self.window.size.y,
 				0.0,
 			)));
 
