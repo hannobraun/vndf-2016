@@ -12,25 +12,12 @@ use gfx::{
 use platform::Camera;
 
 use super::{
+	shaders,
 	Graphics,
 	Transform,
 	Vertex,
 };
 
-
-static VERTEX_SHADER: gfx::ShaderSource = shaders! {
-	GLSL_150: b"
-		#version 150 core
-
-		uniform mat4 transform;
-
-		in vec3 vertex;
-
-		void main() {
-			gl_Position = transform * vec4(vertex, 1.0);
-		}
-	"
-};
 
 static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
@@ -106,7 +93,7 @@ impl Grid {
 
 		let program = graphics.device
 			.link_program(
-				VERTEX_SHADER.clone(),
+				shaders::vertex::SIMPLE.clone(),
 				FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));

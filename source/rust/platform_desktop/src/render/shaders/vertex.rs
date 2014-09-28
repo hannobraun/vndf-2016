@@ -25,3 +25,17 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 		}
 	"
 };
+
+pub static SIMPLE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform mat4 transform;
+
+		in vec3 vertex;
+
+		void main() {
+			gl_Position = transform * vec4(vertex, 1.0);
+		}
+	"
+};
