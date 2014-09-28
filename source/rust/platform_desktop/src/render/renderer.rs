@@ -149,9 +149,9 @@ impl Renderer {
 		let screen_position = self.perspective()
 			.mul(&camera.to_transform())
 			.mul_v(&Vector4::new(
-				body.position[0] as f32,
-				body.position[1] as f32,
-				body.position[2] as f32,
+				body.position.x as f32,
+				body.position.y as f32,
+				body.position.z as f32,
 				1.0,
 			));
 		let screen_position = screen_position.div_s(screen_position.w);
