@@ -32,7 +32,7 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 		in vec3 vertex;
 		in vec2 tex_coord;
 
-		out vec2 tex_coord_f;
+		out vec2 texture_coordinate;
 
 		void main()
 		{
@@ -43,7 +43,7 @@ static VERTEX_SHADER: gfx::ShaderSource = shaders! {
 					vertex.z,
 					1.0
 				);
-			tex_coord_f = tex_coord;
+			texture_coordinate = tex_coord;
 		}
 	"
 };
@@ -54,13 +54,13 @@ static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 
 		uniform sampler2D tex;
 
-		in vec2 tex_coord_f;
+		in vec2 texture_coordinate;
 
 		out vec4 out_color;
 
 		void main()
 		{
-			out_color = texture(tex, tex_coord_f);
+			out_color = texture(tex, texture_coordinate);
 		}
 	"
 };
