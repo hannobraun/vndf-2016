@@ -16,37 +16,12 @@ use font::Glyph;
 use images::Image;
 
 use super::{
+	shaders,
 	Graphics,
 	Transform,
 	Vertex,
 };
 
-
-static VERTEX_SHADER: gfx::ShaderSource = shaders! {
-	GLSL_150: b"
-		#version 150 core
-
-		uniform vec2 size;
-		uniform mat4 transform;
-
-		in vec3 vertex;
-		in vec2 tex_coord;
-
-		out vec2 texture_coordinate;
-
-		void main()
-		{
-			gl_Position =
-				transform
-				* vec4(
-					vertex.xy * size.xy,
-					vertex.z,
-					1.0
-				);
-			texture_coordinate = tex_coord;
-		}
-	"
-};
 
 static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
@@ -144,7 +119,7 @@ impl Icon {
 
 		let program = graphics.device
 			.link_program(
-				VERTEX_SHADER.clone(),
+				shaders::vertex::ICON.clone(),
 				FRAGMENT_SHADER.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
