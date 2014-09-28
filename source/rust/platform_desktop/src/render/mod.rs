@@ -30,11 +30,4 @@ impl Vertex {
 			tex_coord: tex_coord,
 		}
 	}
-
-	fn without_tex(position: [f32, ..3]) -> Vertex {
-		Vertex {
-			vertex   : position,
-			tex_coord: [0.0, 0.0],
-		}
-	}
 }
