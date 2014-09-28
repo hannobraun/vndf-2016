@@ -8,6 +8,7 @@ mod grid;
 mod icon;
 mod planet;
 mod shaders {
+	pub mod fragment;
 	pub mod vertex;
 }
 
