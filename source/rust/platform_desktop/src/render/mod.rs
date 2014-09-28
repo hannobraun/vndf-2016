@@ -7,6 +7,9 @@ pub mod renderer;
 mod grid;
 mod icon;
 mod planet;
+mod shaders {
+	pub mod vertex;
+}
 
 
 type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;
