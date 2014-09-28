@@ -133,10 +133,10 @@ impl Icon {
 		center    : bool,
 	) -> Icon {
 		let vertices = [
-			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([ 1.0, 0.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ 0.0, 1.0, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([ 1.0, 1.0, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([ -0.5,  0.5, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([  0.5,  0.5, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
@@ -183,7 +183,7 @@ impl Icon {
 			.unwrap();
 
 		let size   = Vector2::new(width as f32, height as f32);
-		let offset = if center { size.mul_s(-0.5) } else { Vector2::zero() };
+		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
 
 		Icon {
 			batch : batch,

@@ -169,7 +169,7 @@ impl Renderer {
 			&transform
 		);
 
-		let mut text_position = icon.size + icon.offset;
+		let mut text_position = icon.size.div_s(2.0) + icon.offset;
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
