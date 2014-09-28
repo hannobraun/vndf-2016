@@ -157,8 +157,8 @@ impl Renderer {
 
 		let transform = self.ortho()
 			.mul(&Matrix4::from_translation(&Vector3::new(
-				screen_position.x / screen_position.w * self.window.width as f32,
-				screen_position.y / screen_position.w * self.window.height as f32,
+				screen_position.x / screen_position.w * self.window.size.x,
+				screen_position.y / screen_position.w * self.window.size.y,
 				0.0,
 			)));
 
