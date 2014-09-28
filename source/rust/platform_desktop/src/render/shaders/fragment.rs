@@ -49,3 +49,15 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 		}
 	"
 };
+
+pub static SIMPLE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		out vec4 out_color;
+
+		void main() {
+			out_color = vec4(1.0, 1.0, 1.0, 1.0);
+		}
+	"
+};

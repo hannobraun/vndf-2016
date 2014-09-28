@@ -19,19 +19,6 @@ use super::{
 };
 
 
-static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
-	GLSL_150: b"
-		#version 150 core
-
-		out vec4 out_color;
-
-		void main() {
-			out_color = vec4(1.0, 1.0, 1.0, 1.0);
-		}
-	"
-};
-
-
 #[shader_param(GridBatch)]
 struct Params {
 	transform: [[f32, ..4], ..4],
@@ -94,7 +81,7 @@ impl Grid {
 		let program = graphics.device
 			.link_program(
 				shaders::vertex::SIMPLE.clone(),
-				FRAGMENT_SHADER.clone()
+				shaders::fragment::SIMPLE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
