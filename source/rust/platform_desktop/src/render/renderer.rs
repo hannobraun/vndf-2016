@@ -246,10 +246,10 @@ impl Renderer {
 
 	fn ortho(&self) -> Transform {
 		cgmath::ortho(
-			-(self.window.width  as f32) / 2.0,
-			  self.window.width  as f32  / 2.0,
-			-(self.window.height as f32) / 2.0,
-			  self.window.height as f32  / 2.0,
+			-self.window.size.x / 2.0,
+			 self.window.size.x / 2.0,
+			-self.window.size.y / 2.0,
+			 self.window.size.y / 2.0,
 			-1.0, 1.0,
 		)
 	}
