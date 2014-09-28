@@ -1,3 +1,4 @@
+use cgmath::Vector2;
 use gfx;
 use glfw;
 use glfw::Context;
@@ -6,6 +7,7 @@ use glfw::Context;
 pub struct Window {
 	pub width : u16,
 	pub height: u16,
+	pub size  : Vector2<f32>,
 
 	glfw       : glfw::Glfw,
 	glfw_window: glfw::Window
@@ -37,6 +39,7 @@ impl Window {
 		Window {
 			width : width,
 			height: height,
+			size  : Vector2::new(width as f32, height as f32),
 
 			glfw       : glfw,
 			glfw_window: window
