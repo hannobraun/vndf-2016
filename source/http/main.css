@@ -88,12 +88,12 @@ main.news ul {
 }
 
 table.contact * {
-	text-align    : left;
 	vertical-align: text-top;
 }
 
 table.contact th {
-	padding: 1em;
+	padding   : 1em;
+	text-align: right;
 }
 
 table.contact p {
