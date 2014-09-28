@@ -158,8 +158,8 @@ impl Renderer {
 
 		let transform = self.ortho()
 			.mul(&Matrix4::from_translation(&Vector3::new(
-				screen_position.x / self.window.size.x,
-				screen_position.y / self.window.size.y,
+				screen_position.x / self.window.size.x + self.window.size.x / 2.0,
+				screen_position.y / self.window.size.y + self.window.size.y / 2.0,
 				0.0,
 			)));
 
@@ -194,31 +194,29 @@ impl Renderer {
 	fn draw_ui_overlay(&mut self, input: Input) {
 		let projection = self.ortho();
 
-		let left   = -self.window.size.x / 2.0;
-		let right  = -left;
-		let bottom = -self.window.size.y / 2.0;
+		let right  = self.window.size.x;
 
 
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 60.0).extend(0.0)))
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 60.0).extend(0.0)))
 		);
 		self.draw_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 40.0).extend(0.0))),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 40.0).extend(0.0))),
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(left + 20.0, bottom + 20.0).extend(0.0))),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 20.0).extend(0.0))),
 		);
 
 		self.draw_text(
 			format!("{}", input.attitude).as_slice(),
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, bottom + 40.0).extend(0.0))),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, 40.0).extend(0.0))),
 		);
 		self.draw_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, bottom + 20.0).extend(0.0))),
+			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, 20.0).extend(0.0))),
 		);
 	}
 
@@ -247,10 +245,8 @@ impl Renderer {
 
 	fn ortho(&self) -> Transform {
 		cgmath::ortho(
-			-self.window.size.x / 2.0,
-			 self.window.size.x / 2.0,
-			-self.window.size.y / 2.0,
-			 self.window.size.y / 2.0,
+			0.0, self.window.size.x,
+			0.0, self.window.size.y,
 			-1.0, 1.0,
 		)
 	}
