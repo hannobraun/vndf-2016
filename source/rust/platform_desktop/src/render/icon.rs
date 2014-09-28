@@ -23,24 +23,6 @@ use super::{
 };
 
 
-static FRAGMENT_SHADER: gfx::ShaderSource = shaders! {
-	GLSL_150: b"
-		#version 150 core
-
-		uniform sampler2D tex;
-
-		in vec2 texture_coordinate;
-
-		out vec4 out_color;
-
-		void main()
-		{
-			out_color = texture(tex, texture_coordinate);
-		}
-	"
-};
-
-
 #[shader_param(IconBatch)]
 struct Params {
 	size     : [f32, ..2],
@@ -120,7 +102,7 @@ impl Icon {
 		let program = graphics.device
 			.link_program(
 				shaders::vertex::ICON.clone(),
-				FRAGMENT_SHADER.clone()
+				shaders::fragment::TEXTURE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 

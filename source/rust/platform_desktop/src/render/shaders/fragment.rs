@@ -61,3 +61,20 @@ pub static SIMPLE: gfx::ShaderSource = shaders! {
 		}
 	"
 };
+
+pub static TEXTURE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform sampler2D tex;
+
+		in vec2 texture_coordinate;
+
+		out vec4 out_color;
+
+		void main()
+		{
+			out_color = texture(tex, texture_coordinate);
+		}
+	"
+};
