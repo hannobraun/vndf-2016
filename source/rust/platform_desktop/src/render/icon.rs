@@ -55,11 +55,13 @@ impl Icon {
 			}
 		);
 
+		let texture = Texture::new(data.as_slice(), glyph.size, graphics);
+
 		Icon::new(
 			graphics,
 			draw_state,
 			glyph.size,
-			data.as_slice(),
+			texture,
 			false,
 		)
 	}
@@ -69,11 +71,14 @@ impl Icon {
 		draw_state: &gfx::DrawState,
 		image     : Image
 	) -> Icon {
+		let size    = Vector2::new(image.width as f32, image.height as f32);
+		let texture = Texture::new(image.data.as_slice(), size, graphics);
+
 		Icon::new(
 			graphics,
 			draw_state,
-			Vector2::new(image.width as f32, image.height as f32),
-			image.data.as_slice(),
+			size,
+			texture,
 			true,
 		)
 	}
@@ -82,7 +87,7 @@ impl Icon {
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
 		size      : Vector2<f32>,
-		data      : &[u8],
+		texture   : Texture,
 		center    : bool,
 	) -> Icon {
 		let vertices = [
@@ -110,8 +115,6 @@ impl Icon {
 				draw_state,
 			)
 			.unwrap();
-
-		let texture = Texture::new(data, size, graphics);
 
 		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
 
