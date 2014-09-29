@@ -11,6 +11,7 @@ mod shaders {
 	pub mod fragment;
 	pub mod vertex;
 }
+mod texture;
 
 
 type Graphics  = gfx::Graphics<gfx::GlDevice, gfx::GlCommandBuffer>;

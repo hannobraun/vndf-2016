@@ -21,6 +21,7 @@ use super::{
 	Transform,
 	Vertex,
 };
+use super::texture::Texture;
 
 
 #[shader_param(Batch)]
@@ -31,10 +32,10 @@ struct Params {
 
 
 pub struct Icon {
-	pub batch : Batch,
-	pub param : gfx::shade::TextureParam,
-	pub size  : Vector2<f32>,
-	pub offset: Vector2<f32>,
+	pub batch  : Batch,
+	pub texture: Texture,
+	pub size   : Vector2<f32>,
+	pub offset : Vector2<f32>,
 }
 
 impl Icon {
@@ -135,13 +136,17 @@ impl Icon {
 			)
 			.unwrap();
 
+		let texture = Texture {
+			param: (texture, Some(sampler)),
+		};
+
 		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
 
 		Icon {
-			batch : batch,
-			param : (texture, Some(sampler)),
-			size  : size,
-			offset: offset,
+			batch  : batch,
+			texture: texture,
+			size   : size,
+			offset : offset,
 		}
 	}
 
@@ -153,7 +158,7 @@ impl Icon {
 	) {
 		let params = Params {
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
-			tex      : self.param,
+			tex      : self.texture.param,
 		};
 
 		graphics.draw(
