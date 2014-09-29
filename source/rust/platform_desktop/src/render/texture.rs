@@ -32,7 +32,7 @@ impl Texture {
 		Texture::new(data.as_slice(), glyph.size, graphics)
 	}
 
-	pub fn from_image(graphics: &mut Graphics, image: &Image) -> Texture {
+	pub fn from_image(image: &Image, graphics: &mut Graphics) -> Texture {
 		Texture::new(
 			image.data.as_slice(),
 			Vector2::new(image.width as f32, image.height as f32),

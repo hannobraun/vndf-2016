@@ -65,7 +65,7 @@ impl Renderer {
 		let mut glyphs = HashMap::new();
 		let mut icons  = HashMap::new();
 		for (path, image) in images.into_iter() {
-			let texture = Texture::from_image(&mut graphics, &image);
+			let texture = Texture::from_image(&image, &mut graphics);
 
 			icons.insert(
 				path,
