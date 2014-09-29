@@ -87,10 +87,10 @@ impl Icon {
 		center    : bool,
 	) -> Icon {
 		let vertices = [
-			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -0.5,  0.5, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  0.5,  0.5, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ -0.5 * size.x, -0.5 * size.y, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([  0.5 * size.x, -0.5 * size.y, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([ -0.5 * size.x,  0.5 * size.y, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([  0.5 * size.x,  0.5 * size.y, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
@@ -98,7 +98,7 @@ impl Icon {
 
 		let program = graphics.device
 			.link_program(
-				shaders::vertex::ICON.clone(),
+				shaders::vertex::SIMPLE.clone(),
 				shaders::fragment::TEXTURE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));

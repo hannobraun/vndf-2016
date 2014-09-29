@@ -1,32 +1,6 @@
 use gfx;
 
 
-pub static ICON: gfx::ShaderSource = shaders! {
-	GLSL_150: b"
-		#version 150 core
-
-		uniform vec2 size;
-		uniform mat4 transform;
-
-		in vec3 vertex;
-		in vec2 tex_coord;
-
-		out vec2 texture_coordinate;
-
-		void main()
-		{
-			gl_Position =
-				transform
-				* vec4(
-					vertex.xy * size.xy,
-					vertex.z,
-					1.0
-				);
-			texture_coordinate = tex_coord;
-		}
-	"
-};
-
 pub static PLANET: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
