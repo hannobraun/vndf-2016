@@ -55,7 +55,7 @@ impl Planet {
 
 		let program = graphics.device
 			.link_program(
-				shaders::vertex::PLANET.clone(),
+				shaders::vertex::SCALED_BILLBOARD.clone(),
 				shaders::fragment::PLANET.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));

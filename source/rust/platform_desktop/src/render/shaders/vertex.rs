@@ -25,7 +25,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static PLANET: gfx::ShaderSource = shaders! {
+pub static SCALED_BILLBOARD: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
