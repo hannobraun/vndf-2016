@@ -59,8 +59,7 @@ impl Icon {
 		Icon::new(
 			graphics,
 			draw_state,
-			glyph.size[0],
-			glyph.size[1],
+			glyph.size,
 			data.as_slice(),
 			false,
 		)
@@ -74,8 +73,7 @@ impl Icon {
 		Icon::new(
 			graphics,
 			draw_state,
-			image.width as f32,
-			image.height as f32,
+			Vector2::new(image.width as f32, image.height as f32),
 			image.data.as_slice(),
 			true,
 		)
@@ -84,8 +82,7 @@ impl Icon {
 	fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-		width     : f32,
-		height    : f32,
+		size      : Vector2<f32>,
 		data      : &[u8],
 		center    : bool,
 	) -> Icon {
@@ -107,8 +104,8 @@ impl Icon {
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
 		let texture_info = gfx::tex::TextureInfo {
-			width : width as u16,
-			height: height as u16,
+			width : size.x as u16,
+			height: size.y as u16,
 			depth : 1,
 			levels: -1,
 			kind  : gfx::tex::Texture2D,
@@ -139,7 +136,6 @@ impl Icon {
 			)
 			.unwrap();
 
-		let size   = Vector2::new(width as f32, height as f32);
 		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
 
 		Icon {
