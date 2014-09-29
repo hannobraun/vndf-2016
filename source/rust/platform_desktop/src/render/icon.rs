@@ -6,7 +6,6 @@ use cgmath::{
 };
 use gfx::{
 	mod,
-	Device,
 	DeviceHelper,
 	Frame,
 	ToSlice,
@@ -103,30 +102,6 @@ impl Icon {
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
-		let texture_info = gfx::tex::TextureInfo {
-			width : size.x as u16,
-			height: size.y as u16,
-			depth : 1,
-			levels: -1,
-			kind  : gfx::tex::Texture2D,
-			format: gfx::tex::RGBA8,
-		};
-
-		let texture = graphics.device.create_texture(texture_info).unwrap();
-		graphics.device.update_texture(
-			&texture,
-			&texture_info.to_image_info(),
-			data
-		)
-		.unwrap();
-
-		let sampler = graphics.device.create_sampler(
-			gfx::tex::SamplerInfo::new(
-				gfx::tex::Bilinear,
-				gfx::tex::Clamp
-			)
-		);
-
 		let batch = graphics
 			.make_batch(
 				&program,
@@ -136,9 +111,7 @@ impl Icon {
 			)
 			.unwrap();
 
-		let texture = Texture {
-			param: (texture, Some(sampler)),
-		};
+		let texture = Texture::new(data, size, graphics);
 
 		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
 
