@@ -15,7 +15,7 @@ pub struct Texture {
 }
 
 impl Texture {
-	pub fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Texture {
+	pub fn from_glyph(glyph: &Glyph, graphics: &mut Graphics) -> Texture {
 		let data = Vec::from_fn(
 			glyph.data.len() * 4,
 			|i| {

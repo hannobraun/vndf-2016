@@ -72,7 +72,7 @@ impl Renderer {
 		}
 		for (c, glyph) in font.into_iter() {
 			if c != ' ' {
-				let texture = Texture::from_glyph(&mut graphics, &glyph);
+				let texture = Texture::from_glyph(&glyph, &mut graphics);
 				icons.insert(
 					c.to_string(),
 					Icon::new(
