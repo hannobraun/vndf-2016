@@ -60,7 +60,6 @@ impl Icon {
 		Icon::new(
 			graphics,
 			draw_state,
-			glyph.size,
 			texture,
 			false,
 		)
@@ -77,7 +76,6 @@ impl Icon {
 		Icon::new(
 			graphics,
 			draw_state,
-			size,
 			texture,
 			true,
 		)
@@ -86,10 +84,11 @@ impl Icon {
 	fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-		size      : Vector2<f32>,
 		texture   : Texture,
 		center    : bool,
 	) -> Icon {
+		let size = texture.size;
+
 		let vertices = [
 			Vertex::new([ -0.5 * size.x, -0.5 * size.y, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  0.5 * size.x, -0.5 * size.y, 0.0 ], [ 1.0, 1.0 ]),
