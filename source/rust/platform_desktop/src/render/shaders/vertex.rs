@@ -1,6 +1,30 @@
 use gfx;
 
 
+pub static BILLBOARD: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform vec3 position;
+		uniform mat4 transform;
+		uniform vec2 size;
+		uniform vec2 screen_size;
+
+		in vec3 vertex;
+		in vec2 tex_coord;
+
+		out vec2 texture_coordinate;
+
+		void main() {
+			gl_Position = transform * vec4(position, 1.0);
+			gl_Position /= gl_Position.w;
+			gl_Position.xy += vertex.xy * (size * 2.0) / screen_size;
+
+			texture_coordinate = tex_coord;
+		}
+	"
+};
+
 pub static PLANET: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
