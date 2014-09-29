@@ -11,7 +11,6 @@ use gfx::{
 	ToSlice,
 };
 
-use font::Glyph;
 use images::Image;
 
 use super::{
@@ -38,33 +37,6 @@ pub struct Icon {
 }
 
 impl Icon {
-	pub fn from_glyph(
-		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
-		glyph     : &Glyph
-	) -> Icon {
-		let data = Vec::from_fn(
-			glyph.data.len() * 4,
-			|i| {
-				if (i + 1) % 4 == 0 {
-					glyph.data[i / 4]
-				}
-				else {
-					255
-				}
-			}
-		);
-
-		let texture = Texture::new(data.as_slice(), glyph.size, graphics);
-
-		Icon::new(
-			graphics,
-			draw_state,
-			texture,
-			false,
-		)
-	}
-
 	pub fn from_image(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,

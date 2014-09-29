@@ -4,6 +4,8 @@ use gfx::{
 	Device,
 };
 
+use font::Glyph;
+
 use super::Graphics;
 
 
@@ -13,6 +15,22 @@ pub struct Texture {
 }
 
 impl Texture {
+	pub fn from_glyph(graphics: &mut Graphics, glyph: &Glyph) -> Texture {
+		let data = Vec::from_fn(
+			glyph.data.len() * 4,
+			|i| {
+				if (i + 1) % 4 == 0 {
+					glyph.data[i / 4]
+				}
+				else {
+					255
+				}
+			}
+		);
+
+		Texture::new(data.as_slice(), glyph.size, graphics)
+	}
+
 	pub fn new(
 		data    : &[u8],
 		size    : Vector2<f32>,

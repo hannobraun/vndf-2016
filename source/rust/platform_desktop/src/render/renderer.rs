@@ -33,6 +33,7 @@ use super::{
 use super::grid::Grid;
 use super::icon::Icon;
 use super::planet::Planet;
+use super::texture::Texture;
 
 
 pub struct Renderer {
@@ -71,9 +72,15 @@ impl Renderer {
 		}
 		for (c, glyph) in font.into_iter() {
 			if c != ' ' {
+				let texture = Texture::from_glyph(&mut graphics, &glyph);
 				icons.insert(
 					c.to_string(),
-					Icon::from_glyph(&mut graphics, &draw_state, &glyph)
+					Icon::new(
+						&mut graphics,
+						&draw_state,
+						texture,
+						false,
+					),
 				);
 			}
 			glyphs.insert(c, glyph);
