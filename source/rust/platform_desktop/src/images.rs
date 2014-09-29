@@ -15,7 +15,8 @@ pub struct Image {
 pub fn load() -> Images {
 	let paths = vec!(
 		"images/missile.png",
-		"images/spaceship.png");
+		"images/spaceship.png",
+	);
 
 	let mut images = HashMap::new();
 
