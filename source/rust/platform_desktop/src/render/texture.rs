@@ -8,6 +8,7 @@ use super::Graphics;
 
 
 pub struct Texture {
+	pub size : Vector2<f32>,
 	pub param: gfx::shade::TextureParam,
 }
 
@@ -42,6 +43,7 @@ impl Texture {
 		);
 
 		Texture {
+			size : size,
 			param: (texture, Some(sampler)),
 		}
 	}
