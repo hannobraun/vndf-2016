@@ -55,7 +55,7 @@ impl Billboard {
 
 		let program = graphics.device
 			.link_program(
-				shaders::vertex::BILLBOARD.clone(),
+				shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
 				shaders::fragment::TEXTURE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));

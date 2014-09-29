@@ -1,7 +1,7 @@
 use gfx;
 
 
-pub static BILLBOARD: gfx::ShaderSource = shaders! {
+pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
