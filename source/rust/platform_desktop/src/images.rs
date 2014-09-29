@@ -5,7 +5,6 @@ use stb_image::image;
 
 pub type Images = HashMap<String, Image>;
 
-
 pub fn load() -> Images {
 	let paths = vec!(
 		"images/missile.png",
