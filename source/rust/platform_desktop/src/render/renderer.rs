@@ -30,6 +30,7 @@ use super::{
 	Graphics,
 	Transform,
 };
+use super::billboard::Billboard;
 use super::grid::Grid;
 use super::icon::Icon;
 use super::planet::Planet;
@@ -42,9 +43,10 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	grid  : Grid,
-	planet: Planet,
-	icons : HashMap<String, Icon>,
+	billboards: HashMap<String, Billboard>,
+	grid      : Grid,
+	planet    : Planet,
+	icons     : HashMap<String, Icon>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -62,14 +64,15 @@ impl Renderer {
 		let grid   = Grid::new(&mut graphics, &draw_state);
 		let planet = Planet::new(&mut graphics, &draw_state, 2576.0);
 
-		let mut glyphs = HashMap::new();
-		let mut icons  = HashMap::new();
+		let mut billboards = HashMap::new();
+		let mut glyphs     = HashMap::new();
+		let mut icons      = HashMap::new();
 		for (path, image) in images.into_iter() {
 			let texture = Texture::from_image(&image, &mut graphics);
 
-			icons.insert(
+			billboards.insert(
 				path,
-				Icon::new(&mut graphics, &draw_state, texture, true)
+				Billboard::new(&mut graphics, &draw_state, texture)
 			);
 		}
 		for (c, glyph) in font.into_iter() {
@@ -94,9 +97,10 @@ impl Renderer {
 
 			frame: frame,
 
-			grid  : grid,
-			planet: planet,
-			icons : icons,
+			billboards: billboards,
+			grid      : grid,
+			planet    : planet,
+			icons     : icons,
 
 			glyphs: glyphs,
 		}
@@ -154,9 +158,10 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
-		let icon = self.icons[icon_id.to_string()];
-		let screen_position = self.perspective()
-			.mul(&camera.to_transform())
+		let billboard = self.billboards[icon_id.to_string()];
+		let view_projection = self.perspective()
+			.mul(&camera.to_transform());
+		let screen_position = view_projection
 			.mul_v(&Vector4::new(
 				body.position.x as f32,
 				body.position.y as f32,
@@ -172,13 +177,15 @@ impl Renderer {
 				0.0,
 			)));
 
-		icon.draw(
+		billboard.draw(
 			&mut self.graphics,
 			&self.frame,
-			&transform
+			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
+			&view_projection,
+			&self.window.size,
 		);
 
-		let mut text_position = icon.size.div_s(2.0) + icon.offset;
+		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + billboard.size.div_s(2.0);
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
