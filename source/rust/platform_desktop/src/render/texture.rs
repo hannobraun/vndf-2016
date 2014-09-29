@@ -5,6 +5,7 @@ use gfx::{
 };
 
 use font::Glyph;
+use images::Image;
 
 use super::Graphics;
 
@@ -29,6 +30,14 @@ impl Texture {
 		);
 
 		Texture::new(data.as_slice(), glyph.size, graphics)
+	}
+
+	pub fn from_image(graphics: &mut Graphics, image: &Image) -> Texture {
+		Texture::new(
+			image.data.as_slice(),
+			Vector2::new(image.width as f32, image.height as f32),
+			graphics
+		)
 	}
 
 	pub fn new(

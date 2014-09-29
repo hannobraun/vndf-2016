@@ -11,8 +11,6 @@ use gfx::{
 	ToSlice,
 };
 
-use images::Image;
-
 use super::{
 	shaders,
 	Graphics,
@@ -37,22 +35,6 @@ pub struct Icon {
 }
 
 impl Icon {
-	pub fn from_image(
-		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
-		image     : &Image
-	) -> Icon {
-		let size    = Vector2::new(image.width as f32, image.height as f32);
-		let texture = Texture::new(image.data.as_slice(), size, graphics);
-
-		Icon::new(
-			graphics,
-			draw_state,
-			texture,
-			true,
-		)
-	}
-
 	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
