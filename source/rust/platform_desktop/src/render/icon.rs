@@ -40,7 +40,7 @@ impl Icon {
 	pub fn from_image(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-		image     : Image
+		image     : &Image
 	) -> Icon {
 		let size    = Vector2::new(image.width as f32, image.height as f32);
 		let texture = Texture::new(image.data.as_slice(), size, graphics);

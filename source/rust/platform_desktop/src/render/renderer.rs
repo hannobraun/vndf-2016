@@ -67,7 +67,7 @@ impl Renderer {
 		for (path, image) in images.into_iter() {
 			icons.insert(
 				path,
-				Icon::from_image(&mut graphics, &draw_state, image)
+				Icon::from_image(&mut graphics, &draw_state, &image)
 			);
 		}
 		for (c, glyph) in font.into_iter() {
