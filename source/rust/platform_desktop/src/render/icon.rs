@@ -25,7 +25,6 @@ use super::{
 
 #[shader_param(IconBatch)]
 struct Params {
-	size     : [f32, ..2],
 	transform: [[f32, ..4], ..4],
 	tex      : gfx::shade::TextureParam,
 }
@@ -153,7 +152,6 @@ impl Icon {
 		transform: &Transform,
 	) {
 		let params = Params {
-			size     : self.size.into_fixed(),
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
 			tex      : self.param,
 		};
