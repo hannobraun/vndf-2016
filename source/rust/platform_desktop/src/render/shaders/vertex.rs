@@ -59,9 +59,13 @@ pub static SIMPLE: gfx::ShaderSource = shaders! {
 		uniform mat4 transform;
 
 		in vec3 vertex;
+		in vec2 tex_coord;
+
+		out vec2 texture_coordinate;
 
 		void main() {
 			gl_Position = transform * vec4(vertex, 1.0);
+			texture_coordinate = tex_coord;
 		}
 	"
 };
