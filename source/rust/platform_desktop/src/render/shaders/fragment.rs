@@ -34,18 +34,20 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 			// computations.
 			out_color = vec4(color, a);
 
-			// If we're outside the circle, we're done. Otherwise, the following
-			// will mess up the depth buffer.
 			if (r > r2) {
-				return;
+				// We're outside the circle that represents the planet. Whatever
+				// position the billboard has in space, it must not prevent any
+				// other elements from being drawn over it.
+				gl_FragDepth = 1.0;
 			}
-
-			// Since this is a billboard, we need a bit of math to set the depth
-			// buffer value as if it were a sphere.
-			float depth  = distance_to_eye - sqrt(r2*r2 - r*r) * radius;
-			float A      = projection[2].z;
-			float B      = projection[3].z;
-			gl_FragDepth = 0.5*(-A*depth + B) / depth + 0.5;
+			else {
+				// Since this is a billboard (which is flat), we need a bit of
+				// math to set the depth buffer value as if it were a sphere.
+				float depth  = distance_to_eye - sqrt(r2*r2 - r*r) * radius;
+				float A      = projection[2].z;
+				float B      = projection[3].z;
+				gl_FragDepth = 0.5*(-A*depth + B) / depth + 0.5;
+			}
 		}
 	"
 };
