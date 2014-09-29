@@ -32,8 +32,8 @@ pub fn load() -> Images {
 	images
 }
 
-fn load_image(image_path: &str) -> Result<Image, String> {
-	match image::load(&Path::new(image_path)) {
+fn load_image(path: &str) -> Result<Image, String> {
+	match image::load(&Path::new(path)) {
 		image::ImageU8(image) => {
 			let width  = image.width;
 			let height = image.height;
