@@ -81,7 +81,7 @@ impl Icon {
 		)
 	}
 
-	fn new(
+	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
 		texture   : Texture,
