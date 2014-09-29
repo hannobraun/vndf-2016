@@ -67,6 +67,7 @@ impl Renderer {
 		let mut billboards = HashMap::new();
 		let mut glyphs     = HashMap::new();
 		let mut icons      = HashMap::new();
+
 		for (path, image) in images.into_iter() {
 			let texture = Texture::from_image(&image, &mut graphics);
 
@@ -75,6 +76,7 @@ impl Renderer {
 				Billboard::new(&mut graphics, &draw_state, texture)
 			);
 		}
+
 		for (c, glyph) in font.into_iter() {
 			if c != ' ' {
 				let texture = Texture::from_glyph(&glyph, &mut graphics);
