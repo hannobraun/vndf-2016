@@ -23,7 +23,7 @@ use super::{
 };
 
 
-#[shader_param(IconBatch)]
+#[shader_param(Batch)]
 struct Params {
 	transform: [[f32, ..4], ..4],
 	tex      : gfx::shade::TextureParam,
@@ -31,7 +31,7 @@ struct Params {
 
 
 pub struct Icon {
-	pub batch : IconBatch,
+	pub batch : Batch,
 	pub param : gfx::shade::TextureParam,
 	pub size  : Vector2<f32>,
 	pub offset: Vector2<f32>,
