@@ -109,7 +109,7 @@ impl Connection {
 		let bytes_sent = unsafe {
 			ffi::send(
 				self.fd,
-				data.as_ptr() as *mut libc::c_void,
+				data.as_ptr() as *const libc::c_void,
 				data.len() as u64,
 				ffi::MSG_NOSIGNAL)
 		};
