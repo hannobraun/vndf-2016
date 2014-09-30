@@ -137,8 +137,6 @@ impl Renderer {
 			projection
 		);
 
-
-
 		self.planet.draw(
 			&mut self.graphics,
 			&self.frame,
