@@ -66,14 +66,10 @@ impl Rings {
 		frame    : &Frame,
 		transform: &Transform,
 	) {
-		let params = Params {
-			transform: transform.into_fixed(),
-		};
-
 		graphics.draw(
 			&self.batch,
-			&params,
-			frame
+			&Params { transform: transform.into_fixed() },
+			frame,
 		);
 	}
 }
