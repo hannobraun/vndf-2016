@@ -14,6 +14,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 		in vec2 tex_coord;
 
 		out vec2 texture_coordinate;
+		out vec2 point;
 
 		void main() {
 			gl_Position = transform * vec4(position, 1.0);
@@ -21,6 +22,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 			gl_Position.xy += vertex.xy * size / screen_size;
 
 			texture_coordinate = tex_coord;
+			point = vertex.xy;
 		}
 	"
 };
