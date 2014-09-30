@@ -71,5 +71,9 @@ impl Rings {
 			&Params { transform: transform.into_fixed() },
 			frame,
 		);
+
+		// It's possible to add more draw calls here to draw rotated rings for
+		// additional planes. I tried it and the result was extreme visual
+		// overload. I'll try to make do with the one ring for now.
 	}
 }
