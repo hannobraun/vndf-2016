@@ -34,6 +34,7 @@ use super::billboard::Billboard;
 use super::grid::Grid;
 use super::icon::Icon;
 use super::planet::Planet;
+use super::rings::Rings;
 use super::texture::Texture;
 
 
@@ -46,6 +47,7 @@ pub struct Renderer {
 	billboards: HashMap<String, Billboard>,
 	grid      : Grid,
 	planet    : Planet,
+	rings     : Rings,
 	icons     : HashMap<String, Icon>,
 
 	glyphs: HashMap<char, Glyph>,
@@ -63,6 +65,11 @@ impl Renderer {
 
 		let grid   = Grid::new(&mut graphics, &draw_state);
 		let planet = Planet::new(&mut graphics, &draw_state, 2576.0);
+
+		let rings = Rings::new(
+			&mut graphics,
+			&draw_state,
+		);
 
 		let mut billboards = HashMap::new();
 		let mut glyphs     = HashMap::new();
@@ -102,6 +109,7 @@ impl Renderer {
 			billboards: billboards,
 			grid      : grid,
 			planet    : planet,
+			rings     : rings,
 			icons     : icons,
 
 			glyphs: glyphs,
@@ -109,7 +117,8 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		let projection = self.perspective();
+		let projection      = self.perspective();
+		let view_projection = projection.mul(&frame.camera.to_transform());
 
 		self.graphics.clear(
 			gfx::ClearData {
@@ -152,6 +161,18 @@ impl Renderer {
 				"images/missile.png"
 			);
 		}
+
+		self.rings.draw(
+			&mut self.graphics,
+			&self.frame,
+			&view_projection.mul(&Matrix4::from_translation(
+				&Vector3::new(
+					frame.camera.center.x as f32,
+					frame.camera.center.y as f32,
+					frame.camera.center.z as f32,
+				)
+			)),
+		);
 
 		self.draw_ui_overlay(frame.input);
 
