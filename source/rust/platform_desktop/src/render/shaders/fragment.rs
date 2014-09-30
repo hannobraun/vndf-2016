@@ -100,6 +100,13 @@ pub static TEXTURE: gfx::ShaderSource = shaders! {
 		void main()
 		{
 			out_color = texture(tex, texture_coordinate);
+
+			if (out_color.a == 0.0) {
+				gl_FragDepth = 1.0;
+			}
+			else {
+				gl_FragDepth = gl_FragCoord.z;
+			}
 		}
 	"
 };
