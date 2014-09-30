@@ -82,7 +82,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 				)
 			);
 
-			out_color = vec4(1.0, 1.0, 1.0, alpha);
+			out_color = vec4(0.5, 0.5, 1.0, alpha);
 		}
 	"
 };
