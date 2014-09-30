@@ -31,7 +31,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
-		uniform mat4  transform;
+		uniform mat4 transform;
 
 		in vec3 vertex;
 
