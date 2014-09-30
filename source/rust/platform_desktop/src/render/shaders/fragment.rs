@@ -52,6 +52,21 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 	"
 };
 
+pub static RINGS: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		in vec2 point;
+
+		out vec4 out_color;
+
+		void main() {
+			float alpha = 1.0 - abs(length(point) - 0.95) * 250.0;
+			out_color = vec4(1.0, 1.0, 1.0, alpha);
+		}
+	"
+};
+
 pub static SIMPLE: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core

@@ -27,6 +27,28 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	"
 };
 
+pub static RINGS: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform mat4  transform;
+
+		in vec3 vertex;
+
+		out vec2 point;
+
+		void main() {
+			// transform[3][3] is proportional to the camera distance, thus
+			// scaling the vertex with it will make the size independent of the
+			// zoom level.
+			float s = transform[3][3] * 0.4;
+			gl_Position = transform * vec4(vertex * s, 1.0);
+
+			point = vertex.xy;
+		}
+	"
+};
+
 pub static SCALED_BILLBOARD: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
