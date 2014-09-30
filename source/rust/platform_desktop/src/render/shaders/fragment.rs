@@ -75,7 +75,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 			float outer = 0.95;
 			float inner = 0.15;
 
-			float alpha_base = 0.1;
+			float alpha_base = 0.3;
 			if (r > outer || r < inner) {
 				alpha_base = 0.0;
 			}
