@@ -97,6 +97,13 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 			}
 
 			out_color = vec4(0.5, 0.5, 1.0, alpha);
+
+			if (out_color.a == 0.0) {
+				gl_FragDepth = 1.0;
+			}
+			else {
+				gl_FragDepth = gl_FragCoord.z;
+			}
 		}
 	"
 };
