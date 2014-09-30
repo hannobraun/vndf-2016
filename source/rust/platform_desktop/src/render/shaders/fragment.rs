@@ -66,19 +66,19 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 
 		void main() {
 			float r     = length(point);
-			float d_outer = 0.95;
-			float d_inner = 0.15;
+			float outer = 0.95;
+			float inner = 0.15;
 
 			float alpha_base = 0.1;
-			if (r > d_outer || r < d_inner) {
+			if (r > outer || r < inner) {
 				alpha_base = 0.0;
 			}
 
 			float alpha = max(
 				alpha_base,
 				max(
-					ring(r, d_outer),
-					ring(r, d_inner)
+					ring(r, outer),
+					ring(r, inner)
 				)
 			);
 
