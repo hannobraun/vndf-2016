@@ -8,6 +8,7 @@ mod billboard;
 mod grid;
 mod icon;
 mod planet;
+mod rings;
 mod shaders {
 	pub mod fragment;
 	pub mod vertex;
