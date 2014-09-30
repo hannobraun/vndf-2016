@@ -80,19 +80,17 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 				alpha_base = 0.0;
 			}
 
-			float alpha = max(
-				max(
-					alpha_base,
-					max(
-						line(inner, outer, r, point, vec2(1.0, 0.0)),
-						line(inner, outer, r, point, vec2(0.0, 1.0))
-					)
-				),
-				max(
-					ring(r, outer),
-					ring(r, inner)
-				)
-			);
+			float alphas[5];
+			alphas[0] = alpha_base;
+			alphas[1] = line(inner, outer, r, point, vec2(1.0, 0.0));
+			alphas[2] = line(inner, outer, r, point, vec2(0.0, 1.0));
+			alphas[3] = ring(r, outer);
+			alphas[4] = ring(r, inner);
+
+			float alpha = 0.0;
+			for (int i = 0; i < 5; i += 1) {
+				alpha = max(alpha, alphas[i]);
+			}
 
 			out_color = vec4(0.5, 0.5, 1.0, alpha);
 		}
