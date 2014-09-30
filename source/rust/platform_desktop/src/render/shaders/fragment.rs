@@ -60,20 +60,28 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 
 		out vec4 out_color;
 
+		float ring(float r, float d) {
+			return 1.0 - abs(r - d) * 250.0;
+		}
+
 		void main() {
 			float r     = length(point);
 			float d_outer = 0.95;
 			float d_inner = 0.15;
-
-			float alpha_ring_outer = 1.0 - abs(r - d_outer) * 250.0;
-			float alpha_ring_inner = 1.0 - abs(r - d_inner) * 250.0;
 
 			float alpha_base = 0.2;
 			if (r > d_outer || r < d_inner) {
 				alpha_base = 0.0;
 			}
 
-			float alpha = max(alpha_base, max(alpha_ring_outer, alpha_ring_inner));
+			float alpha = max(
+				alpha_base,
+				max(
+					ring(r, d_outer),
+					ring(r, d_inner)
+				)
+			);
+
 			out_color = vec4(1.0, 1.0, 1.0, alpha);
 		}
 	"
