@@ -41,7 +41,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 			// transform[3][3] is proportional to the camera distance, thus
 			// scaling the vertex with it will make the size independent of the
 			// zoom level.
-			float s = transform[3][3] * 0.4;
+			float s = transform[3][3] * 0.55;
 			gl_Position = transform * vec4(vertex * s, 1.0);
 
 			point = vertex.xy;
