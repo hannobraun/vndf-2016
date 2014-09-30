@@ -5,7 +5,6 @@ use gfx;
 pub mod renderer;
 
 mod billboard;
-mod grid;
 mod icon;
 mod planet;
 mod rings;

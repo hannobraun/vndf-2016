@@ -31,7 +31,6 @@ use super::{
 	Transform,
 };
 use super::billboard::Billboard;
-use super::grid::Grid;
 use super::icon::Icon;
 use super::planet::Planet;
 use super::rings::Rings;
@@ -45,7 +44,6 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	billboards: HashMap<String, Billboard>,
-	grid      : Grid,
 	planet    : Planet,
 	rings     : Rings,
 	icons     : HashMap<String, Icon>,
@@ -63,7 +61,6 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let grid   = Grid::new(&mut graphics, &draw_state);
 		let planet = Planet::new(&mut graphics, &draw_state, 2576.0);
 
 		let rings = Rings::new(
@@ -107,7 +104,6 @@ impl Renderer {
 			frame: frame,
 
 			billboards: billboards,
-			grid      : grid,
 			planet    : planet,
 			rings     : rings,
 			icons     : icons,
@@ -128,13 +124,6 @@ impl Renderer {
 			},
 			gfx::Color | gfx::Depth,
 			&self.frame
-		);
-
-		self.grid.draw(
-			&mut self.graphics,
-			&self.frame,
-			&frame.camera,
-			projection
 		);
 
 		self.planet.draw(
