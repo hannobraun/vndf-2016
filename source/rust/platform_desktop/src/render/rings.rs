@@ -62,9 +62,9 @@ impl Rings {
 
 	pub fn draw(
 		&self,
-		graphics   : &mut Graphics,
-		frame      : &Frame,
-		transform  : &Transform,
+		graphics : &mut Graphics,
+		frame    : &Frame,
+		transform: &Transform,
 	) {
 		let params = Params {
 			transform: transform.into_fixed(),
