@@ -61,13 +61,13 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 		out vec4 out_color;
 
 		float ring(float r, float d) {
-			return 1.0 - abs(r - d) * 250.0;
+			return 1.0 - abs(r - d) * 150.0;
 		}
 		float line(float inner, float outer, float r, vec2 point, vec2 v) {
 			if (r < inner || r > outer) {
 				return 0.0;
 			}
-			return 1.0 - abs(dot(v, point)) * 250;
+			return 1.0 - abs(dot(v, point)) * 150;
 		}
 
 		void main() {
