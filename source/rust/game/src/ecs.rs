@@ -5,7 +5,7 @@ use physics::Body;
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Planet {
-	position: Vector3<f64>,
+	pub position: Vector3<f64>,
 }
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]

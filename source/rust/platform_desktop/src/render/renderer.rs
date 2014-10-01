@@ -126,14 +126,22 @@ impl Renderer {
 			&self.frame
 		);
 
-		self.planet.draw(
-			&mut self.graphics,
-			&self.frame,
-			Vector3::zero(),
-			2576.0,
-			projection,
-			&frame.camera,
-		);
+		for planet in frame.planets.iter() {
+			let position = Vector3::new(
+				planet.position.x as f32,
+				planet.position.y as f32,
+				planet.position.z as f32,
+			);
+
+			self.planet.draw(
+				&mut self.graphics,
+				&self.frame,
+				position,
+				2576.0,
+				projection,
+				&frame.camera,
+			);
+		}
 
 		for body in frame.ships.iter() {
 			self.draw_craft(

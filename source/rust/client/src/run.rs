@@ -1,4 +1,7 @@
+use cgmath::Vector3;
+
 use game::ecs::{
+	Planet,
 	ShowAsMissile,
 	ShowAsShip,
 };
@@ -82,6 +85,6 @@ fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 		camera  : camera,
 		ships   : ships,
 		missiles: missiles,
-		planets : Vec::new(),
+		planets : vec![Planet { position: Vector3::zero() }],
 	}
 }
