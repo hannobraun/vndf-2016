@@ -1,7 +1,4 @@
-use cgmath::Vector3;
-
 use game::ecs::{
-	Planet,
 	ShowAsMissile,
 	ShowAsShip,
 };
@@ -79,23 +76,18 @@ fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 		.map(|(_, &body)|
 			body)
 		.collect();
+	let planets = world.planets
+		.iter()
+		.map(|(_, &planet)|
+			planet
+		)
+		.collect();
 
 	Frame {
 		input   : input,
 		camera  : camera,
 		ships   : ships,
 		missiles: missiles,
-		planets : vec![
-			Planet {
-				position: Vector3::zero(),
-				radius  : 2576.0,
-				color   : Vector3::new(0.8, 0.68, 0.27),
-			},
-			Planet {
-				position: Vector3::new(0.0, 5000.0, 0.0),
-				radius  : 480.0,
-				color   : Vector3::new(0.5, 0.7, 0.7),
-			},
-		],
+		planets : planets,
 	}
 }

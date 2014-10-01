@@ -1,4 +1,9 @@
-use game::ecs::Visual;
+use cgmath::Vector3;
+
+use game::ecs::{
+	Planet,
+	Visual,
+};
 use game::physics::Body;
 
 
@@ -30,6 +35,15 @@ world!(
 			body,
 			visual,
 			Interpolated::new(current_time, Some(body))
+		)
+	}
+	Planet(Planet): (position: Vector3<f64>, radius: f64, color: Vector3<f32>) {
+		(
+			Planet {
+				position: position,
+				radius  : radius,
+				color   : color,
+			},
 		)
 	}
 )
