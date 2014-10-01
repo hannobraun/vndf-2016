@@ -18,10 +18,10 @@ pub enum Visual {
 
 
 world!(
-	Missile(Body, Visual): |body: Body| {
+	Missile(Body, Visual): (body: Body) {
 		(body, ShowAsMissile)
 	}
-	Ship(Body, Visual): |body: Body| {
+	Ship(Body, Visual): (body: Body) {
 		(body, ShowAsShip)
 	}
 )

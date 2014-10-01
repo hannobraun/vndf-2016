@@ -23,7 +23,7 @@ pub struct Player {
 
 
 world!(
-	Missile(Body, Visual): |position: Vector3<f64>, attitude: Quaternion<f64>| {
+	Missile(Body, Visual): (position: Vector3<f64>, attitude: Quaternion<f64>) {
 		let mut body = Body::default();
 		body.position = position;
 		body.velocity = Vector3::new(600.0, 0.0, 0.0);
@@ -31,7 +31,7 @@ world!(
 
 		(body, ShowAsMissile)
 	}
-	Ship(Body, Player, Visual): |client_id: ConnId| {
+	Ship(Body, Player, Visual): (client_id: ConnId) {
 		let mut body = Body::default();
 		body.position = Vector3::new(3000.0, 0.0, 0.0);
 		body.velocity = Vector3::new(-50.0, 0.0, 0.0);
