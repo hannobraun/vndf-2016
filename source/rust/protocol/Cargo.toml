@@ -7,5 +7,5 @@ authors = [ "mail@hannobraun.de" ]
 name = "protocol"
 
 
-[dependencies.game]
-path = "../game"
+[dependencies.cgmath]
+git = "https://github.com/bjz/cgmath-rs.git"

@@ -144,7 +144,7 @@ dependencies = [
 name = "protocol"
 version = "0.1.0"
 dependencies = [
- "game 0.1.0",
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#d2053a8366b65606b57150757f9bcd6531e82f18)",
 ]
 
 [[package]]
