@@ -9,7 +9,7 @@ use cgmath::{
 	Vector3,
 };
 
-use physics::util;
+use game::util;
 use platform::Input;
 use test_tools::{
 	Client,

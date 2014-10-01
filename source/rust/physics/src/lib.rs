@@ -6,5 +6,3 @@ pub use self::body::Body;
 
 
 mod body;
-
-pub mod util;

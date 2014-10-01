@@ -8,10 +8,8 @@ use game::ecs::{
 	Entity,
 	ShowAsShip,
 };
-use physics::{
-	Body,
-	util,
-};
+use game::util;
+use physics::Body;
 use protocol::Perception;
 use test_tools::{
 	Client,
