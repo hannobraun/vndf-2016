@@ -103,13 +103,19 @@ impl Planet {
 
 		let transform = projection.mul(&view);
 
+		let eye = Vector3::new(
+			camera.eye().x as f32,
+			camera.eye().y as f32,
+			camera.eye().z as f32,
+		);
+
 		let params = Params {
 			position  : position.into_fixed(),
 			radius    : self.radius,
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),
 
-			distance_to_eye   : camera.eye().length() as f32,
+			distance_to_eye   : (eye - position).length(),
 			camera_right_world: camera_right_world.into_fixed(),
 			camera_up_world   : camera_up_world.into_fixed(),
 		};
