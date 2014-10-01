@@ -1,5 +1,5 @@
 use game::ecs::Visual;
-use physics::Body;
+use game::physics::Body;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]

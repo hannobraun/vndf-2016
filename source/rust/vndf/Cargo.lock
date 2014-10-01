@@ -46,7 +46,6 @@ name = "game"
 version = "0.1.0"
 dependencies = [
  "net 0.1.0",
- "physics 0.1.0",
  "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9)",
  "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#c0cb536770acf9a131186101ae63fd59caa53bf9)",
 ]
@@ -116,17 +115,10 @@ name = "net"
 version = "0.1.0"
 
 [[package]]
-name = "physics"
-version = "0.1.0"
-dependencies = [
- "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#d2053a8366b65606b57150757f9bcd6531e82f18)",
-]
-
-[[package]]
 name = "platform"
 version = "0.1.0"
 dependencies = [
- "physics 0.1.0",
+ "game 0.1.0",
 ]
 
 [[package]]
@@ -152,7 +144,7 @@ dependencies = [
 name = "protocol"
 version = "0.1.0"
 dependencies = [
- "physics 0.1.0",
+ "game 0.1.0",
 ]
 
 [[package]]

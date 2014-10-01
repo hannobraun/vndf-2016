@@ -2,7 +2,7 @@ extern crate serialize;
 
 extern crate cgmath;
 
-extern crate physics;
+extern crate game;
 
 
 use serialize::json;
@@ -15,7 +15,7 @@ use cgmath::{
 	Vector3,
 };
 
-use physics::Body;
+use game::physics::Body;
 
 
 pub trait Platform {

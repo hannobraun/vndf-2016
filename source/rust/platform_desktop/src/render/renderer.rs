@@ -17,8 +17,8 @@ use font::{
 	Font,
 	Glyph,
 };
+use game::physics::Body;
 use images::Images;
-use physics::Body;
 use platform::{
 	Camera,
 	Frame,

@@ -7,5 +7,5 @@ authors = [ "mail@hannobraun.de" ]
 name = "protocol"
 
 
-[dependencies.physics]
-path = "../physics"
+[dependencies.game]
+path = "../game"

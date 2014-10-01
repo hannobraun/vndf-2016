@@ -9,7 +9,6 @@ extern crate cgmath;
 extern crate epoll;
 extern crate game;
 extern crate net;
-extern crate physics;
 extern crate protocol;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;

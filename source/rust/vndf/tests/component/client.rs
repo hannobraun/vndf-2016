@@ -9,7 +9,7 @@ use game::ecs::{
 	ShowAsShip,
 };
 use game::util;
-use physics::Body;
+use game::physics::Body;
 use protocol::Perception;
 use test_tools::{
 	Client,

@@ -8,7 +8,7 @@ extern crate gfx;
 extern crate glfw;
 extern crate stb_image;
 
-extern crate physics;
+extern crate game;
 extern crate platform;
 
 

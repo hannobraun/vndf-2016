@@ -9,8 +9,8 @@ use game::ecs::{
 	ShowAsShip,
 	Visual,
 };
+use game::physics::Body;
 use net::ConnId;
-use physics::Body;
 use rustecs::EntityId;
 
 

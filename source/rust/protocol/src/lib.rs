@@ -2,7 +2,7 @@ extern crate serialize;
 
 extern crate cgmath;
 
-extern crate physics;
+extern crate game;
 
 
 pub use self::action::Action;

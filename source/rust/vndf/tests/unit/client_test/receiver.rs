@@ -6,7 +6,7 @@ use game::ecs::{
 	Entity,
 	ShowAsMissile,
 };
-use physics::Body;
+use game::physics::Body;
 use protocol::Perception;
 
 

@@ -10,7 +10,6 @@ extern crate cgmath;
 
 extern crate game;
 extern crate net;
-extern crate physics;
 extern crate platform;
 extern crate platform_cli;
 extern crate platform_desktop;

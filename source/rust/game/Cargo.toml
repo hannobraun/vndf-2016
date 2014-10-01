@@ -10,9 +10,6 @@ name = "game"
 [dependencies.net]
 path = "../net"
 
-[dependencies.physics]
-path = "../physics"
-
 [dependencies.rustecs]
 git = "https://github.com/hannobraun/rustecs.git"
 

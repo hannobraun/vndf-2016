@@ -12,8 +12,8 @@ use cgmath::{
 
 use game::ecs::World as SharedWorld;
 use game::ecs::Entity;
+use game::physics::Body;
 use net::ConnId;
-use physics::Body;
 use protocol::{
 	Action,
 	Perception
