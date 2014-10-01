@@ -22,6 +22,7 @@ use super::{
 
 #[shader_param(Batch)]
 struct Params {
+	position  : [f32, ..3],
 	radius    : f32,
 	projection: [[f32, ..4], ..4],
 	transform : [[f32, ..4], ..4],
@@ -102,6 +103,7 @@ impl Planet {
 		let transform = projection.mul(&view);
 
 		let params = Params {
+			position  : Vector3::zero().into_fixed(),
 			radius    : self.radius,
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),

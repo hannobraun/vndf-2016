@@ -53,6 +53,7 @@ pub static SCALED_BILLBOARD: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		uniform vec3  position;
 		uniform float radius;
 		uniform mat4  transform;
 		uniform vec3  camera_right_world;
@@ -64,7 +65,7 @@ pub static SCALED_BILLBOARD: gfx::ShaderSource = shaders! {
 
 		void main() {
 			vec3 vertex_world =
-				vec3(0.0, 0.0, 0.0)
+				position
 				+ camera_right_world * vertex.x * radius
 				+ camera_up_world * vertex.y * radius;
 
