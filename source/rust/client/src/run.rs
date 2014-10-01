@@ -85,6 +85,9 @@ fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 		camera  : camera,
 		ships   : ships,
 		missiles: missiles,
-		planets : vec![Planet { position: Vector3::zero() }],
+		planets : vec![
+			Planet { position: Vector3::zero() },
+			Planet { position: Vector3::new(0.0, 0.0, 5000.0) },
+		],
 	}
 }
