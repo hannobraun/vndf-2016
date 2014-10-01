@@ -137,7 +137,7 @@ impl Renderer {
 				&mut self.graphics,
 				&self.frame,
 				position,
-				2576.0,
+				planet.radius as f32,
 				projection,
 				&frame.camera,
 			);
