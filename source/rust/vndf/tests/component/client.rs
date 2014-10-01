@@ -65,7 +65,7 @@ fn it_should_interpolate_between_perceptions() {
 		frame_2 = client.frame();
 	});
 
-	wait_while!(frame_1.ships.get(0).position == pos_1 && true {
+	wait_while!(frame_1.ships[0].position == pos_1 && true {
 		frame_1 = frame_2;
 		frame_2 = client.frame();
 	});
@@ -75,16 +75,16 @@ fn it_should_interpolate_between_perceptions() {
 			Point::from_vec(&pos_1),
 			Point::from_vec(&pos_2),
 		),
-		Point::from_vec(&frame_1.ships.get(0).position),
+		Point::from_vec(&frame_1.ships[0].position),
 	));
 	assert!(util::is_on_line(
 		Line::new(
 			Point::from_vec(&pos_1),
 			Point::from_vec(&pos_2),
 		),
-		Point::from_vec(&frame_2.ships.get(0).position),
+		Point::from_vec(&frame_2.ships[0].position),
 	));
-	assert!(frame_2.ships.get(0).position != pos_2);
+	assert!(frame_2.ships[0].position != pos_2);
 }
 
 #[test]

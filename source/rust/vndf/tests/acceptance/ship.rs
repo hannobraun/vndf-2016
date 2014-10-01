@@ -31,7 +31,7 @@ fn it_should_fly_straight_without_thrust_applied() {
 	let old_position = frame.ships[0].position;
 	let old_velocity = frame.ships[0].velocity;
 
-	wait_while!(frame.ships.get(0).position == old_position && true {
+	wait_while!(frame.ships[0].position == old_position && true {
 		frame = client.frame();
 	})
 
@@ -74,7 +74,7 @@ fn it_should_change_velocity_according_to_thrust() {
 	input.thrust   = true;
 	client.input(input);
 
-	wait_while!(frame.ships.get(0).attitude == old_attitude && true {
+	wait_while!(frame.ships[0].attitude == old_attitude && true {
 		frame = client.frame();
 	})
 

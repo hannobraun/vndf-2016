@@ -32,7 +32,7 @@ fn it_should_import_added_entities() {
 	let entities = world.to_entities();
 
 	assert_eq!(1, entities.len());
-	assert!(entities.get(0).id == 5);
+	assert!(entities[0].id == 5);
 }
 
 #[test]
@@ -60,7 +60,7 @@ fn it_should_update_entities() {
 
 	assert_eq!(
 		entity.body.unwrap(),
-		world.interpolateds.get(&entity_id).current.unwrap()
+		world.interpolateds[entity_id].current.unwrap()
 	);
 }
 
