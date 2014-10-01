@@ -15,6 +15,7 @@ use cgmath::{
 	Vector3,
 };
 
+use game::ecs::Planet;
 use game::physics::Body;
 
 
@@ -29,7 +30,8 @@ pub struct Frame {
 	pub input   : Input,
 	pub camera  : Camera,
 	pub ships   : Vec<Body>,
-	pub missiles: Vec<Body>
+	pub missiles: Vec<Body>,
+	pub planets : Vec<Planet>,
 }
 
 impl Frame {

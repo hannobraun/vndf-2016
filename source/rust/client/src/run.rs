@@ -81,6 +81,7 @@ fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 		input   : input,
 		camera  : camera,
 		ships   : ships,
-		missiles: missiles
+		missiles: missiles,
+		planets : Vec::new(),
 	}
 }
