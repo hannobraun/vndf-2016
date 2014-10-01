@@ -129,6 +129,7 @@ impl Renderer {
 		self.planet.draw(
 			&mut self.graphics,
 			&self.frame,
+			Vector3::zero(),
 			projection,
 			&frame.camera,
 		);

@@ -80,6 +80,7 @@ impl Planet {
 		&self,
 		graphics  : &mut Graphics,
 		frame     : &Frame,
+		position  : Vector3<f32>,
 		projection: Transform,
 		camera    : &Camera,
 	) {
@@ -103,7 +104,7 @@ impl Planet {
 		let transform = projection.mul(&view);
 
 		let params = Params {
-			position  : Vector3::zero().into_fixed(),
+			position  : position.into_fixed(),
 			radius    : self.radius,
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),
