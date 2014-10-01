@@ -91,7 +91,7 @@ fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
 				radius  : 2576.0,
 			},
 			Planet {
-				position: Vector3::new(0.0, 0.0, 5000.0),
+				position: Vector3::new(0.0, 5000.0, 0.0),
 				radius  : 480.0,
 			},
 		],
