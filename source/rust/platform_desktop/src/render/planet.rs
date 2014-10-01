@@ -24,6 +24,7 @@ use super::{
 struct Params {
 	position  : [f32, ..3],
 	radius    : f32,
+	base_color: [f32, ..3],
 	projection: [[f32, ..4], ..4],
 	transform : [[f32, ..4], ..4],
 
@@ -107,6 +108,7 @@ impl Planet {
 		let params = Params {
 			position  : position.into_fixed(),
 			radius    : radius,
+			base_color: Vector3::new(0.8, 0.68, 0.27).into_fixed(),
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),
 

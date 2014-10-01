@@ -8,6 +8,7 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 		uniform mat4  projection;
 		uniform float distance_to_eye;
 		uniform float radius;
+		uniform vec3  base_color;
 
 		in vec2 point;
 
@@ -23,8 +24,7 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 
 			// Lighten the circle a bit towards the center to give the
 			// perception of roundness and depth.
-			vec3 base_color = vec3(0.8, 0.68, 0.27);
-			vec3 color      = base_color * (1.0 - r * 0.2);
+			vec3 color = base_color * (1.0 - r * 0.2);
 
 			// At the edges, the planet should not be completely solid, to give
 			// the appearance of an atmosphere.
