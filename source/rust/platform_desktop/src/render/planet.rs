@@ -77,6 +77,7 @@ impl Planet {
 		frame     : &Frame,
 		position  : Vector3<f32>,
 		radius    : f32,
+		color     : Vector3<f32>,
 		projection: Transform,
 		camera    : &Camera,
 	) {
@@ -108,7 +109,7 @@ impl Planet {
 		let params = Params {
 			position  : position.into_fixed(),
 			radius    : radius,
-			base_color: Vector3::new(0.8, 0.68, 0.27).into_fixed(),
+			base_color: color.into_fixed(),
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),
 

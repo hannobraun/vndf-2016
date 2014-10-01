@@ -138,6 +138,7 @@ impl Renderer {
 				&self.frame,
 				position,
 				planet.radius as f32,
+				Vector3::new(0.8, 0.68, 0.27),
 				projection,
 				&frame.camera,
 			);
