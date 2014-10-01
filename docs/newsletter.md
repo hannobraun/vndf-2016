@@ -53,6 +53,7 @@ News for October:
 - http://www.nytimes.com/2014/09/22/science/space/nasa-craft-mars.html
 - Maven and MOM arriving at Mars
 - http://www.reddit.com/r/space/comments/2hdei3/actual_colour_photograph_of_comet_67p_contrast/
+- http://www.nasa.gov/jpl/cassini/cassini-watches-mysterious-feature-evolve-in-titan-sea/
 
 News for any month:
 - Asteroid video by Scott Manley
