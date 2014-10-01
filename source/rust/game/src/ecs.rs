@@ -7,6 +7,7 @@ use physics::Body;
 pub struct Planet {
 	pub position: Vector3<f64>,
 	pub radius  : f64,
+	pub color   : Vector3<f32>,
 }
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
