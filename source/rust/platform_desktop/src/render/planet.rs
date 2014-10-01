@@ -35,15 +35,10 @@ struct Params {
 
 pub struct Planet {
 	batch : Batch,
-	radius: f32,
 }
 
 impl Planet {
-	pub fn new(
-		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
-		radius    : f32,
-	) -> Planet {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Planet {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -72,7 +67,6 @@ impl Planet {
 
 		Planet {
 			batch : batch,
-			radius: radius,
 		}
 	}
 
@@ -81,6 +75,7 @@ impl Planet {
 		graphics  : &mut Graphics,
 		frame     : &Frame,
 		position  : Vector3<f32>,
+		radius    : f32,
 		projection: Transform,
 		camera    : &Camera,
 	) {
@@ -111,7 +106,7 @@ impl Planet {
 
 		let params = Params {
 			position  : position.into_fixed(),
-			radius    : self.radius,
+			radius    : radius,
 			projection: projection.into_fixed(),
 			transform : transform.into_fixed(),
 

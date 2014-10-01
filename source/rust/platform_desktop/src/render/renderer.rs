@@ -61,7 +61,7 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let planet = Planet::new(&mut graphics, &draw_state, 2576.0);
+		let planet = Planet::new(&mut graphics, &draw_state);
 
 		let rings = Rings::new(
 			&mut graphics,
@@ -130,6 +130,7 @@ impl Renderer {
 			&mut self.graphics,
 			&self.frame,
 			Vector3::zero(),
+			2576.0,
 			projection,
 			&frame.camera,
 		);
