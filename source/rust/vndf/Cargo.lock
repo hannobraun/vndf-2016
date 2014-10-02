@@ -88,7 +88,7 @@ version = "0.0.1"
 source = "git+https://github.com/bjz/gl-rs.git#e3c94ac249e42db09ac4f2e7687bc415711c039a"
 dependencies = [
  "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git#e3c94ac249e42db09ac4f2e7687bc415711c039a)",
- "rust-xml 0.1.0 (git+https://github.com/tomaka/rust-xml#fdc021b2bfec7855866b964f459559903c6b7808)",
+ "rust-xml 0.1.0 (git+https://github.com/tomaka/rust-xml#51a102ec2a27763792868848fbb568951ba89473)",
 ]
 
 [[package]]
@@ -97,7 +97,7 @@ version = "0.0.1"
 source = "git+https://github.com/bjz/glfw-rs.git#013b68a5ec655c1866ea9555cc43d41b9aba8c16"
 dependencies = [
  "glfw-sys 3.0.4 (git+https://github.com/servo/glfw?ref=cargo-3.0.4#65a2b4721276589d9de24f6a9999a2db37286cae)",
- "semver 0.1.0 (git+https://github.com/rust-lang/semver#cee11faad6753eb461611b37427eeccbc908e17e)",
+ "semver 0.1.0 (git+https://github.com/rust-lang/semver#5dee918159d4e3d84c1ee54cf6a5305e6f7bd557)",
 ]
 
 [[package]]
@@ -158,7 +158,7 @@ dependencies = [
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/tomaka/rust-xml#fdc021b2bfec7855866b964f459559903c6b7808"
+source = "git+https://github.com/tomaka/rust-xml#51a102ec2a27763792868848fbb568951ba89473"
 
 [[package]]
 name = "rustecs"
@@ -176,7 +176,7 @@ source = "git+https://github.com/hannobraun/rustecs.git#825470bc9277b59542f83949
 [[package]]
 name = "semver"
 version = "0.1.0"
-source = "git+https://github.com/rust-lang/semver#cee11faad6753eb461611b37427eeccbc908e17e"
+source = "git+https://github.com/rust-lang/semver#5dee918159d4e3d84c1ee54cf6a5305e6f7bd557"
 
 [[package]]
 name = "stb_image"
