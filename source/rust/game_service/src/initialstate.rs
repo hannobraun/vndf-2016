@@ -5,9 +5,9 @@ use ecs::World;
 use game::ecs::Planet;
 
 
-pub fn load(world: &mut World) {
+pub fn load(world: &mut World, path: &str) {
 	let initial_state_as_json =
-		File::open(&Path::new("initial-state.json"))
+		File::open(&Path::new(path))
 			.read_to_string()
 			.unwrap();
 

@@ -45,7 +45,7 @@ impl GameState {
 		let (sender, receiver) = channel();
 
 		let mut world = World::new();
-		initialstate::load(&mut world);
+		initialstate::load(&mut world, "initial-state.json");
 
 		GameState {
 			events  : sender,
