@@ -41,11 +41,14 @@ pub struct GameState {
 }
 
 impl GameState {
-	pub fn new(network: Sender<NetworkEvent>) -> GameState {
+	pub fn new(
+		network      : Sender<NetworkEvent>,
+		initial_state: &str,
+	) -> GameState {
 		let (sender, receiver) = channel();
 
 		let mut world = World::new();
-		initialstate::load(&mut world, "initial-state.json");
+		initialstate::load(&mut world, initial_state);
 
 		GameState {
 			events  : sender,

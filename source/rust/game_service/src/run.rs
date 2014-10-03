@@ -18,7 +18,10 @@ pub fn run() {
 	};
 
 	let mut network    = Network::new(args.port.as_slice());
-	let mut game_state = GameState::new(network.events.clone());
+	let mut game_state = GameState::new(
+		network.events.clone(),
+		"initial-state.json"
+	);
 
 	let frame_time_in_ms = args.frame_time;
 
