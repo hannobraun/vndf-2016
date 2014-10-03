@@ -34,10 +34,18 @@ pub fn receive(world: &mut World, perception: Perception) {
 	}
 
 	for entity in perception.updated.iter() {
-		*world.visuals.get_mut(&entity.id) = entity.visual.unwrap();
+		match entity.visual {
+			Some(visual) => *world.visuals.get_mut(&entity.id) = visual,
+			None => (),
+		}
 
-		world.interpolateds.get_mut(&entity.id).current      = entity.body;
-		world.interpolateds.get_mut(&entity.id).current_time = current_time;
+		match entity.body {
+			Some(body) => {
+				world.interpolateds.get_mut(&entity.id).current      = Some(body);
+				world.interpolateds.get_mut(&entity.id).current_time = current_time;
+			},
+			None => (),
+		}
 	}
 
 	for entity in perception.removed.iter() {
