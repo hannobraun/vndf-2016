@@ -99,7 +99,7 @@ impl GameState {
 		let entities =
 			SharedWorld::from_entities(
 				self.world
-					.to_entities()
+					.export_entities()
 					.iter()
 					.map(|entity|
 						Entity {
@@ -108,7 +108,7 @@ impl GameState {
 							visual: entity.visual,
 						})
 					.collect())
-			.to_entities();
+			.export_entities();
 
 		for (&id, player) in self.world.players.iter_mut() {
 			let perception = Perception::new(

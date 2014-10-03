@@ -29,7 +29,7 @@ fn it_should_import_added_entities() {
 
 	receive(&mut world, perception);
 
-	let entities = world.to_entities();
+	let entities = world.export_entities();
 
 	assert_eq!(1, entities.len());
 	assert!(entities[0].id == 5);
