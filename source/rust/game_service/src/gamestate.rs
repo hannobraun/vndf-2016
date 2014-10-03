@@ -13,6 +13,7 @@ use cgmath::{
 use game::ecs::World as SharedWorld;
 use game::ecs::Entity;
 use game::physics::Body;
+use initialstate;
 use net::ConnId;
 use protocol::{
 	Action,
@@ -44,16 +45,7 @@ impl GameState {
 		let (sender, receiver) = channel();
 
 		let mut world = World::new();
-		world.create_planet(
-			Vector3::zero(),
-			2576.0,
-			Vector3::new(0.8, 0.68, 0.27),
-		);
-		world.create_planet(
-			Vector3::new(0.0, 5000.0, 0.0),
-			480.0,
-			Vector3::new(0.5, 0.7, 0.7),
-		);
+		initialstate::load(&mut world);
 
 		GameState {
 			events  : sender,
