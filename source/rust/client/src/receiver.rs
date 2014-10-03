@@ -4,7 +4,11 @@ use game::ecs::Entity as SharedEntity;
 use protocol;
 use rustecs::EntityId;
 
-use super::ecs::World;
+use super::ecs::{
+	Entity,
+	Interpolated,
+	World,
+};
 
 
 
@@ -15,12 +19,18 @@ pub fn receive(world: &mut World, perception: Perception) {
 	let current_time = time::precise_time_ns();
 
 	for entity in perception.added.into_iter() {
-		world.import_craft(
-			entity.id,
-			entity.body.unwrap(),
-			entity.visual.unwrap(),
-			current_time
-		);
+		let interpolated = match entity.body {
+			Some(body) => Some(Interpolated::new(current_time, Some(body))),
+			None       => None
+		};
+
+		world.import_entity(Entity {
+			id          : entity.id,
+			body        : entity.body,
+			visual      : entity.visual,
+			interpolated: interpolated,
+			planet      : None,
+		});
 	}
 
 	for entity in perception.updated.iter() {
