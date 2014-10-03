@@ -46,8 +46,8 @@ name = "game"
 version = "0.1.0"
 dependencies = [
  "net 0.1.0",
- "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#8b0f76f7a65d502b2e3b75235e5c7f296cb74649)",
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#8b0f76f7a65d502b2e3b75235e5c7f296cb74649)",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
 ]
 
 [[package]]
@@ -163,15 +163,15 @@ source = "git+https://github.com/tomaka/rust-xml#51a102ec2a27763792868848fbb5689
 [[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#8b0f76f7a65d502b2e3b75235e5c7f296cb74649"
+source = "git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713"
 dependencies = [
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#8b0f76f7a65d502b2e3b75235e5c7f296cb74649)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
 ]
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#8b0f76f7a65d502b2e3b75235e5c7f296cb74649"
+source = "git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713"
 
 [[package]]
 name = "semver"
