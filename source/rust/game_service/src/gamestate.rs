@@ -106,7 +106,7 @@ impl GameState {
 							id    : entity.id,
 							body  : entity.body,
 							visual: entity.visual,
-							planet: None,
+							planet: entity.planet,
 						}
 					)
 					.collect()

@@ -5,6 +5,7 @@ use cgmath::{
 
 use game::ecs::Entity as SharedEntity;
 use game::ecs::{
+	Planet,
 	ShowAsMissile,
 	ShowAsShip,
 	Visual,
@@ -43,6 +44,15 @@ world!(
 		};
 
 		(body, player, ShowAsShip)
+	}
+	Planet(Planet): (position: Vector3<f64>, radius: f64, color: Vector3<f32>) {
+		(
+			Planet {
+				position: position,
+				radius  : radius,
+				color   : color,
+			},
+		)
 	}
 )
 
