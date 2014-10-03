@@ -96,8 +96,8 @@ impl GameState {
 			integrate(body, delta_time_in_s);
 		}
 
-		let entities =
-			SharedWorld::from_entities(
+		let entities = {
+			let world = SharedWorld::from_entities(
 				self.world
 					.export_entities()
 					.iter()
@@ -107,9 +107,13 @@ impl GameState {
 							body  : entity.body,
 							visual: entity.visual,
 							planet: None,
-						})
-					.collect())
-			.export_entities();
+						}
+					)
+					.collect()
+			);
+
+			world.export_entities()
+		};
 
 		for (&id, player) in self.world.players.iter_mut() {
 			let perception = Perception::new(
