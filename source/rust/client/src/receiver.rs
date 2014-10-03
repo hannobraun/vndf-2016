@@ -29,7 +29,7 @@ pub fn receive(world: &mut World, perception: Perception) {
 			body        : entity.body,
 			visual      : entity.visual,
 			interpolated: interpolated,
-			planet      : None,
+			planet      : entity.planet,
 		});
 	}
 
