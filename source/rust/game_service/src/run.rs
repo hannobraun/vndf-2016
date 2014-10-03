@@ -20,7 +20,7 @@ pub fn run() {
 	let mut network    = Network::new(args.port.as_slice());
 	let mut game_state = GameState::new(
 		network.events.clone(),
-		"initial-state.json"
+		args.initial_state.as_slice(),
 	);
 
 	let frame_time_in_ms = args.frame_time;

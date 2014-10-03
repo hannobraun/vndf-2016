@@ -7,22 +7,25 @@ use std::os;
 
 
 pub struct Args {
-	pub port      : String,
-	pub frame_time: u32
+	pub port         : String,
+	pub frame_time   : u32,
+	pub initial_state: String,
 }
 
 
 pub fn parse() -> Option<Args> {
 	let mut args = Args {
-		port      : "34481".to_string(),
-		frame_time: 1000
+		port         : "34481".to_string(),
+		frame_time   : 1000,
+		initial_state: "initial-state.json".to_string(),
 	};
 
 	let args_as_strs: Vec<String> = os::args().iter().map(|s| s.to_string()).collect();
 
 	let options = [
 		optopt("p", "port", "port to listen on", args.port.as_slice()),
-		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_string().as_slice())
+		optopt("f", "frame-time", "frame time in ms", args.frame_time.to_string().as_slice()),
+		optopt("s", "initial-state", "initial game state", args.initial_state.to_string().as_slice()),
 	];
 
 	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(), options);
@@ -52,6 +55,11 @@ pub fn parse() -> Option<Args> {
 		},
 
 		None => ()
+	}
+
+	match matches.opt_str("s") {
+		Some(initial_state) => args.initial_state = initial_state,
+		None => (),
 	}
 
 	Some(args)
