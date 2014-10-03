@@ -1,9 +1,6 @@
 use time;
 
-use cgmath::{
-	Vector,
-	Vector3,
-};
+use cgmath::Vector;
 
 use platform::Camera;
 use rustecs::EntityId;
@@ -20,17 +17,7 @@ pub struct GameState {
 
 impl GameState {
 	pub fn new() -> GameState {
-		let mut world = World::new();
-		world.create_planet(
-			Vector3::zero(),
-			2576.0,
-			Vector3::new(0.8, 0.68, 0.27),
-		);
-		world.create_planet(
-			Vector3::new(0.0, 5000.0, 0.0),
-			480.0,
-			Vector3::new(0.5, 0.7, 0.7),
-		);
+		let world = World::new();
 
 		GameState {
 			self_id: None,
