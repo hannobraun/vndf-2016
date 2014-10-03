@@ -18,6 +18,7 @@ fn it_should_import_added_entities() {
 		id    : 5,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
+		planet: None,
 	};
 
 	let perception = Perception {
@@ -46,6 +47,7 @@ fn it_should_update_entities() {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
+		planet: None,
 	};
 	entity.body.as_mut().unwrap().position = Vector3::new(5.0, 8.0, 13.0);
 
@@ -75,6 +77,7 @@ fn it_should_destroy_removed_entities() {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
+		planet: None,
 	};
 
 	let perception = Perception {

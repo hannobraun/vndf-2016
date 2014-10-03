@@ -35,7 +35,8 @@ fn it_should_interpolate_between_perceptions() {
 			body.velocity = Vector3::new(10.0, 0.0, 0.0);
 			body
 		}),
-		visual: Some(ShowAsShip)
+		visual: Some(ShowAsShip),
+		planet: None,
 	};
 
 	let perception_1 = Perception::new(
@@ -103,7 +104,8 @@ fn the_camera_should_follow_the_ship() {
 			body.velocity = Vector3::new(10.0, 0.0, 0.0);
 			body
 		}),
-		visual: Some(ShowAsShip)
+		visual: Some(ShowAsShip),
+		planet: None,
 	};
 
 	let perception_1 = Perception::new(
