@@ -1,4 +1,5 @@
 extern crate game;
+extern crate game_service;
 extern crate net;
 extern crate platform;
 extern crate protocol;

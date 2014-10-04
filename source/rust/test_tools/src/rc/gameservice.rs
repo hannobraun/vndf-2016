@@ -1,6 +1,7 @@
 use std::os;
 use std::rand::random;
 
+use game_service::initialstate::InitialState;
 use test_infra::Process;
 
 
@@ -13,19 +14,22 @@ impl GameService {
 	pub fn start() -> GameService {
 		let port = random::<u16>() % 10000 + 40000;
 
-		let mut initial_state = "".to_string();
-		for &(ref key, ref value) in os::env().iter() {
-			if *key == "INITIAL_STATE".to_string() {
-				initial_state = value.clone();
-			}
-		}
+		let mut state_file_name = "initial-state-".to_string();
+		state_file_name.push_str(port.to_string().as_slice());
+		state_file_name.push_str(".json");
+
+		let mut state_file_path = os::tmpdir();
+		state_file_path.push(state_file_name);
+
+		let initial_state = InitialState::new();
+		initial_state.to_file(&state_file_path);
 
 		let mut process = Process::start(
 			"vndf-game-service",
 			[
 				"--port".to_string()         , port.to_string(),
 				"--frame-time".to_string()   , "10".to_string(),
-				"--initial-state".to_string(), initial_state,
+				"--initial-state".to_string(), state_file_path.to_c_str().as_str().unwrap().to_string(),
 			]
 		);
 		process.read_stdout_line(); // Make sure it's ready

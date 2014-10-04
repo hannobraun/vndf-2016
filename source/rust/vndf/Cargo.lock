@@ -192,6 +192,7 @@ name = "test_tools"
 version = "0.1.0"
 dependencies = [
  "game 0.1.0",
+ "game_service 0.1.0",
  "platform 0.1.0",
  "protocol 0.1.0",
  "test_infra 0.1.0",
