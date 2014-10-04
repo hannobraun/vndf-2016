@@ -5,6 +5,12 @@ use ecs::World;
 use game::ecs::Planet;
 
 
+#[deriving(Decodable)]
+struct InitialState {
+	planets: Vec<Planet>,
+}
+
+
 pub fn load(world: &mut World, path: &str) {
 	let initial_state_as_json =
 		File::open(&Path::new(path))
@@ -21,10 +27,4 @@ pub fn load(world: &mut World, path: &str) {
 			planet.color,
 		);
 	}
-}
-
-
-#[deriving(Decodable)]
-struct InitialState {
-	planets: Vec<Planet>,
 }
