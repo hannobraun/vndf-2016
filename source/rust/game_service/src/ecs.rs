@@ -33,19 +33,12 @@ world!(
 
 		(body, ShowAsMissile)
 	}
-	Ship(Body, Player, Visual): (client_id: ConnId) {
+	Ship(Body, Visual): () {
 		let mut body = Body::default();
 		body.position = Vector3::new(3000.0, 0.0, 0.0);
 		body.velocity = Vector3::new(-50.0, 0.0, 0.0);
 
-		let player = Player {
-			client_id    : client_id,
-			ship_id      : None,
-			missile_index: 0,
-			last_snapshot: Vec::new(),
-		};
-
-		(body, player, ShowAsShip)
+		(body, ShowAsShip)
 	}
 	Planet(Planet): (position: Vector3<f64>, radius: f64, color: Vector3<f32>) {
 		(
