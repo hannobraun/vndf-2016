@@ -4,6 +4,7 @@ use std::comm::{
 };
 
 use cgmath::{
+	EuclideanVector,
 	Quaternion,
 	Rotation,
 	Vector,
@@ -114,6 +115,18 @@ impl GameState {
 	fn on_update(&mut self, delta_time_in_s: f64) {
 		for (_, body) in self.world.bodies.iter_mut() {
 			integrate(body, delta_time_in_s);
+		}
+
+		let mut entities_to_destroy = vec![];
+		for (&body_id, body) in self.world.bodies.iter() {
+			for (_, planet) in self.world.planets.iter() {
+				if (body.position - planet.position).length() <= planet.radius {
+					entities_to_destroy.push(body_id);
+				}
+			}
+		}
+		for &id in entities_to_destroy.iter() {
+			self.world.destroy_entity(id);
 		}
 
 		let entities = {

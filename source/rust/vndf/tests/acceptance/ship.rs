@@ -9,6 +9,7 @@ use cgmath::{
 	Vector3,
 };
 
+use game::ecs::Planet;
 use game::util;
 use game_service::initialstate::InitialState;
 use platform::Input;
@@ -115,4 +116,29 @@ fn it_should_fire_a_missile() {
 
 	print!("distance: {}\n", distance);
 	assert!(distance < 50.0);
+}
+
+#[test]
+fn it_should_be_removed_when_colliding_with_a_planet() {
+	let game_service = GameService::start(&InitialState::new()
+		.with_planet(Planet::new()
+			.at_position(0.0, 0.0, 0.0)
+			.with_radius(2999.4)
+		)
+	);
+	let mut client = Client::start(game_service.port);
+
+	let mut frame = client.frame();
+
+	wait_while!(frame.ships.len() == 0 {
+		frame = client.frame();
+	})
+
+	// Our ship has spawned. Now we need to wait until it collides.
+
+	wait_while!(frame.ships.len() == 1 {
+		frame = client.frame();
+	})
+
+	assert_eq!(0, frame.ships.len());
 }
