@@ -14,10 +14,10 @@ impl Client {
 		let process = Process::start(
 			"vndf-client",
 			[
-				format!("--headless"),
-				format!("--address=localhost"),
-				format!("--port={}", port),
-				format!("--period=10")
+				format!("--headless").as_slice(),
+				format!("--address=localhost").as_slice(),
+				format!("--port={}", port).as_slice(),
+				format!("--period=10").as_slice(),
 			]
 		);
 
