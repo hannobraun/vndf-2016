@@ -97,7 +97,7 @@ impl GameState {
 	}
 
 	fn on_leave(&mut self, conn_id: ConnId) {
-		match ecs::entity_id_from_client_id(&self.world, conn_id) {
+		match ecs::entity_id_from_conn_id(&self.world, conn_id) {
 			Some(player_id) => {
 				match self.world.players[player_id].ship_id {
 					Some(ship_id) =>
@@ -150,7 +150,7 @@ impl GameState {
 	}
 
 	fn on_action(&mut self, client_id: ConnId, action: Action) {
-		let id = match ecs::entity_id_from_client_id(&self.world, client_id) {
+		let id = match ecs::entity_id_from_conn_id(&self.world, client_id) {
 			Some(id) => id,
 			None     => return
 		};

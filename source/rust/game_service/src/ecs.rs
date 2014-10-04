@@ -69,7 +69,7 @@ world!(
 )
 
 
-pub fn entity_id_from_client_id(
+pub fn entity_id_from_conn_id(
 	world    : &World,
 	client_id: ConnId
 ) -> Option<EntityId> {
