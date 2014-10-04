@@ -10,6 +10,26 @@ pub struct Planet {
 	pub color   : Vector3<f32>,
 }
 
+impl Planet {
+	pub fn new() -> Planet {
+		Planet {
+			position: Vector3::zero(),
+			radius  : 1.0,
+			color   : Vector3::new(1.0, 1.0, 1.0),
+		}
+	}
+
+	pub fn at_position(mut self, x: f64, y: f64, z: f64) -> Planet {
+		self.position = Vector3::new(x, y, z);
+		self
+	}
+
+	pub fn with_radius(mut self, radius: f64) -> Planet {
+		self.radius = radius;
+		self
+	}
+}
+
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Visual {
 	ShowAsMissile,
