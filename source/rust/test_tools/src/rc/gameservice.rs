@@ -16,7 +16,9 @@ impl GameService {
 			"vndf-game-service",
 			[
 				"--port".to_string(), port.to_string(),
-				"--frame-time".to_string(), "10".to_string()]);
+				"--frame-time".to_string(), "10".to_string()
+			]
+		);
 		process.read_stdout_line(); // Make sure it's ready
 
 		GameService {
