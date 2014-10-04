@@ -136,6 +136,15 @@ impl GameState {
 		};
 
 		for (_, player) in self.world.players.iter_mut() {
+			match player.ship_id {
+				Some(ship_id) =>
+					if !self.world.bodies.contains_key(&ship_id) {
+						player.ship_id = None;
+					},
+
+				None => (),
+			}
+
 			let perception = Perception::new(
 				|entity| entity.id,
 				player.ship_id,
