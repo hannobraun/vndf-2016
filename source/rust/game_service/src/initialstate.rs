@@ -40,4 +40,9 @@ impl InitialState {
 			);
 		}
 	}
+
+	pub fn with_planet(mut self, planet: Planet) -> InitialState {
+		self.planets.push(planet);
+		self
+	}
 }
