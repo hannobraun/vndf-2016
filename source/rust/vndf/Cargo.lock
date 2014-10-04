@@ -27,7 +27,7 @@ dependencies = [
 [[package]]
 name = "device"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2"
+source = "git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84"
 dependencies = [
  "gfx_gl 0.1.0 (git+https://github.com/gfx-rs/gfx_gl.git#52bb510e9e76cd3c0aed7b6aa678c03059d630a6)",
 ]
@@ -46,8 +46,8 @@ name = "game"
 version = "0.1.0"
 dependencies = [
  "net 0.1.0",
- "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#37d62afc7ebda01db83e8f33eb63c2fd768e92d1)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#37d62afc7ebda01db83e8f33eb63c2fd768e92d1)",
 ]
 
 [[package]]
@@ -62,11 +62,11 @@ dependencies = [
 [[package]]
 name = "gfx"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2"
+source = "git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84"
 dependencies = [
- "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2)",
- "gfx_macros 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2)",
- "render 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2)",
+ "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
+ "gfx_macros 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
+ "render 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
 ]
 
 [[package]]
@@ -80,7 +80,7 @@ dependencies = [
 [[package]]
 name = "gfx_macros"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2"
+source = "git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84"
 
 [[package]]
 name = "gl_generator"
@@ -134,7 +134,7 @@ version = "0.1.0"
 dependencies = [
  "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#d2053a8366b65606b57150757f9bcd6531e82f18)",
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
- "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2)",
+ "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#16f8b1c725e153bc4ff11e0a210e8896ceee4710)",
  "platform 0.1.0",
  "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c)",
@@ -150,9 +150,9 @@ dependencies = [
 [[package]]
 name = "render"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2"
+source = "git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84"
 dependencies = [
- "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#5b70b070f03340ceb442e245c7f733ddd2ff83f2)",
+ "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
 ]
 
 [[package]]
@@ -163,15 +163,15 @@ source = "git+https://github.com/tomaka/rust-xml#51a102ec2a27763792868848fbb5689
 [[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713"
+source = "git+https://github.com/hannobraun/rustecs.git#37d62afc7ebda01db83e8f33eb63c2fd768e92d1"
 dependencies = [
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#37d62afc7ebda01db83e8f33eb63c2fd768e92d1)",
 ]
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#68c3ef06686e76b728429c1a57f9a709f4587713"
+source = "git+https://github.com/hannobraun/rustecs.git#37d62afc7ebda01db83e8f33eb63c2fd768e92d1"
 
 [[package]]
 name = "semver"

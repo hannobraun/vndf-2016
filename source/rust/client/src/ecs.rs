@@ -30,14 +30,22 @@ impl Interpolated {
 
 
 world!(
-	Craft(Body, Visual, Interpolated): (body: Body, visual: Visual, current_time: u64) {
+	entity_constructor craft(
+		body        : Body,
+		visual      : Visual,
+		current_time: u64,
+	) -> (Body, Visual, Interpolated) {
 		(
 			body,
 			visual,
 			Interpolated::new(current_time, Some(body))
 		)
 	}
-	Planet(Planet): (position: Vector3<f64>, radius: f64, color: Vector3<f32>) {
+	entity_constructor planet(
+		position: Vector3<f64>,
+		radius  : f64,
+		color   : Vector3<f32>,
+	) -> (Planet) {
 		(
 			Planet {
 				position: position,

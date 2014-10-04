@@ -25,7 +25,10 @@ pub struct Player {
 
 
 world!(
-	Missile(Body, Visual): (position: Vector3<f64>, attitude: Quaternion<f64>) {
+	entity_constructor missile(
+		position: Vector3<f64>,
+		attitude: Quaternion<f64>,
+	) -> (Body, Visual) {
 		let mut body = Body::default();
 		body.position = position;
 		body.velocity = Vector3::new(600.0, 0.0, 0.0);
@@ -33,14 +36,20 @@ world!(
 
 		(body, ShowAsMissile)
 	}
-	Ship(Body, Visual): () {
+
+	entity_constructor ship() -> (Body, Visual) {
 		let mut body = Body::default();
 		body.position = Vector3::new(3000.0, 0.0, 0.0);
 		body.velocity = Vector3::new(-50.0, 0.0, 0.0);
 
 		(body, ShowAsShip)
 	}
-	Planet(Planet): (position: Vector3<f64>, radius: f64, color: Vector3<f32>) {
+
+	entity_constructor planet(
+		position: Vector3<f64>,
+		radius  : f64,
+		color   : Vector3<f32>,
+	) -> (Planet) {
 		(
 			Planet {
 				position: position,
@@ -49,7 +58,8 @@ world!(
 			},
 		)
 	}
-	Player(Player): (conn_id: ConnId, ship_id: EntityId) {
+
+	entity_constructor player(conn_id: ConnId, ship_id: EntityId) -> (Player) {
 		(
 			Player {
 				client_id    : conn_id,
