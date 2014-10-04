@@ -157,7 +157,7 @@ impl GameState {
 
 		let player = self.world.players
 			.find_mut(&id)
-			.expect("expected ship");
+			.expect("expected player");
 		let body = match player.ship_id {
 			Some(id) =>
 				self.world.bodies
