@@ -27,7 +27,7 @@ impl GameState {
 
 	pub fn receive_updates(&mut self, network: &mut Network) {
 		network.receive(|perception| {
-			self.self_id = Some(perception.self_id);
+			self.self_id = perception.self_id;
 
 			for (_, interpolated) in self.world.interpolateds.iter_mut() {
 				interpolated.previous_time = interpolated.current_time;

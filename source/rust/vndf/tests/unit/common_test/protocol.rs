@@ -5,7 +5,7 @@ use protocol::Perception;
 fn it_should_sort_entities_into_added_removed_and_created() {
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(0u, 1, 2, 3),
 		vec!(0u, 1, 4, 5)
 	);
@@ -19,7 +19,7 @@ fn it_should_sort_entities_into_added_removed_and_created() {
 fn it_should_handle_intermingled_cases() {
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(0u, 1, 2, 3),
 		vec!(0u, 2, 3, 4)
 	);
@@ -30,7 +30,7 @@ fn it_should_handle_intermingled_cases() {
 
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(0u, 2, 3, 4),
 		vec!(0u, 1, 2, 3)
 	);
@@ -44,7 +44,7 @@ fn it_should_handle_intermingled_cases() {
 fn it_should_handle_an_increase_in_entities() {
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(0u, 1),
 		vec!(0u, 2, 3, 4)
 	);
@@ -58,7 +58,7 @@ fn it_should_handle_an_increase_in_entities() {
 fn it_should_handle_a_decrease_in_entities() {
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(0u, 1, 2, 3),
 		vec!(0u, 4)
 	);
@@ -72,7 +72,7 @@ fn it_should_handle_a_decrease_in_entities() {
 fn it_should_handle_unsorted_input() {
 	let perception = Perception::new(
 		|&n| n,
-		0u,
+		Some(0),
 		vec!(3u, 1, 0, 2),
 		vec!(2u, 4, 0, 3)
 	);

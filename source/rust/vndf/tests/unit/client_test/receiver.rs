@@ -22,7 +22,7 @@ fn it_should_import_added_entities() {
 	};
 
 	let perception = Perception {
-		self_id: 0,
+		self_id: Some(0),
 		added  : vec!(entity),
 		removed: vec!(),
 		updated: vec!(),
@@ -52,7 +52,7 @@ fn it_should_update_entities() {
 	entity.body.as_mut().unwrap().position = Vector3::new(5.0, 8.0, 13.0);
 
 	let perception = Perception {
-		self_id: 0,
+		self_id: Some(0),
 		added  : vec!(),
 		removed: vec!(),
 		updated: vec!(entity),
@@ -81,7 +81,7 @@ fn it_should_destroy_removed_entities() {
 	};
 
 	let perception = Perception {
-		self_id: 0,
+		self_id: Some(0),
 		added  : vec!(),
 		removed: vec!(entity),
 		updated: vec!(),

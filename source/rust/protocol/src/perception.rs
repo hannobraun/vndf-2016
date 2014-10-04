@@ -14,7 +14,7 @@ use std::io::IoError;
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception<Id, T> {
-	pub self_id: Id,
+	pub self_id: Option<Id>,
 	pub added  : Vec<T>,
 	pub removed: Vec<T>,
 	pub updated: Vec<T>,
@@ -32,7 +32,7 @@ impl<
 > Perception<Id, T> {
 	pub fn new(
 		get_id      : |&T| -> Id,
-		self_id     : Id,
+		self_id     : Option<Id>,
 		mut previous: Vec<T>,
 		mut current : Vec<T>
 	) -> Perception<Id, T> {
