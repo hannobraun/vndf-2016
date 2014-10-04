@@ -18,6 +18,7 @@ use rustecs::EntityId;
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Player {
 	pub client_id    : ConnId,
+	pub ship_id      : Option<EntityId>,
 	pub missile_index: u64,
 	pub last_snapshot: Vec<SharedEntity>
 }
@@ -39,6 +40,7 @@ world!(
 
 		let player = Player {
 			client_id    : client_id,
+			ship_id      : None,
 			missile_index: 0,
 			last_snapshot: Vec::new(),
 		};
@@ -54,10 +56,11 @@ world!(
 			},
 		)
 	}
-	Player(Player): (conn_id: ConnId) {
+	Player(Player): (conn_id: ConnId, ship_id: EntityId) {
 		(
 			Player {
 				client_id    : conn_id,
+				ship_id      : Some(ship_id),
 				missile_index: 0,
 				last_snapshot: Vec::new(),
 			},
