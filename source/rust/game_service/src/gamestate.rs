@@ -124,10 +124,10 @@ impl GameState {
 			world.export_entities()
 		};
 
-		for (&id, player) in self.world.players.iter_mut() {
+		for (_, player) in self.world.players.iter_mut() {
 			let perception = Perception::new(
 				|entity| entity.id,
-				id,
+				player.ship_id.unwrap(),
 				player.last_snapshot.clone(),
 				entities.clone());
 
