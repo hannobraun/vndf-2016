@@ -4,4 +4,4 @@ source project.conf
 
 ./scripts/tasks/build-vndf &&
 cd source
-$GAME_SERVICE_BINARY 34481
+$GAME_SERVICE_BINARY
