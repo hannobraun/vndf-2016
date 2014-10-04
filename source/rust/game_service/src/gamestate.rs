@@ -144,12 +144,16 @@ impl GameState {
 			None     => return
 		};
 
-		let body = self.world.bodies
-			.find_mut(&id)
-			.expect("expected body");
 		let player = self.world.players
 			.find_mut(&id)
 			.expect("expected ship");
+		let body = match player.ship_id {
+			Some(id) =>
+				self.world.bodies
+					.find_mut(&id)
+					.expect("expected body"),
+			None => return,
+		};
 
 		body.attitude = action.attitude;
 
