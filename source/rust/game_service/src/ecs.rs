@@ -54,6 +54,15 @@ world!(
 			},
 		)
 	}
+	Player(Player): (conn_id: ConnId) {
+		(
+			Player {
+				client_id    : conn_id,
+				missile_index: 0,
+				last_snapshot: Vec::new(),
+			},
+		)
+	}
 )
 
 
