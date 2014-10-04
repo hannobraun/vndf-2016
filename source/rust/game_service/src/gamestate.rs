@@ -91,8 +91,8 @@ impl GameState {
 		}
 	}
 
-	fn on_enter(&mut self, id: ConnId) {
-		let ship_id = self.world.create_ship(id);
+	fn on_enter(&mut self, conn_id: ConnId) {
+		let ship_id = self.world.create_ship(conn_id);
 		self.world.players.get_mut(&ship_id).ship_id = Some(ship_id);
 	}
 
