@@ -97,7 +97,18 @@ impl GameState {
 	}
 
 	fn on_leave(&mut self, id: ConnId) {
-		ecs::destroy_ship(&mut self.world, id);
+		match ecs::entity_id_from_client_id(&self.world, id) {
+			Some(player_id) => {
+				match self.world.players[player_id].ship_id {
+					Some(ship_id) =>
+						self.world.destroy_entity(ship_id),
+					None => (),
+				}
+
+				self.world.destroy_entity(player_id);
+			},
+			None => (),
+		}
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
