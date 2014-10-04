@@ -6,25 +6,26 @@ use game::ecs::Planet;
 
 
 #[deriving(Decodable)]
-struct InitialState {
+pub struct InitialState {
 	planets: Vec<Planet>,
 }
 
+impl InitialState {
+	pub fn load(world: &mut World, path: &str) {
+		let initial_state_as_json =
+			File::open(&Path::new(path))
+				.read_to_string()
+				.unwrap();
 
-pub fn load(world: &mut World, path: &str) {
-	let initial_state_as_json =
-		File::open(&Path::new(path))
-			.read_to_string()
-			.unwrap();
+		let initial_state: InitialState =
+			json::decode(initial_state_as_json.as_slice()).unwrap();
 
-	let initial_state: InitialState =
-		json::decode(initial_state_as_json.as_slice()).unwrap();
-
-	for planet in initial_state.planets.iter()  {
-		world.create_planet(
-			planet.position,
-			planet.radius,
-			planet.color,
-		);
+		for planet in initial_state.planets.iter()  {
+			world.create_planet(
+				planet.position,
+				planet.radius,
+				planet.color,
+			);
+		}
 	}
 }
