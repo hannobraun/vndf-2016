@@ -140,10 +140,12 @@ impl GameState {
 				|entity| entity.id,
 				player.ship_id,
 				player.last_snapshot.clone(),
-				entities.clone());
+				entities.clone()
+			);
 
 			self.network.send(
-				events::Message(vec!(player.client_id), perception));
+				events::Message(vec!(player.client_id), perception)
+			);
 
 			player.last_snapshot = entities.clone();
 		}
