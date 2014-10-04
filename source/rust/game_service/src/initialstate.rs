@@ -11,7 +11,7 @@ pub struct InitialState {
 }
 
 impl InitialState {
-	pub fn load(world: &mut World, path: &str) {
+	pub fn from_file(world: &mut World, path: &str) {
 		let initial_state_as_json =
 			File::open(&Path::new(path))
 				.read_to_string()
