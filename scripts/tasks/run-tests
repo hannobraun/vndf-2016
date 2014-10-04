@@ -4,7 +4,6 @@ source project.conf
 
 export PATH=$RUST_TARGET:$PATH
 export RUST_TEST_TASKS=1
-export INITIAL_STATE=$(pwd)/initial-state.json
 
 cd $RUST_SOURCE
 cargo test
