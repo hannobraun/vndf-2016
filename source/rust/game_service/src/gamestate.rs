@@ -96,8 +96,8 @@ impl GameState {
 		self.world.players.get_mut(&ship_id).ship_id = Some(ship_id);
 	}
 
-	fn on_leave(&mut self, id: ConnId) {
-		match ecs::entity_id_from_client_id(&self.world, id) {
+	fn on_leave(&mut self, conn_id: ConnId) {
+		match ecs::entity_id_from_client_id(&self.world, conn_id) {
 			Some(player_id) => {
 				match self.world.players[player_id].ship_id {
 					Some(ship_id) =>
