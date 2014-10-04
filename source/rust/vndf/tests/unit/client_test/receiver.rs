@@ -1,11 +1,13 @@
 use cgmath::Vector3;
 
-use client::ecs::World;
-use client::receiver::receive;
-use game::ecs::{
+use client::ecs::{
 	Entity,
-	ShowAsMissile,
+	Interpolated,
+	World,
 };
+use client::receiver::receive;
+use game::ecs::Entity as SharedEntity;
+use game::ecs::ShowAsMissile;
 use game::physics::Body;
 use protocol::Perception;
 
@@ -14,7 +16,7 @@ use protocol::Perception;
 fn it_should_import_added_entities() {
 	let mut world = World::new();
 
-	let entity = Entity {
+	let entity = SharedEntity {
 		id    : 5,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
@@ -41,9 +43,15 @@ fn it_should_update_entities() {
 	let entity_id = 5;
 
 	let mut world = World::new();
-	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
+	world.import_entity(Entity {
+		id          : entity_id,
+		body        : Some(Body::default()),
+		visual      : Some(ShowAsMissile),
+		interpolated: Some(Interpolated::new(0, Some(Body::default()))),
+		planet      : None,
+	});
 
-	let mut entity = Entity {
+	let mut entity = SharedEntity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
@@ -71,9 +79,15 @@ fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
 	let mut world = World::new();
-	world.import_craft(entity_id, Body::default(), ShowAsMissile, 0);
+	world.import_entity(Entity {
+		id          : entity_id,
+		body        : Some(Body::default()),
+		visual      : Some(ShowAsMissile),
+		interpolated: Some(Interpolated::new(0, Some(Body::default()))),
+		planet      : None,
+	});
 
-	let entity = Entity {
+	let entity = SharedEntity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::default()),
