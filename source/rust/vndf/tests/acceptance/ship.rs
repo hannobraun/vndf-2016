@@ -10,6 +10,7 @@ use cgmath::{
 };
 
 use game::util;
+use game_service::initialstate::InitialState;
 use platform::Input;
 use test_tools::{
 	Client,
@@ -19,7 +20,7 @@ use test_tools::{
 
 #[test]
 fn it_should_fly_straight_without_thrust_applied() {
-	let     game_service = GameService::start();
+	let     game_service = GameService::start(&InitialState::new());
 	let mut client       = Client::start(game_service.port);
 
 	let mut frame = client.frame();
@@ -50,7 +51,7 @@ fn it_should_fly_straight_without_thrust_applied() {
 
 #[test]
 fn it_should_change_velocity_according_to_thrust() {
-	let     game_service = GameService::start();
+	let     game_service = GameService::start(&InitialState::new());
 	let mut client       = Client::start(game_service.port);
 
 	let mut frame = client.frame();
@@ -92,7 +93,7 @@ fn it_should_change_velocity_according_to_thrust() {
 
 #[test]
 fn it_should_fire_a_missile() {
-	let     game_service = GameService::start();
+	let     game_service = GameService::start(&InitialState::new());
 	let mut client       = Client::start(game_service.port);
 
 	let mut frame = client.frame();

@@ -9,6 +9,7 @@ extern crate cgmath;
 
 extern crate client;
 extern crate game;
+extern crate game_service;
 extern crate platform;
 extern crate protocol;
 extern crate rustecs;

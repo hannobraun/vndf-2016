@@ -1,3 +1,4 @@
+use game_service::initialstate::InitialState;
 use test_tools::{
 	Client,
 	GameService
@@ -6,7 +7,7 @@ use test_tools::{
 
 #[test]
 fn it_should_render_all_connected_clients() {
-	let     game_service = GameService::start();
+	let     game_service = GameService::start(&InitialState::new());
 	let mut client_1     = Client::start(game_service.port);
 
 	let mut frame = client_1.frame();

@@ -11,7 +11,7 @@ pub struct GameService {
 }
 
 impl GameService {
-	pub fn start() -> GameService {
+	pub fn start(initial_state: &InitialState) -> GameService {
 		let port = random::<u16>() % 10000 + 40000;
 
 		let mut state_file_name = "initial-state-".to_string();
@@ -21,7 +21,6 @@ impl GameService {
 		let mut state_file_path = os::tmpdir();
 		state_file_path.push(state_file_name);
 
-		let initial_state = InitialState::new();
 		initial_state.to_file(&state_file_path);
 
 		let mut process = Process::start(
