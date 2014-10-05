@@ -74,7 +74,7 @@ world!(
 
 
 // Systems. Should be integrated with Rustecs at some point.
-pub fn integrate(body: &mut Body, delta_time_in_s: f64) {
+pub fn integrate(delta_time_in_s: f64, body: &mut Body) {
 	body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
 	body.position = body.position + body.velocity.mul_s(delta_time_in_s);
 	body.force    = Vector3::zero();
