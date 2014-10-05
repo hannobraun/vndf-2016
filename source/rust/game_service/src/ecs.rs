@@ -1,5 +1,6 @@
 use cgmath::{
 	Quaternion,
+	Vector,
 	Vector3,
 };
 
@@ -72,6 +73,15 @@ world!(
 )
 
 
+// Systems. Should be integrated with Rustecs at some point.
+pub fn integrate(body: &mut Body, delta_time_in_s: f64) {
+	body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
+	body.position = body.position + body.velocity.mul_s(delta_time_in_s);
+	body.force    = Vector3::zero();
+}
+
+
+// Utility functions
 pub fn entity_id_from_conn_id(
 	world    : &World,
 	client_id: ConnId

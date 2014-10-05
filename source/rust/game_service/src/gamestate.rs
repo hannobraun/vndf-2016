@@ -13,7 +13,6 @@ use cgmath::{
 
 use game::ecs::World as SharedWorld;
 use game::ecs::Entity;
-use game::physics::Body;
 use initialstate::InitialState;
 use net::ConnId;
 use protocol::{
@@ -23,6 +22,7 @@ use protocol::{
 
 use super::ecs::{
 	mod,
+	integrate,
 	World,
 };
 use super::events::{
@@ -215,11 +215,4 @@ impl GameState {
 	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Quaternion<f64>) {
 		self.world.create_missile(position, attitude);
 	}
-}
-
-
-fn integrate(body: &mut Body, delta_time_in_s: f64) {
-	body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
-	body.position = body.position + body.velocity.mul_s(delta_time_in_s);
-	body.force    = Vector3::zero();
 }
