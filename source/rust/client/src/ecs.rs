@@ -1,5 +1,3 @@
-use cgmath::Vector3;
-
 use game::ecs::{
 	Planet,
 	Visual,
@@ -41,17 +39,7 @@ world!(
 			Interpolated::new(current_time, Some(body))
 		)
 	}
-	entity_constructor planet(
-		position: Vector3<f64>,
-		radius  : f64,
-		color   : Vector3<f32>,
-	) -> (Planet) {
-		(
-			Planet {
-				position: position,
-				radius  : radius,
-				color   : color,
-			},
-		)
+	entity_constructor planet(planet: Planet) -> (Planet) {
+		(planet,)
 	}
 )
