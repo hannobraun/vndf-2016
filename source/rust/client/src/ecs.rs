@@ -35,6 +35,7 @@ world!(
 	) -> (Body, Visual, Interpolated) {
 		(body, visual, interpolated)
 	}
+
 	entity_constructor planet(planet: Planet) -> (Planet) {
 		(planet,)
 	}
