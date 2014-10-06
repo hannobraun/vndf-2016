@@ -11,8 +11,8 @@ use cgmath::{
 	Vector3,
 };
 
+use game::ecs::Entity as SharedEntity;
 use game::ecs::{
-	Entity,
 	ShowAsMissile,
 	ShowAsShip,
 };
@@ -160,11 +160,11 @@ impl GameState {
 			break;
 		}
 
-		let entities: Vec<Entity> = self.world
+		let entities: Vec<SharedEntity> = self.world
 			.export_entities()
 			.iter()
 			.map(|entity|
-				Entity {
+				SharedEntity {
 					id    : entity.id,
 					body  : entity.body,
 					visual: entity.visual,
