@@ -21,4 +21,19 @@ impl Body {
 			attitude: Quaternion::zero(),
 		}
 	}
+
+	pub fn with_position(mut self, position: Vector3<f64>) -> Body {
+		self.position = position;
+		self
+	}
+
+	pub fn with_velocity(mut self, velocity: Vector3<f64>) -> Body {
+		self.velocity = velocity;
+		self
+	}
+
+	pub fn with_attitude(mut self, attitude: Quaternion<f64>) -> Body {
+		self.attitude = attitude;
+		self
+	}
 }
