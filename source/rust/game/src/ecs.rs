@@ -49,8 +49,8 @@ world!(
 		(body, visual)
 	}
 
-	entity_constructor ship(body: Body) -> (Body, Visual) {
-		(body, ShowAsShip)
+	entity_constructor ship(body: Body, visual: Visual) -> (Body, Visual) {
+		(body, visual)
 	}
 
 	entity_constructor planet(planet: Planet) -> (Planet) {
