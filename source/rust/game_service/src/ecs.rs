@@ -6,7 +6,6 @@ use cgmath::{
 use game::ecs::Entity as SharedEntity;
 use game::ecs::{
 	Planet,
-	ShowAsMissile,
 	ShowAsShip,
 	Visual,
 };
@@ -25,8 +24,8 @@ pub struct Player {
 
 
 world!(
-	entity_constructor missile(body: Body) -> (Body, Visual) {
-		(body, ShowAsMissile)
+	entity_constructor missile(body: Body, visual: Visual) -> (Body, Visual) {
+		(body, visual)
 	}
 
 	entity_constructor ship() -> (Body, Visual) {

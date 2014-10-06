@@ -11,7 +11,10 @@ use cgmath::{
 	Vector3,
 };
 
-use game::ecs::Entity;
+use game::ecs::{
+	Entity,
+	ShowAsMissile,
+};
 use game::physics::Body;
 use initialstate::InitialState;
 use net::ConnId;
@@ -228,7 +231,8 @@ impl GameState {
 		self.world.create_missile(
 			Body::new()
 				.with_position(position)
-				.with_attitude(attitude)
+				.with_attitude(attitude),
+			ShowAsMissile,
 		);
 	}
 }
