@@ -1,5 +1,4 @@
 use cgmath::{
-	Quaternion,
 	Vector,
 	Vector3,
 };
@@ -26,15 +25,7 @@ pub struct Player {
 
 
 world!(
-	entity_constructor missile(
-		position: Vector3<f64>,
-		attitude: Quaternion<f64>,
-	) -> (Body, Visual) {
-		let mut body = Body::new();
-		body.position = position;
-		body.velocity = Vector3::new(600.0, 0.0, 0.0);
-		body.attitude = attitude;
-
+	entity_constructor missile(body: Body) -> (Body, Visual) {
 		(body, ShowAsMissile)
 	}
 

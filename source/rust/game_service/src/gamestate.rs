@@ -12,6 +12,7 @@ use cgmath::{
 };
 
 use game::ecs::Entity;
+use game::physics::Body;
 use initialstate::InitialState;
 use net::ConnId;
 use protocol::{
@@ -224,6 +225,10 @@ impl GameState {
 	}
 
 	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Quaternion<f64>) {
-		self.world.create_missile(position, attitude);
+		self.world.create_missile(
+			Body::new()
+				.with_position(position)
+				.with_attitude(attitude)
+		);
 	}
 }
