@@ -48,8 +48,14 @@ impl Network {
 			let perception = match Perception::from_string(message.as_slice()) {
 				Ok(perception) => perception,
 
-				Err(error) =>
-					exit(format!("Error decoding message: {}", error).as_slice())
+				Err(error) => exit(
+					format!(
+						"Error decoding message. Error: {}; Message: {}",
+						error,
+						message
+					)
+					.as_slice()
+				)
 			};
 
 			handler(perception);
