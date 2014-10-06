@@ -6,7 +6,6 @@ use cgmath::{
 use game::ecs::Entity as SharedEntity;
 use game::ecs::{
 	Planet,
-	ShowAsShip,
 	Visual,
 };
 use game::physics::Body;
@@ -28,8 +27,8 @@ world!(
 		(body, visual)
 	}
 
-	entity_constructor ship(body: Body) -> (Body, Visual) {
-		(body, ShowAsShip)
+	entity_constructor ship(body: Body, visual: Visual) -> (Body, Visual) {
+		(body, visual)
 	}
 
 	entity_constructor planet(planet: Planet) -> (Planet) {

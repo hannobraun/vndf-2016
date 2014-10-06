@@ -14,6 +14,7 @@ use cgmath::{
 use game::ecs::{
 	Entity,
 	ShowAsMissile,
+	ShowAsShip,
 };
 use game::physics::Body;
 use initialstate::InitialState;
@@ -99,7 +100,8 @@ impl GameState {
 		let ship_id = self.world.create_ship(
 			Body::new()
 				.with_position(Vector3::new(3000.0, 0.0, 0.0))
-				.with_velocity(Vector3::new(-50.0, 0.0, 0.0))
+				.with_velocity(Vector3::new(-50.0, 0.0, 0.0)),
+			ShowAsShip,
 		);
 		self.world.create_player(conn_id, ship_id);
 	}
