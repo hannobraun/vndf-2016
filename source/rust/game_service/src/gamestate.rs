@@ -11,7 +11,6 @@ use cgmath::{
 	Vector3,
 };
 
-use game::ecs::World as SharedWorld;
 use game::ecs::Entity;
 use initialstate::InitialState;
 use net::ConnId;
@@ -150,24 +149,18 @@ impl GameState {
 			break;
 		}
 
-		let entities = {
-			let world = SharedWorld::from_entities(
-				self.world
-					.export_entities()
-					.iter()
-					.map(|entity|
-						Entity {
-							id    : entity.id,
-							body  : entity.body,
-							visual: entity.visual,
-							planet: entity.planet,
-						}
-					)
-					.collect()
-			);
-
-			world.export_entities()
-		};
+		let entities: Vec<Entity> = self.world
+			.export_entities()
+			.iter()
+			.map(|entity|
+				Entity {
+					id    : entity.id,
+					body  : entity.body,
+					visual: entity.visual,
+					planet: entity.planet,
+				}
+			)
+			.collect();
 
 		for (_, player) in self.world.players.iter_mut() {
 			match player.ship_id {
