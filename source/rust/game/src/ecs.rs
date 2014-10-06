@@ -44,16 +44,6 @@ pub enum Visual {
 }
 
 
-world!(
-	entity_constructor missile(body: Body, visual: Visual) -> (Body, Visual) {
-		(body, visual)
-	}
-
-	entity_constructor ship(body: Body, visual: Visual) -> (Body, Visual) {
-		(body, visual)
-	}
-
-	entity_constructor planet(planet: Planet) -> (Planet) {
-		(planet,)
-	}
-)
+world! {
+	components Body, Visual, Planet;
+}

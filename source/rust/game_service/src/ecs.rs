@@ -18,7 +18,7 @@ pub struct Player {
 	pub client_id    : ConnId,
 	pub ship_id      : Option<EntityId>,
 	pub missile_index: u64,
-	pub last_snapshot: Vec<SharedEntity>
+	pub last_snapshot: Vec<(EntityId, SharedEntity)>
 }
 
 impl Player {
@@ -33,23 +33,9 @@ impl Player {
 }
 
 
-world!(
-	entity_constructor missile(body: Body, visual: Visual) -> (Body, Visual) {
-		(body, visual)
-	}
-
-	entity_constructor ship(body: Body, visual: Visual) -> (Body, Visual) {
-		(body, visual)
-	}
-
-	entity_constructor planet(planet: Planet) -> (Planet) {
-		(planet,)
-	}
-
-	entity_constructor player(player: Player) -> (Player) {
-		(player,)
-	}
-)
+world! {
+	components Body, Visual, Planet, Player;
+}
 
 
 // Systems. Should be integrated with Rustecs at some point.

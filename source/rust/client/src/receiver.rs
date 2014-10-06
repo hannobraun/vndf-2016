@@ -12,7 +12,7 @@ use super::ecs::{
 
 
 
-pub type Perception = protocol::Perception<EntityId, SharedEntity>;
+pub type Perception = protocol::Perception<EntityId, (EntityId, SharedEntity)>;
 
 
 // This code should be generic and live with the protocol code. Before this can
@@ -21,7 +21,7 @@ pub type Perception = protocol::Perception<EntityId, SharedEntity>;
 pub fn receive(world: &mut World, perception: Perception) {
 	let current_time = time::precise_time_ns();
 
-	for entity in perception.added.into_iter() {
+	for (id, entity) in perception.added.into_iter() {
 		// This code is responsible initializing the Interpolated component.
 		// This should happen in a system that runs on the import event.
 		let interpolated = match entity.body {
@@ -41,23 +41,25 @@ pub fn receive(world: &mut World, perception: Perception) {
 		//    should be a trait, World, that every generated world implements.
 		// 2. If protocol is kept ignorant of Rustecs, the import call can be
 		//    moved into the closure that does the conversion.
-		world.import_entity(Entity {
-			id          : entity.id,
-			body        : entity.body,
-			visual      : entity.visual,
-			interpolated: interpolated,
-			planet      : entity.planet,
-		});
+		world.import_entity(
+			id,
+			Entity {
+				body        : entity.body,
+				visual      : entity.visual,
+				interpolated: interpolated,
+				planet      : entity.planet,
+			}
+		);
 	}
 
-	for entity in perception.updated.iter() {
+	for &(id, entity) in perception.updated.iter() {
 		// This does a straight update of the new component data. There could be
 		// a method update_entity akin to import_entity, or maybe import_entity
 		// could be reused. If the world doesn't trigger events by itself, then
 		// reuse can be possible. Just import_entity, then call trigger_import
 		// or trigger_update_received as appropriate.
 		match entity.visual {
-			Some(visual) => *world.visuals.get_mut(&entity.id) = visual,
+			Some(visual) => *world.visuals.get_mut(&id) = visual,
 			None => (),
 		}
 
@@ -65,16 +67,16 @@ pub fn receive(world: &mut World, perception: Perception) {
 		// on the update_received event.
 		match entity.body {
 			Some(body) => {
-				world.interpolateds.get_mut(&entity.id).current      = Some(body);
-				world.interpolateds.get_mut(&entity.id).current_time = current_time;
+				world.interpolateds.get_mut(&id).current      = Some(body);
+				world.interpolateds.get_mut(&id).current_time = current_time;
 			},
 			None => (),
 		}
 	}
 
-	for entity in perception.removed.iter() {
+	for &(id, _) in perception.removed.iter() {
 		// This is already quite generic. The only thing that's required to make
 		// it totally generic is trait World.
-		world.destroy_entity(entity.id);
+		world.destroy_entity(id);
 	}
 }

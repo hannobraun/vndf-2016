@@ -23,6 +23,6 @@ pub enum GameEvent {
 
 #[deriving(PartialEq, Show)]
 pub enum NetworkEvent {
-	Message(Vec<ConnId>, protocol::Perception<EntityId, Entity>),
+	Message(Vec<ConnId>, protocol::Perception<EntityId, (EntityId, Entity)>),
 	Close(ConnId, IoError)
 }

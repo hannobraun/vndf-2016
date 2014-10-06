@@ -42,7 +42,7 @@ impl Network {
 
 	pub fn receive(
 		&mut self,
-		handler: |Perception<EntityId, Entity>|
+		handler: |Perception<EntityId, (EntityId, Entity)>|
 	) {
 		let result = self.conn.receive_messages(|message| {
 			let perception = match Perception::from_string(message.as_slice()) {

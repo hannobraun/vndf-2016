@@ -27,16 +27,6 @@ impl Interpolated {
 }
 
 
-world!(
-	entity_constructor craft(
-		body        : Body,
-		visual      : Visual,
-		interpolated: Interpolated,
-	) -> (Body, Visual, Interpolated) {
-		(body, visual, interpolated)
-	}
-
-	entity_constructor planet(planet: Planet) -> (Planet) {
-		(planet,)
-	}
-)
+world! {
+	components Body, Visual, Interpolated, Planet;
+}

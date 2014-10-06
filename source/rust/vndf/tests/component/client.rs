@@ -28,7 +28,6 @@ fn it_should_interpolate_between_perceptions() {
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = Entity {
-		id: 0,
 		body: Some({
 			let mut body = Body::new();
 			body.position = pos_1;
@@ -40,17 +39,17 @@ fn it_should_interpolate_between_perceptions() {
 	};
 
 	let perception_1 = Perception::new(
-		|entity| entity.id,
+		|&(id, _)| id,
 		Some(0),
 		vec!(),
-		vec!(entity)
+		vec!((0, entity))
 	);
 	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
-		|entity| entity.id,
+		|&(id, _)| id,
 		Some(0),
-		vec!(entity),
-		vec!(entity)
+		vec!((0, entity)),
+		vec!((0, entity))
 	);
 
 	game_service.send_perception(&perception_1);
@@ -97,7 +96,6 @@ fn the_camera_should_follow_the_ship() {
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = Entity {
-		id: 0,
 		body: Some({
 			let mut body = Body::new();
 			body.position = pos_1;
@@ -109,17 +107,17 @@ fn the_camera_should_follow_the_ship() {
 	};
 
 	let perception_1 = Perception::new(
-		|entity| entity.id,
+		|&(id, _)| id,
 		Some(0),
 		vec!(),
-		vec!(entity)
+		vec!((0, entity))
 	);
 	entity.body.as_mut().unwrap().position = pos_2;
 	let perception_2 = Perception::new(
-		|entity| entity.id,
+		|&(id, _)| id,
 		Some(0),
-		vec!(entity),
-		vec!(entity)
+		vec!((0, entity)),
+		vec!((0, entity))
 	);
 
 	game_service.send_perception(&perception_1);

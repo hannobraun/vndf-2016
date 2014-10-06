@@ -17,7 +17,6 @@ fn it_should_import_added_entities() {
 	let mut world = World::new();
 
 	let entity = SharedEntity {
-		id    : 5,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::new()),
 		planet: None,
@@ -25,7 +24,7 @@ fn it_should_import_added_entities() {
 
 	let perception = Perception {
 		self_id: Some(0),
-		added  : vec!(entity),
+		added  : vec!((5, entity)),
 		removed: vec!(),
 		updated: vec!(),
 	};
@@ -35,7 +34,7 @@ fn it_should_import_added_entities() {
 	let entities = world.export_entities();
 
 	assert_eq!(1, entities.len());
-	assert!(entities[0].id == 5);
+	assert!(entities[0].0 == 5);
 }
 
 #[test]
@@ -43,16 +42,17 @@ fn it_should_update_entities() {
 	let entity_id = 5;
 
 	let mut world = World::new();
-	world.import_entity(Entity {
-		id          : entity_id,
-		body        : Some(Body::new()),
-		visual      : Some(ShowAsMissile),
-		interpolated: Some(Interpolated::new(0, Some(Body::new()))),
-		planet      : None,
-	});
+	world.import_entity(
+		entity_id,
+		Entity {
+			body        : Some(Body::new()),
+			visual      : Some(ShowAsMissile),
+			interpolated: Some(Interpolated::new(0, Some(Body::new()))),
+			planet      : None,
+		}
+	);
 
 	let mut entity = SharedEntity {
-		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::new()),
 		planet: None,
@@ -63,7 +63,7 @@ fn it_should_update_entities() {
 		self_id: Some(0),
 		added  : vec!(),
 		removed: vec!(),
-		updated: vec!(entity),
+		updated: vec!((entity_id, entity)),
 	};
 
 	receive(&mut world, perception);
@@ -79,16 +79,17 @@ fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
 	let mut world = World::new();
-	world.import_entity(Entity {
-		id          : entity_id,
-		body        : Some(Body::new()),
-		visual      : Some(ShowAsMissile),
-		interpolated: Some(Interpolated::new(0, Some(Body::new()))),
-		planet      : None,
-	});
+	world.import_entity(
+		entity_id,
+		Entity {
+			body        : Some(Body::new()),
+			visual      : Some(ShowAsMissile),
+			interpolated: Some(Interpolated::new(0, Some(Body::new()))),
+			planet      : None,
+		}
+	);
 
 	let entity = SharedEntity {
-		id    : entity_id,
 		visual: Some(ShowAsMissile),
 		body  : Some(Body::new()),
 		planet: None,
@@ -97,7 +98,7 @@ fn it_should_destroy_removed_entities() {
 	let perception = Perception {
 		self_id: Some(0),
 		added  : vec!(),
-		removed: vec!(entity),
+		removed: vec!((entity_id, entity)),
 		updated: vec!(),
 	};
 

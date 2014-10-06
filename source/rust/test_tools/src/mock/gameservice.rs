@@ -41,7 +41,7 @@ impl MockGameService {
 
 	pub fn send_perception(
 		&self,
-		perception: &Perception<EntityId, Entity>
+		perception: &Perception<EntityId, (EntityId, Entity)>
 	) {
 		for connection in self.clients.iter() {
 			match connection.send_message(perception.to_string().as_slice()) {

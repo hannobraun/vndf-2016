@@ -1,7 +1,10 @@
 use serialize::json;
 use std::io::File;
 
-use ecs::World;
+use ecs::{
+	Entity,
+	World,
+};
 use game::ecs::Planet;
 
 
@@ -33,7 +36,7 @@ impl InitialState {
 
 	pub fn apply_to_world(&self, world: &mut World) {
 		for &planet in self.planets.iter() {
-			world.create_planet(planet);
+			world.create_entity(Entity::new().with_planet(planet));
 		}
 	}
 

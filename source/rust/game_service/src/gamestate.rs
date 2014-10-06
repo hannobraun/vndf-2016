@@ -10,6 +10,7 @@ use cgmath::{
 	Vector,
 	Vector3,
 };
+use rustecs::EntityId;
 
 use game::ecs::Entity as SharedEntity;
 use game::ecs::{
@@ -27,6 +28,7 @@ use protocol::{
 use super::ecs::{
 	mod,
 	integrate,
+	Entity,
 	Player,
 	World,
 };
@@ -98,13 +100,18 @@ impl GameState {
 	}
 
 	fn on_enter(&mut self, conn_id: ConnId) {
-		let ship_id = self.world.create_ship(
-			Body::new()
-				.with_position(Vector3::new(3000.0, 0.0, 0.0))
-				.with_velocity(Vector3::new(-50.0, 0.0, 0.0)),
-			ShowAsShip,
+		let ship_id = self.world.create_entity(
+			Entity::new()
+				.with_body(Body::new()
+					.with_position(Vector3::new(3000.0, 0.0, 0.0))
+					.with_velocity(Vector3::new(-50.0, 0.0, 0.0))
+				)
+				.with_visual(ShowAsShip)
 		);
-		self.world.create_player(Player::new(conn_id, ship_id));
+		self.world.create_entity(
+			Entity::new()
+				.with_player(Player::new(conn_id, ship_id))
+		);
 	}
 
 	fn on_leave(&mut self, conn_id: ConnId) {
@@ -160,16 +167,18 @@ impl GameState {
 			break;
 		}
 
-		let entities: Vec<SharedEntity> = self.world
+		let entities: Vec<(EntityId, SharedEntity)> = self.world
 			.export_entities()
 			.iter()
-			.map(|entity|
-				SharedEntity {
-					id    : entity.id,
-					body  : entity.body,
-					visual: entity.visual,
-					planet: entity.planet,
-				}
+			.map(|&(id, ref entity)|
+				(
+					id,
+					SharedEntity {
+						body  : entity.body,
+						visual: entity.visual,
+						planet: entity.planet,
+					}
+				)
 			)
 			.collect();
 
@@ -184,7 +193,7 @@ impl GameState {
 			}
 
 			let perception = Perception::new(
-				|entity| entity.id,
+				|&(id, _)| id,
 				player.ship_id,
 				player.last_snapshot.clone(),
 				entities.clone()
@@ -235,11 +244,14 @@ impl GameState {
 	}
 
 	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Quaternion<f64>) {
-		self.world.create_missile(
-			Body::new()
-				.with_position(position)
-				.with_attitude(attitude),
-			ShowAsMissile,
+		self.world.create_entity(
+			Entity::new()
+				.with_body(
+					Body::new()
+						.with_position(position)
+						.with_attitude(attitude)
+				)
+				.with_visual(ShowAsMissile)
 		);
 	}
 }
