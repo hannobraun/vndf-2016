@@ -31,13 +31,9 @@ world!(
 	entity_constructor craft(
 		body        : Body,
 		visual      : Visual,
-		current_time: u64,
+		interpolated: Interpolated,
 	) -> (Body, Visual, Interpolated) {
-		(
-			body,
-			visual,
-			Interpolated::new(current_time, Some(body))
-		)
+		(body, visual, interpolated)
 	}
 	entity_constructor planet(planet: Planet) -> (Planet) {
 		(planet,)
