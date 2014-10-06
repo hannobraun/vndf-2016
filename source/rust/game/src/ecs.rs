@@ -45,8 +45,8 @@ pub enum Visual {
 
 
 world!(
-	entity_constructor missile(body: Body) -> (Body, Visual) {
-		(body, ShowAsMissile)
+	entity_constructor missile(body: Body, visual: Visual) -> (Body, Visual) {
+		(body, visual)
 	}
 
 	entity_constructor ship(body: Body) -> (Body, Visual) {
