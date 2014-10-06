@@ -36,7 +36,7 @@ impl InitialState {
 
 	pub fn apply_to_world(&self, world: &mut World) {
 		for &planet in self.planets.iter() {
-			world.create_entity(Entity::new().with_planet(planet));
+			world.add_entity(Entity::new().with_planet(planet));
 		}
 	}
 

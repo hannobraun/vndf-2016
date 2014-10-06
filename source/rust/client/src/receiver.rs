@@ -77,6 +77,6 @@ pub fn receive(world: &mut World, perception: Perception) {
 	for &(id, _) in perception.removed.iter() {
 		// This is already quite generic. The only thing that's required to make
 		// it totally generic is trait World.
-		world.destroy_entity(id);
+		world.remove_entity(id);
 	}
 }
