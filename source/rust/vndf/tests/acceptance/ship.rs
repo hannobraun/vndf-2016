@@ -142,3 +142,35 @@ fn it_should_be_removed_when_colliding_with_a_planet() {
 
 	assert_eq!(0, frame.ships.len());
 }
+
+#[test]
+fn it_should_be_influenced_by_gravity() {
+	let game_service = GameService::start(&InitialState::new()
+		.with_planet(Planet::new()
+			.at_position(3000.0, 10.0, 0.0)
+			.with_mass(1.0e50)
+		)
+	);
+	let mut client = Client::start(game_service.port);
+
+
+	let mut frame = client.frame();
+
+	wait_while!(frame.ships.len() == 0 {
+		frame = client.frame();
+	})
+
+	let old_velocity   = frame.ships[0].velocity;
+	let ship_to_planet = frame.planets[0].position - frame.ships[0].position;
+
+	wait_while!(frame.ships[0].velocity == old_velocity && true {
+		frame = client.frame();
+	})
+
+	let new_velocity = frame.ships[0].velocity;
+
+	let old_angle = ship_to_planet.angle(&old_velocity);
+	let new_angle = ship_to_planet.angle(&new_velocity);
+
+	assert!(new_angle < old_angle);
+}
