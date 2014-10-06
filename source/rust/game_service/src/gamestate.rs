@@ -27,6 +27,7 @@ use protocol::{
 use super::ecs::{
 	mod,
 	integrate,
+	Player,
 	World,
 };
 use super::events::{
@@ -103,7 +104,7 @@ impl GameState {
 				.with_velocity(Vector3::new(-50.0, 0.0, 0.0)),
 			ShowAsShip,
 		);
-		self.world.create_player(conn_id, ship_id);
+		self.world.create_player(Player::new(conn_id, ship_id));
 	}
 
 	fn on_leave(&mut self, conn_id: ConnId) {

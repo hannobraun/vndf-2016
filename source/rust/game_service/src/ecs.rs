@@ -46,8 +46,8 @@ world!(
 		(planet,)
 	}
 
-	entity_constructor player(conn_id: ConnId, ship_id: EntityId) -> (Player) {
-		(Player::new(conn_id, ship_id),)
+	entity_constructor player(player: Player) -> (Player) {
+		(player,)
 	}
 )
 
