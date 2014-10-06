@@ -32,12 +32,8 @@ impl InitialState {
 	}
 
 	pub fn apply_to_world(&self, world: &mut World) {
-		for planet in self.planets.iter() {
-			world.create_planet(
-				planet.position,
-				planet.radius,
-				planet.color,
-			);
+		for &planet in self.planets.iter() {
+			world.create_planet(planet);
 		}
 	}
 
