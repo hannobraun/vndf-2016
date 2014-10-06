@@ -19,7 +19,7 @@ fn it_should_import_added_entities() {
 	let entity = SharedEntity {
 		id    : 5,
 		visual: Some(ShowAsMissile),
-		body  : Some(Body::default()),
+		body  : Some(Body::new()),
 		planet: None,
 	};
 
@@ -45,16 +45,16 @@ fn it_should_update_entities() {
 	let mut world = World::new();
 	world.import_entity(Entity {
 		id          : entity_id,
-		body        : Some(Body::default()),
+		body        : Some(Body::new()),
 		visual      : Some(ShowAsMissile),
-		interpolated: Some(Interpolated::new(0, Some(Body::default()))),
+		interpolated: Some(Interpolated::new(0, Some(Body::new()))),
 		planet      : None,
 	});
 
 	let mut entity = SharedEntity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
-		body  : Some(Body::default()),
+		body  : Some(Body::new()),
 		planet: None,
 	};
 	entity.body.as_mut().unwrap().position = Vector3::new(5.0, 8.0, 13.0);
@@ -81,16 +81,16 @@ fn it_should_destroy_removed_entities() {
 	let mut world = World::new();
 	world.import_entity(Entity {
 		id          : entity_id,
-		body        : Some(Body::default()),
+		body        : Some(Body::new()),
 		visual      : Some(ShowAsMissile),
-		interpolated: Some(Interpolated::new(0, Some(Body::default()))),
+		interpolated: Some(Interpolated::new(0, Some(Body::new()))),
 		planet      : None,
 	});
 
 	let entity = SharedEntity {
 		id    : entity_id,
 		visual: Some(ShowAsMissile),
-		body  : Some(Body::default()),
+		body  : Some(Body::new()),
 		planet: None,
 	};
 

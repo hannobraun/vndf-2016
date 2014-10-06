@@ -30,7 +30,7 @@ fn it_should_interpolate_between_perceptions() {
 	let mut entity = Entity {
 		id: 0,
 		body: Some({
-			let mut body = Body::default();
+			let mut body = Body::new();
 			body.position = pos_1;
 			body.velocity = Vector3::new(10.0, 0.0, 0.0);
 			body
@@ -99,7 +99,7 @@ fn the_camera_should_follow_the_ship() {
 	let mut entity = Entity {
 		id: 0,
 		body: Some({
-			let mut body = Body::default();
+			let mut body = Body::new();
 			body.position = pos_1;
 			body.velocity = Vector3::new(10.0, 0.0, 0.0);
 			body

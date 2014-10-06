@@ -13,7 +13,7 @@ pub struct Body {
 }
 
 impl Body {
-	pub fn default() -> Body {
+	pub fn new() -> Body {
 		Body {
 			position: Vector3::zero(),
 			velocity: Vector3::zero(),

@@ -30,7 +30,7 @@ world!(
 		position: Vector3<f64>,
 		attitude: Quaternion<f64>,
 	) -> (Body, Visual) {
-		let mut body = Body::default();
+		let mut body = Body::new();
 		body.position = position;
 		body.velocity = Vector3::new(600.0, 0.0, 0.0);
 		body.attitude = attitude;
@@ -39,7 +39,7 @@ world!(
 	}
 
 	entity_constructor ship() -> (Body, Visual) {
-		let mut body = Body::default();
+		let mut body = Body::new();
 		body.position = Vector3::new(3000.0, 0.0, 0.0);
 		body.velocity = Vector3::new(-50.0, 0.0, 0.0);
 
