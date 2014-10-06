@@ -28,11 +28,7 @@ world!(
 		(body, visual)
 	}
 
-	entity_constructor ship() -> (Body, Visual) {
-		let mut body = Body::new();
-		body.position = Vector3::new(3000.0, 0.0, 0.0);
-		body.velocity = Vector3::new(-50.0, 0.0, 0.0);
-
+	entity_constructor ship(body: Body) -> (Body, Visual) {
 		(body, ShowAsShip)
 	}
 

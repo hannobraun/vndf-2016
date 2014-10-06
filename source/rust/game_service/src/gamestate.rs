@@ -96,7 +96,11 @@ impl GameState {
 	}
 
 	fn on_enter(&mut self, conn_id: ConnId) {
-		let ship_id = self.world.create_ship();
+		let ship_id = self.world.create_ship(
+			Body::new()
+				.with_position(Vector3::new(3000.0, 0.0, 0.0))
+				.with_velocity(Vector3::new(-50.0, 0.0, 0.0))
+		);
 		self.world.create_player(conn_id, ship_id);
 	}
 
