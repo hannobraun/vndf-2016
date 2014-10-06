@@ -21,6 +21,17 @@ pub struct Player {
 	pub last_snapshot: Vec<SharedEntity>
 }
 
+impl Player {
+	pub fn new(conn_id: ConnId, ship_id: EntityId) -> Player {
+		Player {
+			client_id    : conn_id,
+			ship_id      : Some(ship_id),
+			missile_index: 0,
+			last_snapshot: Vec::new(),
+		}
+	}
+}
+
 
 world!(
 	entity_constructor missile(body: Body, visual: Visual) -> (Body, Visual) {
@@ -36,14 +47,7 @@ world!(
 	}
 
 	entity_constructor player(conn_id: ConnId, ship_id: EntityId) -> (Player) {
-		(
-			Player {
-				client_id    : conn_id,
-				ship_id      : Some(ship_id),
-				missile_index: 0,
-				last_snapshot: Vec::new(),
-			},
-		)
+		(Player::new(conn_id, ship_id),)
 	}
 )
 
