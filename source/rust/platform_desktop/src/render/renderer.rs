@@ -85,7 +85,6 @@ impl Renderer {
 						&mut graphics,
 						&draw_state,
 						texture,
-						false,
 					),
 				);
 			}

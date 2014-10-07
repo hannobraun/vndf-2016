@@ -39,7 +39,6 @@ impl Icon {
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
 		texture   : Texture,
-		center    : bool,
 	) -> Icon {
 		let vertices = [
 			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
@@ -67,12 +66,10 @@ impl Icon {
 			)
 			.unwrap();
 
-		let offset = if center { Vector2::zero() } else { texture.size.mul_s(0.5) };
-
 		Icon {
 			batch  : batch,
 			texture: texture,
-			offset : offset,
+			offset : texture.size.mul_s(0.5),
 		}
 	}
 
