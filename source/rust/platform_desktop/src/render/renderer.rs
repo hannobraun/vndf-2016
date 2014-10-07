@@ -67,13 +67,13 @@ impl Renderer {
 		let planet    = Planet::new(&mut graphics, &draw_state);
 		let rings     = Rings::new(&mut graphics, &draw_state);
 
-		let mut glyphs     = HashMap::new();
-		let mut icons      = HashMap::new();
-		let mut textures   = HashMap::new();
+		let mut glyphs         = HashMap::new();
+		let mut icons          = HashMap::new();
+		let mut image_textures = HashMap::new();
 
 		for (path, image) in images.into_iter() {
 			let texture = Texture::from_image(&image, &mut graphics);
-			textures.insert(path, texture);
+			image_textures.insert(path, texture);
 		}
 
 		for (c, glyph) in font.into_iter() {
@@ -102,7 +102,7 @@ impl Renderer {
 			rings    : rings,
 
 			icons         : icons,
-			image_textures: textures,
+			image_textures: image_textures,
 
 			glyphs: glyphs,
 		}
