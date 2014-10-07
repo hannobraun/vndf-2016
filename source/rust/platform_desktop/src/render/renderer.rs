@@ -202,6 +202,7 @@ impl Renderer {
 			&mut self.graphics,
 			&self.frame,
 			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
+			&billboard.texture,
 			&view_projection,
 			&self.window.size,
 		);
