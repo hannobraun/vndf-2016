@@ -32,14 +32,14 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 		#version 150 core
 
 		uniform mat4  transform;
-		uniform float size;
+		uniform float radius;
 
 		in vec3 vertex;
 
 		out vec2 point;
 
 		void main() {
-			gl_Position = transform * vec4(vertex * size, 1.0);
+			gl_Position = transform * vec4(vertex * radius, 1.0);
 
 			point = vertex.xy;
 		}

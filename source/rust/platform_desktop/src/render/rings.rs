@@ -16,7 +16,7 @@ use super::{
 
 #[shader_param(Batch)]
 struct Params {
-	size     : f32,
+	radius   : f32,
 	transform: [[f32, ..4], ..4],
 }
 
@@ -69,12 +69,12 @@ impl Rings {
 	) {
 		// transform[3][3] is proportional to the camera distance, thus scaling
 		// the vertex with it will make the size independent of the zoom level.
-		let size = transform[3][3] * 0.55;
+		let radius = transform[3][3] * 0.55;
 
 		graphics.draw(
 			&self.batch,
 			&Params {
-				size     : size,
+				radius   : radius,
 				transform: transform.into_fixed()
 			},
 			frame,
