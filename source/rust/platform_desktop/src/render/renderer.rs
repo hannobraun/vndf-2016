@@ -47,6 +47,7 @@ pub struct Renderer {
 	planet    : Planet,
 	rings     : Rings,
 	icons     : HashMap<String, Icon>,
+	textures  : HashMap<String, Texture>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -71,14 +72,17 @@ impl Renderer {
 		let mut billboards = HashMap::new();
 		let mut glyphs     = HashMap::new();
 		let mut icons      = HashMap::new();
+		let mut textures   = HashMap::new();
 
 		for (path, image) in images.into_iter() {
 			let texture = Texture::from_image(&image, &mut graphics);
 
 			billboards.insert(
-				path,
-				Billboard::new(&mut graphics, &draw_state, texture)
+				path.clone(),
+				Billboard::new(&mut graphics, &draw_state, texture.clone())
 			);
+
+			textures.insert(path, texture);
 		}
 
 		for (c, glyph) in font.into_iter() {
@@ -107,6 +111,7 @@ impl Renderer {
 			planet    : planet,
 			rings     : rings,
 			icons     : icons,
+			textures  : textures,
 
 			glyphs: glyphs,
 		}
