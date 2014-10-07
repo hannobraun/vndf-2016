@@ -211,7 +211,7 @@ impl Renderer {
 	}
 
 	fn draw_rings(&mut self, view_projection: Transform, camera: &Camera) {
-		let transform = &view_projection.mul(&Matrix4::from_translation(
+		let transform = view_projection.mul(&Matrix4::from_translation(
 			&Vector3::new(
 				camera.center.x as f32,
 				camera.center.y as f32,
@@ -227,7 +227,7 @@ impl Renderer {
 			&mut self.graphics,
 			&self.frame,
 			radius,
-			transform,
+			&transform,
 		);
 	}
 
