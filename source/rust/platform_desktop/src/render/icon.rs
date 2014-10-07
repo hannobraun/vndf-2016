@@ -70,12 +70,13 @@ impl Icon {
 		&self,
 		graphics : &mut Graphics,
 		frame    : &Frame,
+		texture  : &Texture,
 		transform: &Transform,
 	) {
 		let params = Params {
-			size     : self.texture.size.extend(0.0).into_fixed(),
+			size     : texture.size.extend(0.0).into_fixed(),
 			transform: transform.into_fixed(),
-			tex      : self.texture.param,
+			tex      : texture.param,
 		};
 
 		graphics.draw(

@@ -269,7 +269,8 @@ impl Renderer {
 			};
 
 			if c != ' ' {
-				let icon = self.icons[c.to_string()];
+				let icon    = self.icons[c.to_string()];
+				let texture = self.glyph_textures[c];
 
 				let offset_to_edge = icon.texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
@@ -279,6 +280,7 @@ impl Renderer {
 				icon.draw(
 					&mut self.graphics,
 					&self.frame,
+					&texture,
 					&transform.mul(&Matrix4::from_translation(
 						&total_offset.extend(0.0)
 					)),
