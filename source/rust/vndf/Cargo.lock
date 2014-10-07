@@ -94,7 +94,7 @@ dependencies = [
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#6e306baf5e520797cbaa8c9fb13e64e165535c4b"
+source = "git+https://github.com/bjz/glfw-rs.git#16f8b1c725e153bc4ff11e0a210e8896ceee4710"
 dependencies = [
  "glfw-sys 3.0.4 (git+https://github.com/servo/glfw?ref=cargo-3.0.4#65a2b4721276589d9de24f6a9999a2db37286cae)",
  "semver 0.1.0 (git+https://github.com/rust-lang/semver#5dee918159d4e3d84c1ee54cf6a5305e6f7bd557)",
@@ -135,7 +135,7 @@ dependencies = [
  "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#d981c349a0ffb13fb298f1ac1d5e5483ce860a81)",
  "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#5313a1d112ce517039c6120f714210f1a3e21542)",
  "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#eb7a628a8f189cc06681dddd205d3bd04dc88a84)",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#6e306baf5e520797cbaa8c9fb13e64e165535c4b)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#16f8b1c725e153bc4ff11e0a210e8896ceee4710)",
  "platform 0.1.0",
  "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c)",
 ]
