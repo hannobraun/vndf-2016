@@ -87,7 +87,7 @@ impl Icon {
 		transform: &Transform,
 	) {
 		let params = Params {
-			size     : self.size.extend(0.0).into_fixed(),
+			size     : self.texture.size.extend(0.0).into_fixed(),
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
 			tex      : self.texture.param,
 		};
