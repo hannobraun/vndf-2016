@@ -185,6 +185,8 @@ impl Renderer {
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let billboard = self.billboards[icon_id.to_string()];
+		let texture   = self.textures[icon_id.to_string()];
+
 		let view_projection = self.perspective()
 			.mul(&camera.to_transform());
 		let screen_position = view_projection
@@ -207,12 +209,12 @@ impl Renderer {
 			&mut self.graphics,
 			&self.frame,
 			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
-			&billboard.texture,
+			&texture,
 			&view_projection,
 			&self.window.size,
 		);
 
-		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + billboard.texture.size.div_s(2.0);
+		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + texture.size.div_s(2.0);
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
