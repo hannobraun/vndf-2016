@@ -207,7 +207,7 @@ impl Renderer {
 			&self.window.size,
 		);
 
-		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + billboard.size.div_s(2.0);
+		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + billboard.texture.size.div_s(2.0);
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
