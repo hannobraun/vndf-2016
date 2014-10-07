@@ -86,7 +86,6 @@ impl Renderer {
 					Icon::new(
 						&mut graphics,
 						&draw_state,
-						texture,
 					),
 				);
 				glyph_textures.insert(c, texture);

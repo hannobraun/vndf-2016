@@ -24,15 +24,13 @@ struct Params {
 
 
 pub struct Icon {
-	pub batch  : Batch,
-	pub texture: Texture,
+	pub batch: Batch,
 }
 
 impl Icon {
 	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-		texture   : Texture,
 	) -> Icon {
 		let vertices = [
 			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
@@ -61,8 +59,7 @@ impl Icon {
 			.unwrap();
 
 		Icon {
-			batch  : batch,
-			texture: texture,
+			batch: batch,
 		}
 	}
 
