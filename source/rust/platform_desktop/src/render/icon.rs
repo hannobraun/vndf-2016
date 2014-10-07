@@ -31,7 +31,6 @@ struct Params {
 pub struct Icon {
 	pub batch  : Batch,
 	pub texture: Texture,
-	pub size   : Vector2<f32>,
 	pub offset : Vector2<f32>,
 }
 
@@ -42,8 +41,6 @@ impl Icon {
 		texture   : Texture,
 		center    : bool,
 	) -> Icon {
-		let size = texture.size;
-
 		let vertices = [
 			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
@@ -75,7 +72,6 @@ impl Icon {
 		Icon {
 			batch  : batch,
 			texture: texture,
-			size   : size,
 			offset : offset,
 		}
 	}
