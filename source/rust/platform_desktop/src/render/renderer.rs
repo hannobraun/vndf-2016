@@ -48,6 +48,7 @@ pub struct Renderer {
 	rings    : Rings,
 
 	glyphs        : HashMap<char, Glyph>,
+	glyph_textures: HashMap<char, Texture>,
 	icons         : HashMap<String, Icon>,
 	image_textures: HashMap<String, Texture>,
 
@@ -68,6 +69,7 @@ impl Renderer {
 		let rings     = Rings::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
+		let mut glyph_textures = HashMap::new();
 		let mut icons          = HashMap::new();
 		let mut image_textures = HashMap::new();
 
@@ -87,6 +89,7 @@ impl Renderer {
 						texture,
 					),
 				);
+				glyph_textures.insert(c, texture);
 			}
 			glyphs.insert(c, glyph);
 		}
@@ -102,6 +105,7 @@ impl Renderer {
 			rings    : rings,
 
 			glyphs        : glyphs,
+			glyph_textures: glyph_textures,
 			icons         : icons,
 			image_textures: image_textures,
 
