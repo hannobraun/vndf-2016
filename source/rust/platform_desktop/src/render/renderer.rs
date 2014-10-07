@@ -43,11 +43,12 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	billboards: HashMap<String, Billboard>,
-	planet    : Planet,
-	rings     : Rings,
-	icons     : HashMap<String, Icon>,
-	textures  : HashMap<String, Texture>,
+	billboard: Billboard,
+	planet   : Planet,
+	rings    : Rings,
+
+	icons    : HashMap<String, Icon>,
+	textures : HashMap<String, Texture>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -62,6 +63,8 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
+		let billboard = Billboard::new(&mut graphics, &draw_state);
+
 		let planet = Planet::new(&mut graphics, &draw_state);
 
 		let rings = Rings::new(
@@ -69,19 +72,12 @@ impl Renderer {
 			&draw_state,
 		);
 
-		let mut billboards = HashMap::new();
 		let mut glyphs     = HashMap::new();
 		let mut icons      = HashMap::new();
 		let mut textures   = HashMap::new();
 
 		for (path, image) in images.into_iter() {
 			let texture = Texture::from_image(&image, &mut graphics);
-
-			billboards.insert(
-				path.clone(),
-				Billboard::new(&mut graphics, &draw_state),
-			);
-
 			textures.insert(path, texture);
 		}
 
@@ -107,11 +103,12 @@ impl Renderer {
 
 			frame: frame,
 
-			billboards: billboards,
-			planet    : planet,
-			rings     : rings,
-			icons     : icons,
-			textures  : textures,
+			billboard: billboard,
+			planet   : planet,
+			rings    : rings,
+
+			icons   : icons,
+			textures: textures,
 
 			glyphs: glyphs,
 		}
@@ -184,8 +181,7 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
-		let billboard = self.billboards[icon_id.to_string()];
-		let texture   = self.textures[icon_id.to_string()];
+		let texture = self.textures[icon_id.to_string()];
 
 		let view_projection = self.perspective()
 			.mul(&camera.to_transform());
@@ -205,7 +201,7 @@ impl Renderer {
 				0.0,
 			)));
 
-		billboard.draw(
+		self.billboard.draw(
 			&mut self.graphics,
 			&self.frame,
 			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
