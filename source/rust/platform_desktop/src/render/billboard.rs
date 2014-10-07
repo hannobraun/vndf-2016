@@ -32,7 +32,6 @@ struct Params {
 pub struct Billboard {
 	pub batch  : Batch,
 	pub texture: Texture,
-	pub size   : Vector2<f32>,
 }
 
 impl Billboard {
@@ -41,8 +40,6 @@ impl Billboard {
 		draw_state: &gfx::DrawState,
 		texture   : Texture,
 	) -> Billboard {
-		let size = texture.size;
-
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -72,7 +69,6 @@ impl Billboard {
 		Billboard {
 			batch  : batch,
 			texture: texture,
-			size   : size,
 		}
 	}
 
