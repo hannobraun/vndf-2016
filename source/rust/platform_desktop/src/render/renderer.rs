@@ -264,7 +264,6 @@ impl Renderer {
 		position : &Vector3<f32>,
 		transform: &Transform
 	) {
-		let transform = transform.mul(&Matrix4::from_translation(position));
 		let mut total_advance = Vector2::zero();
 
 		for c in text.chars() {
@@ -279,13 +278,15 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				self.icon.draw(
+				self.billboard.draw(
 					&mut self.graphics,
 					&self.frame,
+					position,
 					&texture,
 					&transform.mul(&Matrix4::from_translation(
 						&total_offset.extend(0.0)
 					)),
+					&self.window.size,
 				);
 			}
 
