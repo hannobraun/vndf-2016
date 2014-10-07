@@ -148,17 +148,7 @@ impl Renderer {
 			);
 		}
 
-		self.rings.draw(
-			&mut self.graphics,
-			&self.frame,
-			&view_projection.mul(&Matrix4::from_translation(
-				&Vector3::new(
-					frame.camera.center.x as f32,
-					frame.camera.center.y as f32,
-					frame.camera.center.z as f32,
-				)
-			)),
-		);
+		self.draw_rings(view_projection, &frame.camera);
 
 		self.draw_ui_overlay(frame.input);
 
@@ -217,6 +207,20 @@ impl Renderer {
 			).as_slice(),
 			&text_position.extend(0.0),
 			&transform,
+		);
+	}
+
+	fn draw_rings(&mut self, view_projection: Transform, camera: &Camera) {
+		self.rings.draw(
+			&mut self.graphics,
+			&self.frame,
+			&view_projection.mul(&Matrix4::from_translation(
+				&Vector3::new(
+					camera.center.x as f32,
+					camera.center.y as f32,
+					camera.center.z as f32,
+				)
+			)),
 		);
 	}
 
