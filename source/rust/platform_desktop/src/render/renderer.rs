@@ -272,7 +272,7 @@ impl Renderer {
 				let icon    = self.icons[c.to_string()];
 				let texture = self.glyph_textures[c];
 
-				let offset_to_edge = icon.texture.size.mul_s(0.5);
+				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
 
