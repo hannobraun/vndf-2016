@@ -44,12 +44,12 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	billboard: Billboard,
+	icon     : Icon,
 	planet   : Planet,
 	rings    : Rings,
 
 	glyphs        : HashMap<char, Glyph>,
 	glyph_textures: HashMap<char, Texture>,
-	icons         : HashMap<String, Icon>,
 	image_textures: HashMap<String, Texture>,
 
 }
@@ -65,12 +65,12 @@ impl Renderer {
 			.depth(gfx::state::Less, true);
 
 		let billboard = Billboard::new(&mut graphics, &draw_state);
+		let icon      = Icon::new(&mut graphics, &draw_state);
 		let planet    = Planet::new(&mut graphics, &draw_state);
 		let rings     = Rings::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();
-		let mut icons          = HashMap::new();
 		let mut image_textures = HashMap::new();
 
 		for (path, image) in images.into_iter() {
@@ -81,13 +81,6 @@ impl Renderer {
 		for (c, glyph) in font.into_iter() {
 			if c != ' ' {
 				let texture = Texture::from_glyph(&glyph, &mut graphics);
-				icons.insert(
-					c.to_string(),
-					Icon::new(
-						&mut graphics,
-						&draw_state,
-					),
-				);
 				glyph_textures.insert(c, texture);
 			}
 			glyphs.insert(c, glyph);
@@ -100,12 +93,12 @@ impl Renderer {
 			frame: frame,
 
 			billboard: billboard,
+			icon     : icon,
 			planet   : planet,
 			rings    : rings,
 
 			glyphs        : glyphs,
 			glyph_textures: glyph_textures,
-			icons         : icons,
 			image_textures: image_textures,
 
 		}
@@ -268,13 +261,12 @@ impl Renderer {
 			};
 
 			if c != ' ' {
-				let icon    = self.icons[c.to_string()];
 				let texture = self.glyph_textures[c];
 
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				icon.draw(
+				self.icon.draw(
 					&mut self.graphics,
 					&self.frame,
 					&texture,
