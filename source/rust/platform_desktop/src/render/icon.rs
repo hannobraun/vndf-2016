@@ -70,7 +70,7 @@ impl Icon {
 			)
 			.unwrap();
 
-		let offset = if center { Vector2::zero() } else { size.mul_s(0.5) };
+		let offset = if center { Vector2::zero() } else { texture.size.mul_s(0.5) };
 
 		Icon {
 			batch  : batch,
