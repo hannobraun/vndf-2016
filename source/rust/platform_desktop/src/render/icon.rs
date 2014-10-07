@@ -1,8 +1,4 @@
-use cgmath::{
-	FixedArray,
-	Matrix4,
-	Vector,
-};
+use cgmath::FixedArray;
 use gfx::{
 	mod,
 	DeviceHelper,
@@ -76,11 +72,9 @@ impl Icon {
 		frame    : &Frame,
 		transform: &Transform,
 	) {
-		let offset = self.texture.size.mul_s(0.5);
-
 		let params = Params {
 			size     : self.texture.size.extend(0.0).into_fixed(),
-			transform: transform.mul(&Matrix4::from_translation(&offset.extend(0.0))).into_fixed(),
+			transform: transform.into_fixed(),
 			tex      : self.texture.param,
 		};
 
