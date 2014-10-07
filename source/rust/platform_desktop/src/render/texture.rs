@@ -10,6 +10,7 @@ use images::Image;
 use super::Graphics;
 
 
+#[deriving(Clone)]
 pub struct Texture {
 	pub size : Vector2<f32>,
 	pub param: gfx::shade::TextureParam,
