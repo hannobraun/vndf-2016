@@ -2,7 +2,6 @@ use cgmath::{
 	FixedArray,
 	Matrix4,
 	Vector,
-	Vector2,
 };
 use gfx::{
 	mod,
@@ -31,7 +30,6 @@ struct Params {
 pub struct Icon {
 	pub batch  : Batch,
 	pub texture: Texture,
-	pub offset : Vector2<f32>,
 }
 
 impl Icon {
@@ -69,7 +67,6 @@ impl Icon {
 		Icon {
 			batch  : batch,
 			texture: texture,
-			offset : texture.size.mul_s(0.5),
 		}
 	}
 
@@ -79,9 +76,11 @@ impl Icon {
 		frame    : &Frame,
 		transform: &Transform,
 	) {
+		let offset = self.texture.size.mul_s(0.5);
+
 		let params = Params {
 			size     : self.texture.size.extend(0.0).into_fixed(),
-			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
+			transform: transform.mul(&Matrix4::from_translation(&offset.extend(0.0))).into_fixed(),
 			tex      : self.texture.param,
 		};
 
