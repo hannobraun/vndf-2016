@@ -64,13 +64,8 @@ impl Renderer {
 			.depth(gfx::state::Less, true);
 
 		let billboard = Billboard::new(&mut graphics, &draw_state);
-
-		let planet = Planet::new(&mut graphics, &draw_state);
-
-		let rings = Rings::new(
-			&mut graphics,
-			&draw_state,
-		);
+		let planet    = Planet::new(&mut graphics, &draw_state);
+		let rings     = Rings::new(&mut graphics, &draw_state);
 
 		let mut glyphs     = HashMap::new();
 		let mut icons      = HashMap::new();
