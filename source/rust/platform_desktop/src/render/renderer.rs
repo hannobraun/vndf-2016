@@ -208,7 +208,8 @@ impl Renderer {
 				body.position.z as int,
 			)
 			.as_slice(),
-			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
+			&text_position.extend(0.0),
+			&transform,
 		);
 
 		text_position = text_position - Vector2::new(0.0, 15.0);
@@ -218,7 +219,8 @@ impl Renderer {
 				body.velocity.y as int,
 				body.velocity.z as int,
 			).as_slice(),
-			&transform.mul(&Matrix4::from_translation(&text_position.extend(0.0))),
+			&text_position.extend(0.0),
+			&transform,
 		);
 	}
 
@@ -230,28 +232,39 @@ impl Renderer {
 
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 60.0).extend(0.0)))
+			&Vector2::new(20.0, 60.0).extend(0.0),
+			&projection,
 		);
 		self.draw_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 40.0).extend(0.0))),
+			&Vector2::new(20.0, 40.0).extend(0.0),
+			&projection,
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(20.0, 20.0).extend(0.0))),
+			&Vector2::new(20.0, 20.0).extend(0.0),
+			&projection,
 		);
 
 		self.draw_text(
 			format!("{}", input.attitude).as_slice(),
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, 40.0).extend(0.0))),
+			&Vector2::new(right - 100.0, 40.0).extend(0.0),
+			&projection,
 		);
 		self.draw_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
-			&projection.mul(&Matrix4::from_translation(&Vector2::new(right - 100.0, 20.0).extend(0.0))),
+			&Vector2::new(right - 100.0, 20.0).extend(0.0),
+			&projection,
 		);
 	}
 
-	fn draw_text(&mut self, text: &str, transform: &Transform) {
+	fn draw_text(
+		&mut self,
+		text     : &str,
+		position : &Vector3<f32>,
+		transform: &Transform
+	) {
+		let transform = transform.mul(&Matrix4::from_translation(position));
 		let mut total_advance = Vector2::zero();
 
 		for c in text.chars() {
