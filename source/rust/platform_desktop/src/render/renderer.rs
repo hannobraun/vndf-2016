@@ -47,10 +47,10 @@ pub struct Renderer {
 	planet   : Planet,
 	rings    : Rings,
 
+	glyphs        : HashMap<char, Glyph>,
 	icons         : HashMap<String, Icon>,
 	image_textures: HashMap<String, Texture>,
 
-	glyphs: HashMap<char, Glyph>,
 }
 
 impl Renderer {
@@ -101,10 +101,10 @@ impl Renderer {
 			planet   : planet,
 			rings    : rings,
 
+			glyphs        : glyphs,
 			icons         : icons,
 			image_textures: image_textures,
 
-			glyphs: glyphs,
 		}
 	}
 
