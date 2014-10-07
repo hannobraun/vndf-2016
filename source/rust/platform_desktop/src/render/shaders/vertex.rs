@@ -79,6 +79,7 @@ pub static SIMPLE: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		uniform vec3 size;
 		uniform mat4 transform;
 
 		in vec3 vertex;
@@ -87,7 +88,7 @@ pub static SIMPLE: gfx::ShaderSource = shaders! {
 		out vec2 texture_coordinate;
 
 		void main() {
-			gl_Position = transform * vec4(vertex, 1.0);
+			gl_Position = transform * vec4(vertex * size, 1.0);
 			texture_coordinate = tex_coord;
 		}
 	"

@@ -22,6 +22,7 @@ use super::texture::Texture;
 
 #[shader_param(Batch)]
 struct Params {
+	size     : [f32, ..3],
 	transform: [[f32, ..4], ..4],
 	tex      : gfx::shade::TextureParam,
 }
@@ -44,10 +45,10 @@ impl Icon {
 		let size = texture.size;
 
 		let vertices = [
-			Vertex::new([ -0.5 * size.x, -0.5 * size.y, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  0.5 * size.x, -0.5 * size.y, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -0.5 * size.x,  0.5 * size.y, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  0.5 * size.x,  0.5 * size.y, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ -0.5, -0.5, 0.0 ], [ 0.0, 1.0 ]),
+			Vertex::new([  0.5, -0.5, 0.0 ], [ 1.0, 1.0 ]),
+			Vertex::new([ -0.5,  0.5, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([  0.5,  0.5, 0.0 ], [ 1.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
@@ -86,6 +87,7 @@ impl Icon {
 		transform: &Transform,
 	) {
 		let params = Params {
+			size     : self.size.extend(0.0).into_fixed(),
 			transform: transform.mul(&Matrix4::from_translation(&self.offset.extend(0.0))).into_fixed(),
 			tex      : self.texture.param,
 		};
