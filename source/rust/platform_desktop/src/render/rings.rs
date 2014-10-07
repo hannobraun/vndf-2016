@@ -65,12 +65,9 @@ impl Rings {
 		&self,
 		graphics : &mut Graphics,
 		frame    : &Frame,
+		radius   : f32,
 		transform: &Transform,
 	) {
-		// transform[3][3] is proportional to the camera distance, thus scaling
-		// the vertex with it will make the size independent of the zoom level.
-		let radius = transform[3][3] * 0.55;
-
 		graphics.draw(
 			&self.batch,
 			&Params {
