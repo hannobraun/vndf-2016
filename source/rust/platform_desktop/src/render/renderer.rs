@@ -31,7 +31,6 @@ use super::{
 	Transform,
 };
 use super::billboard::Billboard;
-use super::icon::Icon;
 use super::planet::Planet;
 use super::rings::Rings;
 use super::texture::Texture;
@@ -44,7 +43,6 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	billboard: Billboard,
-	icon     : Icon,
 	planet   : Planet,
 	rings    : Rings,
 
@@ -65,7 +63,6 @@ impl Renderer {
 			.depth(gfx::state::Less, true);
 
 		let billboard = Billboard::new(&mut graphics, &draw_state);
-		let icon      = Icon::new(&mut graphics, &draw_state);
 		let planet    = Planet::new(&mut graphics, &draw_state);
 		let rings     = Rings::new(&mut graphics, &draw_state);
 
@@ -93,7 +90,6 @@ impl Renderer {
 			frame: frame,
 
 			billboard: billboard,
-			icon     : icon,
 			planet   : planet,
 			rings    : rings,
 
