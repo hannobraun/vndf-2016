@@ -47,8 +47,8 @@ pub struct Renderer {
 	planet   : Planet,
 	rings    : Rings,
 
-	icons    : HashMap<String, Icon>,
-	textures : HashMap<String, Texture>,
+	icons         : HashMap<String, Icon>,
+	image_textures: HashMap<String, Texture>,
 
 	glyphs: HashMap<char, Glyph>,
 }
@@ -101,8 +101,8 @@ impl Renderer {
 			planet   : planet,
 			rings    : rings,
 
-			icons   : icons,
-			textures: textures,
+			icons         : icons,
+			image_textures: textures,
 
 			glyphs: glyphs,
 		}
@@ -175,7 +175,7 @@ impl Renderer {
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
-		let texture = self.textures[icon_id.to_string()];
+		let texture = self.image_textures[icon_id.to_string()];
 
 		let view_projection = self.perspective()
 			.mul(&camera.to_transform());
