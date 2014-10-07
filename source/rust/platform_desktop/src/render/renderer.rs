@@ -274,8 +274,6 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-
-
 				icon.draw(
 					&mut self.graphics,
 					&self.frame,
