@@ -79,7 +79,7 @@ impl Renderer {
 
 			billboards.insert(
 				path.clone(),
-				Billboard::new(&mut graphics, &draw_state, texture.clone())
+				Billboard::new(&mut graphics, &draw_state),
 			);
 
 			textures.insert(path, texture);
