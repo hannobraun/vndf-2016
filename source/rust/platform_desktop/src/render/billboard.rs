@@ -30,7 +30,7 @@ struct Params {
 
 
 pub struct Billboard {
-	pub batch  : Batch,
+	pub batch: Batch,
 }
 
 impl Billboard {
@@ -65,7 +65,7 @@ impl Billboard {
 			.unwrap();
 
 		Billboard {
-			batch  : batch,
+			batch: batch,
 		}
 	}
 
