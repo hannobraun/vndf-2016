@@ -200,6 +200,7 @@ impl Renderer {
 			)
 			.as_slice(),
 			&text_position.extend(0.0),
+			&Vector2::zero(),
 			&transform,
 		);
 
@@ -211,6 +212,7 @@ impl Renderer {
 				body.velocity.z as int,
 			).as_slice(),
 			&text_position.extend(0.0),
+			&Vector2::zero(),
 			&transform,
 		);
 	}
@@ -245,36 +247,42 @@ impl Renderer {
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
 			&Vector2::new(20.0, 60.0).extend(0.0),
+			&Vector2::zero(),
 			&projection,
 		);
 		self.draw_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
 			&Vector2::new(20.0, 40.0).extend(0.0),
+			&Vector2::zero(),
 			&projection,
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
 			&Vector2::new(20.0, 20.0).extend(0.0),
+			&Vector2::zero(),
 			&projection,
 		);
 
 		self.draw_text(
 			format!("{}", input.attitude).as_slice(),
 			&Vector2::new(right - 100.0, 40.0).extend(0.0),
+			&Vector2::zero(),
 			&projection,
 		);
 		self.draw_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
 			&Vector2::new(right - 100.0, 20.0).extend(0.0),
+			&Vector2::zero(),
 			&projection,
 		);
 	}
 
 	fn draw_text(
 		&mut self,
-		text     : &str,
-		position : &Vector3<f32>,
-		transform: &Transform
+		text         : &str,
+		position     : &Vector3<f32>,
+		screen_offset: &Vector2<f32>,
+		transform    : &Transform
 	) {
 		let mut total_advance = Vector2::zero();
 
@@ -294,7 +302,7 @@ impl Renderer {
 					&mut self.graphics,
 					&self.frame,
 					position,
-					&Vector2::zero(),
+					screen_offset,
 					&texture,
 					&transform.mul(&Matrix4::from_translation(
 						&total_offset.extend(0.0)
