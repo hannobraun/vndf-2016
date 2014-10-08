@@ -180,7 +180,11 @@ impl Renderer {
 		self.billboard.draw(
 			&mut self.graphics,
 			&self.frame,
-			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
+			&Vector3::new(
+				body.position.x as f32,
+				body.position.y as f32,
+				body.position.z as f32,
+			),
 			&Vector2::zero(),
 			&texture,
 			&view_projection,
