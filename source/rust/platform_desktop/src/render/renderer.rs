@@ -218,6 +218,30 @@ impl Renderer {
 		// the vertex with it will make the size independent of the zoom level.
 		let radius = transform[3][3] * 0.55;
 
+		let ring_radius = radius * 0.9;
+		self.draw_text(
+			format!("{} km", ring_radius.round()).as_slice(),
+			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
+			&Vector2::zero(),
+			&view_projection,
+		);
+
+		let ring_radius = radius * 0.15 + (radius * 0.9 - radius * 0.15) / 2.0;
+		self.draw_text(
+			format!("{} km", ring_radius.round()).as_slice(),
+			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
+			&Vector2::zero(),
+			&view_projection,
+		);
+
+		let ring_radius = radius * 0.15;
+		self.draw_text(
+			format!("{} km", ring_radius.round()).as_slice(),
+			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
+			&Vector2::zero(),
+			&view_projection,
+		);
+
 		self.rings.draw(
 			&mut self.graphics,
 			&self.frame,
