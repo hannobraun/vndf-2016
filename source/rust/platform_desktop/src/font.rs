@@ -33,7 +33,10 @@ pub fn load() -> Font {
 	let     font_face  = init_font_face();
 	let mut font       = HashMap::new();
 
-	for n in range(32u, 127) {
+	let ascii_chars      = range(32, 127);
+	let additional_chars = vec!['°' as u32].into_iter();
+
+	for n in ascii_chars.chain(additional_chars) {
 		let c = char::from_u32(n as u32).unwrap();
 
 		let glyph_slot = load_glyph_slot(font_face, c);
