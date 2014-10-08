@@ -288,7 +288,7 @@ impl Renderer {
 					&mut self.graphics,
 					&self.frame,
 					position,
-					&(screen_offset + total_offset).mul_s(2.0),
+					&(screen_offset + total_offset),
 					&texture,
 					transform,
 					&self.window.size,
