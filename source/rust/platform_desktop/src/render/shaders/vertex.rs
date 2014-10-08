@@ -8,6 +8,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 		uniform vec3 position;
 		uniform mat4 transform;
 		uniform vec2 size;
+		uniform vec2 offset;
 		uniform vec2 screen_size;
 
 		in vec3 vertex;
@@ -20,6 +21,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 			gl_Position = transform * vec4(position, 1.0);
 			gl_Position /= gl_Position.w;
 			gl_Position.xy += vertex.xy * size / screen_size;
+			gl_Position.xy += offset / screen_size;
 
 			texture_coordinate = tex_coord;
 			point = vertex.xy;

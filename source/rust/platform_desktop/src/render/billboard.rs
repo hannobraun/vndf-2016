@@ -24,6 +24,7 @@ struct Params {
 	position   : [f32, ..3],
 	transform  : [[f32, ..4], ..4],
 	size       : [f32, ..2],
+	offset     : [f32, ..2],
 	screen_size: [f32, ..2],
 	tex        : gfx::shade::TextureParam,
 }
@@ -82,6 +83,7 @@ impl Billboard {
 			position   : position.into_fixed(),
 			transform  : transform.into_fixed(),
 			size       : texture.size.into_fixed(),
+			offset     : [0.0, 0.0],
 			screen_size: screen_size.into_fixed(),
 			tex        : texture.param,
 		};
