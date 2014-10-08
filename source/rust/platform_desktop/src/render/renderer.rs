@@ -232,33 +232,33 @@ impl Renderer {
 
 		self.draw_text(
 			"Move camera with WASD; change zoom with R and F",
-			&Vector2::new(20.0, 60.0).extend(0.0),
-			&Vector2::zero(),
+			&Vector3::zero(),
+			&Vector2::new(20.0, 60.0),
 			&projection,
 		);
 		self.draw_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
-			&Vector2::new(20.0, 40.0).extend(0.0),
-			&Vector2::zero(),
+			&Vector3::zero(),
+			&Vector2::new(20.0, 40.0),
 			&projection,
 		);
 		self.draw_text(
 			"Shoot missiles with Enter",
-			&Vector2::new(20.0, 20.0).extend(0.0),
-			&Vector2::zero(),
+			&Vector3::zero(),
+			&Vector2::new(20.0, 20.0),
 			&projection,
 		);
 
 		self.draw_text(
 			format!("{}", input.attitude).as_slice(),
-			&Vector2::new(right - 100.0, 40.0).extend(0.0),
-			&Vector2::zero(),
+			&Vector3::zero(),
+			&Vector2::new(right - 100.0, 40.0),
 			&projection,
 		);
 		self.draw_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
-			&Vector2::new(right - 100.0, 20.0).extend(0.0),
-			&Vector2::zero(),
+			&Vector3::zero(),
+			&Vector2::new(right - 100.0, 20.0),
 			&projection,
 		);
 	}
