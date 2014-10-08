@@ -302,11 +302,9 @@ impl Renderer {
 					&mut self.graphics,
 					&self.frame,
 					position,
-					screen_offset,
+					&(screen_offset + total_offset).mul_s(2.0),
 					&texture,
-					&transform.mul(&Matrix4::from_translation(
-						&total_offset.extend(0.0)
-					)),
+					transform,
 					&self.window.size,
 				);
 			}
