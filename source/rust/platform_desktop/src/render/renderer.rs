@@ -9,7 +9,6 @@ use cgmath::{
 	Vector,
 	Vector2,
 	Vector3,
-	Vector4,
 };
 use gfx;
 
@@ -161,37 +160,24 @@ impl Renderer {
 
 		let view_projection = self.perspective()
 			.mul(&camera.to_transform());
-		let screen_position = view_projection
-			.mul_v(&Vector4::new(
-				body.position.x as f32,
-				body.position.y as f32,
-				body.position.z as f32,
-				1.0,
-			));
-		let screen_position = screen_position.div_s(screen_position.w);
 
-		let transform = self.ortho()
-			.mul(&Matrix4::from_translation(&Vector3::new(
-				screen_position.x / self.window.size.x + self.window.size.x / 2.0,
-				screen_position.y / self.window.size.y + self.window.size.y / 2.0,
-				0.0,
-			)));
+		let position = Vector3::new(
+			body.position.x as f32,
+			body.position.y as f32,
+			body.position.z as f32,
+		);
 
 		self.billboard.draw(
 			&mut self.graphics,
 			&self.frame,
-			&Vector3::new(
-				body.position.x as f32,
-				body.position.y as f32,
-				body.position.z as f32,
-			),
+			&position,
 			&Vector2::zero(),
 			&texture,
 			&view_projection,
 			&self.window.size,
 		);
 
-		let mut text_position = Vector2::new(screen_position.x, screen_position.y) + texture.size.div_s(2.0);
+		let text_offset = texture.size.div_s(2.0);
 		self.draw_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
@@ -199,21 +185,21 @@ impl Renderer {
 				body.position.z as int,
 			)
 			.as_slice(),
-			&text_position.extend(0.0),
-			&Vector2::zero(),
-			&transform,
+			&position,
+			&text_offset,
+			&view_projection,
 		);
 
-		text_position = text_position - Vector2::new(0.0, 15.0);
+		let text_offset = text_offset - Vector2::new(0.0, 15.0);
 		self.draw_text(
 			format!("vel: {:i} / {:i} / {:i}",
 				body.velocity.x as int,
 				body.velocity.y as int,
 				body.velocity.z as int,
 			).as_slice(),
-			&text_position.extend(0.0),
-			&Vector2::zero(),
-			&transform,
+			&position,
+			&text_offset,
+			&view_projection,
 		);
 	}
 
