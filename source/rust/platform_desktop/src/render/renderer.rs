@@ -181,6 +181,7 @@ impl Renderer {
 			&mut self.graphics,
 			&self.frame,
 			&Vector3::new(body.position.x as f32, body.position.y as f32, body.position.z as f32),
+			&Vector2::zero(),
 			&texture,
 			&view_projection,
 			&self.window.size,
@@ -289,6 +290,7 @@ impl Renderer {
 					&mut self.graphics,
 					&self.frame,
 					position,
+					&Vector2::zero(),
 					&texture,
 					&transform.mul(&Matrix4::from_translation(
 						&total_offset.extend(0.0)

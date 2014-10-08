@@ -75,6 +75,7 @@ impl Billboard {
 		graphics   : &mut Graphics,
 		frame      : &Frame,
 		position   : &Vector3<f32>,
+		offset     : &Vector2<f32>,
 		texture    : &Texture,
 		transform  : &Transform,
 		screen_size: &Vector2<f32>,
@@ -83,7 +84,7 @@ impl Billboard {
 			position   : position.into_fixed(),
 			transform  : transform.into_fixed(),
 			size       : texture.size.into_fixed(),
-			offset     : [0.0, 0.0],
+			offset     : offset.into_fixed(),
 			screen_size: screen_size.into_fixed(),
 			tex        : texture.param,
 		};
