@@ -204,13 +204,15 @@ impl Renderer {
 	}
 
 	fn draw_rings(&mut self, view_projection: Transform, camera: &Camera) {
-		let transform = view_projection.mul(&Matrix4::from_translation(
-			&Vector3::new(
-				camera.center.x as f32,
-				camera.center.y as f32,
-				camera.center.z as f32,
-			)
-		));
+		let camera_center = Vector3::new(
+			camera.center.x as f32,
+			camera.center.y as f32,
+			camera.center.z as f32,
+		);
+
+		let transform = view_projection.mul(
+			&Matrix4::from_translation(&camera_center)
+		);
 
 		// transform[3][3] is proportional to the camera distance, thus scaling
 		// the vertex with it will make the size independent of the zoom level.
