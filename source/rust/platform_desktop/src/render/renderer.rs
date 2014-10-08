@@ -3,9 +3,14 @@ use std::rc::Rc;
 
 use cgmath::{
 	mod,
+	deg,
+	Angle,
+	Basis2,
 	Deg,
 	Matrix,
 	Matrix4,
+	Rotation,
+	Rotation2,
 	Vector,
 	Vector2,
 	Vector3,
@@ -241,6 +246,29 @@ impl Renderer {
 			&Vector2::zero(),
 			&view_projection,
 		);
+
+		let angles: &[f32] = [
+			30.0,
+			60.0,
+			90.0,
+			120.0,
+			150.0,
+			180.0,
+			210.0,
+			240.0,
+			270.0,
+			300.0,
+			330.0,
+		];
+		for &angle in angles.iter() {
+			let rotation: Basis2<f32> = Rotation2::from_angle(Angle::from(deg(angle)));
+			self.draw_text(
+				format!("{}°", angle as u16).as_slice(),
+				&(camera_center + rotation.rotate_vector(&Vector2::new(radius, 0.0)).extend(0.0)),
+				&Vector2::zero(),
+				&view_projection,
+			);
+		}
 
 		self.rings.draw(
 			&mut self.graphics,
