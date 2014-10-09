@@ -22,7 +22,7 @@ pub type Perception = protocol::Perception<EntityId, (EntityId, SharedEntity)>;
 // This code should be generic and live with the protocol code. Before this can
 // happen, more features have to be added to Rustecs. I've added some comments
 // where relevant to explain the details.
-pub fn receive(world: &mut World, perception: Perception) {
+pub fn receive(entities: &mut World, perception: Perception) {
 	let current_time = time::precise_time_ns();
 
 	for (id, entity) in perception.added.into_iter() {
@@ -45,7 +45,7 @@ pub fn receive(world: &mut World, perception: Perception) {
 		//    should be a trait, World, that every generated world implements.
 		// 2. If protocol is kept ignorant of Rustecs, the import call can be
 		//    moved into the closure that does the conversion.
-		world.import(
+		entities.import(
 			id,
 			Entity {
 				body        : entity.body,
@@ -63,7 +63,7 @@ pub fn receive(world: &mut World, perception: Perception) {
 		// reuse can be possible. Just import_entity, then call trigger_import
 		// or trigger_update_received as appropriate.
 		match entity.visual {
-			Some(visual) => *world.visuals.get_mut(&id) = visual,
+			Some(visual) => *entities.visuals.get_mut(&id) = visual,
 			None => (),
 		}
 
@@ -71,8 +71,8 @@ pub fn receive(world: &mut World, perception: Perception) {
 		// on the update_received event.
 		match entity.body {
 			Some(body) => {
-				world.interpolateds.get_mut(&id).current      = Some(body);
-				world.interpolateds.get_mut(&id).current_time = current_time;
+				entities.interpolateds.get_mut(&id).current      = Some(body);
+				entities.interpolateds.get_mut(&id).current_time = current_time;
 			},
 			None => (),
 		}
@@ -81,6 +81,6 @@ pub fn receive(world: &mut World, perception: Perception) {
 	for &(id, _) in perception.removed.iter() {
 		// This is already quite generic. The only thing that's required to make
 		// it totally generic is trait World.
-		world.remove(id);
+		entities.remove(id);
 	}
 }
