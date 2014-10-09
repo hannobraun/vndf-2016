@@ -44,6 +44,6 @@ pub enum Visual {
 }
 
 
-world! {
+world! { World,
 	components Body, Visual, Planet;
 }

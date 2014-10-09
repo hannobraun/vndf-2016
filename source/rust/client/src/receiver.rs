@@ -1,8 +1,12 @@
 use time;
 
+use rustecs::{
+	Entities,
+	EntityId,
+};
+
 use game::ecs::Entity as SharedEntity;
 use protocol;
-use rustecs::EntityId;
 
 use super::ecs::{
 	Entity,
@@ -41,7 +45,7 @@ pub fn receive(world: &mut World, perception: Perception) {
 		//    should be a trait, World, that every generated world implements.
 		// 2. If protocol is kept ignorant of Rustecs, the import call can be
 		//    moved into the closure that does the conversion.
-		world.import_entity(
+		world.import(
 			id,
 			Entity {
 				body        : entity.body,
@@ -77,6 +81,6 @@ pub fn receive(world: &mut World, perception: Perception) {
 	for &(id, _) in perception.removed.iter() {
 		// This is already quite generic. The only thing that's required to make
 		// it totally generic is trait World.
-		world.remove_entity(id);
+		world.remove(id);
 	}
 }

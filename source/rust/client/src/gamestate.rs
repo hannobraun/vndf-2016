@@ -3,7 +3,10 @@ use time;
 use cgmath::Vector;
 
 use platform::Camera;
-use rustecs::EntityId;
+use rustecs::{
+	Entities,
+	EntityId,
+};
 
 use super::ecs::World;
 use super::network::Network;
@@ -17,7 +20,7 @@ pub struct GameState {
 
 impl GameState {
 	pub fn new() -> GameState {
-		let world = World::new();
+		let world: World = Entities::new();
 
 		GameState {
 			self_id: None,

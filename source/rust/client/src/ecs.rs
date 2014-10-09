@@ -27,6 +27,6 @@ impl Interpolated {
 }
 
 
-world! {
+world! { World,
 	components Body, Visual, Interpolated, Planet;
 }

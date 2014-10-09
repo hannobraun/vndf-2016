@@ -10,7 +10,10 @@ use cgmath::{
 	Vector,
 	Vector3,
 };
-use rustecs::EntityId;
+use rustecs::{
+	Entities,
+	EntityId,
+};
 
 use game::ecs::Entity as SharedEntity;
 use game::ecs::{
@@ -55,7 +58,7 @@ impl GameState {
 	) -> GameState {
 		let (sender, receiver) = channel();
 
-		let mut world = World::new();
+		let mut world: World = Entities::new();
 		let initial_state = InitialState::from_file(initial_state);
 		initial_state.apply_to_world(&mut world);
 
@@ -100,7 +103,7 @@ impl GameState {
 	}
 
 	fn on_enter(&mut self, conn_id: ConnId) {
-		let ship_id = self.world.add_entity(
+		let ship_id = self.world.add(
 			Entity::new()
 				.with_body(Body::new()
 					.with_position(Vector3::new(3000.0, 0.0, 0.0))
@@ -108,7 +111,7 @@ impl GameState {
 				)
 				.with_visual(ShowAsShip)
 		);
-		self.world.add_entity(
+		self.world.add(
 			Entity::new()
 				.with_player(Player::new(conn_id, ship_id))
 		);
@@ -119,11 +122,11 @@ impl GameState {
 			Some(player_id) => {
 				match self.world.players[player_id].ship_id {
 					Some(ship_id) =>
-						self.world.remove_entity(ship_id),
+						self.world.remove(ship_id),
 					None => (),
 				}
 
-				self.world.remove_entity(player_id);
+				self.world.remove(player_id);
 			},
 			None => (),
 		}
@@ -143,7 +146,7 @@ impl GameState {
 			}
 		}
 		for &id in entities_to_destroy.iter() {
-			self.world.remove_entity(id);
+			self.world.remove(id);
 		}
 
 		// If you think the exponent should be -11, please consider that we're
@@ -168,7 +171,7 @@ impl GameState {
 		}
 
 		let entities: Vec<(EntityId, SharedEntity)> = self.world
-			.export_entities()
+			.export()
 			.iter()
 			.map(|&(id, ref entity)|
 				(
@@ -244,7 +247,7 @@ impl GameState {
 	}
 
 	fn on_missile_launch(&mut self, position: Vector3<f64>, attitude: Quaternion<f64>) {
-		self.world.add_entity(
+		self.world.add(
 			Entity::new()
 				.with_body(
 					Body::new()

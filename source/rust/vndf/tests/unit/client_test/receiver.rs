@@ -1,4 +1,5 @@
 use cgmath::Vector3;
+use rustecs::Entities;
 
 use client::ecs::{
 	Entity,
@@ -14,7 +15,7 @@ use protocol::Perception;
 
 #[test]
 fn it_should_import_added_entities() {
-	let mut world = World::new();
+	let mut world: World = Entities::new();
 
 	let entity = SharedEntity {
 		visual: Some(ShowAsMissile),
@@ -31,7 +32,7 @@ fn it_should_import_added_entities() {
 
 	receive(&mut world, perception);
 
-	let entities = world.export_entities();
+	let entities = world.export();
 
 	assert_eq!(1, entities.len());
 	assert!(entities[0].0 == 5);
@@ -41,8 +42,8 @@ fn it_should_import_added_entities() {
 fn it_should_update_entities() {
 	let entity_id = 5;
 
-	let mut world = World::new();
-	world.import_entity(
+	let mut world: World = Entities::new();
+	world.import(
 		entity_id,
 		Entity {
 			body        : Some(Body::new()),
@@ -78,8 +79,8 @@ fn it_should_update_entities() {
 fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
-	let mut world = World::new();
-	world.import_entity(
+	let mut world: World = Entities::new();
+	world.import(
 		entity_id,
 		Entity {
 			body        : Some(Body::new()),

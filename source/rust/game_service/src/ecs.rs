@@ -33,7 +33,7 @@ impl Player {
 }
 
 
-world! {
+world! { World,
 	components Body, Visual, Planet, Player;
 }
 
