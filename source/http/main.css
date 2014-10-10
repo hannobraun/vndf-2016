@@ -87,6 +87,22 @@ main.news ul {
 	padding: 0em;
 }
 
+main.news li {
+	margin-bottom: 1em;
+}
+
+main.news li a p {
+	margin: 0em;
+}
+
+main.newsletter > header h1 {
+	margin-bottom: 0em;
+}
+
+main.newsletter > header h2 {
+	margin-top: 0em;
+}
+
 table.contact * {
 	vertical-align: text-top;
 }
