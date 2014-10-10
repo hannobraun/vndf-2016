@@ -6,6 +6,7 @@
   links that should consume the user's full attention at this point, like links
   to the newsletter signup form. Another exception are the internal anchor
   links.
+- Teaser images should be 16:9 (1,77:1) with a width of 600 pixels
 
 
 # Procedures
