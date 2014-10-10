@@ -96,8 +96,10 @@ main.news li p.date {
 	margin     : 0em;
 }
 
-main.news li a p {
-	margin: 0em;
+main.news li a h1,
+main.news li a h2 {
+	font-size: 100%;
+	margin   : 0em;
 }
 
 main.newsletter > header h1 {
