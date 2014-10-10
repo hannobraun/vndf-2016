@@ -99,6 +99,7 @@ main.news li a h2 {
 
 main.news li a p.date {
 	font-weight: bold;
+	font-size  : 90%;
 	margin     : 0em;
 }
 
