@@ -16,6 +16,10 @@ a:hover {
 	text-decoration: underline;
 }
 
+a:hover img {
+	opacity: 0.92;
+}
+
 main {
 	display  : block;
 	max-width: 34em;
