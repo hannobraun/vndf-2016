@@ -91,6 +91,11 @@ main.news li {
 	margin-bottom: 1em;
 }
 
+main.news li p.date {
+	font-weight: bold;
+	margin     : 0em;
+}
+
 main.news li a p {
 	margin: 0em;
 }
