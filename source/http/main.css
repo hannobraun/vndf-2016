@@ -103,7 +103,10 @@ main.news li a p.date {
 	margin     : 0em;
 }
 
-main.news li a h1,
+main.news li a h1 {
+	margin-top   : 0em;
+	margin-bottom: 0.25em;
+}
 main.news li a h2 {
 	margin: 0em;
 }
