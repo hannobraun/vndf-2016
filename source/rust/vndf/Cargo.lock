@@ -39,7 +39,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/hannobraun/freetype-rs.git#f1a285511c650681bebcc74b969ea2ac4e971e4c"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#54efba2495235fd87a4648b9c7e04d1f73938122"
 
 [[package]]
 name = "game"
@@ -133,7 +133,7 @@ name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
  "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#d981c349a0ffb13fb298f1ac1d5e5483ce860a81)",
- "freetype-rs 0.0.0 (git+https://github.com/hannobraun/freetype-rs.git#f1a285511c650681bebcc74b969ea2ac4e971e4c)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#54efba2495235fd87a4648b9c7e04d1f73938122)",
  "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f76dc7931692bc234899a8ce5b7416cec4225640)",
  "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#84b7ec32b4acead41f0bfde224604a2cf5a21d8a)",
  "platform 0.1.0",
