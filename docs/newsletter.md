@@ -48,10 +48,10 @@ News resources:
 
 Topic ideas:
 - An article about each game that inspires VNDF:
-  - EVE Online (done)
-  - Kerbal Space Program
-  - DayZ
-  - FTL
+  - ~~September: EVE Online~~
+  - October: Kerbal Space Program
+  - November: DayZ
+  - December: FTL
 
 News for October:
 - http://www.abc.net.au/news/2014-09-21/japanese-construction-giants-promise-space-elevator-by-2050/5756206
