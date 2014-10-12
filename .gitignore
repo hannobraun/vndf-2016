@@ -3,5 +3,6 @@
 /source/rust/**/target
 /source/rust/**/Cargo.lock
 !/source/rust/vndf/Cargo.lock
+!/source/rust/http/Cargo.lock
 
 /output
