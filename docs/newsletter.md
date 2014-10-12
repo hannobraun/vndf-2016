@@ -55,6 +55,9 @@ Topic ideas:
   - October: Kerbal Space Program
   - November: DayZ
   - December: FTL
+- Announcing the navigation prototype
+- Beyond the navigation prototype (once it's out)
+- Looking back on my marketing efforts: How it started
 
 News for October:
 - http://www.abc.net.au/news/2014-09-21/japanese-construction-giants-promise-space-elevator-by-2050/5756206
@@ -65,3 +68,7 @@ News for October:
 News for any month:
 - Asteroid video by Scott Manley
 - https://kheckeroth.com/solarSystem/
+
+News ideas for later:
+- Write about Lisa RPG when it comes out
+- Write about Paradigm?
