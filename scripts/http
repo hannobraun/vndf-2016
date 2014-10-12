@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd source/rust/http
+cargo run
