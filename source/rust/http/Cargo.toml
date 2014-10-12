@@ -1,0 +1,8 @@
+[package]
+name    = "vndf-http"
+version = "0.1.0"
+authors = [ "mail@hannobraun.de" ]
+
+
+[dependencies.iron]
+git = "https://github.com/iron/iron.git"
