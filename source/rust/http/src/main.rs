@@ -13,4 +13,6 @@ fn main() {
 		Static::new(Path::new("/home/hanno/Projects/vndf/source/http/public"))
 	)
 	.listen(Ipv4Addr(127, 0, 0, 1), 3000);
+
+	print!("Listening on port 3000\n");
 }
