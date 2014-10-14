@@ -66,6 +66,27 @@ pub fn kill_colliding_ships(
 	}
 }
 
+pub fn apply_gravity(
+	bodies : &mut Components<Body>,
+	planets: &Components<Planet>
+) {
+	// If you think the exponent should be -11, please consider that we're using
+	// km instead of m, so the constant has to be adjusted for that.
+	let gravitational_constant = 6.673e-17;
+	for (_, body) in bodies.iter_mut() {
+		for (_, planet) in planets.iter() {
+			let body_to_planet = planet.position - body.position;
+			let force =
+				gravitational_constant
+				* planet.mass
+				/ body_to_planet.length2();
+
+			body.force =
+				body.force + body_to_planet.normalize().mul_s(force);
+		}
+	}
+}
+
 
 // Utility functions
 pub fn entity_id_from_conn_id(

@@ -4,7 +4,6 @@ use std::comm::{
 };
 
 use cgmath::{
-	EuclideanVector,
 	Quaternion,
 	Rotation,
 	Vector,
@@ -31,6 +30,7 @@ use protocol::{
 
 use super::ecs::{
 	mod,
+	apply_gravity,
 	integrate,
 	kill_colliding_ships,
 	Entity,
@@ -143,22 +143,7 @@ impl GameState {
 			&self.world.planets,
 			&mut self.control
 		);
-
-		// If you think the exponent should be -11, please consider that we're
-		// using km instead of m, so the constant has to be adjusted for that.
-		let gravitational_constant = 6.673e-17;
-		for (_, body) in self.world.bodies.iter_mut() {
-			for (_, planet) in self.world.planets.iter() {
-				let body_to_planet = planet.position - body.position;
-				let force =
-					gravitational_constant
-					* planet.mass
-					/ body_to_planet.length2();
-
-				body.force =
-					body.force + body_to_planet.normalize().mul_s(force);
-			}
-		}
+		apply_gravity(&mut self.world.bodies, &self.world.planets);
 
 		for (_, body) in self.world.bodies.iter() {
 			print!("{}\n", body);
