@@ -45,6 +45,7 @@ source = "git+https://github.com/PistonDevelopers/freetype-rs.git#54efba2495235f
 name = "game"
 version = "0.1.0"
 dependencies = [
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#f514fb28830ef55da8f4eccda8a1cfaf170b63f5)",
  "net 0.1.0",
  "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf)",
  "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf)",

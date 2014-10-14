@@ -10,6 +10,10 @@ name = "game"
 [dependencies.net]
 path = "../net"
 
+
+[dependencies.cgmath]
+git = "https://github.com/bjz/cgmath-rs.git"
+
 [dependencies.rustecs]
 git = "https://github.com/hannobraun/rustecs.git"
 
