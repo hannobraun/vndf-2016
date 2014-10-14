@@ -10,7 +10,10 @@ use game::ecs::{
 };
 use game::physics::Body;
 use net::ConnId;
-use rustecs::EntityId;
+use rustecs::{
+	Components,
+	EntityId,
+};
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -39,10 +42,12 @@ world! { World,
 
 
 // Systems. Should be integrated with Rustecs at some point.
-pub fn integrate(delta_time_in_s: f64, body: &mut Body) {
-	body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
-	body.position = body.position + body.velocity.mul_s(delta_time_in_s);
-	body.force    = Vector3::zero();
+pub fn integrate(delta_time_in_s: f64, bodies: &mut Components<Body>) {
+	for (_, body) in bodies.iter_mut() {
+		body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
+		body.position = body.position + body.velocity.mul_s(delta_time_in_s);
+		body.force    = Vector3::zero();
+	}
 }
 
 

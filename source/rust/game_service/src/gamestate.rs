@@ -133,9 +133,7 @@ impl GameState {
 	}
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
-		for (_, body) in self.world.bodies.iter_mut() {
-			integrate(delta_time_in_s, body);
-		}
+		integrate(delta_time_in_s, &mut self.world.bodies);
 
 		let mut entities_to_destroy = vec![];
 		for (&body_id, body) in self.world.bodies.iter() {
