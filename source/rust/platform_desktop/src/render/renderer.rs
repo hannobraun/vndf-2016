@@ -114,7 +114,7 @@ impl Renderer {
 				depth  : 1.0,
 				stencil: 0,
 			},
-			gfx::Color | gfx::Depth,
+			gfx::COLOR | gfx::DEPTH,
 			&self.frame
 		);
 
