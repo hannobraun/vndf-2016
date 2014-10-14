@@ -145,11 +145,6 @@ impl GameState {
 		);
 		apply_gravity(&mut self.world.bodies, &self.world.planets);
 
-		for (_, body) in self.world.bodies.iter() {
-			print!("{}\n", body);
-			break;
-		}
-
 		self.control.apply(&mut self.world);
 
 		let entities: Vec<(EntityId, SharedEntity)> = self.world
