@@ -47,8 +47,8 @@ version = "0.1.0"
 dependencies = [
  "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#f514fb28830ef55da8f4eccda8a1cfaf170b63f5)",
  "net 0.1.0",
- "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf)",
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf)",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#814956c9bb8a3c3ce1b026d3e3f2f93f3a221266)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#814956c9bb8a3c3ce1b026d3e3f2f93f3a221266)",
 ]
 
 [[package]]
@@ -164,15 +164,15 @@ source = "git+https://github.com/netvl/rust-xml#f86f02b3b1c355080136b0acc322b331
 [[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf"
+source = "git+https://github.com/hannobraun/rustecs.git#814956c9bb8a3c3ce1b026d3e3f2f93f3a221266"
 dependencies = [
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#814956c9bb8a3c3ce1b026d3e3f2f93f3a221266)",
 ]
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#3824f75266a22f74959c64ff8019338b3ea7bacf"
+source = "git+https://github.com/hannobraun/rustecs.git#814956c9bb8a3c3ce1b026d3e3f2f93f3a221266"
 
 [[package]]
 name = "semver"
