@@ -1,4 +1,5 @@
 use cgmath::{
+	EuclideanVector,
 	Vector,
 	Vector3,
 };
@@ -12,6 +13,7 @@ use game::physics::Body;
 use net::ConnId;
 use rustecs::{
 	Components,
+	Control,
 	EntityId,
 };
 
@@ -47,6 +49,20 @@ pub fn integrate(delta_time_in_s: f64, bodies: &mut Components<Body>) {
 		body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
 		body.position = body.position + body.velocity.mul_s(delta_time_in_s);
 		body.force    = Vector3::zero();
+	}
+}
+
+pub fn kill_colliding_ships(
+	bodies : &Components<Body>,
+	planets: &Components<Planet>,
+	control: &mut Control<Entity>,
+) {
+	for (&body_id, body) in bodies.iter() {
+		for (_, planet) in planets.iter() {
+			if (body.position - planet.position).length() <= planet.radius {
+				control.remove(body_id);
+			}
+		}
 	}
 }
 

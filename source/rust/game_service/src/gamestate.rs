@@ -32,6 +32,7 @@ use protocol::{
 use super::ecs::{
 	mod,
 	integrate,
+	kill_colliding_ships,
 	Entity,
 	Player,
 	World,
@@ -137,14 +138,11 @@ impl GameState {
 
 	fn on_update(&mut self, delta_time_in_s: f64) {
 		integrate(delta_time_in_s, &mut self.world.bodies);
-
-		for (&body_id, body) in self.world.bodies.iter() {
-			for (_, planet) in self.world.planets.iter() {
-				if (body.position - planet.position).length() <= planet.radius {
-					self.control.remove(body_id);
-				}
-			}
-		}
+		kill_colliding_ships(
+			&self.world.bodies,
+			&self.world.planets,
+			&mut self.control
+		);
 
 		// If you think the exponent should be -11, please consider that we're
 		// using km instead of m, so the constant has to be adjusted for that.
