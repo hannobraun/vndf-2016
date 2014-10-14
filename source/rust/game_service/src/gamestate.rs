@@ -11,6 +11,7 @@ use cgmath::{
 	Vector3,
 };
 use rustecs::{
+	Control,
 	Entities,
 	EntityId,
 };
@@ -48,7 +49,8 @@ pub struct GameState {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	world: World
+	world  : World,
+	control: Control<Entity>,
 }
 
 impl GameState {
@@ -68,7 +70,8 @@ impl GameState {
 			incoming: receiver,
 			network : network,
 
-			world: world,
+			world  : world,
+			control: Control::new(),
 		}
 	}
 
@@ -135,16 +138,12 @@ impl GameState {
 	fn on_update(&mut self, delta_time_in_s: f64) {
 		integrate(delta_time_in_s, &mut self.world.bodies);
 
-		let mut entities_to_destroy = vec![];
 		for (&body_id, body) in self.world.bodies.iter() {
 			for (_, planet) in self.world.planets.iter() {
 				if (body.position - planet.position).length() <= planet.radius {
-					entities_to_destroy.push(body_id);
+					self.control.remove(body_id);
 				}
 			}
-		}
-		for &id in entities_to_destroy.iter() {
-			self.world.remove(id);
 		}
 
 		// If you think the exponent should be -11, please consider that we're
@@ -167,6 +166,8 @@ impl GameState {
 			print!("{}\n", body);
 			break;
 		}
+
+		self.control.apply(&mut self.world);
 
 		let entities: Vec<(EntityId, SharedEntity)> = self.world
 			.export()
