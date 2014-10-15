@@ -58,6 +58,7 @@ Topic ideas:
 - Announcing the navigation prototype
 - Beyond the navigation prototype (once it's out)
 - Looking back on my marketing efforts: How it started
+- Visual inspiration: Galactica's DRADIS
 
 News for October:
 - http://www.abc.net.au/news/2014-09-21/japanese-construction-giants-promise-space-elevator-by-2050/5756206
