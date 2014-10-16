@@ -18,11 +18,15 @@ template.
 1. Update this document. Used news stories need to be removed, as well as
 stories that will no longer be current for the next newsletter.
 1. Write email version of newsletter. Use previous newsletter as template.
+  1. Copy the markup into a new text editor window. It's easier to edit there.
   1. Remove subscription information from header and footer
   1. Remove anchor links
   1. Remove links to subscription in newsletter version
   1. Replace relative links with absolute ones
+  1. Copy markup from text editor into online editor
+  1. Add teaser image to email (below the title and subtitle)
   1. Update link to online version
+  1. Make sure text version of email looks ok
 1. Send preview version of newsletter to yourself. Check all links.
 1. Send email version of newsletter.
 1. Link online version in blog and deploy change.
