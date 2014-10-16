@@ -60,7 +60,7 @@ Topic ideas:
 - Looking back on my marketing efforts: How it started
 - Visual inspiration: Galactica's DRADIS
 
-News for October:
+News for November:
 - ...
 
 News for any month:
