@@ -52,7 +52,7 @@ Gaming News Resources
 Topic ideas:
 - An article about each game that inspires VNDF:
   - ~~September: EVE Online~~
-  - October: Kerbal Space Program
+  - ~~October: Kerbal Space Program~~
   - November: DayZ
   - December: FTL
 - Announcing the navigation prototype
@@ -61,10 +61,7 @@ Topic ideas:
 - Visual inspiration: Galactica's DRADIS
 
 News for October:
-- http://www.abc.net.au/news/2014-09-21/japanese-construction-giants-promise-space-elevator-by-2050/5756206
-- http://www.nytimes.com/2014/09/22/science/space/nasa-craft-mars.html
-- http://www.reddit.com/r/space/comments/2hdei3/actual_colour_photograph_of_comet_67p_contrast/
-- http://www.nasa.gov/jpl/cassini/cassini-watches-mysterious-feature-evolve-in-titan-sea/
+- ...
 
 News for any month:
 - Asteroid video by Scott Manley
@@ -72,4 +69,3 @@ News for any month:
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
-- Write about Paradigm?
