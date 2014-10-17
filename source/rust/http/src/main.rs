@@ -1,3 +1,5 @@
+extern crate time;
+
 extern crate iron;
 extern crate static_file;
 
@@ -28,7 +30,16 @@ impl<H: Handler> Cache<H> {
 
 impl<H: Handler> Handler for Cache<H> {
 	fn call(&self, request: &mut Request) -> IronResult<Response> {
-		self.cached_handler.call(request)
+		match self.cached_handler.call(request) {
+			Ok(mut response) => {
+				response.headers.cache_control =
+					Some("public, max-age=31536000".to_string());
+				response.headers.last_modified = Some(time::now_utc());
+
+				Ok(response)
+			},
+			Err(error) => Err(error),
+		}
 	}
 }
 
