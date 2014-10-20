@@ -1,4 +1,5 @@
 use iron::{
+	status,
 	Handler,
 	IronResult,
 	Request,
@@ -19,10 +20,29 @@ impl RocksHandler {
 			static_handler: StaticWithCache::new(public_path),
 		}
 	}
+
+	fn run_plugin(&self, _: &Request) -> Option<IronResult<Response>> {
+		None
+	}
 }
 
 impl Handler for RocksHandler {
 	fn call(&self, request: &mut Request) -> IronResult<Response> {
-		self.static_handler.call(request)
+		match self.static_handler.call(request) {
+			Ok(response) => {
+				match response.status {
+					Some(status::NotFound) => {
+						match self.run_plugin(request) {
+							Some(result) => result,
+							None         => Ok(response),
+						}
+					},
+
+					_ => Ok(response)
+				}
+			},
+			Err(error) => Err(error),
+		}
+
 	}
 }
