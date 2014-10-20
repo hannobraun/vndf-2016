@@ -1,5 +1,5 @@
 [root]
-name = "vndf-http"
+name = "rocks"
 version = "0.1.0"
 dependencies = [
  "iron 0.0.1 (git+https://github.com/iron/iron.git#f7edddd634b97d3150d92db88911472f27d95493)",
@@ -36,7 +36,7 @@ source = "git+https://github.com/reem/rust-http-content-type.git#6f656bbe66ed2c2
 dependencies = [
  "http 0.1.0-pre (git+https://github.com/chris-morgan/rust-http.git#ba43e05a5abdcc62b4a04b6a7fd6c634a8a4605a)",
  "phf_mac 0.0.0 (git+https://github.com/sfackler/rust-phf.git#996edc690403b57e9a11ee3fb920a5f5c6dc9aef)",
- "url 0.1.0 (git+https://github.com/servo/rust-url.git#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
 ]
 
 [[package]]
@@ -45,7 +45,7 @@ version = "0.1.0-pre"
 source = "git+https://github.com/chris-morgan/rust-http.git#ba43e05a5abdcc62b4a04b6a7fd6c634a8a4605a"
 dependencies = [
  "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git#6277635e5c579c5842fc5f921a3b27a544a7b346)",
- "url 0.1.0 (git+https://github.com/servo/rust-url.git#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
 ]
 
 [[package]]
@@ -59,7 +59,7 @@ dependencies = [
  "plugin 0.0.0 (git+https://github.com/reem/rust-plugin.git#19b97b79ed3fb291cd6d454058c906e33017a0b6)",
  "replace-map 0.0.1 (git+https://github.com/reem/rust-replace-map.git#140217a7ac616625b72ffe62fe4a53f0e1b9cc41)",
  "typemap 0.0.0 (git+https://github.com/reem/rust-typemap.git#895f26e24cfb7be08920895f7c549970b81a9586)",
- "url 0.1.0 (git+https://github.com/servo/rust-url.git#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
 ]
 
 [[package]]
@@ -153,7 +153,7 @@ source = "git+https://github.com/reem/rust-unsafe-any.git#75cff194795447a901c165
 [[package]]
 name = "url"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-url.git#55b18b796ef2cef5490069dd450c60c2cc2c0c1b"
+source = "git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b"
 dependencies = [
  "encoding 0.1.0 (git+https://github.com/lifthrasiir/rust-encoding#4368ee5d0e7599964d98f874df22c86f4005c9ae)",
 ]
