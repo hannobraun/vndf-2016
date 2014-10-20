@@ -6,13 +6,38 @@ extern crate static_file;
 
 use std::io::net::ip::Ipv4Addr;
 
-use iron::Iron;
+use iron::{
+	Handler,
+	Iron,
+	IronResult,
+	Request,
+	Response,
+};
 use static_file::StaticWithCache;
+
+
+struct RocksHandler {
+	static_handler: StaticWithCache,
+}
+
+impl RocksHandler {
+	pub fn new(root_path: Path) -> RocksHandler {
+		RocksHandler {
+			static_handler: StaticWithCache::new(root_path),
+		}
+	}
+}
+
+impl Handler for RocksHandler {
+	fn call(&self, request: &mut Request) -> IronResult<Response> {
+		self.static_handler.call(request)
+	}
+}
 
 
 fn main() {
 	Iron::new(
-		StaticWithCache::new(
+		RocksHandler::new(
 			Path::new("/home/hanno/Projects/vndf/source/http/public")
 		)
 	)
