@@ -4,6 +4,7 @@ version = "0.1.0"
 dependencies = [
  "iron 0.0.1 (git+https://github.com/iron/iron.git#f7edddd634b97d3150d92db88911472f27d95493)",
  "static_file 0.1.0 (git+https://github.com/hannobraun/static-file.git#e03840759ead5c9126a757a687e5252c69b8e5d2)",
+ "toml 0.1.0 (git+https://github.com/alexcrichton/toml-rs#8a3ba4c65cfa22a3d924293a1fb3a70bfac5e66c)",
 ]
 
 [[package]]
@@ -125,6 +126,11 @@ dependencies = [
  "iron-test 0.0.1 (git+https://github.com/reem/iron-test#7f0fa20bf0391f2d2aab4d5cc0d13d54c48780d8)",
  "mount 0.1.0 (git+https://github.com/iron/mount.git#940ee82b14f6ab87ffcffda155f0f3c775c83ab4)",
 ]
+
+[[package]]
+name = "toml"
+version = "0.1.0"
+source = "git+https://github.com/alexcrichton/toml-rs#8a3ba4c65cfa22a3d924293a1fb3a70bfac5e66c"
 
 [[package]]
 name = "trie"

@@ -3,6 +3,7 @@ extern crate time;
 
 extern crate iron;
 extern crate static_file;
+extern crate toml;
 
 
 use std::io::net::ip::Ipv4Addr;
