@@ -22,8 +22,10 @@ struct RocksHandler {
 
 impl RocksHandler {
 	pub fn new(root_path: Path) -> RocksHandler {
+		let public_path = root_path.join("public");
+
 		RocksHandler {
-			static_handler: StaticWithCache::new(root_path),
+			static_handler: StaticWithCache::new(public_path),
 		}
 	}
 }
@@ -38,7 +40,7 @@ impl Handler for RocksHandler {
 fn main() {
 	Iron::new(
 		RocksHandler::new(
-			Path::new("/home/hanno/Projects/vndf/source/http/public")
+			Path::new("/home/hanno/Projects/vndf/source/http")
 		)
 	)
 	.listen(Ipv4Addr(127, 0, 0, 1), 3000);
