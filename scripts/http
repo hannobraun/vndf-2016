@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-cd source/rust/http
+cd source/rust/rocks
 cargo run
