@@ -10,6 +10,7 @@ use std::io::net::ip::Ipv4Addr;
 
 use iron::Iron;
 
+use args::Args;
 use handler::RocksHandler;
 
 
@@ -18,7 +19,7 @@ mod handler;
 
 
 fn main() {
-	let args = args::parse();
+	let args = Args::parse();
 
 	Iron::new(
 		RocksHandler::new(Path::new(args.root_path))
