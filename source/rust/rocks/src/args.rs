@@ -1,3 +1,4 @@
+use std::io::net::ip::Port;
 use std::os;
 
 use getopts::{
@@ -8,6 +9,7 @@ use getopts::{
 
 pub struct Args {
 	pub root_path: String,
+	pub port     : Port,
 }
 
 impl Args {
@@ -16,6 +18,7 @@ impl Args {
 
 		let options = [
 			optopt("r", "root", "the root directory", ""),
+			optopt("p", "port", "the port to listen on", "80"),
 		];
 
 		let matches = match getopts(args.tail(), options) {
@@ -29,8 +32,19 @@ impl Args {
 				fail!("You need to specific the root path with --root"),
 		};
 
+		let port = match matches.opt_str("p") {
+			Some(port) => match from_str(port.as_slice()) {
+				Some(port) => port,
+				None =>
+					fail!("Invalid value for port: {}", port),
+			},
+			None =>
+				fail!("You need to specify the port with --port"),
+		};
+
 		Args {
-			root_path: root_path
+			root_path: root_path,
+			port     : port,
 		}
 	}
 }

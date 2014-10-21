@@ -24,7 +24,7 @@ fn main() {
 	Iron::new(
 		RocksHandler::new(Path::new(args.root_path))
 	)
-	.listen(Ipv4Addr(127, 0, 0, 1), 3000);
+	.listen(Ipv4Addr(127, 0, 0, 1), args.port);
 
-	print!("Listening on port 3000\n");
+	print!("Listening on port {}\n", args.port);
 }

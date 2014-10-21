@@ -3,4 +3,4 @@
 source project.conf
 
 cd source/rust/rocks
-cargo run -- --root $HTTP_SOURCE
+cargo run -- --root $HTTP_SOURCE --port 3000
