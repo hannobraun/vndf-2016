@@ -2,10 +2,16 @@
 name = "rocks"
 version = "0.1.0"
 dependencies = [
+ "acceptance 0.1.0",
+ "hyper 0.0.1 (git+https://github.com/hyperium/hyper.git#50a6f6103e842102ccb03e8e49bf8f412fd166bc)",
  "iron 0.0.1 (git+https://github.com/iron/iron.git#f7edddd634b97d3150d92db88911472f27d95493)",
  "static_file 0.1.0 (git+https://github.com/hannobraun/static-file.git#e03840759ead5c9126a757a687e5252c69b8e5d2)",
  "toml 0.1.0 (git+https://github.com/alexcrichton/toml-rs#8a3ba4c65cfa22a3d924293a1fb3a70bfac5e66c)",
 ]
+
+[[package]]
+name = "acceptance"
+version = "0.1.0"
 
 [[package]]
 name = "content_type"
@@ -50,6 +56,25 @@ dependencies = [
 ]
 
 [[package]]
+name = "hyper"
+version = "0.0.1"
+source = "git+https://github.com/hyperium/hyper.git#50a6f6103e842102ccb03e8e49bf8f412fd166bc"
+dependencies = [
+ "intertwine 0.0.1 (git+https://github.com/reem/rust-intertwine#3b23760cf7da3c7f38db16bf488c88f6e506de2d)",
+ "mime 0.0.1 (git+https://github.com/seanmonstar/mime.rs#d9a80eea2a4d1bee069ac71d8932c82f7e70cee2)",
+ "move-acceptor 0.0.1 (git+https://github.com/reem/rust-move-acceptor#4eef9c13745db3da74c22a26b659dc054aec5500)",
+ "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git#6277635e5c579c5842fc5f921a3b27a544a7b346)",
+ "typeable 0.0.1 (git+https://github.com/reem/rust-typeable.git#55154e1809db8ceec8f8519bdbb638c2fbd712f5)",
+ "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any.git#75cff194795447a901c1658e31629899c9c8d52f)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+]
+
+[[package]]
+name = "intertwine"
+version = "0.0.1"
+source = "git+https://github.com/reem/rust-intertwine#3b23760cf7da3c7f38db16bf488c88f6e506de2d"
+
+[[package]]
 name = "iron"
 version = "0.0.1"
 source = "git+https://github.com/iron/iron.git#f7edddd634b97d3150d92db88911472f27d95493"
@@ -74,6 +99,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "mime"
+version = "0.0.1"
+source = "git+https://github.com/seanmonstar/mime.rs#d9a80eea2a4d1bee069ac71d8932c82f7e70cee2"
+
+[[package]]
 name = "mount"
 version = "0.1.0"
 source = "git+https://github.com/iron/mount.git#940ee82b14f6ab87ffcffda155f0f3c775c83ab4"
@@ -82,6 +112,11 @@ dependencies = [
  "trie 0.0.1 (git+https://github.com/michaelsproul/rust-generic-trie.git#e90b73c5600b4de48a119ace9136658fa7079e41)",
  "typemap 0.0.0 (git+https://github.com/reem/rust-typemap.git#895f26e24cfb7be08920895f7c549970b81a9586)",
 ]
+
+[[package]]
+name = "move-acceptor"
+version = "0.0.1"
+source = "git+https://github.com/reem/rust-move-acceptor#4eef9c13745db3da74c22a26b659dc054aec5500"
 
 [[package]]
 name = "openssl"

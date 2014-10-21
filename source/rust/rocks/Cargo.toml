@@ -9,6 +9,12 @@ name = "rocks"
 test = false
 
 
+[dependencies.acceptance]
+path = "../acceptance-rs"
+
+[dependencies.hyper]
+git = "https://github.com/hyperium/hyper.git"
+
 [dependencies.iron]
 git = "https://github.com/iron/iron.git"
 
