@@ -4,6 +4,11 @@ version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
 
+[[bin]]
+name = "rocks"
+test = false
+
+
 [dependencies.iron]
 git = "https://github.com/iron/iron.git"
 
