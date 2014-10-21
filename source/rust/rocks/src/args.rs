@@ -6,7 +6,11 @@ use getopts::{
 };
 
 
-pub fn parse() -> String {
+pub struct Args {
+	pub root_path: String,
+}
+
+pub fn parse() -> Args {
 	let args = os::args();
 
 	let options = [
@@ -18,9 +22,13 @@ pub fn parse() -> String {
 		Err(error)  => fail!("Error parsing arguments: {}", error),
 	};
 
-	match matches.opt_str("r") {
+	let root_path = match matches.opt_str("r") {
 		Some(root_path) => root_path,
 		None =>
 			fail!("You need to specific the root path with --root"),
+	};
+
+	Args {
+		root_path: root_path
 	}
 }

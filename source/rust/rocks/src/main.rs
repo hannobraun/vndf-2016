@@ -18,10 +18,10 @@ mod handler;
 
 
 fn main() {
-	let root_path = args::parse();
+	let args = args::parse();
 
 	Iron::new(
-		RocksHandler::new(Path::new(root_path))
+		RocksHandler::new(Path::new(args.root_path))
 	)
 	.listen(Ipv4Addr(127, 0, 0, 1), 3000);
 
