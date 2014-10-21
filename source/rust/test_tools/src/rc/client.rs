@@ -1,8 +1,9 @@
+use acceptance::Process;
+
 use platform::{
 	Frame,
 	Input
 };
-use test_infra::Process;
 
 
 pub struct Client {

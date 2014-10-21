@@ -1,8 +1,9 @@
 use std::os;
 use std::rand::random;
 
+use acceptance::Process;
+
 use game_service::initialstate::InitialState;
-use test_infra::Process;
 
 
 pub struct GameService {

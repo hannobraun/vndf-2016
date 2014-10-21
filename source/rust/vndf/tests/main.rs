@@ -5,6 +5,7 @@ extern crate collections;
 extern crate serialize;
 extern crate time;
 
+#[phase(plugin)] extern crate acceptance;
 extern crate cgmath;
 
 extern crate client;
@@ -14,7 +15,6 @@ extern crate platform;
 extern crate protocol;
 extern crate rustecs;
 #[phase(plugin)] extern crate rustecs_macros;
-#[phase(plugin)] extern crate test_infra;
 extern crate test_tools;
 
 

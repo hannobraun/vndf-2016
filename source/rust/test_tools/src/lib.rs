@@ -1,10 +1,11 @@
+extern crate acceptance;
+
 extern crate game;
 extern crate game_service;
 extern crate net;
 extern crate platform;
 extern crate protocol;
 extern crate rustecs;
-extern crate test_infra;
 
 
 pub use self::mock::gameservice::MockGameService;

@@ -19,5 +19,5 @@ path = "../platform"
 [dependencies.protocol]
 path = "../protocol"
 
-[dependencies.test_infra]
-path = "../test_infra"
+[dependencies.acceptance]
+path = "../acceptance-rs"

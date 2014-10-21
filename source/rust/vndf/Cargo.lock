@@ -2,11 +2,15 @@
 name = "vndf"
 version = "0.1.0"
 dependencies = [
+ "acceptance 0.1.0",
  "client 0.1.0",
  "game_service 0.1.0",
- "test_infra 0.1.0",
  "test_tools 0.1.0",
 ]
+
+[[package]]
+name = "acceptance"
+version = "0.1.0"
 
 [[package]]
 name = "cgmath"
@@ -185,17 +189,13 @@ version = "0.1.0"
 source = "git+https://github.com/servo/rust-stb-image.git#f5022de4ad6bb474a03493d1f274dde9b0f1af0c"
 
 [[package]]
-name = "test_infra"
-version = "0.1.0"
-
-[[package]]
 name = "test_tools"
 version = "0.1.0"
 dependencies = [
+ "acceptance 0.1.0",
  "game 0.1.0",
  "game_service 0.1.0",
  "platform 0.1.0",
  "protocol 0.1.0",
- "test_infra 0.1.0",
 ]
 

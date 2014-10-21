@@ -18,8 +18,8 @@ path = "../client"
 [dependencies.game_service]
 path = "../game_service"
 
-[dependencies.test_infra]
-path = "../test_infra"
+[dependencies.acceptance]
+path = "../acceptance-rs"
 
 [dependencies.test_tools]
 path = "../test_tools"
