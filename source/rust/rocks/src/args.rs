@@ -8,7 +8,7 @@ use getopts::{
 
 
 pub struct Args {
-	pub root_path: String,
+	pub root_path: Path,
 	pub port     : Port,
 }
 
@@ -27,7 +27,7 @@ impl Args {
 		};
 
 		let root_path = match matches.opt_str("r") {
-			Some(root_path) => root_path,
+			Some(root_path) => Path::new(root_path),
 			None =>
 				fail!("You need to specific the root path with --root"),
 		};

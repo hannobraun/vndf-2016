@@ -22,7 +22,7 @@ fn main() {
 	let args = Args::parse();
 
 	Iron::new(
-		RocksHandler::new(Path::new(args.root_path))
+		RocksHandler::new(args.root_path)
 	)
 	.listen(Ipv4Addr(127, 0, 0, 1), args.port);
 
