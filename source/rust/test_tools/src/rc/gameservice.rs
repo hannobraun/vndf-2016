@@ -1,7 +1,9 @@
 use std::os;
-use std::rand::random;
 
-use acceptance::Process;
+use acceptance::{
+	random_port,
+	Process,
+};
 
 use game_service::initialstate::InitialState;
 
@@ -13,7 +15,7 @@ pub struct GameService {
 
 impl GameService {
 	pub fn start(initial_state: &InitialState) -> GameService {
-		let port = random::<u16>() % 10000 + 40000;
+		let port = random_port(40000, 50000);
 
 		let mut state_file_name = "initial-state-".to_string();
 		state_file_name.push_str(port.to_string().as_slice());
