@@ -6,9 +6,15 @@ use std::rand::random;
 
 
 pub use self::process::Process;
+pub use tree::{
+	Tree,
+	TreeBuilder,
+};
 
 pub mod macros;
 pub mod process;
+
+mod tree;
 
 
 pub fn random_port(min: Port, max: Port) -> Port {
