@@ -32,7 +32,7 @@ impl RocksHandler {
 
 		let mut source_file =
 			requested_path.filename_str().unwrap().to_string();
-		source_file.push_str(".redirect");
+		source_file.push_str(".response");
 
 		let file_path = requested_path.with_filename(source_file);
 
