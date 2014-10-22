@@ -13,7 +13,7 @@ fn it_should_return_a_custom_response() {
 	";
 
 	let tree = TreeBuilder::new()
-		.with_file("source/test.response", test_response)
+		.with_file("localhost/source/test.response", test_response)
 		.build();
 
 	let rocks = Rocks::start(tree);
@@ -35,7 +35,7 @@ fn it_should_return_a_custom_response_for_a_directory() {
 	";
 
 	let tree = TreeBuilder::new()
-		.with_file("source/test/.response", test_response)
+		.with_file("localhost/source/test/.response", test_response)
 		.build();
 
 	let rocks = Rocks::start(tree);

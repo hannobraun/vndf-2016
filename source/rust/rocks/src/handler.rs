@@ -19,6 +19,7 @@ pub struct RocksHandler {
 
 impl RocksHandler {
 	pub fn new(root_path: Path) -> RocksHandler {
+		let root_path   = root_path.join("localhost");
 		let public_path = root_path.join("public");
 
 		RocksHandler {
