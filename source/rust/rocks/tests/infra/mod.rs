@@ -38,8 +38,6 @@ impl Rocks {
 	pub fn get(&self, path: &str) -> Response {
 		let url = format!("http://localhost:{}{}", self.port, path);
 
-		print!("url: {}\n", url);
-
 		Request::get(Url::parse(url.as_slice()).unwrap())
 			.unwrap_or_else(|e| fail!("get failed: {}", e))
 			.start()
