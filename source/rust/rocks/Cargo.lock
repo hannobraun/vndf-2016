@@ -3,7 +3,7 @@ name = "rocks"
 version = "0.1.0"
 dependencies = [
  "acceptance 0.1.0",
- "hyper 0.0.1 (git+https://github.com/hyperium/hyper.git#50a6f6103e842102ccb03e8e49bf8f412fd166bc)",
+ "hyper 0.0.1 (git+https://github.com/hannobraun/hyper.git#f7581043c5114af8d445163ef6205127ae1fc2b7)",
  "iron 0.0.1 (git+https://github.com/iron/iron.git#f7edddd634b97d3150d92db88911472f27d95493)",
  "static_file 0.1.0 (git+https://github.com/hannobraun/static-file.git#e03840759ead5c9126a757a687e5252c69b8e5d2)",
  "toml 0.1.0 (git+https://github.com/alexcrichton/toml-rs#8a3ba4c65cfa22a3d924293a1fb3a70bfac5e66c)",
@@ -26,7 +26,7 @@ dependencies = [
 [[package]]
 name = "encoding"
 version = "0.1.0"
-source = "git+https://github.com/lifthrasiir/rust-encoding#4368ee5d0e7599964d98f874df22c86f4005c9ae"
+source = "git+https://github.com/lifthrasiir/rust-encoding#dd6183298e20b038fcd1cc4ab91405b3c72e49db"
 
 [[package]]
 name = "error"
@@ -43,7 +43,7 @@ source = "git+https://github.com/reem/rust-http-content-type.git#6f656bbe66ed2c2
 dependencies = [
  "http 0.1.0-pre (git+https://github.com/chris-morgan/rust-http.git#ba43e05a5abdcc62b4a04b6a7fd6c634a8a4605a)",
  "phf_mac 0.0.0 (git+https://github.com/sfackler/rust-phf.git#996edc690403b57e9a11ee3fb920a5f5c6dc9aef)",
- "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url.git#7f1991d847fb8cf8648def2ff121bae90b89131f)",
 ]
 
 [[package]]
@@ -52,13 +52,13 @@ version = "0.1.0-pre"
 source = "git+https://github.com/chris-morgan/rust-http.git#ba43e05a5abdcc62b4a04b6a7fd6c634a8a4605a"
 dependencies = [
  "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git#6277635e5c579c5842fc5f921a3b27a544a7b346)",
- "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url.git#7f1991d847fb8cf8648def2ff121bae90b89131f)",
 ]
 
 [[package]]
 name = "hyper"
 version = "0.0.1"
-source = "git+https://github.com/hyperium/hyper.git#50a6f6103e842102ccb03e8e49bf8f412fd166bc"
+source = "git+https://github.com/hannobraun/hyper.git#f7581043c5114af8d445163ef6205127ae1fc2b7"
 dependencies = [
  "intertwine 0.0.1 (git+https://github.com/reem/rust-intertwine#3b23760cf7da3c7f38db16bf488c88f6e506de2d)",
  "mime 0.0.1 (git+https://github.com/seanmonstar/mime.rs#d9a80eea2a4d1bee069ac71d8932c82f7e70cee2)",
@@ -66,7 +66,7 @@ dependencies = [
  "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git#6277635e5c579c5842fc5f921a3b27a544a7b346)",
  "typeable 0.0.1 (git+https://github.com/reem/rust-typeable.git#55154e1809db8ceec8f8519bdbb638c2fbd712f5)",
  "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any.git#75cff194795447a901c1658e31629899c9c8d52f)",
- "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url.git#7f1991d847fb8cf8648def2ff121bae90b89131f)",
 ]
 
 [[package]]
@@ -85,7 +85,7 @@ dependencies = [
  "plugin 0.0.0 (git+https://github.com/reem/rust-plugin.git#19b97b79ed3fb291cd6d454058c906e33017a0b6)",
  "replace-map 0.0.1 (git+https://github.com/reem/rust-replace-map.git#140217a7ac616625b72ffe62fe4a53f0e1b9cc41)",
  "typemap 0.0.0 (git+https://github.com/reem/rust-typemap.git#895f26e24cfb7be08920895f7c549970b81a9586)",
- "url 0.1.0 (git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b)",
+ "url 0.1.0 (git+https://github.com/servo/rust-url.git#7f1991d847fb8cf8648def2ff121bae90b89131f)",
 ]
 
 [[package]]
@@ -194,9 +194,9 @@ source = "git+https://github.com/reem/rust-unsafe-any.git#75cff194795447a901c165
 [[package]]
 name = "url"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-url#55b18b796ef2cef5490069dd450c60c2cc2c0c1b"
+source = "git+https://github.com/servo/rust-url.git#7f1991d847fb8cf8648def2ff121bae90b89131f"
 dependencies = [
- "encoding 0.1.0 (git+https://github.com/lifthrasiir/rust-encoding#4368ee5d0e7599964d98f874df22c86f4005c9ae)",
+ "encoding 0.1.0 (git+https://github.com/lifthrasiir/rust-encoding#dd6183298e20b038fcd1cc4ab91405b3c72e49db)",
 ]
 
 [[package]]
