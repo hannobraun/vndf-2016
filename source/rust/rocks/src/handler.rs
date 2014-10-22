@@ -30,9 +30,10 @@ impl RocksHandler {
 		let requested_path =
 			self.source_path.join_many(request.url.path.as_slice());
 
-		let mut source_file =
-			requested_path.filename_str().unwrap().to_string();
-		source_file.push_str(".response");
+		let source_file = format!(
+			"{}.response",
+			requested_path.filename_str().unwrap()
+		);
 
 		let file_path = requested_path.with_filename(source_file);
 
