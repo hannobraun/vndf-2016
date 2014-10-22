@@ -1,4 +1,5 @@
 use std::io::File;
+use std::io::fs::PathExtensions;
 
 use iron::{
 	status,
@@ -36,6 +37,10 @@ impl RocksHandler {
 		);
 
 		let file_path = requested_path.with_filename(source_file);
+
+		if !file_path.exists() {
+			return None;
+		}
 
 		let data =
 			Parser::new(
