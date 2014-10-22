@@ -10,6 +10,7 @@ use hyper::client::{
 	Request,
 	Response,
 };
+use hyper::net::Fresh;
 
 
 pub struct Rocks {
@@ -42,7 +43,8 @@ impl Rocks {
 
 
 struct RocksRequest {
-	url: Url,
+	url    : Url,
+	request: Request<Fresh>,
 }
 
 impl RocksRequest {
@@ -53,14 +55,17 @@ impl RocksRequest {
 			)
 			.unwrap();
 
+		let request = Request::get(url.clone())
+			.unwrap_or_else(|e| fail!("get failed: {}", e));
+
 		RocksRequest {
-			url: url,
+			url    : url,
+			request: request,
 		}
 	}
 
 	pub fn send(self) -> Response {
-		Request::get(self.url)
-			.unwrap_or_else(|e| fail!("get failed: {}", e))
+		self.request
 			.start()
 			.unwrap_or_else(|e| fail!("start failed: {}", e))
 			.send()
