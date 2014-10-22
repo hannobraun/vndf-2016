@@ -43,7 +43,6 @@ impl Rocks {
 
 
 struct RocksRequest {
-	url    : Url,
 	request: Request<Fresh>,
 }
 
@@ -59,7 +58,6 @@ impl RocksRequest {
 			.unwrap_or_else(|e| fail!("get failed: {}", e));
 
 		RocksRequest {
-			url    : url,
 			request: request,
 		}
 	}
