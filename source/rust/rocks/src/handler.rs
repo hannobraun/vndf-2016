@@ -26,7 +26,9 @@ impl RocksHandler {
 
 impl Handler for RocksHandler {
 	fn call(&self, request: &mut Request) -> IronResult<Response> {
-		let root_path = self.root_path.join("localhost");
+		let host = "localhost".to_string();
+
+		let root_path = self.root_path.join(host.as_slice());
 
 		let public_path = root_path.join("public");
 		let source_path = root_path.join("source");
