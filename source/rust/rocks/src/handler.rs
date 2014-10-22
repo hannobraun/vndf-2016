@@ -18,8 +18,6 @@ pub struct RocksHandler {
 
 impl RocksHandler {
 	pub fn new(root_path: Path) -> RocksHandler {
-		let root_path = root_path.join("localhost");
-
 		RocksHandler {
 			root_path: root_path,
 		}
@@ -28,8 +26,10 @@ impl RocksHandler {
 
 impl Handler for RocksHandler {
 	fn call(&self, request: &mut Request) -> IronResult<Response> {
-		let public_path = self.root_path.join("public");
-		let source_path = self.root_path.join("source");
+		let root_path = self.root_path.join("localhost");
+
+		let public_path = root_path.join("public");
+		let source_path = root_path.join("source");
 
 		let static_handler = StaticWithCache::new(public_path);
 
