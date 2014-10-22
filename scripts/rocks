@@ -6,4 +6,4 @@ export PATH=$PATH:$(pwd)/source/rust/rocks/target
 
 cd source/rust/rocks
 cargo test &&
-cargo run -- --root $HTTP_SOURCE --port 3000
+cargo run -- --root $HTTP_SOURCE/vndf.de --port 3000
