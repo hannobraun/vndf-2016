@@ -31,20 +31,28 @@ impl RocksHandler {
 		let requested_path =
 			self.source_path.join_many(request.url.path.as_slice());
 
-		let source_file = format!(
-			"{}.response",
-			requested_path.filename_str().unwrap()
-		);
+		let path_candidates = [
+			requested_path.with_filename(
+				format!("{}.response", requested_path.filename_str().unwrap()),
+			),
+			requested_path.join(".response"),
+		];
 
-		let file_path = requested_path.with_filename(source_file);
-
-		if !file_path.exists() {
-			return None;
+		let mut file_path = None;
+		for candidate in path_candidates.iter() {
+			if candidate.exists() {
+				file_path = Some(candidate);
+			}
 		}
+
+		let file_path = match file_path {
+			Some(path) => path,
+			None       => return None,
+		};
 
 		let data =
 			Parser::new(
-				File::open(&file_path).read_to_string().unwrap().as_slice()
+				File::open(file_path).read_to_string().unwrap().as_slice()
 			)
 			.parse()
 			.unwrap();
