@@ -5,11 +5,11 @@ use acceptance::{
 	Process,
 	Tree,
 };
+use hyper::Url;
 use hyper::client::{
 	Request,
 	Response,
 };
-use hyper::Url;
 
 
 pub struct Rocks {
