@@ -13,27 +13,27 @@ use toml::Parser;
 
 
 pub struct RocksHandler {
-	static_handler: StaticWithCache,
-	root_path     : Path,
+	root_path: Path,
 }
 
 impl RocksHandler {
 	pub fn new(root_path: Path) -> RocksHandler {
-		let root_path   = root_path.join("localhost");
-		let public_path = root_path.join("public");
+		let root_path = root_path.join("localhost");
 
 		RocksHandler {
-			static_handler: StaticWithCache::new(public_path),
-			root_path     : root_path,
+			root_path: root_path,
 		}
 	}
 }
 
 impl Handler for RocksHandler {
 	fn call(&self, request: &mut Request) -> IronResult<Response> {
+		let public_path = self.root_path.join("public");
 		let source_path = self.root_path.join("source");
 
-		match self.static_handler.call(request) {
+		let static_handler = StaticWithCache::new(public_path);
+
+		match static_handler.call(request) {
 			Ok(response) => {
 				match response.status {
 					Some(status::NotFound) => {
