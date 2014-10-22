@@ -2,18 +2,19 @@ use acceptance::TreeBuilder;
 use hyper::status;
 use hyper::header::common::location::Location;
 
-use infra::Rocks;
+use infra::{
+	DotResponse,
+	Rocks,
+};
 
 
 #[test]
 fn it_should_return_a_custom_response() {
-	let test_response = "
-		code     = 301
-		location = \"/other-directory\"
-	";
-
 	let tree = TreeBuilder::new()
-		.with_file("localhost/source/test.response", test_response)
+		.with_file(
+			"localhost/source/test.response",
+			DotResponse::new(301, "/other-directory").build().as_slice()
+		)
 		.build();
 
 	let rocks = Rocks::start(tree);
@@ -29,13 +30,11 @@ fn it_should_return_a_custom_response() {
 
 #[test]
 fn it_should_return_a_custom_response_for_a_directory() {
-	let test_response = "
-		code     = 301
-		location = \"/other-directory\"
-	";
-
 	let tree = TreeBuilder::new()
-		.with_file("localhost/source/test/.response", test_response)
+		.with_file(
+			"localhost/source/test/.response",
+			DotResponse::new(301, "/other-directory").build().as_slice()
+		)
 		.build();
 
 	let rocks = Rocks::start(tree);
