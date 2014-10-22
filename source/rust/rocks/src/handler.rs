@@ -38,21 +38,21 @@ impl RocksHandler {
 			requested_path.join(".response"),
 		];
 
-		let mut file_path = None;
+		let mut source_file = None;
 		for candidate in path_candidates.iter() {
 			if candidate.exists() {
-				file_path = Some(candidate);
+				source_file = Some(candidate);
 			}
 		}
 
-		let file_path = match file_path {
+		let source_file = match source_file {
 			Some(path) => path,
 			None       => return None,
 		};
 
 		let data =
 			Parser::new(
-				File::open(file_path).read_to_string().unwrap().as_slice()
+				File::open(source_file).read_to_string().unwrap().as_slice()
 			)
 			.parse()
 			.unwrap();
