@@ -10,6 +10,7 @@ use hyper::client::{
 	Request,
 	Response,
 };
+use hyper::header::Header;
 use hyper::net::Fresh;
 
 
@@ -60,6 +61,11 @@ impl RocksRequest {
 		RocksRequest {
 			request: request,
 		}
+	}
+
+	pub fn with_header<H: Header>(mut self, header: H) -> RocksRequest {
+		self.request.headers_mut().set(header);
+		self
 	}
 
 	pub fn send(self) -> Response {
