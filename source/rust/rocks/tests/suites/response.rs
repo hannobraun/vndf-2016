@@ -18,7 +18,7 @@ fn it_should_return_a_custom_response() {
 
 	let rocks = Rocks::start(tree);
 
-	let response = rocks.get("/test");
+	let response = rocks.request("/test").send();
 
 	assert_eq!(status::MovedPermanently, response.status);
 	assert_eq!(
@@ -40,7 +40,7 @@ fn it_should_return_a_custom_response_for_a_directory() {
 
 	let rocks = Rocks::start(tree);
 
-	let response = rocks.get("/test");
+	let response = rocks.request("/test").send();
 
 	assert_eq!(status::MovedPermanently, response.status);
 	assert_eq!(

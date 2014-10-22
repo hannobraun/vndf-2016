@@ -35,10 +35,31 @@ impl Rocks {
 		}
 	}
 
-	pub fn get(&self, path: &str) -> Response {
-		let url = format!("http://localhost:{}{}", self.port, path);
+	pub fn request(&self, path: &str) -> RocksRequest {
+		RocksRequest::new(self.port, path)
+	}
+}
 
-		Request::get(Url::parse(url.as_slice()).unwrap())
+
+struct RocksRequest {
+	url: Url,
+}
+
+impl RocksRequest {
+	fn new(port: Port, path: &str) -> RocksRequest {
+		let url =
+			Url::parse(
+				format!("http://localhost:{}{}", port, path).as_slice()
+			)
+			.unwrap();
+
+		RocksRequest {
+			url: url,
+		}
+	}
+
+	pub fn send(self) -> Response {
+		Request::get(self.url)
 			.unwrap_or_else(|e| fail!("get failed: {}", e))
 			.start()
 			.unwrap_or_else(|e| fail!("start failed: {}", e))
