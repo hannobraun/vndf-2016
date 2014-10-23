@@ -35,6 +35,7 @@ use super::{
 	Transform,
 };
 use super::billboard::Billboard;
+use super::line::Line;
 use super::planet::Planet;
 use super::rings::Rings;
 use super::texture::Texture;
@@ -47,6 +48,7 @@ pub struct Renderer {
 	frame: gfx::Frame,
 
 	billboard: Billboard,
+	line     : Line,
 	planet   : Planet,
 	rings    : Rings,
 
@@ -67,6 +69,7 @@ impl Renderer {
 			.depth(gfx::state::Less, true);
 
 		let billboard = Billboard::new(&mut graphics, &draw_state);
+		let line      = Line::new(&mut graphics, &draw_state);
 		let planet    = Planet::new(&mut graphics, &draw_state);
 		let rings     = Rings::new(&mut graphics, &draw_state);
 
@@ -94,6 +97,7 @@ impl Renderer {
 			frame: frame,
 
 			billboard: billboard,
+			line     : line,
 			planet   : planet,
 			rings    : rings,
 
@@ -166,6 +170,11 @@ impl Renderer {
 		let view_projection = self.perspective()
 			.mul(&camera.to_transform());
 
+		let center = Vector3::new(
+			camera.center.x as f32,
+			camera.center.y as f32,
+			camera.center.z as f32,
+		);
 		let position = Vector3::new(
 			body.position.x as f32,
 			body.position.y as f32,
@@ -180,6 +189,14 @@ impl Renderer {
 			&texture,
 			&view_projection,
 			&self.window.size,
+		);
+
+		self.line.draw(
+			&mut self.graphics,
+			&self.frame,
+			&center,
+			&position,
+			&view_projection,
 		);
 
 		let text_offset = texture.size.div_s(2.0);

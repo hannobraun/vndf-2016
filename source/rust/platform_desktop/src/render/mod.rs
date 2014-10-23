@@ -5,6 +5,7 @@ use gfx;
 pub mod renderer;
 
 mod billboard;
+mod line;
 mod planet;
 mod rings;
 mod shaders {

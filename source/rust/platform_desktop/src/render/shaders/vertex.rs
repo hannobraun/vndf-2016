@@ -29,6 +29,23 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	"
 };
 
+pub static LINE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform vec3 center;
+		uniform vec3 position;
+		uniform mat4 transform;
+
+		in vec3 vertex;
+
+		void main() {
+			vec3 point = position - vec3(0.0, 0.0, position.z - center.z) * vertex.z;
+			gl_Position = transform * vec4(point, 1.0);
+		}
+	"
+};
+
 pub static RINGS: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
