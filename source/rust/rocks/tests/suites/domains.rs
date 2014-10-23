@@ -15,7 +15,10 @@ fn it_should_use_domain_folder_according_to_host_header() {
 	let rocks = Rocks::start(tree);
 	let mut response = rocks
 		.request("/test")
-		.with_header(Host(format!("www.example.com:{}", rocks.port)))
+		.with_header(Host {
+			hostname: "www.example.com".to_string(),
+			port    : Some(rocks.port)
+		})
 		.send();
 
 	assert_eq!(status::Ok, response.status);

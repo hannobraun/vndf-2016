@@ -13,7 +13,7 @@ test = false
 path = "../acceptance-rs"
 
 [dependencies.hyper]
-git = "https://github.com/hannobraun/hyper.git"
+git = "https://github.com/hyperium/hyper.git"
 
 [dependencies.iron]
 git = "https://github.com/iron/iron.git"
