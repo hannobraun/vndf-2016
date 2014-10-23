@@ -5,6 +5,7 @@ use cgmath::{
 	mod,
 	deg,
 	Angle,
+	ApproxEq,
 	Basis2,
 	Deg,
 	Matrix,
@@ -218,7 +219,9 @@ impl Renderer {
 			&self.window.size,
 		);
 
-		self.draw_line_to_disc(&center, &position, &view_projection);
+		if !center.approx_eq_eps(&position, &50.0) {
+			self.draw_line_to_disc(&center, &position, &view_projection);
+		}
 
 		let text_offset = texture.size.div_s(2.0);
 		self.draw_text(
