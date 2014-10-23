@@ -15,7 +15,7 @@ pub static BASE: gfx::ShaderSource = shaders! {
 
 		void main() {
 			float size = transform[3][3] * 0.025;
-			vec3 v = vec3(position.xy, center.z + 1.0) + vertex * size;
+			vec3 v = vec3(position.xy, center.z) + vertex * size;
 			gl_Position = transform * vec4(v, 1.0);
 
 			point = vertex.xy;
