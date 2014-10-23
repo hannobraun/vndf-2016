@@ -195,21 +195,7 @@ impl Renderer {
 			&self.window.size,
 		);
 
-		self.line.draw(
-			&mut self.graphics,
-			&self.frame,
-			&center,
-			&position,
-			&view_projection,
-		);
-
-		self.base.draw(
-			&mut self.graphics,
-			&self.frame,
-			&center,
-			&position,
-			&view_projection,
-		);
+		self.draw_line_to_disc(&center, &position, &view_projection);
 
 		let text_offset = texture.size.div_s(2.0);
 		self.draw_text(
@@ -380,6 +366,29 @@ impl Renderer {
 
 			total_advance = total_advance + advance;
 		}
+	}
+
+	fn draw_line_to_disc(
+		&mut self,
+		center   : &Vector3<f32>,
+		position : &Vector3<f32>,
+		transform: &Transform
+	) {
+		self.line.draw(
+			&mut self.graphics,
+			&self.frame,
+			center,
+			position,
+			transform,
+		);
+
+		self.base.draw(
+			&mut self.graphics,
+			&self.frame,
+			center,
+			position,
+			transform,
+		);
 	}
 
 	fn ortho(&self) -> Transform {
