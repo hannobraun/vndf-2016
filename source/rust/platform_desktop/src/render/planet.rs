@@ -78,7 +78,7 @@ impl Planet {
 		position  : Vector3<f32>,
 		radius    : f32,
 		color     : Vector3<f32>,
-		projection: Transform,
+		projection: &Transform,
 		camera    : &Camera,
 	) {
 		let view = camera.to_transform();

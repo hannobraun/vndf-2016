@@ -173,7 +173,7 @@ impl Renderer {
 			position,
 			planet.radius as f32,
 			planet.color,
-			*transform,
+			transform,
 			camera,
 		);
 	}
