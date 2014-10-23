@@ -5,11 +5,24 @@ pub static BASE: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
+		in vec2 point;
+
 		out vec4 out_color;
 
 		void main()
 		{
-			out_color = vec4(1.0, 1.0, 1.0, 1.0);
+			float r = length(point);
+
+			float a = 0.0;
+			if (r <= 1.0) {
+				a = 1.0 - r;
+				gl_FragDepth = gl_FragCoord.z;
+			}
+			else {
+				gl_FragDepth = 1.0;
+			}
+
+			out_color = vec4(1.0, 1.0, 1.0, a);
 		}
 	"
 };
