@@ -128,7 +128,12 @@ impl Renderer {
 		);
 
 		for planet in frame.planets.iter() {
-			self.draw_planet(planet, &frame.camera, &projection);
+			self.draw_planet(
+				planet,
+				&frame.camera,
+				&projection,
+				&view_projection
+			);
 		}
 
 		for body in frame.ships.iter() {
@@ -157,10 +162,16 @@ impl Renderer {
 
 	fn draw_planet(
 		&mut self,
-		planet   : &GamePlanet,
-		camera   : &Camera,
-		transform: &Transform
+		planet    : &GamePlanet,
+		camera    : &Camera,
+		projection: &Transform,
+		transform : &Transform
 	) {
+		let center = Vector3::new(
+			camera.center.x as f32,
+			camera.center.y as f32,
+			camera.center.z as f32,
+		);
 		let position = Vector3::new(
 			planet.position.x as f32,
 			planet.position.y as f32,
@@ -173,9 +184,11 @@ impl Renderer {
 			position,
 			planet.radius as f32,
 			planet.color,
-			transform,
+			projection,
 			camera,
 		);
+
+		self.draw_line_to_disc(&center, &position, transform);
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
