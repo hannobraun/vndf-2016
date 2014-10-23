@@ -66,7 +66,7 @@ Topic ideas:
 - Visual inspiration: Galactica's DRADIS
 
 News for November:
-- ...
+- http://www.reddit.com/r/space/comments/2k21dt/it_may_be_the_case_that_complex_life_on_earth_is/
 
 News for any month:
 - Asteroid video by Scott Manley
