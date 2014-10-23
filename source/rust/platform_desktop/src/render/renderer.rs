@@ -21,6 +21,7 @@ use font::{
 	Font,
 	Glyph,
 };
+use game::ecs::Planet as GamePlanet;
 use game::physics::Body;
 use images::Images;
 use platform::{
@@ -127,21 +128,7 @@ impl Renderer {
 		);
 
 		for planet in frame.planets.iter() {
-			let position = Vector3::new(
-				planet.position.x as f32,
-				planet.position.y as f32,
-				planet.position.z as f32,
-			);
-
-			self.planet.draw(
-				&mut self.graphics,
-				&self.frame,
-				position,
-				planet.radius as f32,
-				planet.color,
-				projection,
-				&frame.camera,
-			);
+			self.draw_planet(planet, &frame.camera, &projection);
 		}
 
 		for body in frame.ships.iter() {
@@ -166,6 +153,29 @@ impl Renderer {
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();
+	}
+
+	fn draw_planet(
+		&mut self,
+		planet   : &GamePlanet,
+		camera   : &Camera,
+		transform: &Transform
+	) {
+		let position = Vector3::new(
+			planet.position.x as f32,
+			planet.position.y as f32,
+			planet.position.z as f32,
+		);
+
+		self.planet.draw(
+			&mut self.graphics,
+			&self.frame,
+			position,
+			planet.radius as f32,
+			planet.color,
+			*transform,
+			camera,
+		);
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
