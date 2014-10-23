@@ -1,6 +1,28 @@
 use gfx;
 
 
+pub static BASE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		uniform vec3 center;
+		uniform vec3 position;
+		uniform mat4 transform;
+
+		in vec3 vertex;
+
+		out vec2 point;
+
+		void main() {
+			float size = transform[3][3] * 0.025;
+			vec3 v = vec3(position.xy, center.z) + vertex * size;
+			gl_Position = transform * vec4(v, 1.0);
+
+			point = vertex.xy;
+		}
+	"
+};
+
 pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core

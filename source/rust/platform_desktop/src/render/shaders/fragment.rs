@@ -1,6 +1,19 @@
 use gfx;
 
 
+pub static BASE: gfx::ShaderSource = shaders! {
+	GLSL_150: b"
+		#version 150 core
+
+		out vec4 out_color;
+
+		void main()
+		{
+			out_color = vec4(1.0, 1.0, 1.0, 1.0);
+		}
+	"
+};
+
 pub static PLANET: gfx::ShaderSource = shaders! {
 	GLSL_150: b"
 		#version 150 core

@@ -4,6 +4,7 @@ use gfx;
 
 pub mod renderer;
 
+mod base;
 mod billboard;
 mod line;
 mod planet;
