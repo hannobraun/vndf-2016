@@ -35,6 +35,7 @@ use render::drawers::{
 	BaseDrawer,
 	Billboard,
 	BillboardDrawer,
+	Line,
 	LineDrawer,
 	PlanetDrawer,
 	NavDiscDrawer,
@@ -412,9 +413,11 @@ impl Renderer {
 		self.line_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
-			center,
-			position,
-			transform,
+			&Line {
+				center   : *center,
+				position : *position,
+				transform: *transform,
+			}
 		);
 
 		self.base_drawer.draw(

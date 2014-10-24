@@ -62,16 +62,14 @@ impl LineDrawer {
 
 	pub fn draw(
 		&self,
-		graphics : &mut Graphics,
-		frame    : &Frame,
-		center   : &Vector3<f32>,
-		position : &Vector3<f32>,
-		transform: &Transform,
+		graphics: &mut Graphics,
+		frame   : &Frame,
+		line    : &Line,
 	) {
 		let params = Params {
-			center   : center.into_fixed(),
-			position : position.into_fixed(),
-			transform: transform.into_fixed(),
+			center   : line.center.into_fixed(),
+			position : line.position.into_fixed(),
+			transform: line.transform.into_fixed(),
 		};
 
 		graphics.draw(
@@ -80,4 +78,11 @@ impl LineDrawer {
 			frame
 		);
 	}
+}
+
+
+pub struct Line {
+	pub center   : Vector3<f32>,
+	pub position : Vector3<f32>,
+	pub transform: Transform,
 }
