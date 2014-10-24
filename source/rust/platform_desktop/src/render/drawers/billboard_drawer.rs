@@ -72,21 +72,17 @@ impl BillboardDrawer {
 
 	pub fn draw(
 		&self,
-		graphics   : &mut Graphics,
-		frame      : &Frame,
-		position   : &Vector3<f32>,
-		offset     : &Vector2<f32>,
-		texture    : &Texture,
-		transform  : &Transform,
-		screen_size: &Vector2<f32>,
+		graphics : &mut Graphics,
+		frame    : &Frame,
+		billboard: &Billboard,
 	) {
 		let params = Params {
-			position   : position.into_fixed(),
-			transform  : transform.into_fixed(),
-			size       : texture.size.into_fixed(),
-			offset     : offset.into_fixed(),
-			screen_size: screen_size.into_fixed(),
-			tex        : texture.param,
+			position   : billboard.position.into_fixed(),
+			transform  : billboard.transform.into_fixed(),
+			size       : billboard.texture.size.into_fixed(),
+			offset     : billboard.offset.into_fixed(),
+			screen_size: billboard.screen_size.into_fixed(),
+			tex        : billboard.texture.param,
 		};
 
 		graphics.draw(
@@ -95,4 +91,13 @@ impl BillboardDrawer {
 			frame
 		);
 	}
+}
+
+
+pub struct Billboard {
+	pub position   : Vector3<f32>,
+	pub offset     : Vector2<f32>,
+	pub texture    : Texture,
+	pub transform  : Transform,
+	pub screen_size: Vector2<f32>,
 }

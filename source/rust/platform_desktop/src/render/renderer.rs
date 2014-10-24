@@ -33,6 +33,7 @@ use platform::{
 use render::drawers::{
 	Base,
 	BaseDrawer,
+	Billboard,
 	BillboardDrawer,
 	LineDrawer,
 	PlanetDrawer,
@@ -215,11 +216,13 @@ impl Renderer {
 		self.billboard_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
-			&position,
-			&Vector2::zero(),
-			&texture,
-			&view_projection,
-			&self.window.size,
+			&Billboard {
+				position   : position,
+				offset     : Vector2::zero(),
+				texture    : texture,
+				transform  : view_projection,
+				screen_size: self.window.size,
+			},
 		);
 
 		if !center.approx_eq_eps(&position, &50.0) {
@@ -386,11 +389,13 @@ impl Renderer {
 				self.billboard_drawer.draw(
 					&mut self.graphics,
 					&self.frame,
-					position,
-					&(screen_offset + total_offset),
-					&texture,
-					transform,
-					&self.window.size,
+					&Billboard {
+						position   : *position,
+						offset     : screen_offset + total_offset,
+						texture    : texture,
+						transform  : *transform,
+						screen_size: self.window.size,
+					},
 				);
 			}
 
