@@ -25,12 +25,12 @@ struct Params {
 }
 
 
-pub struct Line {
+pub struct LineDrawer {
 	pub batch: Batch,
 }
 
-impl Line {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Line {
+impl LineDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> LineDrawer {
 		let vertices = [
 			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 0.0 ]),
 			Vertex::new([ 0.0, 0.0, 1.0 ], [ 0.0, 0.0 ]),
@@ -55,7 +55,7 @@ impl Line {
 			)
 			.unwrap();
 
-		Line {
+		LineDrawer {
 			batch: batch,
 		}
 	}

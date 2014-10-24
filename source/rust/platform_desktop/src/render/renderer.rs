@@ -38,7 +38,7 @@ use super::{
 };
 use super::base::BaseDrawer;
 use super::billboard::BillboardDrawer;
-use super::line::Line;
+use super::line::LineDrawer;
 use super::planet::PlanetDrawer;
 use super::rings::Rings;
 use super::texture::Texture;
@@ -52,7 +52,7 @@ pub struct Renderer {
 
 	base_drawer     : BaseDrawer,
 	billboard_drawer: BillboardDrawer,
-	line            : Line,
+	line_drawer     : LineDrawer,
 	planet_drawer   : PlanetDrawer,
 	rings           : Rings,
 
@@ -74,7 +74,7 @@ impl Renderer {
 
 		let base_drawer      = BaseDrawer::new(&mut graphics, &draw_state);
 		let billboard_drawer = BillboardDrawer::new(&mut graphics, &draw_state);
-		let line             = Line::new(&mut graphics, &draw_state);
+		let line_drawer      = LineDrawer::new(&mut graphics, &draw_state);
 		let planet_drawer    = PlanetDrawer::new(&mut graphics, &draw_state);
 		let rings            = Rings::new(&mut graphics, &draw_state);
 
@@ -103,7 +103,7 @@ impl Renderer {
 
 			base_drawer     : base_drawer,
 			billboard_drawer: billboard_drawer,
-			line            : line,
+			line_drawer     : line_drawer,
 			planet_drawer   : planet_drawer,
 			rings           : rings,
 
@@ -400,7 +400,7 @@ impl Renderer {
 		position : &Vector3<f32>,
 		transform: &Transform
 	) {
-		self.line.draw(
+		self.line_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
 			center,
