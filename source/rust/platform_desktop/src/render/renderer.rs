@@ -36,7 +36,7 @@ use super::{
 	Graphics,
 	Transform,
 };
-use super::base::Base;
+use super::base::BaseDrawer;
 use super::billboard::BillboardDrawer;
 use super::line::Line;
 use super::planet::PlanetDrawer;
@@ -50,7 +50,7 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	base            : Base,
+	base_drawer     : BaseDrawer,
 	billboard_drawer: BillboardDrawer,
 	line            : Line,
 	planet_drawer   : PlanetDrawer,
@@ -72,7 +72,7 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let base             = Base::new(&mut graphics, &draw_state);
+		let base_drawer      = BaseDrawer::new(&mut graphics, &draw_state);
 		let billboard_drawer = BillboardDrawer::new(&mut graphics, &draw_state);
 		let line             = Line::new(&mut graphics, &draw_state);
 		let planet_drawer    = PlanetDrawer::new(&mut graphics, &draw_state);
@@ -101,7 +101,7 @@ impl Renderer {
 
 			frame: frame,
 
-			base            : base,
+			base_drawer     : base_drawer,
 			billboard_drawer: billboard_drawer,
 			line            : line,
 			planet_drawer   : planet_drawer,
@@ -408,7 +408,7 @@ impl Renderer {
 			transform,
 		);
 
-		self.base.draw(
+		self.base_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
 			center,

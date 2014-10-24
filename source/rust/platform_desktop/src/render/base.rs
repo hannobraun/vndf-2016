@@ -25,12 +25,12 @@ struct Params {
 }
 
 
-pub struct Base {
+pub struct BaseDrawer {
 	pub batch: Batch,
 }
 
-impl Base {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Base {
+impl BaseDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> BaseDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -57,7 +57,7 @@ impl Base {
 			)
 			.unwrap();
 
-		Base {
+		BaseDrawer {
 			batch: batch,
 		}
 	}
