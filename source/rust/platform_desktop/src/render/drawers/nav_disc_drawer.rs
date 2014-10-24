@@ -2,6 +2,7 @@ use cgmath::FixedArray;
 use gfx::{
 	mod,
 	DeviceHelper,
+	DrawState,
 	Frame,
 	ToSlice,
 };
@@ -29,7 +30,7 @@ pub struct NavDiscDrawer {
 impl Drawer<NavDisc> for NavDiscDrawer {
 	fn new(
 		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
+		draw_state: &DrawState,
 	) -> NavDiscDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
