@@ -6,6 +6,7 @@ use cgmath::{
 use gfx::{
 	mod,
 	DeviceHelper,
+	DrawState,
 	Frame,
 	ToSlice,
 };
@@ -38,7 +39,7 @@ pub struct BillboardDrawer {
 impl Drawer<Billboard> for BillboardDrawer {
 	fn new(
 		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
+		draw_state: &DrawState,
 	) -> BillboardDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
