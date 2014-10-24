@@ -40,7 +40,7 @@ use super::base::BaseDrawer;
 use super::billboard::BillboardDrawer;
 use super::line::LineDrawer;
 use super::planet::PlanetDrawer;
-use super::rings::Rings;
+use super::rings::NavDiscDrawer;
 use super::texture::Texture;
 
 
@@ -54,7 +54,7 @@ pub struct Renderer {
 	billboard_drawer: BillboardDrawer,
 	line_drawer     : LineDrawer,
 	planet_drawer   : PlanetDrawer,
-	rings           : Rings,
+	nav_disc_drawer : NavDiscDrawer,
 
 	glyphs        : HashMap<char, Glyph>,
 	glyph_textures: HashMap<char, Texture>,
@@ -76,7 +76,7 @@ impl Renderer {
 		let billboard_drawer = BillboardDrawer::new(&mut graphics, &draw_state);
 		let line_drawer      = LineDrawer::new(&mut graphics, &draw_state);
 		let planet_drawer    = PlanetDrawer::new(&mut graphics, &draw_state);
-		let rings            = Rings::new(&mut graphics, &draw_state);
+		let nav_disc_drawer  = NavDiscDrawer::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();
@@ -105,7 +105,7 @@ impl Renderer {
 			billboard_drawer: billboard_drawer,
 			line_drawer     : line_drawer,
 			planet_drawer   : planet_drawer,
-			rings           : rings,
+			nav_disc_drawer : nav_disc_drawer,
 
 			glyphs        : glyphs,
 			glyph_textures: glyph_textures,
@@ -311,7 +311,8 @@ impl Renderer {
 			);
 		}
 
-		self.rings.draw(
+
+		self.nav_disc_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
 			radius,

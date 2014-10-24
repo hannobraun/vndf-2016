@@ -21,15 +21,15 @@ struct Params {
 }
 
 
-pub struct Rings {
+pub struct NavDiscDrawer {
 	batch: Batch,
 }
 
-impl Rings {
+impl NavDiscDrawer {
 	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-	) -> Rings {
+	) -> NavDiscDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -56,7 +56,7 @@ impl Rings {
 			)
 			.unwrap();
 
-		Rings {
+		NavDiscDrawer {
 			batch: batch,
 		}
 	}
