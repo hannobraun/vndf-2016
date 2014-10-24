@@ -14,6 +14,7 @@ use platform::Camera;
 
 use render::{
 	shaders,
+	Drawer,
 	Graphics,
 	Transform,
 	Vertex,
@@ -38,8 +39,8 @@ pub struct PlanetDrawer {
 	batch : Batch,
 }
 
-impl PlanetDrawer {
-	pub fn new(
+impl Drawer<Planet> for PlanetDrawer {
+	fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState
 	) -> PlanetDrawer {
@@ -74,7 +75,7 @@ impl PlanetDrawer {
 		}
 	}
 
-	pub fn draw(
+	fn draw(
 		&self,
 		graphics: &mut Graphics,
 		frame   : &Frame,

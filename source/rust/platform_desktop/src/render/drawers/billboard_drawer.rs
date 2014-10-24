@@ -12,6 +12,7 @@ use gfx::{
 
 use render::{
 	shaders,
+	Drawer,
 	Graphics,
 	Transform,
 	Vertex,
@@ -34,8 +35,8 @@ pub struct BillboardDrawer {
 	pub batch: Batch,
 }
 
-impl BillboardDrawer {
-	pub fn new(
+impl Drawer<Billboard> for BillboardDrawer {
+	fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
 	) -> BillboardDrawer {
@@ -70,7 +71,7 @@ impl BillboardDrawer {
 		}
 	}
 
-	pub fn draw(
+	fn draw(
 		&self,
 		graphics : &mut Graphics,
 		frame    : &Frame,

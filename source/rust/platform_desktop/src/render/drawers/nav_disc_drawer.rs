@@ -8,6 +8,7 @@ use gfx::{
 
 use render::{
 	shaders,
+	Drawer,
 	Graphics,
 	Transform,
 	Vertex,
@@ -25,8 +26,8 @@ pub struct NavDiscDrawer {
 	batch: Batch,
 }
 
-impl NavDiscDrawer {
-	pub fn new(
+impl Drawer<NavDisc> for NavDiscDrawer {
+	fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
 	) -> NavDiscDrawer {
@@ -61,7 +62,7 @@ impl NavDiscDrawer {
 		}
 	}
 
-	pub fn draw(
+	fn draw(
 		&self,
 		graphics: &mut Graphics,
 		frame   : &Frame,

@@ -30,6 +30,7 @@ use platform::{
 	Frame,
 	Input,
 };
+use render::Drawer;
 use render::drawers::{
 	Base,
 	BaseDrawer,
@@ -79,11 +80,16 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let base_drawer      = BaseDrawer::new(&mut graphics, &draw_state);
-		let billboard_drawer = BillboardDrawer::new(&mut graphics, &draw_state);
-		let line_drawer      = LineDrawer::new(&mut graphics, &draw_state);
-		let planet_drawer    = PlanetDrawer::new(&mut graphics, &draw_state);
-		let nav_disc_drawer  = NavDiscDrawer::new(&mut graphics, &draw_state);
+		let base_drawer: BaseDrawer =
+			Drawer::new(&mut graphics, &draw_state);
+		let billboard_drawer: BillboardDrawer =
+			Drawer::new(&mut graphics, &draw_state);
+		let line_drawer: LineDrawer =
+			Drawer::new(&mut graphics, &draw_state);
+		let planet_drawer: PlanetDrawer =
+			Drawer::new(&mut graphics, &draw_state);
+		let nav_disc_drawer: NavDiscDrawer =
+			Drawer::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();

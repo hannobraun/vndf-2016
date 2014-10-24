@@ -11,6 +11,7 @@ use gfx::{
 
 use render::{
 	shaders,
+	Drawer,
 	Graphics,
 	Transform,
 	Vertex,
@@ -29,8 +30,8 @@ pub struct LineDrawer {
 	pub batch: Batch,
 }
 
-impl LineDrawer {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> LineDrawer {
+impl Drawer<Line> for LineDrawer {
+	fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> LineDrawer {
 		let vertices = [
 			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 0.0 ]),
 			Vertex::new([ 0.0, 0.0, 1.0 ], [ 0.0, 0.0 ]),
@@ -60,7 +61,7 @@ impl LineDrawer {
 		}
 	}
 
-	pub fn draw(
+	fn draw(
 		&self,
 		graphics: &mut Graphics,
 		frame   : &Frame,
