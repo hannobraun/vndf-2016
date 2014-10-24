@@ -6,6 +6,7 @@ use cgmath::{
 use gfx::{
 	mod,
 	DeviceHelper,
+	DrawState,
 	Frame,
 	ToSlice,
 };
@@ -40,10 +41,7 @@ pub struct PlanetDrawer {
 }
 
 impl Drawer<Planet> for PlanetDrawer {
-	fn new(
-		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState
-	) -> PlanetDrawer {
+	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> PlanetDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
