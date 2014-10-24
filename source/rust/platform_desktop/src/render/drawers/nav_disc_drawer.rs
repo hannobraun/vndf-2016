@@ -28,10 +28,7 @@ pub struct NavDiscDrawer {
 }
 
 impl Drawer<NavDisc> for NavDiscDrawer {
-	fn new(
-		graphics  : &mut Graphics,
-		draw_state: &DrawState,
-	) -> NavDiscDrawer {
+	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> NavDiscDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
