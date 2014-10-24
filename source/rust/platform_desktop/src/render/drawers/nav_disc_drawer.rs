@@ -6,7 +6,7 @@ use gfx::{
 	ToSlice,
 };
 
-use super::{
+use render::{
 	shaders,
 	Graphics,
 	Transform,

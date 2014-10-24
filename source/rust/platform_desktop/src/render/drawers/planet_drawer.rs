@@ -12,7 +12,7 @@ use gfx::{
 
 use platform::Camera;
 
-use super::{
+use render::{
 	shaders,
 	Graphics,
 	Transform,

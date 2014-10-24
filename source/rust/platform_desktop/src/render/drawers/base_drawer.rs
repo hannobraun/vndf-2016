@@ -1,6 +1,5 @@
 use cgmath::{
 	FixedArray,
-	Vector2,
 	Vector3,
 };
 use gfx::{
@@ -10,35 +9,28 @@ use gfx::{
 	ToSlice,
 };
 
-use super::{
+use render::{
 	shaders,
 	Graphics,
 	Transform,
 	Vertex,
 };
-use super::texture::Texture;
 
 
 #[shader_param(Batch)]
 struct Params {
-	position   : [f32, ..3],
-	transform  : [[f32, ..4], ..4],
-	size       : [f32, ..2],
-	offset     : [f32, ..2],
-	screen_size: [f32, ..2],
-	tex        : gfx::shade::TextureParam,
+	center   : [f32, ..3],
+	position : [f32, ..3],
+	transform: [[f32, ..4], ..4],
 }
 
 
-pub struct BillboardDrawer {
+pub struct BaseDrawer {
 	pub batch: Batch,
 }
 
-impl BillboardDrawer {
-	pub fn new(
-		graphics  : &mut Graphics,
-		draw_state: &gfx::DrawState,
-	) -> BillboardDrawer {
+impl BaseDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> BaseDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -51,8 +43,8 @@ impl BillboardDrawer {
 
 		let program = graphics.device
 			.link_program(
-				shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
-				shaders::fragment::TEXTURE.clone()
+				shaders::vertex::BASE.clone(),
+				shaders::fragment::BASE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
@@ -65,28 +57,23 @@ impl BillboardDrawer {
 			)
 			.unwrap();
 
-		BillboardDrawer {
+		BaseDrawer {
 			batch: batch,
 		}
 	}
 
 	pub fn draw(
 		&self,
-		graphics   : &mut Graphics,
-		frame      : &Frame,
-		position   : &Vector3<f32>,
-		offset     : &Vector2<f32>,
-		texture    : &Texture,
-		transform  : &Transform,
-		screen_size: &Vector2<f32>,
+		graphics : &mut Graphics,
+		frame    : &Frame,
+		center   : &Vector3<f32>,
+		position : &Vector3<f32>,
+		transform: &Transform,
 	) {
 		let params = Params {
-			position   : position.into_fixed(),
-			transform  : transform.into_fixed(),
-			size       : texture.size.into_fixed(),
-			offset     : offset.into_fixed(),
-			screen_size: screen_size.into_fixed(),
-			tex        : texture.param,
+			center   : center.into_fixed(),
+			position : position.into_fixed(),
+			transform: transform.into_fixed(),
 		};
 
 		graphics.draw(

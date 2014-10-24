@@ -4,11 +4,7 @@ use gfx;
 
 pub mod renderer;
 
-mod base;
-mod billboard;
-mod line;
-mod planet;
-mod rings;
+mod drawers;
 mod shaders {
 	pub mod fragment;
 	pub mod vertex;

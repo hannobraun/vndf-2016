@@ -30,17 +30,19 @@ use platform::{
 	Frame,
 	Input,
 };
+use render::drawers::{
+	BaseDrawer,
+	BillboardDrawer,
+	LineDrawer,
+	PlanetDrawer,
+	NavDiscDrawer,
+};
 use window::Window;
 
 use super::{
 	Graphics,
 	Transform,
 };
-use super::base::BaseDrawer;
-use super::billboard::BillboardDrawer;
-use super::line::LineDrawer;
-use super::planet::PlanetDrawer;
-use super::rings::NavDiscDrawer;
 use super::texture::Texture;
 
 

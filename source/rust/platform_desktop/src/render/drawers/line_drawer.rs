@@ -9,7 +9,7 @@ use gfx::{
 	ToSlice,
 };
 
-use super::{
+use render::{
 	shaders,
 	Graphics,
 	Transform,
@@ -25,26 +25,24 @@ struct Params {
 }
 
 
-pub struct BaseDrawer {
+pub struct LineDrawer {
 	pub batch: Batch,
 }
 
-impl BaseDrawer {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> BaseDrawer {
+impl LineDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> LineDrawer {
 		let vertices = [
-			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
+			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 0.0 ]),
+			Vertex::new([ 0.0, 0.0, 1.0 ], [ 0.0, 0.0 ]),
 		];
 
 		let mesh  = graphics.device.create_mesh(vertices);
-		let slice = mesh.to_slice(gfx::TriangleStrip);
+		let slice = mesh.to_slice(gfx::Line);
 
 		let program = graphics.device
 			.link_program(
-				shaders::vertex::BASE.clone(),
-				shaders::fragment::BASE.clone()
+				shaders::vertex::LINE.clone(),
+				shaders::fragment::SIMPLE.clone()
 			)
 			.unwrap_or_else(|error| fail!("error linking program: {}", error));
 
@@ -57,7 +55,7 @@ impl BaseDrawer {
 			)
 			.unwrap();
 
-		BaseDrawer {
+		LineDrawer {
 			batch: batch,
 		}
 	}
