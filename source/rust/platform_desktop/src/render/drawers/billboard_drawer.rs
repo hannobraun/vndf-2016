@@ -37,10 +37,7 @@ pub struct BillboardDrawer {
 }
 
 impl Drawer<Billboard> for BillboardDrawer {
-	fn new(
-		graphics  : &mut Graphics,
-		draw_state: &DrawState,
-	) -> BillboardDrawer {
+	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BillboardDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
