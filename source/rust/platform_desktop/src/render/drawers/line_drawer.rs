@@ -61,12 +61,7 @@ impl Drawer<Line> for LineDrawer {
 		}
 	}
 
-	fn draw(
-		&self,
-		graphics: &mut Graphics,
-		frame   : &Frame,
-		line    : &Line,
-	) {
+	fn draw(&self, graphics: &mut Graphics, frame: &Frame, line: &Line) {
 		let params = Params {
 			center   : line.center.into_fixed(),
 			position : line.position.into_fixed(),
