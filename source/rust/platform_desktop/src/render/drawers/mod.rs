@@ -10,7 +10,10 @@ pub use self::line_drawer::{
 	Line,
 	LineDrawer,
 };
-pub use self::nav_disc_drawer::NavDiscDrawer;
+pub use self::nav_disc_drawer::{
+	NavDisc,
+	NavDiscDrawer,
+};
 pub use self::planet_drawer::PlanetDrawer;
 
 

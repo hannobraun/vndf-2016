@@ -63,16 +63,15 @@ impl NavDiscDrawer {
 
 	pub fn draw(
 		&self,
-		graphics : &mut Graphics,
-		frame    : &Frame,
-		radius   : f32,
-		transform: &Transform,
+		graphics: &mut Graphics,
+		frame   : &Frame,
+		nav_disc: &NavDisc,
 	) {
 		graphics.draw(
 			&self.batch,
 			&Params {
-				radius   : radius,
-				transform: transform.into_fixed()
+				radius   : nav_disc.radius,
+				transform: nav_disc.transform.into_fixed()
 			},
 			frame,
 		);
@@ -81,4 +80,10 @@ impl NavDiscDrawer {
 		// additional planes. I tried it and the result was extreme visual
 		// overload. I'll try to make do with the one ring for now.
 	}
+}
+
+
+pub struct NavDisc {
+	pub radius   : f32,
+	pub transform: Transform,
 }

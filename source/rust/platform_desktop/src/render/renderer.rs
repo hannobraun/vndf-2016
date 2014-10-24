@@ -37,6 +37,7 @@ use render::drawers::{
 	BillboardDrawer,
 	Line,
 	LineDrawer,
+	NavDisc,
 	NavDiscDrawer,
 	PlanetDrawer,
 };
@@ -322,8 +323,10 @@ impl Renderer {
 		self.nav_disc_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
-			radius,
-			&transform,
+			&NavDisc {
+				radius   : radius,
+				transform: transform,
+			},
 		);
 	}
 
