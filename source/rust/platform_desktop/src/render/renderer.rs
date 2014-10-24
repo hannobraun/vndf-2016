@@ -30,7 +30,11 @@ use platform::{
 	Frame,
 	Input,
 };
-use render::Drawer;
+use render::{
+	Drawer,
+	Graphics,
+	Transform,
+};
 use render::drawers::{
 	Base,
 	BaseDrawer,
@@ -45,10 +49,6 @@ use render::drawers::{
 };
 use window::Window;
 
-use super::{
-	Graphics,
-	Transform,
-};
 use super::texture::Texture;
 
 
