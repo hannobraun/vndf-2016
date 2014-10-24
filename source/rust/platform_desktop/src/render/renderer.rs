@@ -226,7 +226,7 @@ impl Renderer {
 			}
 		);
 
-		self.draw_line_to_disc(&center, &position, transform);
+		self.push_line_to_disc(&center, &position, transform);
 	}
 
 	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
@@ -259,7 +259,7 @@ impl Renderer {
 		);
 
 		if !center.approx_eq_eps(&position, &50.0) {
-			self.draw_line_to_disc(&center, &position, &view_projection);
+			self.push_line_to_disc(&center, &position, &view_projection);
 		}
 
 		let text_offset = texture.size.div_s(2.0);
@@ -438,7 +438,7 @@ impl Renderer {
 		}
 	}
 
-	fn draw_line_to_disc(
+	fn push_line_to_disc(
 		&mut self,
 		center   : &Vector3<f32>,
 		position : &Vector3<f32>,
