@@ -39,6 +39,7 @@ use render::drawers::{
 	LineDrawer,
 	NavDisc,
 	NavDiscDrawer,
+	Planet,
 	PlanetDrawer,
 };
 use window::Window;
@@ -188,11 +189,13 @@ impl Renderer {
 		self.planet_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
-			position,
-			planet.radius as f32,
-			planet.color,
-			projection,
-			camera,
+			&Planet {
+				position  : position,
+				radius    : planet.radius as f32,
+				color     : planet.color,
+				projection: *projection,
+				camera    : *camera,
+			}
 		);
 
 		self.draw_line_to_disc(&center, &position, transform);

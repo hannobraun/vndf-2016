@@ -14,7 +14,10 @@ pub use self::nav_disc_drawer::{
 	NavDisc,
 	NavDiscDrawer,
 };
-pub use self::planet_drawer::PlanetDrawer;
+pub use self::planet_drawer::{
+	Planet,
+	PlanetDrawer,
+};
 
 
 mod base_drawer;
