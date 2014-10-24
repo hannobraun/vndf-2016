@@ -34,12 +34,15 @@ struct Params {
 }
 
 
-pub struct Planet {
+pub struct PlanetDrawer {
 	batch : Batch,
 }
 
-impl Planet {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Planet {
+impl PlanetDrawer {
+	pub fn new(
+		graphics  : &mut Graphics,
+		draw_state: &gfx::DrawState
+	) -> PlanetDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -66,7 +69,7 @@ impl Planet {
 			)
 			.unwrap();
 
-		Planet {
+		PlanetDrawer {
 			batch : batch,
 		}
 	}

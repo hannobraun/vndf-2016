@@ -39,7 +39,7 @@ use super::{
 use super::base::Base;
 use super::billboard::Billboard;
 use super::line::Line;
-use super::planet::Planet;
+use super::planet::PlanetDrawer;
 use super::rings::Rings;
 use super::texture::Texture;
 
@@ -50,11 +50,11 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	base     : Base,
-	billboard: Billboard,
-	line     : Line,
-	planet   : Planet,
-	rings    : Rings,
+	base         : Base,
+	billboard    : Billboard,
+	line         : Line,
+	planet_drawer: PlanetDrawer,
+	rings        : Rings,
 
 	glyphs        : HashMap<char, Glyph>,
 	glyph_textures: HashMap<char, Texture>,
@@ -72,11 +72,11 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let base      = Base::new(&mut graphics, &draw_state);
-		let billboard = Billboard::new(&mut graphics, &draw_state);
-		let line      = Line::new(&mut graphics, &draw_state);
-		let planet    = Planet::new(&mut graphics, &draw_state);
-		let rings     = Rings::new(&mut graphics, &draw_state);
+		let base          = Base::new(&mut graphics, &draw_state);
+		let billboard     = Billboard::new(&mut graphics, &draw_state);
+		let line          = Line::new(&mut graphics, &draw_state);
+		let planet_drawer = PlanetDrawer::new(&mut graphics, &draw_state);
+		let rings         = Rings::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();
@@ -101,11 +101,11 @@ impl Renderer {
 
 			frame: frame,
 
-			base     : base,
-			billboard: billboard,
-			line     : line,
-			planet   : planet,
-			rings    : rings,
+			base         : base,
+			billboard    : billboard,
+			line         : line,
+			planet_drawer: planet_drawer,
+			rings        : rings,
 
 			glyphs        : glyphs,
 			glyph_textures: glyph_textures,
@@ -179,7 +179,7 @@ impl Renderer {
 			planet.position.z as f32,
 		);
 
-		self.planet.draw(
+		self.planet_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
 			position,
