@@ -5,6 +5,7 @@ use cgmath::{
 use gfx::{
 	mod,
 	DeviceHelper,
+	DrawState,
 	Frame,
 	ToSlice,
 };
@@ -31,7 +32,7 @@ pub struct BaseDrawer {
 }
 
 impl Drawer<Base> for BaseDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> BaseDrawer {
+	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BaseDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
