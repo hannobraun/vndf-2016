@@ -37,7 +37,7 @@ use super::{
 	Transform,
 };
 use super::base::Base;
-use super::billboard::Billboard;
+use super::billboard::BillboardDrawer;
 use super::line::Line;
 use super::planet::PlanetDrawer;
 use super::rings::Rings;
@@ -50,11 +50,11 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	base         : Base,
-	billboard    : Billboard,
-	line         : Line,
-	planet_drawer: PlanetDrawer,
-	rings        : Rings,
+	base            : Base,
+	billboard_drawer: BillboardDrawer,
+	line            : Line,
+	planet_drawer   : PlanetDrawer,
+	rings           : Rings,
 
 	glyphs        : HashMap<char, Glyph>,
 	glyph_textures: HashMap<char, Texture>,
@@ -72,11 +72,11 @@ impl Renderer {
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
 
-		let base          = Base::new(&mut graphics, &draw_state);
-		let billboard     = Billboard::new(&mut graphics, &draw_state);
-		let line          = Line::new(&mut graphics, &draw_state);
-		let planet_drawer = PlanetDrawer::new(&mut graphics, &draw_state);
-		let rings         = Rings::new(&mut graphics, &draw_state);
+		let base             = Base::new(&mut graphics, &draw_state);
+		let billboard_drawer = BillboardDrawer::new(&mut graphics, &draw_state);
+		let line             = Line::new(&mut graphics, &draw_state);
+		let planet_drawer    = PlanetDrawer::new(&mut graphics, &draw_state);
+		let rings            = Rings::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();
@@ -101,11 +101,11 @@ impl Renderer {
 
 			frame: frame,
 
-			base         : base,
-			billboard    : billboard,
-			line         : line,
-			planet_drawer: planet_drawer,
-			rings        : rings,
+			base            : base,
+			billboard_drawer: billboard_drawer,
+			line            : line,
+			planet_drawer   : planet_drawer,
+			rings           : rings,
 
 			glyphs        : glyphs,
 			glyph_textures: glyph_textures,
@@ -209,7 +209,7 @@ impl Renderer {
 			body.position.z as f32,
 		);
 
-		self.billboard.draw(
+		self.billboard_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
 			&position,
@@ -379,7 +379,7 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				self.billboard.draw(
+				self.billboard_drawer.draw(
 					&mut self.graphics,
 					&self.frame,
 					position,

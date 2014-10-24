@@ -30,15 +30,15 @@ struct Params {
 }
 
 
-pub struct Billboard {
+pub struct BillboardDrawer {
 	pub batch: Batch,
 }
 
-impl Billboard {
+impl BillboardDrawer {
 	pub fn new(
 		graphics  : &mut Graphics,
 		draw_state: &gfx::DrawState,
-	) -> Billboard {
+	) -> BillboardDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -65,7 +65,7 @@ impl Billboard {
 			)
 			.unwrap();
 
-		Billboard {
+		BillboardDrawer {
 			batch: batch,
 		}
 	}
