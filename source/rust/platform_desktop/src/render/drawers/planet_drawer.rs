@@ -75,12 +75,7 @@ impl Drawer<Planet> for PlanetDrawer {
 		}
 	}
 
-	fn draw(
-		&self,
-		graphics: &mut Graphics,
-		frame   : &Frame,
-		planet  : &Planet,
-	) {
+	fn draw(&self, graphics: &mut Graphics, frame: &Frame, planet: &Planet) {
 		let view = planet.camera.to_transform();
 
 		let camera_right_world =
