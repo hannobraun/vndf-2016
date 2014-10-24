@@ -68,6 +68,7 @@ pub struct Renderer {
 	glyph_textures: HashMap<char, Texture>,
 	image_textures: HashMap<String, Texture>,
 
+	bases: Vec<Base>,
 }
 
 impl Renderer {
@@ -124,10 +125,13 @@ impl Renderer {
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
+			bases: Vec::new(),
 		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
+		self.bases.clear();
+
 		let projection      = self.perspective();
 		let view_projection = projection.mul(&frame.camera.to_transform());
 
@@ -167,6 +171,14 @@ impl Renderer {
 		}
 
 		self.draw_rings(view_projection, &frame.camera);
+
+		for base in self.bases.iter() {
+			self.base_drawer.draw(
+				&mut self.graphics,
+				&self.frame,
+				base,
+			);
+		}
 
 		self.draw_ui_overlay(frame.input);
 
@@ -432,15 +444,11 @@ impl Renderer {
 			}
 		);
 
-		self.base_drawer.draw(
-			&mut self.graphics,
-			&self.frame,
-			&Base {
-				center   : *center,
-				position : *position,
-				transform: *transform,
-			},
-		);
+		self.bases.push(Base {
+			center   : *center,
+			position : *position,
+			transform: *transform,
+		});
 	}
 
 	fn ortho(&self) -> Transform {
