@@ -69,6 +69,7 @@ pub struct Renderer {
 	image_textures: HashMap<String, Texture>,
 
 	bases: Vec<Base>,
+	lines: Vec<Line>,
 }
 
 impl Renderer {
@@ -126,11 +127,13 @@ impl Renderer {
 			image_textures: image_textures,
 
 			bases: Vec::new(),
+			lines: Vec::new(),
 		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
 		self.bases.clear();
+		self.lines.clear();
 
 		let projection      = self.perspective();
 		let view_projection = projection.mul(&frame.camera.to_transform());
@@ -177,6 +180,13 @@ impl Renderer {
 				&mut self.graphics,
 				&self.frame,
 				base,
+			);
+		}
+		for line in self.lines.iter() {
+			self.line_drawer.draw(
+				&mut self.graphics,
+				&self.frame,
+				line,
 			);
 		}
 
@@ -434,15 +444,11 @@ impl Renderer {
 		position : &Vector3<f32>,
 		transform: &Transform
 	) {
-		self.line_drawer.draw(
-			&mut self.graphics,
-			&self.frame,
-			&Line {
-				center   : *center,
-				position : *position,
-				transform: *transform,
-			}
-		);
+		self.lines.push(Line {
+			center   : *center,
+			position : *position,
+			transform: *transform,
+		});
 
 		self.bases.push(Base {
 			center   : *center,
