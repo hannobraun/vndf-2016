@@ -62,12 +62,7 @@ impl Drawer<NavDisc> for NavDiscDrawer {
 		}
 	}
 
-	fn draw(
-		&self,
-		graphics: &mut Graphics,
-		frame   : &Frame,
-		nav_disc: &NavDisc,
-	) {
+	fn draw(&self, graphics: &mut Graphics, frame: &Frame, nav_disc: &NavDisc) {
 		graphics.draw(
 			&self.batch,
 			&Params {
