@@ -37,8 +37,8 @@ use render::drawers::{
 	BillboardDrawer,
 	Line,
 	LineDrawer,
-	PlanetDrawer,
 	NavDiscDrawer,
+	PlanetDrawer,
 };
 use window::Window;
 
