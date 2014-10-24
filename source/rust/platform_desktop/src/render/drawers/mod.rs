@@ -1,4 +1,7 @@
-pub use self::base_drawer::BaseDrawer;
+pub use self::base_drawer::{
+	Base,
+	BaseDrawer,
+};
 pub use self::billboard_drawer::BillboardDrawer;
 pub use self::line_drawer::LineDrawer;
 pub use self::nav_disc_drawer::NavDiscDrawer;

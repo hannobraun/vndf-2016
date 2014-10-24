@@ -31,6 +31,7 @@ use platform::{
 	Input,
 };
 use render::drawers::{
+	Base,
 	BaseDrawer,
 	BillboardDrawer,
 	LineDrawer,
@@ -414,9 +415,11 @@ impl Renderer {
 		self.base_drawer.draw(
 			&mut self.graphics,
 			&self.frame,
-			center,
-			position,
-			transform,
+			&Base {
+				center   : *center,
+				position : *position,
+				transform: *transform,
+			},
 		);
 	}
 
