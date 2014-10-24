@@ -63,12 +63,7 @@ impl Drawer<Base> for BaseDrawer {
 		}
 	}
 
-	fn draw(
-		&self,
-		graphics: &mut Graphics,
-		frame   : &Frame,
-		base    : &Base,
-	) {
+	fn draw(&self, graphics: &mut Graphics, frame: &Frame, base: &Base) {
 		let params = Params {
 			center   : base.center.into_fixed(),
 			position : base.position.into_fixed(),
