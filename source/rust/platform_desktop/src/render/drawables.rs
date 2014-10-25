@@ -25,4 +25,12 @@ impl Drawables {
 			planets   : Vec::new(),
 		}
 	}
+
+	pub fn clear(&mut self) {
+		self.bases.clear();
+		self.billboards.clear();
+		self.lines.clear();
+		self.nav_discs.clear();
+		self.planets.clear();
+	}
 }

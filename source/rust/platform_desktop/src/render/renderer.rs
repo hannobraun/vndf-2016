@@ -131,11 +131,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		self.drawables.bases.clear();
-		self.drawables.billboards.clear();
-		self.drawables.lines.clear();
-		self.drawables.nav_discs.clear();
-		self.drawables.planets.clear();
+		self.drawables.clear();
 
 		let projection      = self.perspective();
 		let view_projection = projection.mul(&frame.camera.to_transform());
