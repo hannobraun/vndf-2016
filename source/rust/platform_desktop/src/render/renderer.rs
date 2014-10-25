@@ -71,6 +71,7 @@ pub struct Renderer {
 	bases     : Vec<Base>,
 	billboards: Vec<Billboard>,
 	lines     : Vec<Line>,
+	nav_discs : Vec<NavDisc>,
 	planets   : Vec<Planet>,
 }
 
@@ -131,6 +132,7 @@ impl Renderer {
 			bases     : Vec::new(),
 			billboards: Vec::new(),
 			lines     : Vec::new(),
+			nav_discs : Vec::new(),
 			planets   : Vec::new(),
 		}
 	}
@@ -139,6 +141,7 @@ impl Renderer {
 		self.bases.clear();
 		self.billboards.clear();
 		self.lines.clear();
+		self.nav_discs.clear();
 		self.planets.clear();
 
 		let projection      = self.perspective();
@@ -179,6 +182,8 @@ impl Renderer {
 			);
 		}
 
+		self.push_nav_disc(view_projection, &frame.camera);
+
 		for planet in self.planets.iter() {
 			self.planet_drawer.draw(
 				&mut self.graphics,
@@ -186,9 +191,13 @@ impl Renderer {
 				planet,
 			);
 		}
-
-		self.draw_nav_disc(view_projection, &frame.camera);
-
+		for nav_disc in self.nav_discs.iter() {
+			self.nav_disc_drawer.draw(
+				&mut self.graphics,
+				&self.frame,
+				nav_disc,
+			);
+		}
 		for base in self.bases.iter() {
 			self.base_drawer.draw(
 				&mut self.graphics,
@@ -301,7 +310,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_nav_disc(&mut self, view_projection: Transform, camera: &Camera) {
+	fn push_nav_disc(&mut self, view_projection: Transform, camera: &Camera) {
 		let camera_center = Vector3::new(
 			camera.center.x as f32,
 			camera.center.y as f32,
@@ -364,14 +373,10 @@ impl Renderer {
 		}
 
 
-		self.nav_disc_drawer.draw(
-			&mut self.graphics,
-			&self.frame,
-			&NavDisc {
-				radius   : radius,
-				transform: transform,
-			},
-		);
+		self.nav_discs.push(NavDisc {
+			radius   : radius,
+			transform: transform,
+		});
 	}
 
 	fn draw_ui_overlay(&mut self, input: Input) {
