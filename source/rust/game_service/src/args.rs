@@ -28,7 +28,7 @@ pub fn parse() -> Option<Args> {
 		optopt("s", "initial-state", "initial game state", args.initial_state.to_string().as_slice()),
 	];
 
-	let usage = usage(format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(), options);
+	let usage = usage(format!("{} [OPTIONS]", args_as_strs[0]).as_slice(), options);
 
 	let matches = match getopts(args_as_strs.as_slice(), options) {
 		Ok(matches) => matches,

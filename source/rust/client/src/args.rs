@@ -38,7 +38,7 @@ pub fn parse() -> Option<Args> {
 	];
 
 	let usage = usage(
-		format!("{} [OPTIONS]", args_as_strs.get(0)).as_slice(),
+		format!("{} [OPTIONS]", args_as_strs[0]).as_slice(),
 		options);
 
 	let matches = match getopts(args_as_strs.tail(), options) {
