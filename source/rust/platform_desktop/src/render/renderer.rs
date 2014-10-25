@@ -68,8 +68,9 @@ pub struct Renderer {
 	glyph_textures: HashMap<char, Texture>,
 	image_textures: HashMap<String, Texture>,
 
-	bases: Vec<Base>,
-	lines: Vec<Line>,
+	bases  : Vec<Base>,
+	lines  : Vec<Line>,
+	planets: Vec<Planet>,
 }
 
 impl Renderer {
@@ -126,14 +127,16 @@ impl Renderer {
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
-			bases: Vec::new(),
-			lines: Vec::new(),
+			bases  : Vec::new(),
+			lines  : Vec::new(),
+			planets: Vec::new(),
 		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
 		self.bases.clear();
 		self.lines.clear();
+		self.planets.clear();
 
 		let projection      = self.perspective();
 		let view_projection = projection.mul(&frame.camera.to_transform());
@@ -149,7 +152,7 @@ impl Renderer {
 		);
 
 		for planet in frame.planets.iter() {
-			self.draw_planet(
+			self.push_planet(
 				planet,
 				&frame.camera,
 				&projection,
@@ -170,6 +173,14 @@ impl Renderer {
 				body,
 				&frame.camera,
 				"images/missile.png"
+			);
+		}
+
+		for planet in self.planets.iter() {
+			self.planet_drawer.draw(
+				&mut self.graphics,
+				&self.frame,
+				planet,
 			);
 		}
 
@@ -196,7 +207,7 @@ impl Renderer {
 		self.window.swap_buffers();
 	}
 
-	fn draw_planet(
+	fn push_planet(
 		&mut self,
 		planet    : &GamePlanet,
 		camera    : &Camera,
@@ -214,17 +225,13 @@ impl Renderer {
 			planet.position.z as f32,
 		);
 
-		self.planet_drawer.draw(
-			&mut self.graphics,
-			&self.frame,
-			&Planet {
-				position  : position,
-				radius    : planet.radius as f32,
-				color     : planet.color,
-				projection: *projection,
-				camera    : *camera,
-			}
-		);
+		self.planets.push(Planet {
+			position  : position,
+			radius    : planet.radius as f32,
+			color     : planet.color,
+			projection: *projection,
+			camera    : *camera,
+		});
 
 		self.push_line_to_disc(&center, &position, transform);
 	}
