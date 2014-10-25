@@ -42,6 +42,8 @@ pub trait Drawer<T> {
 
 
 pub struct Drawables {
+	pub drawers: Drawers,
+
 	pub bases     : Vec<Base>,
 	pub billboards: Vec<Billboard>,
 	pub lines     : Vec<Line>,
@@ -50,8 +52,10 @@ pub struct Drawables {
 }
 
 impl Drawables {
-	pub fn new() -> Drawables {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawables {
 		Drawables {
+			drawers: Drawers::new(graphics, draw_state),
+
 			bases     : Vec::new(),
 			billboards: Vec::new(),
 			lines     : Vec::new(),

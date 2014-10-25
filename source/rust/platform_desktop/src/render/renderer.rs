@@ -39,7 +39,6 @@ use render::drawers::{
 	Billboard,
 	Drawables,
 	Drawer,
-	Drawers,
 	Line,
 	NavDisc,
 	Planet,
@@ -60,7 +59,6 @@ pub struct Renderer {
 	image_textures: HashMap<String, Texture>,
 
 	drawables: Drawables,
-	drawers  : Drawers,
 }
 
 impl Renderer {
@@ -90,7 +88,7 @@ impl Renderer {
 			glyphs.insert(c, glyph);
 		}
 
-		let drawers = Drawers::new(&mut graphics, &draw_state);
+		let drawables = Drawables::new(&mut graphics, &draw_state);
 
 		Renderer {
 			graphics: graphics,
@@ -102,8 +100,7 @@ impl Renderer {
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
-			drawables: Drawables::new(),
-			drawers  : drawers,
+			drawables: drawables,
 		}
 	}
 
@@ -152,35 +149,35 @@ impl Renderer {
 		self.push_ui_overlay(frame.input);
 
 		for planet in self.drawables.planets.iter() {
-			self.drawers.planet_drawer.draw(
+			self.drawables.drawers.planet_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				planet,
 			);
 		}
 		for nav_disc in self.drawables.nav_discs.iter() {
-			self.drawers.nav_disc_drawer.draw(
+			self.drawables.drawers.nav_disc_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				nav_disc,
 			);
 		}
 		for base in self.drawables.bases.iter() {
-			self.drawers.base_drawer.draw(
+			self.drawables.drawers.base_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				base,
 			);
 		}
 		for line in self.drawables.lines.iter() {
-			self.drawers.line_drawer.draw(
+			self.drawables.drawers.line_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				line,
 			);
 		}
 		for billboard in self.drawables.billboards.iter() {
-			self.drawers.billboard_drawer.draw(
+			self.drawables.drawers.billboard_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				billboard,
