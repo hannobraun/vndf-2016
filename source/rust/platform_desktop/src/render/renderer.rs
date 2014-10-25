@@ -183,6 +183,7 @@ impl Renderer {
 		}
 
 		self.push_nav_disc(view_projection, &frame.camera);
+		self.push_ui_overlay(frame.input);
 
 		for planet in self.planets.iter() {
 			self.planet_drawer.draw(
@@ -219,8 +220,6 @@ impl Renderer {
 				billboard,
 			);
 		}
-
-		self.draw_ui_overlay(frame.input);
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();
@@ -379,7 +378,7 @@ impl Renderer {
 		});
 	}
 
-	fn draw_ui_overlay(&mut self, input: Input) {
+	fn push_ui_overlay(&mut self, input: Input) {
 		let projection = self.ortho();
 
 		let right  = self.window.size.x;
