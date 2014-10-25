@@ -1,6 +1,6 @@
 use gfx::{
-	mod,
 	DrawState,
+	Frame,
 };
 
 use render::Graphics;
@@ -37,7 +37,7 @@ mod planet_drawer;
 
 pub trait Drawer<T> {
 	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Self;
-	fn draw(&self, graphics: &mut Graphics, frame: &gfx::Frame, drawable: &T);
+	fn draw(&self, graphics: &mut Graphics, frame: &Frame, drawable: &T);
 }
 
 
