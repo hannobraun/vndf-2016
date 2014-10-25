@@ -68,9 +68,10 @@ pub struct Renderer {
 	glyph_textures: HashMap<char, Texture>,
 	image_textures: HashMap<String, Texture>,
 
-	bases  : Vec<Base>,
-	lines  : Vec<Line>,
-	planets: Vec<Planet>,
+	bases     : Vec<Base>,
+	billboards: Vec<Billboard>,
+	lines     : Vec<Line>,
+	planets   : Vec<Planet>,
 }
 
 impl Renderer {
@@ -127,14 +128,16 @@ impl Renderer {
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
-			bases  : Vec::new(),
-			lines  : Vec::new(),
-			planets: Vec::new(),
+			bases     : Vec::new(),
+			billboards: Vec::new(),
+			lines     : Vec::new(),
+			planets   : Vec::new(),
 		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
 		self.bases.clear();
+		self.billboards.clear();
 		self.lines.clear();
 		self.planets.clear();
 
@@ -198,6 +201,13 @@ impl Renderer {
 				&mut self.graphics,
 				&self.frame,
 				line,
+			);
+		}
+		for billboard in self.billboards.iter() {
+			self.billboard_drawer.draw(
+				&mut self.graphics,
+				&self.frame,
+				billboard,
 			);
 		}
 
@@ -270,7 +280,7 @@ impl Renderer {
 		}
 
 		let text_offset = texture.size.div_s(2.0);
-		self.draw_text(
+		self.push_text(
 			format!("pos: {:i} / {:i} / {:i}",
 				body.position.x as int,
 				body.position.y as int,
@@ -283,7 +293,7 @@ impl Renderer {
 		);
 
 		let text_offset = text_offset - Vector2::new(0.0, 15.0);
-		self.draw_text(
+		self.push_text(
 			format!("vel: {:i} / {:i} / {:i}",
 				body.velocity.x as int,
 				body.velocity.y as int,
@@ -311,7 +321,7 @@ impl Renderer {
 		let radius = transform[3][3] * 0.55;
 
 		let ring_radius = radius * 0.9;
-		self.draw_text(
+		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
 			&Vector2::zero(),
@@ -319,7 +329,7 @@ impl Renderer {
 		);
 
 		let ring_radius = radius * 0.15 + (radius * 0.9 - radius * 0.15) / 2.0;
-		self.draw_text(
+		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
 			&Vector2::zero(),
@@ -327,7 +337,7 @@ impl Renderer {
 		);
 
 		let ring_radius = radius * 0.15;
-		self.draw_text(
+		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
 			&Vector2::zero(),
@@ -349,7 +359,7 @@ impl Renderer {
 		];
 		for &angle in angles.iter() {
 			let rotation: Basis2<f32> = Rotation2::from_angle(Angle::from(deg(angle)));
-			self.draw_text(
+			self.push_text(
 				format!("{}°", angle as u16).as_slice(),
 				&(camera_center + rotation.rotate_vector(&Vector2::new(radius, 0.0)).extend(0.0)),
 				&Vector2::zero(),
@@ -374,32 +384,32 @@ impl Renderer {
 		let right  = self.window.size.x;
 
 
-		self.draw_text(
+		self.push_text(
 			"Move camera with WASD; change zoom with R and F",
 			&Vector3::zero(),
 			&Vector2::new(20.0, 60.0),
 			&projection,
 		);
-		self.draw_text(
+		self.push_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
 			&Vector3::zero(),
 			&Vector2::new(20.0, 40.0),
 			&projection,
 		);
-		self.draw_text(
+		self.push_text(
 			"Shoot missiles with Enter",
 			&Vector3::zero(),
 			&Vector2::new(20.0, 20.0),
 			&projection,
 		);
 
-		self.draw_text(
+		self.push_text(
 			format!("{}", input.attitude).as_slice(),
 			&Vector3::zero(),
 			&Vector2::new(right - 100.0, 40.0),
 			&projection,
 		);
-		self.draw_text(
+		self.push_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
 			&Vector3::zero(),
 			&Vector2::new(right - 100.0, 20.0),
@@ -407,7 +417,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_text(
+	fn push_text(
 		&mut self,
 		text         : &str,
 		position     : &Vector3<f32>,
@@ -428,17 +438,13 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				self.billboard_drawer.draw(
-					&mut self.graphics,
-					&self.frame,
-					&Billboard {
-						position   : *position,
-						offset     : screen_offset + total_offset,
-						texture    : texture,
-						transform  : *transform,
-						screen_size: self.window.size,
-					},
-				);
+				self.billboards.push(Billboard {
+					position   : *position,
+					offset     : screen_offset + total_offset,
+					texture    : texture,
+					transform  : *transform,
+					screen_size: self.window.size,
+				});
 			}
 
 			total_advance = total_advance + advance;
