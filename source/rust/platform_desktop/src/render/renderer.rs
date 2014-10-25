@@ -128,7 +128,6 @@ impl Renderer {
 				&view_projection
 			);
 		}
-
 		for body in frame.ships.iter() {
 			self.push_craft(
 				body,
@@ -136,7 +135,6 @@ impl Renderer {
 				"images/spaceship.png"
 			);
 		}
-
 		for body in frame.missiles.iter() {
 			self.push_craft(
 				body,
@@ -144,7 +142,6 @@ impl Renderer {
 				"images/missile.png"
 			);
 		}
-
 		self.push_nav_disc(view_projection, &frame.camera);
 		self.push_ui_overlay(frame.input);
 
