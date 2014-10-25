@@ -148,41 +148,7 @@ impl Renderer {
 		self.push_nav_disc(view_projection, &frame.camera);
 		self.push_ui_overlay(frame.input);
 
-		for planet in self.drawables.planets.iter() {
-			self.drawables.drawers.planet_drawer.draw(
-				&mut self.graphics,
-				&self.frame,
-				planet,
-			);
-		}
-		for nav_disc in self.drawables.nav_discs.iter() {
-			self.drawables.drawers.nav_disc_drawer.draw(
-				&mut self.graphics,
-				&self.frame,
-				nav_disc,
-			);
-		}
-		for base in self.drawables.bases.iter() {
-			self.drawables.drawers.base_drawer.draw(
-				&mut self.graphics,
-				&self.frame,
-				base,
-			);
-		}
-		for line in self.drawables.lines.iter() {
-			self.drawables.drawers.line_drawer.draw(
-				&mut self.graphics,
-				&self.frame,
-				line,
-			);
-		}
-		for billboard in self.drawables.billboards.iter() {
-			self.drawables.drawers.billboard_drawer.draw(
-				&mut self.graphics,
-				&self.frame,
-				billboard,
-			);
-		}
+		self.drawables.draw(&mut self.graphics, &self.frame);
 
 		self.graphics.end_frame();
 		self.window.swap_buffers();

@@ -87,6 +87,44 @@ impl Drawables {
 	pub fn push_planet(&mut self, planet: Planet) {
 		self.planets.push(planet);
 	}
+
+	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame) {
+		for planet in self.planets.iter() {
+			self.drawers.planet_drawer.draw(
+				graphics,
+				frame,
+				planet,
+			);
+		}
+		for nav_disc in self.nav_discs.iter() {
+			self.drawers.nav_disc_drawer.draw(
+				graphics,
+				frame,
+				nav_disc,
+			);
+		}
+		for base in self.bases.iter() {
+			self.drawers.base_drawer.draw(
+				graphics,
+				frame,
+				base,
+			);
+		}
+		for line in self.lines.iter() {
+			self.drawers.line_drawer.draw(
+				graphics,
+				frame,
+				line,
+			);
+		}
+		for billboard in self.billboards.iter() {
+			self.drawers.billboard_drawer.draw(
+				graphics,
+				frame,
+				billboard,
+			);
+		}
+	}
 }
 
 
