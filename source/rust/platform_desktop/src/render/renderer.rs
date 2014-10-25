@@ -232,7 +232,7 @@ impl Renderer {
 			planet.position.z as f32,
 		);
 
-		self.drawables.planets.push(Planet {
+		self.drawables.push_planet(Planet {
 			position  : position,
 			radius    : planet.radius as f32,
 			color     : planet.color,
@@ -260,7 +260,7 @@ impl Renderer {
 			body.position.z as f32,
 		);
 
-		self.drawables.billboards.push(Billboard {
+		self.drawables.push_billboard(Billboard {
 			position   : position,
 			offset     : Vector2::zero(),
 			texture    : texture,
@@ -361,7 +361,7 @@ impl Renderer {
 		}
 
 
-		self.drawables.nav_discs.push(NavDisc {
+		self.drawables.push_nav_disc(NavDisc {
 			radius   : radius,
 			transform: transform,
 		});
@@ -427,7 +427,7 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				self.drawables.billboards.push(Billboard {
+				self.drawables.push_billboard(Billboard {
 					position   : *position,
 					offset     : screen_offset + total_offset,
 					texture    : texture,
@@ -446,13 +446,13 @@ impl Renderer {
 		position : &Vector3<f32>,
 		transform: &Transform
 	) {
-		self.drawables.lines.push(Line {
+		self.drawables.push_line(Line {
 			center   : *center,
 			position : *position,
 			transform: *transform,
 		});
 
-		self.drawables.bases.push(Base {
+		self.drawables.push_base(Base {
 			center   : *center,
 			position : *position,
 			transform: *transform,

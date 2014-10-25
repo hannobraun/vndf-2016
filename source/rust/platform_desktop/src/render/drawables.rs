@@ -33,4 +33,24 @@ impl Drawables {
 		self.nav_discs.clear();
 		self.planets.clear();
 	}
+
+	pub fn push_base(&mut self, base: Base) {
+		self.bases.push(base);
+	}
+
+	pub fn push_billboard(&mut self, billboard: Billboard) {
+		self.billboards.push(billboard);
+	}
+
+	pub fn push_line(&mut self, line: Line) {
+		self.lines.push(line);
+	}
+
+	pub fn push_nav_disc(&mut self, nav_disc: NavDisc) {
+		self.nav_discs.push(nav_disc);
+	}
+
+	pub fn push_planet(&mut self, planet: Planet) {
+		self.planets.push(planet);
+	}
 }
