@@ -184,7 +184,7 @@ impl Renderer {
 			);
 		}
 
-		self.draw_rings(view_projection, &frame.camera);
+		self.draw_nav_disc(view_projection, &frame.camera);
 
 		for base in self.bases.iter() {
 			self.base_drawer.draw(
@@ -295,7 +295,7 @@ impl Renderer {
 		);
 	}
 
-	fn draw_rings(&mut self, view_projection: Transform, camera: &Camera) {
+	fn draw_nav_disc(&mut self, view_projection: Transform, camera: &Camera) {
 		let camera_center = Vector3::new(
 			camera.center.x as f32,
 			camera.center.y as f32,
