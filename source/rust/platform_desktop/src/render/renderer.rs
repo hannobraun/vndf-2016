@@ -38,7 +38,6 @@ use render::drawers::{
 	Base,
 	Billboard,
 	Drawables,
-	Drawer,
 	Line,
 	NavDisc,
 	Planet,

@@ -17,8 +17,6 @@ use render::{
 	Vertex,
 };
 
-use super::Drawer;
-
 
 #[shader_param(Batch)]
 struct Params {
@@ -32,8 +30,8 @@ pub struct LineDrawer {
 	pub batch: Batch,
 }
 
-impl Drawer<Line> for LineDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> LineDrawer {
+impl LineDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> LineDrawer {
 		let vertices = [
 			Vertex::new([ 0.0, 0.0, 0.0 ], [ 0.0, 0.0 ]),
 			Vertex::new([ 0.0, 0.0, 1.0 ], [ 0.0, 0.0 ]),
@@ -63,7 +61,7 @@ impl Drawer<Line> for LineDrawer {
 		}
 	}
 
-	fn draw(&self, graphics: &mut Graphics, frame: &Frame, line: &Line) {
+	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, line: &Line) {
 		let params = Params {
 			center   : line.center.into_fixed(),
 			position : line.position.into_fixed(),

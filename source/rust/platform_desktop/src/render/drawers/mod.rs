@@ -35,12 +35,6 @@ mod nav_disc_drawer;
 mod planet_drawer;
 
 
-pub trait Drawer<T> {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Self;
-	fn draw(&self, graphics: &mut Graphics, frame: &Frame, drawable: &T);
-}
-
-
 pub struct Drawables {
 	pub drawers: Drawers,
 
@@ -139,11 +133,11 @@ pub struct Drawers {
 impl Drawers {
 	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawers {
 		Drawers {
-			base_drawer     : Drawer::new(graphics, draw_state),
-			billboard_drawer: Drawer::new(graphics, draw_state),
-			line_drawer     : Drawer::new(graphics, draw_state),
-			planet_drawer   : Drawer::new(graphics, draw_state),
-			nav_disc_drawer : Drawer::new(graphics, draw_state),
+			base_drawer     : BaseDrawer::new(graphics, draw_state),
+			billboard_drawer: BillboardDrawer::new(graphics, draw_state),
+			line_drawer     : LineDrawer::new(graphics, draw_state),
+			planet_drawer   : PlanetDrawer::new(graphics, draw_state),
+			nav_disc_drawer : NavDiscDrawer::new(graphics, draw_state),
 		}
 	}
 }

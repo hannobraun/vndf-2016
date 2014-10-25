@@ -19,8 +19,6 @@ use render::{
 };
 use render::texture::Texture;
 
-use super::Drawer;
-
 
 #[shader_param(Batch)]
 struct Params {
@@ -37,8 +35,8 @@ pub struct BillboardDrawer {
 	pub batch: Batch,
 }
 
-impl Drawer<Billboard> for BillboardDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BillboardDrawer {
+impl BillboardDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BillboardDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -70,7 +68,7 @@ impl Drawer<Billboard> for BillboardDrawer {
 		}
 	}
 
-	fn draw(
+	pub fn draw(
 		&self,
 		graphics : &mut Graphics,
 		frame    : &Frame,

@@ -14,8 +14,6 @@ use render::{
 	Vertex,
 };
 
-use super::Drawer;
-
 
 #[shader_param(Batch)]
 struct Params {
@@ -28,8 +26,8 @@ pub struct NavDiscDrawer {
 	batch: Batch,
 }
 
-impl Drawer<NavDisc> for NavDiscDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> NavDiscDrawer {
+impl NavDiscDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> NavDiscDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -61,7 +59,7 @@ impl Drawer<NavDisc> for NavDiscDrawer {
 		}
 	}
 
-	fn draw(&self, graphics: &mut Graphics, frame: &Frame, nav_disc: &NavDisc) {
+	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, nav_disc: &NavDisc) {
 		graphics.draw(
 			&self.batch,
 			&Params {

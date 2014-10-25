@@ -20,8 +20,6 @@ use render::{
 	Vertex,
 };
 
-use super::Drawer;
-
 
 #[shader_param(Batch)]
 struct Params {
@@ -41,8 +39,8 @@ pub struct PlanetDrawer {
 	batch : Batch,
 }
 
-impl Drawer<Planet> for PlanetDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> PlanetDrawer {
+impl PlanetDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> PlanetDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -74,7 +72,7 @@ impl Drawer<Planet> for PlanetDrawer {
 		}
 	}
 
-	fn draw(&self, graphics: &mut Graphics, frame: &Frame, planet: &Planet) {
+	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, planet: &Planet) {
 		let view = planet.camera.to_transform();
 
 		let camera_right_world =

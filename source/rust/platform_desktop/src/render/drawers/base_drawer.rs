@@ -17,8 +17,6 @@ use render::{
 	Vertex,
 };
 
-use super::Drawer;
-
 
 #[shader_param(Batch)]
 struct Params {
@@ -32,8 +30,8 @@ pub struct BaseDrawer {
 	pub batch: Batch,
 }
 
-impl Drawer<Base> for BaseDrawer {
-	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BaseDrawer {
+impl BaseDrawer {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BaseDrawer {
 		let vertices = [
 			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
 			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
@@ -65,7 +63,7 @@ impl Drawer<Base> for BaseDrawer {
 		}
 	}
 
-	fn draw(&self, graphics: &mut Graphics, frame: &Frame, base: &Base) {
+	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, base: &Base) {
 		let params = Params {
 			center   : base.center.into_fixed(),
 			position : base.position.into_fixed(),
