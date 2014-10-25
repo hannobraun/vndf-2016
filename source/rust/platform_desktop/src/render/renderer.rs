@@ -35,6 +35,7 @@ use render::{
 	Graphics,
 	Transform,
 };
+use render::drawables::Drawables;
 use render::drawers::{
 	Base,
 	BaseDrawer,
@@ -68,11 +69,7 @@ pub struct Renderer {
 	glyph_textures: HashMap<char, Texture>,
 	image_textures: HashMap<String, Texture>,
 
-	bases     : Vec<Base>,
-	billboards: Vec<Billboard>,
-	lines     : Vec<Line>,
-	nav_discs : Vec<NavDisc>,
-	planets   : Vec<Planet>,
+	drawables: Drawables,
 }
 
 impl Renderer {
@@ -129,20 +126,16 @@ impl Renderer {
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
-			bases     : Vec::new(),
-			billboards: Vec::new(),
-			lines     : Vec::new(),
-			nav_discs : Vec::new(),
-			planets   : Vec::new(),
+			drawables: Drawables::new(),
 		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) {
-		self.bases.clear();
-		self.billboards.clear();
-		self.lines.clear();
-		self.nav_discs.clear();
-		self.planets.clear();
+		self.drawables.bases.clear();
+		self.drawables.billboards.clear();
+		self.drawables.lines.clear();
+		self.drawables.nav_discs.clear();
+		self.drawables.planets.clear();
 
 		let projection      = self.perspective();
 		let view_projection = projection.mul(&frame.camera.to_transform());
@@ -185,35 +178,35 @@ impl Renderer {
 		self.push_nav_disc(view_projection, &frame.camera);
 		self.push_ui_overlay(frame.input);
 
-		for planet in self.planets.iter() {
+		for planet in self.drawables.planets.iter() {
 			self.planet_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				planet,
 			);
 		}
-		for nav_disc in self.nav_discs.iter() {
+		for nav_disc in self.drawables.nav_discs.iter() {
 			self.nav_disc_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				nav_disc,
 			);
 		}
-		for base in self.bases.iter() {
+		for base in self.drawables.bases.iter() {
 			self.base_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				base,
 			);
 		}
-		for line in self.lines.iter() {
+		for line in self.drawables.lines.iter() {
 			self.line_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				line,
 			);
 		}
-		for billboard in self.billboards.iter() {
+		for billboard in self.drawables.billboards.iter() {
 			self.billboard_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
@@ -243,7 +236,7 @@ impl Renderer {
 			planet.position.z as f32,
 		);
 
-		self.planets.push(Planet {
+		self.drawables.planets.push(Planet {
 			position  : position,
 			radius    : planet.radius as f32,
 			color     : planet.color,
@@ -271,7 +264,7 @@ impl Renderer {
 			body.position.z as f32,
 		);
 
-		self.billboards.push(Billboard {
+		self.drawables.billboards.push(Billboard {
 			position   : position,
 			offset     : Vector2::zero(),
 			texture    : texture,
@@ -372,7 +365,7 @@ impl Renderer {
 		}
 
 
-		self.nav_discs.push(NavDisc {
+		self.drawables.nav_discs.push(NavDisc {
 			radius   : radius,
 			transform: transform,
 		});
@@ -438,7 +431,7 @@ impl Renderer {
 				let offset_to_edge = texture.size.mul_s(0.5);
 				let total_offset   = offset + offset_to_edge + total_advance;
 
-				self.billboards.push(Billboard {
+				self.drawables.billboards.push(Billboard {
 					position   : *position,
 					offset     : screen_offset + total_offset,
 					texture    : texture,
@@ -457,13 +450,13 @@ impl Renderer {
 		position : &Vector3<f32>,
 		transform: &Transform
 	) {
-		self.lines.push(Line {
+		self.drawables.lines.push(Line {
 			center   : *center,
 			position : *position,
 			transform: *transform,
 		});
 
-		self.bases.push(Base {
+		self.drawables.bases.push(Base {
 			center   : *center,
 			position : *position,
 			transform: *transform,
