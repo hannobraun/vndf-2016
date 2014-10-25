@@ -35,88 +35,82 @@ mod nav_disc_drawer;
 mod planet_drawer;
 
 
-pub struct Drawables {
-	pub drawers: Drawers,
+pub enum Drawable {
+	IsBase(Base),
+	IsBillboard(Billboard),
+	IsLine(Line),
+	IsNavDisc(NavDisc),
+	IsPlanet(Planet),
+}
 
-	pub bases     : Vec<Base>,
-	pub billboards: Vec<Billboard>,
-	pub lines     : Vec<Line>,
-	pub nav_discs : Vec<NavDisc>,
-	pub planets   : Vec<Planet>,
+
+pub struct Drawables {
+	pub drawers  : Drawers,
+	pub drawables: Vec<Drawable>,
 }
 
 impl Drawables {
 	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawables {
 		Drawables {
-			drawers: Drawers::new(graphics, draw_state),
-
-			bases     : Vec::new(),
-			billboards: Vec::new(),
-			lines     : Vec::new(),
-			nav_discs : Vec::new(),
-			planets   : Vec::new(),
+			drawers  : Drawers::new(graphics, draw_state),
+			drawables: Vec::new(),
 		}
 	}
 
 	pub fn clear(&mut self) {
-		self.bases.clear();
-		self.billboards.clear();
-		self.lines.clear();
-		self.nav_discs.clear();
-		self.planets.clear();
+		self.drawables.clear();
 	}
 
 	pub fn push_base(&mut self, base: Base) {
-		self.bases.push(base);
+		self.drawables.push(IsBase(base));
 	}
 	pub fn push_billboard(&mut self, billboard: Billboard) {
-		self.billboards.push(billboard);
+		self.drawables.push(IsBillboard(billboard));
 	}
 	pub fn push_line(&mut self, line: Line) {
-		self.lines.push(line);
+		self.drawables.push(IsLine(line));
 	}
 	pub fn push_nav_disc(&mut self, nav_disc: NavDisc) {
-		self.nav_discs.push(nav_disc);
+		self.drawables.push(IsNavDisc(nav_disc));
 	}
 	pub fn push_planet(&mut self, planet: Planet) {
-		self.planets.push(planet);
+		self.drawables.push(IsPlanet(planet));
 	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame) {
-		for planet in self.planets.iter() {
-			self.drawers.planet_drawer.draw(
-				graphics,
-				frame,
-				planet,
-			);
-		}
-		for nav_disc in self.nav_discs.iter() {
-			self.drawers.nav_disc_drawer.draw(
-				graphics,
-				frame,
-				nav_disc,
-			);
-		}
-		for base in self.bases.iter() {
-			self.drawers.base_drawer.draw(
-				graphics,
-				frame,
-				base,
-			);
-		}
-		for line in self.lines.iter() {
-			self.drawers.line_drawer.draw(
-				graphics,
-				frame,
-				line,
-			);
-		}
-		for billboard in self.billboards.iter() {
-			self.drawers.billboard_drawer.draw(
-				graphics,
-				frame,
-				billboard,
-			);
+		for drawable in self.drawables.iter() {
+			match *drawable {
+				IsBase(base) =>
+					self.drawers.base_drawer.draw(
+						graphics,
+						frame,
+						&base,
+					),
+				IsBillboard(billboard) =>
+					self.drawers.billboard_drawer.draw(
+						graphics,
+						frame,
+						&billboard,
+					),
+				IsLine(line) =>
+					self.drawers.line_drawer.draw(
+						graphics,
+						frame,
+						&line,
+					),
+				IsNavDisc(nav_disc) =>
+					self.drawers.nav_disc_drawer.draw(
+						graphics,
+						frame,
+						&nav_disc,
+					),
+				IsPlanet(planet) =>
+					self.drawers.planet_drawer.draw(
+						graphics,
+						frame,
+						&planet,
+					),
+			}
 		}
 	}
 }
