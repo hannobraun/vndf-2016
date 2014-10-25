@@ -164,7 +164,7 @@ impl Renderer {
 		}
 
 		for body in frame.ships.iter() {
-			self.draw_craft(
+			self.push_craft(
 				body,
 				&frame.camera,
 				"images/spaceship.png"
@@ -172,7 +172,7 @@ impl Renderer {
 		}
 
 		for body in frame.missiles.iter() {
-			self.draw_craft(
+			self.push_craft(
 				body,
 				&frame.camera,
 				"images/missile.png"
@@ -246,7 +246,7 @@ impl Renderer {
 		self.push_line_to_disc(&center, &position, transform);
 	}
 
-	fn draw_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
+	fn push_craft(&mut self, body: &Body, camera: &Camera, icon_id: &str) {
 		let texture = self.image_textures[icon_id.to_string()];
 
 		let view_projection = self.perspective()
@@ -263,17 +263,13 @@ impl Renderer {
 			body.position.z as f32,
 		);
 
-		self.billboard_drawer.draw(
-			&mut self.graphics,
-			&self.frame,
-			&Billboard {
-				position   : position,
-				offset     : Vector2::zero(),
-				texture    : texture,
-				transform  : view_projection,
-				screen_size: self.window.size,
-			},
-		);
+		self.billboards.push(Billboard {
+			position   : position,
+			offset     : Vector2::zero(),
+			texture    : texture,
+			transform  : view_projection,
+			screen_size: self.window.size,
+		});
 
 		if !center.approx_eq_eps(&position, &50.0) {
 			self.push_line_to_disc(&center, &position, &view_projection);
