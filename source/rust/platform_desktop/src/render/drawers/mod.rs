@@ -1,4 +1,7 @@
-use gfx;
+use gfx::{
+	mod,
+	DrawState,
+};
 
 use render::Graphics;
 
@@ -33,7 +36,7 @@ mod planet_drawer;
 
 
 pub trait Drawer<T> {
-	fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Self;
+	fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Self;
 	fn draw(&self, graphics: &mut Graphics, frame: &gfx::Frame, drawable: &T);
 }
 
@@ -92,7 +95,7 @@ pub struct Drawers {
 }
 
 impl Drawers {
-	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Drawers {
+	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawers {
 		Drawers {
 			base_drawer     : Drawer::new(graphics, draw_state),
 			billboard_drawer: Drawer::new(graphics, draw_state),
