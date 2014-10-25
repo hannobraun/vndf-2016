@@ -4,7 +4,6 @@ use gfx;
 
 pub mod renderer;
 
-mod drawables;
 mod drawers;
 mod shaders {
 	pub mod fragment;

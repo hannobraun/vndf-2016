@@ -35,12 +35,12 @@ use render::{
 	Graphics,
 	Transform,
 };
-use render::drawables::Drawables;
 use render::drawers::{
 	Base,
 	BaseDrawer,
 	Billboard,
 	BillboardDrawer,
+	Drawables,
 	Line,
 	LineDrawer,
 	NavDisc,
