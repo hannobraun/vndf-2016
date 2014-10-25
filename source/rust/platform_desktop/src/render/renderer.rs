@@ -31,7 +31,6 @@ use platform::{
 	Input,
 };
 use render::{
-	Drawer,
 	Graphics,
 	Transform,
 };
@@ -41,6 +40,7 @@ use render::drawers::{
 	Billboard,
 	BillboardDrawer,
 	Drawables,
+	Drawer,
 	Line,
 	LineDrawer,
 	NavDisc,

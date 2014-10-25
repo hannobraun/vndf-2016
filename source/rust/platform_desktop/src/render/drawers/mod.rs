@@ -1,3 +1,8 @@
+use gfx;
+
+use render::Graphics;
+
+
 pub use self::base_drawer::{
 	Base,
 	BaseDrawer,
@@ -25,6 +30,12 @@ mod billboard_drawer;
 mod line_drawer;
 mod nav_disc_drawer;
 mod planet_drawer;
+
+
+pub trait Drawer<T> {
+	fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Self;
+	fn draw(&self, graphics: &mut Graphics, frame: &gfx::Frame, drawable: &T);
+}
 
 
 pub struct Drawables {

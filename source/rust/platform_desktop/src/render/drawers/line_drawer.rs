@@ -12,11 +12,12 @@ use gfx::{
 
 use render::{
 	shaders,
-	Drawer,
 	Graphics,
 	Transform,
 	Vertex,
 };
+
+use super::Drawer;
 
 
 #[shader_param(Batch)]

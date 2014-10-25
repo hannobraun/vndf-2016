@@ -30,9 +30,3 @@ impl Vertex {
 		}
 	}
 }
-
-
-pub trait Drawer<T> {
-	fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Self;
-	fn draw(&self, graphics: &mut Graphics, frame: &gfx::Frame, drawable: &T);
-}
