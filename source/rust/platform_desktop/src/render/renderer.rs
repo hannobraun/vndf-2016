@@ -36,17 +36,13 @@ use render::{
 };
 use render::drawers::{
 	Base,
-	BaseDrawer,
 	Billboard,
-	BillboardDrawer,
 	Drawables,
 	Drawer,
+	Drawers,
 	Line,
-	LineDrawer,
 	NavDisc,
-	NavDiscDrawer,
 	Planet,
-	PlanetDrawer,
 };
 use window::Window;
 
@@ -59,17 +55,12 @@ pub struct Renderer {
 
 	frame: gfx::Frame,
 
-	base_drawer     : BaseDrawer,
-	billboard_drawer: BillboardDrawer,
-	line_drawer     : LineDrawer,
-	planet_drawer   : PlanetDrawer,
-	nav_disc_drawer : NavDiscDrawer,
-
 	glyphs        : HashMap<char, Glyph>,
 	glyph_textures: HashMap<char, Texture>,
 	image_textures: HashMap<String, Texture>,
 
 	drawables: Drawables,
+	drawers  : Drawers,
 }
 
 impl Renderer {
@@ -81,17 +72,6 @@ impl Renderer {
 			.multi_sample()
 			.blend(gfx::BlendAlpha)
 			.depth(gfx::state::Less, true);
-
-		let base_drawer: BaseDrawer =
-			Drawer::new(&mut graphics, &draw_state);
-		let billboard_drawer: BillboardDrawer =
-			Drawer::new(&mut graphics, &draw_state);
-		let line_drawer: LineDrawer =
-			Drawer::new(&mut graphics, &draw_state);
-		let planet_drawer: PlanetDrawer =
-			Drawer::new(&mut graphics, &draw_state);
-		let nav_disc_drawer: NavDiscDrawer =
-			Drawer::new(&mut graphics, &draw_state);
 
 		let mut glyphs         = HashMap::new();
 		let mut glyph_textures = HashMap::new();
@@ -110,23 +90,20 @@ impl Renderer {
 			glyphs.insert(c, glyph);
 		}
 
+		let drawers = Drawers::new(&mut graphics, &draw_state);
+
 		Renderer {
 			graphics: graphics,
 			window  : window,
 
 			frame: frame,
 
-			base_drawer     : base_drawer,
-			billboard_drawer: billboard_drawer,
-			line_drawer     : line_drawer,
-			planet_drawer   : planet_drawer,
-			nav_disc_drawer : nav_disc_drawer,
-
 			glyphs        : glyphs,
 			glyph_textures: glyph_textures,
 			image_textures: image_textures,
 
 			drawables: Drawables::new(),
+			drawers  : drawers,
 		}
 	}
 
@@ -175,35 +152,35 @@ impl Renderer {
 		self.push_ui_overlay(frame.input);
 
 		for planet in self.drawables.planets.iter() {
-			self.planet_drawer.draw(
+			self.drawers.planet_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				planet,
 			);
 		}
 		for nav_disc in self.drawables.nav_discs.iter() {
-			self.nav_disc_drawer.draw(
+			self.drawers.nav_disc_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				nav_disc,
 			);
 		}
 		for base in self.drawables.bases.iter() {
-			self.base_drawer.draw(
+			self.drawers.base_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				base,
 			);
 		}
 		for line in self.drawables.lines.iter() {
-			self.line_drawer.draw(
+			self.drawers.line_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				line,
 			);
 		}
 		for billboard in self.drawables.billboards.iter() {
-			self.billboard_drawer.draw(
+			self.drawers.billboard_drawer.draw(
 				&mut self.graphics,
 				&self.frame,
 				billboard,

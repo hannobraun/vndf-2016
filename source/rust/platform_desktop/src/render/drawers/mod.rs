@@ -81,3 +81,24 @@ impl Drawables {
 		self.planets.push(planet);
 	}
 }
+
+
+pub struct Drawers {
+	pub base_drawer     : BaseDrawer,
+	pub billboard_drawer: BillboardDrawer,
+	pub line_drawer     : LineDrawer,
+	pub planet_drawer   : PlanetDrawer,
+	pub nav_disc_drawer : NavDiscDrawer,
+}
+
+impl Drawers {
+	pub fn new(graphics: &mut Graphics, draw_state: &gfx::DrawState) -> Drawers {
+		Drawers {
+			base_drawer     : Drawer::new(graphics, draw_state),
+			billboard_drawer: Drawer::new(graphics, draw_state),
+			line_drawer     : Drawer::new(graphics, draw_state),
+			planet_drawer   : Drawer::new(graphics, draw_state),
+			nav_disc_drawer : Drawer::new(graphics, draw_state),
+		}
+	}
+}
