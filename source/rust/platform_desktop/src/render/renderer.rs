@@ -41,6 +41,7 @@ use render::drawers::{
 	Line,
 	NavDisc,
 	Planet,
+	ProjectedCourse,
 };
 use window::Window;
 
@@ -195,6 +196,11 @@ impl Renderer {
 			body.position.y as f32,
 			body.position.z as f32,
 		);
+		let velocity = Vector3::new(
+			body.velocity.x as f32,
+			body.velocity.y as f32,
+			body.velocity.z as f32,
+		);
 
 		self.drawables.push_billboard(Billboard {
 			position   : position,
@@ -207,6 +213,12 @@ impl Renderer {
 		if !center.approx_eq_eps(&position, &50.0) {
 			self.push_line_to_disc(&center, &position, &view_projection);
 		}
+
+		self.drawables.push_projected_course(ProjectedCourse {
+			position : position,
+			velocity : velocity,
+			transform: view_projection,
+		});
 
 		let text_offset = texture.size.div_s(2.0);
 		self.push_text(
