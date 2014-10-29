@@ -5,29 +5,19 @@ use gfx::{
 
 use render::Graphics;
 
+use self::base_drawer::BaseDrawer;
+use self::billboard_drawer::BillboardDrawer;
+use self::line_drawer::LineDrawer;
+use self::nav_disc_drawer::NavDiscDrawer;
+use self::planet_drawer::PlanetDrawer;
 use self::projected_course::ProjectedCourseDrawer;
 
 
-pub use self::base_drawer::{
-	Base,
-	BaseDrawer,
-};
-pub use self::billboard_drawer::{
-	Billboard,
-	BillboardDrawer,
-};
-pub use self::line_drawer::{
-	Line,
-	LineDrawer,
-};
-pub use self::nav_disc_drawer::{
-	NavDisc,
-	NavDiscDrawer,
-};
-pub use self::planet_drawer::{
-	Planet,
-	PlanetDrawer,
-};
+pub use self::base_drawer::Base;
+pub use self::billboard_drawer::Billboard;
+pub use self::line_drawer::Line;
+pub use self::nav_disc_drawer::NavDisc;
+pub use self::planet_drawer::Planet;
 pub use self::projected_course::ProjectedCourse;
 
 
