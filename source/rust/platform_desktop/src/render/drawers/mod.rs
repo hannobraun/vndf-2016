@@ -5,6 +5,8 @@ use gfx::{
 
 use render::Graphics;
 
+use self::projected_course::ProjectedCourseDrawer;
+
 
 pub use self::base_drawer::{
 	Base,
@@ -26,6 +28,7 @@ pub use self::planet_drawer::{
 	Planet,
 	PlanetDrawer,
 };
+pub use self::projected_course::ProjectedCourse;
 
 
 mod base_drawer;
@@ -33,6 +36,7 @@ mod billboard_drawer;
 mod line_drawer;
 mod nav_disc_drawer;
 mod planet_drawer;
+mod projected_course;
 
 
 pub enum Drawable {
@@ -41,6 +45,7 @@ pub enum Drawable {
 	IsLine(Line),
 	IsNavDisc(NavDisc),
 	IsPlanet(Planet),
+	IsProjectedCourse(ProjectedCourse),
 }
 
 
@@ -76,6 +81,9 @@ impl Drawables {
 	pub fn push_planet(&mut self, planet: Planet) {
 		self.drawables.push(IsPlanet(planet));
 	}
+	pub fn push_projected_course(&mut self, projected_course: ProjectedCourse) {
+		self.drawables.push(IsProjectedCourse(projected_course));
+	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame) {
 		for drawable in self.drawables.iter() {
@@ -110,6 +118,12 @@ impl Drawables {
 						frame,
 						&planet,
 					),
+				IsProjectedCourse(projected_course) =>
+					self.drawers.projected_course_drawer.draw(
+						graphics,
+						frame,
+						&projected_course,
+					),
 			}
 		}
 	}
@@ -117,21 +131,26 @@ impl Drawables {
 
 
 pub struct Drawers {
-	pub base_drawer     : BaseDrawer,
-	pub billboard_drawer: BillboardDrawer,
-	pub line_drawer     : LineDrawer,
-	pub planet_drawer   : PlanetDrawer,
-	pub nav_disc_drawer : NavDiscDrawer,
+	pub base_drawer            : BaseDrawer,
+	pub billboard_drawer       : BillboardDrawer,
+	pub line_drawer            : LineDrawer,
+	pub planet_drawer          : PlanetDrawer,
+	pub nav_disc_drawer        : NavDiscDrawer,
+	pub projected_course_drawer: ProjectedCourseDrawer,
 }
 
 impl Drawers {
 	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawers {
+		let projected_course_drawer =
+			ProjectedCourseDrawer::new(graphics, draw_state);
+
 		Drawers {
 			base_drawer     : BaseDrawer::new(graphics, draw_state),
 			billboard_drawer: BillboardDrawer::new(graphics, draw_state),
 			line_drawer     : LineDrawer::new(graphics, draw_state),
 			planet_drawer   : PlanetDrawer::new(graphics, draw_state),
 			nav_disc_drawer : NavDiscDrawer::new(graphics, draw_state),
+			projected_course_drawer: projected_course_drawer,
 		}
 	}
 }
