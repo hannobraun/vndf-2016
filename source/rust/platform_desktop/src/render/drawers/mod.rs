@@ -134,8 +134,8 @@ pub struct Drawers {
 	pub base_drawer            : BaseDrawer,
 	pub billboard_drawer       : BillboardDrawer,
 	pub line_drawer            : LineDrawer,
-	pub planet_drawer          : PlanetDrawer,
 	pub nav_disc_drawer        : NavDiscDrawer,
+	pub planet_drawer          : PlanetDrawer,
 	pub projected_course_drawer: ProjectedCourseDrawer,
 }
 
@@ -148,8 +148,8 @@ impl Drawers {
 			base_drawer     : BaseDrawer::new(graphics, draw_state),
 			billboard_drawer: BillboardDrawer::new(graphics, draw_state),
 			line_drawer     : LineDrawer::new(graphics, draw_state),
-			planet_drawer   : PlanetDrawer::new(graphics, draw_state),
 			nav_disc_drawer : NavDiscDrawer::new(graphics, draw_state),
+			planet_drawer   : PlanetDrawer::new(graphics, draw_state),
 			projected_course_drawer: projected_course_drawer,
 		}
 	}
