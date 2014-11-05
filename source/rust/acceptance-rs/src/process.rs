@@ -13,7 +13,7 @@ impl Process {
 	pub fn start(path: &str, args: &[&str]) -> Process {
 		let mut process = match io::Command::new(path).args(args).spawn() {
 			Ok(process) => process,
-			Err(error)  => fail!("Failed to start process {}: {}", path, error)
+			Err(error)  => panic!("Failed to start process {}: {}", path, error)
 		};
 
 		let stdout_opt = process.stdout.take();
@@ -38,14 +38,14 @@ impl Process {
 	pub fn read_stdout_line(&mut self) -> String {
 		match self.stdout.read_line() {
 			Ok(line)   => line,
-			Err(error) => fail!("Failed to read line from stdout: {}", error)
+			Err(error) => panic!("Failed to read line from stdout: {}", error)
 		}
 	}
 
 	pub fn write_stdin_line(&mut self, line: &str) {
 		match self.stdin.write_line(line) {
 			Ok(())     => (),
-			Err(error) => fail!("Failed to write to stdin: {}", error)
+			Err(error) => panic!("Failed to write to stdin: {}", error)
 		}
 	}
 }
@@ -66,7 +66,7 @@ impl Drop for Process {
 fn to_reader(pipe_opt: Option<PipeStream>) -> BufferedReader<PipeStream> {
 	let pipe = match pipe_opt {
 		Some(pipe) => pipe,
-		None       => fail!()
+		None       => panic!()
 	};
 
 	BufferedReader::new(pipe)

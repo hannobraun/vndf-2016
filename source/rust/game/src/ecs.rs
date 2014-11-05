@@ -44,6 +44,8 @@ pub enum Visual {
 }
 
 
-world! { World,
+world! {
 	components Body, Visual, Planet;
+
+	derived_traits Clone, Decodable, Encodable, PartialEq, Show;
 }

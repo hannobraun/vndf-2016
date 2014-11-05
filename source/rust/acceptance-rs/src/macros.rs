@@ -8,7 +8,7 @@ macro_rules! wait_while(
 			$action
 
 			if ::time::precise_time_ns() - start_time > 1000000000 {
-				fail!(
+				panic!(
 					"Condition \"{}\" still true after one second",
 					stringify!($condition)
 				);

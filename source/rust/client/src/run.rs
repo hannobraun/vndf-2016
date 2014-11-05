@@ -11,7 +11,7 @@ use platform_cli;
 use platform_desktop;
 
 use super::args;
-use super::ecs::World;
+use super::ecs::Entities;
 use super::gamestate::GameState;
 use super::inputsender::InputSender;
 use super::network::Network;
@@ -20,7 +20,7 @@ use super::network::Network;
 pub fn run() {
 	let args = match args::parse() {
 		Some(args) => args,
-		None       => fail!(format!("Failed to parse arguments"))
+		None       => panic!(format!("Failed to parse arguments"))
 	};
 
 	let mut network = Network::connect(
@@ -45,7 +45,7 @@ pub fn run() {
 
 		let input = match platform.input() {
 			Ok(input)  => input,
-			Err(error) => fail!("Error reading input: {}", error)
+			Err(error) => panic!("Error reading input: {}", error)
 		};
 		should_close = input.exit;
 		camera.perspective = input.camera_angle;
@@ -61,7 +61,7 @@ pub fn run() {
 	}
 }
 
-fn make_frame(input: Input, camera: Camera, world: &World) -> Frame {
+fn make_frame(input: Input, camera: Camera, world: &Entities) -> Frame {
 	let ships = world.bodies
 		.iter()
 		.filter(|&(&id, _)|

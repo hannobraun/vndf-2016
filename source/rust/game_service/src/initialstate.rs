@@ -1,11 +1,11 @@
 use serialize::json;
 use std::io::File;
 
-use rustecs::Entities;
+use rustecs::EntityContainer;
 
 use ecs::{
+	Entities,
 	Entity,
-	World,
 };
 use game::ecs::Planet;
 
@@ -36,7 +36,7 @@ impl InitialState {
 		file.write_str(json::encode(self).as_slice()).unwrap();
 	}
 
-	pub fn apply_to_world(&self, world: &mut World) {
+	pub fn apply_to_world(&self, world: &mut Entities) {
 		for &planet in self.planets.iter() {
 			world.add(Entity::new().with_planet(planet));
 		}

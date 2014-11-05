@@ -52,7 +52,7 @@ impl BillboardDrawer {
 				shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
 				shaders::fragment::TEXTURE.clone()
 			)
-			.unwrap_or_else(|error| fail!("error linking program: {}", error));
+			.unwrap_or_else(|error| panic!("error linking program: {}", error));
 
 		let batch = graphics
 			.make_batch(

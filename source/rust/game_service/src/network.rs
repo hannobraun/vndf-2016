@@ -34,19 +34,19 @@ impl Network {
 	pub fn new(port: &str) -> Network {
 		let epoll = match EPoll::create() {
 			Ok(epoll)  => epoll,
-			Err(error) => fail!("Error initializing epoll: {}", error)
+			Err(error) => panic!("Error initializing epoll: {}", error)
 		};
 
 		let acceptor = match Acceptor::new(port) {
 			Ok(acceptor) => acceptor,
-			Err(error)   => fail!("Error creating acceptor: {}", error)
+			Err(error)   => panic!("Error creating acceptor: {}", error)
 		};
 
 		match epoll.add(acceptor.fd, epoll::ffi::EPOLLIN) {
 			Ok(()) => (),
 
 			Err(error) =>
-				fail!("Error registering server socket with epoll: {}", error)
+				panic!("Error registering server socket with epoll: {}", error)
 		}
 
 		let (sender, receiver) = channel();
@@ -97,7 +97,7 @@ impl Network {
 
 				Err(error) => match error {
 					Empty        => break,
-					Disconnected => fail!("Unexpected error: {}", error)
+					Disconnected => panic!("Unexpected error: {}", error)
 				}
 			}
 		}
@@ -122,7 +122,7 @@ impl Network {
 							Ok(message) => message,
 
 							Err(error) =>
-								fail!("Error decoding message: {}", error)
+								panic!("Error decoding message: {}", error)
 						};
 
 						game.send(events::Action(fd as ConnId, action));
@@ -135,7 +135,7 @@ impl Network {
 				}
 			},
 
-			Err(error) => fail!("Error while waiting for events: {}", error)
+			Err(error) => panic!("Error while waiting for events: {}", error)
 		}
 
 		for _ in to_accept.iter() {
@@ -143,14 +143,14 @@ impl Network {
 				Ok(connection) => connection,
 
 				Err(error) =>
-					fail!("Error accepting connection: {}", error)
+					panic!("Error accepting connection: {}", error)
 			};
 
 			match self.epoll.add(connection.fd, epoll::ffi::EPOLLIN) {
 				Ok(()) => (),
 
 				Err(error) =>
-					fail!("Error adding to epoll: {}", error)
+					panic!("Error adding to epoll: {}", error)
 			}
 
 			let client_id = connection.fd as ConnId;

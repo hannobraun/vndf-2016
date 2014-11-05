@@ -38,8 +38,10 @@ impl Player {
 }
 
 
-world! { World,
+world! {
 	components Body, Visual, Planet, Player;
+
+	derived_traits Clone;
 }
 
 
@@ -90,7 +92,7 @@ pub fn apply_gravity(
 
 // Utility functions
 pub fn entity_id_from_conn_id(
-	world    : &World,
+	world    : &Entities,
 	client_id: ConnId
 ) -> Option<EntityId> {
 	for (&id, player) in world.players.iter() {

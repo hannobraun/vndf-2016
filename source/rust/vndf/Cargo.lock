@@ -15,7 +15,7 @@ version = "0.1.0"
 [[package]]
 name = "cgmath"
 version = "0.0.1"
-source = "git+https://github.com/bjz/cgmath-rs.git#498fb602816b838524570f0627fea25f7575c070"
+source = "git+https://github.com/bjz/cgmath-rs.git#66114567919a2304d9d977c542198bec6d4f2e39"
 
 [[package]]
 name = "client"
@@ -31,9 +31,9 @@ dependencies = [
 [[package]]
 name = "device"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e"
+source = "git+https://github.com/gfx-rs/gfx-rs#d7e47b45702ad97d7c3d7bb84ce6c66cc7c17386"
 dependencies = [
- "gfx_gl 0.1.0 (git+https://github.com/gfx-rs/gfx_gl.git#ed681503da2e7ed9343003e78af4767e8e4e33a8)",
+ "gfx_gl 0.1.0 (git+https://github.com/gfx-rs/gfx_gl.git)",
 ]
 
 [[package]]
@@ -43,16 +43,16 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#7782e48574e0eb7544f1eb220eea838365710889"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#befab85963d7ddea3fc1c96e7741f80deb8c109e"
 
 [[package]]
 name = "game"
 version = "0.1.0"
 dependencies = [
- "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#498fb602816b838524570f0627fea25f7575c070)",
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
  "net 0.1.0",
- "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git#ea109d9a9e8fb6fd14f7c7eea419e48ae5429b96)",
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#ea109d9a9e8fb6fd14f7c7eea419e48ae5429b96)",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
 ]
 
 [[package]]
@@ -67,11 +67,11 @@ dependencies = [
 [[package]]
 name = "gfx"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e"
+source = "git+https://github.com/gfx-rs/gfx-rs#d7e47b45702ad97d7c3d7bb84ce6c66cc7c17386"
 dependencies = [
- "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e)",
- "gfx_macros 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e)",
- "render 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e)",
+ "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
+ "gfx_macros 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
+ "render 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
 ]
 
 [[package]]
@@ -79,41 +79,41 @@ name = "gfx_gl"
 version = "0.1.0"
 source = "git+https://github.com/gfx-rs/gfx_gl.git#ed681503da2e7ed9343003e78af4767e8e4e33a8"
 dependencies = [
- "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs.git#9bdee3839e809a1f7ccbee158a38a704965528b3)",
+ "gl_generator 0.0.1 (git+https://github.com/bjz/gl-rs.git)",
 ]
 
 [[package]]
 name = "gfx_macros"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e"
+source = "git+https://github.com/gfx-rs/gfx-rs#d7e47b45702ad97d7c3d7bb84ce6c66cc7c17386"
 
 [[package]]
 name = "gl_generator"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#9bdee3839e809a1f7ccbee158a38a704965528b3"
+source = "git+https://github.com/bjz/gl-rs.git#325b34c470b18f83756fe86e48cce56dba28d648"
 dependencies = [
- "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git#9bdee3839e809a1f7ccbee158a38a704965528b3)",
- "rust-xml 0.1.0 (git+https://github.com/bjz/rust-xml#250ead29ed43d5743149e17d157f14d47860c0c8)",
+ "khronos_api 0.0.1 (git+https://github.com/bjz/gl-rs.git)",
+ "rust-xml 0.1.0 (git+https://github.com/netvl/rust-xml)",
 ]
 
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#d394c244575ed879e933dffcdab06d4276a5cdae"
+source = "git+https://github.com/bjz/glfw-rs.git#848816edfdaf3cca21fbb9172ea6635f623d558c"
 dependencies = [
- "glfw-sys 3.0.4 (git+https://github.com/servo/glfw?ref=cargo-3.0.4#0e13d32555fb72b38ba1dfcff0c65a486510302e)",
- "semver 0.1.0 (git+https://github.com/rust-lang/semver#c7227f131c0855f9b0fdc169f767aff589a139a9)",
+ "glfw-sys 3.0.4 (git+https://github.com/servo/glfw?ref=cargo-3.0.4)",
+ "semver 0.1.0 (git+https://github.com/rust-lang/semver)",
 ]
 
 [[package]]
 name = "glfw-sys"
 version = "3.0.4"
-source = "git+https://github.com/servo/glfw?ref=cargo-3.0.4#0e13d32555fb72b38ba1dfcff0c65a486510302e"
+source = "git+https://github.com/servo/glfw?ref=cargo-3.0.4#aa8e0d26cccdb4145f34c5a1724d7e48e0399674"
 
 [[package]]
 name = "khronos_api"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#9bdee3839e809a1f7ccbee158a38a704965528b3"
+source = "git+https://github.com/bjz/gl-rs.git#325b34c470b18f83756fe86e48cce56dba28d648"
 
 [[package]]
 name = "net"
@@ -137,51 +137,51 @@ dependencies = [
 name = "platform_desktop"
 version = "0.1.0"
 dependencies = [
- "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#498fb602816b838524570f0627fea25f7575c070)",
- "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git#7782e48574e0eb7544f1eb220eea838365710889)",
- "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e)",
- "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git#d394c244575ed879e933dffcdab06d4276a5cdae)",
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
+ "freetype-rs 0.0.0 (git+https://github.com/PistonDevelopers/freetype-rs.git)",
+ "gfx 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
+ "glfw 0.0.1 (git+https://github.com/bjz/glfw-rs.git)",
  "platform 0.1.0",
- "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git#c84d5c3d1e0c5579331b7cad86c7011a73f74944)",
+ "stb_image 0.1.0 (git+https://github.com/servo/rust-stb-image.git)",
 ]
 
 [[package]]
 name = "protocol"
 version = "0.1.0"
 dependencies = [
- "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git#498fb602816b838524570f0627fea25f7575c070)",
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
 ]
 
 [[package]]
 name = "render"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e"
+source = "git+https://github.com/gfx-rs/gfx-rs#d7e47b45702ad97d7c3d7bb84ce6c66cc7c17386"
 dependencies = [
- "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs#f8ec387c26f85484266eb571d636bf9854e6ce7e)",
+ "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
 ]
 
 [[package]]
 name = "rust-xml"
 version = "0.1.0"
-source = "git+https://github.com/bjz/rust-xml#250ead29ed43d5743149e17d157f14d47860c0c8"
+source = "git+https://github.com/netvl/rust-xml#7d867d8020e6ee845d198e012124c698738804a2"
 
 [[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#ea109d9a9e8fb6fd14f7c7eea419e48ae5429b96"
+source = "git+https://github.com/hannobraun/rustecs.git#6fc983d1efd4bcdb163af31ca901a75e7ed7bdfb"
 dependencies = [
- "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git#ea109d9a9e8fb6fd14f7c7eea419e48ae5429b96)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
 ]
 
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#ea109d9a9e8fb6fd14f7c7eea419e48ae5429b96"
+source = "git+https://github.com/hannobraun/rustecs.git#6fc983d1efd4bcdb163af31ca901a75e7ed7bdfb"
 
 [[package]]
 name = "semver"
 version = "0.1.0"
-source = "git+https://github.com/rust-lang/semver#c7227f131c0855f9b0fdc169f767aff589a139a9"
+source = "git+https://github.com/rust-lang/semver#7dca047a9cd40e929a4545b37a1917daff82f156"
 
 [[package]]
 name = "stb_image"

@@ -16,7 +16,7 @@ pub fn load() -> Images {
 	for &path in paths.iter() {
 		let image = match Image::load(path) {
 			Ok(image)  => image,
-			Err(error) => fail!(error)
+			Err(error) => panic!(error)
 		};
 
 		images.insert(path.to_string(), image);

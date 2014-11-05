@@ -56,7 +56,7 @@ impl PlanetDrawer {
 				shaders::vertex::SCALED_BILLBOARD.clone(),
 				shaders::fragment::PLANET.clone()
 			)
-			.unwrap_or_else(|error| fail!("error linking program: {}", error));
+			.unwrap_or_else(|error| panic!("error linking program: {}", error));
 
 		let batch = graphics
 			.make_batch(

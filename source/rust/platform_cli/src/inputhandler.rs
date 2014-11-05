@@ -25,7 +25,7 @@ impl InputHandler {
 					Err(error)  =>
 						// Failing is enough. The next call to input will return
 						// an error due to the disconnected channel.
-						fail!(format!("Error reading from stdin: {}", error))
+						panic!(format!("Error reading from stdin: {}", error))
 				}
 			}
 		});

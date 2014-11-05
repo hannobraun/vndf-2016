@@ -1,7 +1,7 @@
 use time;
 
 use rustecs::{
-	Entities,
+	EntityContainer,
 	EntityId,
 };
 
@@ -9,9 +9,9 @@ use game::ecs::Entity as SharedEntity;
 use protocol;
 
 use super::ecs::{
+	Entities,
 	Entity,
 	Interpolated,
-	World,
 };
 
 
@@ -22,7 +22,7 @@ pub type Perception = protocol::Perception<EntityId, (EntityId, SharedEntity)>;
 // This code should be generic and live with the protocol code. Before this can
 // happen, more features have to be added to Rustecs. I've added some comments
 // where relevant to explain the details.
-pub fn receive(entities: &mut World, perception: Perception) {
+pub fn receive(entities: &mut Entities, perception: Perception) {
 	let current_time = time::precise_time_ns();
 
 	for (id, entity) in perception.added.into_iter() {

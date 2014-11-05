@@ -5,19 +5,19 @@ use cgmath::Vector;
 use platform::Camera;
 use rustecs::EntityId;
 
-use super::ecs::World;
+use super::ecs::Entities;
 use super::network::Network;
 use super::receiver::receive;
 
 
 pub struct GameState {
 	pub self_id: Option<EntityId>,
-	pub world  : World,
+	pub world  : Entities,
 }
 
 impl GameState {
 	pub fn new() -> GameState {
-		let world = World::new();
+		let world = Entities::new();
 
 		GameState {
 			self_id: None,

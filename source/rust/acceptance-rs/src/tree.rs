@@ -38,11 +38,11 @@ impl TreeBuilder {
 		let path = self.root.join(path);
 
 		fs::mkdir_recursive(&path.dir_path(), io::USER_RWX)
-			.unwrap_or_else(|e| fail!("failed to create tree root: {}", e));
+			.unwrap_or_else(|e| panic!("failed to create tree root: {}", e));
 
 		File::create(&path)
 			.write_str(contents)
-			.unwrap_or_else(|e| fail!("failed to write file: {}", e));
+			.unwrap_or_else(|e| panic!("failed to write file: {}", e));
 
 		self
 	}

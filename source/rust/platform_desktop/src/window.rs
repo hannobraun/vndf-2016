@@ -17,7 +17,7 @@ impl Window {
 	pub fn create(width: u16, height: u16) -> Window {
 		let glfw = match glfw::init(glfw::FAIL_ON_ERRORS) {
 			Ok(glfw)   => glfw,
-			Err(error) => fail!(format!("{}", error))
+			Err(error) => panic!(format!("{}", error))
 		};
 
 		glfw.window_hint(glfw::ContextVersion(3, 2));

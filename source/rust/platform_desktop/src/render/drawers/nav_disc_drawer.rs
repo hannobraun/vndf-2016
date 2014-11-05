@@ -43,7 +43,7 @@ impl NavDiscDrawer {
 				shaders::vertex::RINGS.clone(),
 				shaders::fragment::RINGS.clone()
 			)
-			.unwrap_or_else(|error| fail!("error linking program: {}", error));
+			.unwrap_or_else(|error| panic!("error linking program: {}", error));
 
 		let batch = graphics
 			.make_batch(

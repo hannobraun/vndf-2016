@@ -1,10 +1,10 @@
 use cgmath::Vector3;
-use rustecs::Entities;
+use rustecs::EntityContainer;
 
 use client::ecs::{
+	Entities,
 	Entity,
 	Interpolated,
-	World,
 };
 use client::receiver::receive;
 use game::ecs::Entity as SharedEntity;
@@ -15,7 +15,7 @@ use protocol::Perception;
 
 #[test]
 fn it_should_import_added_entities() {
-	let mut world = World::new();
+	let mut world = Entities::new();
 
 	let entity = SharedEntity {
 		visual: Some(ShowAsMissile),
@@ -42,7 +42,7 @@ fn it_should_import_added_entities() {
 fn it_should_update_entities() {
 	let entity_id = 5;
 
-	let mut world = World::new();
+	let mut world = Entities::new();
 	world.import(
 		entity_id,
 		Entity {
@@ -79,7 +79,7 @@ fn it_should_update_entities() {
 fn it_should_destroy_removed_entities() {
 	let entity_id = 5;
 
-	let mut world = World::new();
+	let mut world = Entities::new();
 	world.import(
 		entity_id,
 		Entity {

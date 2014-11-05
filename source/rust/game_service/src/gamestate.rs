@@ -11,7 +11,7 @@ use cgmath::{
 };
 use rustecs::{
 	Control,
-	Entities,
+	EntityContainer,
 	EntityId,
 };
 
@@ -33,9 +33,9 @@ use super::ecs::{
 	apply_gravity,
 	integrate,
 	kill_colliding_ships,
+	Entities,
 	Entity,
 	Player,
-	World,
 };
 use super::events::{
 	mod,
@@ -50,7 +50,7 @@ pub struct GameState {
 	incoming: Receiver<GameEvent>,
 	network : Sender<NetworkEvent>,
 
-	world  : World,
+	world  : Entities,
 	control: Control<Entity>,
 }
 
@@ -61,7 +61,7 @@ impl GameState {
 	) -> GameState {
 		let (sender, receiver) = channel();
 
-		let mut world = World::new();
+		let mut world = Entities::new();
 		let initial_state = InitialState::from_file(initial_state);
 		initial_state.apply_to_world(&mut world);
 
@@ -100,7 +100,7 @@ impl GameState {
 
 				Err(error) => match error {
 					Empty        => break,
-					Disconnected => fail!("Unexpected error: {}", error)
+					Disconnected => panic!("Unexpected error: {}", error)
 				}
 			}
 		}
@@ -148,6 +148,7 @@ impl GameState {
 		self.control.apply(&mut self.world);
 
 		let entities: Vec<(EntityId, SharedEntity)> = self.world
+			.clone()
 			.export()
 			.iter()
 			.map(|&(id, ref entity)|

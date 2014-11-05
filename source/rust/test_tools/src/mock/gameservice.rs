@@ -22,7 +22,7 @@ impl MockGameService {
 
 		let acceptor = match Acceptor::new(port.to_string().as_slice()) {
 			Ok(acceptor) => acceptor,
-			Err(error)   => fail!("Error creating acceptor: {}", error)
+			Err(error)   => panic!("Error creating acceptor: {}", error)
 		};
 
 		MockGameService {
@@ -35,7 +35,7 @@ impl MockGameService {
 	pub fn accept_client(&mut self) {
 		match self.acceptor.accept() {
 			Ok(connection) => self.clients.push(connection),
-			Err(error)     => fail!("Error accepting client: {}", error)
+			Err(error)     => panic!("Error accepting client: {}", error)
 		}
 	}
 
@@ -46,7 +46,7 @@ impl MockGameService {
 		for connection in self.clients.iter() {
 			match connection.send_message(perception.to_string().as_slice()) {
 				Ok(())     => (),
-				Err(error) => fail!("Error sending perception: {}", error)
+				Err(error) => panic!("Error sending perception: {}", error)
 			}
 		}
 	}
