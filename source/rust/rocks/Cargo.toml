@@ -18,8 +18,8 @@ git = "https://github.com/hyperium/hyper.git"
 [dependencies.iron]
 git = "https://github.com/iron/iron.git"
 
-[dependencies.static_file]
-git = "https://github.com/hannobraun/static-file.git"
+[dependencies.static]
+git = "https://github.com/hannobraun/static.git"
 
 [dependencies.toml]
 git = "https://github.com/alexcrichton/toml-rs"

@@ -10,7 +10,10 @@ use hyper::client::{
 	Request,
 	Response,
 };
-use hyper::header::Header;
+use hyper::header::{
+	Header,
+	HeaderFormat,
+};
 use hyper::net::Fresh;
 
 
@@ -56,14 +59,17 @@ impl RocksRequest {
 			.unwrap();
 
 		let request = Request::get(url.clone())
-			.unwrap_or_else(|e| fail!("get failed: {}", e));
+			.unwrap_or_else(|e| panic!("get failed: {}", e));
 
 		RocksRequest {
 			request: request,
 		}
 	}
 
-	pub fn with_header<H: Header>(mut self, header: H) -> RocksRequest {
+	pub fn with_header<H: Header + HeaderFormat>(
+		mut self,
+		header: H
+	) -> RocksRequest {
 		self.request.headers_mut().set(header);
 		self
 	}
@@ -71,8 +77,8 @@ impl RocksRequest {
 	pub fn send(self) -> Response {
 		self.request
 			.start()
-			.unwrap_or_else(|e| fail!("start failed: {}", e))
+			.unwrap_or_else(|e| panic!("start failed: {}", e))
 			.send()
-			.unwrap_or_else(|e| fail!("send failed: {}", e))
+			.unwrap_or_else(|e| panic!("send failed: {}", e))
 	}
 }

@@ -2,7 +2,7 @@ extern crate getopts;
 extern crate time;
 
 extern crate iron;
-extern crate static_file;
+extern crate "static" as static_file;
 extern crate toml;
 
 

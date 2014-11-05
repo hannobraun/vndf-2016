@@ -23,23 +23,23 @@ impl Args {
 
 		let matches = match getopts(args.tail(), options) {
 			Ok(matches) => matches,
-			Err(error)  => fail!("Error parsing arguments: {}", error),
+			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
 		let root_path = match matches.opt_str("r") {
 			Some(root_path) => Path::new(root_path),
 			None =>
-				fail!("You need to specific the root path with --root"),
+				panic!("You need to specific the root path with --root"),
 		};
 
 		let port = match matches.opt_str("p") {
 			Some(port) => match from_str(port.as_slice()) {
 				Some(port) => port,
 				None =>
-					fail!("Invalid value for port: {}", port),
+					panic!("Invalid value for port: {}", port),
 			},
 			None =>
-				fail!("You need to specify the port with --port"),
+				panic!("You need to specify the port with --port"),
 		};
 
 		Args {

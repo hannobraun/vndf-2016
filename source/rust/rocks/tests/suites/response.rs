@@ -39,8 +39,9 @@ fn it_should_return_a_custom_response_for_a_directory() {
 
 	let rocks = Rocks::start(tree);
 
-	let response = rocks.request("/test").send();
+	let mut response = rocks.request("/test").send();
 
+	print!("response: {}\n", response.read_to_string().unwrap());
 	assert_eq!(status::MovedPermanently, response.status);
 	assert_eq!(
 		&Location(format!("http://localhost:{}/other-directory", rocks.port)),
