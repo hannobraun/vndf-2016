@@ -63,7 +63,7 @@ pub fn receive(entities: &mut Entities, perception: Perception) {
 		// reuse can be possible. Just import_entity, then call trigger_import
 		// or trigger_update_received as appropriate.
 		match entity.visual {
-			Some(visual) => *entities.visuals.get_mut(&id) = visual,
+			Some(visual) => entities.visuals[id] = visual,
 			None => (),
 		}
 
@@ -71,8 +71,8 @@ pub fn receive(entities: &mut Entities, perception: Perception) {
 		// on the update_received event.
 		match entity.body {
 			Some(body) => {
-				entities.interpolateds.get_mut(&id).current      = Some(body);
-				entities.interpolateds.get_mut(&id).current_time = current_time;
+				entities.interpolateds[id].current      = Some(body);
+				entities.interpolateds[id].current_time = current_time;
 			},
 			None => (),
 		}
