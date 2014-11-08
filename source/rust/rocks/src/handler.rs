@@ -7,6 +7,11 @@ use iron::{
 	IronResult,
 	Request,
 	Response,
+	Set,
+};
+use iron::response::modifiers::{
+	Redirect,
+	Status,
 };
 use static_file::StaticWithCache;
 use toml::Parser;
@@ -102,10 +107,9 @@ fn run_plugin(
 		.map(|s| s.to_string())
 		.collect();
 
-	let response = Response::redirect(
-		FromPrimitive::from_i64(code).unwrap(),
-		url,
-	);
+	let response = Response::new()
+		.set(Status(FromPrimitive::from_i64(code).unwrap()))
+		.set(Redirect(url));
 
 	Some(Ok(response))
 }
