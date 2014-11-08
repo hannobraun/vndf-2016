@@ -25,15 +25,47 @@ dependencies = [
 
 [[package]]
 name = "encoding"
-version = "0.1.0"
-source = "git+https://github.com/lifthrasiir/rust-encoding#a739425a3f3174a31fe38c158dcaf22ea1d856f4"
+version = "0.2.0"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
+dependencies = [
+ "encoding-index-japanese 1.0.20140915 (git+https://github.com/lifthrasiir/rust-encoding)",
+ "encoding-index-korean 1.0.20140915 (git+https://github.com/lifthrasiir/rust-encoding)",
+ "encoding-index-simpchinese 1.0.20140915 (git+https://github.com/lifthrasiir/rust-encoding)",
+ "encoding-index-singlebyte 1.0.20140915 (git+https://github.com/lifthrasiir/rust-encoding)",
+ "encoding-index-tradchinese 1.0.20140915 (git+https://github.com/lifthrasiir/rust-encoding)",
+]
+
+[[package]]
+name = "encoding-index-japanese"
+version = "1.0.20140915"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
+
+[[package]]
+name = "encoding-index-korean"
+version = "1.0.20140915"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
+
+[[package]]
+name = "encoding-index-simpchinese"
+version = "1.0.20140915"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
+
+[[package]]
+name = "encoding-index-singlebyte"
+version = "1.0.20140915"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
+
+[[package]]
+name = "encoding-index-tradchinese"
+version = "1.0.20140915"
+source = "git+https://github.com/lifthrasiir/rust-encoding#a06637cc6d0da37c12c68661e2ee9ca1999764a4"
 
 [[package]]
 name = "error"
 version = "0.0.0"
 source = "git+https://github.com/reem/rust-error.git#c068c32136431a676f55e9050002225059d523a6"
 dependencies = [
- "typeable 0.0.1 (git+https://github.com/reem/rust-typeable)",
+ "typeable 0.0.1 (git+https://github.com/reem/rust-typeable.git)",
 ]
 
 [[package]]
@@ -49,7 +81,7 @@ dependencies = [
 [[package]]
 name = "http"
 version = "0.1.0-pre"
-source = "git+https://github.com/chris-morgan/rust-http.git#c8aef7e0192161aa528ed067fad85bd353088a52"
+source = "git+https://github.com/chris-morgan/rust-http.git#3224008263e065384403dd4f899646e783cc0b6e"
 dependencies = [
  "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git)",
  "url 0.1.0 (git+https://github.com/servo/rust-url.git)",
@@ -58,26 +90,26 @@ dependencies = [
 [[package]]
 name = "hyper"
 version = "0.0.1"
-source = "git+https://github.com/hyperium/hyper.git#d409236e42360307e305ea3b04fa7be2a79abbb5"
+source = "git+https://github.com/hyperium/hyper.git#c32b15041a224a1323b04147ff1634949354dc2a"
 dependencies = [
  "intertwine 0.0.1 (git+https://github.com/reem/rust-intertwine)",
  "mime 0.0.1 (git+https://github.com/hyperium/mime.rs)",
  "move-acceptor 0.0.1 (git+https://github.com/reem/rust-move-acceptor)",
  "openssl 0.0.0 (git+https://github.com/sfackler/rust-openssl.git)",
- "typeable 0.0.1 (git+https://github.com/reem/rust-typeable)",
- "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any)",
+ "typeable 0.0.1 (git+https://github.com/reem/rust-typeable.git)",
+ "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any.git)",
  "url 0.1.0 (git+https://github.com/servo/rust-url.git)",
 ]
 
 [[package]]
 name = "intertwine"
 version = "0.0.1"
-source = "git+https://github.com/reem/rust-intertwine#3b23760cf7da3c7f38db16bf488c88f6e506de2d"
+source = "git+https://github.com/reem/rust-intertwine#2a78205f7dd4e66eed29ed292671c996792da77b"
 
 [[package]]
 name = "iron"
 version = "0.0.1"
-source = "git+https://github.com/iron/iron.git#0d01602312ebf06606cc26b59c927c6219329691"
+source = "git+https://github.com/iron/iron.git#4fe74e4871923b858f55a68eede330a379e6ff0f"
 dependencies = [
  "content_type 0.1.0 (git+https://github.com/reem/rust-http-content-type.git)",
  "error 0.0.0 (git+https://github.com/reem/rust-error.git)",
@@ -91,7 +123,7 @@ dependencies = [
 [[package]]
 name = "iron-test"
 version = "0.0.1"
-source = "git+https://github.com/reem/iron-test#1b2d57a40f12faec7731c25d559e109ab193ed3a"
+source = "git+https://github.com/reem/iron-test#7e9789462fd9e82b601de6d87a9c2c3e014563d2"
 dependencies = [
  "http 0.1.0-pre (git+https://github.com/chris-morgan/rust-http.git)",
  "iron 0.0.1 (git+https://github.com/iron/iron.git)",
@@ -106,12 +138,12 @@ source = "git+https://github.com/hyperium/mime.rs#e2a6bcf5029a33f12a77387da9000e
 [[package]]
 name = "modifier"
 version = "0.0.1"
-source = "git+https://github.com/reem/rust-modifier.git#13bec5504b5c1e37b168a0e5bff602f5ddf99c18"
+source = "git+https://github.com/reem/rust-modifier.git#a538909229291164467583221d4e6e39fd5043b6"
 
 [[package]]
 name = "mount"
 version = "0.1.0"
-source = "git+https://github.com/iron/mount.git#c4d919681d2181f7ed5fb1854d817d87edf19c89"
+source = "git+https://github.com/iron/mount.git#6fbfec106dd6f2665c94c0ee68ef4d1b02939c84"
 dependencies = [
  "iron 0.0.1 (git+https://github.com/iron/iron.git)",
  "trie 0.0.1 (git+https://github.com/michaelsproul/rust-generic-trie.git)",
@@ -121,12 +153,12 @@ dependencies = [
 [[package]]
 name = "move-acceptor"
 version = "0.0.1"
-source = "git+https://github.com/reem/rust-move-acceptor#4eef9c13745db3da74c22a26b659dc054aec5500"
+source = "git+https://github.com/reem/rust-move-acceptor#25c5c33a83f605fdd0f3d37d2589e2b0b4e6cbd1"
 
 [[package]]
 name = "openssl"
 version = "0.0.0"
-source = "git+https://github.com/sfackler/rust-openssl.git#1e706b8ef4d4344b5297b90bcd430cc96f40fb39"
+source = "git+https://github.com/sfackler/rust-openssl.git#766ce4b7785c0b038bee95b74564e5b9bf7e9a4b"
 
 [[package]]
 name = "phantom"
@@ -152,7 +184,7 @@ dependencies = [
 [[package]]
 name = "plugin"
 version = "0.0.0"
-source = "git+https://github.com/reem/rust-plugin.git#19b97b79ed3fb291cd6d454058c906e33017a0b6"
+source = "git+https://github.com/reem/rust-plugin.git#38c93a9b8dd3e704741d8986d4555b46040af43d"
 dependencies = [
  "phantom 0.0.0 (git+https://github.com/reem/rust-phantom.git)",
  "typemap 0.0.0 (git+https://github.com/reem/rust-typemap.git)",
@@ -171,7 +203,7 @@ dependencies = [
 [[package]]
 name = "toml"
 version = "0.1.0"
-source = "git+https://github.com/alexcrichton/toml-rs#78acb5081d57bec85fd51ecb596506b14d17d430"
+source = "git+https://github.com/alexcrichton/toml-rs#ac6f3b27e03e7a5938fd4cae5fc3fecc5ab1a85f"
 
 [[package]]
 name = "trie"
@@ -181,34 +213,34 @@ source = "git+https://github.com/michaelsproul/rust-generic-trie.git#e239a7ce411
 [[package]]
 name = "typeable"
 version = "0.0.1"
-source = "git+https://github.com/reem/rust-typeable#55154e1809db8ceec8f8519bdbb638c2fbd712f5"
+source = "git+https://github.com/reem/rust-typeable.git#55154e1809db8ceec8f8519bdbb638c2fbd712f5"
 
 [[package]]
 name = "typemap"
 version = "0.0.0"
-source = "git+https://github.com/reem/rust-typemap.git#e29b9c99827b469a9a3cc62a1e8c4f023946bce5"
+source = "git+https://github.com/reem/rust-typemap.git#55f0020b670b00a3521f35408f2ea72c95b82df0"
 dependencies = [
  "phantom 0.0.0 (git+https://github.com/reem/rust-phantom.git)",
- "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any)",
+ "unsafe-any 0.1.0 (git+https://github.com/reem/rust-unsafe-any.git)",
 ]
 
 [[package]]
 name = "unsafe-any"
 version = "0.1.0"
-source = "git+https://github.com/reem/rust-unsafe-any#75cff194795447a901c1658e31629899c9c8d52f"
+source = "git+https://github.com/reem/rust-unsafe-any.git#2863af363bbd83079b6773920bba5b736408db33"
 
 [[package]]
 name = "url"
 version = "0.1.0"
-source = "git+https://github.com/servo/rust-url.git#9142b86a812ac5bc886f76235585557d8e002246"
+source = "git+https://github.com/servo/rust-url.git#8a61b7654ab5378b488225a1d8a9cbbbcbd38894"
 dependencies = [
- "encoding 0.1.0 (git+https://github.com/lifthrasiir/rust-encoding)",
+ "encoding 0.2.0 (git+https://github.com/lifthrasiir/rust-encoding)",
 ]
 
 [[package]]
 name = "uuid"
 version = "0.0.1"
-source = "git+https://github.com/rust-lang/uuid#c6159089a491ff4398c6d423263a085c95092a04"
+source = "git+https://github.com/rust-lang/uuid#7c5af48d4f9074717199e05a1895f42b9fb1c1f0"
 
 [[package]]
 name = "xxhash"
