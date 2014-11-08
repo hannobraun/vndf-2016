@@ -1,4 +1,6 @@
 use std::io::net::ip::Port;
+use std::io::timer::sleep;
+use std::time::Duration;
 
 use acceptance::{
 	random_port,
@@ -27,12 +29,17 @@ impl Rocks {
 	pub fn start(tree: Tree) -> Rocks {
 		let port = random_port(8000, 9000);
 
-		let mut process = Process::start("rocks", [
+		let process = Process::start("rocks", [
 			format!("--port={}", port).as_slice(),
 			format!("--root={}", tree.root().display()).as_slice(),
 		]);
 
-		process.read_stdout_line(); // Make sure it's ready
+		// Sleep to make sure that Rocks is listening. A better solution would
+		// be for Rocks to print a line once it is listening, but that is not
+		// possible at the moment. The Iron::listen method returns after it has
+		// spawned the listening thread, not once that thread is actually
+		// listening. This is an issue best fixed in Iron.
+		sleep(Duration::milliseconds(100));
 
 		Rocks {
 			port    : port,
