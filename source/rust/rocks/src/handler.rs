@@ -10,6 +10,7 @@ use iron::{
 	Set,
 };
 use iron::response::modifiers::{
+	Body,
 	Redirect,
 	Status,
 };
@@ -109,6 +110,7 @@ fn run_plugin(
 
 	let response = Response::new()
 		.set(Status(FromPrimitive::from_i64(code).unwrap()))
+		.set(Body(format!("Redirecting to {}\n", url)))
 		.set(Redirect(url));
 
 	Some(Ok(response))
