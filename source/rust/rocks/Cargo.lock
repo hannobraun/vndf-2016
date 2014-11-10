@@ -5,7 +5,7 @@ dependencies = [
  "acceptance 0.1.0",
  "hyper 0.0.1 (git+https://github.com/hyperium/hyper.git)",
  "iron 0.0.1 (git+https://github.com/iron/iron.git)",
- "static 0.1.0 (git+https://github.com/hannobraun/static.git)",
+ "static 0.1.0 (git+https://github.com/iron/static.git)",
  "toml 0.1.0 (git+https://github.com/alexcrichton/toml-rs)",
 ]
 
@@ -193,7 +193,7 @@ dependencies = [
 [[package]]
 name = "static"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/static.git#281603b2e9547c429b6d251d78c80e157da855ec"
+source = "git+https://github.com/iron/static.git#e2dd7457387ed97fe7eba257bf33ef2de60025cf"
 dependencies = [
  "iron 0.0.1 (git+https://github.com/iron/iron.git)",
  "iron-test 0.0.1 (git+https://github.com/reem/iron-test)",
