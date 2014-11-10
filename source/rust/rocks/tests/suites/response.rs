@@ -12,7 +12,7 @@ use infra::{
 fn it_should_return_a_custom_response() {
 	let tree = TreeBuilder::new()
 		.with_file(
-			"localhost/source/test.response",
+			"source/localhost/test.response",
 			DotResponse::new(301, "/other-directory").build().as_slice()
 		)
 		.build();
@@ -32,7 +32,7 @@ fn it_should_return_a_custom_response() {
 fn it_should_return_a_custom_response_for_a_directory() {
 	let tree = TreeBuilder::new()
 		.with_file(
-			"localhost/source/test/.response",
+			"source/localhost/test/.response",
 			DotResponse::new(301, "/other-directory").build().as_slice()
 		)
 		.build();

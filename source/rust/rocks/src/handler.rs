@@ -38,10 +38,8 @@ impl Handler for RocksHandler {
 			.serialize_host()
 			.unwrap();
 
-		let root_path = self.root_path.join(host.as_slice());
-
-		let public_path = root_path.join("public");
-		let source_path = root_path.join("source");
+		let public_path = self.root_path.join("public").join(host.as_slice());
+		let source_path = self.root_path.join("source").join(host.as_slice());
 
 		let static_handler = StaticWithCache::new(public_path);
 

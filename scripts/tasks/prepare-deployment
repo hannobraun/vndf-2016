@@ -12,7 +12,7 @@ rm -rf output &&
 ./scripts/tasks/package-client &&
 mkdir -p $CONTAINER_DIR &&
 cp source/docker/Dockerfile $CONTAINER_DIR &&
-cp -r source/http/vndf.de/public $CONTAINER_DIR/http &&
+cp -r source/http/public/vndf.de $CONTAINER_DIR/http &&
 cp -r source/nginx $CONTAINER_DIR &&
 cp -r source/upstart $CONTAINER_DIR &&
 cp source/initial-state.json $CONTAINER_DIR &&

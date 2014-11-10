@@ -9,7 +9,7 @@ use infra::Rocks;
 fn it_should_use_domain_folder_according_to_host_header() {
 	let file_contents = "this is a file";
 	let tree = TreeBuilder::new()
-		.with_file("www.example.com/public/test", file_contents)
+		.with_file("public/www.example.com/test", file_contents)
 		.build();
 
 	let rocks = Rocks::start(tree);
