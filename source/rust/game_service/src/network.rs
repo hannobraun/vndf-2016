@@ -67,7 +67,7 @@ impl Network {
 				Ok(event) => match event {
 					events::Message(recipients, message) => {
 						for &id in recipients.iter() {
-							let connection = match self.connections.find(&id) {
+							let connection = match self.connections.get(&id) {
 								Some(connection) => connection,
 								None             => return
 							};
@@ -79,7 +79,7 @@ impl Network {
 						}
 					},
 
-					events::Close(id, error) => match self.connections.pop(&id) {
+					events::Close(id, error) => match self.connections.remove(&id) {
 						Some(conn) => {
 							let _ =
 								write!(
@@ -112,7 +112,7 @@ impl Network {
 				else {
 					let client_id = fd as ConnId;
 
-					let conn = match self.connections.find_mut(&client_id) {
+					let conn = match self.connections.get_mut(&client_id) {
 						Some(result) => result,
 						None         => return
 					};
