@@ -377,7 +377,7 @@ impl Renderer {
 
 				self.drawables.push_billboard(Billboard {
 					position   : *position,
-					offset     : screen_offset + total_offset,
+					offset     : *screen_offset + total_offset,
 					texture    : texture,
 					transform  : *transform,
 					screen_size: self.window.size,

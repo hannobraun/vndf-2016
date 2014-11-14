@@ -1,7 +1,7 @@
 use gfx;
 
 
-pub static BASE: gfx::ShaderSource = shaders! {
+pub static BASE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -27,7 +27,7 @@ pub static BASE: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static PLANET: gfx::ShaderSource = shaders! {
+pub static PLANET: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -78,7 +78,7 @@ pub static PLANET: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static RINGS: gfx::ShaderSource = shaders! {
+pub static RINGS: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -135,7 +135,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static SIMPLE: gfx::ShaderSource = shaders! {
+pub static SIMPLE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -148,7 +148,7 @@ pub static SIMPLE: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static TEXTURE: gfx::ShaderSource = shaders! {
+pub static TEXTURE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 

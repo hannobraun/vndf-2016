@@ -1,7 +1,7 @@
 use gfx;
 
 
-pub static BASE: gfx::ShaderSource = shaders! {
+pub static BASE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -23,7 +23,7 @@ pub static BASE: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
+pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -51,7 +51,7 @@ pub static FIXED_SIZE_BILLBOARD: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static LINE: gfx::ShaderSource = shaders! {
+pub static LINE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -68,7 +68,7 @@ pub static LINE: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static PROJECTED_COURSE: gfx::ShaderSource = shaders! {
+pub static PROJECTED_COURSE: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -85,7 +85,7 @@ pub static PROJECTED_COURSE: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static RINGS: gfx::ShaderSource = shaders! {
+pub static RINGS: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
@@ -104,7 +104,7 @@ pub static RINGS: gfx::ShaderSource = shaders! {
 	"
 };
 
-pub static SCALED_BILLBOARD: gfx::ShaderSource = shaders! {
+pub static SCALED_BILLBOARD: gfx::ShaderSource<'static> = shaders! {
 	GLSL_150: b"
 		#version 150 core
 
