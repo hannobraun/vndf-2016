@@ -64,6 +64,7 @@ Topic ideas:
 - Beyond the navigation prototype (once it's out)
 - Looking back on my marketing efforts: How it started
 - Visual inspiration: Galactica's DRADIS
+- Recycle short story
 
 News for November:
 - http://www.reddit.com/r/space/comments/2k21dt/it_may_be_the_case_that_complex_life_on_earth_is/
