@@ -60,6 +60,7 @@ Topic ideas:
   - ~~October: Kerbal Space Program~~
   - November: DayZ
   - December: FTL
+- Check the rest of the vision file for further topic ideas
 - Announcing the navigation prototype
 - Beyond the navigation prototype (once it's out)
 - Looking back on my marketing efforts: How it started
