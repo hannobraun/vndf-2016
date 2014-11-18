@@ -58,7 +58,7 @@ Topic ideas:
 - An article about each game that inspires VNDF:
   - ~~September: EVE Online~~
   - ~~October: Kerbal Space Program~~
-  - November: DayZ
+  - ~~November: DayZ~~
   - December: FTL
 - Check the rest of the vision file for further topic ideas
 - Announcing the navigation prototype
@@ -69,15 +69,13 @@ Topic ideas:
 - Second inspirations series:
   - Homeworld
 
-News for November:
-- http://www.reddit.com/r/space/comments/2k21dt/it_may_be_the_case_that_complex_life_on_earth_is/
+News for December:
+- ...
 
 News for any month:
 - Asteroid video by Scott Manley
 - https://kheckeroth.com/solarSystem/
 - http://www.reddit.com/r/space/comments/2k0slk/this_earth_universe_size_comparison_still_blows/
-- http://joshworth.com/dev/pixelspace/pixelspace_solarsystem.html (check if I've already included it earlier)
-- Write about To The Moon
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
