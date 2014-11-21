@@ -2,6 +2,6 @@
 
 source project.conf
 
-./scripts/tasks/build-vndf &&
+./scripts/tasks/build-server &&
 cd source
 $GAME_SERVICE_BINARY
