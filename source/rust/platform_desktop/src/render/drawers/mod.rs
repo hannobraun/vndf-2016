@@ -204,7 +204,7 @@ impl Drawers {
 			base_drawer     : BaseDrawer::new(graphics, draw_state),
 			billboard_drawer: BillboardDrawer::new(graphics, draw_state),
 			line_drawer     : line::new_drawer(graphics, draw_state),
-			nav_disc_drawer : NavDiscDrawer::new(graphics, draw_state),
+			nav_disc_drawer : nav_disc::new_drawer(graphics, draw_state),
 			planet_drawer   : PlanetDrawer::new(graphics, draw_state),
 			projected_course_drawer: projected_course_drawer,
 		}
