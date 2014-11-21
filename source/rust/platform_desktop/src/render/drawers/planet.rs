@@ -20,6 +20,8 @@ use render::{
 	Vertex,
 };
 
+use super::Draw;
+
 
 #[shader_param(Batch)]
 struct Params {
@@ -90,7 +92,7 @@ pub struct Planet {
 	pub camera    : Camera,
 }
 
-impl Planet {
+impl Draw<Params> for Planet {
 	fn to_params(&self) -> Params {
 		let view = self.camera.to_transform();
 
