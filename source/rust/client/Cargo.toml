@@ -5,6 +5,7 @@ authors = [ "mail@hannobraun.de" ]
 
 [lib]
 name = "client"
+path = "src/lib/lib.rs"
 
 [[bin]]
 name = "vndf-client"
