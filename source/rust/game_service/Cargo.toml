@@ -8,6 +8,7 @@ name = "vndf-game-service"
 
 [lib]
 name = "game_service"
+path = "src/lib/lib.rs"
 
 
 [dependencies.game]
