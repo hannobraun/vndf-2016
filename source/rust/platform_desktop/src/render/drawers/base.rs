@@ -4,10 +4,7 @@ use cgmath::{
 };
 use gfx::{
 	mod,
-	DeviceHelper,
 	DrawState,
-	Frame,
-	ToSlice,
 };
 
 use render::{
@@ -17,7 +14,10 @@ use render::{
 	Vertex,
 };
 
-use super::Draw;
+use super::{
+	Draw,
+	Drawer,
+};
 
 
 #[shader_param(Batch)]
@@ -25,53 +25,6 @@ struct Params {
 	center   : [f32, ..3],
 	position : [f32, ..3],
 	transform: [[f32, ..4], ..4],
-}
-
-
-pub struct BaseDrawer {
-	pub batch: Batch,
-}
-
-impl BaseDrawer {
-	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BaseDrawer {
-		let vertices = [
-			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
-		];
-
-		let mesh  = graphics.device.create_mesh(vertices);
-		let slice = mesh.to_slice(gfx::TriangleStrip);
-
-		let program = graphics.device
-			.link_program(
-				shaders::vertex::BASE.clone(),
-				shaders::fragment::BASE.clone()
-			)
-			.unwrap_or_else(|error| panic!("error linking program: {}", error));
-
-		let batch = graphics
-			.make_batch(
-				&program,
-				&mesh,
-				slice,
-				draw_state,
-			)
-			.unwrap();
-
-		BaseDrawer {
-			batch: batch,
-		}
-	}
-
-	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, base: &Base) {
-		graphics.draw(
-			&self.batch,
-			&base.to_params(),
-			frame
-		);
-	}
 }
 
 
@@ -89,4 +42,28 @@ impl Draw<Params> for Base {
 			transform: self.transform.into_fixed(),
 		}
 	}
+}
+
+
+pub type BaseDrawer = Drawer<_ParamsLink, Params>;
+
+pub fn new_drawer(
+	graphics: &mut Graphics,
+	draw_state: &DrawState
+) -> BaseDrawer {
+	let vertices = [
+		Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
+		Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
+		Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
+		Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
+	];
+
+	Drawer::new(
+		graphics,
+		draw_state,
+		vertices,
+		gfx::TriangleStrip,
+		shaders::vertex::BASE.clone(),
+		shaders::fragment::BASE.clone(),
+	)
 }

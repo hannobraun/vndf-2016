@@ -201,7 +201,7 @@ impl Drawers {
 			projected_course::new_drawer(graphics, draw_state);
 
 		Drawers {
-			base_drawer     : BaseDrawer::new(graphics, draw_state),
+			base_drawer     : base::new_drawer(graphics, draw_state),
 			billboard_drawer: BillboardDrawer::new(graphics, draw_state),
 			line_drawer     : line::new_drawer(graphics, draw_state),
 			nav_disc_drawer : nav_disc::new_drawer(graphics, draw_state),
