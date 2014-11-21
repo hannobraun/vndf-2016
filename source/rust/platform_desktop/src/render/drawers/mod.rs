@@ -198,7 +198,7 @@ pub struct Drawers {
 impl Drawers {
 	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> Drawers {
 		let projected_course_drawer =
-			ProjectedCourseDrawer::new(graphics, draw_state);
+			projected_course::new_drawer(graphics, draw_state);
 
 		Drawers {
 			base_drawer     : BaseDrawer::new(graphics, draw_state),
@@ -206,6 +206,7 @@ impl Drawers {
 			line_drawer     : line::new_drawer(graphics, draw_state),
 			nav_disc_drawer : nav_disc::new_drawer(graphics, draw_state),
 			planet_drawer   : planet::new_drawer(graphics, draw_state),
+
 			projected_course_drawer: projected_course_drawer,
 		}
 	}
