@@ -1,9 +1,15 @@
 use gfx::{
+	mod,
+	DeviceHelper,
 	DrawState,
 	Frame,
+	ToSlice,
 };
 
-use render::Graphics;
+use render::{
+	Graphics,
+	Vertex,
+};
 
 use self::base::BaseDrawer;
 use self::billboard::BillboardDrawer;
@@ -121,6 +127,61 @@ impl Drawables {
 					),
 			}
 		}
+	}
+}
+
+
+struct Drawer<L, T> {
+	batch: gfx::batch::RefBatch<L, T>,
+}
+
+impl<L, T: gfx::shade::ShaderParam<L>, D: Draw<T>, > Drawer<L, T> {
+	pub fn new(
+		graphics       : &mut Graphics,
+		draw_state     : &DrawState,
+		vertices       : &[Vertex],
+		primitive      : gfx::PrimitiveType,
+		vertex_shader  : gfx::ShaderSource,
+		fragment_shader: gfx::ShaderSource,
+	) -> Drawer<L, T> {
+		let mesh  = graphics.device.create_mesh(vertices);
+		let slice = mesh.to_slice(primitive);
+
+		let program = graphics.device
+			.link_program(
+				vertex_shader,
+				fragment_shader,
+			)
+			.unwrap_or_else(
+				|error|
+					panic!("error linking program: {}", error)
+			);
+
+		let batch = graphics
+			.make_batch(
+				&program,
+				&mesh,
+				slice,
+				draw_state,
+			)
+			.unwrap();
+
+		Drawer {
+			batch: batch,
+		}
+	}
+
+	pub fn draw(
+		&self,
+		graphics: &mut Graphics,
+		frame   : &Frame,
+		drawable: &D,
+	) {
+		graphics.draw(
+			&self.batch,
+			&drawable.to_params(),
+			frame,
+		);
 	}
 }
 
