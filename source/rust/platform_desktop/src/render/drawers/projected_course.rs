@@ -18,6 +18,8 @@ use render::{
 	Vertex,
 };
 
+use super::Draw;
+
 
 #[shader_param(Batch)]
 struct Params {
@@ -86,7 +88,7 @@ pub struct ProjectedCourse {
 	pub transform: Transform,
 }
 
-impl ProjectedCourse {
+impl Draw<Params> for ProjectedCourse {
 	fn to_params(&self) -> Params {
 		let velocity = self.velocity
 			.mul_s(self.transform[3][3])
