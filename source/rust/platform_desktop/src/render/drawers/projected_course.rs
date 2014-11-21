@@ -71,17 +71,9 @@ impl ProjectedCourseDrawer {
 		frame           : &Frame,
 		projected_course: &ProjectedCourse
 	) {
-		let velocity = projected_course.velocity
-			.mul_s(projected_course.transform[3][3])
-			.mul_s(0.005);
-
 		graphics.draw(
 			&self.batch,
-			&Params {
-				position : projected_course.position.into_fixed(),
-				velocity : velocity.into_fixed(),
-				transform: projected_course.transform.into_fixed()
-			},
+			&projected_course.to_params(),
 			frame,
 		);
 	}
@@ -92,4 +84,18 @@ pub struct ProjectedCourse {
 	pub position : Vector3<f32>,
 	pub velocity : Vector3<f32>,
 	pub transform: Transform,
+}
+
+impl ProjectedCourse {
+	fn to_params(&self) -> Params {
+		let velocity = self.velocity
+			.mul_s(self.transform[3][3])
+			.mul_s(0.005);
+
+		Params {
+			position : self.position.into_fixed(),
+			velocity : velocity.into_fixed(),
+			transform: self.transform.into_fixed()
+		}
+	}
 }
