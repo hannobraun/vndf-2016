@@ -2,5 +2,5 @@
 
 source project.conf
 
-cd $RUST_SOURCE
+cd $RUST_SOURCE/vndf
 cargo build
