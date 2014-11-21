@@ -2,7 +2,5 @@
 
 source project.conf
 
-./scripts/tasks/build-server
-
-cd $RUST_SOURCE/vndf
-cargo build
+./scripts/tasks/build-server &&
+./scripts/tasks/build-client

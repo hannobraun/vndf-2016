@@ -6,6 +6,9 @@ authors = [ "mail@hannobraun.de" ]
 [lib]
 name = "client"
 
+[[bin]]
+name = "vndf-client"
+
 
 [dependencies.game]
 path = "../game"
