@@ -73,7 +73,26 @@ impl PlanetDrawer {
 	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, planet: &Planet) {
-		let view = planet.camera.to_transform();
+		graphics.draw(
+			&self.batch,
+			&planet.to_params(),
+			frame
+		);
+	}
+}
+
+
+pub struct Planet {
+	pub position  : Vector3<f32>,
+	pub radius    : f32,
+	pub color     : Vector3<f32>,
+	pub projection: Transform,
+	pub camera    : Camera,
+}
+
+impl Planet {
+	fn to_params(&self) -> Params {
+		let view = self.camera.to_transform();
 
 		let camera_right_world =
 			Vector3::new(
@@ -90,39 +109,24 @@ impl PlanetDrawer {
 			)
 			.normalize();
 
-		let transform = planet.projection.mul(&view);
+		let transform = self.projection.mul(&view);
 
 		let eye = Vector3::new(
-			planet.camera.eye().x as f32,
-			planet.camera.eye().y as f32,
-			planet.camera.eye().z as f32,
+			self.camera.eye().x as f32,
+			self.camera.eye().y as f32,
+			self.camera.eye().z as f32,
 		);
 
-		let params = Params {
-			position  : planet.position.into_fixed(),
-			radius    : planet.radius,
-			base_color: planet.color.into_fixed(),
-			projection: planet.projection.into_fixed(),
+		Params {
+			position  : self.position.into_fixed(),
+			radius    : self.radius,
+			base_color: self.color.into_fixed(),
+			projection: self.projection.into_fixed(),
 			transform : transform.into_fixed(),
 
-			distance_to_eye   : (eye - planet.position).length(),
+			distance_to_eye   : (eye - self.position).length(),
 			camera_right_world: camera_right_world.into_fixed(),
 			camera_up_world   : camera_up_world.into_fixed(),
-		};
-
-		graphics.draw(
-			&self.batch,
-			&params,
-			frame
-		);
+		}
 	}
-}
-
-
-pub struct Planet {
-	pub position  : Vector3<f32>,
-	pub radius    : f32,
-	pub color     : Vector3<f32>,
-	pub projection: Transform,
-	pub camera    : Camera,
 }
