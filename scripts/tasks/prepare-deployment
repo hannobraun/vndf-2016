@@ -2,8 +2,6 @@
 
 source project.conf
 
-export PATH=$RUST_TARGET:$PATH
-
 rm -rf output &&
 ./scripts/init &&
 ./scripts/tasks/run-tests &&
