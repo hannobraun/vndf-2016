@@ -6,7 +6,7 @@ use gfx::{
 use render::Graphics;
 
 use self::base::BaseDrawer;
-use self::billboard_drawer::BillboardDrawer;
+use self::billboard::BillboardDrawer;
 use self::line_drawer::LineDrawer;
 use self::nav_disc_drawer::NavDiscDrawer;
 use self::planet_drawer::PlanetDrawer;
@@ -14,7 +14,7 @@ use self::projected_course::ProjectedCourseDrawer;
 
 
 pub use self::base::Base;
-pub use self::billboard_drawer::Billboard;
+pub use self::billboard::Billboard;
 pub use self::line_drawer::Line;
 pub use self::nav_disc_drawer::NavDisc;
 pub use self::planet_drawer::Planet;
@@ -22,7 +22,7 @@ pub use self::projected_course::ProjectedCourse;
 
 
 mod base;
-mod billboard_drawer;
+mod billboard;
 mod line_drawer;
 mod nav_disc_drawer;
 mod planet_drawer;
