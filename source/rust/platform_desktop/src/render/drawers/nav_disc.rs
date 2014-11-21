@@ -57,7 +57,7 @@ pub fn new_drawer(
 		draw_state,
 		vertices,
 		gfx::TriangleStrip,
-		shaders::vertex::RINGS.clone(),
+		shaders::vertex::NAV_DISC.clone(),
 		shaders::fragment::NAV_DISC.clone(),
 	)
 }
