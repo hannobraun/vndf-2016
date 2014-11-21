@@ -4,7 +4,7 @@ source project.conf
 
 BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_BINARY)
 
-./scripts/tasks/build-vndf &&
+./scripts/tasks/build-client &&
 ./scripts/tasks/arrange-client $DIST_DIR &&
 cd $DIST_DIR &&
 $BINARY $@
