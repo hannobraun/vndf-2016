@@ -14,6 +14,8 @@ use render::{
 	Vertex,
 };
 
+use super::Draw;
+
 
 #[shader_param(Batch)]
 struct Params {
@@ -78,7 +80,7 @@ pub struct NavDisc {
 	pub transform: Transform,
 }
 
-impl NavDisc {
+impl Draw<Params> for NavDisc {
 	fn to_params(&self) -> Params {
 		Params {
 			radius   : self.radius,
