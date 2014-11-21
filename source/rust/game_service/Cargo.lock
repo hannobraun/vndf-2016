@@ -1,0 +1,52 @@
+[root]
+name = "game_service"
+version = "0.1.0"
+dependencies = [
+ "epoll 0.1.0",
+ "game 0.1.0",
+ "protocol 0.1.0",
+]
+
+[[package]]
+name = "cgmath"
+version = "0.0.1"
+source = "git+https://github.com/bjz/cgmath-rs.git#2fe17066b21949b03802a4af96aa7e5e4303bffc"
+
+[[package]]
+name = "epoll"
+version = "0.1.0"
+
+[[package]]
+name = "game"
+version = "0.1.0"
+dependencies = [
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
+ "net 0.1.0",
+ "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
+]
+
+[[package]]
+name = "net"
+version = "0.1.0"
+
+[[package]]
+name = "protocol"
+version = "0.1.0"
+dependencies = [
+ "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
+]
+
+[[package]]
+name = "rustecs"
+version = "0.1.0"
+source = "git+https://github.com/hannobraun/rustecs.git#cd844f90b3073626e4252ff46781bed6ab0b337e"
+dependencies = [
+ "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
+]
+
+[[package]]
+name = "rustecs_macros"
+version = "0.1.0"
+source = "git+https://github.com/hannobraun/rustecs.git#cd844f90b3073626e4252ff46781bed6ab0b337e"
+
