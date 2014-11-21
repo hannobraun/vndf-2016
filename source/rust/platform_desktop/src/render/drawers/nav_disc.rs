@@ -62,10 +62,7 @@ impl NavDiscDrawer {
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, nav_disc: &NavDisc) {
 		graphics.draw(
 			&self.batch,
-			&Params {
-				radius   : nav_disc.radius,
-				transform: nav_disc.transform.into_fixed()
-			},
+			&nav_disc.to_params(),
 			frame,
 		);
 
@@ -79,4 +76,13 @@ impl NavDiscDrawer {
 pub struct NavDisc {
 	pub radius   : f32,
 	pub transform: Transform,
+}
+
+impl NavDisc {
+	fn to_params(&self) -> Params {
+		Params {
+			radius   : self.radius,
+			transform: self.transform.into_fixed()
+		}
+	}
 }
