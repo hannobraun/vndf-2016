@@ -9,7 +9,7 @@ use self::base::BaseDrawer;
 use self::billboard::BillboardDrawer;
 use self::line::LineDrawer;
 use self::nav_disc::NavDiscDrawer;
-use self::planet_drawer::PlanetDrawer;
+use self::planet::PlanetDrawer;
 use self::projected_course::ProjectedCourseDrawer;
 
 
@@ -17,7 +17,7 @@ pub use self::base::Base;
 pub use self::billboard::Billboard;
 pub use self::line::Line;
 pub use self::nav_disc::NavDisc;
-pub use self::planet_drawer::Planet;
+pub use self::planet::Planet;
 pub use self::projected_course::ProjectedCourse;
 
 
@@ -25,7 +25,7 @@ mod base;
 mod billboard;
 mod line;
 mod nav_disc;
-mod planet_drawer;
+mod planet;
 mod projected_course;
 
 
