@@ -64,15 +64,9 @@ impl BaseDrawer {
 	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, base: &Base) {
-		let params = Params {
-			center   : base.center.into_fixed(),
-			position : base.position.into_fixed(),
-			transform: base.transform.into_fixed(),
-		};
-
 		graphics.draw(
 			&self.batch,
-			&params,
+			&base.to_params(),
 			frame
 		);
 	}
@@ -83,4 +77,14 @@ pub struct Base {
 	pub center   : Vector3<f32>,
 	pub position : Vector3<f32>,
 	pub transform: Transform,
+}
+
+impl Base {
+	fn to_params(&self) -> Params {
+		Params {
+			center   : self.center.into_fixed(),
+			position : self.position.into_fixed(),
+			transform: self.transform.into_fixed(),
+		}
+	}
 }
