@@ -29,6 +29,11 @@ mod planet;
 mod projected_course;
 
 
+pub trait Draw<T> {
+	fn to_params(&self) -> T;
+}
+
+
 pub enum Drawable {
 	IsBase(Base),
 	IsBillboard(Billboard),
