@@ -5,10 +5,7 @@ use cgmath::{
 };
 use gfx::{
 	mod,
-	DeviceHelper,
 	DrawState,
-	Frame,
-	ToSlice,
 };
 
 use render::{
@@ -19,7 +16,10 @@ use render::{
 };
 use render::texture::Texture;
 
-use super::Draw;
+use super::{
+	Draw,
+	Drawer,
+};
 
 
 #[shader_param(Batch)]
@@ -30,58 +30,6 @@ struct Params {
 	offset     : [f32, ..2],
 	screen_size: [f32, ..2],
 	tex        : gfx::shade::TextureParam,
-}
-
-
-pub struct BillboardDrawer {
-	pub batch: Batch,
-}
-
-impl BillboardDrawer {
-	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> BillboardDrawer {
-		let vertices = [
-			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
-		];
-
-		let mesh  = graphics.device.create_mesh(vertices);
-		let slice = mesh.to_slice(gfx::TriangleStrip);
-
-		let program = graphics.device
-			.link_program(
-				shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
-				shaders::fragment::TEXTURE.clone()
-			)
-			.unwrap_or_else(|error| panic!("error linking program: {}", error));
-
-		let batch = graphics
-			.make_batch(
-				&program,
-				&mesh,
-				slice,
-				draw_state,
-			)
-			.unwrap();
-
-		BillboardDrawer {
-			batch: batch,
-		}
-	}
-
-	pub fn draw(
-		&self,
-		graphics : &mut Graphics,
-		frame    : &Frame,
-		billboard: &Billboard,
-	) {
-		graphics.draw(
-			&self.batch,
-			&billboard.to_params(),
-			frame
-		);
-	}
 }
 
 
@@ -104,4 +52,28 @@ impl Draw<Params> for Billboard {
 			tex        : self.texture.param,
 		}
 	}
+}
+
+
+pub type BillboardDrawer = Drawer<_ParamsLink, Params>;
+
+pub fn new_drawer(
+	graphics: &mut Graphics,
+	draw_state: &DrawState
+) -> BillboardDrawer {
+	let vertices = [
+		Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
+		Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
+		Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
+		Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
+	];
+
+	Drawer::new(
+		graphics,
+		draw_state,
+		vertices,
+		gfx::TriangleStrip,
+		shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
+		shaders::fragment::TEXTURE.clone(),
+	)
 }
