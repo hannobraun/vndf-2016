@@ -3,8 +3,8 @@
 /source/rust/**/target
 /source/rust/**/Cargo.lock
 !/source/rust/client/Cargo.lock
-!/source/rust/game_service/Cargo.lock
-!/source/rust/vndf/Cargo.lock
 !/source/rust/http/Cargo.lock
+!/source/rust/game_service/Cargo.lock
+!/source/rust/test_suite/Cargo.lock
 
 /output
