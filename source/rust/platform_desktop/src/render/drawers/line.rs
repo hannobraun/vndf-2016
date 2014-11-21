@@ -17,6 +17,8 @@ use render::{
 	Vertex,
 };
 
+use super::Draw;
+
 
 #[shader_param(Batch)]
 struct Params {
@@ -77,7 +79,7 @@ pub struct Line {
 	pub transform: Transform,
 }
 
-impl Line {
+impl Draw<Params> for Line {
 	fn to_params(&self) -> Params {
 		Params {
 			center   : self.center.into_fixed(),
