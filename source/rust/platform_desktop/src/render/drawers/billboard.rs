@@ -74,18 +74,9 @@ impl BillboardDrawer {
 		frame    : &Frame,
 		billboard: &Billboard,
 	) {
-		let params = Params {
-			position   : billboard.position.into_fixed(),
-			transform  : billboard.transform.into_fixed(),
-			size       : billboard.texture.size.into_fixed(),
-			offset     : billboard.offset.into_fixed(),
-			screen_size: billboard.screen_size.into_fixed(),
-			tex        : billboard.texture.param,
-		};
-
 		graphics.draw(
 			&self.batch,
-			&params,
+			&billboard.to_params(),
 			frame
 		);
 	}
@@ -98,4 +89,17 @@ pub struct Billboard {
 	pub texture    : Texture,
 	pub transform  : Transform,
 	pub screen_size: Vector2<f32>,
+}
+
+impl Billboard {
+	fn to_params(&self) -> Params {
+		Params {
+			position   : self.position.into_fixed(),
+			transform  : self.transform.into_fixed(),
+			size       : self.texture.size.into_fixed(),
+			offset     : self.offset.into_fixed(),
+			screen_size: self.screen_size.into_fixed(),
+			tex        : self.texture.param,
+		}
+	}
 }
