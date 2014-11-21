@@ -19,6 +19,8 @@ use render::{
 };
 use render::texture::Texture;
 
+use super::Draw;
+
 
 #[shader_param(Batch)]
 struct Params {
@@ -91,7 +93,7 @@ pub struct Billboard {
 	pub screen_size: Vector2<f32>,
 }
 
-impl Billboard {
+impl Draw<Params> for Billboard {
 	fn to_params(&self) -> Params {
 		Params {
 			position   : self.position.into_fixed(),
