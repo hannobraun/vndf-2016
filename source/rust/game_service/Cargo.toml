@@ -3,6 +3,9 @@ name    = "game_service"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
+[[bin]]
+name = "vndf-game-service"
+
 [lib]
 name = "game_service"
 

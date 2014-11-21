@@ -2,7 +2,5 @@
 
 source project.conf
 
-./scripts/tasks/build-server
-
-cd $RUST_SOURCE/vndf
+cd $RUST_SOURCE/game_service
 cargo build

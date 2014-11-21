@@ -7,10 +7,6 @@ authors = [ "mail@hannobraun.de" ]
 name = "vndf-client"
 test = false
 
-[[bin]]
-name = "vndf-game-service"
-test = false
-
 
 [dependencies.client]
 path = "../client"
