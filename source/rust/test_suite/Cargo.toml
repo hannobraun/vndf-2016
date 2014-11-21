@@ -1,5 +1,5 @@
 [package]
-name    = "vndf"
+name    = "test_suite"
 version = "0.1.0"
 authors = [ "mail@hannobraun.de" ]
 
