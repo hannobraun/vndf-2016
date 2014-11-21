@@ -5,10 +5,7 @@ use cgmath::{
 };
 use gfx::{
 	mod,
-	DeviceHelper,
 	DrawState,
-	Frame,
-	ToSlice,
 };
 
 use platform::Camera;
@@ -20,7 +17,10 @@ use render::{
 	Vertex,
 };
 
-use super::Draw;
+use super::{
+	Draw,
+	Drawer,
+};
 
 
 #[shader_param(Batch)]
@@ -34,53 +34,6 @@ struct Params {
 	distance_to_eye   : f32,
 	camera_right_world: [f32, ..3],
 	camera_up_world   : [f32, ..3],
-}
-
-
-pub struct PlanetDrawer {
-	batch : Batch,
-}
-
-impl PlanetDrawer {
-	pub fn new(graphics: &mut Graphics, draw_state: &DrawState) -> PlanetDrawer {
-		let vertices = [
-			Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
-			Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
-			Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
-			Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
-		];
-
-		let mesh  = graphics.device.create_mesh(vertices);
-		let slice = mesh.to_slice(gfx::TriangleStrip);
-
-		let program = graphics.device
-			.link_program(
-				shaders::vertex::SCALED_BILLBOARD.clone(),
-				shaders::fragment::PLANET.clone()
-			)
-			.unwrap_or_else(|error| panic!("error linking program: {}", error));
-
-		let batch = graphics
-			.make_batch(
-				&program,
-				&mesh,
-				slice,
-				draw_state,
-			)
-			.unwrap();
-
-		PlanetDrawer {
-			batch : batch,
-		}
-	}
-
-	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame, planet: &Planet) {
-		graphics.draw(
-			&self.batch,
-			&planet.to_params(),
-			frame
-		);
-	}
 }
 
 
@@ -131,4 +84,28 @@ impl Draw<Params> for Planet {
 			camera_up_world   : camera_up_world.into_fixed(),
 		}
 	}
+}
+
+
+pub type PlanetDrawer = Drawer<_ParamsLink, Params>;
+
+pub fn new_drawer(
+	graphics: &mut Graphics,
+	draw_state: &DrawState
+) -> PlanetDrawer {
+	let vertices = [
+		Vertex::new([ -1.0, -1.0, 0.0 ], [ 0.0, 1.0 ]),
+		Vertex::new([  1.0, -1.0, 0.0 ], [ 1.0, 1.0 ]),
+		Vertex::new([ -1.0,  1.0, 0.0 ], [ 0.0, 0.0 ]),
+		Vertex::new([  1.0,  1.0, 0.0 ], [ 1.0, 0.0 ]),
+	];
+
+	Drawer::new(
+		graphics,
+		draw_state,
+		vertices,
+		gfx::TriangleStrip,
+		shaders::vertex::SCALED_BILLBOARD.clone(),
+		shaders::fragment::PLANET.clone(),
+	)
 }
