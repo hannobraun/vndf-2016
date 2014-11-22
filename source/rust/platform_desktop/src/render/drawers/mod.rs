@@ -41,12 +41,12 @@ pub trait Draw<T> {
 
 
 pub enum Drawable {
-	IsBase(Base),
-	IsBillboard(Billboard),
-	IsLine(Line),
-	IsNavDisc(NavDisc),
-	IsPlanet(Planet),
-	IsProjectedCourse(ProjectedCourse),
+	Base(Base),
+	Billboard(Billboard),
+	Line(Line),
+	NavDisc(NavDisc),
+	Planet(Planet),
+	ProjectedCourse(ProjectedCourse),
 }
 
 
@@ -68,58 +68,58 @@ impl Drawables {
 	}
 
 	pub fn push_base(&mut self, base: Base) {
-		self.drawables.push(Drawable::IsBase(base));
+		self.drawables.push(Drawable::Base(base));
 	}
 	pub fn push_billboard(&mut self, billboard: Billboard) {
-		self.drawables.push(Drawable::IsBillboard(billboard));
+		self.drawables.push(Drawable::Billboard(billboard));
 	}
 	pub fn push_line(&mut self, line: Line) {
-		self.drawables.push(Drawable::IsLine(line));
+		self.drawables.push(Drawable::Line(line));
 	}
 	pub fn push_nav_disc(&mut self, nav_disc: NavDisc) {
-		self.drawables.push(Drawable::IsNavDisc(nav_disc));
+		self.drawables.push(Drawable::NavDisc(nav_disc));
 	}
 	pub fn push_planet(&mut self, planet: Planet) {
-		self.drawables.push(Drawable::IsPlanet(planet));
+		self.drawables.push(Drawable::Planet(planet));
 	}
 	pub fn push_projected_course(&mut self, projected_course: ProjectedCourse) {
-		self.drawables.push(Drawable::IsProjectedCourse(projected_course));
+		self.drawables.push(Drawable::ProjectedCourse(projected_course));
 	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame) {
 		for drawable in self.drawables.iter() {
 			match *drawable {
-				Drawable::IsBase(base) =>
+				Drawable::Base(base) =>
 					self.drawers.base.draw(
 						graphics,
 						frame,
 						&base,
 					),
-				Drawable::IsBillboard(billboard) =>
+				Drawable::Billboard(billboard) =>
 					self.drawers.billboard.draw(
 						graphics,
 						frame,
 						&billboard,
 					),
-				Drawable::IsLine(line) =>
+				Drawable::Line(line) =>
 					self.drawers.line.draw(
 						graphics,
 						frame,
 						&line,
 					),
-				Drawable::IsNavDisc(nav_disc) =>
+				Drawable::NavDisc(nav_disc) =>
 					self.drawers.nav_disc.draw(
 						graphics,
 						frame,
 						&nav_disc,
 					),
-				Drawable::IsPlanet(planet) =>
+				Drawable::Planet(planet) =>
 					self.drawers.planet.draw(
 						graphics,
 						frame,
 						&planet,
 					),
-				Drawable::IsProjectedCourse(projected_course) =>
+				Drawable::ProjectedCourse(projected_course) =>
 					self.drawers.projected_course.draw(
 						graphics,
 						frame,
