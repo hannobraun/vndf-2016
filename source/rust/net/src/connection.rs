@@ -122,7 +122,7 @@ impl Connection {
 				kind  : OtherIoError,
 				desc  : "Could not send all bytes",
 				detail: Some(format!(
-					"Only sent {:d} of {:u} bytes",
+					"Only sent {} of {} bytes",
 					bytes_sent,
 					data.len()))
 			})
