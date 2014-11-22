@@ -101,7 +101,7 @@ impl Connection {
 			transmute(message_length as MessageLength)
 		};
 
-		try!(self.send(length_as_bytes));
+		try!(self.send(&length_as_bytes));
 		self.send(data)
 	}
 
