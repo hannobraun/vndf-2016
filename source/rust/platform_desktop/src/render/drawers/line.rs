@@ -59,7 +59,7 @@ pub fn new_drawer(
 	Drawer::new(
 		graphics,
 		draw_state,
-		vertices,
+		&vertices,
 		gfx::Line,
 		shaders::vertex::LINE.clone(),
 		shaders::fragment::SIMPLE.clone(),

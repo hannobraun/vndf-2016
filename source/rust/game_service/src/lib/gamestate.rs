@@ -83,17 +83,17 @@ impl GameState {
 					print!("Incoming event: {}\n", event);
 
 					match event {
-						events::Init =>
+						GameEvent::Init =>
 							(), // nothing do do, it just exists for the logging
-						events::Enter(client_id) =>
+						GameEvent::Enter(client_id) =>
 							self.on_enter(client_id),
-						events::Leave(client_id) =>
+						GameEvent::Leave(client_id) =>
 							self.on_leave(client_id),
-						events::Update(frame_time_in_s) =>
+						GameEvent::Update(frame_time_in_s) =>
 							self.on_update(frame_time_in_s),
-						events::Action(client_id, action) =>
+						GameEvent::Action(client_id, action) =>
 							self.on_action(client_id, action),
-						events::MissileLaunch(position, attitude) =>
+						GameEvent::MissileLaunch(position, attitude) =>
 							self.on_missile_launch(position, attitude)
 					}
 				},
@@ -181,7 +181,7 @@ impl GameState {
 			);
 
 			self.network.send(
-				events::Message(vec!(player.client_id), perception)
+				NetworkEvent::Message(vec!(player.client_id), perception)
 			);
 
 			player.last_snapshot = entities.clone();
@@ -215,7 +215,7 @@ impl GameState {
 
 		if action.missile > player.missile_index {
 			self.events.send(
-				events::MissileLaunch(
+				GameEvent::MissileLaunch(
 					body.position,
 					body.attitude,
 				)

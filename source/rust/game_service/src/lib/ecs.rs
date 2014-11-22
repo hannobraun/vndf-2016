@@ -2,6 +2,7 @@ use cgmath::{
 	EuclideanVector,
 	Vector,
 	Vector3,
+	zero,
 };
 
 use game::ecs::Entity as SharedEntity;
@@ -50,7 +51,7 @@ pub fn integrate(delta_time_in_s: f64, bodies: &mut Components<Body>) {
 	for (_, body) in bodies.iter_mut() {
 		body.velocity = body.velocity + body.force.mul_s(delta_time_in_s);
 		body.position = body.position + body.velocity.mul_s(delta_time_in_s);
-		body.force    = Vector3::zero();
+		body.force    = zero();
 	}
 }
 

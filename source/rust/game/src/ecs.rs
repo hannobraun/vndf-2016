@@ -1,4 +1,7 @@
-use cgmath::Vector3;
+use cgmath::{
+	Vector3,
+	zero,
+};
 
 use physics::Body;
 
@@ -14,7 +17,7 @@ pub struct Planet {
 impl Planet {
 	pub fn new() -> Planet {
 		Planet {
-			position: Vector3::zero(),
+			position: zero(),
 			radius  : 1.0,
 			mass    : 1.0,
 			color   : Vector3::new(1.0, 1.0, 1.0),

@@ -1,7 +1,14 @@
 use cgmath::Vector2;
 use gfx;
-use glfw;
-use glfw::Context;
+use glfw::{
+	mod,
+	Action,
+	Context,
+	Key,
+	OpenGlProfileHint,
+	WindowHint,
+	WindowMode,
+};
 
 
 pub struct Window {
@@ -20,17 +27,17 @@ impl Window {
 			Err(error) => panic!(format!("{}", error))
 		};
 
-		glfw.window_hint(glfw::ContextVersion(3, 2));
-		glfw.window_hint(glfw::OpenglForwardCompat(true));
-		glfw.window_hint(glfw::OpenglProfile(glfw::OpenGlCoreProfile));
-		glfw.window_hint(glfw::Samples(16));
+		glfw.window_hint(WindowHint::ContextVersion(3, 2));
+		glfw.window_hint(WindowHint::OpenglForwardCompat(true));
+		glfw.window_hint(WindowHint::OpenglProfile(OpenGlProfileHint::Core));
+		glfw.window_hint(WindowHint::Samples(16));
 
 		let (window, _) =
 			glfw.create_window(
 				width as u32,
 				height as u32,
 				"Von Neumann Defense Force *EARLY PROTOTYPE*",
-				glfw::Windowed
+				WindowMode::Windowed
 			)
 			.expect("failed to create window");
 
@@ -50,13 +57,13 @@ impl Window {
 		gfx::GlDevice::new(|s| self.glfw_window.get_proc_address(s))
 	}
 
-	pub fn key_pressed(&self, key: glfw::Key) -> bool {
-		self.glfw_window.get_key(key) == glfw::Press
+	pub fn key_pressed(&self, key: Key) -> bool {
+		self.glfw_window.get_key(key) == Action::Press
 	}
 
 	pub fn should_close(&self) -> bool {
 		self.glfw_window.should_close() ||
-			self.glfw_window.get_key(glfw::KeyEscape) == glfw::Press
+			self.glfw_window.get_key(Key::Escape) == Action::Press
 	}
 
 	pub fn swap_buffers(&self) {

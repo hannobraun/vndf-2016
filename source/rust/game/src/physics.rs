@@ -1,6 +1,7 @@
 use cgmath::{
 	Quaternion,
 	Vector3,
+	zero,
 };
 
 
@@ -15,9 +16,9 @@ pub struct Body {
 impl Body {
 	pub fn new() -> Body {
 		Body {
-			position: Vector3::zero(),
-			velocity: Vector3::zero(),
-			force   : Vector3::zero(),
+			position: zero(),
+			velocity: zero(),
+			force   : zero(),
 			attitude: Quaternion::zero(),
 		}
 	}

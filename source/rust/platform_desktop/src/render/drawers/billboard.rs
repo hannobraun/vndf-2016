@@ -71,7 +71,7 @@ pub fn new_drawer(
 	Drawer::new(
 		graphics,
 		draw_state,
-		vertices,
+		&vertices,
 		gfx::TriangleStrip,
 		shaders::vertex::FIXED_SIZE_BILLBOARD.clone(),
 		shaders::fragment::TEXTURE.clone(),

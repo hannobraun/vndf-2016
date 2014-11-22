@@ -6,6 +6,7 @@ extern crate game;
 
 
 use serialize::json;
+use std::num::FloatMath;
 
 use cgmath::{
 	Matrix4,
@@ -13,6 +14,7 @@ use cgmath::{
 	Quaternion,
 	Rad,
 	Vector3,
+	zero,
 };
 
 use game::ecs::Planet;
@@ -89,7 +91,7 @@ pub struct Camera {
 impl Camera {
 	pub fn new() -> Camera {
 		Camera {
-			center     : Vector3::zero(),
+			center     : zero(),
 			perspective: (Rad::zero(), Rad::zero()),
 			distance   : 500.0,
 		}

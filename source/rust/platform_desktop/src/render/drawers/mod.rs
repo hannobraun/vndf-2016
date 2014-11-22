@@ -68,58 +68,58 @@ impl Drawables {
 	}
 
 	pub fn push_base(&mut self, base: Base) {
-		self.drawables.push(IsBase(base));
+		self.drawables.push(Drawable::IsBase(base));
 	}
 	pub fn push_billboard(&mut self, billboard: Billboard) {
-		self.drawables.push(IsBillboard(billboard));
+		self.drawables.push(Drawable::IsBillboard(billboard));
 	}
 	pub fn push_line(&mut self, line: Line) {
-		self.drawables.push(IsLine(line));
+		self.drawables.push(Drawable::IsLine(line));
 	}
 	pub fn push_nav_disc(&mut self, nav_disc: NavDisc) {
-		self.drawables.push(IsNavDisc(nav_disc));
+		self.drawables.push(Drawable::IsNavDisc(nav_disc));
 	}
 	pub fn push_planet(&mut self, planet: Planet) {
-		self.drawables.push(IsPlanet(planet));
+		self.drawables.push(Drawable::IsPlanet(planet));
 	}
 	pub fn push_projected_course(&mut self, projected_course: ProjectedCourse) {
-		self.drawables.push(IsProjectedCourse(projected_course));
+		self.drawables.push(Drawable::IsProjectedCourse(projected_course));
 	}
 
 	pub fn draw(&self, graphics: &mut Graphics, frame: &Frame) {
 		for drawable in self.drawables.iter() {
 			match *drawable {
-				IsBase(base) =>
+				Drawable::IsBase(base) =>
 					self.drawers.base.draw(
 						graphics,
 						frame,
 						&base,
 					),
-				IsBillboard(billboard) =>
+				Drawable::IsBillboard(billboard) =>
 					self.drawers.billboard.draw(
 						graphics,
 						frame,
 						&billboard,
 					),
-				IsLine(line) =>
+				Drawable::IsLine(line) =>
 					self.drawers.line.draw(
 						graphics,
 						frame,
 						&line,
 					),
-				IsNavDisc(nav_disc) =>
+				Drawable::IsNavDisc(nav_disc) =>
 					self.drawers.nav_disc.draw(
 						graphics,
 						frame,
 						&nav_disc,
 					),
-				IsPlanet(planet) =>
+				Drawable::IsPlanet(planet) =>
 					self.drawers.planet.draw(
 						graphics,
 						frame,
 						&planet,
 					),
-				IsProjectedCourse(projected_course) =>
+				Drawable::IsProjectedCourse(projected_course) =>
 					self.drawers.projected_course.draw(
 						graphics,
 						frame,

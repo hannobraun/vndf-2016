@@ -2,6 +2,7 @@ use cgmath::{
 	Line,
 	Point,
 	Vector3,
+	zero,
 };
 
 use game::ecs::{
@@ -24,7 +25,7 @@ fn it_should_interpolate_between_perceptions() {
 
 	game_service.accept_client();
 
-	let pos_1 = Vector3::zero();
+	let pos_1 = zero();
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = Entity {
@@ -92,7 +93,7 @@ fn the_camera_should_follow_the_ship() {
 
 	game_service.accept_client();
 
-	let pos_1 = Vector3::zero();
+	let pos_1 = zero();
 	let pos_2 = Vector3::new(10.0, 0.0, 0.0);
 
 	let mut entity = Entity {

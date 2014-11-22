@@ -1,7 +1,7 @@
 use std::os;
 
 use super::args;
-use super::events::Init;
+use super::events::GameEvent;
 use super::gamestate::GameState;
 use super::network::Network;
 use super::updater;
@@ -27,7 +27,7 @@ pub fn run() {
 
 	updater::init(frame_time_in_ms as u64, game_state.events.clone());
 
-	game_state.events.send(Init);
+	game_state.events.send(GameEvent::Init);
 
 	loop {
 		network.update(frame_time_in_ms, &mut game_state.events);

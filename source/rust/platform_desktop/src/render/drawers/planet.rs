@@ -103,7 +103,7 @@ pub fn new_drawer(
 	Drawer::new(
 		graphics,
 		draw_state,
-		vertices,
+		&vertices,
 		gfx::TriangleStrip,
 		shaders::vertex::SCALED_BILLBOARD.clone(),
 		shaders::fragment::PLANET.clone(),

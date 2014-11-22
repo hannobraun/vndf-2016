@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::num::Float;
 use std::rc::Rc;
 
 use cgmath::{
@@ -15,6 +16,7 @@ use cgmath::{
 	Vector,
 	Vector2,
 	Vector3,
+	zero,
 };
 use gfx;
 
@@ -204,7 +206,7 @@ impl Renderer {
 
 		self.drawables.push_billboard(Billboard {
 			position   : position,
-			offset     : Vector2::zero(),
+			offset     : zero(),
 			texture    : texture,
 			transform  : view_projection,
 			screen_size: self.window.size,
@@ -222,7 +224,7 @@ impl Renderer {
 
 		let text_offset = texture.size.div_s(2.0);
 		self.push_text(
-			format!("pos: {:i} / {:i} / {:i}",
+			format!("pos: {} / {} / {}",
 				body.position.x as int,
 				body.position.y as int,
 				body.position.z as int,
@@ -235,7 +237,7 @@ impl Renderer {
 
 		let text_offset = text_offset - Vector2::new(0.0, 15.0);
 		self.push_text(
-			format!("vel: {:i} / {:i} / {:i}",
+			format!("vel: {} / {} / {}",
 				body.velocity.x as int,
 				body.velocity.y as int,
 				body.velocity.z as int,
@@ -265,7 +267,7 @@ impl Renderer {
 		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
-			&Vector2::zero(),
+			&zero(),
 			&view_projection,
 		);
 
@@ -273,7 +275,7 @@ impl Renderer {
 		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
-			&Vector2::zero(),
+			&zero(),
 			&view_projection,
 		);
 
@@ -281,11 +283,11 @@ impl Renderer {
 		self.push_text(
 			format!("{} km", ring_radius.round()).as_slice(),
 			&(camera_center + Vector3::new(ring_radius, 0.0, 0.0)),
-			&Vector2::zero(),
+			&zero(),
 			&view_projection,
 		);
 
-		let angles: &[f32] = [
+		let angles = [
 			30.0,
 			60.0,
 			90.0,
@@ -303,7 +305,7 @@ impl Renderer {
 			self.push_text(
 				format!("{}°", angle as u16).as_slice(),
 				&(camera_center + rotation.rotate_vector(&Vector2::new(radius, 0.0)).extend(0.0)),
-				&Vector2::zero(),
+				&zero(),
 				&view_projection,
 			);
 		}
@@ -323,32 +325,32 @@ impl Renderer {
 
 		self.push_text(
 			"Move camera with WASD; change zoom with R and F",
-			&Vector3::zero(),
+			&zero(),
 			&Vector2::new(20.0, 60.0),
 			&projection,
 		);
 		self.push_text(
 			"Change attitude with the cursor keys, toggle thrust with Space",
-			&Vector3::zero(),
+			&zero(),
 			&Vector2::new(20.0, 40.0),
 			&projection,
 		);
 		self.push_text(
 			"Shoot missiles with Enter",
-			&Vector3::zero(),
+			&zero(),
 			&Vector2::new(20.0, 20.0),
 			&projection,
 		);
 
 		self.push_text(
 			format!("{}", input.attitude).as_slice(),
-			&Vector3::zero(),
+			&zero(),
 			&Vector2::new(right - 100.0, 40.0),
 			&projection,
 		);
 		self.push_text(
 			if input.thrust { "Thrust ON" } else { "Thrust OFF" },
-			&Vector3::zero(),
+			&zero(),
 			&Vector2::new(right - 100.0, 20.0),
 			&projection,
 		);
@@ -361,7 +363,7 @@ impl Renderer {
 		screen_offset: &Vector2<f32>,
 		transform    : &Transform
 	) {
-		let mut total_advance = Vector2::zero();
+		let mut total_advance = zero();
 
 		for c in text.chars() {
 			let (offset, advance) = {

@@ -14,7 +14,7 @@ impl Client {
 	pub fn start(port: u16) -> Client {
 		let process = Process::start(
 			"vndf-client",
-			[
+			&[
 				format!("--headless").as_slice(),
 				format!("--address=localhost").as_slice(),
 				format!("--port={}", port).as_slice(),

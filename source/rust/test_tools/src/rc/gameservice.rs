@@ -28,7 +28,7 @@ impl GameService {
 
 		let mut process = Process::start(
 			"vndf-game-service",
-			[
+			&[
 				format!("--port={}", port).as_slice(),
 				format!("--frame-time=10").as_slice(),
 				format!("--initial-state={}",
