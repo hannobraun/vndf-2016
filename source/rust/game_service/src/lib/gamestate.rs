@@ -38,7 +38,6 @@ use super::ecs::{
 	Player,
 };
 use super::events::{
-	mod,
 	GameEvent,
 	NetworkEvent,
 };

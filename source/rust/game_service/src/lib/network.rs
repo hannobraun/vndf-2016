@@ -15,7 +15,6 @@ use net::{
 use protocol::Action;
 
 use super::events::{
-	mod,
 	GameEvent,
 	NetworkEvent,
 };

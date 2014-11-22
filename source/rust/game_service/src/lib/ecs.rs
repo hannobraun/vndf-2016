@@ -1,7 +1,6 @@
 use cgmath::{
 	EuclideanVector,
 	Vector,
-	Vector3,
 	zero,
 };
 
