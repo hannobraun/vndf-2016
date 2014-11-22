@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(echo "Cleaning client..."; cd $RUST_SOURCE/client; cargo clean)
+(echo "Cleaning game_service..."; cd $RUST_SOURCE/game_service; cargo clean)
+(echo "Cleaning test_suite..."; cd $RUST_SOURCE/test_suite; cargo clean)
