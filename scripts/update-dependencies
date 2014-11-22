@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+source project.conf
+
+(echo "Updating client..."; cd $RUST_SOURCE/client; cargo update)
+(echo "Updating game_service..."; cd $RUST_SOURCE/game_service; cargo update)
+(echo "Updating test_suite..."; cd $RUST_SOURCE/test_suite; cargo update)
