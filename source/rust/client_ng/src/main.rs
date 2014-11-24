@@ -39,8 +39,7 @@ fn main() {
 			}
 		}
 
-		print!("\x1b[1A\x1b[2K");
-		print!("{}\n", i);
+		write(i);
 
 		i += 1;
 		sleep(Duration::milliseconds(200));
@@ -63,4 +62,9 @@ fn input() -> Receiver<String> {
 	});
 
 	receiver
+}
+
+fn write(i: u8) {
+	print!("\x1b[1A\x1b[2K");
+	print!("{}\n", i);
 }
