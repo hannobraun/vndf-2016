@@ -5,8 +5,9 @@ use std::time::Duration;
 fn main() {
 	let mut i = 0u8;
 
+	print!("\n");
 	loop {
-		print!("{}\n", i);
+		print!("\x1b[1A{}\n", i);
 
 		i += 1;
 		sleep(Duration::milliseconds(200));
