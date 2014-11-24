@@ -4,7 +4,8 @@ extern crate libc;
 use std::io::timer::sleep;
 use std::time::Duration;
 
-use termios::{
+use termios::ffi::{
+	mod,
 	ECHO,
 	FAILURE,
 	ICANON,
@@ -20,7 +21,7 @@ mod termios;
 
 
 fn main() {
-	let mut termios = termios::termios {
+	let mut termios = ffi::termios {
 		c_iflag: 0,
 		c_oflag: 0,
 		c_cflag: 0,
