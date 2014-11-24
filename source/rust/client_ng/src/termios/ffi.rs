@@ -7,9 +7,9 @@ use libc::{
 };
 
 
-type cc_t     = c_uchar;
-type speed_t  = c_uint;
-type tcflag_t = c_uint;
+pub type cc_t     = c_uchar;
+pub type speed_t  = c_uint;
+pub type tcflag_t = c_uint;
 
 
 extern {
