@@ -39,7 +39,8 @@ fn main() {
 			}
 		}
 
-		print!("\x1b[1A{}\n", i);
+		print!("\x1b[1A\x1b[2K");
+		print!("{}\n", i);
 
 		i += 1;
 		sleep(Duration::milliseconds(200));
