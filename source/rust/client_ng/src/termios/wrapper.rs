@@ -6,9 +6,11 @@ use super::ffi::{
 	ICANON,
 	NCCS,
 	SUCCESS,
+	TCSANOW,
 	tcflag_t,
 	termios,
 	tcgetattr,
+	tcsetattr,
 };
 
 
@@ -37,6 +39,14 @@ impl Termios {
 
 		Termios {
 			termios: termios,
+		}
+	}
+
+	pub fn set(&self, fd: c_int) {
+		match unsafe { tcsetattr(fd, TCSANOW, &self.termios) } {
+			FAILURE => panic!("Error setting term attributes"),
+			SUCCESS => (),
+			_       => unreachable!(),
 		}
 	}
 
