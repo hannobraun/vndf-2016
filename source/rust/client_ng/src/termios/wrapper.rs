@@ -1,9 +1,12 @@
 use libc::c_int;
 
 use super::ffi::{
+	ECHO,
 	FAILURE,
+	ICANON,
 	NCCS,
 	SUCCESS,
+	tcflag_t,
 	termios,
 	tcgetattr,
 };
@@ -35,5 +38,21 @@ impl Termios {
 		Termios {
 			termios: termios,
 		}
+	}
+
+	pub fn echo(&mut self, set: bool) {
+		apply(&mut self.termios.c_lflag, ECHO, set);
+	}
+
+	pub fn canonical_input(&mut self, set: bool) {
+		apply(&mut self.termios.c_lflag, ICANON, set);
+	}
+}
+
+
+fn apply(flags: &mut tcflag_t, flag: tcflag_t, set: bool) {
+	match set {
+		true  => *flags &= flag,
+		false => *flags &= !flag,
 	}
 }

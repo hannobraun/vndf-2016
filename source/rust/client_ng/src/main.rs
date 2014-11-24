@@ -6,9 +6,7 @@ use std::time::Duration;
 
 use termios::Termios;
 use termios::ffi::{
-	ECHO,
 	FAILURE,
-	ICANON,
 	SUCCESS,
 	TCSANOW,
 	tcsetattr,
@@ -20,8 +18,9 @@ mod termios;
 
 fn main() {
 	let mut termios = Termios::get(libc::STDIN_FILENO);
+	termios.echo(false);
+	termios.canonical_input(false);
 
-	termios.termios.c_lflag &= !ICANON & !ECHO; // disable line buffering and echo
 	match unsafe { tcsetattr(libc::STDIN_FILENO, TCSANOW, &termios.termios) } {
 		FAILURE => panic!("Error setting term attributes"),
 		SUCCESS => (),
