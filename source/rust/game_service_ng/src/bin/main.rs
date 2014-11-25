@@ -15,10 +15,13 @@ fn main() {
 
 	print!("Listening on port {}\n", port);
 
+	// TODO: This is just the broadcast the test case expects. This should be
+	//       read from broadcasting clients instead.
 	let broadcast = "This is a broadcast.";
 
 	loop {
 		let address = match socket.recv_from(&mut buffer) {
+			// TODO: Message is completely ignored right now.
 			Ok((_, address)) =>
 				address,
 			Err(error) => {
