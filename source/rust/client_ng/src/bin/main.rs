@@ -27,9 +27,9 @@ mod output;
 
 
 fn main() {
-	let input  = input();
+	let args  = Args::parse(std::os::args().as_slice());
+	let input = input();
 
-	let args = Args::parse(std::os::args().as_slice());
 	if args.headless {
 		run(input, HeadlessOutput::new())
 	}
