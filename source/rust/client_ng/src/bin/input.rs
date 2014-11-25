@@ -3,7 +3,7 @@ use std::io::stdin;
 
 
 pub struct Input {
-	pub receiver: Receiver<String>,
+	receiver: Receiver<String>,
 }
 
 impl Input {
