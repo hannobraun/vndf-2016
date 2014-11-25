@@ -49,10 +49,13 @@ fn run<O: Output>(input : Input, server: Server, mut output: O) {
 
 	loop {
 		match input.read_line() {
+			// TODO: Currently user input is completely ignored.
 			Some(_) => (),
 			None    => (),
 		}
 		match server.recv_from() {
+			// TODO: Just setting the received broadcast as the only one will
+			//       not be enough.
 			Some(broadcast) => frame.broadcasts = vec![broadcast],
 			None            => (),
 		}
