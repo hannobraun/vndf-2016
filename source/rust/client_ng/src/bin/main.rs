@@ -21,7 +21,8 @@ mod termios;
 fn main() {
 	// This is a hack to get headless mode to work as far as the test case is
 	// concerned. Needs to be cleaned up later, obviously.
-	if std::os::args()[1] == "--headless".to_string() {
+	let args = std::os::args();
+	if args.len() > 1 && args[1] == "--headless".to_string() {
 		let frame = Frame {
 			broadcasts: vec!["This is a broadcast.".to_string()],
 		};
