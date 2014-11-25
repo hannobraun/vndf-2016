@@ -13,9 +13,11 @@ use std::comm::TryRecvError;
 
 use client_ng::Frame;
 use termios::Termios;
+use output::PlayerOutput;
 
 
 mod termios;
+mod output;
 
 
 fn main() {
@@ -37,7 +39,8 @@ fn main() {
 	termios.canonical_input(false);
 	termios.set(libc::STDIN_FILENO);
 
-	let input = input();
+	let input  = input();
+	let output = PlayerOutput;
 
 	let mut i = 0u8;
 
@@ -55,7 +58,7 @@ fn main() {
 			}
 		}
 
-		write(i);
+		output.render(i);
 
 		i += 1;
 		sleep(Duration::milliseconds(200));
@@ -78,9 +81,4 @@ fn input() -> Receiver<String> {
 	});
 
 	receiver
-}
-
-fn write(i: u8) {
-	print!("\x1b[1A\x1b[2K");
-	print!("{}\n", i);
 }
