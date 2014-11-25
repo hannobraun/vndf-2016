@@ -80,6 +80,7 @@ News for any month:
 - Asteroid video by Scott Manley
 - https://kheckeroth.com/solarSystem/
 - http://www.reddit.com/r/space/comments/2k0slk/this_earth_universe_size_comparison_still_blows/
+- http://solarsystem.nasa.gov/europa/multimediaimagedetails.cfm?Subsite_IM_ID=8421&SiteID=4
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
