@@ -34,10 +34,10 @@ fn main() {
 	let server = Server::new(args.port);
 
 	if args.headless {
-		run(input, server.receiver, HeadlessOutput::new())
+		run(input, server, HeadlessOutput::new())
 	}
 	else {
-		run(input, server.receiver, PlayerOutput::new());
+		run(input, server, PlayerOutput::new());
 	}
 }
 
@@ -61,7 +61,7 @@ fn input() -> Receiver<String> {
 
 fn run<O: Output>(
 	    input : Receiver<String>,
-	    server: Receiver<String>,
+	    server: Server,
 	mut output: O
 ) {
 	let mut frame = Frame {
@@ -77,7 +77,7 @@ fn run<O: Output>(
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}
-		match server.try_recv() {
+		match server.receiver.try_recv() {
 			Ok(broadcast) => frame.broadcasts = vec![broadcast],
 
 			Err(error) => match error {
