@@ -11,6 +11,7 @@ use std::io::timer::sleep;
 use std::time::Duration;
 use std::comm::TryRecvError;
 
+use args::Args;
 use client_ng::Frame;
 use output::{
 	HeadlessOutput,
@@ -19,6 +20,7 @@ use output::{
 };
 
 
+mod args;
 mod termios;
 mod output;
 
@@ -26,8 +28,8 @@ mod output;
 fn main() {
 	let input  = input();
 
-	let args = std::os::args();
-	if args.len() > 1 && args[1] == "--headless".to_string() {
+	let args = Args::parse(std::os::args().as_slice());
+	if args.headless {
 		run(input, HeadlessOutput::new())
 	}
 	else {
