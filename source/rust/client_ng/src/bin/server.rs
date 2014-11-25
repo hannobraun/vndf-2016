@@ -4,7 +4,7 @@ use std::io::net::udp::UdpSocket;
 
 
 pub struct Server {
-	pub receiver: Receiver<String>,
+	receiver: Receiver<String>,
 }
 
 impl Server {
