@@ -1,6 +1,7 @@
 #![feature(slicing_syntax)]
 
 
+extern crate getopts;
 extern crate libc;
 
 extern crate client_ng;
