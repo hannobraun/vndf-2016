@@ -39,7 +39,6 @@ fn main() {
 	let     input  = input();
 	let mut output = PlayerOutput::new();
 
-	print!("\n");
 	loop {
 		match input.try_recv() {
 			Ok(_) => (),
