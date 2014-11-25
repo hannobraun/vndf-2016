@@ -12,7 +12,6 @@ use std::time::Duration;
 use std::comm::TryRecvError;
 
 use client_ng::Frame;
-use termios::Termios;
 use output::{
 	Output,
 	PlayerOutput,
@@ -37,13 +36,8 @@ fn main() {
 		}
 	}
 
-	let mut termios = Termios::get(libc::STDIN_FILENO);
-	termios.echo(false);
-	termios.canonical_input(false);
-	termios.set(libc::STDIN_FILENO);
-
 	let     input  = input();
-	let mut output = PlayerOutput;
+	let mut output = PlayerOutput::new();
 
 	let mut i = 0u8;
 
