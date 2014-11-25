@@ -1,5 +1,6 @@
 extern crate acceptance;
 
+extern crate client_ng;
 extern crate game;
 extern crate game_service;
 extern crate net;
@@ -18,5 +19,6 @@ pub mod mock {
 }
 pub mod rc {
 	pub mod client;
+	pub mod client_ng;
 	pub mod gameservice;
 }
