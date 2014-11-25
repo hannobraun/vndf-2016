@@ -9,7 +9,6 @@ extern crate client_ng;
 
 use std::io::timer::sleep;
 use std::time::Duration;
-use std::comm::TryRecvError;
 
 use args::Args;
 use client_ng::Frame;
@@ -35,16 +34,16 @@ fn main() {
 	let server = Server::new(args.port);
 
 	if args.headless {
-		run(input.receiver, server, HeadlessOutput::new())
+		run(input, server, HeadlessOutput::new())
 	}
 	else {
-		run(input.receiver, server, PlayerOutput::new());
+		run(input, server, PlayerOutput::new());
 	}
 }
 
 
 fn run<O: Output>(
-	    input : Receiver<String>,
+	    input : Input,
 	    server: Server,
 	mut output: O
 ) {
@@ -53,13 +52,9 @@ fn run<O: Output>(
 	};
 
 	loop {
-		match input.try_recv() {
-			Ok(_) => (),
-
-			Err(error) => match error {
-				TryRecvError::Empty        => (),
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
-			}
+		match input.read_line() {
+			Some(_) => (),
+			None    => (),
 		}
 		match server.recv_from() {
 			Some(broadcast) => frame.broadcasts = vec![broadcast],

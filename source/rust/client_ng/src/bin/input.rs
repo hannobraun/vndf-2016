@@ -1,3 +1,4 @@
+use std::comm::TryRecvError;
 use std::io::stdin;
 
 
@@ -24,6 +25,17 @@ impl Input {
 
 		Input {
 			receiver: receiver,
+		}
+	}
+
+	pub fn read_line(&self) -> Option<String> {
+		match self.receiver.try_recv() {
+			Ok(line) => Some(line),
+
+			Err(error) => match error {
+				TryRecvError::Empty        => None,
+				TryRecvError::Disconnected => panic!("Channel disconnected"),
+			}
 		}
 	}
 }
