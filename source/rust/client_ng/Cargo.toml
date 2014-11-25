@@ -4,5 +4,9 @@ name = "client_ng"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
+[lib]
+name = "client_ng"
+path = "src/lib/lib.rs"
+
 [[bin]]
 name = "vndf-client-ng"
