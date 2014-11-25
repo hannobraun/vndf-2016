@@ -7,13 +7,13 @@ extern crate libc;
 extern crate client_ng;
 
 
-use std::io::stdin;
 use std::io::timer::sleep;
 use std::time::Duration;
 use std::comm::TryRecvError;
 
 use args::Args;
 use client_ng::Frame;
+use input::Input;
 use output::{
 	HeadlessOutput,
 	Output,
@@ -23,6 +23,7 @@ use server::Server;
 
 
 mod args;
+mod input;
 mod server;
 mod termios;
 mod output;
@@ -30,34 +31,17 @@ mod output;
 
 fn main() {
 	let args   = Args::parse(std::os::args().as_slice());
-	let input  = input();
+	let input  = Input::new();
 	let server = Server::new(args.port);
 
 	if args.headless {
-		run(input, server, HeadlessOutput::new())
+		run(input.receiver, server, HeadlessOutput::new())
 	}
 	else {
-		run(input, server, PlayerOutput::new());
+		run(input.receiver, server, PlayerOutput::new());
 	}
 }
 
-
-fn input() -> Receiver<String> {
-	let (sender, receiver) = channel();
-
-	spawn(proc() {
-		let mut stdin = stdin();
-
-		loop {
-			match stdin.read_line() {
-				Ok(line)   => sender.send(line[.. line.len() - 1].to_string()),
-				Err(error) => panic!("Error reading from stdint: {}", error),
-			}
-		}
-	});
-
-	receiver
-}
 
 fn run<O: Output>(
 	    input : Receiver<String>,
