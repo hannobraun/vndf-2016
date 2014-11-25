@@ -9,11 +9,12 @@ pub struct Client {
 }
 
 impl Client {
-	pub fn start(_port: Port) -> Client {
+	pub fn start(port: Port) -> Client {
 		let process = Process::start(
 			"vndf-client-ng",
 			&[
 				format!("--headless").as_slice(),
+				format!("--server-port={}", port).as_slice(),
 			]
 		);
 
