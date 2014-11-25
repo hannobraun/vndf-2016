@@ -4,9 +4,9 @@ use test_tools::rc::game_service_ng::GameService;
 
 #[test]
 fn it_should_receive_broadcasts() {
-	let game_service = GameService::start();
-	let client_1     = Client::start(game_service.port());
-	let client_2     = Client::start(game_service.port());
+	let     game_service = GameService::start();
+	let mut client_1     = Client::start(game_service.port());
+	let mut client_2     = Client::start(game_service.port());
 
 	let message = "This is a broadcast.".to_string();
 	client_1.command(format!("broadcast {}", message).as_slice());

@@ -10,11 +10,11 @@ impl Client {
 		Client
 	}
 
-	pub fn command(&self, _command: &str) {
+	pub fn command(&mut self, _command: &str) {
 
 	}
 
-	pub fn wait_while(&self, _condition: |Frame| -> bool) -> Frame {
+	pub fn wait_while(&mut self, _condition: |Frame| -> bool) -> Frame {
 		Frame {
 			broadcasts: vec!["This is a broadcast.".to_string()],
 		}
