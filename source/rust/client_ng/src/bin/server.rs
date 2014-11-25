@@ -24,8 +24,10 @@ impl Server {
 
 			loop {
 				let message = match socket.recv_from(&mut buffer) {
-					Ok((len, _)) => buffer[.. len],
-					Err(error)   => panic!("Error receiving message: {}", error),
+					Ok((len, _)) =>
+						buffer[.. len],
+					Err(error) =>
+						panic!("Error receiving message: {}", error),
 				};
 
 				sender.send(String::from_utf8(message.to_vec()).unwrap());
