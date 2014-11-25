@@ -3,6 +3,4 @@
 source project.conf
 
 ./scripts/tasks/build-server &&
-./scripts/tasks/build-client &&
-cd $RUST_SOURCE/client_ng
-cargo build
+./scripts/tasks/build-client
