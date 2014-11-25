@@ -88,6 +88,6 @@ fn run<O: Output>(
 
 		output.render(&frame);
 
-		sleep(Duration::milliseconds(200));
+		sleep(Duration::milliseconds(10));
 	}
 }
