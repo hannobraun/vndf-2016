@@ -3,3 +3,6 @@
 name = "game_service_ng"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
+
+[[bin]]
+name = "vndf-game-service-ng"
