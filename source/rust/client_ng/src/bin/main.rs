@@ -23,9 +23,9 @@ use server::Server;
 
 mod args;
 mod input;
+mod output;
 mod server;
 mod termios;
-mod output;
 
 
 fn main() {
