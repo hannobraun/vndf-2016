@@ -7,8 +7,6 @@ extern crate libc;
 extern crate client_ng;
 
 
-use std::io::net::ip::Port;
-use std::io::net::udp::UdpSocket;
 use std::io::stdin;
 use std::io::timer::sleep;
 use std::time::Duration;
@@ -21,9 +19,11 @@ use output::{
 	Output,
 	PlayerOutput,
 };
+use server::Server;
 
 
 mod args;
+mod server;
 mod termios;
 mod output;
 
@@ -31,13 +31,13 @@ mod output;
 fn main() {
 	let args   = Args::parse(std::os::args().as_slice());
 	let input  = input();
-	let server = server(args.port);
+	let server = Server::new(args.port);
 
 	if args.headless {
-		run(input, server, HeadlessOutput::new())
+		run(input, server.receiver, HeadlessOutput::new())
 	}
 	else {
-		run(input, server, PlayerOutput::new());
+		run(input, server.receiver, PlayerOutput::new());
 	}
 }
 
@@ -53,30 +53,6 @@ fn input() -> Receiver<String> {
 				Ok(line)   => sender.send(line[.. line.len() - 1].to_string()),
 				Err(error) => panic!("Error reading from stdint: {}", error),
 			}
-		}
-	});
-
-	receiver
-}
-fn server(port: Port) -> Receiver<String> {
-	let (sender, receiver) = channel();
-
-	spawn(proc() {
-		let mut buffer = [0u8, ..512];
-		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
-
-		socket.send_to(
-			"Please send broadcasts.\n".as_bytes(),
-			("127.0.0.1", port)
-		).unwrap();
-
-		loop {
-			let message = match socket.recv_from(&mut buffer) {
-				Ok((len, _)) => buffer[.. len],
-				Err(error)   => panic!("Error receiving message: {}", error),
-			};
-
-			sender.send(String::from_utf8(message.to_vec()).unwrap());
 		}
 	});
 
