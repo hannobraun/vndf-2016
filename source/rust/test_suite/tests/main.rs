@@ -36,3 +36,7 @@ mod acceptance {
 	mod basic;
 	mod ship;
 }
+
+mod acceptance_ng {
+	mod basic;
+}
