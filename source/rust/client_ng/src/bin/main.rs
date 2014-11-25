@@ -77,13 +77,9 @@ fn run<O: Output>(
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}
-		match server.receiver.try_recv() {
-			Ok(broadcast) => frame.broadcasts = vec![broadcast],
-
-			Err(error) => match error {
-				TryRecvError::Empty        => (),
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
-			}
+		match server.recv_from() {
+			Some(broadcast) => frame.broadcasts = vec![broadcast],
+			None            => (),
 		}
 
 		output.render(&frame);

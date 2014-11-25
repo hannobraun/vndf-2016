@@ -1,3 +1,4 @@
+use std::comm::TryRecvError;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
@@ -31,6 +32,17 @@ impl Server {
 
 		Server {
 			receiver: receiver,
+		}
+	}
+
+	pub fn recv_from(&self) -> Option<String> {
+		match self.receiver.try_recv() {
+			Ok(message) => Some(message),
+
+			Err(error) => match error {
+				TryRecvError::Empty        => None,
+				TryRecvError::Disconnected => panic!("Channel disconnected"),
+			}
 		}
 	}
 }
