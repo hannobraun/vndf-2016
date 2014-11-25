@@ -13,6 +13,7 @@ use std::comm::TryRecvError;
 
 use client_ng::Frame;
 use output::{
+	HeadlessOutput,
 	Output,
 	PlayerOutput,
 };
@@ -23,23 +24,15 @@ mod output;
 
 
 fn main() {
-	let frame = Frame {
-		broadcasts: vec!["This is a broadcast.".to_string()],
-	};
+	let input  = input();
 
-	// This is a hack to get headless mode to work as far as the test case is
-	// concerned. Needs to be cleaned up later, obviously.
 	let args = std::os::args();
 	if args.len() > 1 && args[1] == "--headless".to_string() {
-		loop {
-			print!("{}\n", frame.to_json());
-		}
+		run(input, HeadlessOutput::new())
 	}
-
-	let input  = input();
-	let output = PlayerOutput::new();
-
-	run(input, output);
+	else {
+		run(input, PlayerOutput::new());
+	}
 }
 
 

@@ -31,3 +31,18 @@ impl Output for PlayerOutput {
 		}
 	}
 }
+
+
+pub struct HeadlessOutput;
+
+impl HeadlessOutput {
+	pub fn new() -> HeadlessOutput {
+		HeadlessOutput
+	}
+}
+
+impl Output for HeadlessOutput {
+	fn render(&mut self, frame: &Frame) {
+		print!("{}\n", frame.to_json());
+	}
+}
