@@ -36,23 +36,10 @@ fn main() {
 		}
 	}
 
-	let     input  = input();
-	let mut output = PlayerOutput::new();
+	let input  = input();
+	let output = PlayerOutput::new();
 
-	loop {
-		match input.try_recv() {
-			Ok(_) => (),
-
-			Err(error) => match error {
-				TryRecvError::Empty        => (),
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
-			}
-		}
-
-		output.render(&frame);
-
-		sleep(Duration::milliseconds(200));
-	}
+	run(input, output);
 }
 
 
@@ -71,4 +58,25 @@ fn input() -> Receiver<String> {
 	});
 
 	receiver
+}
+
+fn run<O: Output>(input: Receiver<String>, mut output: O) {
+	let frame = Frame {
+		broadcasts: vec!["This is a broadcast.".to_string()],
+	};
+
+	loop {
+		match input.try_recv() {
+			Ok(_) => (),
+
+			Err(error) => match error {
+				TryRecvError::Empty        => (),
+				TryRecvError::Disconnected => panic!("Channel disconnected"),
+			}
+		}
+
+		output.render(&frame);
+
+		sleep(Duration::milliseconds(200));
+	}
 }
