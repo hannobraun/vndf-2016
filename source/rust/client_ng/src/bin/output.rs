@@ -1,10 +1,11 @@
 use libc;
 
+use client_ng::Frame;
 use termios::Termios;
 
 
 pub trait Output {
-	fn render(&mut self, i: u8);
+	fn render(&mut self, frame: &Frame);
 }
 
 
@@ -22,8 +23,11 @@ impl PlayerOutput {
 }
 
 impl Output for PlayerOutput {
-	fn render(&mut self, i: u8) {
+	fn render(&mut self, frame: &Frame) {
 		print!("\x1b[2J\x1b[H");
-		print!("{}\n", i);
+
+		for broadcast in frame.broadcasts.iter() {
+			print!("{}\n", broadcast);
+		}
 	}
 }

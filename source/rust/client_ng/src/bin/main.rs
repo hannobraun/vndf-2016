@@ -23,14 +23,14 @@ mod output;
 
 
 fn main() {
+	let frame = Frame {
+		broadcasts: vec!["This is a broadcast.".to_string()],
+	};
+
 	// This is a hack to get headless mode to work as far as the test case is
 	// concerned. Needs to be cleaned up later, obviously.
 	let args = std::os::args();
 	if args.len() > 1 && args[1] == "--headless".to_string() {
-		let frame = Frame {
-			broadcasts: vec!["This is a broadcast.".to_string()],
-		};
-
 		loop {
 			print!("{}\n", frame.to_json());
 		}
@@ -39,15 +39,10 @@ fn main() {
 	let     input  = input();
 	let mut output = PlayerOutput::new();
 
-	let mut i = 0u8;
-
 	print!("\n");
 	loop {
 		match input.try_recv() {
-			Ok(line) => match from_str(line.as_slice()) {
-				Some(n) => i = n,
-				None    => (),
-			},
+			Ok(_) => (),
 
 			Err(error) => match error {
 				TryRecvError::Empty        => (),
@@ -55,9 +50,8 @@ fn main() {
 			}
 		}
 
-		output.render(i);
+		output.render(&frame);
 
-		i += 1;
 		sleep(Duration::milliseconds(200));
 	}
 }
