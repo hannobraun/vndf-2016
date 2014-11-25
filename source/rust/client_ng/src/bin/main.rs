@@ -7,6 +7,8 @@ extern crate libc;
 extern crate client_ng;
 
 
+use std::io::net::ip::Port;
+use std::io::net::udp::UdpSocket;
 use std::io::stdin;
 use std::io::timer::sleep;
 use std::time::Duration;
