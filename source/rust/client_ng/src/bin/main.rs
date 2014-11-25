@@ -29,14 +29,15 @@ mod output;
 
 
 fn main() {
-	let args  = Args::parse(std::os::args().as_slice());
-	let input = input();
+	let args   = Args::parse(std::os::args().as_slice());
+	let input  = input();
+	let server = server(args.port);
 
 	if args.headless {
-		run(input, HeadlessOutput::new())
+		run(input, server, HeadlessOutput::new())
 	}
 	else {
-		run(input, PlayerOutput::new());
+		run(input, server, PlayerOutput::new());
 	}
 }
 
@@ -57,15 +58,51 @@ fn input() -> Receiver<String> {
 
 	receiver
 }
+fn server(port: Port) -> Receiver<String> {
+	let (sender, receiver) = channel();
 
-fn run<O: Output>(input: Receiver<String>, mut output: O) {
-	let frame = Frame {
-		broadcasts: vec!["This is a broadcast.".to_string()],
+	spawn(proc() {
+		let mut buffer = [0u8, ..512];
+		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
+
+		socket.send_to(
+			"Please send broadcasts.\n".as_bytes(),
+			("127.0.0.1", port)
+		).unwrap();
+
+		loop {
+			let message = match socket.recv_from(&mut buffer) {
+				Ok((len, _)) => buffer[.. len],
+				Err(error)   => panic!("Error receiving message: {}", error),
+			};
+
+			sender.send(String::from_utf8(message.to_vec()).unwrap());
+		}
+	});
+
+	receiver
+}
+
+fn run<O: Output>(
+	    input : Receiver<String>,
+	    server: Receiver<String>,
+	mut output: O
+) {
+	let mut frame = Frame {
+		broadcasts: vec![],
 	};
 
 	loop {
 		match input.try_recv() {
 			Ok(_) => (),
+
+			Err(error) => match error {
+				TryRecvError::Empty        => (),
+				TryRecvError::Disconnected => panic!("Channel disconnected"),
+			}
+		}
+		match server.try_recv() {
+			Ok(broadcast) => frame.broadcasts = vec![broadcast],
 
 			Err(error) => match error {
 				TryRecvError::Empty        => (),
