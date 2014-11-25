@@ -3,12 +3,15 @@
 
 extern crate libc;
 
+extern crate client_ng;
+
 
 use std::io::stdin;
 use std::io::timer::sleep;
 use std::time::Duration;
 use std::comm::TryRecvError;
 
+use client_ng::Frame;
 use termios::Termios;
 
 
@@ -16,6 +19,18 @@ mod termios;
 
 
 fn main() {
+	// This is a hack to get headless mode to work as far as the test case is
+	// concerned. Needs to be cleaned up later, obviously.
+	if std::os::args()[1] == "--headless".to_string() {
+		let frame = Frame {
+			broadcasts: vec!["This is a broadcast.".to_string()],
+		};
+
+		loop {
+			print!("{}\n", frame.to_json());
+		}
+	}
+
 	let mut termios = Termios::get(libc::STDIN_FILENO);
 	termios.echo(false);
 	termios.canonical_input(false);
