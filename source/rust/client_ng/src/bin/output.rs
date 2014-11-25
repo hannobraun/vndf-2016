@@ -23,7 +23,7 @@ impl PlayerOutput {
 
 impl Output for PlayerOutput {
 	fn render(&mut self, i: u8) {
-		print!("\x1b[1A\x1b[2K");
+		print!("\x1b[2J\x1b[H");
 		print!("{}\n", i);
 	}
 }
