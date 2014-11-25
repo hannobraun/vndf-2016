@@ -13,7 +13,10 @@ use std::comm::TryRecvError;
 
 use client_ng::Frame;
 use termios::Termios;
-use output::PlayerOutput;
+use output::{
+	Output,
+	PlayerOutput,
+};
 
 
 mod termios;
@@ -39,8 +42,8 @@ fn main() {
 	termios.canonical_input(false);
 	termios.set(libc::STDIN_FILENO);
 
-	let input  = input();
-	let output = PlayerOutput;
+	let     input  = input();
+	let mut output = PlayerOutput;
 
 	let mut i = 0u8;
 
