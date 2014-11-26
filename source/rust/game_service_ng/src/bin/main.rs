@@ -65,9 +65,10 @@ fn main() {
 		let perception = Perception {
 			broadcasts: broadcasts,
 		};
-		// TODO: We need to make sure that the encoded perception fits into a
-		//       UDP packet. Research suggests that, given typical MTU sizes,
-		//       512 bytes are a safe bet for the maximum size.
+		// TODO(83504690): We need to make sure that the encoded perception fits
+		//                 into a UDP packet. Research suggests that, given
+		//                 typical MTU sizes, 512 bytes are a safe bet for the
+		//                 maximum size.
 		let perception = perception.to_json();
 
 		for (&address, _) in clients.iter() {
