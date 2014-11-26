@@ -33,7 +33,7 @@ mod termios;
 fn main() {
 	let args   = Args::parse(std::os::args().as_slice());
 	let input  = Input::new();
-	let server = Server::new(args.port);
+	let server = Server::new(args.server);
 
 	if args.headless {
 		run(input, server, HeadlessOutput::new())

@@ -1,9 +1,5 @@
 use std::comm::TryRecvError;
-use std::io::net::ip::{
-	Port,
-	SocketAddr,
-	ToSocketAddr,
-};
+use std::io::net::ip::SocketAddr;
 use std::io::net::udp::UdpSocket;
 
 use protocol_ng::{
@@ -19,13 +15,10 @@ pub struct Server {
 }
 
 impl Server {
-	pub fn new(port: Port) -> Server {
+	pub fn new(address: SocketAddr) -> Server {
 		let (sender, receiver) = channel();
 
 		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
-		// TODO: This only works if server runs on localhost. We need an actual
-		//       address here.
-		let     server = ("127.0.0.1", port).to_socket_addr().unwrap();
 
 		let socket_field = socket.clone();
 
@@ -46,7 +39,7 @@ impl Server {
 
 		Server {
 			receiver: receiver,
-			server  : server,
+			server  : address,
 			socket  : socket_field,
 		}
 	}

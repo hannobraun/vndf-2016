@@ -3,18 +3,28 @@ use getopts::{
 	optflag,
 	optopt,
 };
-use std::io::net::ip::Port;
+use std::io::net::ip::{
+	Port,
+	SocketAddr,
+	ToSocketAddr,
+};
 
 
 pub struct Args {
 	pub headless: bool,
-	pub port    : Port,
+	pub server  : SocketAddr,
 }
 
 impl Args {
 	pub fn parse(args: &[String]) -> Args {
 		let opts = &[
 			optflag("h", "headless", "enable headless mode"),
+			optopt(
+				"h",
+				"server-host",
+				"server host to connect to",
+				"localhost",
+			),
 			optopt("p", "server-port", "server port to connect to", "34481"),
 		];
 		let matches = match getopts(args.tail(), opts) {
@@ -22,14 +32,18 @@ impl Args {
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
-		let port = match matches.opt_str("p") {
+		let host = match matches.opt_str("h") {
+			Some(host) => host,
+			None       => "localhost".to_string(),
+		};
+		let port: Port = match matches.opt_str("p") {
 			Some(port) => from_str(port.as_slice()).unwrap(),
 			None       => 34481,
 		};
 
 		Args {
 			headless: matches.opt_present("h"),
-			port    : port,
+			server  : (host.as_slice(), port).to_socket_addr().unwrap(),
 		}
 	}
 }
