@@ -7,7 +7,7 @@ use serialize::json::{
 };
 
 
-#[deriving(Decodable, Encodable)]
+#[deriving(Decodable, Encodable, Show)]
 pub enum Message {
 	Login,
 	Broadcast(String),
