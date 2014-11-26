@@ -46,9 +46,19 @@ impl Server {
 
 	pub fn recv_from(&self) -> Option<Perception> {
 		match self.receiver.try_recv() {
-			Ok(message) =>
-				// TODO: Handle decoding errors.
-				Some(Perception::from_json(message.as_slice()).unwrap()),
+			Ok(message) => {
+				let message =
+					Perception::from_json(message.as_slice())
+					.unwrap_or_else(
+						|error|
+							panic!(
+								"Error decoding message from server: {}",
+								error,
+							)
+					);
+				
+				Some(message)
+			},
 
 			Err(error) => match error {
 				TryRecvError::Empty        => None,
