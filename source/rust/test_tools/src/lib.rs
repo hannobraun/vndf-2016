@@ -1,3 +1,5 @@
+extern crate time;
+
 extern crate acceptance;
 
 extern crate client_ng;

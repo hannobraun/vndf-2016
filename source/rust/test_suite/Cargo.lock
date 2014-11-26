@@ -221,6 +221,7 @@ dependencies = [
  "game_service 0.1.0",
  "platform 0.1.0",
  "protocol 0.1.0",
+ "time 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

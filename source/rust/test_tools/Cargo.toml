@@ -7,6 +7,10 @@ authors = [ "mail@hannobraun.de" ]
 name = "test_tools"
 
 
+[dependencies]
+time = "*"
+
+
 [dependencies.client_ng]
 path = "../client_ng"
 
