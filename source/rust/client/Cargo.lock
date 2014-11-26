@@ -7,6 +7,7 @@ dependencies = [
  "platform_cli 0.1.0",
  "platform_desktop 0.1.0",
  "protocol 0.1.0",
+ "time 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -36,6 +37,11 @@ dependencies = [
  "rustecs 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
  "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
 ]
+
+[[package]]
+name = "gcc"
+version = "0.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "gfx"
@@ -166,4 +172,12 @@ source = "git+https://github.com/rust-lang/semver#29212953f839337c672d185dde74e1
 name = "stb_image"
 version = "0.1.0"
 source = "git+https://github.com/csherratt/rust-stb-image.git#3ae2e79654b81db958a9ea59851ca40b1dbcf0fd"
+
+[[package]]
+name = "time"
+version = "0.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "gcc 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 

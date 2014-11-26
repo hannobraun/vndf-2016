@@ -11,6 +11,10 @@ path = "src/lib/lib.rs"
 name = "vndf-client"
 
 
+[dependencies]
+time = "*"
+
+
 [dependencies.game]
 path = "../game"
 
