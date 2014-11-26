@@ -1,5 +1,9 @@
 use std::comm::TryRecvError;
-use std::io::net::ip::Port;
+use std::io::net::ip::{
+	Port,
+	SocketAddr,
+	ToSocketAddr,
+};
 use std::io::net::udp::UdpSocket;
 
 use protocol_ng::Message;
@@ -7,19 +11,27 @@ use protocol_ng::Message;
 
 pub struct Server {
 	receiver: Receiver<String>,
+	server  : SocketAddr,
+	socket  : UdpSocket,
 }
 
 impl Server {
 	pub fn new(port: Port) -> Server {
 		let (sender, receiver) = channel();
 
+		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
+		// TODO: This only works if server runs on localhost. We need an actual
+		//       address here.
+		let     server = ("127.0.0.1", port).to_socket_addr().unwrap();
+
+		let socket_field = socket.clone();
+
 		spawn(proc() {
 			let mut buffer = [0u8, ..512];
-			let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
 
 			socket.send_to(
 				Message::Login.to_json().as_bytes(),
-				("127.0.0.1", port)
+				server,
 			).unwrap();
 
 			loop {
@@ -36,6 +48,8 @@ impl Server {
 
 		Server {
 			receiver: receiver,
+			server  : server,
+			socket  : socket_field,
 		}
 	}
 
@@ -48,5 +62,11 @@ impl Server {
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}
+	}
+
+	pub fn send_to(&mut self, message: Message) {
+		// TODO: We have no way of knowing, if this message actually arrives.
+		// TODO: Replace unwrap with proper error handling.
+		self.socket.send_to(message.to_json().as_bytes(), self.server).unwrap();
 	}
 }
