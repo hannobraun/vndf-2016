@@ -5,7 +5,7 @@ extern crate client_ng;
 
 
 pub use self::rc::client::Client;
-pub use self::rc::gameservice::GameService;
+pub use self::rc::game_service::GameService;
 
 
 pub mod rc {
