@@ -1,4 +1,11 @@
 [root]
 name = "game_service_ng"
 version = "0.0.1"
+dependencies = [
+ "protocol_ng 0.0.1",
+]
+
+[[package]]
+name = "protocol_ng"
+version = "0.0.1"
 

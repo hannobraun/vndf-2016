@@ -1,9 +1,14 @@
 #![feature(slicing_syntax)]
 
 
+extern crate protocol_ng;
+
+
 use std::collections::HashSet;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
+
+use protocol_ng::Message;
 
 
 fn main() {
@@ -20,17 +25,35 @@ fn main() {
 	let broadcast = "This is a broadcast.";
 
 	loop {
-		let address = match socket.recv_from(&mut buffer) {
-			// TODO: Message is completely ignored right now.
-			Ok((_, address)) =>
-				address,
+		let (message, address) = match socket.recv_from(&mut buffer) {
+			// TODO: Handle decoding errors.
+			Ok((len, address)) => {
+				let message =
+					Message::from_json(
+						String::from_utf8(
+							buffer[.. len].to_vec()
+						)
+						.unwrap()
+						.as_slice()
+					)
+					.unwrap();
+
+				(message, address)
+			},
+
 			Err(error) => {
 				print!("Error receiving data: {}\n", error);
 				continue;
 			},
 		};
 
-		clients.insert(address);
+		match message {
+			Message::Login => {
+				clients.insert(address);
+			},
+
+			_ => print!("Unexpected message: {}\n", message),
+		}
 
 		for &address in clients.iter() {
 			match socket.send_to(broadcast.as_bytes(), address) {
