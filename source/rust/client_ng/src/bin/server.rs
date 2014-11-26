@@ -52,22 +52,16 @@ impl Server {
 	}
 
 	pub fn recv_from(&self) -> Option<Perception> {
-		let message = match self.receiver.try_recv() {
-			Ok(message) => message,
+		match self.receiver.try_recv() {
+			Ok(message) =>
+				// TODO: Handle decodig errors.
+				Some(Perception::from_json(message.as_slice()).unwrap()),
 
 			Err(error) => match error {
-				TryRecvError::Empty        => return None,
+				TryRecvError::Empty        => None,
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
-		};
-
-		// TODO: Just setting the received broadcast as the only one will not be
-		//       enough.
-		let perception = Perception {
-			broadcasts: vec![message],
-		};
-
-		Some(perception)
+		}
 	}
 
 	pub fn send_to(&mut self, message: Action) {

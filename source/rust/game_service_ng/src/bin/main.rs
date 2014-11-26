@@ -8,7 +8,10 @@ use std::collections::HashSet;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Action;
+use protocol_ng::{
+	Action,
+	Perception,
+};
 
 
 fn main() {
@@ -57,13 +60,16 @@ fn main() {
 			},
 		}
 
-		for &address in clients.iter() {
-			let ref broadcast = match broadcast {
-				Some(ref broadcast) => broadcast,
-				None                => continue,
-			};
+		let perception = Perception {
+			broadcasts: broadcast.as_slice().to_vec(),
+		};
+		// TODO: We need to make sure that the encoded perception fits into a
+		//       UDP packet. Research suggests that, given typical MTU sizes,
+		//       512 bytes are a safe bet for the maximum size.
+		let perception = perception.to_json();
 
-			match socket.send_to(broadcast.as_bytes(), address) {
+		for &address in clients.iter() {
+			match socket.send_to(perception.as_bytes(), address) {
 				Ok(())     => (),
 				Err(error) =>
 					print!(
