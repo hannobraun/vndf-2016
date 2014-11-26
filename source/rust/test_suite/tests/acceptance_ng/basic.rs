@@ -9,7 +9,10 @@ fn it_should_receive_broadcasts() {
 	let mut client_2     = Client::start(game_service.port());
 
 	let message = "This is a broadcast.".to_string();
-	client_1.command(format!("broadcast {}", message).as_slice());
+	// TODO: This is just the command argument, what's missing is the command.
+	//       Once we need more than one command, this should be something like
+	//       "broadcast ...", instead of only "...".
+	client_1.command(format!("{}", message).as_slice());
 
 	let frame_1 = client_1.wait_while(|frame| frame.broadcasts.len() == 0);
 	let frame_2 = client_2.wait_while(|frame| frame.broadcasts.len() == 0);
