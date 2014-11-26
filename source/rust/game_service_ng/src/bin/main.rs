@@ -4,7 +4,7 @@
 extern crate protocol_ng;
 
 
-use std::collections::HashSet;
+use std::collections::HashMap;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
@@ -17,16 +17,11 @@ use protocol_ng::{
 fn main() {
 	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
 
-	let mut clients = HashSet::new();
+	let mut clients = HashMap::new();
 	let mut buffer  = [0u8, ..512];
 	let mut socket  = UdpSocket::bind(("0.0.0.0", port)).unwrap();
 
 	print!("Listening on port {}\n", port);
-
-	// TODO: The game service sends at most a single broadcast that can be
-	//       overwritten by every client. Instead we want one broadcast per
-	//       client.
-	let mut broadcast = None;
 
 	loop {
 		let (message, address) = match socket.recv_from(&mut buffer) {
@@ -53,22 +48,33 @@ fn main() {
 
 		match message {
 			Action::Login => {
-				clients.insert(address);
+				clients.insert(address, None);
 			},
-			Action::Broadcast(string) => {
-				broadcast = Some(string);
+			Action::Broadcast(broadcast) => {
+				clients.insert(address, Some(broadcast));
 			},
 		}
 
+		let broadcasts: Vec<String> = clients
+			.iter()
+			.filter(
+				|&(_, broadcast)|
+					broadcast.is_some()
+			)
+			.map(
+				|(_, broadcast)|
+					broadcast.clone().unwrap()
+			)
+			.collect();
 		let perception = Perception {
-			broadcasts: broadcast.as_slice().to_vec(),
+			broadcasts: broadcasts,
 		};
 		// TODO: We need to make sure that the encoded perception fits into a
 		//       UDP packet. Research suggests that, given typical MTU sizes,
 		//       512 bytes are a safe bet for the maximum size.
 		let perception = perception.to_json();
 
-		for &address in clients.iter() {
+		for (&address, _) in clients.iter() {
 			match socket.send_to(perception.as_bytes(), address) {
 				Ok(())     => (),
 				Err(error) =>
