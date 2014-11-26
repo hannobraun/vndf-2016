@@ -10,3 +10,7 @@ path = "src/lib/lib.rs"
 
 [[bin]]
 name = "vndf-client-ng"
+
+
+[dependencies.protocol_ng]
+path = "../protocol_ng"

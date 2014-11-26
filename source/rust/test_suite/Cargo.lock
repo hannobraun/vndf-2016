@@ -31,6 +31,9 @@ dependencies = [
 [[package]]
 name = "client_ng"
 version = "0.0.1"
+dependencies = [
+ "protocol_ng 0.0.1",
+]
 
 [[package]]
 name = "device"
@@ -161,6 +164,10 @@ version = "0.1.0"
 dependencies = [
  "cgmath 0.0.1 (git+https://github.com/bjz/cgmath-rs.git)",
 ]
+
+[[package]]
+name = "protocol_ng"
+version = "0.0.1"
 
 [[package]]
 name = "render"

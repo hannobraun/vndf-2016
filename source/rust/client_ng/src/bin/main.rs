@@ -5,6 +5,7 @@ extern crate getopts;
 extern crate libc;
 
 extern crate client_ng;
+extern crate protocol_ng;
 
 
 use std::io::timer::sleep;

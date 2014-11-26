@@ -2,6 +2,8 @@ use std::comm::TryRecvError;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
+use protocol_ng::Message;
+
 
 pub struct Server {
 	receiver: Receiver<String>,
@@ -15,10 +17,8 @@ impl Server {
 			let mut buffer = [0u8, ..512];
 			let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
 
-			// TODO: The server has no way of distinguishing this initial
-			//       message from a broadcast.
 			socket.send_to(
-				"Please send broadcasts.\n".as_bytes(),
+				Message::Login.to_json().as_bytes(),
 				("127.0.0.1", port)
 			).unwrap();
 
