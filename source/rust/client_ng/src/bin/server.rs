@@ -60,11 +60,10 @@ impl Server {
 	pub fn send_to(&mut self, message: Action) {
 		// TODO(83501684): We have no way of knowing, if this message actually
 		//                 arrives.
-		// TODO: Replace unwrap with proper error handling.
 		self.socket.send_to(
 			message.to_json().as_bytes(),
 			self.address
 		)
-		.unwrap();
+		.unwrap_or_else(|error| panic!("Error sending message: {}\n", error));
 	}
 }
