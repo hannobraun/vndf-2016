@@ -1,16 +1,23 @@
 extern crate serialize;
 
 
-use serialize::json;
+use serialize::json::{
+	mod,
+	DecodeResult,
+};
 
 
-#[deriving(Encodable)]
+#[deriving(Decodable, Encodable)]
 pub enum Message {
 	Login,
 	Broadcast(String),
 }
 
 impl Message {
+	pub fn from_json(json: &str) -> DecodeResult<Message> {
+		json::decode(json)
+	}
+
 	pub fn to_json(&self) -> String {
 		json::encode(self)
 	}
