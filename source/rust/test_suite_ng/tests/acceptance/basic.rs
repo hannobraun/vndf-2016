@@ -1,5 +1,5 @@
-use test_tools::rc::client_ng::Client;
-use test_tools::rc::game_service_ng::GameService;
+use test_tools_ng::Client;
+use test_tools_ng::GameService;
 
 
 #[test]
