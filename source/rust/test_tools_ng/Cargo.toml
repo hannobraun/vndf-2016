@@ -1,0 +1,18 @@
+[package]
+name    = "test_tools_ng"
+version = "0.0.1"
+authors = ["Hanno Braun <mail@hannobraun.de>"]
+
+[lib]
+name = "test_tools_ng"
+
+
+[dependencies]
+time = "*"
+
+
+[dependencies.client_ng]
+path = "../client_ng"
+
+[dependencies.acceptance]
+path = "../acceptance-rs"

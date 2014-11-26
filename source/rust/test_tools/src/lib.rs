@@ -21,7 +21,5 @@ pub mod mock {
 }
 pub mod rc {
 	pub mod client;
-	pub mod client_ng;
 	pub mod gameservice;
-	pub mod game_service_ng;
 }
