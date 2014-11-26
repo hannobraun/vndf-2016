@@ -53,9 +53,8 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 
 	loop {
 		match input.read_line() {
-			// TODO: Currently user input is completely ignored.
-			Some(_) => (),
-			None    => (),
+			Some(line) => server.send_to(Message::Broadcast(line)),
+			None       => (),
 		}
 		match server.recv_from() {
 			// TODO: Just setting the received broadcast as the only one will

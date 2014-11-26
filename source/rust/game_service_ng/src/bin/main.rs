@@ -20,9 +20,10 @@ fn main() {
 
 	print!("Listening on port {}\n", port);
 
-	// TODO: This is just the broadcast the test case expects. This should be
-	//       read from broadcasting clients instead.
-	let broadcast = "This is a broadcast.";
+	// TODO: The game service sends at most a single broadcast that can be
+	//       overwritten by every client. Instead we want one broadcast per
+	//       client.
+	let mut broadcast = None;
 
 	loop {
 		let (message, address) = match socket.recv_from(&mut buffer) {
@@ -51,11 +52,17 @@ fn main() {
 			Message::Login => {
 				clients.insert(address);
 			},
-
-			_ => print!("Unexpected message: {}\n", message),
+			Message::Broadcast(string) => {
+				broadcast = Some(string);
+			},
 		}
 
 		for &address in clients.iter() {
+			let ref broadcast = match broadcast {
+				Some(ref broadcast) => broadcast,
+				None                => continue,
+			};
+
 			match socket.send_to(broadcast.as_bytes(), address) {
 				Ok(())     => (),
 				Err(error) =>
