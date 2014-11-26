@@ -10,9 +10,9 @@ fn it_should_receive_broadcasts() {
 
 	let message_1 = "This is a broadcast by client 1.".to_string();
 	let message_2 = "This is a broadcast by client 2.".to_string();
-	// TODO: This is just the command argument, what's missing is the command.
-	//       Once we need more than one command, this should be something like
-	//       "broadcast ...", instead of only "...".
+	// TODO(83305336): This is just the command argument, what's missing is the
+	//                 command. Once we need more than one command, this should
+	//                 be something like "broadcast ...", instead of only "...".
 	client_1.command(format!("{}", message_1).as_slice());
 	client_2.command(format!("{}", message_2).as_slice());
 
