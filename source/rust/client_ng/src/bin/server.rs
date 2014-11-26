@@ -6,7 +6,7 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Message;
+use protocol_ng::Action;
 
 
 pub struct Server {
@@ -59,7 +59,7 @@ impl Server {
 		}
 	}
 
-	pub fn send_to(&mut self, message: Message) {
+	pub fn send_to(&mut self, message: Action) {
 		// TODO: We have no way of knowing, if this message actually arrives.
 		// TODO: Replace unwrap with proper error handling.
 		self.socket.send_to(message.to_json().as_bytes(), self.server).unwrap();

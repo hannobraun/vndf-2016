@@ -19,7 +19,7 @@ use output::{
 	Output,
 	PlayerOutput,
 };
-use protocol_ng::Message;
+use protocol_ng::Action;
 use server::Server;
 
 
@@ -49,11 +49,11 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 		broadcasts: vec![],
 	};
 
-	server.send_to(Message::Login);
+	server.send_to(Action::Login);
 
 	loop {
 		match input.read_line() {
-			Some(line) => server.send_to(Message::Broadcast(line)),
+			Some(line) => server.send_to(Action::Broadcast(line)),
 			None       => (),
 		}
 		match server.recv_from() {

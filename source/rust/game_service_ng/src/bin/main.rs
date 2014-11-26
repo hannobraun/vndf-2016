@@ -8,7 +8,7 @@ use std::collections::HashSet;
 use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Message;
+use protocol_ng::Action;
 
 
 fn main() {
@@ -30,7 +30,7 @@ fn main() {
 			// TODO: Handle decoding errors.
 			Ok((len, address)) => {
 				let message =
-					Message::from_json(
+					Action::from_json(
 						String::from_utf8(
 							buffer[.. len].to_vec()
 						)
@@ -49,10 +49,10 @@ fn main() {
 		};
 
 		match message {
-			Message::Login => {
+			Action::Login => {
 				clients.insert(address);
 			},
-			Message::Broadcast(string) => {
+			Action::Broadcast(string) => {
 				broadcast = Some(string);
 			},
 		}
