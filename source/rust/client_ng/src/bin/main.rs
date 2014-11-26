@@ -19,6 +19,7 @@ use output::{
 	Output,
 	PlayerOutput,
 };
+use protocol_ng::Message;
 use server::Server;
 
 
@@ -43,10 +44,12 @@ fn main() {
 }
 
 
-fn run<O: Output>(input : Input, server: Server, mut output: O) {
+fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 	let mut frame = Frame {
 		broadcasts: vec![],
 	};
+
+	server.send_to(Message::Login);
 
 	loop {
 		match input.read_line() {

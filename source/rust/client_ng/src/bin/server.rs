@@ -29,11 +29,6 @@ impl Server {
 		spawn(proc() {
 			let mut buffer = [0u8, ..512];
 
-			socket.send_to(
-				Message::Login.to_json().as_bytes(),
-				server,
-			).unwrap();
-
 			loop {
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, _)) =>
