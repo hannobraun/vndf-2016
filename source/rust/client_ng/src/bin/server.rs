@@ -6,7 +6,10 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Action;
+use protocol_ng::{
+	Action,
+	Perception,
+};
 
 
 pub struct Server {
@@ -48,15 +51,23 @@ impl Server {
 		}
 	}
 
-	pub fn recv_from(&self) -> Option<String> {
-		match self.receiver.try_recv() {
-			Ok(message) => Some(message),
+	pub fn recv_from(&self) -> Option<Perception> {
+		let message = match self.receiver.try_recv() {
+			Ok(message) => message,
 
 			Err(error) => match error {
-				TryRecvError::Empty        => None,
+				TryRecvError::Empty        => return None,
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
-		}
+		};
+
+		// TODO: Just setting the received broadcast as the only one will not be
+		//       enough.
+		let perception = Perception {
+			broadcasts: vec![message],
+		};
+
+		Some(perception)
 	}
 
 	pub fn send_to(&mut self, message: Action) {

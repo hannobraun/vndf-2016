@@ -57,10 +57,8 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 			None       => (),
 		}
 		match server.recv_from() {
-			// TODO: Just setting the received broadcast as the only one will
-			//       not be enough.
-			Some(broadcast) => frame.broadcasts = vec![broadcast],
-			None            => (),
+			Some(perception) => frame.broadcasts = perception.broadcasts,
+			None             => (),
 		}
 
 		output.render(&frame);
