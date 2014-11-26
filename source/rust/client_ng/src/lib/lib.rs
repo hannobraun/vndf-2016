@@ -7,7 +7,7 @@ use serialize::json::{
 };
 
 
-#[deriving(Decodable, Encodable)]
+#[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
 	pub broadcasts: Vec<String>,
 }
