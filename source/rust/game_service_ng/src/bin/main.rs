@@ -57,13 +57,9 @@ fn main() {
 
 		let broadcasts: Vec<String> = clients
 			.iter()
-			.filter(
-				|&(_, broadcast)|
-					broadcast.is_some()
-			)
-			.map(
+			.filter_map(
 				|(_, broadcast)|
-					broadcast.clone().unwrap()
+					broadcast.clone()
 			)
 			.collect();
 		let perception = Perception {
