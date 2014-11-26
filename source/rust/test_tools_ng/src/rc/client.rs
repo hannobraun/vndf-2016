@@ -14,7 +14,7 @@ impl Client {
 		let process = Process::start(
 			"vndf-client-ng",
 			&[
-				format!("--headless").as_slice(),
+				"--headless",
 				format!("--server-port={}", port).as_slice(),
 			]
 		);
