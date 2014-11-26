@@ -15,6 +15,7 @@ impl Client {
 			"vndf-client-ng",
 			&[
 				"--headless",
+				"--server-host=localhost",
 				format!("--server-port={}", port).as_slice(),
 			]
 		);
