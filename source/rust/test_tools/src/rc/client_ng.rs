@@ -24,8 +24,8 @@ impl Client {
 		}
 	}
 
-	pub fn command(&mut self, _command: &str) {
-
+	pub fn command(&mut self, command: &str) {
+		self.process.write_stdin_line(command);
 	}
 
 	pub fn frame(&mut self) -> Frame {
