@@ -54,7 +54,7 @@ impl Server {
 	pub fn recv_from(&self) -> Option<Perception> {
 		match self.receiver.try_recv() {
 			Ok(message) =>
-				// TODO: Handle decodig errors.
+				// TODO: Handle decoding errors.
 				Some(Perception::from_json(message.as_slice()).unwrap()),
 
 			Err(error) => match error {
