@@ -6,7 +6,8 @@ use serialize::json;
 
 #[deriving(Encodable)]
 pub enum Message {
-	Login
+	Login,
+	Broadcast(String),
 }
 
 impl Message {
