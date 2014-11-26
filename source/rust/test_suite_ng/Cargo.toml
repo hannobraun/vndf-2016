@@ -1,0 +1,17 @@
+[package]
+name    = "test_suite_ng"
+version = "0.0.1"
+authors = ["Hanno Braun <mail@hannobraun.de>"]
+
+
+[dependencies.client_ng]
+path = "../client_ng"
+
+[dependencies.game_service_ng]
+path = "../game_service"
+
+[dependencies.acceptance]
+path = "../acceptance-rs"
+
+[dependencies.test_tools_ng]
+path = "../test_tools_ng"
