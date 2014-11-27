@@ -66,7 +66,9 @@ fn main() {
 			)
 			.collect();
 		let perception = Perception {
-			broadcasts: broadcasts,
+			// TODO: Set sequence number of last action
+			last_action: 0,
+			broadcasts : broadcasts,
 		};
 		// TODO(83504690): We need to make sure that the encoded perception fits
 		//                 into a UDP packet. Research suggests that, given

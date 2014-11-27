@@ -33,7 +33,8 @@ pub enum Step {
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Perception {
-	pub broadcasts: Vec<String>,
+	pub last_action: u64,
+	pub broadcasts : Vec<String>,
 }
 
 impl Perception {
