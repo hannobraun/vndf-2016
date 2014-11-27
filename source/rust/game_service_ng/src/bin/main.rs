@@ -26,8 +26,6 @@ fn main() {
 	let mut clients = HashMap::new();
 	let mut socket  = Socket::new(port);
 
-	print!("Listening on port {}\n", port);
-
 	loop {
 		match socket.recv_from() {
 			Some((action, address)) => {

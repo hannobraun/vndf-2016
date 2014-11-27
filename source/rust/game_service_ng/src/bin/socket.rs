@@ -20,6 +20,8 @@ impl Socket {
 		let mut socket       = UdpSocket::bind(("0.0.0.0", port)).unwrap();
 		let     socket_field = socket.clone();
 
+		print!("Listening on port {}\n", port);
+
 		spawn(proc() {
 			let mut buffer  = [0u8, ..512];
 
