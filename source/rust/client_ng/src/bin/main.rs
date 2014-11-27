@@ -73,6 +73,6 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 
 		output.render(&frame);
 
-		sleep(Duration::milliseconds(10));
+		sleep(Duration::milliseconds(20));
 	}
 }
