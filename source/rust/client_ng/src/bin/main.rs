@@ -12,7 +12,10 @@ use std::io::timer::sleep;
 use std::time::Duration;
 
 use args::Args;
-use client_ng::Frame;
+use client_ng::{
+	Frame,
+	Server,
+};
 use input::Input;
 use output::{
 	HeadlessOutput,
@@ -20,13 +23,11 @@ use output::{
 	PlayerOutput,
 };
 use protocol_ng::Action;
-use server::Server;
 
 
 mod args;
 mod input;
 mod output;
-mod server;
 mod termios;
 
 
