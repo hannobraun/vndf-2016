@@ -81,14 +81,7 @@ fn main() {
 		let perception = perception.to_json();
 
 		for (&address, _) in clients.iter() {
-			match socket.socket.send_to(perception.as_bytes(), address) {
-				Ok(())     => (),
-				Err(error) =>
-					print!(
-						"Error sending data to {}: {}",
-						address, error
-					),
-			}
+			socket.send_to(perception.as_bytes(), address);
 		}
 	}
 }
