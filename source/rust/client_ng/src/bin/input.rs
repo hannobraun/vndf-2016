@@ -14,6 +14,8 @@ impl Input {
 			let mut stdin = stdin();
 
 			loop {
+				// TODO(83541252): This operation should time out to ensure
+				//                 panic propagation between tasks.
 				match stdin.read_line() {
 					Ok(line) =>
 						sender.send(line[.. line.len() - 1].to_string()),
