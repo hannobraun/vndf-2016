@@ -54,6 +54,8 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 	};
 
 	server.send_to(Action {
+		// TODO: Set sequence number
+		seq  : 0,
 		steps: vec![Step::Login],
 	});
 
@@ -61,6 +63,8 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 		match input.read_line() {
 			Some(line) =>
 				server.send_to(Action {
+					// TODO: Set sequence number
+					seq  : 0,
 					steps: vec![Step::Broadcast(line)],
 				}),
 

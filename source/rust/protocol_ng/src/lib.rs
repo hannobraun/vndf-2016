@@ -9,6 +9,7 @@ use serialize::json::{
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Action {
+	pub seq  : u64,
 	pub steps: Vec<Step>,
 }
 
