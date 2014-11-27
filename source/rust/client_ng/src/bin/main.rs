@@ -54,13 +54,14 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 
 	let mut action_assembler = ActionAssembler::new();
 
-	server.send_to(action_assembler.assemble(Step::Login));
+	action_assembler.add_step(Step::Login);
+	server.send_to(action_assembler.assemble());
 
 	loop {
 		match input.read_line() {
 			Some(line) => {
-				let action = action_assembler.assemble(Step::Broadcast(line));
-				server.send_to(action);
+				action_assembler.add_step(Step::Broadcast(line));
+				server.send_to(action_assembler.assemble());
 			},
 
 			None => (),

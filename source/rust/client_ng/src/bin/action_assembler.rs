@@ -4,18 +4,29 @@ use protocol_ng::{
 };
 
 
-pub struct ActionAssembler;
+pub struct ActionAssembler {
+	steps: Vec<Step>,
+}
 
 impl ActionAssembler {
 	pub fn new() -> ActionAssembler {
-		ActionAssembler
+		ActionAssembler {
+			steps: Vec::new(),
+		}
 	}
 
-	pub fn assemble(&mut self, step: Step) -> Action {
-		Action {
+	pub fn add_step(&mut self, step: Step) {
+		self.steps.push(step);
+	}
+
+	pub fn assemble(&mut self) -> Action {
+		let action = Action {
 			// TODO: Set sequence number
 			seq  : 0,
-			steps: vec![step],
-		}
+			steps: self.steps.clone(),
+		};
+		self.steps.clear();
+
+		action
 	}
 }
