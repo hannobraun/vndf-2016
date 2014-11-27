@@ -10,7 +10,7 @@ use protocol_ng::{
 
 
 pub struct Server {
-	receiver: Receiver<String>,
+	receiver: Receiver<Option<String>>,
 	address : SocketAddr,
 	socket  : UdpSocket,
 }
@@ -46,10 +46,7 @@ impl Server {
 					},
 				};
 
-				match message {
-					Some(message) => sender.send(message),
-					None          => (),
-				}
+				sender.send(message);
 			}
 		});
 
@@ -62,8 +59,10 @@ impl Server {
 
 	pub fn recv_from(&self) -> Option<Perception> {
 		let message = match self.receiver.try_recv() {
-			Ok(message) =>
-				message,
+			Ok(message) => match message {
+				Some(message) => message,
+				None          => return None,
+			},
 
 			Err(error) => match error {
 				TryRecvError::Empty        => return None,
