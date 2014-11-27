@@ -20,30 +20,36 @@ use socket::Socket;
 mod socket;
 
 
+struct Client {
+	last_action: u64,
+	broadcast  : Option<String>,
+}
+
+
 fn main() {
 	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
 
-	// TODO: Those two parallel HashMaps are now very nice.
 	let mut clients = HashMap::new();
-	let mut seqs    = HashMap::new();
-
-	let mut socket = Socket::new(port);
+	let mut socket  = Socket::new(port);
 
 	loop {
 		match socket.recv_from() {
 			Some((action, address)) => {
-				seqs.insert(address, action.seq);
-
 				for step in action.steps.into_iter() {
 					match step {
 						Step::Login => {
-							clients.insert(address, None);
+							clients.insert(address, Client {
+								last_action: action.seq,
+								broadcast  : None,
+							});
 						},
 						Step::Broadcast(broadcast) => {
-							clients.insert(address, Some(broadcast));
+							clients[address].broadcast = Some(broadcast);
 						},
 					}
 				}
+
+				clients[address].last_action = action.seq;
 			},
 
 			None => (),
@@ -52,14 +58,14 @@ fn main() {
 		let broadcasts: Vec<String> = clients
 			.iter()
 			.filter_map(
-				|(_, broadcast)|
-					broadcast.clone()
+				|(_, client)|
+					client.broadcast.clone()
 			)
 			.collect();
 
-		for (&address, _) in clients.iter() {
+		for (&address, client) in clients.iter() {
 			let perception = Perception {
-				last_action: seqs[address],
+				last_action: client.last_action,
 				broadcasts : broadcasts.clone(),
 			};
 			// TODO(83504690): We need to make sure that the encoded perception fits
