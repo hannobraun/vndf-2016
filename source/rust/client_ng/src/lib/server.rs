@@ -1,4 +1,5 @@
 use std::comm::TryRecvError;
+use std::io::IoErrorKind;
 use std::io::net::ip::SocketAddr;
 use std::io::net::udp::UdpSocket;
 
@@ -26,15 +27,29 @@ impl Server {
 			let mut buffer = [0u8, ..512];
 
 			loop {
+				socket.set_read_timeout(Some(100));
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, _)) =>
-						// TODO: Handle decoding failure.
-						String::from_utf8(buffer[.. len].to_vec()).unwrap(),
-					Err(error) =>
-						panic!("Error receiving message: {}", error),
+						Some(
+							String::from_utf8(
+								buffer[.. len].to_vec()
+							)
+							// TODO: Handle decoding failure.
+							.unwrap()
+						),
+
+					Err(error) => match error.kind {
+						IoErrorKind::TimedOut =>
+							None,
+						_ =>
+							panic!("Error receiving message: {}", error),
+					},
 				};
 
-				sender.send(message);
+				match message {
+					Some(message) => sender.send(message),
+					None          => (),
+				}
 			}
 		});
 
