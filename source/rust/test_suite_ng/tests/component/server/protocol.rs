@@ -10,8 +10,8 @@ use test_tools_ng::{
 
 #[test]
 fn it_should_confirm_received_actions() {
-	let game_service = GameService::start();
-	let client       = MockClient::start(game_service.port());
+	let     game_service = GameService::start();
+	let mut client       = MockClient::start(game_service.port());
 
 	let seq = 512;
 	client.send_action(Action {
