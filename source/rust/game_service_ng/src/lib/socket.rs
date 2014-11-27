@@ -1,4 +1,5 @@
 use std::comm::TryRecvError;
+use std::io::IoErrorKind;
 use std::io::net::ip::{
 	Port,
 	SocketAddr,
@@ -9,7 +10,7 @@ use protocol_ng::Action;
 
 
 pub struct Socket {
-	receiver  : Receiver<(Action, SocketAddr)>,
+	receiver  : Receiver<Option<(Action, SocketAddr)>>,
 	pub socket: UdpSocket,
 }
 
@@ -26,7 +27,7 @@ impl Socket {
 			let mut buffer  = [0u8, ..512];
 
 			loop {
-				// TODO: Add receive timeout.
+				socket.set_read_timeout(Some(20));
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => {
 						let action =
@@ -40,12 +41,18 @@ impl Socket {
 							// TODO(83503278): Handle decoding errors.
 							.unwrap();
 
-						(action, address)
+						Some((action, address))
 					},
 
 					Err(error) => {
-						print!("Error receiving data: {}\n", error);
-						continue;
+						match error.kind {
+							IoErrorKind::TimedOut =>
+								(),
+							_ =>
+								print!("Error receiving data: {}\n", error),
+						}
+
+						None
 					},
 				};
 
@@ -72,8 +79,7 @@ impl Socket {
 
 	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
 		match self.receiver.try_recv() {
-			Ok((address, action)) =>
-				Some((address, action)),
+			Ok(message) => message,
 
 			Err(error) => match error {
 				TryRecvError::Empty        => return None,
