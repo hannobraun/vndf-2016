@@ -23,12 +23,17 @@ mod socket;
 fn main() {
 	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
 
+	// TODO: Those two parallel HashMaps are now very nice.
 	let mut clients = HashMap::new();
-	let mut socket  = Socket::new(port);
+	let mut seqs    = HashMap::new();
+
+	let mut socket = Socket::new(port);
 
 	loop {
 		match socket.recv_from() {
 			Some((action, address)) => {
+				seqs.insert(address, action.seq);
+
 				for step in action.steps.into_iter() {
 					match step {
 						Step::Login => {
@@ -51,18 +56,18 @@ fn main() {
 					broadcast.clone()
 			)
 			.collect();
-		let perception = Perception {
-			// TODO: Use per-client sequence number from last action.
-			last_action: 512,
-			broadcasts : broadcasts,
-		};
-		// TODO(83504690): We need to make sure that the encoded perception fits
-		//                 into a UDP packet. Research suggests that, given
-		//                 typical MTU sizes, 512 bytes are a safe bet for the
-		//                 maximum size.
-		let perception = perception.to_json();
 
 		for (&address, _) in clients.iter() {
+			let perception = Perception {
+				last_action: seqs[address],
+				broadcasts : broadcasts.clone(),
+			};
+			// TODO(83504690): We need to make sure that the encoded perception fits
+			//                 into a UDP packet. Research suggests that, given
+			//                 typical MTU sizes, 512 bytes are a safe bet for the
+			//                 maximum size.
+			let perception = perception.to_json();
+
 			socket.send_to(perception.as_bytes(), address);
 		}
 
