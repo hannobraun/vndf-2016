@@ -34,8 +34,12 @@ impl Server {
 							String::from_utf8(
 								buffer[.. len].to_vec()
 							)
-							// TODO: Handle decoding failure.
-							.unwrap()
+							.unwrap_or_else(|error|
+								panic!(
+									"Message from server is no valid UTF-8: {}",
+									error
+								)
+							)
 						),
 
 					Err(error) => match error.kind {
