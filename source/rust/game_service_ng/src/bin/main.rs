@@ -1,6 +1,7 @@
 #![feature(slicing_syntax)]
 
 
+extern crate game_service_ng;
 extern crate protocol_ng;
 
 
@@ -14,10 +15,7 @@ use protocol_ng::{
 	Step,
 };
 
-use socket::Socket;
-
-
-mod socket;
+use game_service_ng::Socket;
 
 
 struct Client {
