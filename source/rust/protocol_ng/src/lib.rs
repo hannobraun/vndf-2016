@@ -29,16 +29,6 @@ pub enum Step {
 	Broadcast(String),
 }
 
-impl Step {
-	pub fn from_json(json: &str) -> DecodeResult<Step> {
-		json::decode(json)
-	}
-
-	pub fn to_json(&self) -> String {
-		json::encode(self)
-	}
-}
-
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Perception {
