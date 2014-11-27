@@ -4,8 +4,8 @@ use std::io::net::ip::SocketAddr;
 use std::io::net::udp::UdpSocket;
 
 use protocol_ng::{
+	Action,
 	Perception,
-	Step,
 };
 
 
@@ -91,7 +91,7 @@ impl Server {
 		Some(message)
 	}
 
-	pub fn send_to(&mut self, message: Step) {
+	pub fn send_to(&mut self, message: Action) {
 		// TODO(83501684): We have no way of knowing, if this message actually
 		//                 arrives.
 		// TODO: Do we need to set a timeout here?
