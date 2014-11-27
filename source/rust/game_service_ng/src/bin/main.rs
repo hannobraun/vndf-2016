@@ -6,7 +6,6 @@ extern crate protocol_ng;
 
 use std::collections::HashMap;
 use std::io::net::ip::Port;
-use std::io::net::udp::UdpSocket;
 
 use protocol_ng::{
 	Action,
@@ -14,18 +13,23 @@ use protocol_ng::{
 	Step,
 };
 
+use socket::Socket;
+
+
+mod socket;
+
 
 fn main() {
 	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
 
 	let mut clients = HashMap::new();
 	let mut buffer  = [0u8, ..512];
-	let mut socket  = UdpSocket::bind(("0.0.0.0", port)).unwrap();
+	let mut socket  = Socket::new(port);
 
 	print!("Listening on port {}\n", port);
 
 	loop {
-		let (action, address) = match socket.recv_from(&mut buffer) {
+		let (action, address) = match socket.socket.recv_from(&mut buffer) {
 			// TODO(83503278): Handle decoding errors.
 			Ok((len, address)) => {
 				let action =
@@ -77,7 +81,7 @@ fn main() {
 		let perception = perception.to_json();
 
 		for (&address, _) in clients.iter() {
-			match socket.send_to(perception.as_bytes(), address) {
+			match socket.socket.send_to(perception.as_bytes(), address) {
 				Ok(())     => (),
 				Err(error) =>
 					print!(
