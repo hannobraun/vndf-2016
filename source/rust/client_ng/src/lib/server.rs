@@ -28,12 +28,13 @@ impl Server {
 			loop {
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, _)) =>
-						buffer[.. len],
+						// TODO: Handle decoding failure.
+						String::from_utf8(buffer[.. len].to_vec()).unwrap(),
 					Err(error) =>
 						panic!("Error receiving message: {}", error),
 				};
 
-				sender.send(String::from_utf8(message.to_vec()).unwrap());
+				sender.send(message);
 			}
 		});
 
