@@ -66,8 +66,8 @@ fn main() {
 			)
 			.collect();
 		let perception = Perception {
-			// TODO: Set sequence number of last action
-			last_action: 512,
+			// TODO: The sequence number must be per-client.
+			last_action: action.seq,
 			broadcasts : broadcasts,
 		};
 		// TODO(83504690): We need to make sure that the encoded perception fits
