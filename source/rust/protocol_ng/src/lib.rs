@@ -8,13 +8,13 @@ use serialize::json::{
 
 
 #[deriving(Decodable, Encodable, Show)]
-pub enum Action {
+pub enum Step {
 	Login,
 	Broadcast(String),
 }
 
-impl Action {
-	pub fn from_json(json: &str) -> DecodeResult<Action> {
+impl Step {
+	pub fn from_json(json: &str) -> DecodeResult<Step> {
 		json::decode(json)
 	}
 

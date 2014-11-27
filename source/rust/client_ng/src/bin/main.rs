@@ -22,7 +22,7 @@ use output::{
 	Output,
 	PlayerOutput,
 };
-use protocol_ng::Action;
+use protocol_ng::Step;
 
 
 mod args;
@@ -50,11 +50,11 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 		broadcasts: vec![],
 	};
 
-	server.send_to(Action::Login);
+	server.send_to(Step::Login);
 
 	loop {
 		match input.read_line() {
-			Some(line) => server.send_to(Action::Broadcast(line)),
+			Some(line) => server.send_to(Step::Broadcast(line)),
 			None       => (),
 		}
 		match server.recv_from() {

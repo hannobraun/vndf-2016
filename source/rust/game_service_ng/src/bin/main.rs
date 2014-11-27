@@ -9,8 +9,8 @@ use std::io::net::ip::Port;
 use std::io::net::udp::UdpSocket;
 
 use protocol_ng::{
-	Action,
 	Perception,
+	Step,
 };
 
 
@@ -28,7 +28,7 @@ fn main() {
 			// TODO(83503278): Handle decoding errors.
 			Ok((len, address)) => {
 				let message =
-					Action::from_json(
+					Step::from_json(
 						String::from_utf8(
 							buffer[.. len].to_vec()
 						)
@@ -47,10 +47,10 @@ fn main() {
 		};
 
 		match message {
-			Action::Login => {
+			Step::Login => {
 				clients.insert(address, None);
 			},
-			Action::Broadcast(broadcast) => {
+			Step::Broadcast(broadcast) => {
 				clients.insert(address, Some(broadcast));
 			},
 		}
