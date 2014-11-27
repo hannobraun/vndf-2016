@@ -61,26 +61,27 @@ impl Server {
 	}
 
 	pub fn recv_from(&self) -> Option<Perception> {
-		match self.receiver.try_recv() {
-			Ok(message) => {
-				let message =
-					Perception::from_json(message.as_slice())
-					.unwrap_or_else(
-						|error|
-							panic!(
-								"Error decoding message from server: {}",
-								error,
-							)
-					);
-				
-				Some(message)
-			},
+		let message = match self.receiver.try_recv() {
+			Ok(message) =>
+				message,
 
 			Err(error) => match error {
-				TryRecvError::Empty        => None,
+				TryRecvError::Empty        => return None,
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
-		}
+		};
+
+		let message =
+			Perception::from_json(message.as_slice())
+			.unwrap_or_else(
+				|error|
+					panic!(
+						"Error decoding message from server: {}",
+						error,
+					)
+			);
+
+		Some(message)
 	}
 
 	pub fn send_to(&mut self, message: Action) {
