@@ -41,7 +41,7 @@ impl Client {
 	}
 
 	pub fn wait_while(&mut self, condition: |&Frame| -> bool) -> Frame {
-		let start_s= precise_time_s();
+		let start_s = precise_time_s();
 
 		let mut frame = self.frame();
 
