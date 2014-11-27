@@ -11,6 +11,7 @@ extern crate protocol_ng;
 use std::io::timer::sleep;
 use std::time::Duration;
 
+use action_assembler::ActionAssembler;
 use args::Args;
 use client_ng::{
 	Frame,
@@ -22,12 +23,10 @@ use output::{
 	Output,
 	PlayerOutput,
 };
-use protocol_ng::{
-	Action,
-	Step,
-};
+use protocol_ng::Step;
 
 
+mod action_assembler;
 mod args;
 mod input;
 mod output;
@@ -53,20 +52,16 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 		broadcasts: vec![],
 	};
 
-	server.send_to(Action {
-		// TODO: Set sequence number
-		seq  : 0,
-		steps: vec![Step::Login],
-	});
+	let mut action_assembler = ActionAssembler::new();
+
+	server.send_to(action_assembler.assemble(Step::Login));
 
 	loop {
 		match input.read_line() {
-			Some(line) =>
-				server.send_to(Action {
-					// TODO: Set sequence number
-					seq  : 0,
-					steps: vec![Step::Broadcast(line)],
-				}),
+			Some(line) => {
+				let action = action_assembler.assemble(Step::Broadcast(line));
+				server.send_to(action);
+			},
 
 			None => (),
 		}
