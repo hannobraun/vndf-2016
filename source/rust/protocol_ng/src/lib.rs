@@ -7,7 +7,7 @@ use serialize::json::{
 };
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Clone, Decodable, Encodable, Show)]
 pub struct Action {
 	pub seq  : u64,
 	pub steps: Vec<Step>,
@@ -24,14 +24,14 @@ impl Action {
 }
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Clone, Decodable, Encodable, Show)]
 pub enum Step {
 	Login,
 	Broadcast(String),
 }
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(Clone, Decodable, Encodable, Show)]
 pub struct Perception {
 	pub last_action: u64,
 	pub broadcasts : Vec<String>,
