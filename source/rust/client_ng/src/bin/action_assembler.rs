@@ -5,27 +5,27 @@ use protocol_ng::{
 
 
 pub struct ActionAssembler {
-	steps: Vec<Step>,
+	added: Vec<Step>,
 }
 
 impl ActionAssembler {
 	pub fn new() -> ActionAssembler {
 		ActionAssembler {
-			steps: Vec::new(),
+			added: Vec::new(),
 		}
 	}
 
 	pub fn add_step(&mut self, step: Step) {
-		self.steps.push(step);
+		self.added.push(step);
 	}
 
 	pub fn assemble(&mut self) -> Action {
 		let action = Action {
 			// TODO: Set sequence number
 			seq  : 0,
-			steps: self.steps.clone(),
+			steps: self.added.clone(),
 		};
-		self.steps.clear();
+		self.added.clear();
 
 		action
 	}
