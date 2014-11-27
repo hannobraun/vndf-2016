@@ -25,10 +25,10 @@ fn main() {
 	print!("Listening on port {}\n", port);
 
 	loop {
-		let (message, address) = match socket.recv_from(&mut buffer) {
+		let (action, address) = match socket.recv_from(&mut buffer) {
 			// TODO(83503278): Handle decoding errors.
 			Ok((len, address)) => {
-				let message =
+				let action =
 					Action::from_json(
 						String::from_utf8(
 							buffer[.. len].to_vec()
@@ -38,7 +38,7 @@ fn main() {
 					)
 					.unwrap();
 
-				(message, address)
+				(action, address)
 			},
 
 			Err(error) => {
@@ -47,7 +47,7 @@ fn main() {
 			},
 		};
 
-		for step in message.steps.into_iter() {
+		for step in action.steps.into_iter() {
 			match step {
 				Step::Login => {
 					clients.insert(address, None);
