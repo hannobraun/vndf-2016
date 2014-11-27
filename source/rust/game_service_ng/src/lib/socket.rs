@@ -24,9 +24,10 @@ impl Socket {
 		print!("Listening on port {}\n", port);
 
 		spawn(proc() {
-			let mut buffer  = [0u8, ..512];
+			let mut should_run = true;
+			let mut buffer     = [0u8, ..512];
 
-			loop {
+			while should_run {
 				socket.set_read_timeout(Some(20));
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => {
@@ -56,7 +57,10 @@ impl Socket {
 					},
 				};
 
-				sender.send(message);
+				match sender.send_opt(message) {
+					Ok(()) => (),
+					Err(_) => should_run = false,
+				}
 			}
 		});
 
