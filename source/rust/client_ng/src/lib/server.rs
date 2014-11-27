@@ -24,9 +24,10 @@ impl Server {
 		let socket_field = socket.clone();
 
 		spawn(proc() {
-			let mut buffer = [0u8, ..512];
+			let mut should_run = true;
+			let mut buffer     = [0u8, ..512];
 
-			loop {
+			while should_run {
 				socket.set_read_timeout(Some(100));
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, _)) =>
@@ -50,7 +51,10 @@ impl Server {
 					},
 				};
 
-				sender.send(message);
+				match sender.send_opt(message) {
+					Ok(()) => (),
+					Err(_) => should_run = false, // other end disconnected
+				}
 			}
 		});
 
