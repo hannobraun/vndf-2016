@@ -27,8 +27,7 @@ impl Socket {
 
 			loop {
 				// TODO: Add receive timeout.
-				match socket.recv_from(&mut buffer) {
-					// TODO(83503278): Handle decoding errors.
+				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => {
 						let action =
 							Action::from_json(
@@ -38,16 +37,19 @@ impl Socket {
 								.unwrap()
 								.as_slice()
 							)
+							// TODO(83503278): Handle decoding errors.
 							.unwrap();
 
-						sender.send((action, address));
+						(action, address)
 					},
 
 					Err(error) => {
 						print!("Error receiving data: {}\n", error);
 						continue;
 					},
-				}
+				};
+
+				sender.send(message);
 			}
 		});
 
