@@ -1,6 +1,9 @@
 use std::comm::TryRecvError;
 use std::io::IoErrorKind;
-use std::io::net::ip::SocketAddr;
+use std::io::net::ip::{
+	SocketAddr,
+	ToSocketAddr,
+};
 use std::io::net::udp::UdpSocket;
 
 use protocol_ng::{
@@ -16,7 +19,7 @@ pub struct Server {
 }
 
 impl Server {
-	pub fn new(address: SocketAddr) -> Server {
+	pub fn new<T: ToSocketAddr>(address: T) -> Server {
 		let (sender, receiver) = channel();
 
 		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
@@ -60,7 +63,8 @@ impl Server {
 
 		Server {
 			receiver: receiver,
-			address : address,
+			// TODO: Replace unwrap with proper error handling.
+			address : address.to_socket_addr().unwrap(),
 			socket  : socket_field,
 		}
 	}
