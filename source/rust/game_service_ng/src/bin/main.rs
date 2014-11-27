@@ -6,9 +6,10 @@ extern crate protocol_ng;
 
 use std::collections::HashMap;
 use std::io::net::ip::Port;
+use std::io::timer::sleep;
+use std::time::Duration;
 
 use protocol_ng::{
-	Action,
 	Perception,
 	Step,
 };
@@ -23,43 +24,26 @@ fn main() {
 	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
 
 	let mut clients = HashMap::new();
-	let mut buffer  = [0u8, ..512];
 	let mut socket  = Socket::new(port);
 
 	print!("Listening on port {}\n", port);
 
 	loop {
-		let (action, address) = match socket.socket.recv_from(&mut buffer) {
-			// TODO(83503278): Handle decoding errors.
-			Ok((len, address)) => {
-				let action =
-					Action::from_json(
-						String::from_utf8(
-							buffer[.. len].to_vec()
-						)
-						.unwrap()
-						.as_slice()
-					)
-					.unwrap();
-
-				(action, address)
+		match socket.recv_from() {
+			Some((action, address)) => {
+				for step in action.steps.into_iter() {
+					match step {
+						Step::Login => {
+							clients.insert(address, None);
+						},
+						Step::Broadcast(broadcast) => {
+							clients.insert(address, Some(broadcast));
+						},
+					}
+				}
 			},
 
-			Err(error) => {
-				print!("Error receiving data: {}\n", error);
-				continue;
-			},
-		};
-
-		for step in action.steps.into_iter() {
-			match step {
-				Step::Login => {
-					clients.insert(address, None);
-				},
-				Step::Broadcast(broadcast) => {
-					clients.insert(address, Some(broadcast));
-				},
-			}
+			None => (),
 		}
 
 		let broadcasts: Vec<String> = clients
@@ -70,8 +54,8 @@ fn main() {
 			)
 			.collect();
 		let perception = Perception {
-			// TODO: The sequence number must be per-client.
-			last_action: action.seq,
+			// TODO: Use per-client sequence number from last action.
+			last_action: 512,
 			broadcasts : broadcasts,
 		};
 		// TODO(83504690): We need to make sure that the encoded perception fits
@@ -83,5 +67,7 @@ fn main() {
 		for (&address, _) in clients.iter() {
 			socket.send_to(perception.as_bytes(), address);
 		}
+
+		sleep(Duration::milliseconds(20));
 	}
 }
