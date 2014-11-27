@@ -1,7 +1,4 @@
-use std::io::net::ip::{
-	Port,
-	ToSocketAddr,
-};
+use std::io::net::ip::Port;
 use std::io::timer::sleep;
 use std::time::Duration;
 
@@ -19,7 +16,7 @@ pub struct Client {
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			server: Server::new(("localhost", port).to_socket_addr().unwrap()),
+			server: Server::new(("localhost", port)),
 		}
 	}
 
