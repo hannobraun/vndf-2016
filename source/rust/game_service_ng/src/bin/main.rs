@@ -54,9 +54,10 @@ fn main() {
 			},
 			ReceiveResult::None =>
 				(),
-			ReceiveResult::ClientError(error, address) =>
-				// TODO(83503278): Handle decoding errors.
-				panic!("Error receiving message from {}: {}", address, error),
+			ReceiveResult::ClientError(error, address) => {
+				print!("Error receiving message from {}: {}", address, error);
+				clients.remove(&address);
+			},
 		}
 
 		let broadcasts: Vec<String> = clients

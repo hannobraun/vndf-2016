@@ -15,3 +15,24 @@ fn it_should_confirm_received_actions() {
 	let perception = client.expect_perception().unwrap();
 	assert_eq!(seq, perception.last_action);
 }
+
+
+#[test]
+fn it_should_disconnect_clients_sending_invalid_utf8() {
+	let     game_service = GameService::start();
+	let mut client_1     = MockClient::start(game_service.port());
+
+	client_1.login(0);
+	assert!(client_1.expect_perception().is_some());
+	let invalid_utf8 = [0x80u8];
+	client_1.send_data(&invalid_utf8);
+	client_1.wait_until(|perception| perception.is_none()); // flush queue
+
+	// We should no longer receive any perceptions.
+	assert!(client_1.expect_perception().is_none());
+
+	// But the game service shouldn't have crashed either.
+	let mut client_2 = MockClient::start(game_service.port());
+	client_2.login(0);
+	assert!(client_2.expect_perception().is_some());
+}
