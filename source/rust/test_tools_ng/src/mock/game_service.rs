@@ -41,8 +41,6 @@ impl GameService {
 			message = self.socket.recv_from();
 		}
 
-		print!("message: {}\n", message);
-
 		match message {
 			Some((action, address)) =>
 				Some(ActionHandle {
