@@ -19,6 +19,9 @@ mod component {
 	mod server {
 		mod protocol;
 	}
+	mod client {
+		mod protocol;
+	}
 }
 mod acceptance {
 	mod basic;

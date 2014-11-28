@@ -66,8 +66,11 @@ fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
 			None => (),
 		}
 		match server.recv_from() {
-			Some(perception) => frame.broadcasts = perception.broadcasts,
-			None             => (),
+			Some(perception) => {
+				frame.broadcasts = perception.broadcasts;
+				action_assembler.process_receipt(perception.last_action);
+			},
+			None => (),
 		}
 
 		server.send_to(action_assembler.assemble());
