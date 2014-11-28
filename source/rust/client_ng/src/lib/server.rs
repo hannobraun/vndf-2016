@@ -89,8 +89,9 @@ impl Server {
 			.unwrap_or_else(
 				|error|
 					panic!(
-						"Error decoding message from server: {}",
-						error,
+						"Error decoding message from server.\
+						Error: {}; Message: {}",
+						error, message,
 					)
 			);
 
