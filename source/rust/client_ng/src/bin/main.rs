@@ -55,7 +55,6 @@ fn run<O: Output>(args: Args, mut output: O) {
 	let mut server           = Server::new(args.server);
 
 	action_assembler.add_step(Step::Login);
-	
 
 	loop {
 		match input.read_line() {
