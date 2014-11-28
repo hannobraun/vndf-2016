@@ -11,7 +11,7 @@ use std::io::timer::sleep;
 use std::time::Duration;
 
 use protocol_ng::{
-	Perception,
+	Encoder,
 	Step,
 };
 
@@ -32,6 +32,7 @@ fn main() {
 
 	let mut clients = HashMap::new();
 	let mut socket  = Socket::new(port);
+	let mut encoder = Encoder::new();
 
 	loop {
 		match socket.recv_from() {
@@ -69,17 +70,20 @@ fn main() {
 			.collect();
 
 		for (&address, client) in clients.iter() {
-			let perception = Perception {
-				last_action: client.last_action,
-				broadcasts : broadcasts.clone(),
-			};
 			// TODO(83504690): We need to make sure that the encoded perception
 			//                 fits into a UDP packet. Research suggests that,
 			//                 given typical MTU sizes, 512 bytes are a safe bet
 			//                 for the maximum size.
-			let perception = perception.encode();
+			let mut encode_buffer = [0, ..512];
+			let mut perception    = encoder.perception(client.last_action);
 
-			socket.send_to(perception.as_bytes(), address);
+			for broadcast in broadcasts.iter() {
+				perception.update(broadcast.as_slice());
+			}
+
+			// TODO: Replace unwrap with proper error handling
+			let message = perception.encode(&mut encode_buffer).unwrap();
+			socket.send_to(message, address);
 		}
 
 		sleep(Duration::milliseconds(20));
