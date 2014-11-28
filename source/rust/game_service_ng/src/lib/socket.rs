@@ -10,8 +10,8 @@ use protocol_ng::Action;
 
 
 pub struct Socket {
-	sender  : SocketSender,
-	receiver: SocketReceiver,
+	pub sender  : SocketSender,
+	    receiver: SocketReceiver,
 }
 
 impl Socket {
@@ -36,7 +36,7 @@ impl Socket {
 }
 
 
-struct SocketSender {
+pub struct SocketSender {
 	socket: UdpSocket,
 }
 
@@ -47,7 +47,7 @@ impl SocketSender {
 		}
 	}
 
-	fn send(&mut self, message: &[u8], address: SocketAddr) {
+	pub fn send(&mut self, message: &[u8], address: SocketAddr) {
 		match self.socket.send_to(message, address) {
 			Ok(())     => (),
 			Err(error) =>
