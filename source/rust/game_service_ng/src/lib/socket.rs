@@ -49,6 +49,7 @@ impl SocketSender {
 	}
 
 	pub fn send(&mut self, message: &[u8], address: SocketAddr) {
+		// TODO: Do we need a timeout here?
 		match self.socket.send_to(message, address) {
 			Ok(())     => (),
 			Err(error) =>
