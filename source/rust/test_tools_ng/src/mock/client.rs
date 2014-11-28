@@ -41,4 +41,17 @@ impl Client {
 
 		perception
 	}
+
+	pub fn wait_until(
+		&self,
+		condition: |&Option<Perception>| -> bool
+	) -> Option<Perception> {
+		let mut perception = self.expect_perception();
+
+		while !condition(&perception) {
+			perception = self.expect_perception();
+		}
+
+		perception
+	}
 }
