@@ -73,6 +73,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 		}
 
 		let action = action_assembler.assemble();
+		// TODO(83504690): Action may be too large to fit into a single UDP
+		//                 package. Research suggests that, given typical MTU
+		//                 sizes, 512 bytes are a safe bet for the maximum size.
 		server.send_to(action.to_json().as_bytes());
 		output.render(&frame);
 
