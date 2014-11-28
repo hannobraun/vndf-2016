@@ -37,6 +37,13 @@ impl Client {
 		});
 	}
 
+	pub fn broadcast(&mut self, seq: u64, text: String) {
+		self.send_action(Action {
+			seq  : seq,
+			steps: vec![Step::Broadcast(text)],
+		})
+	}
+
 	pub fn expect_perception(&self) -> Option<Perception> {
 		let start_s = precise_time_s();
 
