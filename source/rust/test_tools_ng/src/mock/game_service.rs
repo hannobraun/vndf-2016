@@ -55,6 +55,19 @@ impl GameService {
 			None => None,
 		}
 	}
+
+	pub fn wait_until(
+		&mut self,
+		condition: |&Option<ActionHandle>| -> bool
+	) -> Option<ActionHandle> {
+		let mut action = self.expect_action();
+
+		while !condition(&action) {
+			action = self.expect_action();
+		}
+
+		action
+	}
 }
 
 
