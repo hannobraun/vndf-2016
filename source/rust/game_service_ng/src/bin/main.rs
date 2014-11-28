@@ -73,10 +73,10 @@ fn main() {
 				last_action: client.last_action,
 				broadcasts : broadcasts.clone(),
 			};
-			// TODO(83504690): We need to make sure that the encoded perception fits
-			//                 into a UDP packet. Research suggests that, given
-			//                 typical MTU sizes, 512 bytes are a safe bet for the
-			//                 maximum size.
+			// TODO(83504690): We need to make sure that the encoded perception
+			//                 fits into a UDP packet. Research suggests that,
+			//                 given typical MTU sizes, 512 bytes are a safe bet
+			//                 for the maximum size.
 			let perception = perception.to_json();
 
 			socket.send_to(perception.as_bytes(), address);
