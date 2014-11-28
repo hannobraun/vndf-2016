@@ -138,8 +138,18 @@ fn decode_message(
 			),
 	};
 
-	// TODO(83503278): Handle decoding errors.
-	let message = Action::from_json(message.as_slice()).unwrap();
+	let message = match Action::from_json(message.as_slice()) {
+		Ok(message) =>
+			message,
+		Err(error) =>
+			return ReceiveResult::ClientError(
+				format!(
+					"Error decoding JSON. Error: {}; JSON: {}",
+					error, message
+				),
+				address,
+			),
+	};
 
 	ReceiveResult::Message(message, address)
 }

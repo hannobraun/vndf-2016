@@ -18,8 +18,9 @@ fn it_should_confirm_received_actions() {
 
 
 #[test]
-fn it_should_disconnect_clients_sending_invalid_utf8() {
+fn it_should_disconnect_clients_sending_invalid_data() {
 	let invalid_utf8 = [0x80u8];
+	let invalid_json = "Definitely not JSON.";
 
 	fn test(invalid_data: &[u8]) {
 		let     game_service = GameService::start();
@@ -40,4 +41,5 @@ fn it_should_disconnect_clients_sending_invalid_utf8() {
 	}
 
 	test(&invalid_utf8);
+	test(invalid_json.as_bytes());
 }
