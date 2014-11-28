@@ -10,22 +10,54 @@ use protocol_ng::Action;
 
 
 pub struct Socket {
-	receiver  : Receiver<Option<(Action, SocketAddr)>>,
+	receiver  : SocketReceiver,
 	pub socket: UdpSocket,
 }
 
 impl Socket {
 	pub fn new(port: Port) -> Socket {
+		let socket   = UdpSocket::bind(("0.0.0.0", port)).unwrap();
+		let receiver = SocketReceiver::new(socket.clone());
+
+		Socket {
+			receiver: receiver,
+			socket  : socket,
+		}
+	}
+
+	pub fn send_to(&mut self, perception: &[u8], address: SocketAddr) {
+		match self.socket.send_to(perception, address) {
+			Ok(())     => (),
+			Err(error) =>
+				print!(
+					"Error sending data to {}: {}",
+					address, error
+				),
+		}
+	}
+
+	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
+		self.receiver.recv()
+	}
+}
+
+
+struct SocketReceiver {
+	receiver: Receiver<Option<(Action, SocketAddr)>>,
+}
+
+impl SocketReceiver {
+	fn new(mut socket: UdpSocket) -> SocketReceiver {
 		let (sender, receiver) = channel();
-
-		let mut socket       = UdpSocket::bind(("0.0.0.0", port)).unwrap();
-		let     socket_field = socket.clone();
-
-		print!("Listening on port {}\n", port);
 
 		spawn(proc() {
 			let mut should_run = true;
 			let mut buffer     = [0u8, ..512];
+
+			print!(
+				"Listening on port {}\n",
+				socket.socket_name().unwrap().port
+			);
 
 			while should_run {
 				socket.set_read_timeout(Some(20));
@@ -64,24 +96,12 @@ impl Socket {
 			}
 		});
 
-		Socket {
+		SocketReceiver {
 			receiver: receiver,
-			socket  : socket_field,
 		}
 	}
 
-	pub fn send_to(&mut self, perception: &[u8], address: SocketAddr) {
-		match self.socket.send_to(perception, address) {
-			Ok(())     => (),
-			Err(error) =>
-				print!(
-					"Error sending data to {}: {}",
-					address, error
-				),
-		}
-	}
-
-	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
+	fn recv(&self) -> Option<(Action, SocketAddr)> {
 		match self.receiver.try_recv() {
 			Ok(message) => message,
 
