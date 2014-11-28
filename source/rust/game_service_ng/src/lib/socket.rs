@@ -137,4 +137,5 @@ impl SocketReceiver {
 pub enum ReceiveResult {
 	None,
 	Message(Action, SocketAddr),
+	ClientError(String),
 }

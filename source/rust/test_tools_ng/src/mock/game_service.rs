@@ -47,6 +47,8 @@ impl GameService {
 					Some((action, address)),
 				ReceiveResult::None =>
 					None,
+				ReceiveResult::ClientError(error) =>
+					panic!("Error receiving message: {}", error),
 			}
 		}
 

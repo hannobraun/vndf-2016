@@ -52,8 +52,10 @@ fn main() {
 
 				clients[address].last_action = action.seq;
 			},
-
-			ReceiveResult::None => (),
+			ReceiveResult::None =>
+				(),
+			ReceiveResult::ClientError(error) =>
+				panic!("Error receiving message: {}", error),
 		}
 
 		let broadcasts: Vec<String> = clients
