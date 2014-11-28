@@ -42,7 +42,7 @@ impl Client {
 
 		let mut perception = None;
 
-		while perception.is_none() && precise_time_s() - start_s < 0.5 {
+		while perception.is_none() && precise_time_s() - start_s < 0.1 {
 			perception = self.server.recv_from();
 			sleep(Duration::milliseconds(20));
 		}
