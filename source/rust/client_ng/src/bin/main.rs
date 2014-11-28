@@ -37,7 +37,7 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		run(args, HeadlessOutput::new())
+		run(args, HeadlessOutput::new());
 	}
 	else {
 		run(args, PlayerOutput::new());
