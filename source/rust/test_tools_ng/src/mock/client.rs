@@ -7,6 +7,7 @@ use client_ng::Server;
 use protocol_ng::{
 	Action,
 	Perception,
+	Step,
 };
 
 
@@ -27,6 +28,13 @@ impl Client {
 
 	pub fn send_action(&mut self, action: Action) {
 		self.send_data(action.to_json().as_bytes());
+	}
+
+	pub fn login(&mut self, seq: u64) {
+		self.send_action(Action {
+			seq  : seq,
+			steps: vec![Step::Login],
+		});
 	}
 
 	pub fn expect_perception(&self) -> Option<Perception> {
