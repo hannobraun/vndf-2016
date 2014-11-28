@@ -4,7 +4,10 @@
 extern crate protocol_ng;
 
 
-pub use socket::Socket;
+pub use socket::{
+	Socket,
+	SocketSender,
+};
 
 
 mod socket;
