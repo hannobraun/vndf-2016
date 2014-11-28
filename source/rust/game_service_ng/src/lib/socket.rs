@@ -82,7 +82,7 @@ impl SocketReceiver {
 				socket.set_read_timeout(Some(20));
 				let result = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => {
-						let action =
+						let message =
 							Action::from_json(
 								String::from_utf8(
 									buffer[.. len].to_vec()
@@ -94,7 +94,7 @@ impl SocketReceiver {
 							// TODO(83503278): Handle decoding errors.
 							.unwrap();
 
-						ReceiveResult::Message(action, address)
+						ReceiveResult::Message(message, address)
 					},
 
 					Err(error) => {
