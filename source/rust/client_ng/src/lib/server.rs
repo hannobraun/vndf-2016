@@ -85,7 +85,7 @@ impl Server {
 		};
 
 		let message =
-			Perception::from_json(message.as_slice())
+			Perception::decode(message.as_slice())
 			.unwrap_or_else(
 				|error|
 					panic!(

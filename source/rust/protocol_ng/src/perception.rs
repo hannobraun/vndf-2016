@@ -11,7 +11,7 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn from_json(json: &str) -> DecodeResult<Perception> {
+	pub fn decode(json: &str) -> DecodeResult<Perception> {
 		json::decode(json)
 	}
 
