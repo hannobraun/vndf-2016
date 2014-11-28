@@ -98,6 +98,6 @@ impl ActionHandle {
 			broadcasts : Vec::new(),
 		};
 
-		self.sender.send(perception.to_json().as_bytes(), self.address);
+		self.sender.send(perception.encode().as_bytes(), self.address);
 	}
 }

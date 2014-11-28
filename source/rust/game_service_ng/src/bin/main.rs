@@ -77,7 +77,7 @@ fn main() {
 			//                 fits into a UDP packet. Research suggests that,
 			//                 given typical MTU sizes, 512 bytes are a safe bet
 			//                 for the maximum size.
-			let perception = perception.to_json();
+			let perception = perception.encode();
 
 			socket.send_to(perception.as_bytes(), address);
 		}
