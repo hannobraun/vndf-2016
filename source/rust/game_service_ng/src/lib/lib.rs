@@ -5,6 +5,7 @@ extern crate protocol_ng;
 
 
 pub use socket::{
+	ReceiveResult,
 	Socket,
 	SocketSender,
 };
