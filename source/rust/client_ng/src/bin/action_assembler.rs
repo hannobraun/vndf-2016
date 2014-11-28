@@ -5,6 +5,7 @@ use protocol_ng::{
 
 
 pub struct ActionAssembler {
+	next_seq : u64,
 	added    : Vec<Step>,
 	assembled: Option<Action>,
 }
@@ -12,6 +13,7 @@ pub struct ActionAssembler {
 impl ActionAssembler {
 	pub fn new() -> ActionAssembler {
 		ActionAssembler {
+			next_seq : 0,
 			added    : Vec::new(),
 			assembled: None,
 		}
@@ -27,11 +29,11 @@ impl ActionAssembler {
 				self.assembled.take().unwrap(),
 			None => {
 				let action = Action {
-					// TODO: Set sequence number
-					seq  : 0,
+					seq  : self.next_seq,
 					steps: self.added.clone(),
 				};
 
+				self.next_seq += 1;
 				self.added.clear();
 
 				action
