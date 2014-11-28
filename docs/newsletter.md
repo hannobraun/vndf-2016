@@ -63,7 +63,9 @@ Topic ideas:
   - ~~September: EVE Online~~
   - ~~October: Kerbal Space Program~~
   - ~~November: DayZ~~
-  - December: FTL
+  - December: FTL (title: The Secret Project Edition)
+- January: NG announcement (title: Definitely Not April Fools)
+- Overview over text-based games (title: Self-Help for Text-based Game Devs)
 - Check the rest of the vision file for further topic ideas
 - Announcing the navigation prototype
 - Beyond the navigation prototype (once it's out)
