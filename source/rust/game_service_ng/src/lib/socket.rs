@@ -131,9 +131,9 @@ fn decode_message(
 	let message = match String::from_utf8(message) {
 		Ok(message) =>
 			message,
-		Err(_) =>
+		Err(message) =>
 			return ReceiveResult::ClientError(
-				"Received invalid UTF-8 string".to_string(),
+				format!("Received invalid UTF-8 string: {}", message),
 				address,
 			),
 	};
