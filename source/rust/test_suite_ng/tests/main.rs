@@ -16,10 +16,10 @@ mod unit {
 	}
 }
 mod component {
-	mod server {
+	mod client {
 		mod protocol;
 	}
-	mod client {
+	mod game_service {
 		mod protocol;
 	}
 }
