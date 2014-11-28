@@ -69,14 +69,14 @@ impl SocketReceiver {
 	fn new(mut socket: UdpSocket) -> SocketReceiver {
 		let (sender, receiver) = channel();
 
+		print!(
+			"Listening on port {}\n",
+			socket.socket_name().unwrap().port
+		);
+
 		spawn(proc() {
 			let mut should_run = true;
 			let mut buffer     = [0u8, ..512];
-
-			print!(
-				"Listening on port {}\n",
-				socket.socket_name().unwrap().port
-			);
 
 			while should_run {
 				socket.set_read_timeout(Some(20));
