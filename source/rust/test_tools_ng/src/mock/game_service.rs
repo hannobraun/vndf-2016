@@ -5,7 +5,10 @@ use std::io::net::ip::{
 use time::precise_time_s;
 
 use acceptance::random_port;
-use game_service_ng::Socket;
+use game_service_ng::{
+	Socket,
+	SocketSender,
+};
 use protocol_ng::{
 	Action,
 	Perception,
@@ -46,7 +49,7 @@ impl GameService {
 				Some(ActionHandle {
 					inner  : action,
 					address: address,
-					socket : &mut self.socket,
+					sender : self.socket.sender.clone(),
 				}),
 
 			None => None,
@@ -55,14 +58,14 @@ impl GameService {
 }
 
 
-pub struct ActionHandle<'r> {
+pub struct ActionHandle {
 	pub inner: Action,
 
 	address: SocketAddr,
-	socket : &'r mut Socket,
+	sender : SocketSender,
 }
 
-impl<'r> ActionHandle<'r> {
+impl ActionHandle {
 	pub fn ignore(&self) {}
 
 	pub fn confirm(&mut self) {
@@ -71,6 +74,6 @@ impl<'r> ActionHandle<'r> {
 			broadcasts : Vec::new(),
 		};
 
-		self.socket.send_to(perception.to_json().as_bytes(), self.address);
+		self.sender.send(perception.to_json().as_bytes(), self.address);
 	}
 }
