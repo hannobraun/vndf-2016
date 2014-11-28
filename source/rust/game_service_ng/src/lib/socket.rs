@@ -87,6 +87,7 @@ impl SocketReceiver {
 								String::from_utf8(
 									buffer[.. len].to_vec()
 								)
+								// TODO(83503278): Handle decoding errors.
 								.unwrap()
 								.as_slice()
 							)
