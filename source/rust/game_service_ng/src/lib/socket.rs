@@ -49,7 +49,9 @@ impl SocketSender {
 	}
 
 	pub fn send(&mut self, message: &[u8], address: SocketAddr) {
-		// TODO: Do we need a timeout here?
+		// Whether a udp send blocks or just drops the packet is implementation-
+		// specific. I'd say with a low timeout, we're on the safe side.
+		self.socket.set_write_timeout(Some(10));
 		match self.socket.send_to(message, address) {
 			Ok(())     => (),
 			Err(error) =>
