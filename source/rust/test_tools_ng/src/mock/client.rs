@@ -20,8 +20,12 @@ impl Client {
 		}
 	}
 
+	pub fn send_data(&mut self, data: &[u8]) {
+		self.server.send_to(data);
+	}
+
 	pub fn send_action(&mut self, action: Action) {
-		self.server.send_to(action.to_json().as_bytes())
+		self.send_data(action.to_json().as_bytes());
 	}
 
 	pub fn expect_perception(&self) -> Option<Perception> {
