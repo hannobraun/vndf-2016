@@ -33,11 +33,7 @@ fn it_should_keep_track_of_which_actions_are_confirmed() {
 	{
 		let mut login = game_service.expect_action().unwrap();
 		login.confirm();
-		// TODO(83305336): This is just the command argument, what's missing is
-		//                 the command. Once we need more than one command, this
-		//                 should be something like "broadcast ...", instead of
-		//                 only "...".
-		client.command(format!("{}", broadcast).as_slice());
+		client.broadcast(broadcast.as_slice());
 		game_service.wait_until(|action| {
 			let ref action = action.as_ref().unwrap().inner;
 			action.steps.contains(&Step::Broadcast(broadcast.clone()))
