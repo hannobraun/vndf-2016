@@ -6,6 +6,7 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 use game_service_ng::{
+	ReceiveResult,
 	Socket,
 	SocketSender,
 };
@@ -41,7 +42,12 @@ impl GameService {
 		let mut message = None;
 
 		while message.is_none() && precise_time_s() - start_s < 0.5 {
-			message = self.socket.recv_from();
+			message = match self.socket.recv_from() {
+				ReceiveResult::Message(action, address) =>
+					Some((action, address)),
+				ReceiveResult::None =>
+					None,
+			}
 		}
 
 		match message {

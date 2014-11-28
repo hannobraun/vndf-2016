@@ -30,7 +30,7 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
+	pub fn recv_from(&self) -> ReceiveResult {
 		self.receiver.recv()
 	}
 }
@@ -62,7 +62,7 @@ impl SocketSender {
 
 
 struct SocketReceiver {
-	receiver: Receiver<Option<(Action, SocketAddr)>>,
+	receiver: Receiver<ReceiveResult>,
 }
 
 impl SocketReceiver {
@@ -80,7 +80,7 @@ impl SocketReceiver {
 
 			while should_run {
 				socket.set_read_timeout(Some(20));
-				let message = match socket.recv_from(&mut buffer) {
+				let result = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => {
 						let action =
 							Action::from_json(
@@ -94,7 +94,7 @@ impl SocketReceiver {
 							// TODO(83503278): Handle decoding errors.
 							.unwrap();
 
-						Some((action, address))
+						ReceiveResult::Message(action, address)
 					},
 
 					Err(error) => {
@@ -105,11 +105,11 @@ impl SocketReceiver {
 								print!("Error receiving data: {}\n", error),
 						}
 
-						None
+						ReceiveResult::None
 					},
 				};
 
-				match sender.send_opt(message) {
+				match sender.send_opt(result) {
 					Ok(()) => (),
 					Err(_) => should_run = false,
 				}
@@ -121,12 +121,12 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> Option<(Action, SocketAddr)> {
+	fn recv(&self) -> ReceiveResult {
 		match self.receiver.try_recv() {
 			Ok(message) => message,
 
 			Err(error) => match error {
-				TryRecvError::Empty        => return None,
+				TryRecvError::Empty        => return ReceiveResult::None,
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}

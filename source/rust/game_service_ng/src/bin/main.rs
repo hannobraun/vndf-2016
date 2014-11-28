@@ -15,7 +15,10 @@ use protocol_ng::{
 	Step,
 };
 
-use game_service_ng::Socket;
+use game_service_ng::{
+	ReceiveResult,
+	Socket,
+};
 
 
 struct Client {
@@ -32,7 +35,7 @@ fn main() {
 
 	loop {
 		match socket.recv_from() {
-			Some((action, address)) => {
+			ReceiveResult::Message(action, address) => {
 				for step in action.steps.into_iter() {
 					match step {
 						Step::Login => {
@@ -50,7 +53,7 @@ fn main() {
 				clients[address].last_action = action.seq;
 			},
 
-			None => (),
+			ReceiveResult::None => (),
 		}
 
 		let broadcasts: Vec<String> = clients
