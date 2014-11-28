@@ -18,10 +18,6 @@ impl Perception {
 	pub fn decode(json: &str) -> DecodeResult<Perception> {
 		json::decode(json)
 	}
-
-	pub fn encode(&self) -> String {
-		json::encode(self)
-	}
 }
 
 
