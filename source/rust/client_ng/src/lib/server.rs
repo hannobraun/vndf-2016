@@ -58,10 +58,15 @@ impl Server {
 			}
 		});
 
+		let address = address
+			.to_socket_addr()
+			.unwrap_or_else(|error|
+				panic!("Error converting socket address: {}", error)
+			);
+
 		Server {
 			receiver: receiver,
-			// TODO: Replace unwrap with proper error handling.
-			address : address.to_socket_addr().unwrap(),
+			address : address,
 			socket  : socket_field,
 		}
 	}
