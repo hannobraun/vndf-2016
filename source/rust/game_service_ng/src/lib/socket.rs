@@ -10,23 +10,45 @@ use protocol_ng::Action;
 
 
 pub struct Socket {
-	receiver  : SocketReceiver,
-	pub socket: UdpSocket,
+	sender  : SocketSender,
+	receiver: SocketReceiver,
 }
 
 impl Socket {
 	pub fn new(port: Port) -> Socket {
 		let socket   = UdpSocket::bind(("0.0.0.0", port)).unwrap();
-		let receiver = SocketReceiver::new(socket.clone());
+		let sender   = SocketSender::new(socket.clone());
+		let receiver = SocketReceiver::new(socket);
 
 		Socket {
+			sender  : sender,
 			receiver: receiver,
-			socket  : socket,
 		}
 	}
 
-	pub fn send_to(&mut self, perception: &[u8], address: SocketAddr) {
-		match self.socket.send_to(perception, address) {
+	pub fn send_to(&mut self, message: &[u8], address: SocketAddr) {
+		self.sender.send(message, address)
+	}
+
+	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
+		self.receiver.recv()
+	}
+}
+
+
+struct SocketSender {
+	socket: UdpSocket,
+}
+
+impl SocketSender {
+	fn new(socket: UdpSocket) -> SocketSender {
+		SocketSender {
+			socket: socket,
+		}
+	}
+
+	fn send(&mut self, message: &[u8], address: SocketAddr) {
+		match self.socket.send_to(message, address) {
 			Ok(())     => (),
 			Err(error) =>
 				print!(
@@ -34,10 +56,6 @@ impl Socket {
 					address, error
 				),
 		}
-	}
-
-	pub fn recv_from(&self) -> Option<(Action, SocketAddr)> {
-		self.receiver.recv()
 	}
 }
 
