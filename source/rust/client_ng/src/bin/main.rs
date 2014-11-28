@@ -35,24 +35,24 @@ mod termios;
 
 fn main() {
 	let args   = Args::parse(std::os::args().as_slice());
-	let input  = Input::new();
-	let server = Server::new(args.server);
 
 	if args.headless {
-		run(input, server, HeadlessOutput::new())
+		run(args, HeadlessOutput::new())
 	}
 	else {
-		run(input, server, PlayerOutput::new());
+		run(args, PlayerOutput::new());
 	}
 }
 
 
-fn run<O: Output>(input : Input, mut server: Server, mut output: O) {
+fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		broadcasts: vec![],
 	};
 
+	let     input            = Input::new();
 	let mut action_assembler = ActionAssembler::new();
+	let mut server           = Server::new(args.server);
 
 	action_assembler.add_step(Step::Login);
 	
