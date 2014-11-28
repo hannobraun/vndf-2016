@@ -133,7 +133,8 @@ fn decode_message(
 			message,
 		Err(_) =>
 			return ReceiveResult::ClientError(
-				"Received invalid UTF-8 string".to_string()
+				"Received invalid UTF-8 string".to_string(),
+				address,
 			),
 	};
 
@@ -147,5 +148,5 @@ fn decode_message(
 pub enum ReceiveResult {
 	None,
 	Message(Action, SocketAddr),
-	ClientError(String),
+	ClientError(String, SocketAddr),
 }
