@@ -72,7 +72,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 			None => (),
 		}
 
-		server.send_to(action_assembler.assemble());
+		let action = action_assembler.assemble();
+		server.send_to(action.to_json().as_bytes());
 		output.render(&frame);
 
 		sleep(Duration::milliseconds(20));

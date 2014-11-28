@@ -6,10 +6,7 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::{
-	Action,
-	Perception,
-};
+use protocol_ng::Perception;
 
 
 pub struct Server {
@@ -95,10 +92,10 @@ impl Server {
 		Some(message)
 	}
 
-	pub fn send_to(&mut self, message: Action) {
+	pub fn send_to(&mut self, message: &[u8]) {
 		// TODO: Do we need to set a timeout here?
 		self.socket.send_to(
-			message.to_json().as_bytes(),
+			message,
 			self.address
 		)
 		.unwrap_or_else(|error| panic!("Error sending message: {}\n", error));

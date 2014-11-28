@@ -21,7 +21,7 @@ impl Client {
 	}
 
 	pub fn send_action(&mut self, action: Action) {
-		self.server.send_to(action)
+		self.server.send_to(action.to_json().as_bytes())
 	}
 
 	pub fn expect_perception(&self) -> Option<Perception> {
