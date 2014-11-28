@@ -12,7 +12,7 @@ use game_service_ng::{
 };
 use protocol_ng::{
 	Action,
-	Perception,
+	Encoder,
 };
 
 
@@ -93,11 +93,11 @@ impl ActionHandle {
 	pub fn ignore(&self) {}
 
 	pub fn confirm(&mut self) {
-		let perception = Perception {
-			last_action: self.inner.seq,
-			broadcasts : Vec::new(),
-		};
+		let mut encoder       = Encoder::new();
+		let mut encode_buffer = [0, ..512];
+		let     perception    = encoder.perception(self.inner.seq);
 
-		self.sender.send(perception.encode().as_bytes(), self.address);
+		let message = perception.encode(&mut encode_buffer).unwrap();
+		self.sender.send(message, self.address);
 	}
 }
