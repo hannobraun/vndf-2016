@@ -127,8 +127,16 @@ fn decode_message(
 	address: SocketAddr
 ) -> ReceiveResult {
 	let message = buffer[.. len].to_vec();
-	// TODO(83503278): Handle decoding errors.
-	let message = String::from_utf8(message).unwrap();
+
+	let message = match String::from_utf8(message) {
+		Ok(message) =>
+			message,
+		Err(_) =>
+			return ReceiveResult::ClientError(
+				"Received invalid UTF-8 string".to_string()
+			),
+	};
+
 	// TODO(83503278): Handle decoding errors.
 	let message = Action::from_json(message.as_slice()).unwrap();
 

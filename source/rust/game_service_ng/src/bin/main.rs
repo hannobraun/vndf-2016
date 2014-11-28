@@ -55,6 +55,7 @@ fn main() {
 			ReceiveResult::None =>
 				(),
 			ReceiveResult::ClientError(error) =>
+				// TODO(83503278): Handle decoding errors.
 				panic!("Error receiving message: {}", error),
 		}
 
