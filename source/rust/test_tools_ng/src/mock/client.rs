@@ -1,6 +1,7 @@
 use std::io::net::ip::Port;
 use std::io::timer::sleep;
 use std::time::Duration;
+use time::precise_time_s;
 
 use client_ng::Server;
 use protocol_ng::{
@@ -29,9 +30,11 @@ impl Client {
 	}
 
 	pub fn expect_perception(&self) -> Option<Perception> {
+		let start_s = precise_time_s();
+
 		let mut perception = None;
 
-		while perception.is_none() {
+		while perception.is_none() && precise_time_s() - start_s < 0.5 {
 			perception = self.server.recv_from();
 			sleep(Duration::milliseconds(20));
 		}
