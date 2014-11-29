@@ -10,7 +10,7 @@ use protocol_ng::Perception;
 
 
 pub struct Server {
-	receiver: Receiver<Option<String>>,
+	receiver: Receiver<Option<Vec<u8>>>,
 	address : SocketAddr,
 	socket  : UdpSocket,
 }
@@ -31,17 +31,7 @@ impl Server {
 				socket.set_read_timeout(Some(100));
 				let message = match socket.recv_from(&mut buffer) {
 					Ok((len, _)) =>
-						Some(
-							String::from_utf8(
-								buffer[.. len].to_vec()
-							)
-							.unwrap_or_else(|error|
-								panic!(
-									"Message from server is no valid UTF-8: {}",
-									error
-								)
-							)
-						),
+						Some(buffer[.. len].to_vec()),
 
 					Err(error) => match error.kind {
 						IoErrorKind::TimedOut =>
@@ -83,6 +73,15 @@ impl Server {
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		};
+
+		let message =
+			String::from_utf8(message)
+			.unwrap_or_else(|error|
+				panic!(
+					"Message from server is no valid UTF-8: {}",
+					error
+				)
+			);
 
 		let message =
 			Perception::decode(message.as_slice())
