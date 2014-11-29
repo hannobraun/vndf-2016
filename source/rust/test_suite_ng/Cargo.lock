@@ -1,0 +1,56 @@
+[root]
+name = "test_suite_ng"
+version = "0.0.1"
+dependencies = [
+ "acceptance 0.1.0",
+ "client_ng 0.0.1",
+ "game_service_ng 0.0.1",
+ "test_tools_ng 0.0.1",
+ "time 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "acceptance"
+version = "0.1.0"
+
+[[package]]
+name = "client_ng"
+version = "0.0.1"
+dependencies = [
+ "protocol_ng 0.0.1",
+]
+
+[[package]]
+name = "game_service_ng"
+version = "0.0.1"
+dependencies = [
+ "protocol_ng 0.0.1",
+]
+
+[[package]]
+name = "gcc"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "protocol_ng"
+version = "0.0.1"
+
+[[package]]
+name = "test_tools_ng"
+version = "0.0.1"
+dependencies = [
+ "acceptance 0.1.0",
+ "client_ng 0.0.1",
+ "game_service_ng 0.0.1",
+ "time 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "time"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "gcc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
