@@ -3,6 +3,7 @@ use std::io::{
 	BufWriter,
 	IoResult,
 };
+use std::str;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -12,8 +13,9 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn decode(json: &str) -> Option<Perception> {
-		match json::decode(json) {
+	pub fn decode(buffer: &[u8]) -> Option<Perception> {
+		// TODO: Replace unwrap with proper error handling.
+		match json::decode(str::from_utf8(buffer).unwrap()) {
 			Ok(perception) => Some(perception),
 			Err(_)         => None,
 		}

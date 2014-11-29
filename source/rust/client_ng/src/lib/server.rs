@@ -75,15 +75,6 @@ impl Server {
 		};
 
 		let message =
-			String::from_utf8(message)
-			.unwrap_or_else(|error|
-				panic!(
-					"Message from server is no valid UTF-8: {}",
-					error
-				)
-			);
-
-		let message =
 			Perception::decode(message.as_slice())
 			.unwrap_or_else(||
 				panic!("Error decoding message from server: {}", message)
