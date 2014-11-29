@@ -4,6 +4,7 @@ use std::io::{
 };
 
 use self::buf_writer::BufWriter;
+use super::Encoder;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -72,6 +73,22 @@ impl Perception {
 			last_action: last_action,
 			broadcasts : broadcasts,
 		})
+	}
+
+	/// This is a convenience method that makes encoding as easy as possible,
+	/// ignoring performance and error handling. Please don't use this outside
+	/// of test code.
+	pub fn encode(&self) -> Vec<u8> {
+		let mut encoder = Encoder::new();
+		let mut buffer  = Vec::with_capacity(512);
+
+		let mut perception = encoder.perception(self.last_action);
+		for broadcast in self.broadcasts.iter() {
+			perception.update(broadcast.as_slice());
+		}
+
+		perception.encode(buffer.as_mut_slice()).unwrap();
+		buffer
 	}
 }
 
