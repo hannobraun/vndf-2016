@@ -1,7 +1,4 @@
-use serialize::json::{
-	mod,
-	DecodeResult,
-};
+use serialize::json;
 use std::io::{
 	BufWriter,
 	IoResult,
@@ -15,8 +12,11 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn decode(json: &str) -> DecodeResult<Perception> {
-		json::decode(json)
+	pub fn decode(json: &str) -> Option<Perception> {
+		match json::decode(json) {
+			Ok(perception) => Some(perception),
+			Err(_)         => None,
+		}
 	}
 }
 
