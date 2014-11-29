@@ -81,8 +81,11 @@ fn main() {
 				perception.update(broadcast.as_slice());
 			}
 
-			// TODO: Replace unwrap with proper error handling
-			let message = perception.encode(&mut encode_buffer).unwrap();
+			let message = perception
+				.encode(&mut encode_buffer)
+				.unwrap_or_else(|error|
+					panic!("Error encoding perception: {}", error)
+				);
 			socket.send_to(message, address);
 		}
 
