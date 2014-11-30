@@ -91,8 +91,6 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 
 			None => (),
 		}
-
-		print!("{}\n", broadcasts.len());
 	}
 
 	for perception in perceptions.iter() {
