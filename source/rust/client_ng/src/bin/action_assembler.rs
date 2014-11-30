@@ -1,11 +1,12 @@
 use protocol_ng::{
 	Action,
+	Seq,
 	Step,
 };
 
 
 pub struct ActionAssembler {
-	next_seq : u64,
+	next_seq : Seq,
 	added    : Vec<Step>,
 	assembled: Option<Action>,
 }
@@ -44,7 +45,7 @@ impl ActionAssembler {
 		action
 	}
 
-	pub fn process_receipt(&mut self, seq: u64) {
+	pub fn process_receipt(&mut self, seq: Seq) {
 		let is_confirmed = match self.assembled {
 			Some(ref action) => seq >= action.seq,
 			None             => false,
