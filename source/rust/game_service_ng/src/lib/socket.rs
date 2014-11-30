@@ -113,17 +113,23 @@ impl SocketReceiver {
 	}
 
 	fn recv(&self) -> Vec<ReceiveResult> {
-		match self.receiver.try_recv() {
-			Ok(result) => match result {
-				Some(result) => vec![result],
-				None         => vec![],
-			},
+		let mut results = Vec::new();
 
-			Err(error) => match error {
-				TryRecvError::Empty        => vec![],
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
+		loop {
+			match self.receiver.try_recv() {
+				Ok(result) => match result {
+					Some(result) => results.push(result),
+					None         => (),
+				},
+
+				Err(error) => match error {
+					TryRecvError::Empty        => break,
+					TryRecvError::Disconnected => panic!("Channel disconnected"),
+				}
 			}
 		}
+
+		results
 	}
 }
 
