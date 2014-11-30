@@ -51,20 +51,18 @@ fn it_should_disconnect_clients_sending_invalid_data() {
 
 #[test]
 fn it_should_distribute_large_payloads_over_multiple_packets() {
-	// TODO: This test is really slow. It needs to be optimized.
-
 	let     game_service = GameService::start();
 	let mut client       = MockClient::start(game_service.port());
 
 	client.login(0);
 
-	// 512 bytes should be the maximum size for UDP packets. 512 clients all
-	// sending broadcasts are more than enough to overflow this.
-	let mut other_clients = Vec::new();
-	let mut broadcasts    = HashSet::new();
-	for i in range(0u16, 512) {
+	// Create enough clients to overflow the maximum packet size.
+	let     broadcast_text = "Broadcast from client";
+	let mut other_clients  = Vec::new();
+	let mut broadcasts     = HashSet::new();
+	for i in range(0, MAX_PACKET_SIZE / broadcast_text.len() + 1) {
 		let mut client    = MockClient::start(game_service.port());
-		let     broadcast = format!("Broadcast from client {}", i);
+		let     broadcast = format!("{} {}", broadcast_text, i);
 
 		client.login(0);
 		client.broadcast(1, broadcast.clone());
