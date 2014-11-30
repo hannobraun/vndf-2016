@@ -88,7 +88,7 @@ impl SocketReceiver {
 				socket.set_read_timeout(Some(20));
 				let result = match socket.recv_from(&mut buffer) {
 					Ok((len, address)) => Some(
-						decode_message(buffer.as_mut_slice(), len, address)
+						decode_message(buffer[.. len].to_vec(), address)
 					),
 
 					Err(error) => {
@@ -137,13 +137,7 @@ impl SocketReceiver {
 }
 
 
-fn decode_message(
-	buffer : &mut [u8],
-	len    : uint,
-	address: SocketAddr
-) -> ReceiveResult {
-	let message = buffer[.. len].to_vec();
-
+fn decode_message(message: Vec<u8>, address: SocketAddr) -> ReceiveResult {
 	let message = match String::from_utf8(message) {
 		Ok(message) =>
 			message,
