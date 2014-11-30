@@ -10,6 +10,7 @@ pub use action::{
 };
 pub use encoder::{
 	buf_writer,
+	Encode,
 	Encoder,
 };
 pub use perception::{

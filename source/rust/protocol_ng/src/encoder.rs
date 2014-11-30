@@ -1,3 +1,5 @@
+use std::io::IoResult;
+
 use super::{
 	MAX_PACKET_SIZE,
 	PerceptionEnc,
@@ -19,6 +21,11 @@ impl Encoder {
 	pub fn perception(&mut self, last_action: Seq) -> PerceptionEnc {
 		PerceptionEnc::new(&mut self.buffer, last_action)
 	}
+}
+
+
+pub trait Encode<Part> {
+	fn write_part<W: Writer>(writer: &mut W, part: Part) -> IoResult<()>;
 }
 
 
