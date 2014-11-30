@@ -1,7 +1,9 @@
 use serialize::json::{
 	mod,
 	DecodeResult,
+	DecoderError,
 };
+use std::str::from_utf8;
 
 use super::Seq;
 
@@ -13,8 +15,19 @@ pub struct Action {
 }
 
 impl Action {
-	pub fn from_json(json: &str) -> DecodeResult<Action> {
-		json::decode(json)
+	pub fn from_json(buffer: &[u8]) -> DecodeResult<Action> {
+		let message = match from_utf8(buffer) {
+			Some(message) =>
+				message,
+			None =>
+				return Err(
+					DecoderError::ApplicationError(
+						format!("Received invalid UTF-8 string: {}", buffer)
+					)
+				)
+		};
+
+		json::decode(message)
 	}
 
 	pub fn to_json(&self) -> String {

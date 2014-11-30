@@ -138,16 +138,6 @@ impl SocketReceiver {
 
 
 fn decode_message(message: Vec<u8>, address: SocketAddr) -> ReceiveResult {
-	let message = match String::from_utf8(message) {
-		Ok(message) =>
-			message,
-		Err(message) =>
-			return Err((
-				format!("Received invalid UTF-8 string: {}", message),
-				address,
-			)),
-	};
-
 	let message = match Action::from_json(message.as_slice()) {
 		Ok(message) =>
 			message,
