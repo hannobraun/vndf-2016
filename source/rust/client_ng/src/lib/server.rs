@@ -79,8 +79,12 @@ impl Server {
 
 		let message =
 			Perception::decode(message.as_slice())
-			.unwrap_or_else(||
-				panic!("Error decoding message from server: {}", message)
+			.unwrap_or_else(|error|
+				panic!(
+					"Error decoding message from server. \
+					Message: {}; Error: {}",
+					message, error
+				)
 			);
 
 		Some(message)

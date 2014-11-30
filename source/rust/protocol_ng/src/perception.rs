@@ -18,16 +18,16 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn decode(buffer: &[u8]) -> Option<Perception> {
-		// TODO: Properly handle all errors.
+	pub fn decode(buffer: &[u8]) -> Result<Perception, String> {
 		let mut reader = BufReader::new(buffer);
 
 		let message = match reader.read_to_string() {
 			Ok(message) =>
 				message,
 			Err(error) => {
-				print!("Error converting message to string: {}\n", error);
-				return None;
+				return Err(
+					format!("Error converting message to string: {}\n", error)
+				);
 			},
 		};
 
@@ -37,8 +37,7 @@ impl Perception {
 			Some(header) =>
 				header,
 			None => {
-				print!("Header line is missing\n");
-				return None;
+				return Err(format!("Header line is missing\n"));
 			},
 		};
 
@@ -46,8 +45,7 @@ impl Perception {
 			Some(last_action) =>
 				last_action,
 			None => {
-				print!("Header is not a number\n");
-				return None;
+				return Err(format!("Header is not a number\n"));
 			},
 		};
 
@@ -65,15 +63,16 @@ impl Perception {
 				Some(broadcast) =>
 					broadcast,
 				None => {
-					print!("Invalid line, broadcast missing: {}\n", line);
-					return None;
+					return Err(
+						format!("Invalid line, broadcast missing: {}\n", line)
+					);
 				},
 			};
 
 			broadcasts.push(broadcast);
 		}
 
-		Some(Perception {
+		Ok(Perception {
 			last_action: last_action,
 			broadcasts : broadcasts,
 		})
