@@ -68,7 +68,7 @@ impl SocketSender {
 
 
 struct SocketReceiver {
-	receiver: Receiver<Option<ReceiveResult>>,
+	receiver: Receiver<Option<(Vec<u8>, SocketAddr)>>,
 }
 
 impl SocketReceiver {
@@ -87,10 +87,8 @@ impl SocketReceiver {
 			while should_run {
 				socket.set_read_timeout(Some(20));
 				let result = match socket.recv_from(&mut buffer) {
-					Ok((len, address)) => Some(
-						decode_message(buffer[.. len].to_vec(), address)
-					),
-
+					Ok((len, address)) =>
+						Some((buffer[.. len].to_vec(), address)),
 					Err(error) => {
 						match error.kind {
 							IoErrorKind::TimedOut =>
@@ -121,8 +119,10 @@ impl SocketReceiver {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(result) => match result {
-					Some(result) => results.push(result),
-					None         => (),
+					Some((vec, address)) =>
+						results.push(decode_message(vec, address)),
+					None =>
+						(),
 				},
 
 				Err(error) => match error {
