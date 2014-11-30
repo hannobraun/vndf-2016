@@ -6,7 +6,10 @@ extern crate protocol_ng;
 
 
 use std::collections::HashMap;
-use std::io::net::ip::Port;
+use std::io::net::ip::{
+	Port,
+	SocketAddr,
+};
 use std::io::timer::sleep;
 use std::time::Duration;
 
@@ -71,25 +74,56 @@ fn main() {
 			.collect();
 
 		for (&address, client) in clients.iter() {
-			// TODO(83504690): We need to make sure that the encoded perception
-			//                 fits into a UDP packet. Research suggests that,
-			//                 given typical MTU sizes, 512 bytes are a safe bet
-			//                 for the maximum size.
-			let mut encode_buffer = [0, ..512];
-			let mut perception    = encoder.perception(client.last_action);
+			let mut broadcasts: Vec<&str> = broadcasts
+				.iter()
+				.map(|broadcast| broadcast.as_slice())
+				.collect();
 
-			for broadcast in broadcasts.iter() {
-				perception.update(broadcast.as_slice());
-			}
-
-			let message = perception
-				.encode(&mut encode_buffer)
-				.unwrap_or_else(|error|
-					panic!("Error encoding perception: {}", error)
+			let mut needs_to_send_perception = true;
+			while needs_to_send_perception {
+				send_perception(
+					&mut encoder,
+					&mut broadcasts,
+					&mut socket,
+					client.last_action,
+					address,
 				);
-			socket.send_to(message, address);
+
+				needs_to_send_perception = broadcasts.len() > 0;
+			}
 		}
 
 		sleep(Duration::milliseconds(20));
 	}
+}
+
+
+fn send_perception(
+	encoder    : &mut Encoder,
+	broadcasts : &mut Vec<&str>,
+	socket     : &mut Socket,
+	last_action: u64,
+	address    : SocketAddr,
+) {
+	let mut perception = encoder.perception(last_action);
+	loop {
+		let broadcast = match broadcasts.pop() {
+			Some(broadcast) => broadcast,
+			None            => break,
+		};
+
+		if !perception.update(broadcast) {
+			broadcasts.push(broadcast);
+			break;
+		}
+	}
+
+	let mut encode_buffer = [0, ..512];
+
+	let message = perception
+		.encode(&mut encode_buffer)
+		.unwrap_or_else(|error|
+			panic!("Error encoding perception: {}", error)
+		);
+	socket.send_to(message, address);
 }

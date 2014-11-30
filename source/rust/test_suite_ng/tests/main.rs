@@ -1,6 +1,8 @@
 #![feature(phase)]
 
 
+extern crate time;
+
 extern crate client_ng;
 extern crate game_service_ng;
 extern crate protocol_ng;

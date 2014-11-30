@@ -1,3 +1,7 @@
+use std::collections::HashSet;
+
+use time::precise_time_s;
+
 use test_tools_ng::{
 	GameService,
 	MockClient,
@@ -42,4 +46,54 @@ fn it_should_disconnect_clients_sending_invalid_data() {
 
 	test(&invalid_utf8);
 	test(invalid_message.as_bytes());
+}
+
+#[test]
+fn it_should_distribute_large_payloads_over_multiple_packets() {
+	let     game_service = GameService::start();
+	let mut client       = MockClient::start(game_service.port());
+
+	client.login(0);
+
+	// 512 bytes should be the maximum size for UDP packets. 512 clients all
+	// sending broadcasts are more than enough to overflow this.
+	let mut other_clients = Vec::new();
+	let mut broadcasts    = HashSet::new();
+	for i in range(0u16, 512) {
+		let mut client    = MockClient::start(game_service.port());
+		let     broadcast = format!("Broadcast from client {}", i);
+
+		client.login(0);
+		client.broadcast(1, broadcast.clone());
+
+		other_clients.push(client);
+		broadcasts.insert(broadcast);
+	}
+
+	// Receive perceptions until all broadcasts have been seen.
+	let mut perceptions = Vec::new();
+	let     start_s     = precise_time_s();
+	while broadcasts.len() > 0 {
+		if precise_time_s() - start_s > 2.0 {
+			panic!("Not all broadcasts arrived.");
+		}
+
+		match client.expect_perception() {
+			Some(perception) => {
+				for received in perception.broadcasts.iter() {
+					broadcasts.remove(received);
+				}
+				perceptions.push(perception);
+			},
+
+			None => (),
+		}
+
+		print!("{}\n", broadcasts.len());
+	}
+
+	// All perceptions should be 512 bytes or smaller
+	for perception in perceptions.iter() {
+		assert!(perception.encode().len() <= 512);
+	}
 }

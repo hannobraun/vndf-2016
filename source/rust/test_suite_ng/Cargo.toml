@@ -4,6 +4,10 @@ version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
+[dependencies]
+time = "*"
+
+
 [dependencies.client_ng]
 path = "../client_ng"
 
