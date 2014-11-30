@@ -43,15 +43,17 @@ impl GameService {
 
 		while message.is_none() && precise_time_s() - start_s < 0.5 {
 			message = match self.socket.recv_from() {
-				ReceiveResult::Message(action, address) =>
-					Some((action, address)),
-				ReceiveResult::None =>
+				Some(result) => match result {
+					ReceiveResult::Message(action, address) =>
+						Some((action, address)),
+					ReceiveResult::ClientError(error, address) =>
+						panic!(
+							"Error receiving message from {}: {}",
+							address, error
+						),
+				},
+				None =>
 					None,
-				ReceiveResult::ClientError(error, address) =>
-					panic!(
-						"Error receiving message from {}: {}",
-						address, error
-					),
 			}
 		}
 

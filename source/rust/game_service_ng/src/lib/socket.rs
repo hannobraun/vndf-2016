@@ -30,7 +30,7 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> ReceiveResult {
+	pub fn recv_from(&self) -> Option<ReceiveResult> {
 		self.receiver.recv()
 	}
 }
@@ -65,7 +65,7 @@ impl SocketSender {
 
 
 struct SocketReceiver {
-	receiver: Receiver<ReceiveResult>,
+	receiver: Receiver<Option<ReceiveResult>>,
 }
 
 impl SocketReceiver {
@@ -84,8 +84,9 @@ impl SocketReceiver {
 			while should_run {
 				socket.set_read_timeout(Some(20));
 				let result = match socket.recv_from(&mut buffer) {
-					Ok((len, address)) =>
-						decode_message(buffer.as_mut_slice(), len, address),
+					Ok((len, address)) => Some(
+						decode_message(buffer.as_mut_slice(), len, address)
+					),
 
 					Err(error) => {
 						match error.kind {
@@ -95,7 +96,7 @@ impl SocketReceiver {
 								print!("Error receiving data: {}\n", error),
 						}
 
-						ReceiveResult::None
+						None
 					},
 				};
 
@@ -111,12 +112,12 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> ReceiveResult {
+	fn recv(&self) -> Option<ReceiveResult> {
 		match self.receiver.try_recv() {
 			Ok(message) => message,
 
 			Err(error) => match error {
-				TryRecvError::Empty        => return ReceiveResult::None,
+				TryRecvError::Empty        => None,
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}
@@ -159,7 +160,6 @@ fn decode_message(
 
 
 pub enum ReceiveResult {
-	None,
 	Message(Action, SocketAddr),
 	ClientError(String, SocketAddr),
 }

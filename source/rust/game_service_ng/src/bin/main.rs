@@ -36,29 +36,31 @@ fn main() {
 
 	loop {
 		match socket.recv_from() {
-			ReceiveResult::Message(action, address) => {
-				for step in action.steps.into_iter() {
-					match step {
-						Step::Login => {
-							clients.insert(address, Client {
-								last_action: action.seq,
-								broadcast  : None,
-							});
-						},
-						Step::Broadcast(broadcast) => {
-							clients[address].broadcast = Some(broadcast);
-						},
+			Some(result) => match result {
+				ReceiveResult::Message(action, address) => {
+					for step in action.steps.into_iter() {
+						match step {
+							Step::Login => {
+								clients.insert(address, Client {
+									last_action: action.seq,
+									broadcast  : None,
+								});
+							},
+							Step::Broadcast(broadcast) => {
+								clients[address].broadcast = Some(broadcast);
+							},
+						}
 					}
-				}
 
-				clients[address].last_action = action.seq;
+					clients[address].last_action = action.seq;
+				},
+				ReceiveResult::ClientError(error, address) => {
+					print!("Error receiving message from {}: {}", address, error);
+					clients.remove(&address);
+				},
 			},
-			ReceiveResult::None =>
+			None =>
 				(),
-			ReceiveResult::ClientError(error, address) => {
-				print!("Error receiving message from {}: {}", address, error);
-				clients.remove(&address);
-			},
 		}
 
 		let broadcasts: Vec<String> = clients
