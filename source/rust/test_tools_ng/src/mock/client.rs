@@ -28,7 +28,7 @@ impl Client {
 	}
 
 	pub fn send_action(&mut self, action: Action) {
-		self.send_data(action.encode().as_bytes());
+		self.send_data(action.encode().as_slice());
 	}
 
 	pub fn login(&mut self, seq: Seq) {
