@@ -6,7 +6,10 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Perception;
+use protocol_ng::{
+	MAX_PACKET_SIZE,
+	Perception,
+};
 
 
 pub struct Server {
@@ -25,7 +28,7 @@ impl Server {
 
 		spawn(proc() {
 			let mut should_run = true;
-			let mut buffer     = [0u8, ..512];
+			let mut buffer     = [0u8, ..MAX_PACKET_SIZE];
 
 			while should_run {
 				socket.set_read_timeout(Some(100));
