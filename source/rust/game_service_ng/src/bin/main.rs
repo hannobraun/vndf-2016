@@ -111,7 +111,7 @@ fn send_perception(
 			None            => break,
 		};
 
-		if !perception.update(broadcast) {
+		if !perception.add(broadcast) {
 			broadcasts.push(broadcast);
 			break;
 		}

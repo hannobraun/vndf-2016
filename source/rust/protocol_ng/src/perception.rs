@@ -87,7 +87,7 @@ impl Perception {
 
 		let mut perception = encoder.perception(self.last_action);
 		for broadcast in self.broadcasts.iter() {
-			perception.update(broadcast.as_slice());
+			perception.add(broadcast.as_slice());
 		}
 
 		perception
@@ -120,7 +120,7 @@ impl<'r> PerceptionEnc<'r> {
 		}
 	}
 
-	pub fn update(&mut self, broadcast: &str) -> bool {
+	pub fn add(&mut self, broadcast: &str) -> bool {
 		let mut update = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
