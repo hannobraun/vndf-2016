@@ -8,7 +8,10 @@ pub use action::{
 	Action,
 	Step,
 };
-pub use encoder::Encoder;
+pub use encoder::{
+	buf_writer,
+	Encoder,
+};
 pub use perception::{
 	Perception,
 	PerceptionEnc,
