@@ -148,31 +148,27 @@ fn decode_message(
 		Ok(message) =>
 			message,
 		Err(message) =>
-			return ReceiveResult::Error(
+			return Err((
 				format!("Received invalid UTF-8 string: {}", message),
 				address,
-			),
+			)),
 	};
 
 	let message = match Action::from_json(message.as_slice()) {
 		Ok(message) =>
 			message,
 		Err(error) =>
-			return ReceiveResult::Error(
+			return Err((
 				format!(
 					"Error decoding JSON. Error: {}; JSON: {}",
 					error, message
 				),
 				address,
-			),
+			)),
 	};
 
-	ReceiveResult::Message(message, address)
+	Ok((message, address))
 }
 
 
-#[deriving(Clone)]
-pub enum ReceiveResult {
-	Message(Action, SocketAddr),
-	Error(String, SocketAddr),
-}
+pub type ReceiveResult = Result<(Action, SocketAddr), (String, SocketAddr)>;

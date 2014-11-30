@@ -20,10 +20,7 @@ use protocol_ng::{
 	Step,
 };
 
-use game_service_ng::{
-	ReceiveResult,
-	Socket,
-};
+use game_service_ng::Socket;
 
 
 struct Client {
@@ -43,7 +40,7 @@ fn main() {
 		let received = socket.recv_from();
 		for result in received.into_iter() {
 			match result {
-				ReceiveResult::Message(action, address) => {
+				Ok((action, address)) => {
 					for step in action.steps.into_iter() {
 						match step {
 							Step::Login => {
@@ -60,7 +57,7 @@ fn main() {
 
 					clients[address].last_action = action.seq;
 				},
-				ReceiveResult::Error(error, address) => {
+				Err((error, address)) => {
 					print!("Error receiving message from {}: {}", address, error);
 					clients.remove(&address);
 				},

@@ -48,13 +48,13 @@ impl GameService {
 
 		match self.received.remove(0) {
 			Some(result) => match result {
-				ReceiveResult::Message(action, address) =>
+				Ok((action, address)) =>
 					Some(ActionHandle {
 						inner  : action,
 						address: address,
 						sender : self.socket.sender.clone(),
 					}),
-				ReceiveResult::Error(error, address) =>
+				Err((error, address)) =>
 					panic!(
 						"Error receiving message from {}: {}",
 						address, error
