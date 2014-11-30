@@ -11,6 +11,7 @@ use game_service_ng::{
 	SocketSender,
 };
 use protocol_ng::{
+	MAX_PACKET_SIZE,
 	Action,
 	Encoder,
 };
@@ -91,7 +92,7 @@ impl ActionHandle {
 
 	pub fn confirm(&mut self) {
 		let mut encoder       = Encoder::new();
-		let mut encode_buffer = [0, ..512];
+		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
 		let     perception    = encoder.perception(self.inner.seq);
 
 		let message = perception.encode(&mut encode_buffer).unwrap();
