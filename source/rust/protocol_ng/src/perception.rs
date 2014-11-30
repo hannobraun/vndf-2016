@@ -112,7 +112,7 @@ impl<'r> PerceptionEnc<'r> {
 			Ok(()) =>
 				(),
 			Err(error) =>
-				panic!("Error writing perception header: {}", error),
+				panic!("Error writing message header: {}", error),
 		}
 
 		PerceptionEnc {
