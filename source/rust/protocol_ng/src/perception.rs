@@ -105,10 +105,10 @@ pub struct PerceptionEnc<'r> {
 }
 
 impl<'r> PerceptionEnc<'r> {
-	pub fn new(buffer: &mut [u8], last_action: Seq) -> PerceptionEnc {
+	pub fn new(buffer: &mut [u8], confirm_seq: Seq) -> PerceptionEnc {
 		let mut writer = BufWriter::new(buffer);
 
-		match write!(&mut writer, "{}\n", last_action) {
+		match write!(&mut writer, "{}\n", confirm_seq) {
 			Ok(()) =>
 				(),
 			Err(error) =>
