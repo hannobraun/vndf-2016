@@ -32,7 +32,7 @@ impl Encoder {
 		}
 	}
 
-	pub fn perception(&mut self, last_action: u64) -> PerceptionEnc {
+	pub fn perception(&mut self, last_action: Seq) -> PerceptionEnc {
 		PerceptionEnc::new(&mut self.buffer, last_action)
 	}
 }

@@ -4,12 +4,15 @@ use std::io::{
 };
 
 use self::buf_writer::BufWriter;
-use super::Encoder;
+use super::{
+	Encoder,
+	Seq,
+};
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
-	pub last_action: u64,
+	pub last_action: Seq,
 	pub broadcasts : Vec<String>,
 }
 
@@ -102,7 +105,7 @@ pub struct PerceptionEnc<'r> {
 }
 
 impl<'r> PerceptionEnc<'r> {
-	pub fn new(buffer: &mut [u8], last_action: u64) -> PerceptionEnc {
+	pub fn new(buffer: &mut [u8], last_action: Seq) -> PerceptionEnc {
 		let mut writer = BufWriter::new(buffer);
 
 		match write!(&mut writer, "{}\n", last_action) {

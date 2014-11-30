@@ -3,10 +3,12 @@ use serialize::json::{
 	DecodeResult,
 };
 
+use super::Seq;
+
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Action {
-	pub seq  : u64,
+	pub seq  : Seq,
 	pub steps: Vec<Step>,
 }
 
