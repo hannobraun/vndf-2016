@@ -15,6 +15,7 @@ use std::time::Duration;
 
 use protocol_ng::{
 	Encoder,
+	Seq,
 	Step,
 };
 
@@ -25,7 +26,7 @@ use game_service_ng::{
 
 
 struct Client {
-	last_action: u64,
+	last_action: Seq,
 	broadcast  : Option<String>,
 }
 
@@ -102,7 +103,7 @@ fn send_perception(
 	encoder    : &mut Encoder,
 	broadcasts : &mut Vec<&str>,
 	socket     : &mut Socket,
-	last_action: u64,
+	last_action: Seq,
 	address    : SocketAddr,
 ) {
 	let mut perception = encoder.perception(last_action);
