@@ -7,6 +7,7 @@ use client_ng::Server;
 use protocol_ng::{
 	Action,
 	Perception,
+	Seq,
 	Step,
 };
 
@@ -30,14 +31,14 @@ impl Client {
 		self.send_data(action.to_json().as_bytes());
 	}
 
-	pub fn login(&mut self, seq: u64) {
+	pub fn login(&mut self, seq: Seq) {
 		self.send_action(Action {
 			seq  : seq,
 			steps: vec![Step::Login],
 		});
 	}
 
-	pub fn broadcast(&mut self, seq: u64, text: String) {
+	pub fn broadcast(&mut self, seq: Seq, text: String) {
 		self.send_action(Action {
 			seq  : seq,
 			steps: vec![Step::Broadcast(text)],
