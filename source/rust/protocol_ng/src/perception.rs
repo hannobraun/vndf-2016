@@ -137,9 +137,9 @@ impl<'r> PerceptionEnc<'r> {
 				)
 			)
 		};
-		let update = buffer[.. len as uint];
+		let addition = buffer[.. len as uint];
 
-		match self.writer.write(update) {
+		match self.writer.write(addition) {
 			Ok(()) => (),
 			Err(_) => return false,
 		}
