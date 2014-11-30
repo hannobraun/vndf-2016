@@ -144,7 +144,7 @@ fn decode_message(message: &[u8], address: SocketAddr) -> ReceiveResult {
 		Err(error) =>
 			return Err((
 				format!(
-					"Error decoding JSON. Error: {}; JSON: {}",
+					"Error decoding JSON. Error: {}; Message: {}",
 					error, message
 				),
 				address,
