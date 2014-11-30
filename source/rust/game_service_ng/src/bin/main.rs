@@ -60,7 +60,7 @@ fn main() {
 
 					clients[address].last_action = action.seq;
 				},
-				ReceiveResult::ClientError(error, address) => {
+				ReceiveResult::Error(error, address) => {
 					print!("Error receiving message from {}: {}", address, error);
 					clients.remove(&address);
 				},

@@ -54,7 +54,7 @@ impl GameService {
 						address: address,
 						sender : self.socket.sender.clone(),
 					}),
-				ReceiveResult::ClientError(error, address) =>
+				ReceiveResult::Error(error, address) =>
 					panic!(
 						"Error receiving message from {}: {}",
 						address, error

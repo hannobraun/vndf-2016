@@ -148,7 +148,7 @@ fn decode_message(
 		Ok(message) =>
 			message,
 		Err(message) =>
-			return ReceiveResult::ClientError(
+			return ReceiveResult::Error(
 				format!("Received invalid UTF-8 string: {}", message),
 				address,
 			),
@@ -158,7 +158,7 @@ fn decode_message(
 		Ok(message) =>
 			message,
 		Err(error) =>
-			return ReceiveResult::ClientError(
+			return ReceiveResult::Error(
 				format!(
 					"Error decoding JSON. Error: {}; JSON: {}",
 					error, message
@@ -174,5 +174,5 @@ fn decode_message(
 #[deriving(Clone)]
 pub enum ReceiveResult {
 	Message(Action, SocketAddr),
-	ClientError(String, SocketAddr),
+	Error(String, SocketAddr),
 }
