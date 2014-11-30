@@ -50,6 +50,8 @@ fn it_should_disconnect_clients_sending_invalid_data() {
 
 #[test]
 fn it_should_distribute_large_payloads_over_multiple_packets() {
+	// TODO: This test is really slow. It needs to be optimized.
+
 	let     game_service = GameService::start();
 	let mut client       = MockClient::start(game_service.port());
 
@@ -74,7 +76,7 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 	let mut perceptions = Vec::new();
 	let     start_s     = precise_time_s();
 	while broadcasts.len() > 0 {
-		if precise_time_s() - start_s > 2.0 {
+		if precise_time_s() - start_s > 5.0 {
 			panic!("Not all broadcasts arrived.");
 		}
 
