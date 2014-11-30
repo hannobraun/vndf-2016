@@ -75,7 +75,7 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 	let mut perceptions = Vec::new();
 	let     start_s     = precise_time_s();
 	while broadcasts.len() > 0 {
-		if precise_time_s() - start_s > 5.0 {
+		if precise_time_s() - start_s > 0.5 {
 			panic!("Not all broadcasts arrived.");
 		}
 
