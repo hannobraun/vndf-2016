@@ -87,7 +87,11 @@ impl Perception {
 			perception.update(broadcast.as_slice());
 		}
 
-		perception.encode(buffer.as_mut_slice()).unwrap();
+		perception
+			.encode(buffer.as_mut_slice())
+			.unwrap_or_else(|error|
+				panic!("Error encoding perception: {}", error)
+			);
 		buffer
 	}
 }
