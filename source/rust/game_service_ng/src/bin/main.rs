@@ -35,8 +35,9 @@ fn main() {
 	let mut encoder = Encoder::new();
 
 	loop {
-		match socket.recv_from() {
-			Some(result) => match result {
+		let received = socket.recv_from();
+		for result in received.into_iter() {
+			match result {
 				ReceiveResult::Message(action, address) => {
 					for step in action.steps.into_iter() {
 						match step {
@@ -58,9 +59,7 @@ fn main() {
 					print!("Error receiving message from {}: {}", address, error);
 					clients.remove(&address);
 				},
-			},
-			None =>
-				(),
+			}
 		}
 
 		let broadcasts: Vec<String> = clients

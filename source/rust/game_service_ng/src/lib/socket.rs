@@ -30,8 +30,11 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> Option<ReceiveResult> {
-		self.receiver.recv()
+	pub fn recv_from(&self) -> Vec<ReceiveResult> {
+		match self.receiver.recv() {
+			Some(result) => vec![result],
+			None         => vec![],
+		}
 	}
 }
 

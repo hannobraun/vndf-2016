@@ -17,8 +17,9 @@ use protocol_ng::{
 
 
 pub struct GameService {
-	port  : Port,
-	socket: Socket,
+	port    : Port,
+	socket  : Socket,
+	received: Vec<ReceiveResult>,
 }
 
 impl GameService {
@@ -27,8 +28,9 @@ impl GameService {
 		let socket = Socket::new(port);
 
 		GameService {
-			port  : port,
-			socket: socket,
+			port    : port,
+			socket  : socket,
+			received: Vec::new(),
 		}
 	}
 
@@ -39,33 +41,26 @@ impl GameService {
 	pub fn expect_action(&mut self) -> Option<ActionHandle> {
 		let start_s = precise_time_s();
 
-		let mut message = None;
-
-		while message.is_none() && precise_time_s() - start_s < 0.5 {
-			message = match self.socket.recv_from() {
-				Some(result) => match result {
-					ReceiveResult::Message(action, address) =>
-						Some((action, address)),
-					ReceiveResult::ClientError(error, address) =>
-						panic!(
-							"Error receiving message from {}: {}",
-							address, error
-						),
-				},
-				None =>
-					None,
-			}
+		while self.received.len() == 0 && precise_time_s() - start_s < 0.5 {
+			self.received.push_all(self.socket.recv_from().as_slice());
 		}
 
-		match message {
-			Some((action, address)) =>
-				Some(ActionHandle {
-					inner  : action,
-					address: address,
-					sender : self.socket.sender.clone(),
-				}),
-
-			None => None,
+		match self.received.remove(0) {
+			Some(result) => match result {
+				ReceiveResult::Message(action, address) =>
+					Some(ActionHandle {
+						inner  : action,
+						address: address,
+						sender : self.socket.sender.clone(),
+					}),
+				ReceiveResult::ClientError(error, address) =>
+					panic!(
+						"Error receiving message from {}: {}",
+						address, error
+					),
+			},
+			None =>
+				None,
 		}
 	}
 
