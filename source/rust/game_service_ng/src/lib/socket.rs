@@ -120,7 +120,7 @@ impl SocketReceiver {
 			match self.receiver.try_recv() {
 				Ok(result) => match result {
 					Some((vec, address)) =>
-						results.push(decode_message(vec, address)),
+						results.push(decode_message(vec.as_slice(), address)),
 					None =>
 						(),
 				},
@@ -137,8 +137,8 @@ impl SocketReceiver {
 }
 
 
-fn decode_message(message: Vec<u8>, address: SocketAddr) -> ReceiveResult {
-	let message = match Action::decode(message.as_slice()) {
+fn decode_message(message: &[u8], address: SocketAddr) -> ReceiveResult {
+	let message = match Action::decode(message) {
 		Ok(message) =>
 			message,
 		Err(error) =>
