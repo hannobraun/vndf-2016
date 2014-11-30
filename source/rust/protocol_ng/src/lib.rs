@@ -18,6 +18,9 @@ mod action;
 mod perception;
 
 
+pub type Seq = u64;
+
+
 pub struct Encoder {
 	buffer: [u8, ..512],
 }
