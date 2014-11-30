@@ -2,6 +2,7 @@ use std::collections::HashSet;
 
 use time::precise_time_s;
 
+use protocol_ng::MAX_PACKET_SIZE;
 use test_tools_ng::{
 	GameService,
 	MockClient,
@@ -94,8 +95,7 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 		print!("{}\n", broadcasts.len());
 	}
 
-	// All perceptions should be 512 bytes or smaller
 	for perception in perceptions.iter() {
-		assert!(perception.encode().len() <= 512);
+		assert!(perception.encode().len() <= MAX_PACKET_SIZE);
 	}
 }
