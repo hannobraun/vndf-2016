@@ -5,6 +5,7 @@ use std::io::{
 
 use self::buf_writer::BufWriter;
 use super::{
+	MAX_PACKET_SIZE,
 	Encoder,
 	Seq,
 };
@@ -83,7 +84,7 @@ impl Perception {
 	/// of test code.
 	pub fn encode(&self) -> Vec<u8> {
 		let mut encoder = Encoder::new();
-		let mut buffer  = Vec::from_elem(512, 0);
+		let mut buffer  = Vec::from_elem(MAX_PACKET_SIZE, 0);
 
 		let mut perception = encoder.perception(self.last_action);
 		for broadcast in self.broadcasts.iter() {
@@ -121,7 +122,7 @@ impl<'r> PerceptionEnc<'r> {
 	}
 
 	pub fn update(&mut self, broadcast: &str) -> bool {
-		let mut update = [0, ..512];
+		let mut update = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut update);

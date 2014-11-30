@@ -25,13 +25,13 @@ pub type Seq = u64;
 
 
 pub struct Encoder {
-	buffer: [u8, ..512],
+	buffer: [u8, ..MAX_PACKET_SIZE],
 }
 
 impl Encoder {
 	pub fn new() -> Encoder {
 		Encoder {
-			buffer: [0, ..512],
+			buffer: [0, ..MAX_PACKET_SIZE],
 		}
 	}
 
