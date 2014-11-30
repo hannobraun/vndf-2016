@@ -12,6 +12,7 @@ use protocol_ng::{
 };
 
 
+// TODO(83622206): Merge into Socket
 pub struct Server {
 	receiver: Receiver<Option<Vec<u8>>>,
 	address : SocketAddr,
