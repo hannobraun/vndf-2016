@@ -31,10 +31,7 @@ impl Socket {
 	}
 
 	pub fn recv_from(&self) -> Vec<ReceiveResult> {
-		match self.receiver.recv() {
-			Some(result) => vec![result],
-			None         => vec![],
-		}
+		self.receiver.recv()
 	}
 }
 
@@ -115,12 +112,15 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> Option<ReceiveResult> {
+	fn recv(&self) -> Vec<ReceiveResult> {
 		match self.receiver.try_recv() {
-			Ok(message) => message,
+			Ok(result) => match result {
+				Some(result) => vec![result],
+				None         => vec![],
+			},
 
 			Err(error) => match error {
-				TryRecvError::Empty        => None,
+				TryRecvError::Empty        => vec![],
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}
