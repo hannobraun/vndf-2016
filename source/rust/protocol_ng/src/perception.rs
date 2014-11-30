@@ -80,7 +80,7 @@ impl Perception {
 	/// of test code.
 	pub fn encode(&self) -> Vec<u8> {
 		let mut encoder = Encoder::new();
-		let mut buffer  = Vec::with_capacity(512);
+		let mut buffer  = Vec::from_elem(512, 0);
 
 		let mut perception = encoder.perception(self.last_action);
 		for broadcast in self.broadcasts.iter() {
