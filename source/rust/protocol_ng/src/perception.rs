@@ -120,12 +120,12 @@ impl<'r> PerceptionEnc<'r> {
 		}
 	}
 
-	pub fn add(&mut self, broadcast: &str) -> bool {
+	pub fn add(&mut self, addition: &str) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write!(&mut writer, "UPDATE {}\n", broadcast) {
+			match write!(&mut writer, "UPDATE {}\n", addition) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
