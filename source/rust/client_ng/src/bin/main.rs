@@ -76,7 +76,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 		// TODO(83504690): Action may be too large to fit into a single UDP
 		//                 package. Research suggests that, given typical MTU
 		//                 sizes, 512 bytes are a safe bet for the maximum size.
-		server.send_to(action.to_json().as_bytes());
+		server.send_to(action.encode().as_bytes());
 		output.render(&frame);
 
 		sleep(Duration::milliseconds(20));

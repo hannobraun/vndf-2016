@@ -28,7 +28,7 @@ impl Action {
 		}
 	}
 
-	pub fn to_json(&self) -> String {
+	pub fn encode(&self) -> String {
 		json::encode(self)
 	}
 }
