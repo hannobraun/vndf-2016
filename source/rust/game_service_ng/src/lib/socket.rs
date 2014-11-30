@@ -159,6 +159,7 @@ fn decode_message(
 }
 
 
+#[deriving(Clone)]
 pub enum ReceiveResult {
 	Message(Action, SocketAddr),
 	ClientError(String, SocketAddr),
