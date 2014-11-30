@@ -6,7 +6,10 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::Action;
+use protocol_ng::{
+	MAX_PACKET_SIZE,
+	Action,
+};
 
 
 pub struct Socket {
@@ -79,7 +82,7 @@ impl SocketReceiver {
 
 		spawn(proc() {
 			let mut should_run = true;
-			let mut buffer     = [0u8, ..512];
+			let mut buffer     = [0u8, ..MAX_PACKET_SIZE];
 
 			while should_run {
 				socket.set_read_timeout(Some(20));

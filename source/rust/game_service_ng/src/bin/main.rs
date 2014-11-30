@@ -14,6 +14,7 @@ use std::io::timer::sleep;
 use std::time::Duration;
 
 use protocol_ng::{
+	MAX_PACKET_SIZE,
 	Encoder,
 	Seq,
 	Step,
@@ -119,7 +120,7 @@ fn send_perception(
 		}
 	}
 
-	let mut encode_buffer = [0, ..512];
+	let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
 
 	let message = perception
 		.encode(&mut encode_buffer)
