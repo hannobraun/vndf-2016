@@ -15,7 +15,7 @@ pub struct Action {
 }
 
 impl Action {
-	pub fn from_json(buffer: &[u8]) -> DecodeResult<Action> {
+	pub fn decode(buffer: &[u8]) -> DecodeResult<Action> {
 		let message = match from_utf8(buffer) {
 			Some(message) =>
 				message,

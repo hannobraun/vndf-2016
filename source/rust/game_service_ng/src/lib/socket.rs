@@ -138,7 +138,7 @@ impl SocketReceiver {
 
 
 fn decode_message(message: Vec<u8>, address: SocketAddr) -> ReceiveResult {
-	let message = match Action::from_json(message.as_slice()) {
+	let message = match Action::decode(message.as_slice()) {
 		Ok(message) =>
 			message,
 		Err(error) =>
