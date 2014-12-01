@@ -81,7 +81,7 @@ impl Perception {
 	/// This is a convenience method that makes encoding as easy as possible,
 	/// ignoring performance and error handling. Please don't use this outside
 	/// of test code.
-	pub fn encode(&self) -> Vec<u8> {
+	pub fn encode(self) -> Vec<u8> {
 		let mut encoder = Encoder::new();
 		let mut buffer  = Vec::from_elem(MAX_PACKET_SIZE, 0);
 

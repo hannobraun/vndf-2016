@@ -91,7 +91,7 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 		}
 	}
 
-	for perception in perceptions.iter() {
+	for perception in perceptions.into_iter() {
 		assert!(perception.encode().len() <= MAX_PACKET_SIZE);
 	}
 }
