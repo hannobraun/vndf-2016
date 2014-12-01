@@ -3,9 +3,10 @@ use std::io::{
 	IoResult,
 };
 
+use acpe::MAX_PACKET_SIZE;
+
 use self::buf_writer::BufWriter;
 use super::{
-	MAX_PACKET_SIZE,
 	Percept,
 	Seq,
 	Step,

@@ -6,6 +6,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "acpe"
+version = "0.0.1"
+
+[[package]]
 name = "protocol_ng"
 version = "0.0.1"
+dependencies = [
+ "acpe 0.0.1",
+]
 

@@ -3,6 +3,8 @@
 
 extern crate serialize;
 
+extern crate acpe;
+
 extern crate protocol_ng;
 
 

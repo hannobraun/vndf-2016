@@ -6,10 +6,9 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::{
-	MAX_PACKET_SIZE,
-	Perception,
-};
+use acpe::MAX_PACKET_SIZE;
+
+use protocol_ng::Perception;
 
 
 // TODO(83622206): Merge into Socket

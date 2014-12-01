@@ -1,6 +1,7 @@
 #![feature(phase)]
 
 
+extern crate acpe;
 extern crate time;
 
 extern crate client_ng;

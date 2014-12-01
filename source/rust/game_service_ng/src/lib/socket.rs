@@ -6,10 +6,9 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use protocol_ng::{
-	MAX_PACKET_SIZE,
-	Action,
-};
+use acpe::MAX_PACKET_SIZE;
+
+use protocol_ng::Action;
 
 
 pub struct Socket {

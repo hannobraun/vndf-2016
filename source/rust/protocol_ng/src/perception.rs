@@ -2,8 +2,9 @@ use serialize::Encodable;
 use serialize::json;
 use std::io::IoResult;
 
+use acpe::MAX_PACKET_SIZE;
+
 use super::{
-	MAX_PACKET_SIZE,
 	decode,
 	MessagePart,
 	Seq,

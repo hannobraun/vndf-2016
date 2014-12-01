@@ -14,6 +14,10 @@ name = "acceptance"
 version = "0.1.0"
 
 [[package]]
+name = "acpe"
+version = "0.0.1"
+
+[[package]]
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
@@ -35,6 +39,9 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "protocol_ng"
 version = "0.0.1"
+dependencies = [
+ "acpe 0.0.1",
+]
 
 [[package]]
 name = "test_tools_ng"

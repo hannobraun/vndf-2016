@@ -5,13 +5,14 @@ use std::io::net::ip::{
 use time::precise_time_s;
 
 use acceptance::random_port;
+use acpe::MAX_PACKET_SIZE;
+
 use game_service_ng::{
 	ReceiveResult,
 	Socket,
 	SocketSender,
 };
 use protocol_ng::{
-	MAX_PACKET_SIZE,
 	Action,
 	Encoder,
 };

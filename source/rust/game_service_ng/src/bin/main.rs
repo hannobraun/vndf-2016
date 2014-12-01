@@ -1,6 +1,8 @@
 #![feature(slicing_syntax)]
 
 
+extern crate acpe;
+
 extern crate game_service_ng;
 extern crate protocol_ng;
 
@@ -13,8 +15,9 @@ use std::io::net::ip::{
 use std::io::timer::sleep;
 use std::time::Duration;
 
+use acpe::MAX_PACKET_SIZE;
+
 use protocol_ng::{
-	MAX_PACKET_SIZE,
 	Encoder,
 	Percept,
 	Seq,

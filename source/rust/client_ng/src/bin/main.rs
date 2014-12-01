@@ -4,6 +4,8 @@
 extern crate getopts;
 extern crate libc;
 
+extern crate acpe;
+
 extern crate client_ng;
 extern crate protocol_ng;
 

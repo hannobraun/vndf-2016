@@ -3,6 +3,8 @@
 
 extern crate serialize;
 
+extern crate acpe;
+
 
 pub use action::{
 	Action,
@@ -23,9 +25,6 @@ pub use perception::{
 mod action;
 mod encoder;
 mod perception;
-
-
-pub const MAX_PACKET_SIZE: uint = 512;
 
 
 pub type Seq = u64;
