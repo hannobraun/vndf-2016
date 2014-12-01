@@ -3,11 +3,11 @@ use serialize::json;
 use std::io::IoResult;
 
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Seq;
-
-use super::{
+use acpe::protocol::{
 	decode,
+	Encoder,
 	MessagePart,
+	Seq,
 };
 
 
@@ -33,7 +33,7 @@ impl Action {
 
 	pub fn encode(self) -> Vec<u8> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
-		let mut encoder = super::Encoder::new();
+		let mut encoder = Encoder::new();
 
 		let mut action = encoder.message(self.seq);
 		for step in self.steps.iter() {

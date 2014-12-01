@@ -1,3 +1,6 @@
+#![feature(slicing_syntax)]
+
+
 pub mod protocol;
 
 

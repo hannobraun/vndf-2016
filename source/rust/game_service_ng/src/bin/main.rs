@@ -16,10 +16,12 @@ use std::io::timer::sleep;
 use std::time::Duration;
 
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Seq;
+use acpe::protocol::{
+	Encoder,
+	Seq,
+};
 
 use protocol_ng::{
-	Encoder,
 	Percept,
 	Step,
 };

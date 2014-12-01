@@ -1,10 +1,10 @@
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Seq;
-
-use protocol_ng::{
+use acpe::protocol::{
 	Encoder,
-	Step,
+	Seq,
 };
+
+use protocol_ng::Step;
 
 
 pub struct ActionAssembler<'r> {

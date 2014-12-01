@@ -10,12 +10,6 @@ pub use action::{
 	Action,
 	Step,
 };
-pub use encoder::{
-	Encoder,
-	decode,
-	MessageEncoder,
-	MessagePart,
-};
 pub use perception::{
 	Percept,
 	Perception,
@@ -23,5 +17,4 @@ pub use perception::{
 
 
 mod action;
-mod encoder;
 mod perception;

@@ -13,6 +13,8 @@ extern crate protocol_ng;
 use std::io::timer::sleep;
 use std::time::Duration;
 
+use acpe::protocol::Encoder;
+
 use action_assembler::ActionAssembler;
 use args::Args;
 use client_ng::{
@@ -26,7 +28,6 @@ use output::{
 	PlayerOutput,
 };
 use protocol_ng::{
-	Encoder,
 	Percept,
 	Step,
 };

@@ -3,11 +3,11 @@ use serialize::json;
 use std::io::IoResult;
 
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Seq;
-
-use super::{
+use acpe::protocol::{
 	decode,
+	Encoder,
 	MessagePart,
+	Seq,
 };
 
 
@@ -36,7 +36,7 @@ impl Perception {
 	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
-		let mut encoder = super::Encoder::new();
+		let mut encoder = Encoder::new();
 
 		let mut perception = encoder.message(self.last_action);
 		for percept in self.percepts.iter() {
