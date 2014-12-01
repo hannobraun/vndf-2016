@@ -14,7 +14,7 @@ use super::buf_writer::BufWriter;
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Perception {
 	pub last_action: Seq,
-	pub broadcasts : Vec<String>,
+	pub percepts   : Vec<Percept>,
 }
 
 impl Perception {
@@ -49,7 +49,7 @@ impl Perception {
 			},
 		};
 
-		let mut broadcasts = Vec::new();
+		let mut percepts = Vec::new();
 		for line in lines.iter() {
 			let mut splits: Vec<String> = line.splitn(1, ' ')
 				.map(|s| s.to_string())
@@ -69,12 +69,12 @@ impl Perception {
 				},
 			};
 
-			broadcasts.push(broadcast);
+			percepts.push(Percept::Broadcast(broadcast));
 		}
 
 		Ok(Perception {
 			last_action: last_action,
-			broadcasts : broadcasts,
+			percepts   : percepts,
 		})
 	}
 
@@ -86,8 +86,12 @@ impl Perception {
 		let mut buffer  = Vec::from_elem(MAX_PACKET_SIZE, 0);
 
 		let mut perception = encoder.perception(self.last_action);
-		for broadcast in self.broadcasts.iter() {
-			perception.add(broadcast.as_slice());
+		for percept in self.percepts.into_iter() {
+			match percept {
+				Percept::Broadcast(broadcast) => {
+					perception.add(broadcast.as_slice());
+				},
+			}
 		}
 
 		perception
@@ -100,7 +104,7 @@ impl Perception {
 }
 
 
-#[deriving(Encodable, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Percept {
 	Broadcast(String),
 }

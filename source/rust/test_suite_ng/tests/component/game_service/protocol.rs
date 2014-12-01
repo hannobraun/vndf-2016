@@ -2,7 +2,10 @@ use std::collections::HashSet;
 
 use time::precise_time_s;
 
-use protocol_ng::MAX_PACKET_SIZE;
+use protocol_ng::{
+	MAX_PACKET_SIZE,
+	Percept,
+};
 use test_tools_ng::{
 	GameService,
 	MockClient,
@@ -81,8 +84,12 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 
 		match client.expect_perception() {
 			Some(perception) => {
-				for received in perception.broadcasts.iter() {
-					broadcasts.remove(received);
+				for percept in perception.percepts.iter() {
+					match *percept {
+						Percept::Broadcast(ref broadcast) => {
+							broadcasts.remove(broadcast);
+						},
+					}
 				}
 				perceptions.push(perception);
 			},

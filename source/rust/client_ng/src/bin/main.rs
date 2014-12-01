@@ -23,7 +23,10 @@ use output::{
 	Output,
 	PlayerOutput,
 };
-use protocol_ng::Step;
+use protocol_ng::{
+	Percept,
+	Step,
+};
 
 
 mod action_assembler;
@@ -66,7 +69,14 @@ fn run<O: Output>(args: Args, mut output: O) {
 		}
 		match server.recv_from() {
 			Some(perception) => {
-				frame.broadcasts = perception.broadcasts;
+				frame.broadcasts = perception.percepts
+					.into_iter()
+					.map(|percept|
+						match percept {
+							Percept::Broadcast(broadcast) => broadcast
+						}
+					)
+					.collect();
 				action_assembler.process_receipt(perception.last_action);
 			},
 			None => (),
