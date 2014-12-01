@@ -4,9 +4,9 @@ use std::io::{
 };
 
 use acpe::MAX_PACKET_SIZE;
+use acpe::protocol::Seq;
 
 use self::buf_writer::BufWriter;
-use super::Seq;
 
 
 pub struct Encoder {

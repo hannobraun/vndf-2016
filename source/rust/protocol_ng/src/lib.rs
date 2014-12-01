@@ -25,6 +25,3 @@ pub use perception::{
 mod action;
 mod encoder;
 mod perception;
-
-
-pub type Seq = u64;

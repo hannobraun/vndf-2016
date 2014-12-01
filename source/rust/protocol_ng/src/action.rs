@@ -3,11 +3,11 @@ use serialize::json;
 use std::io::IoResult;
 
 use acpe::MAX_PACKET_SIZE;
+use acpe::protocol::Seq;
 
 use super::{
 	decode,
 	MessagePart,
-	Seq,
 };
 
 

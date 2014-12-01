@@ -1,8 +1,8 @@
 use acpe::MAX_PACKET_SIZE;
+use acpe::protocol::Seq;
 
 use protocol_ng::{
 	Encoder,
-	Seq,
 	Step,
 };
 
