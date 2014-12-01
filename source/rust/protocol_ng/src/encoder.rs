@@ -6,7 +6,6 @@ use std::io::{
 use self::buf_writer::BufWriter;
 use super::{
 	MAX_PACKET_SIZE,
-	Percept,
 	Seq,
 };
 
@@ -99,7 +98,10 @@ impl<'r> MessageEncoder<'r> {
 
 
 // TODO: A decode method in an encoder module. Something has to change.
-pub fn decode(message: &[u8], parts: &mut Vec<Percept>) -> Result<Seq, String> {
+pub fn decode<P: MessagePart>(
+	message: &[u8],
+	parts  : &mut Vec<P>
+) -> Result<Seq, String> {
 	let mut reader = BufReader::new(message);
 
 	let message = match reader.read_to_string() {
