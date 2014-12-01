@@ -21,7 +21,7 @@ use acpe::protocol::{
 	Seq,
 };
 
-use protocol_ng::{
+use protocol_ng::protocol::{
 	Percept,
 	Step,
 };

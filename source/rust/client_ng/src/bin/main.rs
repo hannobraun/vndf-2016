@@ -27,7 +27,7 @@ use output::{
 	Output,
 	PlayerOutput,
 };
-use protocol_ng::{
+use protocol_ng::protocol::{
 	Percept,
 	Step,
 };

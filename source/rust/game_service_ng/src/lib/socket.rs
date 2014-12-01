@@ -9,7 +9,7 @@ use std::io::net::udp::UdpSocket;
 use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::Action;
 
-use protocol_ng::Step;
+use protocol_ng::protocol::Step;
 
 
 pub struct Socket {

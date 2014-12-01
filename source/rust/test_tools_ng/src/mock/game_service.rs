@@ -16,7 +16,7 @@ use game_service_ng::{
 	Socket,
 	SocketSender,
 };
-use protocol_ng::{
+use protocol_ng::protocol::{
 	Percept,
 	Step,
 };
