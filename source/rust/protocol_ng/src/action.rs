@@ -1,10 +1,10 @@
 use serialize::Encodable;
 use serialize::json;
-use std::error::Error;
 use std::io::IoResult;
-use std::str::from_utf8;
 
 use super::{
+	MAX_PACKET_SIZE,
+	decode,
 	MessagePart,
 	Seq,
 };
@@ -18,23 +18,34 @@ pub struct Action {
 
 impl Action {
 	pub fn decode(buffer: &[u8]) -> Result<Action, String> {
-		let message = match from_utf8(buffer) {
-			Some(message) =>
-				message,
-			None =>
-				return Err(
-					format!("Received invalid UTF-8 string: {}", buffer)
-				),
-		};
-
-		match json::decode(message) {
-			Ok(action) => Ok(action),
-			Err(error) => Err(error.description().to_string()),
+		let mut steps = Vec::new();
+		match decode(buffer, &mut steps) {
+			Ok(seq) =>
+				Ok(Action {
+					seq  : seq,
+					steps: steps,
+				}),
+			Err(error) =>
+				Err(error),
 		}
 	}
 
 	pub fn encode(self) -> Vec<u8> {
-		json::encode(&self).into_bytes()
+		let mut buffer  = [0, ..MAX_PACKET_SIZE];
+		let mut encoder = super::Encoder::new();
+
+		let mut action = encoder.action(self.seq);
+		for step in self.steps.into_iter() {
+			action.add(step);
+		}
+
+		let message = action
+			.encode(&mut buffer)
+			.unwrap_or_else(|error|
+				panic!("Error encoding action: {}", error)
+			);
+
+		message.to_vec()
 	}
 }
 
