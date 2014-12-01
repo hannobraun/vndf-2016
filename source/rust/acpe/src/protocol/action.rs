@@ -15,9 +15,9 @@ pub struct Action<Step> {
 }
 
 impl<Step: MessagePart> Action<Step> {
-	pub fn decode(buffer: &[u8]) -> Result<Action<Step>, String> {
+	pub fn decode(message: &[u8]) -> Result<Action<Step>, String> {
 		let mut steps = Vec::new();
-		match decode(buffer, &mut steps) {
+		match decode(message, &mut steps) {
 			Ok(seq) =>
 				Ok(Action {
 					seq  : seq,
