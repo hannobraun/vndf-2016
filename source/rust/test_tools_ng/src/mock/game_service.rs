@@ -6,7 +6,10 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Encoder;
+use acpe::protocol::{
+	Action,
+	Encoder,
+};
 
 use game_service_ng::{
 	ReceiveResult,
@@ -14,7 +17,6 @@ use game_service_ng::{
 	SocketSender,
 };
 use protocol_ng::{
-	Action,
 	Percept,
 	Step,
 };

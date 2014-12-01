@@ -1,6 +1,7 @@
 use std::io::IoResult;
 
 
+pub use self::action::Action;
 pub use self::decode::decode;
 pub use self::encode::{
 	Encoder,
@@ -8,6 +9,7 @@ pub use self::encode::{
 };
 
 
+mod action;
 mod decode;
 mod encode;
 

@@ -6,10 +6,7 @@ extern crate serialize;
 extern crate acpe;
 
 
-pub use action::{
-	Action,
-	Step,
-};
+pub use action::Step;
 pub use perception::{
 	Percept,
 	Perception,
