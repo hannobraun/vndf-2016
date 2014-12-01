@@ -31,13 +31,22 @@ impl Input {
 	}
 
 	pub fn read_line(&self) -> Vec<String> {
-		match self.receiver.try_recv() {
-			Ok(line) => vec![line],
+		let mut lines = Vec::new();
 
-			Err(error) => match error {
-				TryRecvError::Empty        => vec![],
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
+		loop {
+			match self.receiver.try_recv() {
+				Ok(line) =>
+					lines.push(line),
+
+				Err(error) => match error {
+					TryRecvError::Empty =>
+						break,
+					TryRecvError::Disconnected =>
+						panic!("Channel disconnected"),
+				}
 			}
 		}
+
+		lines
 	}
 }
