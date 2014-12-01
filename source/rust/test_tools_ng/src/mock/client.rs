@@ -10,7 +10,7 @@ use acpe::protocol::{
 use time::precise_time_s;
 
 use client_ng::Server;
-use protocol_ng::protocol::{
+use common::protocol::{
 	Percept,
 	Step,
 };

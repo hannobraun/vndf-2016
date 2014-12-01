@@ -2,7 +2,7 @@
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "protocol_ng 0.0.1",
+ "common 0.0.1",
 ]
 
 [[package]]
@@ -10,7 +10,7 @@ name = "acpe"
 version = "0.0.1"
 
 [[package]]
-name = "protocol_ng"
+name = "common"
 version = "0.0.1"
 dependencies = [
  "acpe 0.0.1",

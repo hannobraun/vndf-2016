@@ -11,14 +11,14 @@ use acpe::protocol::{
 	Encoder,
 };
 
+use common::protocol::{
+	Percept,
+	Step,
+};
 use game_service_ng::{
 	ReceiveResult,
 	Socket,
 	SocketSender,
-};
-use protocol_ng::protocol::{
-	Percept,
-	Step,
 };
 
 

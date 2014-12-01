@@ -1,6 +1,6 @@
 [package]
 
-name = "protocol_ng"
+name = "common"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 

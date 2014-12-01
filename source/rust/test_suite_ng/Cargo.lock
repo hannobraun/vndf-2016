@@ -21,27 +21,27 @@ version = "0.0.1"
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "protocol_ng 0.0.1",
+ "common 0.0.1",
+]
+
+[[package]]
+name = "common"
+version = "0.0.1"
+dependencies = [
+ "acpe 0.0.1",
 ]
 
 [[package]]
 name = "game_service_ng"
 version = "0.0.1"
 dependencies = [
- "protocol_ng 0.0.1",
+ "common 0.0.1",
 ]
 
 [[package]]
 name = "gcc"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "protocol_ng"
-version = "0.0.1"
-dependencies = [
- "acpe 0.0.1",
-]
 
 [[package]]
 name = "test_tools_ng"

@@ -9,7 +9,7 @@ use std::io::net::udp::UdpSocket;
 use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::Perception;
 
-use protocol_ng::protocol::Percept;
+use common::protocol::Percept;
 
 
 // TODO(83622206): Merge into Socket

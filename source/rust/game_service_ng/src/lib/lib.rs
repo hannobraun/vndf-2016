@@ -3,7 +3,7 @@
 
 extern crate acpe;
 
-extern crate protocol_ng;
+extern crate common;
 
 
 pub use socket::{

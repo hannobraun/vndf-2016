@@ -7,7 +7,7 @@ extern crate libc;
 extern crate acpe;
 
 extern crate client_ng;
-extern crate protocol_ng;
+extern crate common;
 
 
 use std::io::timer::sleep;
@@ -21,15 +21,15 @@ use client_ng::{
 	Frame,
 	Server,
 };
+use common::protocol::{
+	Percept,
+	Step,
+};
 use input::Input;
 use output::{
 	HeadlessOutput,
 	Output,
 	PlayerOutput,
-};
-use protocol_ng::protocol::{
-	Percept,
-	Step,
 };
 
 

@@ -4,7 +4,7 @@ use acpe::protocol::{
 	Seq,
 };
 
-use protocol_ng::protocol::Step;
+use common::protocol::Step;
 
 
 pub struct ActionAssembler<'r> {

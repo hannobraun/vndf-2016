@@ -12,5 +12,5 @@ path = "src/lib/lib.rs"
 name = "vndf-game-service-ng"
 
 
-[dependencies.protocol_ng]
-path = "../protocol_ng"
+[dependencies.common]
+path = "../common"

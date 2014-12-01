@@ -3,8 +3,8 @@
 
 extern crate acpe;
 
+extern crate common;
 extern crate game_service_ng;
-extern crate protocol_ng;
 
 
 use std::collections::HashMap;
@@ -21,7 +21,7 @@ use acpe::protocol::{
 	Seq,
 };
 
-use protocol_ng::protocol::{
+use common::protocol::{
 	Percept,
 	Step,
 };
