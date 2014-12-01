@@ -34,20 +34,21 @@ impl Perception {
 	/// ignoring performance and error handling. Please don't use this outside
 	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
+		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = super::Encoder::new();
-		let mut buffer  = Vec::from_elem(MAX_PACKET_SIZE, 0);
 
 		let mut perception = encoder.perception(self.last_action);
 		for percept in self.percepts.into_iter() {
 			perception.add(percept);
 		}
 
-		perception
-			.encode(buffer.as_mut_slice())
+		let message = perception
+			.encode(&mut buffer)
 			.unwrap_or_else(|error|
 				panic!("Error encoding perception: {}", error)
 			);
-		buffer
+
+		message.to_vec()
 	}
 }
 
