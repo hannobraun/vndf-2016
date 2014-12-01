@@ -64,4 +64,17 @@ impl MessagePart for Percept {
 
 		Ok(())
 	}
+
+	fn read(line: &str) -> Result<Percept, String> {
+		match json::decode(line) {
+			Ok(part) =>
+				Ok(part),
+			Err(error) =>
+				Err(format!(
+					"Error decoding part. \
+					Error: {}; Part: {}",
+					error, line,
+				)),
+		}
+	}
 }
