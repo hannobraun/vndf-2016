@@ -159,18 +159,20 @@ impl<'r> PerceptionEnc<'r> {
 
 	pub fn encode(self, buffer: &mut [u8]) -> IoResult<&[u8]> {
 		let len = {
-			let mut writer = BufWriter::new(buffer);
-			match writer.write(self.writer.into_slice()) {
-				Ok(())     => (),
-				Err(error) => return Err(error),
-			};
-
-			writer.tell().unwrap_or_else(|_|
+			let len = self.writer.tell().unwrap_or_else(|_|
 				panic!(
 					"I/O operation on BufWriter that cannot possibly fail \
 					still managed to fail somehow."
 				)
-			)
+			);
+
+			let mut writer = BufWriter::new(buffer);
+			match writer.write(self.writer.into_slice()[.. len as uint]) {
+				Ok(())     => (),
+				Err(error) => return Err(error),
+			};
+
+			len
 		};
 
 		Ok(buffer[.. len as uint])
