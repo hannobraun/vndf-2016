@@ -11,7 +11,7 @@ use acpe::protocol::{
 };
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 pub struct Action<Step> {
 	pub seq  : Seq,
 	pub steps: Vec<Step>,
