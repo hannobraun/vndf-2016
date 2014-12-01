@@ -24,6 +24,10 @@ impl Encoder {
 		}
 	}
 
+	pub fn message<P: MessagePart>(&mut self, seq: Seq) -> MessageEncoder<P> {
+		MessageEncoder::new(&mut self.buffer, seq)
+	}
+
 	pub fn action(&mut self, seq: Seq) -> MessageEncoder<Step> {
 		MessageEncoder::new(&mut self.buffer, seq)
 	}
