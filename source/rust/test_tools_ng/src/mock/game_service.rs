@@ -15,6 +15,7 @@ use game_service_ng::{
 use protocol_ng::{
 	Action,
 	Encoder,
+	Percept,
 };
 
 
@@ -94,7 +95,7 @@ impl ActionHandle {
 	pub fn confirm(&mut self) {
 		let mut encoder       = Encoder::new();
 		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
-		let     perception    = encoder.perception(self.inner.seq);
+		let     perception    = encoder.message::<Percept>(self.inner.seq);
 
 		let message = perception.encode(&mut encode_buffer).unwrap();
 		self.sender.send(message, self.address);

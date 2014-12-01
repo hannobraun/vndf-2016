@@ -6,10 +6,7 @@ use std::io::{
 use acpe::MAX_PACKET_SIZE;
 
 use self::buf_writer::BufWriter;
-use super::{
-	Percept,
-	Seq,
-};
+use super::Seq;
 
 
 pub struct Encoder {
@@ -25,10 +22,6 @@ impl Encoder {
 
 	pub fn message<P: MessagePart>(&mut self, seq: Seq) -> MessageEncoder<P> {
 		MessageEncoder::new(&mut self.buffer, seq)
-	}
-
-	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder<Percept> {
-		MessageEncoder::new(&mut self.buffer, last_action)
 	}
 }
 

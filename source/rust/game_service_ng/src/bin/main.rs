@@ -108,7 +108,7 @@ fn send_perception(
 	last_action: Seq,
 	address    : SocketAddr,
 ) {
-	let mut perception = encoder.perception(last_action);
+	let mut perception = encoder.message(last_action);
 	loop {
 		let broadcast = match broadcasts.pop() {
 			Some(broadcast) => broadcast,
