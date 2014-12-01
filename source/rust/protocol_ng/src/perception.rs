@@ -42,9 +42,9 @@ impl Perception {
 			},
 		};
 
-		let last_action = match from_str(header) {
-			Some(last_action) =>
-				last_action,
+		let confirmed_seq = match from_str(header) {
+			Some(confirmed_seq) =>
+				confirmed_seq,
 			None => {
 				return Err(format!("Header is not a number\n"));
 			},
@@ -69,7 +69,7 @@ impl Perception {
 		}
 
 		Ok(Perception {
-			last_action: last_action,
+			last_action: confirmed_seq,
 			percepts   : percepts,
 		})
 	}
