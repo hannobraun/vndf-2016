@@ -1,8 +1,13 @@
+use serialize::Encodable;
 use serialize::json;
 use std::error::Error;
+use std::io::IoResult;
 use std::str::from_utf8;
 
-use super::Seq;
+use super::{
+	MessagePart,
+	Seq,
+};
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -38,4 +43,26 @@ impl Action {
 pub enum Step {
 	Login,
 	Broadcast(String),
+}
+
+impl MessagePart for Step {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+		try!(self.encode(&mut json::Encoder::new(writer)));
+		try!(writer.write_char('\n'));
+
+		Ok(())
+	}
+
+	fn read(line: &str) -> Result<Step, String> {
+		match json::decode(line) {
+			Ok(part) =>
+				Ok(part),
+			Err(error) =>
+				Err(format!(
+					"Error decoding step. \
+					Error: {}; Step: {}",
+					error, line,
+				)),
+		}
+	}
 }
