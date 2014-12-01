@@ -34,7 +34,6 @@ impl ActionAssembler {
 					steps: self.added.clone(),
 				};
 
-				self.next_seq += 1;
 				self.added.clear();
 
 				action
@@ -47,12 +46,13 @@ impl ActionAssembler {
 
 	pub fn process_receipt(&mut self, seq: Seq) {
 		let is_confirmed = match self.assembled {
-			Some(ref action) => seq >= action.seq,
-			None             => false,
+			Some(_) => seq >= self.next_seq,
+			None    => false,
 		};
 
 		if is_confirmed {
 			self.assembled = None;
+			self.next_seq += 1;
 		}
 	}
 }
