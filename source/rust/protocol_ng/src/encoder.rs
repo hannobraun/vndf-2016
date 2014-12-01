@@ -101,6 +101,11 @@ impl<'r> MessageEncoder<'r> {
 }
 
 
+pub trait MessagePart {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
+}
+
+
 mod buf_writer {
 	// This is code from the Rust standard library. I copied it because I needed
 	// the BufWriter::into_slice method that I implemented here.

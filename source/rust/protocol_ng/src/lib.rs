@@ -11,6 +11,7 @@ pub use action::{
 pub use encoder::{
 	Encoder,
 	MessageEncoder,
+	MessagePart,
 };
 pub use perception::{
 	Percept,
