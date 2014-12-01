@@ -6,6 +6,7 @@ use std::io::{
 use self::buf_writer::BufWriter;
 use super::{
 	MAX_PACKET_SIZE,
+	Percept,
 	Seq,
 };
 
@@ -21,18 +22,18 @@ impl Encoder {
 		}
 	}
 
-	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder {
+	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder<Percept> {
 		MessageEncoder::new(&mut self.buffer, last_action)
 	}
 }
 
 
-pub struct MessageEncoder<'r> {
+pub struct MessageEncoder<'r, Part> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r> MessageEncoder<'r> {
-	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder {
+impl<'r, Part: MessagePart> MessageEncoder<'r, Part> {
+	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder<Part> {
 		let mut writer = BufWriter::new(buffer);
 
 		match write!(&mut writer, "{}\n", confirmed_seq) {
@@ -47,7 +48,7 @@ impl<'r> MessageEncoder<'r> {
 		}
 	}
 
-	pub fn add<P: MessagePart>(&mut self, percept: P) -> bool {
+	pub fn add(&mut self, percept: Part) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
