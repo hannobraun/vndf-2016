@@ -34,10 +34,10 @@ pub struct MessageEncoder<'r> {
 }
 
 impl<'r> MessageEncoder<'r> {
-	pub fn new(buffer: &mut [u8], confirm_seq: Seq) -> MessageEncoder {
+	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder {
 		let mut writer = BufWriter::new(buffer);
 
-		match write!(&mut writer, "{}\n", confirm_seq) {
+		match write!(&mut writer, "{}\n", confirmed_seq) {
 			Ok(()) =>
 				(),
 			Err(error) =>
