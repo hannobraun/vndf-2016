@@ -1,4 +1,3 @@
-use serialize::json;
 use std::io::{
 	BufReader,
 	IoResult,
@@ -136,15 +135,12 @@ pub fn decode(message: &[u8], parts: &mut Vec<Percept>) -> Result<Seq, String> {
 			continue;
 		}
 
-		match json::decode(line) {
+		match MessagePart::read(line) {
 			Ok(part) =>
 				parts.push(part),
 			Err(error) =>
-				return Err(format!(
-					"Error decoding part. \
-					Error: {}; Part: {}; Message: {}",
-					error, line, message,
-				)),
+				return Err(error),
+
 		}
 	}
 
