@@ -1,3 +1,5 @@
+use serialize::Encodable;
+use serialize::json;
 use std::io::{
 	BufReader,
 	IoResult,
@@ -50,26 +52,21 @@ impl Perception {
 		};
 
 		let mut percepts = Vec::new();
-		for line in lines.iter() {
-			let mut splits: Vec<String> = line.splitn(1, ' ')
-				.map(|s| s.to_string())
-				.collect();
-
-			if splits.len() != 2 && splits[0].as_slice() != "UPDATE" {
+		for line in lines.into_iter() {
+			if line.len() == 0 {
 				continue;
 			}
 
-			let broadcast = match splits.pop() {
-				Some(broadcast) =>
-					broadcast,
-				None => {
-					return Err(
-						format!("Invalid line, broadcast missing: {}\n", line)
-					);
-				},
-			};
-
-			percepts.push(Percept::Broadcast(broadcast));
+			match json::decode(line) {
+				Ok(percept) =>
+					percepts.push(percept),
+				Err(error) =>
+					return Err(format!(
+						"Error decoding percept. \
+						Error: {}; Percept: {}; Message: {}",
+						error, line, message,
+					)),
+			}
 		}
 
 		Ok(Perception {
@@ -87,11 +84,7 @@ impl Perception {
 
 		let mut perception = encoder.perception(self.last_action);
 		for percept in self.percepts.into_iter() {
-			match percept {
-				Percept::Broadcast(broadcast) => {
-					perception.add(broadcast.as_slice());
-				},
-			}
+			perception.add(percept);
 		}
 
 		perception
@@ -130,14 +123,18 @@ impl<'r> PerceptionEnc<'r> {
 		}
 	}
 
-	pub fn add(&mut self, percept: &str) -> bool {
+	pub fn add(&mut self, percept: Percept) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write!(&mut writer, "UPDATE {}\n", percept) {
+			match percept.encode(&mut json::Encoder::new(&mut writer)) {
 				Ok(())  => (),
 				Err(_)  => return false,
+			}
+			match writer.write_char('\n') {
+				Ok(()) => (),
+				Err(_) => return false,
 			}
 
 			writer.tell().unwrap_or_else(|_|

@@ -16,6 +16,7 @@ use std::time::Duration;
 use protocol_ng::{
 	MAX_PACKET_SIZE,
 	Encoder,
+	Percept,
 	Seq,
 	Step,
 };
@@ -111,7 +112,7 @@ fn send_perception(
 			None            => break,
 		};
 
-		if !perception.add(broadcast) {
+		if !perception.add(Percept::Broadcast(broadcast.to_string())) {
 			broadcasts.push(broadcast);
 			break;
 		}
