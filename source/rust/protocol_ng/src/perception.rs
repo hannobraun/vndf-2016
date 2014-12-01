@@ -11,7 +11,7 @@ use acpe::protocol::{
 };
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 pub struct Perception {
 	pub last_action: Seq,
 	pub percepts   : Vec<Percept>,
