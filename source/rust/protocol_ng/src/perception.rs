@@ -50,7 +50,7 @@ impl Perception {
 			},
 		};
 
-		let mut percepts = Vec::new();
+		let mut parts = Vec::new();
 		for line in lines.into_iter() {
 			if line.len() == 0 {
 				continue;
@@ -58,7 +58,7 @@ impl Perception {
 
 			match json::decode(line) {
 				Ok(percept) =>
-					percepts.push(percept),
+					parts.push(percept),
 				Err(error) =>
 					return Err(format!(
 						"Error decoding percept. \
@@ -70,7 +70,7 @@ impl Perception {
 
 		Ok(Perception {
 			last_action: confirmed_seq,
-			percepts   : percepts,
+			percepts   : parts,
 		})
 	}
 
