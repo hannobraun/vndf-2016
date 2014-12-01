@@ -28,7 +28,7 @@ impl Client {
 		self.server.send_to(data);
 	}
 
-	pub fn send_action(&mut self, action: Action) {
+	pub fn send_action(&mut self, action: Action<Step>) {
 		self.send_data(action.encode().as_slice());
 	}
 

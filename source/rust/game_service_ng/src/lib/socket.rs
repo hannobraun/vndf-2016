@@ -8,7 +8,10 @@ use std::io::net::udp::UdpSocket;
 
 use acpe::MAX_PACKET_SIZE;
 
-use protocol_ng::Action;
+use protocol_ng::{
+	Action,
+	Step,
+};
 
 
 pub struct Socket {
@@ -154,4 +157,4 @@ fn decode_message(message: &[u8], address: SocketAddr) -> ReceiveResult {
 }
 
 
-pub type ReceiveResult = Result<(Action, SocketAddr), (String, SocketAddr)>;
+pub type ReceiveResult = Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;

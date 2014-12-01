@@ -16,6 +16,7 @@ use game_service_ng::{
 use protocol_ng::{
 	Action,
 	Percept,
+	Step,
 };
 
 
@@ -83,7 +84,7 @@ impl GameService {
 
 
 pub struct ActionHandle {
-	pub inner: Action,
+	pub inner: Action<Step>,
 
 	address: SocketAddr,
 	sender : SocketSender,

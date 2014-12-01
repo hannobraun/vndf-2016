@@ -12,13 +12,13 @@ use acpe::protocol::{
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
-pub struct Action {
+pub struct Action<Step> {
 	pub seq  : Seq,
 	pub steps: Vec<Step>,
 }
 
-impl Action {
-	pub fn decode(buffer: &[u8]) -> Result<Action, String> {
+impl<Step: MessagePart> Action<Step> {
+	pub fn decode(buffer: &[u8]) -> Result<Action<Step>, String> {
 		let mut steps = Vec::new();
 		match decode(buffer, &mut steps) {
 			Ok(seq) =>
