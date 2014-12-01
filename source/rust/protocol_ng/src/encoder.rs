@@ -46,12 +46,12 @@ impl<'r, Part: MessagePart> MessageEncoder<'r, Part> {
 		}
 	}
 
-	pub fn add(&mut self, percept: &Part) -> bool {
+	pub fn add(&mut self, part: &Part) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match percept.write(&mut writer) {
+			match part.write(&mut writer) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
