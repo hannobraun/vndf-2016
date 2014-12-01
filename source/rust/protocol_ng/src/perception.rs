@@ -1,9 +1,13 @@
 use serialize::Encodable;
 use serialize::json;
-use std::io::BufReader;
+use std::io::{
+	BufReader,
+	IoResult,
+};
 
 use super::{
 	MAX_PACKET_SIZE,
+	MessagePart,
 	Seq,
 };
 
@@ -95,4 +99,13 @@ impl Perception {
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Percept {
 	Broadcast(String),
+}
+
+impl MessagePart for Percept {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+		try!(self.encode(&mut json::Encoder::new(writer)));
+		try!(writer.write_char('\n'));
+
+		Ok(())
+	}
 }
