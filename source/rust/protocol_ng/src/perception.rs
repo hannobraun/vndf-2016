@@ -57,8 +57,8 @@ impl Perception {
 			}
 
 			match json::decode(line) {
-				Ok(percept) =>
-					parts.push(percept),
+				Ok(part) =>
+					parts.push(part),
 				Err(error) =>
 					return Err(format!(
 						"Error decoding percept. \
