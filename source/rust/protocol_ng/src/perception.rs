@@ -61,8 +61,8 @@ impl Perception {
 					parts.push(part),
 				Err(error) =>
 					return Err(format!(
-						"Error decoding percept. \
-						Error: {}; Percept: {}; Message: {}",
+						"Error decoding part. \
+						Error: {}; Part: {}; Message: {}",
 						error, line, message,
 					)),
 			}
