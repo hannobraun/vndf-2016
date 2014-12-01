@@ -11,9 +11,9 @@ pub use action::{
 pub use encoder::{
 	buf_writer,
 	Encoder,
+	MessageEncoder,
 };
 pub use perception::{
-	MessageEncoder,
 	Percept,
 	Perception,
 };

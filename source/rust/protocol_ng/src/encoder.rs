@@ -1,6 +1,11 @@
+use serialize::Encodable;
+use serialize::json;
+use std::io::IoResult;
+
+use self::buf_writer::BufWriter;
 use super::{
 	MAX_PACKET_SIZE,
-	MessageEncoder,
+	Percept,
 	Seq,
 };
 
@@ -18,6 +23,80 @@ impl Encoder {
 
 	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder {
 		MessageEncoder::new(&mut self.buffer, last_action)
+	}
+}
+
+
+pub struct MessageEncoder<'r> {
+	writer: BufWriter<'r>,
+}
+
+impl<'r> MessageEncoder<'r> {
+	pub fn new(buffer: &mut [u8], confirm_seq: Seq) -> MessageEncoder {
+		let mut writer = BufWriter::new(buffer);
+
+		match write!(&mut writer, "{}\n", confirm_seq) {
+			Ok(()) =>
+				(),
+			Err(error) =>
+				panic!("Error writing message header: {}", error),
+		}
+
+		MessageEncoder {
+			writer: writer,
+		}
+	}
+
+	pub fn add(&mut self, percept: Percept) -> bool {
+		let mut buffer = [0, ..MAX_PACKET_SIZE];
+
+		let len = {
+			let mut writer = BufWriter::new(&mut buffer);
+			match percept.encode(&mut json::Encoder::new(&mut writer)) {
+				Ok(())  => (),
+				Err(_)  => return false,
+			}
+			match writer.write_char('\n') {
+				Ok(()) => (),
+				Err(_) => return false,
+			}
+
+			writer.tell().unwrap_or_else(|_|
+				panic!(
+					"I/O operation on BufWriter that cannot possibly fail \
+					still managed to fail somehow."
+				)
+			)
+		};
+		let addition = buffer[.. len as uint];
+
+		match self.writer.write(addition) {
+			Ok(()) => (),
+			Err(_) => return false,
+		}
+
+		true
+	}
+
+	pub fn encode(self, buffer: &mut [u8]) -> IoResult<&[u8]> {
+		let len = {
+			let len = self.writer.tell().unwrap_or_else(|_|
+				panic!(
+					"I/O operation on BufWriter that cannot possibly fail \
+					still managed to fail somehow."
+				)
+			);
+
+			let mut writer = BufWriter::new(buffer);
+			match writer.write(self.writer.into_slice()[.. len as uint]) {
+				Ok(())     => (),
+				Err(error) => return Err(error),
+			};
+
+			len
+		};
+
+		Ok(buffer[.. len as uint])
 	}
 }
 
