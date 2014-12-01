@@ -31,6 +31,9 @@ impl<Step: MessagePart> Action<Step> {
 		}
 	}
 
+	/// This is a convenience method that makes encoding as easy as possible,
+	/// ignoring performance and error handling. Please don't use this outside
+	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
