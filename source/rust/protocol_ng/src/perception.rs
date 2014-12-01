@@ -19,8 +19,8 @@ pub struct Perception {
 }
 
 impl Perception {
-	pub fn decode(buffer: &[u8]) -> Result<Perception, String> {
-		let mut reader = BufReader::new(buffer);
+	pub fn decode(message: &[u8]) -> Result<Perception, String> {
+		let mut reader = BufReader::new(message);
 
 		let message = match reader.read_to_string() {
 			Ok(message) =>
