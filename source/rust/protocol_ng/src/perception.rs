@@ -7,7 +7,6 @@ use std::io::{
 
 use super::{
 	MAX_PACKET_SIZE,
-	Encoder,
 	Seq,
 };
 use super::buf_writer::BufWriter;
@@ -79,7 +78,7 @@ impl Perception {
 	/// ignoring performance and error handling. Please don't use this outside
 	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
-		let mut encoder = Encoder::new();
+		let mut encoder = super::Encoder::new();
 		let mut buffer  = Vec::from_elem(MAX_PACKET_SIZE, 0);
 
 		let mut perception = encoder.perception(self.last_action);
