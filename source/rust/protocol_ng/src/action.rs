@@ -28,8 +28,8 @@ impl Action {
 		}
 	}
 
-	pub fn encode(&self) -> Vec<u8> {
-		json::encode(self).into_bytes()
+	pub fn encode(self) -> Vec<u8> {
+		json::encode(&self).into_bytes()
 	}
 }
 
