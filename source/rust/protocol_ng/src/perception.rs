@@ -38,7 +38,7 @@ impl Perception {
 		let mut encoder = super::Encoder::new();
 
 		let mut perception = encoder.perception(self.last_action);
-		for percept in self.percepts.into_iter() {
+		for percept in self.percepts.iter() {
 			perception.add(percept);
 		}
 

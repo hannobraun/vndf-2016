@@ -35,7 +35,7 @@ impl Action {
 		let mut encoder = super::Encoder::new();
 
 		let mut action = encoder.action(self.seq);
-		for step in self.steps.into_iter() {
+		for step in self.steps.iter() {
 			action.add(step);
 		}
 

@@ -112,7 +112,7 @@ fn send_perception(
 			None            => break,
 		};
 
-		if !perception.add(Percept::Broadcast(broadcast.to_string())) {
+		if !perception.add(&Percept::Broadcast(broadcast.to_string())) {
 			broadcasts.push(broadcast);
 			break;
 		}
