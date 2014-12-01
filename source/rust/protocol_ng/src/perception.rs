@@ -100,6 +100,12 @@ impl Perception {
 }
 
 
+#[deriving(Encodable, Show)]
+pub enum Percept {
+	Broadcast(String),
+}
+
+
 pub struct PerceptionEnc<'r> {
 	writer: BufWriter<'r>,
 }
