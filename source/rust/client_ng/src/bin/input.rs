@@ -30,12 +30,12 @@ impl Input {
 		}
 	}
 
-	pub fn read_line(&self) -> Option<String> {
+	pub fn read_line(&self) -> Vec<String> {
 		match self.receiver.try_recv() {
-			Ok(line) => Some(line),
+			Ok(line) => vec![line],
 
 			Err(error) => match error {
-				TryRecvError::Empty        => None,
+				TryRecvError::Empty        => vec![],
 				TryRecvError::Disconnected => panic!("Channel disconnected"),
 			}
 		}

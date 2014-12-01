@@ -60,13 +60,10 @@ fn run<O: Output>(args: Args, mut output: O) {
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		match input.read_line() {
-			Some(line) => {
-				action_assembler.add_step(Step::Broadcast(line));
-			},
-
-			None => (),
+		for line in input.read_line().into_iter() {
+			action_assembler.add_step(Step::Broadcast(line));
 		}
+
 		match server.recv_from() {
 			Some(perception) => {
 				frame.broadcasts = perception.percepts
