@@ -4,6 +4,7 @@ use std::time::Duration;
 
 use acpe::protocol::{
 	Action,
+	Perception,
 	Seq,
 };
 use time::precise_time_s;
@@ -11,7 +12,6 @@ use time::precise_time_s;
 use client_ng::Server;
 use protocol_ng::{
 	Percept,
-	Perception,
 	Step,
 };
 

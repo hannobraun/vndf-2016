@@ -7,10 +7,7 @@ extern crate acpe;
 
 
 pub use action::Step;
-pub use perception::{
-	Percept,
-	Perception,
-};
+pub use perception::Percept;
 
 
 mod action;

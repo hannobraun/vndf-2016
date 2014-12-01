@@ -7,11 +7,13 @@ pub use self::encode::{
 	Encoder,
 	MessageEncoder,
 };
+pub use self::perception::Perception;
 
 
 mod action;
 mod decode;
 mod encode;
+mod perception;
 
 
 pub type Seq = u64;
