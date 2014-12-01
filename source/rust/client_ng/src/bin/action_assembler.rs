@@ -1,19 +1,22 @@
 use protocol_ng::{
-	Action,
+	MAX_PACKET_SIZE,
+	Encoder,
 	Seq,
 	Step,
 };
 
 
-pub struct ActionAssembler {
+pub struct ActionAssembler<'r> {
+	buffer   : [u8, ..MAX_PACKET_SIZE],
 	next_seq : Seq,
 	added    : Vec<Step>,
-	assembled: Option<Action>,
+	assembled: Option<&'r [u8]>,
 }
 
-impl ActionAssembler {
-	pub fn new() -> ActionAssembler {
+impl<'r> ActionAssembler<'r> {
+	pub fn new() -> ActionAssembler<'r> {
 		ActionAssembler {
+			buffer   : [0, ..MAX_PACKET_SIZE],
 			next_seq : 0,
 			added    : Vec::new(),
 			assembled: None,
@@ -24,24 +27,34 @@ impl ActionAssembler {
 		self.added.push(step);
 	}
 
-	pub fn assemble(&mut self) -> Action {
-		let action = match self.assembled {
-			Some(_) =>
-				self.assembled.take().unwrap(),
-			None => {
-				let action = Action {
-					seq  : self.next_seq,
-					steps: self.added.clone(),
-				};
+	pub fn assemble(&mut self, encoder: &mut Encoder) -> &[u8] {
+		match self.assembled {
+			Some(message) => return message.clone(),
+			None          => (),
+		}
 
-				self.added.clear();
+		let mut action = encoder.action(self.next_seq);
 
-				action
-			},
-		};
+		loop {
+			let step = match self.added.remove(0) {
+				Some(step) => step,
+				None       => break,
+			};
 
-		self.assembled = Some(action.clone());
-		action
+			if !action.add(&step) {
+				self.added.insert(0, step);
+				break;
+			}
+		}
+
+		let message = action
+			.encode(&mut self.buffer)
+			.unwrap_or_else(|error|
+				panic!("Error encoding action: {}", error)
+			);
+
+		self.assembled = Some(message.clone());
+		message
 	}
 
 	pub fn process_receipt(&mut self, seq: Seq) {

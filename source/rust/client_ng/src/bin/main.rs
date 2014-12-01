@@ -24,6 +24,7 @@ use output::{
 	PlayerOutput,
 };
 use protocol_ng::{
+	Encoder,
 	Percept,
 	Step,
 };
@@ -56,6 +57,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 	let     input            = Input::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Server::new(args.server);
+	let mut encoder          = Encoder::new();
 
 	action_assembler.add_step(Step::Login);
 
@@ -79,11 +81,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 			None => (),
 		}
 
-		let action = action_assembler.assemble();
-		// TODO(83504690): Action may be too large to fit into a single UDP
-		//                 package. Research suggests that, given typical MTU
-		//                 sizes, 512 bytes are a safe bet for the maximum size.
-		server.send_to(action.encode().as_slice());
+		let message = action_assembler.assemble(&mut encoder);
+
+		server.send_to(message);
 		output.render(&frame);
 
 		sleep(Duration::milliseconds(20));
