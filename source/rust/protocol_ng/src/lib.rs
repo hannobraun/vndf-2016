@@ -10,6 +10,7 @@ pub use action::{
 };
 pub use encoder::{
 	Encoder,
+	decode,
 	MessageEncoder,
 	MessagePart,
 };

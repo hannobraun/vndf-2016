@@ -1,8 +1,13 @@
-use std::io::IoResult;
+use serialize::json;
+use std::io::{
+	BufReader,
+	IoResult,
+};
 
 use self::buf_writer::BufWriter;
 use super::{
 	MAX_PACKET_SIZE,
+	Percept,
 	Seq,
 };
 
@@ -91,6 +96,59 @@ impl<'r> MessageEncoder<'r> {
 
 		Ok(buffer[.. len as uint])
 	}
+}
+
+
+// TODO: A decode method in an encoder module. Something has to change.
+pub fn decode(message: &[u8], parts: &mut Vec<Percept>) -> Result<Seq, String> {
+	let mut reader = BufReader::new(message);
+
+	let message = match reader.read_to_string() {
+		Ok(message) =>
+			message,
+		Err(error) => {
+			return Err(
+				format!("Error converting message to string: {}\n", error)
+			);
+		},
+	};
+
+	let mut lines: Vec<&str> = message.split('\n').collect();
+
+	let header = match lines.remove(0) {
+		Some(header) =>
+			header,
+		None => {
+			return Err(format!("Header line is missing\n"));
+		},
+	};
+
+	let confirmed_seq = match from_str(header) {
+		Some(confirmed_seq) =>
+			confirmed_seq,
+		None => {
+			return Err(format!("Header is not a number\n"));
+		},
+	};
+
+	for line in lines.into_iter() {
+		if line.len() == 0 {
+			continue;
+		}
+
+		match json::decode(line) {
+			Ok(part) =>
+				parts.push(part),
+			Err(error) =>
+				return Err(format!(
+					"Error decoding part. \
+					Error: {}; Part: {}; Message: {}",
+					error, line, message,
+				)),
+		}
+	}
+
+	Ok(confirmed_seq)
 }
 
 
