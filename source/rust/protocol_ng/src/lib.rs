@@ -9,7 +9,6 @@ pub use action::{
 	Step,
 };
 pub use encoder::{
-	buf_writer,
 	Encoder,
 	MessageEncoder,
 };
