@@ -8,6 +8,7 @@ use super::{
 	MAX_PACKET_SIZE,
 	Percept,
 	Seq,
+	Step,
 };
 
 
@@ -20,6 +21,10 @@ impl Encoder {
 		Encoder {
 			buffer: [0, ..MAX_PACKET_SIZE],
 		}
+	}
+
+	pub fn action(&mut self, seq: Seq) -> MessageEncoder<Step> {
+		MessageEncoder::new(&mut self.buffer, seq)
 	}
 
 	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder<Percept> {
