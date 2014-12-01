@@ -103,12 +103,12 @@ pub enum Percept {
 }
 
 
-pub struct PerceptionEnc<'r> {
+pub struct MessageEncoder<'r> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r> PerceptionEnc<'r> {
-	pub fn new(buffer: &mut [u8], confirm_seq: Seq) -> PerceptionEnc {
+impl<'r> MessageEncoder<'r> {
+	pub fn new(buffer: &mut [u8], confirm_seq: Seq) -> MessageEncoder {
 		let mut writer = BufWriter::new(buffer);
 
 		match write!(&mut writer, "{}\n", confirm_seq) {
@@ -118,7 +118,7 @@ impl<'r> PerceptionEnc<'r> {
 				panic!("Error writing message header: {}", error),
 		}
 
-		PerceptionEnc {
+		MessageEncoder {
 			writer: writer,
 		}
 	}

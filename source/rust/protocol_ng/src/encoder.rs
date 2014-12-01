@@ -1,6 +1,6 @@
 use super::{
 	MAX_PACKET_SIZE,
-	PerceptionEnc,
+	MessageEncoder,
 	Seq,
 };
 
@@ -16,8 +16,8 @@ impl Encoder {
 		}
 	}
 
-	pub fn perception(&mut self, last_action: Seq) -> PerceptionEnc {
-		PerceptionEnc::new(&mut self.buffer, last_action)
+	pub fn perception(&mut self, last_action: Seq) -> MessageEncoder {
+		MessageEncoder::new(&mut self.buffer, last_action)
 	}
 }
 

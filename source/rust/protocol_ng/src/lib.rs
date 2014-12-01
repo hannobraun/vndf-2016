@@ -13,9 +13,9 @@ pub use encoder::{
 	Encoder,
 };
 pub use perception::{
+	MessageEncoder,
 	Percept,
 	Perception,
-	PerceptionEnc,
 };
 
 
