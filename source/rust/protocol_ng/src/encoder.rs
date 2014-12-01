@@ -1,11 +1,8 @@
-use serialize::Encodable;
-use serialize::json;
 use std::io::IoResult;
 
 use self::buf_writer::BufWriter;
 use super::{
 	MAX_PACKET_SIZE,
-	Percept,
 	Seq,
 };
 
@@ -47,18 +44,14 @@ impl<'r> MessageEncoder<'r> {
 		}
 	}
 
-	pub fn add(&mut self, percept: Percept) -> bool {
+	pub fn add<P: MessagePart>(&mut self, percept: P) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match percept.encode(&mut json::Encoder::new(&mut writer)) {
+			match percept.write(&mut writer) {
 				Ok(())  => (),
 				Err(_)  => return false,
-			}
-			match writer.write_char('\n') {
-				Ok(()) => (),
-				Err(_) => return false,
 			}
 
 			writer.tell().unwrap_or_else(|_|
