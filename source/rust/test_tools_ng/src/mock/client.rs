@@ -10,6 +10,7 @@ use time::precise_time_s;
 
 use client_ng::Server;
 use protocol_ng::{
+	Percept,
 	Perception,
 	Step,
 };
@@ -48,7 +49,7 @@ impl Client {
 		})
 	}
 
-	pub fn expect_perception(&self) -> Option<Perception> {
+	pub fn expect_perception(&self) -> Option<Perception<Percept>> {
 		let start_s = precise_time_s();
 
 		let mut perception = None;
@@ -63,8 +64,8 @@ impl Client {
 
 	pub fn wait_until(
 		&self,
-		condition: |&Option<Perception>| -> bool
-	) -> Option<Perception> {
+		condition: |&Option<Perception<Percept>>| -> bool
+	) -> Option<Perception<Percept>> {
 		let mut perception = self.expect_perception();
 
 		while !condition(&perception) {

@@ -8,7 +8,10 @@ use std::io::net::udp::UdpSocket;
 
 use acpe::MAX_PACKET_SIZE;
 
-use protocol_ng::Perception;
+use protocol_ng::{
+	Percept,
+	Perception,
+};
 
 
 // TODO(83622206): Merge into Socket
@@ -64,7 +67,7 @@ impl Server {
 		}
 	}
 
-	pub fn recv_from(&self) -> Option<Perception> {
+	pub fn recv_from(&self) -> Option<Perception<Percept>> {
 		let message = match self.receiver.try_recv() {
 			Ok(message) => match message {
 				Some(message) => message,

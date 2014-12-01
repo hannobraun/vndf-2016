@@ -12,13 +12,13 @@ use acpe::protocol::{
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct Perception {
+pub struct Perception<Percept> {
 	pub last_action: Seq,
 	pub percepts   : Vec<Percept>,
 }
 
-impl Perception {
-	pub fn decode(message: &[u8]) -> Result<Perception, String> {
+impl<Percept: MessagePart> Perception<Percept> {
+	pub fn decode(message: &[u8]) -> Result<Perception<Percept>, String> {
 		let mut percepts = Vec::new();
 		match decode(message, &mut percepts) {
 			Ok(last_action) =>
