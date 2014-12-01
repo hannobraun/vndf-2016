@@ -35,7 +35,7 @@ impl Action {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = super::Encoder::new();
 
-		let mut action = encoder.action(self.seq);
+		let mut action = encoder.message(self.seq);
 		for step in self.steps.iter() {
 			action.add(step);
 		}
