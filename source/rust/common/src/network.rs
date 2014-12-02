@@ -76,7 +76,7 @@ impl SocketSender {
 
 
 struct SocketReceiver {
-	receiver: Receiver<Option<(Vec<u8>, SocketAddr)>>,
+	receiver: Receiver<Option<Message>>,
 }
 
 impl SocketReceiver {
@@ -121,7 +121,7 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> Vec<(Vec<u8>, SocketAddr)> {
+	fn recv(&self) -> Vec<Message> {
 		let mut results = Vec::new();
 
 		loop {
@@ -162,4 +162,5 @@ fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
 }
 
 
+pub type Message       = (Vec<u8>, SocketAddr);
 pub type ReceiveResult = Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;
