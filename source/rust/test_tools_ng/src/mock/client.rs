@@ -9,7 +9,7 @@ use acpe::protocol::{
 };
 use time::precise_time_s;
 
-use client_ng::Socket;
+use client::Socket;
 use common::protocol::{
 	Percept,
 	Step,

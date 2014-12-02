@@ -1,4 +1,4 @@
-use client_ng::Socket;
+use client::Socket;
 
 
 #[test]

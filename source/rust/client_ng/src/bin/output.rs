@@ -1,6 +1,6 @@
 use libc;
 
-use client_ng::Frame;
+use client::Frame;
 use termios::Termios;
 
 

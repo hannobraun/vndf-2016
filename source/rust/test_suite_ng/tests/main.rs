@@ -4,7 +4,7 @@
 extern crate acpe;
 extern crate time;
 
-extern crate client_ng;
+extern crate client;
 extern crate common;
 extern crate test_tools_ng;
 

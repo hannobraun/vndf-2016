@@ -2,7 +2,7 @@ use std::io::net::ip::Port;
 use time::precise_time_s;
 
 use acceptance::Process;
-use client_ng::Frame;
+use client::Frame;
 
 
 pub struct Client {

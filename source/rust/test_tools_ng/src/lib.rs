@@ -3,7 +3,7 @@ extern crate time;
 
 extern crate acceptance;
 
-extern crate client_ng;
+extern crate client;
 extern crate common;
 extern crate game_service;
 

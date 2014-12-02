@@ -6,7 +6,7 @@ extern crate libc;
 
 extern crate acpe;
 
-extern crate client_ng;
+extern crate client;
 extern crate common;
 
 
@@ -17,7 +17,7 @@ use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
 use args::Args;
-use client_ng::{
+use client::{
 	Frame,
 	Socket,
 };
