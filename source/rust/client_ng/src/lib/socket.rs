@@ -13,14 +13,14 @@ use common::protocol::Percept;
 
 
 // TODO(83622206): Merge into Socket
-pub struct Server {
+pub struct Socket {
 	receiver: Receiver<Option<Vec<u8>>>,
 	address : SocketAddr,
 	socket  : UdpSocket,
 }
 
-impl Server {
-	pub fn new<T: ToSocketAddr>(address: T) -> Server {
+impl Socket {
+	pub fn new<T: ToSocketAddr>(address: T) -> Socket {
 		let (sender, receiver) = channel();
 
 		let mut socket = UdpSocket::bind(("0.0.0.0", 0)).unwrap();
@@ -58,7 +58,7 @@ impl Server {
 				panic!("Error converting socket address: {}", error)
 			);
 
-		Server {
+		Socket {
 			receiver: receiver,
 			address : address,
 			socket  : socket_field,

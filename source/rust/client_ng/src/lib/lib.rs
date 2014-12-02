@@ -9,8 +9,8 @@ extern crate common;
 
 
 pub use frame::Frame;
-pub use server::Server;
+pub use socket::Socket;
 
 
 mod frame;
-mod server;
+mod socket;

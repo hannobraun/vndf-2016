@@ -9,7 +9,7 @@ use acpe::protocol::{
 };
 use time::precise_time_s;
 
-use client_ng::Server;
+use client_ng::Socket;
 use common::protocol::{
 	Percept,
 	Step,
@@ -17,13 +17,13 @@ use common::protocol::{
 
 
 pub struct Client {
-	server: Server,
+	server: Socket,
 }
 
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			server: Server::new(("localhost", port)),
+			server: Socket::new(("localhost", port)),
 		}
 	}
 

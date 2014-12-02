@@ -19,7 +19,7 @@ use action_assembler::ActionAssembler;
 use args::Args;
 use client_ng::{
 	Frame,
-	Server,
+	Socket,
 };
 use common::protocol::{
 	Percept,
@@ -59,7 +59,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 
 	let     input            = Input::new();
 	let mut action_assembler = ActionAssembler::new();
-	let mut server           = Server::new(args.server);
+	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();
 
 	action_assembler.add_step(Step::Login);
