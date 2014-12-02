@@ -6,6 +6,7 @@ use serialize::json::{
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
+	pub self_id   : String,
 	pub broadcasts: Vec<Broadcast>,
 }
 

@@ -55,6 +55,8 @@ fn main() {
 
 fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
+		// TODO: Self id must be set.
+		self_id   : "".to_string(),
 		broadcasts: vec![],
 	};
 
