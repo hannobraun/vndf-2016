@@ -12,5 +12,5 @@ pub use frame::Frame;
 pub use network::Socket;
 
 
-mod frame;
-mod network;
+pub mod frame;
+pub mod network;
