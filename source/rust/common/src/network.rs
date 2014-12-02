@@ -35,6 +35,11 @@ impl Socket {
 
 	pub fn recv_from(&self) -> Vec<ReceiveResult> {
 		self.receiver.recv()
+			.into_iter()
+			.map(|(message, address)|
+				decode_message(message.as_slice(), address)
+			)
+			.collect()
 	}
 }
 
@@ -113,14 +118,14 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> Vec<ReceiveResult> {
+	fn recv(&self) -> Vec<(Vec<u8>, SocketAddr)> {
 		let mut results = Vec::new();
 
 		loop {
 			match self.receiver.try_recv() {
 				Ok(result) => match result {
 					Some((vec, address)) =>
-						results.push(decode_message(vec.as_slice(), address)),
+						results.push((vec, address)),
 					None =>
 						(),
 				},
