@@ -15,20 +15,20 @@ use common::protocol::{
 
 
 pub struct Client {
-	server     : Socket,
+	socket     : Socket,
 	perceptions: Vec<Perception<Percept>>,
 }
 
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			server     : Socket::new(("localhost", port)),
+			socket     : Socket::new(("localhost", port)),
 			perceptions: Vec::new(),
 		}
 	}
 
 	pub fn send_data(&mut self, data: &[u8]) {
-		self.server.send_to(data);
+		self.socket.send_to(data);
 	}
 
 	pub fn send_action(&mut self, action: Action<Step>) {
@@ -53,7 +53,7 @@ impl Client {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
-			self.perceptions.push_all(self.server.recv_from().as_slice());
+			self.perceptions.push_all(self.socket.recv_from().as_slice());
 		}
 
 		self.perceptions.remove(0)
