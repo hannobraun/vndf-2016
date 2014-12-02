@@ -77,6 +77,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 					match percept {
 						Percept::Broadcast(broadcast) =>
 							Broadcast {
+								// TODO: Sender must be set.
+								sender : "".to_string(),
 								message: broadcast,
 							}
 					}

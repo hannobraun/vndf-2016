@@ -22,5 +22,6 @@ impl Frame {
 
 #[deriving(Decodable, Encodable, PartialEq, Show)]
 pub struct Broadcast {
+	pub sender : String,
 	pub message: String,
 }

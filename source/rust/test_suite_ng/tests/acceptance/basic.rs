@@ -28,5 +28,8 @@ fn it_should_receive_broadcasts() {
 }
 
 fn contains(frame: &Frame, message: &String) -> bool {
-	frame.broadcasts.contains(&Broadcast { message: message.clone() })
+	frame.broadcasts.contains(&Broadcast {
+		sender : "".to_string(),
+		message: message.clone(),
+	})
 }
