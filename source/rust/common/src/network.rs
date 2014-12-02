@@ -9,6 +9,9 @@ use std::io::net::udp::UdpSocket;
 use acpe::MAX_PACKET_SIZE;
 
 
+pub type Message = (Vec<u8>, SocketAddr);
+
+
 pub struct Socket {
 	pub sender  : SocketSender,
 	    receiver: SocketReceiver,
@@ -132,6 +135,3 @@ impl SocketReceiver {
 		results
 	}
 }
-
-
-pub type Message       = (Vec<u8>, SocketAddr);
