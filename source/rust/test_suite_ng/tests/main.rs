@@ -10,9 +10,6 @@ extern crate test_tools;
 
 
 mod unit {
-	mod client {
-		mod server;
-	}
 	mod common {
 		mod socket;
 	}
