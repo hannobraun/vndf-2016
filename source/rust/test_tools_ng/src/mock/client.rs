@@ -16,7 +16,7 @@ use common::protocol::{
 
 pub struct Client {
 	socket     : Socket,
-	perceptions: Vec<Perception<Percept>>,
+	perceptions: Vec<Perception<String, Percept>>,
 }
 
 impl Client {
@@ -49,7 +49,7 @@ impl Client {
 		})
 	}
 
-	pub fn expect_perception(&mut self) -> Option<Perception<Percept>> {
+	pub fn expect_perception(&mut self) -> Option<Perception<String, Percept>> {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -61,8 +61,8 @@ impl Client {
 
 	pub fn wait_until(
 		&mut self,
-		condition: |&Option<Perception<Percept>>| -> bool
-	) -> Option<Perception<Percept>> {
+		condition: |&Option<Perception<String, Percept>>| -> bool
+	) -> Option<Perception<String, Percept>> {
 		let mut perception = self.expect_perception();
 
 		while !condition(&perception) {

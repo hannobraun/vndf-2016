@@ -9,18 +9,21 @@ use super::{
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct Perception<Percept> {
+pub struct Perception<Id, Percept> {
 	pub last_action: Seq,
+	pub self_id    : Option<Id>,
 	pub percepts   : Vec<Percept>,
 }
 
-impl<Percept: MessagePart> Perception<Percept> {
-	pub fn decode(message: &[u8]) -> Result<Perception<Percept>, String> {
+impl<Id, Percept: MessagePart> Perception<Id, Percept> {
+	pub fn decode(message: &[u8]) -> Result<Perception<Id, Percept>, String> {
 		let mut percepts = Vec::new();
 		match decode(message, &mut percepts) {
 			Ok(last_action) =>
 				Ok(Perception {
 					last_action: last_action,
+					// TODO: Add support for self id to decode
+					self_id    : None,
 					percepts   : percepts,
 				}),
 			Err(error) =>
