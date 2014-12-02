@@ -41,6 +41,8 @@ fn main() {
 	let mut socket  = Socket::new(port);
 	let mut encoder = Encoder::new();
 
+	print!("Listening on port {}\n", port);
+
 	loop {
 		let received = socket.recv_from();
 		for result in received.into_iter() {
