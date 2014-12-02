@@ -1,6 +1,4 @@
 use std::io::net::ip::Port;
-use std::io::timer::sleep;
-use std::time::Duration;
 
 use acpe::protocol::{
 	Action,
@@ -17,13 +15,15 @@ use common::protocol::{
 
 
 pub struct Client {
-	server: Socket,
+	server     : Socket,
+	perceptions: Vec<Perception<Percept>>,
 }
 
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			server: Socket::new(("localhost", port)),
+			server     : Socket::new(("localhost", port)),
+			perceptions: Vec::new(),
 		}
 	}
 
@@ -49,21 +49,18 @@ impl Client {
 		})
 	}
 
-	pub fn expect_perception(&self) -> Option<Perception<Percept>> {
+	pub fn expect_perception(&mut self) -> Option<Perception<Percept>> {
 		let start_s = precise_time_s();
 
-		let mut perception = None;
-
-		while perception.is_none() && precise_time_s() - start_s < 0.1 {
-			perception = self.server.recv_from();
-			sleep(Duration::milliseconds(20));
+		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
+			self.perceptions.push_all(self.server.recv_from().as_slice());
 		}
 
-		perception
+		self.perceptions.remove(0)
 	}
 
 	pub fn wait_until(
-		&self,
+		&mut self,
 		condition: |&Option<Perception<Percept>>| -> bool
 	) -> Option<Perception<Percept>> {
 		let mut perception = self.expect_perception();

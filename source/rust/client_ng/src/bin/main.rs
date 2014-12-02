@@ -69,19 +69,16 @@ fn run<O: Output>(args: Args, mut output: O) {
 			action_assembler.add_step(Step::Broadcast(line));
 		}
 
-		match server.recv_from() {
-			Some(perception) => {
-				frame.broadcasts = perception.percepts
-					.into_iter()
-					.map(|percept|
-						match percept {
-							Percept::Broadcast(broadcast) => broadcast
-						}
-					)
-					.collect();
-				action_assembler.process_receipt(perception.last_action);
-			},
-			None => (),
+		for perception in  server.recv_from().into_iter() {
+			frame.broadcasts = perception.percepts
+				.into_iter()
+				.map(|percept|
+					match percept {
+						Percept::Broadcast(broadcast) => broadcast
+					}
+				)
+				.collect();
+			action_assembler.process_receipt(perception.last_action);
 		}
 
 		let message = action_assembler.assemble(&mut encoder);

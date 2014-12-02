@@ -65,30 +65,37 @@ impl Socket {
 		}
 	}
 
-	pub fn recv_from(&self) -> Option<Perception<Percept>> {
-		let message = match self.receiver.try_recv() {
-			Ok(message) => match message {
-				Some(message) => message,
-				None          => return None,
-			},
+	pub fn recv_from(&self) -> Vec<Perception<Percept>> {
+		let mut messages = Vec::new();
 
-			Err(error) => match error {
-				TryRecvError::Empty        => return None,
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
-			}
-		};
+		loop {
+			let message = match self.receiver.try_recv() {
+				Ok(message) => match message {
+					Some(message) => message,
+					None          => continue,
+				},
 
-		let message =
-			Perception::decode(message.as_slice())
-			.unwrap_or_else(|error|
-				panic!(
-					"Error decoding message from server. \
-					Message: {}; Error: {}",
-					message, error
-				)
-			);
+				Err(error) => match error {
+					TryRecvError::Empty => break,
+					TryRecvError::Disconnected
+						=> panic!("Channel disconnected"),
+				}
+			};
 
-		Some(message)
+			let message =
+				Perception::decode(message.as_slice())
+				.unwrap_or_else(|error|
+					panic!(
+						"Error decoding message from server. \
+						Message: {}; Error: {}",
+						message, error
+					)
+				);
+
+			messages.push(message);
+		}
+
+		messages
 	}
 
 	pub fn send_to(&mut self, message: &[u8]) {
