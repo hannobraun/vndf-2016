@@ -3,10 +3,13 @@ use std::io::net::ip::{
 	SocketAddr,
 };
 
+use acpe::protocol::Action;
+
 use common::network::{
 	mod,
 	ReceiveResult,
 };
+use common::protocol::Step;
 
 
 pub struct Socket {
@@ -26,5 +29,30 @@ impl Socket {
 
 	pub fn recv_from(&self) -> Vec<ReceiveResult> {
 		self.inner.recv_from()
+			.into_iter()
+			.map(|(message, address)| {
+				match decode_message(message.as_slice()) {
+					Ok(message) => Ok((message, address)),
+					Err(error)  => Err((error, address)),
+				}
+			})
+			.collect()
 	}
+}
+
+
+fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
+	let message = match Action::decode(message) {
+		Ok(message) =>
+			message,
+		Err(error) =>
+			return Err((
+				format!(
+					"Error decoding message. Error: {}; Message: {}",
+					error, message
+				)
+			)),
+	};
+
+	Ok(message)
 }

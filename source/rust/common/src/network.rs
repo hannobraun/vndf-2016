@@ -33,16 +33,8 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> Vec<ReceiveResult> {
+	pub fn recv_from(&self) -> Vec<Message> {
 		self.receiver.recv()
-			.into_iter()
-			.map(|(message, address)| {
-				match decode_message(message.as_slice()) {
-					Ok(message) => Ok((message, address)),
-					Err(error)  => Err((error, address)),
-				}
-			})
-			.collect()
 	}
 }
 
@@ -142,23 +134,6 @@ impl SocketReceiver {
 
 		results
 	}
-}
-
-
-fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
-	let message = match Action::decode(message) {
-		Ok(message) =>
-			message,
-		Err(error) =>
-			return Err((
-				format!(
-					"Error decoding message. Error: {}; Message: {}",
-					error, message
-				)
-			)),
-	};
-
-	Ok(message)
 }
 
 
