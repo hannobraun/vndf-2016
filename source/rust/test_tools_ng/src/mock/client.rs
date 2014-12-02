@@ -7,7 +7,7 @@ use acpe::protocol::{
 };
 use time::precise_time_s;
 
-use client::Socket;
+use client::network::Socket;
 use common::protocol::{
 	Percept,
 	Step,

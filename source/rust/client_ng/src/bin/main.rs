@@ -17,10 +17,8 @@ use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
 use args::Args;
-use client::{
-	Frame,
-	Socket,
-};
+use client::Frame;
+use client::network::Socket;
 use common::protocol::{
 	Percept,
 	Step,
