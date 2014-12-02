@@ -13,13 +13,13 @@ use acpe::protocol::{
 
 use common::network::{
 	ReceiveResult,
-	Socket,
 	SocketSender,
 };
 use common::protocol::{
 	Percept,
 	Step,
 };
+use game_service_ng::Socket;
 
 
 pub struct GameService {
@@ -57,7 +57,7 @@ impl GameService {
 					Some(ActionHandle {
 						inner  : action,
 						address: address,
-						sender : self.socket.sender.clone(),
+						sender : self.socket.inner.sender.clone(),
 					}),
 				Err((error, address)) =>
 					panic!(
