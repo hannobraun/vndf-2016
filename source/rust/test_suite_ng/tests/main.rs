@@ -6,7 +6,7 @@ extern crate time;
 
 extern crate client;
 extern crate common;
-extern crate test_tools_ng;
+extern crate test_tools;
 
 
 mod unit {

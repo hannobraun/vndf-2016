@@ -4,7 +4,7 @@ use acpe::MAX_PACKET_SIZE;
 use time::precise_time_s;
 
 use common::protocol::Step;
-use test_tools_ng::{
+use test_tools::{
 	Client,
 	MockGameService,
 };

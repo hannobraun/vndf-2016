@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 [lib]
-name = "test_tools_ng"
+name = "test_tools"
 
 
 [dependencies]
