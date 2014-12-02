@@ -1,4 +1,7 @@
-use client::output::Broadcast;
+use client::output::{
+	Broadcast,
+	Frame,
+};
 use test_tools::{
 	Client,
 	GameService,
@@ -11,19 +14,19 @@ fn it_should_receive_broadcasts() {
 	let mut client_1     = Client::start(game_service.port());
 	let mut client_2     = Client::start(game_service.port());
 
-	let broadcast_1 = Broadcast {
-		message: "This is a broadcast by client 1.".to_string()
-	};
-	let broadcast_2 = Broadcast {
-		message: "This is a broadcast by client 2.".to_string()
-	};
-	client_1.broadcast(broadcast_1.message.as_slice());
-	client_2.broadcast(broadcast_2.message.as_slice());
+	let message_1 = "This is a broadcast by client 1.".to_string();
+	let message_2 = "This is a broadcast by client 2.".to_string();
+	client_1.broadcast(message_1.as_slice());
+	client_2.broadcast(message_2.as_slice());
 
 	let frame_1 = client_1.wait_until(|frame| frame.broadcasts.len() >= 2);
 	let frame_2 = client_2.wait_until(|frame| frame.broadcasts.len() >= 2);
-	assert!(frame_1.broadcasts.contains(&broadcast_1));
-	assert!(frame_1.broadcasts.contains(&broadcast_2));
-	assert!(frame_2.broadcasts.contains(&broadcast_1));
-	assert!(frame_2.broadcasts.contains(&broadcast_2));
+	assert!(contains(&frame_1, &message_1));
+	assert!(contains(&frame_1, &message_2));
+	assert!(contains(&frame_2, &message_1));
+	assert!(contains(&frame_2, &message_2));
+}
+
+fn contains(frame: &Frame, message: &String) -> bool {
+	frame.broadcasts.contains(&Broadcast { message: message.clone() })
 }
