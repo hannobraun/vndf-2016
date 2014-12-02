@@ -55,7 +55,6 @@ fn main() {
 
 fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
-		// TODO: Self id must be set.
 		self_id   : "".to_string(),
 		broadcasts: vec![],
 	};
@@ -73,6 +72,11 @@ fn run<O: Output>(args: Args, mut output: O) {
 		}
 
 		for perception in  server.recv_from().into_iter() {
+			match perception.self_id {
+				Some(self_id) => frame.self_id = self_id,
+				None          => (),
+			}
+
 			frame.broadcasts = perception.percepts
 				.into_iter()
 				.map(|percept|
