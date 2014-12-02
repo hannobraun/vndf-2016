@@ -4,6 +4,10 @@ name = "game_service_ng"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
+[lib]
+name = "game_service_ng"
+path = "src/lib/lib.rs"
+
 [[bin]]
 name = "vndf-game-service-ng"
 
