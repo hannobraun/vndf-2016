@@ -8,8 +8,5 @@ extern crate acpe;
 extern crate common;
 
 
-pub use output::Frame;
-
-
 pub mod network;
 pub mod output;

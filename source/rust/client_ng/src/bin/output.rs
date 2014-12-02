@@ -1,6 +1,6 @@
 use libc;
 
-use client::Frame;
+use client::output::Frame;
 use termios::Termios;
 
 
