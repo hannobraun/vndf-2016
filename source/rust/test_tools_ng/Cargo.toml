@@ -14,8 +14,5 @@ time = "*"
 [dependencies.client_ng]
 path = "../client_ng"
 
-[dependencies.game_service_ng]
-path = "../game_service_ng"
-
 [dependencies.acceptance]
 path = "../acceptance-rs"

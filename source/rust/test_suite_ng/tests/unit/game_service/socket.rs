@@ -1,4 +1,4 @@
-use game_service_ng::Socket;
+use common::network::Socket;
 
 
 #[test]

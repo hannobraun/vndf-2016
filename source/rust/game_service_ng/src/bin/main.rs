@@ -4,7 +4,6 @@
 extern crate acpe;
 
 extern crate common;
-extern crate game_service_ng;
 
 
 use std::collections::HashMap;
@@ -21,12 +20,11 @@ use acpe::protocol::{
 	Seq,
 };
 
+use common::network::Socket;
 use common::protocol::{
 	Percept,
 	Step,
 };
-
-use game_service_ng::Socket;
 
 
 struct Client {
