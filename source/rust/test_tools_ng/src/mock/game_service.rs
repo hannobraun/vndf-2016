@@ -6,12 +6,12 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 use acpe::MAX_PACKET_SIZE;
+use acpe::network::SocketSender;
 use acpe::protocol::{
 	Action,
 	Encoder,
 };
 
-use common::network::SocketSender;
 use common::protocol::{
 	Percept,
 	Step,

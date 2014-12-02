@@ -6,7 +6,7 @@ use std::io::net::ip::{
 };
 use std::io::net::udp::UdpSocket;
 
-use acpe::MAX_PACKET_SIZE;
+use root::MAX_PACKET_SIZE;
 
 
 pub type Message = (Vec<u8>, SocketAddr);

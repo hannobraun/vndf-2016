@@ -4,6 +4,7 @@
 pub use root::MAX_PACKET_SIZE;
 
 
+pub mod network;
 pub mod protocol;
 
 

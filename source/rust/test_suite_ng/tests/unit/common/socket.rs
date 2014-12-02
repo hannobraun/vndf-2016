@@ -1,4 +1,4 @@
-use common::network::Socket;
+use acpe::network::Socket;
 
 
 #[test]

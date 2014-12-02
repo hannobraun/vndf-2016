@@ -3,9 +3,9 @@ use std::io::net::ip::{
 	ToSocketAddr,
 };
 
+use acpe::network;
 use acpe::protocol::Perception;
 
-use common::network;
 use common::protocol::Percept;
 
 
