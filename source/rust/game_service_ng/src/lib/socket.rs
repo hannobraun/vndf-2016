@@ -10,7 +10,7 @@ use common::network::{
 
 
 pub struct Socket {
-	inner: network::Socket,
+	pub inner: network::Socket,
 }
 
 impl Socket {
