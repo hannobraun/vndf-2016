@@ -1,5 +1,7 @@
-use test_tools::Client;
-use test_tools::GameService;
+use test_tools::{
+	Client,
+	GameService,
+};
 
 
 #[test]
