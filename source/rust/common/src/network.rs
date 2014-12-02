@@ -152,7 +152,7 @@ fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
 		Err(error) =>
 			return Err((
 				format!(
-					"Error decoding JSON. Error: {}; Message: {}",
+					"Error decoding message. Error: {}; Message: {}",
 					error, message
 				)
 			)),
