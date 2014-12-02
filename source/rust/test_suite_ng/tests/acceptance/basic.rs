@@ -21,15 +21,17 @@ fn it_should_receive_broadcasts() {
 
 	let frame_1 = client_1.wait_until(|frame| frame.broadcasts.len() >= 2);
 	let frame_2 = client_2.wait_until(|frame| frame.broadcasts.len() >= 2);
-	assert!(contains(&frame_1, &message_1));
-	assert!(contains(&frame_1, &message_2));
-	assert!(contains(&frame_2, &message_1));
-	assert!(contains(&frame_2, &message_2));
+	assert!(contains(&frame_1, (&frame_1.self_id, &message_1)));
+	assert!(contains(&frame_1, (&frame_2.self_id, &message_2)));
+	assert!(contains(&frame_2, (&frame_1.self_id, &message_1)));
+	assert!(contains(&frame_2, (&frame_2.self_id, &message_2)));
 }
 
-fn contains(frame: &Frame, message: &String) -> bool {
+fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
+	let (sender, message) = broadcast;
+
 	frame.broadcasts.contains(&Broadcast {
-		sender : "".to_string(),
+		sender : sender.clone(),
 		message: message.clone(),
 	})
 }
