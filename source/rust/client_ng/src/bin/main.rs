@@ -18,7 +18,10 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use args::Args;
 use client::network::Socket;
-use client::output::Frame;
+use client::output::{
+	Broadcast,
+	Frame,
+};
 use common::protocol::{
 	Percept,
 	Step,
@@ -72,7 +75,10 @@ fn run<O: Output>(args: Args, mut output: O) {
 				.into_iter()
 				.map(|percept|
 					match percept {
-						Percept::Broadcast(broadcast) => broadcast
+						Percept::Broadcast(broadcast) =>
+							Broadcast {
+								message: broadcast,
+							}
 					}
 				)
 				.collect();

@@ -6,7 +6,7 @@ use serialize::json::{
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
-	pub broadcasts: Vec<String>,
+	pub broadcasts: Vec<Broadcast>,
 }
 
 impl Frame {
@@ -17,4 +17,10 @@ impl Frame {
 	pub fn to_json(&self) -> String {
 		json::encode(self)
 	}
+}
+
+
+#[deriving(Decodable, Encodable, PartialEq, Show)]
+pub struct Broadcast {
+	pub message: String,
 }
