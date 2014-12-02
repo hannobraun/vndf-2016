@@ -13,7 +13,7 @@ mod unit {
 	mod client {
 		mod server;
 	}
-	mod game_service {
+	mod common {
 		mod socket;
 	}
 }
