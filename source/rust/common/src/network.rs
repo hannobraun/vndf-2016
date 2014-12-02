@@ -7,9 +7,6 @@ use std::io::net::ip::{
 use std::io::net::udp::UdpSocket;
 
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Action;
-
-use protocol::Step;
 
 
 pub struct Socket {
@@ -138,4 +135,3 @@ impl SocketReceiver {
 
 
 pub type Message       = (Vec<u8>, SocketAddr);
-pub type ReceiveResult = Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;

@@ -5,11 +5,12 @@ use std::io::net::ip::{
 
 use acpe::protocol::Action;
 
-use common::network::{
-	mod,
-	ReceiveResult,
-};
+use common::network;
 use common::protocol::Step;
+
+
+pub type ReceiveResult =
+	Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;
 
 
 pub struct Socket {

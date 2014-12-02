@@ -11,15 +11,15 @@ use acpe::protocol::{
 	Encoder,
 };
 
-use common::network::{
-	ReceiveResult,
-	SocketSender,
-};
+use common::network::SocketSender;
 use common::protocol::{
 	Percept,
 	Step,
 };
-use game_service_ng::Socket;
+use game_service_ng::{
+	ReceiveResult,
+	Socket,
+};
 
 
 pub struct GameService {
