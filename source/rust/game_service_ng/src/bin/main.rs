@@ -4,7 +4,7 @@
 extern crate acpe;
 
 extern crate common;
-extern crate game_service_ng;
+extern crate game_service;
 
 
 use std::collections::HashMap;
@@ -25,7 +25,7 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use game_service_ng::Socket;
+use game_service::Socket;
 
 
 struct Client {

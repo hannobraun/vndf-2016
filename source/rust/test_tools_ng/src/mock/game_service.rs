@@ -16,7 +16,7 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use game_service_ng::{
+use game_service::{
 	ReceiveResult,
 	Socket,
 };
