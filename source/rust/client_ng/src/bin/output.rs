@@ -27,7 +27,7 @@ impl Output for PlayerOutput {
 		print!("\x1b[2J\x1b[H");
 
 		for broadcast in frame.broadcasts.iter() {
-			print!("{}\n", broadcast.message);
+			print!("{}: {}\n", broadcast.sender, broadcast.message);
 		}
 	}
 }
