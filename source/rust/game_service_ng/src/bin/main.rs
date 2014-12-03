@@ -92,9 +92,8 @@ fn main() {
 			let mut broadcasts = broadcasts
 				.iter()
 				.map(|broadcast|
-					// TODO: Set sender
 					Broadcast {
-						sender : "".to_string(),
+						sender : client.id.clone(),
 						message: broadcast.clone(),
 					}
 				)
