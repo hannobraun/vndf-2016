@@ -54,7 +54,7 @@ impl<I, P: Part> Perception<I, P> {
 	}
 }
 
-impl<Id, P: Part> Message<PerceptionHeader<Id>, P> for Perception<Id, P> {}
+impl<I, P: Part> Message<PerceptionHeader<I>, P> for Perception<I, P> {}
 
 
 #[deriving(Clone, PartialEq, Show)]
