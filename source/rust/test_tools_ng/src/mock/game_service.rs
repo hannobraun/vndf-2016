@@ -102,7 +102,7 @@ impl ActionHandle {
 		let mut encoder       = Encoder::new();
 		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
 
-		let perception: MessageEncoder<Perception<String, Percept>> =
+		let perception: MessageEncoder<Perception<Percept>> =
 			encoder.message(PerceptionHeader {
 				confirm_action: self.inner.header.id,
 				// TODO: Set self id?

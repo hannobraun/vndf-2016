@@ -13,13 +13,13 @@ use super::{
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct Perception<Id, Percept> {
-	pub header  : PerceptionHeader<Id>,
+pub struct Perception<Percept> {
+	pub header  : PerceptionHeader,
 	pub percepts: Vec<Percept>,
 }
 
-impl<I, P: Part> Perception<I, P> {
-	pub fn decode(message: &[u8]) -> Result<Perception<I, P>, String> {
+impl<P: Part> Perception<P> {
+	pub fn decode(message: &[u8]) -> Result<Perception<P>, String> {
 		let mut percepts = Vec::new();
 		match decode(message, &mut percepts) {
 			Ok(header) =>
@@ -54,21 +54,21 @@ impl<I, P: Part> Perception<I, P> {
 	}
 }
 
-impl<I, P: Part> Message<PerceptionHeader<I>, P> for Perception<I, P> {}
+impl<P: Part> Message<PerceptionHeader, P> for Perception<P> {}
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct PerceptionHeader<Id> {
+pub struct PerceptionHeader {
 	pub confirm_action: Seq,
-	pub self_id       : Option<Id>,
+	pub self_id       : Option<String>,
 }
 
-impl<I> Header for PerceptionHeader<I> {
+impl Header for PerceptionHeader {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		write!(writer, "{}\n", self.confirm_action)
 	}
 
-	fn read(line: &str) -> Result<PerceptionHeader<I>, String> {
+	fn read(line: &str) -> Result<PerceptionHeader, String> {
 		match from_str(line) {
 			Some(action_id) => Ok(PerceptionHeader {
 				confirm_action: action_id,

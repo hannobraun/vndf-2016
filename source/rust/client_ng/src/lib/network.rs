@@ -30,7 +30,7 @@ impl Socket {
 		}
 	}
 
-	pub fn recv_from(&self) -> Vec<Perception<String, Percept>> {
+	pub fn recv_from(&self) -> Vec<Perception<Percept>> {
 		self.inner
 			.recv_from()
 			.into_iter()
