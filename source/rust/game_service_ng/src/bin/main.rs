@@ -81,6 +81,11 @@ fn main() {
 			.collect();
 
 		for (&address, client) in clients.iter() {
+			let header = PerceptionHeader {
+				confirm_action: client.last_action,
+				// TODO: Set self id
+				self_id       : None,
+			};
 			let mut broadcasts: Vec<&str> = broadcasts
 				.iter()
 				.map(|broadcast| broadcast.as_slice())
@@ -90,9 +95,9 @@ fn main() {
 			while needs_to_send_perception {
 				send_perception(
 					&mut encoder,
+					&header,
 					&mut broadcasts,
 					&mut socket,
-					client.last_action,
 					address,
 				);
 
@@ -107,16 +112,12 @@ fn main() {
 
 fn send_perception(
 	encoder    : &mut Encoder,
+	header     : &PerceptionHeader,
 	broadcasts : &mut Vec<&str>,
 	socket     : &mut Socket,
-	last_action: Seq,
 	address    : SocketAddr,
 ) {
-	let mut perception = encoder.message(&PerceptionHeader {
-		confirm_action: last_action,
-		// TODO: Set self id
-		self_id       : None,
-	});
+	let mut perception = encoder.message(header);
 	loop {
 		let message = match broadcasts.pop() {
 			Some(message) => message,
