@@ -63,12 +63,12 @@ pub struct PerceptionHeader<Id> {
 	pub self_id       : Option<Id>,
 }
 
-impl<Id> Header for PerceptionHeader<Id> {
+impl<I> Header for PerceptionHeader<I> {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		write!(writer, "{}\n", self.confirm_action)
 	}
 
-	fn read(line: &str) -> Result<PerceptionHeader<Id>, String> {
+	fn read(line: &str) -> Result<PerceptionHeader<I>, String> {
 		match from_str(line) {
 			Some(action_id) => Ok(PerceptionHeader {
 				confirm_action: action_id,
