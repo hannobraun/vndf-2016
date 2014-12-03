@@ -13,6 +13,7 @@ use std::io::net::ip::{
 	SocketAddr,
 };
 use std::io::timer::sleep;
+use std::rand::random;
 use std::time::Duration;
 
 use acpe::MAX_PACKET_SIZE;
@@ -116,8 +117,35 @@ fn main() {
 
 
 fn generate_id() -> String {
-	// TODO: Randomly generate id
-	"XOD-3H2DF".to_string()
+	fn random_char(min: char, max: char) -> char {
+		let min = min as u8;
+		let max = max as u8;
+
+		((random::<u8>() % (max + 1 - min)) + min) as char
+	}
+	fn random_letter() -> char {
+		random_char('A', 'Z')
+	}
+	fn random_letter_or_number() -> char {
+		if random() {
+			random_letter()
+		}
+		else {
+			random_char('0', '9')
+		}
+	}
+
+	let mut id = String::new();
+
+	for _ in range(0u8, 3) {
+		id.push(random_letter());
+	}
+	id.push('-');
+	for _ in range(0u8, 5) {
+		id.push(random_letter_or_number());
+	}
+
+	id
 }
 
 fn send_perception(
