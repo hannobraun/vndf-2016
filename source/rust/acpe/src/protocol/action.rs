@@ -3,6 +3,7 @@ use root::MAX_PACKET_SIZE;
 use super::{
 	decode,
 	Encoder,
+	Message,
 	MessagePart,
 	Seq,
 };
@@ -49,3 +50,5 @@ impl<Step: MessagePart> Action<Step> {
 		message.to_vec()
 	}
 }
+
+impl<Step: MessagePart> Message<Seq, Step> for Action<Step> {}

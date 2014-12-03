@@ -3,6 +3,7 @@ use root::MAX_PACKET_SIZE;
 use super::{
 	decode,
 	Encoder,
+	Message,
 	MessagePart,
 	Seq,
 };
@@ -52,3 +53,6 @@ impl<Id, Percept: MessagePart> Perception<Id, Percept> {
 		message.to_vec()
 	}
 }
+
+impl<Id, Percept: MessagePart> Message<Seq, Percept>
+	for Perception<Id, Percept> {}
