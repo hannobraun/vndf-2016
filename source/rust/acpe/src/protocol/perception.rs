@@ -1,8 +1,11 @@
+use std::io::IoResult;
+
 use root::MAX_PACKET_SIZE;
 
 use super::{
 	decode,
 	Encoder,
+	Header,
 	Message,
 	Part,
 	Seq,
@@ -64,4 +67,20 @@ impl<Id, Percept: Part> Message<Seq, Percept> for Perception<Id, Percept> {}
 pub struct PerceptionHeader<Id> {
 	pub confirm_action: Seq,
 	pub self_id       : Option<Id>,
+}
+
+impl<Id> Header for PerceptionHeader<Id> {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+		write!(writer, "{}\n", self.confirm_action)
+	}
+
+	fn read(line: &str) -> Result<PerceptionHeader<Id>, String> {
+		match from_str(line) {
+			Some(action_id) => Ok(PerceptionHeader {
+				confirm_action: action_id,
+				self_id       : None,
+			}),
+			None => Err(format!("Header is not a number")),
+		}
+	}
 }
