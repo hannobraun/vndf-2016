@@ -112,12 +112,10 @@ fn send_perception(
 	last_action: Seq,
 	address    : SocketAddr,
 ) {
-	let self_id: Option<String> = None;
-
 	let mut perception = encoder.message(PerceptionHeader {
 		confirm_action: last_action,
 		// TODO: Set self id
-		self_id       : self_id,
+		self_id       : None,
 	});
 	loop {
 		let message = match broadcasts.pop() {
