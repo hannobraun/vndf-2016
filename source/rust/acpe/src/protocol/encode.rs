@@ -4,8 +4,8 @@ use root::MAX_PACKET_SIZE;
 
 use self::buf_writer::BufWriter;
 use super::{
+	Header,
 	MessagePart,
-	Seq,
 };
 
 
@@ -20,21 +20,21 @@ impl Encoder {
 		}
 	}
 
-	pub fn message<P: MessagePart>(&mut self, seq: Seq) -> MessageEncoder<P> {
-		MessageEncoder::new(&mut self.buffer, seq)
+	pub fn message<H: Header, P: MessagePart>(&mut self, header: H) -> MessageEncoder<H, P> {
+		MessageEncoder::new(&mut self.buffer, header)
 	}
 }
 
 
-pub struct MessageEncoder<'r, Part> {
+pub struct MessageEncoder<'r, Header, Part> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, P: MessagePart> MessageEncoder<'r, P> {
-	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder<P> {
+impl<'r, H: Header, P: MessagePart> MessageEncoder<'r, H, P> {
+	pub fn new(buffer: &mut [u8], header: H) -> MessageEncoder<H, P> {
 		let mut writer = BufWriter::new(buffer);
 
-		match write!(&mut writer, "{}\n", confirmed_seq) {
+		match header.write(&mut writer) {
 			Ok(()) =>
 				(),
 			Err(error) =>
