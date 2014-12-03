@@ -79,11 +79,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 				.into_iter()
 				.map(|percept|
 					match percept {
-						Percept::Broadcast(sender, broadcast) =>
-							Broadcast {
-								sender : sender,
-								message: broadcast,
-							}
+						Percept::Broadcast(broadcast) => broadcast,
 					}
 				)
 				.collect();

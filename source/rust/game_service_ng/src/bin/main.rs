@@ -23,6 +23,7 @@ use acpe::protocol::{
 };
 
 use common::protocol::{
+	Broadcast,
 	Percept,
 	Step,
 };
@@ -127,12 +128,12 @@ fn send_perception(
 		};
 
 		// TODO: Set sender
-		let broadcast = Percept::Broadcast(
-			"".to_string(),
-			message.to_string()
-		);
+		let broadcast = Broadcast {
+			sender : "".to_string(),
+			message: message.to_string(),
+		};
 
-		if !perception.add(&broadcast) {
+		if !perception.add(&Percept::Broadcast(broadcast)) {
 			broadcasts.push(message);
 			break;
 		}

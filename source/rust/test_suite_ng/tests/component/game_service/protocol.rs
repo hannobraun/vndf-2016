@@ -84,8 +84,8 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 			Some(perception) => {
 				for percept in perception.percepts.iter() {
 					match *percept {
-						Percept::Broadcast(_, ref broadcast) => {
-							broadcasts.remove(broadcast);
+						Percept::Broadcast(ref broadcast) => {
+							broadcasts.remove(&broadcast.message);
 						},
 					}
 				}
