@@ -76,11 +76,16 @@ fn main() {
 			}
 		}
 
-		let broadcasts: Vec<String> = clients
+		let broadcasts: Vec<Broadcast> = clients
 			.iter()
 			.filter_map(
 				|(_, client)|
-					client.broadcast.clone()
+					client.broadcast.clone().map(|broadcast|
+						Broadcast {
+							sender : client.id.clone(),
+							message: broadcast,
+						}
+					)
 			)
 			.collect();
 
@@ -89,15 +94,7 @@ fn main() {
 				confirm_action: client.last_action,
 				self_id       : Some(client.id.clone()),
 			};
-			let mut broadcasts = broadcasts
-				.iter()
-				.map(|broadcast|
-					Broadcast {
-						sender : client.id.clone(),
-						message: broadcast.clone(),
-					}
-				)
-				.collect();
+			let mut broadcasts = broadcasts.clone();
 
 			let mut needs_to_send_perception = true;
 			while needs_to_send_perception {
