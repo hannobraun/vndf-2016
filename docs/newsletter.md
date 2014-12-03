@@ -77,6 +77,8 @@ Topic ideas:
 
 News for December:
 - Hayabusa 2 launch: http://www.jspec.jaxa.jp/e/activity/hayabusa2.html (find better link for news)
+- Orion test flight
+- New Horizons wakes up from hibernation
 
 News for any month:
 - Asteroid video by Scott Manley
