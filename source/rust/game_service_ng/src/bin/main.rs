@@ -30,6 +30,7 @@ use game_service::Socket;
 
 
 struct Client {
+	id         : String,
 	last_action: Seq,
 	broadcast  : Option<String>,
 }
@@ -53,6 +54,8 @@ fn main() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {
+									// TODO: Set id
+									id         : "".to_string(),
 									last_action: action.header.id,
 									broadcast  : None,
 								});
