@@ -26,6 +26,8 @@ impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) {
 		print!("\x1b[2J\x1b[H");
 
+		print!("Your Comm ID: {}\n\n", frame.self_id);
+
 		for broadcast in frame.broadcasts.iter() {
 			print!("{}: {}\n", broadcast.sender, broadcast.message);
 		}
