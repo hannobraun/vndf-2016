@@ -1,6 +1,5 @@
 use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::{
-	Action,
 	ActionHeader,
 	Encoder,
 	Seq,
@@ -36,10 +35,7 @@ impl<'r> ActionAssembler<'r> {
 			None          => (),
 		}
 
-		// TODO: Simplify generic arguments.
-		let mut action = encoder.message::<Action<_>, _, _>(
-			ActionHeader { id: self.next_seq }
-		);
+		let mut action = encoder.message(ActionHeader { id: self.next_seq });
 
 		loop {
 			let step = match self.added.remove(0) {
