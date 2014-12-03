@@ -30,8 +30,8 @@ pub struct MessageEncoder<'r, Part> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, Part: MessagePart> MessageEncoder<'r, Part> {
-	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder<Part> {
+impl<'r, P: MessagePart> MessageEncoder<'r, P> {
+	pub fn new(buffer: &mut [u8], confirmed_seq: Seq) -> MessageEncoder<P> {
 		let mut writer = BufWriter::new(buffer);
 
 		match write!(&mut writer, "{}\n", confirmed_seq) {
@@ -46,7 +46,7 @@ impl<'r, Part: MessagePart> MessageEncoder<'r, Part> {
 		}
 	}
 
-	pub fn add(&mut self, part: &Part) -> bool {
+	pub fn add(&mut self, part: &P) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
