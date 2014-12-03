@@ -21,8 +21,7 @@ pub struct Action<Step> {
 impl<Step: Part> Action<Step> {
 	pub fn decode(message: &[u8]) -> Result<Action<Step>, String> {
 		let mut steps = Vec::new();
-		// TODO: Simplify generic arguments
-		match decode::<Action<_>, _, _>(message, &mut steps) {
+		match decode(message, &mut steps) {
 			Ok(header) =>
 				Ok(Action {
 					header: header,
