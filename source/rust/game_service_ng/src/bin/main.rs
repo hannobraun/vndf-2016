@@ -86,8 +86,7 @@ fn main() {
 		for (&address, client) in clients.iter() {
 			let header = PerceptionHeader {
 				confirm_action: client.last_action,
-				// TODO: Set self id
-				self_id       : None,
+				self_id       : Some(client.id.clone()),
 			};
 			let mut broadcasts: Vec<&str> = broadcasts
 				.iter()
