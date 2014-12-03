@@ -55,5 +55,4 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 	}
 }
 
-impl<Id, Percept: Part> Message<Seq, Percept>
-	for Perception<Id, Percept> {}
+impl<Id, Percept: Part> Message<Seq, Percept> for Perception<Id, Percept> {}
