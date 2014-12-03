@@ -18,7 +18,6 @@ use std::time::Duration;
 use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::{
 	Encoder,
-	Perception,
 	PerceptionHeader,
 	Seq,
 };
@@ -113,14 +112,13 @@ fn send_perception(
 	last_action: Seq,
 	address    : SocketAddr,
 ) {
-	// TODO: Simplify generic arguments.
-	let mut perception = encoder.message::<Perception<String, _>, _, _>(
-		PerceptionHeader {
-			confirm_action: last_action,
-			// TODO: Set self id
-			self_id       : None,
-		}
-	);
+	let self_id: Option<String> = None;
+
+	let mut perception = encoder.message(PerceptionHeader {
+		confirm_action: last_action,
+		// TODO: Set self id
+		self_id       : self_id,
+	});
 	loop {
 		let broadcast = match broadcasts.pop() {
 			Some(broadcast) => broadcast,
