@@ -23,7 +23,7 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 			Ok(last_action) =>
 				Ok(Perception {
 					last_action: last_action,
-					// TODO: Add support for self id to decode
+					// TODO: Add support for self id to encode/decode
 					self_id    : None,
 					percepts   : percepts,
 				}),
