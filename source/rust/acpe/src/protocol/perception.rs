@@ -1,3 +1,5 @@
+use serialize::Encodable;
+use serialize::json;
 use std::io::IoResult;
 
 use root::MAX_PACKET_SIZE;
@@ -57,7 +59,7 @@ impl<P: Part> Perception<P> {
 impl<P: Part> Message<PerceptionHeader, P> for Perception<P> {}
 
 
-#[deriving(Clone, PartialEq, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct PerceptionHeader {
 	pub confirm_action: Seq,
 	pub self_id       : Option<String>,
@@ -65,16 +67,16 @@ pub struct PerceptionHeader {
 
 impl Header for PerceptionHeader {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
-		write!(writer, "{}\n", self.confirm_action)
+		try!(self.encode(&mut json::Encoder::new(writer)));
+		try!(writer.write_char('\n'));
+
+		Ok(())
 	}
 
 	fn read(line: &str) -> Result<PerceptionHeader, String> {
-		match from_str(line) {
-			Some(action_id) => Ok(PerceptionHeader {
-				confirm_action: action_id,
-				self_id       : None,
-			}),
-			None => Err(format!("Header is not a number")),
-		}
+		json::decode(line)
+			.map_err(|error|
+				format!("Error decoding perception header: {}", error)
+			)
 	}
 }
