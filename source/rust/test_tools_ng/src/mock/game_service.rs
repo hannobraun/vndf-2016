@@ -10,6 +10,7 @@ use acpe::network::SocketSender;
 use acpe::protocol::{
 	Action,
 	Encoder,
+	Perception,
 };
 
 use common::protocol::{
@@ -98,7 +99,8 @@ impl ActionHandle {
 	pub fn confirm(&mut self) {
 		let mut encoder       = Encoder::new();
 		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
-		let     perception    = encoder.message::<_, Percept>(self.inner.seq);
+		// TODO: Simplify generic arguments.
+		let     perception    = encoder.message::<Perception<String, Percept>, _, _>(self.inner.seq);
 
 		let message = perception.encode(&mut encode_buffer).unwrap();
 		self.sender.send(message, self.address);

@@ -39,7 +39,8 @@ impl<Id, Percept: MessagePart> Perception<Id, Percept> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
-		let mut perception = encoder.message(self.last_action);
+		// TODO: Simplify generic arguments.
+		let mut perception = encoder.message::<Perception<Id, _>, _, _>(self.last_action);
 		for percept in self.percepts.iter() {
 			perception.add(percept);
 		}

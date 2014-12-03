@@ -36,7 +36,8 @@ impl<Step: MessagePart> Action<Step> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
-		let mut action = encoder.message(self.seq);
+		// TODO: Simplify generic arguments.
+		let mut action = encoder.message::<Action<_>, _, _>(self.seq);
 		for step in self.steps.iter() {
 			action.add(step);
 		}
