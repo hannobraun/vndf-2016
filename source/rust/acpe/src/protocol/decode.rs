@@ -1,15 +1,15 @@
 use std::io::BufReader;
 
 use super::{
+	Header,
 	MessagePart,
-	Seq,
 };
 
 
-pub fn decode<P: MessagePart>(
+pub fn decode<H: Header, P: MessagePart>(
 	message: &[u8],
 	parts  : &mut Vec<P>
-) -> Result<Seq, String> {
+) -> Result<H, String> {
 	let mut reader = BufReader::new(message);
 
 	let message = match reader.read_to_string() {
@@ -32,12 +32,9 @@ pub fn decode<P: MessagePart>(
 		},
 	};
 
-	let confirmed_seq = match from_str(header) {
-		Some(confirmed_seq) =>
-			confirmed_seq,
-		None => {
-			return Err(format!("Header is not a number\n"));
-		},
+	let header = match Header::read(header) {
+		Ok(header) => header,
+		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
 
 	for line in lines.into_iter() {
@@ -54,5 +51,5 @@ pub fn decode<P: MessagePart>(
 		}
 	}
 
-	Ok(confirmed_seq)
+	Ok(header)
 }
