@@ -11,6 +11,7 @@ use acpe::protocol::{
 	Action,
 	Encoder,
 	Perception,
+	PerceptionHeader,
 };
 
 use common::protocol::{
@@ -100,7 +101,13 @@ impl ActionHandle {
 		let mut encoder       = Encoder::new();
 		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
 		// TODO: Simplify generic arguments.
-		let     perception    = encoder.message::<Perception<String, Percept>, _, _>(self.inner.header.id);
+		let     perception    = encoder.message::<Perception<String, Percept>, _, _>(
+			PerceptionHeader {
+				confirm_action: self.inner.header.id,
+				// TODO: Set self id?
+				self_id       : None,
+			}
+		);
 
 		let message = perception.encode(&mut encode_buffer).unwrap();
 		self.sender.send(message, self.address);

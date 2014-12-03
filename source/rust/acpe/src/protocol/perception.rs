@@ -23,13 +23,9 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 		let mut percepts = Vec::new();
 		// TODO: Simplify generic arguments
 		match decode::<Perception<Id, _>, _, _>(message, &mut percepts) {
-			Ok(last_action) =>
+			Ok(header) =>
 				Ok(Perception {
-					header: PerceptionHeader {
-						confirm_action: last_action,
-						// TODO: Add support for self id to encode/decode
-						self_id       : None
-					},
+					header  : header,
 					percepts: percepts,
 				}),
 			Err(error) =>
@@ -45,7 +41,7 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 		let mut encoder = Encoder::new();
 
 		// TODO: Simplify generic arguments.
-		let mut perception = encoder.message::<Perception<Id, _>, _, _>(self.header.confirm_action);
+		let mut perception = encoder.message::<Perception<Id, _>, _, _>(self.header);
 		for percept in self.percepts.iter() {
 			perception.add(percept);
 		}
@@ -60,7 +56,7 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 	}
 }
 
-impl<Id, Percept: Part> Message<Seq, Percept> for Perception<Id, Percept> {}
+impl<Id, Percept: Part> Message<PerceptionHeader<Id>, Percept> for Perception<Id, Percept> {}
 
 
 #[deriving(Clone, PartialEq, Show)]

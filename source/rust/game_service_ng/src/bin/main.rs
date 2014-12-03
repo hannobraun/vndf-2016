@@ -19,6 +19,7 @@ use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::{
 	Encoder,
 	Perception,
+	PerceptionHeader,
 	Seq,
 };
 
@@ -113,7 +114,13 @@ fn send_perception(
 	address    : SocketAddr,
 ) {
 	// TODO: Simplify generic arguments.
-	let mut perception = encoder.message::<Perception<String, _>, _, _>(last_action);
+	let mut perception = encoder.message::<Perception<String, _>, _, _>(
+		PerceptionHeader {
+			confirm_action: last_action,
+			// TODO: Set self id
+			self_id       : None,
+		}
+	);
 	loop {
 		let broadcast = match broadcasts.pop() {
 			Some(broadcast) => broadcast,
