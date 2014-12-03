@@ -23,3 +23,8 @@ pub trait MessagePart {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 	fn read(line: &str) -> Result<Self, String>;
 }
+
+
+pub trait Header {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
+}
