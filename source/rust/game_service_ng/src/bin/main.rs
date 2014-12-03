@@ -162,7 +162,6 @@ fn send_perception(
 			None            => break,
 		};
 
-		// TODO: Remove clone
 		if !perception.add(&Percept::Broadcast(broadcast.clone())) {
 			broadcasts.push(broadcast);
 			break;
