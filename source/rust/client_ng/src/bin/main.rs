@@ -72,7 +72,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 		}
 
 		for perception in  server.recv_from().into_iter() {
-			match perception.self_id {
+			match perception.header.self_id {
 				Some(self_id) => frame.self_id = self_id,
 				None          => (),
 			}
@@ -90,7 +90,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 					}
 				)
 				.collect();
-			action_assembler.process_receipt(perception.last_action);
+			action_assembler.process_receipt(perception.header.confirm_action);
 		}
 
 		let message = action_assembler.assemble(&mut encoder);

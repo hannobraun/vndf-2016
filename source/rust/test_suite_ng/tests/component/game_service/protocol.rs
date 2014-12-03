@@ -19,7 +19,7 @@ fn it_should_confirm_received_actions() {
 	client.login(seq);
 
 	let perception = client.expect_perception().unwrap();
-	assert_eq!(seq, perception.last_action);
+	assert_eq!(seq, perception.header.confirm_action);
 }
 
 

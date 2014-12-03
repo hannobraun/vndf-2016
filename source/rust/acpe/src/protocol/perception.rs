@@ -11,9 +11,8 @@ use super::{
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Perception<Id, Percept> {
-	pub last_action: Seq,
-	pub self_id    : Option<Id>,
-	pub percepts   : Vec<Percept>,
+	pub header  : PerceptionHeader<Id>,
+	pub percepts: Vec<Percept>,
 }
 
 impl<Id, Percept: Part> Perception<Id, Percept> {
@@ -22,10 +21,12 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 		match decode(message, &mut percepts) {
 			Ok(last_action) =>
 				Ok(Perception {
-					last_action: last_action,
-					// TODO: Add support for self id to encode/decode
-					self_id    : None,
-					percepts   : percepts,
+					header: PerceptionHeader {
+						confirm_action: last_action,
+						// TODO: Add support for self id to encode/decode
+						self_id       : None
+					},
+					percepts: percepts,
 				}),
 			Err(error) =>
 				Err(error),
@@ -40,7 +41,7 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 		let mut encoder = Encoder::new();
 
 		// TODO: Simplify generic arguments.
-		let mut perception = encoder.message::<Perception<Id, _>, _, _>(self.last_action);
+		let mut perception = encoder.message::<Perception<Id, _>, _, _>(self.header.confirm_action);
 		for percept in self.percepts.iter() {
 			perception.add(percept);
 		}
@@ -56,3 +57,10 @@ impl<Id, Percept: Part> Perception<Id, Percept> {
 }
 
 impl<Id, Percept: Part> Message<Seq, Percept> for Perception<Id, Percept> {}
+
+
+#[deriving(Clone, PartialEq, Show)]
+pub struct PerceptionHeader<Id> {
+	pub confirm_action: Seq,
+	pub self_id       : Option<Id>,
+}
