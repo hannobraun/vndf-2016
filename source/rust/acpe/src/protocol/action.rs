@@ -1,8 +1,11 @@
+use std::io::IoResult;
+
 use root::MAX_PACKET_SIZE;
 
 use super::{
 	decode,
 	Encoder,
+	Header,
 	Message,
 	Part,
 	Seq,
@@ -60,4 +63,17 @@ impl<Step: Part> Message<Seq, Step> for Action<Step> {}
 #[deriving(Clone, PartialEq, Show)]
 pub struct ActionHeader {
 	pub id: Seq,
+}
+
+impl Header for ActionHeader {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+		write!(writer, "{}\n", self.id)
+	}
+
+	fn read(line: &str) -> Result<ActionHeader, String> {
+		match from_str(line) {
+			Some(id) => Ok(ActionHeader { id: id }),
+			None     => Err(format!("Header is not a number")),
+		}
+	}
 }
