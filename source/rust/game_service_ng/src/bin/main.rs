@@ -55,8 +55,8 @@ fn main() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {
-									// TODO: Set id
-									id         : "".to_string(),
+									// TODO: Guarantee uniqueness
+									id         : generate_id(),
 									last_action: action.header.id,
 									broadcast  : None,
 								});
@@ -117,6 +117,11 @@ fn main() {
 	}
 }
 
+
+fn generate_id() -> String {
+	// TODO: Randomly generate id
+	"XOD-3H2DF".to_string()
+}
 
 fn send_perception(
 	encoder    : &mut Encoder,
