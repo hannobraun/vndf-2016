@@ -28,3 +28,9 @@ pub trait MessagePart {
 pub trait Header {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
+
+impl Header for Seq {
+	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+		write!(writer, "{}\n", self)
+	}
+}
