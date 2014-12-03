@@ -2,6 +2,7 @@ use std::io::net::ip::Port;
 
 use acpe::protocol::{
 	Action,
+	ActionHeader,
 	Perception,
 	Seq,
 };
@@ -37,15 +38,15 @@ impl Client {
 
 	pub fn login(&mut self, seq: Seq) {
 		self.send_action(Action {
-			seq  : seq,
-			steps: vec![Step::Login],
+			header: ActionHeader { id: seq },
+			steps : vec![Step::Login],
 		});
 	}
 
 	pub fn broadcast(&mut self, seq: Seq, text: String) {
 		self.send_action(Action {
-			seq  : seq,
-			steps: vec![Step::Broadcast(text)],
+			header: ActionHeader { id: seq },
+			steps : vec![Step::Broadcast(text)],
 		})
 	}
 

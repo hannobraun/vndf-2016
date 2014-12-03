@@ -53,7 +53,7 @@ fn main() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {
-									last_action: action.seq,
+									last_action: action.header.id,
 									broadcast  : None,
 								});
 							},
@@ -63,7 +63,7 @@ fn main() {
 						}
 					}
 
-					clients[address].last_action = action.seq;
+					clients[address].last_action = action.header.id;
 				},
 				Err((error, address)) => {
 					print!("Error receiving message from {}: {}", address, error);

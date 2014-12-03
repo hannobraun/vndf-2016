@@ -11,8 +11,8 @@ use super::{
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Action<Step> {
-	pub seq  : Seq,
-	pub steps: Vec<Step>,
+	pub header: ActionHeader,
+	pub steps : Vec<Step>,
 }
 
 impl<Step: Part> Action<Step> {
@@ -21,8 +21,8 @@ impl<Step: Part> Action<Step> {
 		match decode(message, &mut steps) {
 			Ok(seq) =>
 				Ok(Action {
-					seq  : seq,
-					steps: steps,
+					header: ActionHeader { id: seq },
+					steps : steps,
 				}),
 			Err(error) =>
 				Err(error),
@@ -37,7 +37,8 @@ impl<Step: Part> Action<Step> {
 		let mut encoder = Encoder::new();
 
 		// TODO: Simplify generic arguments.
-		let mut action = encoder.message::<Action<_>, _, _>(self.seq);
+		// TODO: Pass header directly.
+		let mut action = encoder.message::<Action<_>, _, _>(self.header.id);
 		for step in self.steps.iter() {
 			action.add(step);
 		}
@@ -53,3 +54,9 @@ impl<Step: Part> Action<Step> {
 }
 
 impl<Step: Part> Message<Seq, Step> for Action<Step> {}
+
+
+#[deriving(Clone, PartialEq, Show)]
+pub struct ActionHeader {
+	pub id: Seq,
+}
