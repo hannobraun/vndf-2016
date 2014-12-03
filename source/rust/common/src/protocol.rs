@@ -2,9 +2,7 @@ use serialize::Encodable;
 use serialize::json;
 use std::io::IoResult;
 
-use acpe::protocol::{
-	MessagePart,
-};
+use acpe::protocol::MessagePart;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
