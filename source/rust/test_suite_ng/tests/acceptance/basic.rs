@@ -1,7 +1,5 @@
-use client::output::{
-	Broadcast,
-	Frame,
-};
+use client::output::Frame;
+use common::protocol::Broadcast;
 use test_tools::{
 	Client,
 	GameService,

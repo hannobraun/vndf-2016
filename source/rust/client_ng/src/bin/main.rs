@@ -18,11 +18,9 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use args::Args;
 use client::network::Socket;
-use client::output::{
-	Broadcast,
-	Frame,
-};
+use client::output::Frame;
 use common::protocol::{
+	Broadcast,
 	Percept,
 	Step,
 };

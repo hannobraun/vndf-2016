@@ -3,6 +3,8 @@ use serialize::json::{
 	DecodeResult,
 };
 
+use common::protocol::Broadcast;
+
 
 #[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
@@ -18,11 +20,4 @@ impl Frame {
 	pub fn to_json(&self) -> String {
 		json::encode(self)
 	}
-}
-
-
-#[deriving(Decodable, Encodable, PartialEq, Show)]
-pub struct Broadcast {
-	pub sender : String,
-	pub message: String,
 }
