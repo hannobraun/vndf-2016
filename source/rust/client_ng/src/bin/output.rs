@@ -29,6 +29,9 @@ impl Output for PlayerOutput {
 		print!("Your Comm ID: {}\n\n", frame.self_id);
 
 		print!("BROADCASTS\n");
+		if frame.broadcasts.len() == 0 {
+			print!("    none\n");
+		}
 		for broadcast in frame.broadcasts.iter() {
 			print!("    {}: {}\n", broadcast.sender, broadcast.message);
 		}
