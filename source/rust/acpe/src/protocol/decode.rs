@@ -17,7 +17,7 @@ pub fn decode<H: Header, P: Part>(
 			message,
 		Err(error) => {
 			return Err(
-				format!("Error converting message to string: {}\n", error)
+				format!("Error converting message to string: {}", error)
 			);
 		},
 	};
@@ -28,7 +28,7 @@ pub fn decode<H: Header, P: Part>(
 		Some(header) =>
 			header,
 		None => {
-			return Err(format!("Header line is missing\n"));
+			return Err(format!("Header line is missing"));
 		},
 	};
 
