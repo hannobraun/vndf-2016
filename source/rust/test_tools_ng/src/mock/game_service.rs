@@ -105,7 +105,6 @@ impl ActionHandle {
 		let perception: MessageEncoder<Perception<Percept>> =
 			encoder.message(&PerceptionHeader {
 				confirm_action: self.inner.header.id,
-				// TODO: Set self id?
 				self_id       : None,
 			});
 
