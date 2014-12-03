@@ -4,7 +4,7 @@ use super::{
 	decode,
 	Encoder,
 	Message,
-	MessagePart,
+	Part,
 	Seq,
 };
 
@@ -15,7 +15,7 @@ pub struct Action<Step> {
 	pub steps: Vec<Step>,
 }
 
-impl<Step: MessagePart> Action<Step> {
+impl<Step: Part> Action<Step> {
 	pub fn decode(message: &[u8]) -> Result<Action<Step>, String> {
 		let mut steps = Vec::new();
 		match decode(message, &mut steps) {
@@ -52,4 +52,4 @@ impl<Step: MessagePart> Action<Step> {
 	}
 }
 
-impl<Step: MessagePart> Message<Seq, Step> for Action<Step> {}
+impl<Step: Part> Message<Seq, Step> for Action<Step> {}

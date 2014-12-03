@@ -2,7 +2,7 @@ use serialize::Encodable;
 use serialize::json;
 use std::io::IoResult;
 
-use acpe::protocol::MessagePart;
+use acpe::protocol::Part;
 
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
@@ -11,7 +11,7 @@ pub enum Step {
 	Broadcast(String),
 }
 
-impl MessagePart for Step {
+impl Part for Step {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		try!(self.encode(&mut json::Encoder::new(writer)));
 		try!(writer.write_char('\n'));
@@ -39,7 +39,7 @@ pub enum Percept {
 	Broadcast(String),
 }
 
-impl MessagePart for Percept {
+impl Part for Percept {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		try!(self.encode(&mut json::Encoder::new(writer)));
 		try!(writer.write_char('\n'));

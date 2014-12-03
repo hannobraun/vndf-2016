@@ -4,7 +4,7 @@ use super::{
 	decode,
 	Encoder,
 	Message,
-	MessagePart,
+	Part,
 	Seq,
 };
 
@@ -16,7 +16,7 @@ pub struct Perception<Id, Percept> {
 	pub percepts   : Vec<Percept>,
 }
 
-impl<Id, Percept: MessagePart> Perception<Id, Percept> {
+impl<Id, Percept: Part> Perception<Id, Percept> {
 	pub fn decode(message: &[u8]) -> Result<Perception<Id, Percept>, String> {
 		let mut percepts = Vec::new();
 		match decode(message, &mut percepts) {
@@ -55,5 +55,5 @@ impl<Id, Percept: MessagePart> Perception<Id, Percept> {
 	}
 }
 
-impl<Id, Percept: MessagePart> Message<Seq, Percept>
+impl<Id, Percept: Part> Message<Seq, Percept>
 	for Perception<Id, Percept> {}

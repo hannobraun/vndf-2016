@@ -2,11 +2,11 @@ use std::io::BufReader;
 
 use super::{
 	Header,
-	MessagePart,
+	Part,
 };
 
 
-pub fn decode<H: Header, P: MessagePart>(
+pub fn decode<H: Header, P: Part>(
 	message: &[u8],
 	parts  : &mut Vec<P>
 ) -> Result<H, String> {
@@ -42,7 +42,7 @@ pub fn decode<H: Header, P: MessagePart>(
 			continue;
 		}
 
-		match MessagePart::read(line) {
+		match Part::read(line) {
 			Ok(part) =>
 				parts.push(part),
 			Err(error) =>
