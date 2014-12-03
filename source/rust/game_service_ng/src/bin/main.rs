@@ -89,9 +89,15 @@ fn main() {
 				confirm_action: client.last_action,
 				self_id       : Some(client.id.clone()),
 			};
-			let mut broadcasts: Vec<&str> = broadcasts
+			let mut broadcasts = broadcasts
 				.iter()
-				.map(|broadcast| broadcast.as_slice())
+				.map(|broadcast|
+					// TODO: Set sender
+					Broadcast {
+						sender : "".to_string(),
+						message: broadcast.clone(),
+					}
+				)
 				.collect();
 
 			let mut needs_to_send_perception = true;
@@ -116,25 +122,20 @@ fn main() {
 fn send_perception(
 	encoder    : &mut Encoder,
 	header     : &PerceptionHeader,
-	broadcasts : &mut Vec<&str>,
+	broadcasts : &mut Vec<Broadcast>,
 	socket     : &mut Socket,
 	address    : SocketAddr,
 ) {
 	let mut perception = encoder.message(header);
 	loop {
-		let message = match broadcasts.pop() {
-			Some(message) => message,
-			None          => break,
+		let broadcast = match broadcasts.pop() {
+			Some(broadcast) => broadcast,
+			None            => break,
 		};
 
-		// TODO: Set sender
-		let broadcast = Broadcast {
-			sender : "".to_string(),
-			message: message.to_string(),
-		};
-
-		if !perception.add(&Percept::Broadcast(broadcast)) {
-			broadcasts.push(message);
+		// TODO: Remove clone
+		if !perception.add(&Percept::Broadcast(broadcast.clone())) {
+			broadcasts.push(broadcast);
 			break;
 		}
 	}
