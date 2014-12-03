@@ -112,7 +112,7 @@ fn send_perception(
 	last_action: Seq,
 	address    : SocketAddr,
 ) {
-	let mut perception = encoder.message(PerceptionHeader {
+	let mut perception = encoder.message(&PerceptionHeader {
 		confirm_action: last_action,
 		// TODO: Set self id
 		self_id       : None,

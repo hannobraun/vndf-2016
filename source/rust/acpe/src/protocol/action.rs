@@ -39,7 +39,7 @@ impl<Step: Part> Action<Step> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
-		let mut action = encoder.message(self.header);
+		let mut action = encoder.message(&self.header);
 		for step in self.steps.iter() {
 			action.add(step);
 		}

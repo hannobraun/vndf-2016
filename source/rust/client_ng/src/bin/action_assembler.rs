@@ -35,7 +35,7 @@ impl<'r> ActionAssembler<'r> {
 			None          => (),
 		}
 
-		let mut action = encoder.message(ActionHeader { id: self.next_seq });
+		let mut action = encoder.message(&ActionHeader { id: self.next_seq });
 
 		loop {
 			let step = match self.added.remove(0) {

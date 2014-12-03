@@ -21,8 +21,8 @@ impl Encoder {
 		}
 	}
 
-	pub fn message<M: Message<H, P>, H: Header, P: Part>(&mut self, header: H) -> MessageEncoder<M> {
-		MessageEncoder::new(&mut self.buffer, &header)
+	pub fn message<M: Message<H, P>, H: Header, P: Part>(&mut self, header: &H) -> MessageEncoder<M> {
+		MessageEncoder::new(&mut self.buffer, header)
 	}
 }
 

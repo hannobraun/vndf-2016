@@ -41,7 +41,7 @@ impl<P: Part> Perception<P> {
 		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
-		let mut perception = encoder.message(self.header);
+		let mut perception = encoder.message(&self.header);
 		for percept in self.percepts.iter() {
 			perception.add(percept);
 		}
