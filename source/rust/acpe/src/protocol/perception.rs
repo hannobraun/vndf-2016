@@ -18,7 +18,8 @@ pub struct Perception<Id, Percept> {
 impl<Id, Percept: Part> Perception<Id, Percept> {
 	pub fn decode(message: &[u8]) -> Result<Perception<Id, Percept>, String> {
 		let mut percepts = Vec::new();
-		match decode(message, &mut percepts) {
+		// TODO: Simplify generic arguments
+		match decode::<Perception<Id, _>, _, _>(message, &mut percepts) {
 			Ok(last_action) =>
 				Ok(Perception {
 					header: PerceptionHeader {
