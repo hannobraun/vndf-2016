@@ -62,7 +62,7 @@ impl Part for Percept {
 }
 
 
-#[deriving(Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub struct Broadcast {
 	pub sender : String,
 	pub message: String,
