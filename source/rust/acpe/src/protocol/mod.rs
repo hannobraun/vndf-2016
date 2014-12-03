@@ -38,16 +38,3 @@ pub trait Header {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 	fn read(line: &str) -> Result<Self, String>;
 }
-
-impl Header for Seq {
-	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
-		write!(writer, "{}\n", self)
-	}
-
-	fn read(line: &str) -> Result<Seq, String> {
-		match from_str(line) {
-			Some(seq) => Ok(seq),
-			None      => Err(format!("Header is not a number\n")),
-		}
-	}
-}
