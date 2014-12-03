@@ -23,9 +23,9 @@ impl<Step: Part> Action<Step> {
 		let mut steps = Vec::new();
 		// TODO: Simplify generic arguments
 		match decode::<Action<_>, _, _>(message, &mut steps) {
-			Ok(seq) =>
+			Ok(header) =>
 				Ok(Action {
-					header: ActionHeader { id: seq },
+					header: header,
 					steps : steps,
 				}),
 			Err(error) =>
@@ -41,8 +41,7 @@ impl<Step: Part> Action<Step> {
 		let mut encoder = Encoder::new();
 
 		// TODO: Simplify generic arguments.
-		// TODO: Pass header directly.
-		let mut action = encoder.message::<Action<_>, _, _>(self.header.id);
+		let mut action = encoder.message::<Action<_>, _, _>(self.header);
 		for step in self.steps.iter() {
 			action.add(step);
 		}
@@ -57,7 +56,7 @@ impl<Step: Part> Action<Step> {
 	}
 }
 
-impl<Step: Part> Message<Seq, Step> for Action<Step> {}
+impl<Step: Part> Message<ActionHeader, Step> for Action<Step> {}
 
 
 #[deriving(Clone, PartialEq, Show)]
