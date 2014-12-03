@@ -19,6 +19,9 @@ mod perception;
 pub type Seq = u64;
 
 
+pub trait Message<H: Header, P: MessagePart> {}
+
+
 pub trait MessagePart {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 	fn read(line: &str) -> Result<Self, String>;
