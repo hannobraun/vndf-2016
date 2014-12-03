@@ -36,7 +36,7 @@ impl Part for Step {
 
 #[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
 pub enum Percept {
-	Broadcast(String),
+	Broadcast(String, String),
 }
 
 impl Part for Percept {

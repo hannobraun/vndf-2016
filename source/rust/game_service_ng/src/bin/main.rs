@@ -120,13 +120,19 @@ fn send_perception(
 		self_id       : self_id,
 	});
 	loop {
-		let broadcast = match broadcasts.pop() {
-			Some(broadcast) => broadcast,
-			None            => break,
+		let message = match broadcasts.pop() {
+			Some(message) => message,
+			None          => break,
 		};
 
-		if !perception.add(&Percept::Broadcast(broadcast.to_string())) {
-			broadcasts.push(broadcast);
+		// TODO: Set sender
+		let broadcast = Percept::Broadcast(
+			"".to_string(),
+			message.to_string()
+		);
+
+		if !perception.add(&broadcast) {
+			broadcasts.push(message);
 			break;
 		}
 	}

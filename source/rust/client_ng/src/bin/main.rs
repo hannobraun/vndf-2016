@@ -81,7 +81,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 				.into_iter()
 				.map(|percept|
 					match percept {
-						Percept::Broadcast(broadcast) =>
+						Percept::Broadcast(_, broadcast) =>
 							Broadcast {
 								// TODO: Sender must be set.
 								sender : "".to_string(),
