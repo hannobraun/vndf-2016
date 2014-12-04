@@ -72,7 +72,6 @@ fn run<O: Output>(args: Args, mut output: O) {
 
 	loop {
 		for result in input.read_commands().into_iter() {
-			// TODO: Reset error on succesful command
 			match result {
 				Ok(command) => {
 					match command {
