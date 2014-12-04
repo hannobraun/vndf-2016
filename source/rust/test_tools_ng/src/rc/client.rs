@@ -34,6 +34,10 @@ impl Client {
 		self.command(format!("broadcast {}", broadcast).as_slice());
 	}
 
+	pub fn stop_broadcast(&mut self) {
+		self.command("stop-broadcast");
+	}
+
 	pub fn frame(&mut self) -> Frame {
 		let line = self.process.read_stdout_line();
 		match Frame::from_json(line.as_slice()) {
