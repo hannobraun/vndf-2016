@@ -75,7 +75,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 				None          => (),
 			}
 
-			frame.broadcasts = perception.percepts
+			frame.broadcasts = perception.update
 				.into_iter()
 				.map(|percept|
 					match percept {

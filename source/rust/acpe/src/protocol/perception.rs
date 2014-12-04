@@ -16,8 +16,8 @@ use super::{
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Perception<Percept> {
-	pub header  : PerceptionHeader,
-	pub percepts: Vec<Percept>,
+	pub header: PerceptionHeader,
+	pub update: Vec<Percept>,
 }
 
 impl<P: Part> Perception<P> {
@@ -26,8 +26,8 @@ impl<P: Part> Perception<P> {
 		match decode(message, &mut percepts) {
 			Ok(header) =>
 				Ok(Perception {
-					header  : header,
-					percepts: percepts,
+					header: header,
+					update: percepts,
 				}),
 			Err(error) =>
 				Err(error),
@@ -42,7 +42,7 @@ impl<P: Part> Perception<P> {
 		let mut encoder = Encoder::new();
 
 		let mut perception = encoder.message(&self.header);
-		for percept in self.percepts.iter() {
+		for percept in self.update.iter() {
 			perception.add(percept);
 		}
 
