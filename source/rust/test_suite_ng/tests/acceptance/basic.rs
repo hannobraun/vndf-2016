@@ -8,6 +8,15 @@ use test_tools::{
 
 #[test]
 fn it_should_receive_broadcasts() {
+	fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
+		let (sender, message) = broadcast;
+
+		frame.broadcasts.contains(&Broadcast {
+			sender : sender.clone(),
+			message: message.clone(),
+		})
+	}
+
 	let     game_service = GameService::start();
 	let mut client_1     = Client::start(game_service.port());
 	let mut client_2     = Client::start(game_service.port());
@@ -23,13 +32,4 @@ fn it_should_receive_broadcasts() {
 	assert!(contains(&frame_1, (&frame_2.self_id, &message_2)));
 	assert!(contains(&frame_2, (&frame_1.self_id, &message_1)));
 	assert!(contains(&frame_2, (&frame_2.self_id, &message_2)));
-}
-
-fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
-	let (sender, message) = broadcast;
-
-	frame.broadcasts.contains(&Broadcast {
-		sender : sender.clone(),
-		message: message.clone(),
-	})
 }
