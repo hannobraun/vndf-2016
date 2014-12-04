@@ -38,7 +38,10 @@ impl Input {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(c) => {
-					if c == '\n' {
+					if c == '\x7f' { // Backspace
+						self.current.pop();
+					}
+					else if c == '\n' {
 						commands.push(Command::parse(self.current.clone()));
 						self.current.clear();
 					}

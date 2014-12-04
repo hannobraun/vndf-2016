@@ -25,3 +25,18 @@ fn it_should_ignore_control_characters() {
 
 	client.wait_until(|frame| frame.input.len() == 3);
 }
+
+#[test]
+fn it_should_remove_the_last_character_with_backspace() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.input("abc\x7f");
+	client.wait_until(|frame| frame.input.as_slice() == "ab");
+
+	client.input("\x7f\x7f\x7f\x7f");
+	client.wait_until(|frame| {
+		print!("{} {}\n", frame.input.as_slice() == "", frame.input.as_slice());
+		frame.input.as_slice() == ""
+	});
+}
