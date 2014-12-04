@@ -34,7 +34,6 @@ impl PlayerOutput {
 
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		// TODO: Remove flickering
 		try!(write!(&mut self.stdout, "\x1b[2J\x1b[H"));
 
 		try!(write!(&mut self.stdout, "Your Comm ID: {}\n\n", frame.self_id));
