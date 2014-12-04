@@ -60,7 +60,6 @@ fn main() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {
-									// TODO(83867146): Guarantee uniqueness
 									id         : generate_id(),
 									last_action: action.header.id,
 									broadcast  : None,
