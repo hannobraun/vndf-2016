@@ -24,7 +24,10 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use input::Input;
+use input::{
+	Command,
+	Input,
+};
 use output::{
 	HeadlessOutput,
 	Output,
@@ -66,7 +69,10 @@ fn run<O: Output>(args: Args, mut output: O) {
 
 	loop {
 		for line in input.read_commands().into_iter() {
-			action_assembler.add_step(Step::Broadcast(line));
+			match line {
+				Command::Broadcast(message) =>
+					action_assembler.add_step(Step::Broadcast(message)),
+			}
 		}
 
 		for perception in  server.recv_from().into_iter() {
