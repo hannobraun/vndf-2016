@@ -4,6 +4,7 @@ use std::io::stdin;
 
 pub struct Input {
 	receiver: Receiver<char>,
+	current : String,
 }
 
 impl Input {
@@ -27,22 +28,22 @@ impl Input {
 
 		Input {
 			receiver: receiver,
+			current : String::new(),
 		}
 	}
 
-	pub fn read_commands(&self) -> Vec<Command> {
+	pub fn read_commands(&mut self) -> Vec<Command> {
 		let mut commands = Vec::new();
-		let mut command  = String::new();
 
 		loop {
 			match self.receiver.try_recv() {
 				Ok(c) => {
 					if c == '\n' {
-						commands.push(Command::parse(command.clone()));
-						command.clear();
+						commands.push(Command::parse(self.current.clone()));
+						self.current.clear();
 					}
 					else {
-						command.push(c);
+						self.current.push(c);
 					}
 				},
 
@@ -55,8 +56,8 @@ impl Input {
 			}
 		}
 
-		if command.len() > 0 {
-			commands.push(Command::Incomplete(command));
+		if self.current.len() > 0 {
+			commands.push(Command::Incomplete(self.current.clone()));
 		}
 
 		commands

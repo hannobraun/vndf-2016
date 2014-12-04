@@ -61,7 +61,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 		broadcasts: vec![],
 	};
 
-	let     input            = Input::new();
+	let mut input            = Input::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();
