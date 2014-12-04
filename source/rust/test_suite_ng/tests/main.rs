@@ -16,6 +16,7 @@ mod unit {
 }
 mod component {
 	mod client {
+		mod input;
 		mod protocol;
 	}
 	mod game_service {
