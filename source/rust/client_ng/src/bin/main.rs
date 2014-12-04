@@ -58,6 +58,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
+		error     : String::new(),
 		broadcasts: vec![],
 	};
 
