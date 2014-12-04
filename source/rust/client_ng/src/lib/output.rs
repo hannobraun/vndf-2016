@@ -9,6 +9,7 @@ use common::protocol::Broadcast;
 #[deriving(Decodable, Encodable, Show)]
 pub struct Frame {
 	pub self_id   : String,
+	pub input     : String,
 	pub broadcasts: Vec<Broadcast>,
 }
 

@@ -57,6 +57,8 @@ fn main() {
 fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		self_id   : "".to_string(),
+		// TODO: Set input
+		input     : "".to_string(),
 		broadcasts: vec![],
 	};
 
