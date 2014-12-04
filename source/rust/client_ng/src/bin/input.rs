@@ -55,6 +55,10 @@ impl Input {
 			}
 		}
 
+		if command.len() > 0 {
+			commands.push(Command::Incomplete(command));
+		}
+
 		commands
 	}
 }
