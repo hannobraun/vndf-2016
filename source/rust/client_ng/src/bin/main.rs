@@ -65,7 +65,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		for line in input.read_line().into_iter() {
+		for line in input.read_commands().into_iter() {
 			action_assembler.add_step(Step::Broadcast(line));
 		}
 

@@ -30,7 +30,7 @@ impl Input {
 		}
 	}
 
-	pub fn read_line(&self) -> Vec<String> {
+	pub fn read_commands(&self) -> Vec<String> {
 		let mut lines = Vec::new();
 
 		loop {
