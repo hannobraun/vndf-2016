@@ -31,12 +31,12 @@ impl Input {
 	}
 
 	pub fn read_commands(&self) -> Vec<Command> {
-		let mut lines = Vec::new();
+		let mut commands = Vec::new();
 
 		loop {
 			match self.receiver.try_recv() {
 				Ok(line) =>
-					lines.push(Command::Broadcast(line)),
+					commands.push(Command::Broadcast(line)),
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
@@ -47,7 +47,7 @@ impl Input {
 			}
 		}
 
-		lines
+		commands
 	}
 }
 
