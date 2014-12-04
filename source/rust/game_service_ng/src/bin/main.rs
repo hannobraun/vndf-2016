@@ -56,28 +56,29 @@ fn main() {
 		for result in received.into_iter() {
 			match result {
 				Ok((action, address)) => {
-					for step in action.steps.into_iter() {
-						match step {
-							Step::Login => {
-								clients.insert(address, Client {
-									id         : generate_id(),
-									last_action: action.header.id,
-									broadcast  : None,
-								});
-							},
-							Step::Broadcast(broadcast) => {
-								if clients.contains_key(&address) {
+					if
+						clients.contains_key(&address)
+						|| action.steps[0] == Step::Login
+					{
+						for step in action.steps.into_iter() {
+							match step {
+								Step::Login => {
+									clients.insert(address, Client {
+										id         : generate_id(),
+										last_action: action.header.id,
+										broadcast  : None,
+									});
+								},
+								Step::Broadcast(broadcast) => {
 									clients[address].broadcast =
 										Some(broadcast);
-								}
-							},
-							Step::StopBroadcast => {
-								// TODO: Stop broadcast
-							},
+								},
+								Step::StopBroadcast => {
+									// TODO: Stop broadcast
+								},
+							}
 						}
-					}
 
-					if clients.contains_key(&address) {
 						clients[address].last_action = action.header.id;
 					}
 				},
