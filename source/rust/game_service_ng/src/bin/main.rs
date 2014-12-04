@@ -67,12 +67,17 @@ fn main() {
 								});
 							},
 							Step::Broadcast(broadcast) => {
-								clients[address].broadcast = Some(broadcast);
+								if clients.contains_key(&address) {
+									clients[address].broadcast =
+										Some(broadcast);
+								}
 							},
 						}
 					}
 
-					clients[address].last_action = action.header.id;
+					if clients.contains_key(&address) {
+						clients[address].last_action = action.header.id;
+					}
 				},
 				Err((error, address)) => {
 					print!("Error receiving message from {}: {}", address, error);

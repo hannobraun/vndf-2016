@@ -20,6 +20,7 @@ mod component {
 	}
 	mod game_service {
 		mod protocol;
+		mod robustness;
 	}
 }
 mod acceptance {
