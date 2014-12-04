@@ -22,12 +22,12 @@ pub struct Perception<Percept> {
 
 impl<P: Part> Perception<P> {
 	pub fn decode(message: &[u8]) -> Result<Perception<P>, String> {
-		let mut percepts = Vec::new();
-		match decode(message, &mut percepts) {
+		let mut update = Vec::new();
+		match decode(message, &mut update) {
 			Ok(header) =>
 				Ok(Perception {
 					header: header,
-					update: percepts,
+					update: update,
 				}),
 			Err(error) =>
 				Err(error),
