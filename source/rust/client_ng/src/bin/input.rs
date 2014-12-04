@@ -58,13 +58,17 @@ pub enum Command {
 }
 
 impl Command {
-	fn parse(command: String) -> Command {
-		let mut splits = command.splitn(1, ' ');
+	fn parse(full_command: String) -> Command {
+		let mut splits = full_command.splitn(1, ' ');
 		
 		let command = match splits.next() {
-			Some(command) => command,
-			// TODO: Handle error
-			None          => panic!("Invalid command"),
+			Some(command) =>
+				command,
+			None =>
+				return Command::Invalid(
+					"Invalid command",
+					full_command.clone(),
+				),
 		};
 
 		let args = splits.next();
@@ -72,17 +76,20 @@ impl Command {
 		match command {
 			"broadcast" => {
 				let message = match args {
-					Some(message) => message,
-					// TODO: Handle error
-					None          => panic!("Broadcast message is missing")
+					Some(message) =>
+						message,
+					None =>
+						return Command::Invalid(
+							"Broadcast message is missing",
+							full_command.clone(),
+						),
 				};
 
 				Command::Broadcast(message.to_string())
 			},
 
 			_ =>
-				// TODO: Handle error
-				panic!("Unknown command")
+				Command::Invalid("Unknown command", full_command.clone()),
 		}
 	}
 }
