@@ -40,3 +40,12 @@ fn it_should_remove_the_last_character_with_backspace() {
 		frame.input.as_slice() == ""
 	});
 }
+
+#[test]
+fn it_should_display_an_error_when_entering_an_invalid_command() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.command("invalid-command");
+	client.wait_until(|frame| frame.error.len() > 0);
+}
