@@ -33,6 +33,12 @@ if [ $(ps | grep $GAME_SERVICE_PID | wc -l) == 0 ]
 		exit
 fi
 
+# Clean up after the client is quit
+function cleanup {
+	printf "Game Service Output:\n\n$(cat $TMP_OUTPUT)\n"
+}
+trap "cleanup" SIGINT
+
 # Run the client
 cd $RUST_SOURCE/client_ng
 cargo run
