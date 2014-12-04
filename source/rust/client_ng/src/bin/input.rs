@@ -56,9 +56,7 @@ impl Input {
 			}
 		}
 
-		if self.current.len() > 0 {
-			commands.push(Command::Incomplete(self.current.clone()));
-		}
+		commands.push(Command::Incomplete(self.current.clone()));
 
 		commands
 	}
