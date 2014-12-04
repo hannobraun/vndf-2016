@@ -78,9 +78,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 
 				Command::Incomplete(partial_command) =>
 					frame.input = partial_command,
-				Command::Invalid(_error, _command) =>
+				Command::Invalid(error, command) =>
 					// TODO(83925600): Display error message to user
-					(),
+					panic!("{}: \"{}\"", error, command),
 			}
 		}
 
