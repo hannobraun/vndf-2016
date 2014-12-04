@@ -81,6 +81,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 						Command::StopBroadcast =>
 							action_assembler.add_step(Step::StopBroadcast),
 					}
+
+					frame.error.clear();
 				},
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command) =>

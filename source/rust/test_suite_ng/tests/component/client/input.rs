@@ -49,3 +49,15 @@ fn it_should_display_an_error_when_entering_an_invalid_command() {
 	client.command("invalid-command");
 	client.wait_until(|frame| frame.error.len() > 0);
 }
+
+#[test]
+fn it_should_reset_the_error_after_successful_command() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.command("invalid-command");
+	client.wait_until(|frame| frame.error.len() > 0);
+
+	client.broadcast("This is a broadcast.");
+	client.wait_until(|frame| frame.error.len() == 0);
+}
