@@ -35,6 +35,10 @@ fi
 
 # Clean up after the client is quit
 function cleanup {
+	# Reset the terminal
+	stty echo
+	stty icanon
+
 	printf "Game Service Output:\n\n$(cat $TMP_OUTPUT)\n"
 }
 trap "cleanup" SIGINT
