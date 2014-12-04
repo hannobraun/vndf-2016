@@ -9,6 +9,7 @@ use acpe::protocol::Part;
 pub enum Step {
 	Login,
 	Broadcast(String),
+	StopBroadcast,
 }
 
 impl Part for Step {

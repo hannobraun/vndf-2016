@@ -71,6 +71,9 @@ fn main() {
 										Some(broadcast);
 								}
 							},
+							Step::StopBroadcast => {
+								// TODO: Stop broadcast
+							},
 						}
 					}
 
