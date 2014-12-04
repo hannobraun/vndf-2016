@@ -7,7 +7,7 @@ use test_tools::{
 
 
 #[test]
-fn it_should_receive_broadcasts() {
+fn it_should_send_broadcasts_to_all_clients() {
 	fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
 		let (sender, message) = broadcast;
 
