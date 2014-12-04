@@ -1,5 +1,10 @@
 use libc;
-use std::io::IoResult;
+use std::io::{
+	stdout,
+	IoResult,
+	LineBufferedWriter,
+};
+use std::io::stdio::StdWriter;
 
 use client::output::Frame;
 use termios::Termios;
@@ -10,7 +15,9 @@ pub trait Output {
 }
 
 
-pub struct PlayerOutput;
+pub struct PlayerOutput {
+	stdout: LineBufferedWriter<StdWriter>,
+}
 
 impl PlayerOutput {
 	pub fn new() -> PlayerOutput {
@@ -19,22 +26,29 @@ impl PlayerOutput {
 		termios.canonical_input(false);
 		termios.set(libc::STDIN_FILENO);
 
-		PlayerOutput
+		PlayerOutput {
+			stdout: stdout(),
+		}
 	}
 }
 
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		print!("\x1b[2J\x1b[H");
+		try!(write!(&mut self.stdout, "\x1b[2J\x1b[H"));
 
-		print!("Your Comm ID: {}\n\n", frame.self_id);
+		try!(write!(&mut self.stdout, "Your Comm ID: {}\n\n", frame.self_id));
 
-		print!("BROADCASTS\n");
+		try!(write!(&mut self.stdout, "BROADCASTS\n"));
 		if frame.broadcasts.len() == 0 {
-			print!("    none\n");
+			try!(write!(&mut self.stdout, "    none\n"));
 		}
 		for broadcast in frame.broadcasts.iter() {
-			print!("    {}: {}\n", broadcast.sender, broadcast.message);
+			try!(write!(
+				&mut self.stdout,
+				"    {}: {}\n",
+				broadcast.sender,
+				broadcast.message
+			));
 		}
 
 		Ok(())
