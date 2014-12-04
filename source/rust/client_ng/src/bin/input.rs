@@ -65,6 +65,7 @@ impl Input {
 }
 
 
+#[deriving(Show)]
 pub enum Command {
 	Broadcast(String),
 	StopBroadcast,
