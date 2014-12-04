@@ -26,8 +26,8 @@ impl Client {
 		}
 	}
 
-	pub fn input(&mut self, _input: &str) {
-		// TODO: Pass input to process
+	pub fn input(&mut self, input: &str) {
+		self.process.write_stdin(input);
 	}
 
 	pub fn command(&mut self, command: &str) {

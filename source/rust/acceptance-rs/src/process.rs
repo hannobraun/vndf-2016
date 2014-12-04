@@ -42,6 +42,10 @@ impl Process {
 		}
 	}
 
+	pub fn write_stdin(&mut self, _input: &str) {
+		// TODO: Implement
+	}
+
 	pub fn write_stdin_line(&mut self, line: &str) {
 		match self.stdin.write_line(line) {
 			Ok(())     => (),
