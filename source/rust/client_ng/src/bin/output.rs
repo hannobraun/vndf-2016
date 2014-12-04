@@ -1,11 +1,12 @@
 use libc;
+use std::io::IoResult;
 
 use client::output::Frame;
 use termios::Termios;
 
 
 pub trait Output {
-	fn render(&mut self, frame: &Frame);
+	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
 
@@ -23,7 +24,7 @@ impl PlayerOutput {
 }
 
 impl Output for PlayerOutput {
-	fn render(&mut self, frame: &Frame) {
+	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		print!("\x1b[2J\x1b[H");
 
 		print!("Your Comm ID: {}\n\n", frame.self_id);
@@ -35,6 +36,8 @@ impl Output for PlayerOutput {
 		for broadcast in frame.broadcasts.iter() {
 			print!("    {}: {}\n", broadcast.sender, broadcast.message);
 		}
+
+		Ok(())
 	}
 }
 
@@ -48,7 +51,8 @@ impl HeadlessOutput {
 }
 
 impl Output for HeadlessOutput {
-	fn render(&mut self, frame: &Frame) {
+	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		print!("{}\n", frame.to_json());
+		Ok(())
 	}
 }

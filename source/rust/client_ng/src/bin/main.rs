@@ -104,7 +104,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 		let message = action_assembler.assemble(&mut encoder);
 
 		server.send_to(message);
-		output.render(&frame);
+		// TODO: Handle error.
+		output.render(&frame).unwrap();
 
 		sleep(Duration::milliseconds(20));
 	}
