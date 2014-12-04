@@ -54,6 +54,7 @@ impl Input {
 
 pub enum Command {
 	Broadcast(String),
+	StopBroadcast,
 	Invalid(&'static str, String),
 }
 
@@ -87,6 +88,19 @@ impl Command {
 
 				Command::Broadcast(message.to_string())
 			},
+			"stop-broadcast" => {
+				match args {
+					Some(_) =>
+						return Command::Invalid(
+							"stop-broadcast has no arguments",
+							full_command.clone()
+						),
+					None =>
+						(),
+				}
+
+				Command::StopBroadcast
+			}
 
 			_ =>
 				Command::Invalid("Unknown command", full_command.clone()),

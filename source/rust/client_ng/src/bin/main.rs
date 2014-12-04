@@ -72,6 +72,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 			match command {
 				Command::Broadcast(message) =>
 					action_assembler.add_step(Step::Broadcast(message)),
+				Command::StopBroadcast =>
+					// TODO: Send to server
+					(),
 				Command::Invalid(_error, _command) =>
 					// TODO(83925600): Display error message to user
 					(),
