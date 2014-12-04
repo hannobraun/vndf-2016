@@ -57,7 +57,7 @@ fn main() {
 fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		self_id   : "".to_string(),
-		// TODO: Set input
+		// TODO: Remove stub
 		input     : "I'm typing, but not submitting yet, a command".to_string(),
 		broadcasts: vec![],
 	};
@@ -76,6 +76,10 @@ fn run<O: Output>(args: Args, mut output: O) {
 					action_assembler.add_step(Step::Broadcast(message)),
 				Command::StopBroadcast =>
 					action_assembler.add_step(Step::StopBroadcast),
+
+				Command::Incomplete(_partial_command) =>
+					// TODO: Set input
+					(),
 				Command::Invalid(_error, _command) =>
 					// TODO(83925600): Display error message to user
 					(),

@@ -55,6 +55,8 @@ impl Input {
 pub enum Command {
 	Broadcast(String),
 	StopBroadcast,
+
+	Incomplete(String),
 	Invalid(&'static str, String),
 }
 
