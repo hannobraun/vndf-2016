@@ -3,7 +3,7 @@ use std::io::stdin;
 
 
 pub struct Input {
-	receiver: Receiver<String>,
+	receiver: Receiver<char>,
 }
 
 impl Input {
@@ -16,9 +16,9 @@ impl Input {
 			loop {
 				// TODO(83541252): This operation should time out to ensure
 				//                 panic propagation between tasks.
-				match stdin.read_line() {
-					Ok(line) =>
-						sender.send(line[.. line.len() - 1].to_string()),
+				match stdin.read_char() {
+					Ok(c) =>
+						sender.send(c),
 					Err(error) =>
 						panic!("Error reading from stdint: {}", error),
 				}
@@ -32,11 +32,19 @@ impl Input {
 
 	pub fn read_commands(&self) -> Vec<Command> {
 		let mut commands = Vec::new();
+		let mut command  = String::new();
 
 		loop {
 			match self.receiver.try_recv() {
-				Ok(line) =>
-					commands.push(Command::parse(line)),
+				Ok(c) => {
+					if c == '\n' {
+						commands.push(Command::parse(command.clone()));
+						command.clear();
+					}
+					else {
+						command.push(c);
+					}
+				},
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
