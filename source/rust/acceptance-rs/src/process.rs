@@ -42,8 +42,11 @@ impl Process {
 		}
 	}
 
-	pub fn write_stdin(&mut self, _input: &str) {
-		// TODO: Implement
+	pub fn write_stdin(&mut self, input: &str) {
+		match self.stdin.write_str(input) {
+			Ok(())     => (),
+			Err(error) => panic!("Failed to write to stdin: {}", error),
+		}
 	}
 
 	pub fn write_stdin_line(&mut self, line: &str) {
