@@ -1,6 +1,8 @@
 #![feature(slicing_syntax)]
 
 
+extern crate getopts;
+
 extern crate acpe;
 
 extern crate common;
@@ -8,11 +10,9 @@ extern crate game_service;
 
 
 use std::collections::HashMap;
-use std::io::net::ip::{
-	Port,
-	SocketAddr,
-};
+use std::io::net::ip::SocketAddr;
 use std::io::timer::sleep;
+use std::os;
 use std::rand::random;
 use std::time::Duration;
 
@@ -23,12 +23,16 @@ use acpe::protocol::{
 	Seq,
 };
 
+use args::Args;
 use common::protocol::{
 	Broadcast,
 	Percept,
 	Step,
 };
 use game_service::Socket;
+
+
+mod args;
 
 
 struct Client {
@@ -39,13 +43,13 @@ struct Client {
 
 
 fn main() {
-	let port: Port = from_str(std::os::args()[1].as_slice()).unwrap();
+	let args = Args::parse(os::args().as_slice());
 
 	let mut clients = HashMap::new();
-	let mut socket  = Socket::new(port);
+	let mut socket  = Socket::new(args.port);
 	let mut encoder = Encoder::new();
 
-	print!("Listening on port {}\n", port);
+	print!("Listening on port {}\n", args.port);
 
 	loop {
 		let received = socket.recv_from();
