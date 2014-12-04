@@ -31,11 +31,7 @@ impl Client {
 	}
 
 	pub fn broadcast(&mut self, broadcast: &str) {
-		// TODO(83305336): This is just the command argument, what's missing is
-		//                 the command. Once we need more than one command, this
-		//                 should be something like "broadcast ...", instead of
-		//                 only "...".
-		self.command(broadcast);
+		self.command(format!("broadcast {}", broadcast).as_slice());
 	}
 
 	pub fn frame(&mut self) -> Frame {

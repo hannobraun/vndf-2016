@@ -36,7 +36,7 @@ impl Input {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(line) =>
-					commands.push(Command::Broadcast(line)),
+					commands.push(Command::parse(line)),
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
@@ -54,4 +54,34 @@ impl Input {
 
 pub enum Command {
 	Broadcast(String),
+}
+
+impl Command {
+	fn parse(command: String) -> Command {
+		let mut splits = command.splitn(1, ' ');
+		
+		let command = match splits.next() {
+			Some(command) => command,
+			// TODO: Handle error
+			None          => panic!("Invalid command"),
+		};
+
+		let args = splits.next();
+
+		match command {
+			"broadcast" => {
+				let message = match args {
+					Some(message) => message,
+					// TODO: Handle error
+					None          => panic!("Broadcast message is missing")
+				};
+
+				Command::Broadcast(message.to_string())
+			},
+
+			_ =>
+				// TODO: Handle error
+				panic!("Unknown command")
+		}
+	}
 }
