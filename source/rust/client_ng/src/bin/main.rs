@@ -74,11 +74,13 @@ fn run<O: Output>(args: Args, mut output: O) {
 		for result in input.read_commands().into_iter() {
 			// TODO: Reset error on succesful command
 			match result {
-				Ok(command) => match command {
-					Command::Broadcast(message) =>
-						action_assembler.add_step(Step::Broadcast(message)),
-					Command::StopBroadcast =>
-						action_assembler.add_step(Step::StopBroadcast),
+				Ok(command) => {
+					match command {
+						Command::Broadcast(message) =>
+							action_assembler.add_step(Step::Broadcast(message)),
+						Command::StopBroadcast =>
+							action_assembler.add_step(Step::StopBroadcast),
+					}
 				},
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command) =>
