@@ -42,6 +42,9 @@ impl Input {
 						commands.push(Command::parse(self.current.clone()));
 						self.current.clear();
 					}
+					else if c.is_control() {
+						// ignore other control characters
+					}
 					else {
 						self.current.push(c);
 					}
