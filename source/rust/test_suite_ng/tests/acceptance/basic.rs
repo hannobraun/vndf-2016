@@ -33,3 +33,14 @@ fn it_should_send_broadcasts_to_all_clients() {
 	assert!(contains(&frame_2, (&frame_1.self_id, &message_1)));
 	assert!(contains(&frame_2, (&frame_2.self_id, &message_2)));
 }
+
+#[test]
+fn it_should_not_keep_sending_stopped_broadcasts() {
+	let     game_service = GameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.broadcast("This is a broadcast.");
+	client.wait_until(|frame| frame.broadcasts.len() == 1);
+	client.stop_broadcast();
+	client.wait_until(|frame| frame.broadcasts.len() == 0);
+}
