@@ -12,6 +12,5 @@ fn it_should_display_typed_input_to_the_user() {
 	let input = "I'm typing, but not submitting yet, a command";
 	client.input(input);
 
-	let frame = client.frame();
-	assert_eq!(input, frame.input.as_slice());
+	client.wait_until(|frame| frame.input.as_slice() == input);
 }
