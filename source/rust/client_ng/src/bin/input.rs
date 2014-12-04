@@ -32,7 +32,7 @@ impl Input {
 		}
 	}
 
-	pub fn read_commands(&mut self) -> Vec<Command> {
+	pub fn read_commands(&mut self) -> Vec<CommandResult> {
 		let mut commands = Vec::new();
 
 		loop {
@@ -62,7 +62,7 @@ impl Input {
 			}
 		}
 
-		commands.push(Command::Incomplete(self.current.clone()));
+		commands.push(Err(CommandError::Incomplete(self.current.clone())));
 
 		commands
 	}
@@ -73,23 +73,20 @@ impl Input {
 pub enum Command {
 	Broadcast(String),
 	StopBroadcast,
-
-	Incomplete(String),
-	Invalid(&'static str, String),
 }
 
 impl Command {
-	fn parse(full_command: String) -> Command {
+	fn parse(full_command: String) -> CommandResult {
 		let mut splits = full_command.splitn(1, ' ');
 		
 		let command = match splits.next() {
 			Some(command) =>
 				command,
 			None =>
-				return Command::Invalid(
+				return Err(CommandError::Invalid(
 					"Invalid command",
 					full_command.clone(),
-				),
+				)),
 		};
 
 		let args = splits.next();
@@ -100,30 +97,42 @@ impl Command {
 					Some(message) =>
 						message,
 					None =>
-						return Command::Invalid(
+						return Err(CommandError::Invalid(
 							"Broadcast message is missing",
 							full_command.clone(),
-						),
+						)),
 				};
 
-				Command::Broadcast(message.to_string())
+				Ok(Command::Broadcast(message.to_string()))
 			},
 			"stop-broadcast" => {
 				match args {
 					Some(_) =>
-						return Command::Invalid(
+						return Err(CommandError::Invalid(
 							"stop-broadcast has no arguments",
 							full_command.clone()
-						),
+						)),
 					None =>
 						(),
 				}
 
-				Command::StopBroadcast
+				Ok(Command::StopBroadcast)
 			}
 
 			_ =>
-				Command::Invalid("Unknown command", full_command.clone()),
+				Err(CommandError::Invalid(
+					"Unknown command",
+					full_command.clone()
+				)),
 		}
 	}
+}
+
+
+pub type CommandResult = Result<Command, CommandError>;
+
+
+pub enum CommandError {
+	Incomplete(String),
+	Invalid(&'static str, String),
 }

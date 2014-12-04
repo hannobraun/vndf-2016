@@ -26,6 +26,7 @@ use common::protocol::{
 };
 use input::{
 	Command,
+	CommandError,
 	Input,
 };
 use output::{
@@ -70,17 +71,21 @@ fn run<O: Output>(args: Args, mut output: O) {
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		for command in input.read_commands().into_iter() {
-			match command {
-				Command::Broadcast(message) =>
-					action_assembler.add_step(Step::Broadcast(message)),
-				Command::StopBroadcast =>
-					action_assembler.add_step(Step::StopBroadcast),
-
-				Command::Incomplete(partial_command) =>
-					frame.input = partial_command,
-				Command::Invalid(error, command) =>
-					frame.error = format!("{}: \"{}\"", error, command),
+		for result in input.read_commands().into_iter() {
+			// TODO: Reset error on succesful command
+			match result {
+				Ok(command) => match command {
+					Command::Broadcast(message) =>
+						action_assembler.add_step(Step::Broadcast(message)),
+					Command::StopBroadcast =>
+						action_assembler.add_step(Step::StopBroadcast),
+				},
+				Err(error) => match error {
+					CommandError::Incomplete(partial_command) =>
+						frame.input = partial_command,
+					CommandError::Invalid(error, command) =>
+						frame.error = format!("{}: \"{}\"", error, command),
+				}
 			}
 		}
 
