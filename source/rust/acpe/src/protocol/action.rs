@@ -41,13 +41,7 @@ impl<Step: Part> Action<Step> {
 			action.add(step);
 		}
 
-		let message = action
-			.encode()
-			.unwrap_or_else(|error|
-				panic!("Error encoding action: {}", error)
-			);
-
-		message.to_vec()
+		action.encode().to_vec()
 	}
 }
 

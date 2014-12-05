@@ -1,5 +1,3 @@
-use std::io::IoResult;
-
 use root::MAX_PACKET_SIZE;
 
 use self::buf_writer::BufWriter;
@@ -74,7 +72,7 @@ impl<'r, M: Message<H, P>, H: Header, P: Part> MessageEncoder<'r, M> {
 		true
 	}
 
-	pub fn encode(self) -> IoResult<&'r [u8]> {
+	pub fn encode(self) -> &'r [u8] {
 		let len = self.writer.tell().unwrap_or_else(|_|
 			panic!(
 				"I/O operation on BufWriter that cannot possibly fail still \
@@ -82,7 +80,7 @@ impl<'r, M: Message<H, P>, H: Header, P: Part> MessageEncoder<'r, M> {
 			)
 		);
 
-		Ok(self.writer.into_slice()[.. len as uint])
+		self.writer.into_slice()[.. len as uint]
 	}
 }
 

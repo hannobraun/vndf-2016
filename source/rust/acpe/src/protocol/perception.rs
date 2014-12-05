@@ -43,13 +43,7 @@ impl<P: Part> Perception<P> {
 			perception.add(percept);
 		}
 
-		let message = perception
-			.encode()
-			.unwrap_or_else(|error|
-				panic!("Error encoding perception: {}", error)
-			);
-
-		message.to_vec()
+		perception.encode().to_vec()
 	}
 }
 

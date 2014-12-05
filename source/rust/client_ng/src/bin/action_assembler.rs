@@ -46,11 +46,7 @@ impl<'r> ActionAssembler<'r> {
 			}
 		}
 
-		let message = action
-			.encode()
-			.unwrap_or_else(|error|
-				panic!("Error encoding action: {}", error)
-			);
+		let message = action.encode();
 
 		self.assembled = Some(message.clone());
 		message

@@ -106,7 +106,7 @@ impl ActionHandle {
 				self_id       : None,
 			});
 
-		let message = perception.encode().unwrap();
+		let message = perception.encode();
 		self.sender.send(message, self.address);
 	}
 }

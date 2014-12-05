@@ -180,10 +180,6 @@ fn send_perception(
 		}
 	}
 
-	let message = perception
-		.encode()
-		.unwrap_or_else(|error|
-			panic!("Error encoding perception: {}", error)
-		);
+	let message = perception.encode();
 	socket.send_to(message, address);
 }
