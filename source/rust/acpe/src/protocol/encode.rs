@@ -74,25 +74,15 @@ impl<'r, M: Message<H, P>, H: Header, P: Part> MessageEncoder<'r, M> {
 		true
 	}
 
-	pub fn encode(self, buffer: &mut [u8]) -> IoResult<&[u8]> {
-		let len = {
-			let len = self.writer.tell().unwrap_or_else(|_|
-				panic!(
-					"I/O operation on BufWriter that cannot possibly fail \
-					still managed to fail somehow."
-				)
-			);
+	pub fn encode(self) -> IoResult<&'r [u8]> {
+		let len = self.writer.tell().unwrap_or_else(|_|
+			panic!(
+				"I/O operation on BufWriter that cannot possibly fail still \
+				managed to fail somehow."
+			)
+		);
 
-			let mut writer = BufWriter::new(buffer);
-			match writer.write(self.writer.into_slice()[.. len as uint]) {
-				Ok(())     => (),
-				Err(error) => return Err(error),
-			};
-
-			len
-		};
-
-		Ok(buffer[.. len as uint])
+		Ok(self.writer.into_slice()[.. len as uint])
 	}
 }
 

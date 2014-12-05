@@ -2,8 +2,6 @@ use serialize::Encodable;
 use serialize::json;
 use std::io::IoResult;
 
-use root::MAX_PACKET_SIZE;
-
 use super::{
 	decode,
 	Encoder,
@@ -38,7 +36,6 @@ impl<P: Part> Perception<P> {
 	/// ignoring performance and error handling. Please don't use this outside
 	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
-		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
 		let mut perception = encoder.message(&self.header);
@@ -47,7 +44,7 @@ impl<P: Part> Perception<P> {
 		}
 
 		let message = perception
-			.encode(&mut buffer)
+			.encode()
 			.unwrap_or_else(|error|
 				panic!("Error encoding perception: {}", error)
 			);

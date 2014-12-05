@@ -5,7 +5,6 @@ use std::io::net::ip::{
 use time::precise_time_s;
 
 use acceptance::random_port;
-use acpe::MAX_PACKET_SIZE;
 use acpe::network::SocketSender;
 use acpe::protocol::{
 	Action,
@@ -99,8 +98,7 @@ impl ActionHandle {
 	pub fn ignore(&self) {}
 
 	pub fn confirm(&mut self) {
-		let mut encoder       = Encoder::new();
-		let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
+		let mut encoder = Encoder::new();
 
 		let perception: MessageEncoder<Perception<Percept>> =
 			encoder.message(&PerceptionHeader {
@@ -108,7 +106,7 @@ impl ActionHandle {
 				self_id       : None,
 			});
 
-		let message = perception.encode(&mut encode_buffer).unwrap();
+		let message = perception.encode().unwrap();
 		self.sender.send(message, self.address);
 	}
 }

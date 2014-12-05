@@ -1,7 +1,5 @@
 use std::io::IoResult;
 
-use root::MAX_PACKET_SIZE;
-
 use super::{
 	decode,
 	Encoder,
@@ -36,7 +34,6 @@ impl<Step: Part> Action<Step> {
 	/// ignoring performance and error handling. Please don't use this outside
 	/// of test code.
 	pub fn encode(self) -> Vec<u8> {
-		let mut buffer  = [0, ..MAX_PACKET_SIZE];
 		let mut encoder = Encoder::new();
 
 		let mut action = encoder.message(&self.header);
@@ -45,7 +42,7 @@ impl<Step: Part> Action<Step> {
 		}
 
 		let message = action
-			.encode(&mut buffer)
+			.encode()
 			.unwrap_or_else(|error|
 				panic!("Error encoding action: {}", error)
 			);

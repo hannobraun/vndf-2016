@@ -1,4 +1,3 @@
-use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::{
 	ActionHeader,
 	Encoder,
@@ -9,7 +8,6 @@ use common::protocol::Step;
 
 
 pub struct ActionAssembler<'r> {
-	buffer   : [u8, ..MAX_PACKET_SIZE],
 	next_seq : Seq,
 	added    : Vec<Step>,
 	assembled: Option<&'r [u8]>,
@@ -18,7 +16,6 @@ pub struct ActionAssembler<'r> {
 impl<'r> ActionAssembler<'r> {
 	pub fn new() -> ActionAssembler<'r> {
 		ActionAssembler {
-			buffer   : [0, ..MAX_PACKET_SIZE],
 			next_seq : 0,
 			added    : Vec::new(),
 			assembled: None,
@@ -50,7 +47,7 @@ impl<'r> ActionAssembler<'r> {
 		}
 
 		let message = action
-			.encode(&mut self.buffer)
+			.encode()
 			.unwrap_or_else(|error|
 				panic!("Error encoding action: {}", error)
 			);

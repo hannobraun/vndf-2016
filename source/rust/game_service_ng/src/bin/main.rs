@@ -16,7 +16,6 @@ use std::os;
 use std::rand::random;
 use std::time::Duration;
 
-use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::{
 	Encoder,
 	PerceptionHeader,
@@ -181,10 +180,8 @@ fn send_perception(
 		}
 	}
 
-	let mut encode_buffer = [0, ..MAX_PACKET_SIZE];
-
 	let message = perception
-		.encode(&mut encode_buffer)
+		.encode()
 		.unwrap_or_else(|error|
 			panic!("Error encoding perception: {}", error)
 		);
