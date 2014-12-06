@@ -1,3 +1,5 @@
+use std::hash;
+
 use super::Command;
 
 
@@ -17,6 +19,12 @@ impl PartialEq for CommandKind + 'static {
 }
 
 impl Eq for CommandKind + 'static {}
+
+impl<H: hash::Writer> hash::Hash<H> for CommandKind + 'static {
+	fn hash(&self, hasher: &mut H) {
+		self.name().hash(hasher)
+	}
+}
 
 
 pub struct Broadcast;
