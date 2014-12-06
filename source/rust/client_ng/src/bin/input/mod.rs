@@ -2,6 +2,9 @@ use std::comm::TryRecvError;
 use std::io::stdin;
 
 
+mod command_kinds;
+
+
 pub struct Input {
 	receiver: Receiver<char>,
 	current : String,
@@ -93,17 +96,15 @@ impl Command {
 
 		match command {
 			"broadcast" => {
-				let message = match args {
-					Some(message) =>
-						message,
-					None =>
+				match command_kinds::BROADCAST.parse(args) {
+					Ok(command) =>
+						Ok(command),
+					Err(error) =>
 						return Err(CommandError::Invalid(
-							"Broadcast message is missing",
-							full_command.clone(),
+							error,
+							full_command.clone()
 						)),
-				};
-
-				Ok(Command::Broadcast(message.to_string()))
+				}
 			},
 			"stop-broadcast" => {
 				match args {
