@@ -46,9 +46,9 @@ impl CommandKinds {
 }
 
 
-pub static BROADCAST: Broadcast = Broadcast;
+static BROADCAST: Broadcast = Broadcast;
 
-pub struct Broadcast;
+struct Broadcast;
 
 impl CommandKind for Broadcast {
 	fn name(&self) -> &'static str {
@@ -66,9 +66,9 @@ impl CommandKind for Broadcast {
 }
 
 
-pub static STOP_BROADCAST: StopBroadcast = StopBroadcast;
+static STOP_BROADCAST: StopBroadcast = StopBroadcast;
 
-pub struct StopBroadcast;
+struct StopBroadcast;
 
 impl CommandKind for StopBroadcast {
 	fn name(&self) -> &'static str {
