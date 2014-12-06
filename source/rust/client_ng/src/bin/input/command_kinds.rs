@@ -16,6 +16,8 @@ impl PartialEq for CommandKind + 'static {
 	}
 }
 
+impl Eq for CommandKind + 'static {}
+
 
 pub struct Broadcast;
 
