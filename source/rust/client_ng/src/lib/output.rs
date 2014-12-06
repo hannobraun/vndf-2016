@@ -10,7 +10,7 @@ use common::protocol::Broadcast;
 pub struct Frame {
 	pub self_id   : String,
 	pub input     : String,
-	pub error     : String,
+	pub status    : String,
 	pub commands  : Vec<String>,
 	pub broadcasts: Vec<Broadcast>,
 }

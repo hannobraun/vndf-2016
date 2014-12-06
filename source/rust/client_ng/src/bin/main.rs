@@ -60,7 +60,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
-		error     : String::new(),
+		status    : String::new(),
 		commands  : vec![],
 		broadcasts: vec![],
 	};
@@ -83,7 +83,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 							action_assembler.add_step(Step::StopBroadcast),
 					}
 
-					frame.error.clear();
+					frame.status.clear();
 				},
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command, applicable) => {
@@ -91,7 +91,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 						frame.commands = applicable;
 					},
 					CommandError::Invalid(error, command) =>
-						frame.error = format!("{}: \"{}\"", error, command),
+						frame.status = format!("{}: \"{}\"", error, command),
 				}
 			}
 		}
