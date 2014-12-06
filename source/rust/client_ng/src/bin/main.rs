@@ -61,6 +61,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 		self_id   : String::new(),
 		input     : String::new(),
 		error     : String::new(),
+		commands  : vec![],
 		broadcasts: vec![],
 	};
 
