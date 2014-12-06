@@ -99,7 +99,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 						frame.commands = applicable;
 					},
 					CommandError::Invalid(error, command) =>
-						frame.status = format!("{}: \"{}\"", error, command),
+						frame.status = format!("\"{}\": {}", command, error),
 				}
 			}
 		}
