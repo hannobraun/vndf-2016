@@ -1,13 +1,8 @@
-use libc;
-use std::io::{
-	stdout,
-	IoResult,
-	LineBufferedWriter,
-};
-use std::io::stdio::StdWriter;
+use std::io::IoResult;
 
 use client::output::Frame;
-use termios::Termios;
+
+use self::screen::Screen;
 
 
 mod screen;
@@ -19,54 +14,57 @@ pub trait Output {
 
 
 pub struct PlayerOutput {
-	stdout: LineBufferedWriter<StdWriter>,
+	screen: Screen,
 }
 
 impl PlayerOutput {
 	pub fn new() -> PlayerOutput {
-		let mut termios = Termios::get(libc::STDIN_FILENO);
-		termios.echo(false);
-		termios.canonical_input(false);
-		termios.set(libc::STDIN_FILENO);
-
 		PlayerOutput {
-			stdout: stdout(),
+			screen: Screen::new(),
 		}
 	}
 }
 
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		try!(write!(&mut self.stdout, "\x1b[2J\x1b[H"));
+		try!(self.screen.clear());
 
-		try!(write!(&mut self.stdout, "Your Comm ID: {}\n\n", frame.self_id));
+		try!(write!(
+			&mut self.screen.buffer(),
+			"Your Comm ID: {}\n\n",
+			frame.self_id
+		));
 
-		try!(write!(&mut self.stdout, "BROADCASTS\n"));
+		try!(write!(&mut self.screen.buffer(), "BROADCASTS\n"));
 		if frame.broadcasts.len() == 0 {
-			try!(write!(&mut self.stdout, "    none\n"));
+			try!(write!(&mut self.screen.buffer(), "    none\n"));
 		}
 		for broadcast in frame.broadcasts.iter() {
 			try!(write!(
-				&mut self.stdout,
+				&mut self.screen.buffer(),
 				"    {}: {}\n",
 				broadcast.sender,
 				broadcast.message
 			));
 		}
 
-		try!(write!(&mut self.stdout, "\nCOMMANDS\n    "));
+		try!(write!(&mut self.screen.buffer(), "\nCOMMANDS\n    "));
 		if frame.commands.len() == 0 {
-			try!(write!(&mut self.stdout, "none"));
+			try!(write!(&mut self.screen.buffer(), "none"));
 		}
 		for command in frame.commands.iter() {
-			try!(write!(&mut self.stdout, "{}    ", command));
+			try!(write!(&mut self.screen.buffer(), "{}    ", command));
 		}
 
-		try!(write!(&mut self.stdout, "\n\n{}\n", frame.status));
+		try!(write!(&mut self.screen.buffer(), "\n\n{}\n", frame.status));
 
-		try!(write!(&mut self.stdout, "Enter command: {}", frame.input));
-		try!(self.stdout.flush());
+		try!(write!(
+			&mut self.screen.buffer(),
+			"Enter command: {}",
+			frame.input
+		));
 
+		try!(self.screen.submit());
 
 		Ok(())
 	}
