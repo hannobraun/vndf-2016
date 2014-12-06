@@ -10,6 +10,12 @@ pub trait CommandKind {
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str>;
 }
 
+impl PartialEq for CommandKind + 'static {
+	fn eq(&self, other: &CommandKind) -> bool {
+		self.name().eq(other.name())
+	}
+}
+
 
 pub struct Broadcast;
 
