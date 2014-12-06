@@ -6,6 +6,7 @@ use super::Command;
 
 pub trait CommandKind {
 	fn name(&self) -> &'static str;
+	fn help(&self) -> &'static str;
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str>;
 }
 
@@ -68,6 +69,11 @@ impl CommandKind for Broadcast {
 		"broadcast"
 	}
 
+	fn help(&self) -> &'static str {
+		"broadcast <message> - Broadcast a message into the surrounding space \
+		(Example: broadcast This is a broadcasted message.)"
+	}
+
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
 		let message = match args {
 			Some(message) => message,
@@ -88,6 +94,10 @@ impl CommandKind for StopBroadcast {
 		"stop-broadcast"
 	}
 
+	fn help(&self) -> &'static str {
+		"stop-broadcast - Stop the current broadcast (Example: stop-broadcast)"
+	}
+
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
 		match args {
 			Some(_) => return Err("stop-broadcast has no arguments"),
@@ -106,6 +116,10 @@ struct Help;
 impl CommandKind for Help {
 	fn name(&self) -> &'static str {
 		"help"
+	}
+
+	fn help(&self) -> &'static str {
+		"help <command> - Learn about a command (Example: help help)"
 	}
 
 	fn parse(&self, _args: Option<&str>) -> Result<Command, &'static str> {
