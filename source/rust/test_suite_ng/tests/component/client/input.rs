@@ -51,7 +51,7 @@ fn it_should_display_an_error_when_entering_an_invalid_command() {
 }
 
 #[test]
-fn it_should_reset_the_error_after_successful_command() {
+fn it_should_reset_the_error_after_a_successful_command() {
 	let     game_service = MockGameService::start();
 	let mut client       = Client::start(game_service.port());
 
