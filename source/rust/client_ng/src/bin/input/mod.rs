@@ -126,7 +126,7 @@ impl Command {
 				)),
 		};
 
-		match kind.parse(args) {
+		match kind.parse(args, kinds) {
 			Ok(command) =>
 				Ok(command),
 			Err(error) =>

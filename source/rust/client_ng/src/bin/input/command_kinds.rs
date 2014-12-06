@@ -7,7 +7,11 @@ use super::Command;
 pub trait CommandKind {
 	fn name(&self) -> &'static str;
 	fn help(&self) -> &'static str;
-	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str>;
+	fn parse(
+		&self,
+		args : Option<&str>,
+		kinds: &CommandKinds
+	) -> Result<Command, &'static str>;
 }
 
 impl PartialEq for CommandKind + 'static {
@@ -74,7 +78,11 @@ impl CommandKind for Broadcast {
 		(Example: broadcast This is a broadcasted message.)"
 	}
 
-	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
+	fn parse(
+		&self,
+		args: Option<&str>,
+		_   : &CommandKinds
+	) -> Result<Command, &'static str> {
 		let message = match args {
 			Some(message) => message,
 			None          => return Err("Broadcast message is missing"),
@@ -98,7 +106,11 @@ impl CommandKind for StopBroadcast {
 		"stop-broadcast - Stop the current broadcast (Example: stop-broadcast)"
 	}
 
-	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
+	fn parse(
+		&self,
+		args: Option<&str>,
+		_   : &CommandKinds
+	) -> Result<Command, &'static str> {
 		match args {
 			Some(_) => return Err("stop-broadcast has no arguments"),
 			None    => (),
@@ -122,7 +134,11 @@ impl CommandKind for Help {
 		"help <command> - Learn about a command (Example: help help)"
 	}
 
-	fn parse(&self, _args: Option<&str>) -> Result<Command, &'static str> {
+	fn parse(
+		&self,
+		_args : Option<&str>,
+		_kinds: &CommandKinds,
+	) -> Result<Command, &'static str> {
 		Ok(Command::Help("Type \"help <command>\" to learn about a command"))
 	}
 }
