@@ -81,6 +81,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 							action_assembler.add_step(Step::Broadcast(message)),
 						Command::StopBroadcast =>
 							action_assembler.add_step(Step::StopBroadcast),
+						Command::Help(_text) =>
+							// TODO: Display help text
+							(),
 					}
 
 					frame.status.clear();

@@ -95,6 +95,7 @@ impl Input {
 
 #[deriving(Show)]
 pub enum Command {
+	Help(&'static str),
 	Broadcast(String),
 	StopBroadcast,
 }
