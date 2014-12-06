@@ -1,6 +1,8 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
 
+use self::command_kinds::CommandKind;
+
 
 mod command_kinds;
 
