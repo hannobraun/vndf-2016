@@ -76,17 +76,22 @@ fn run<O: Output>(args: Args, mut output: O) {
 		for result in input.read_commands().into_iter() {
 			match result {
 				Ok(command) => {
+					let mut reset_status = true;
+
 					match command {
 						Command::Broadcast(message) =>
 							action_assembler.add_step(Step::Broadcast(message)),
 						Command::StopBroadcast =>
 							action_assembler.add_step(Step::StopBroadcast),
-						Command::Help(_text) =>
-							// TODO: Display help text
-							(),
+						Command::Help(text) => {
+							frame.status = text.to_string();
+							reset_status = false;
+						},
 					}
 
-					frame.status.clear();
+					if reset_status {
+						frame.status.clear();
+					}
 				},
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command, applicable) => {

@@ -77,3 +77,12 @@ fn it_should_show_applicable_commands_depending_on_input() {
 	);
 	assert!(frame.commands.contains(&"broadcast".to_string()));
 }
+
+#[test]
+fn it_should_display_help_messages() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.command("help");
+	client.wait_until(|frame| frame.status.len() > 0);
+}
