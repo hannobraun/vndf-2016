@@ -6,6 +6,7 @@ pub static STOP_BROADCAST: StopBroadcast = StopBroadcast;
 
 
 pub trait CommandKind {
+	fn name(&self) -> &'static str;
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str>;
 }
 
@@ -13,6 +14,10 @@ pub trait CommandKind {
 pub struct Broadcast;
 
 impl CommandKind for Broadcast {
+	fn name(&self) -> &'static str {
+		"broadcast"
+	}
+
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
 		let message = match args {
 			Some(message) => message,
@@ -27,6 +32,10 @@ impl CommandKind for Broadcast {
 pub struct StopBroadcast;
 
 impl CommandKind for StopBroadcast {
+	fn name(&self) -> &'static str {
+		"stop-broadcast"
+	}
+
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str> {
 		match args {
 			Some(_) => return Err("stop-broadcast has no arguments"),
