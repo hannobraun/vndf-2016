@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::hash;
 
 use super::Command;
@@ -23,6 +24,28 @@ impl Eq for CommandKind + 'static {}
 impl<H: hash::Writer> hash::Hash<H> for CommandKind + 'static {
 	fn hash(&self, hasher: &mut H) {
 		self.name().hash(hasher)
+	}
+}
+
+
+pub struct CommandKinds {
+	kinds: HashMap<&'static str, &'static CommandKind + 'static>,
+}
+
+impl CommandKinds {
+	pub fn new() -> CommandKinds {
+		let mut kinds = HashMap::new();
+
+		kinds.insert(BROADCAST.name()     , &BROADCAST      as &CommandKind);
+		kinds.insert(STOP_BROADCAST.name(), &STOP_BROADCAST as &CommandKind);
+
+		CommandKinds {
+			kinds: kinds,
+		}
+	}
+
+	pub fn get(&self, name: &str) -> Option<&CommandKind> {
+		self.kinds.get(name).map(|kind| *kind)
 	}
 }
 
