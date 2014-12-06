@@ -10,6 +10,9 @@ use client::output::Frame;
 use termios::Termios;
 
 
+mod screen;
+
+
 pub trait Output {
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
