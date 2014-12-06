@@ -1,15 +1,19 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
 
-use self::command_kinds::CommandKind;
+use self::command_kinds::{
+	CommandKind,
+	CommandKinds,
+};
 
 
 mod command_kinds;
 
 
 pub struct Input {
-	receiver: Receiver<char>,
-	current : String,
+	receiver     : Receiver<char>,
+	current      : String,
+	command_kinds: CommandKinds,
 }
 
 impl Input {
@@ -32,8 +36,9 @@ impl Input {
 		});
 
 		Input {
-			receiver: receiver,
-			current : String::new(),
+			receiver     : receiver,
+			current      : String::new(),
+			command_kinds: CommandKinds::new(),
 		}
 	}
 
@@ -47,7 +52,10 @@ impl Input {
 						self.current.pop();
 					}
 					else if c == '\n' {
-						commands.push(Command::parse(self.current.clone()));
+						commands.push(Command::parse(
+							&self.command_kinds,
+							self.current.clone(),
+						));
 						self.current.clear();
 					}
 					else if c.is_control() {
@@ -81,7 +89,7 @@ pub enum Command {
 }
 
 impl Command {
-	fn parse(full_command: String) -> CommandResult {
+	fn parse(kinds: &CommandKinds, full_command: String) -> CommandResult {
 		let mut splits = full_command.splitn(1, ' ');
 		
 		let command = match splits.next() {
@@ -96,33 +104,22 @@ impl Command {
 
 		let args = splits.next();
 
-		match command {
-			"broadcast" => {
-				match command_kinds::BROADCAST.parse(args) {
-					Ok(command) =>
-						Ok(command),
-					Err(error) =>
-						return Err(CommandError::Invalid(
-							error,
-							full_command.clone()
-						)),
-				}
-			},
-			"stop-broadcast" => {
-				match command_kinds::STOP_BROADCAST.parse(args) {
-					Ok(command) =>
-						Ok(command),
-					Err(error) =>
-						return Err(CommandError::Invalid(
-							error,
-							full_command.clone()
-						)),
-				}
-			}
-
-			_ =>
-				Err(CommandError::Invalid(
+		let kind = match kinds.get(command) {
+			Some(kind) =>
+				kind,
+			None =>
+				return Err(CommandError::Invalid(
 					"Unknown command",
+					full_command.clone()
+				)),
+		};
+
+		match kind.parse(args) {
+			Ok(command) =>
+				Ok(command),
+			Err(error) =>
+				return Err(CommandError::Invalid(
+					error,
 					full_command.clone()
 				)),
 		}
