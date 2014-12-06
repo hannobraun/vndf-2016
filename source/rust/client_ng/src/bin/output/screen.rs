@@ -26,7 +26,8 @@ impl Screen {
 	}
 
 	pub fn clear(&mut self) -> IoResult<()> {
-		try!(write!(&mut self.stdout, "\x1b[2J\x1b[H"));
+		try!(write!(&mut self.stdout, "\x1b[2J")); // clear screen
+		try!(write!(&mut self.stdout, "\x1b[H")); // reset cursor
 		Ok(())
 	}
 
