@@ -51,6 +51,14 @@ impl Output for PlayerOutput {
 			));
 		}
 
+		try!(write!(&mut self.stdout, "\nCOMMANDS\n    "));
+		if frame.commands.len() == 0 {
+			try!(write!(&mut self.stdout, "none"));
+		}
+		for command in frame.commands.iter() {
+			try!(write!(&mut self.stdout, "{}    ", command));
+		}
+
 		try!(write!(&mut self.stdout, "\n\n{}\n", frame.error));
 
 		try!(write!(&mut self.stdout, "Enter command: {}", frame.input));
