@@ -75,7 +75,11 @@ impl Input {
 			}
 		}
 
-		commands.push(Err(CommandError::Incomplete(self.current.clone())));
+		commands.push(Err(CommandError::Incomplete(
+			self.current.clone(),
+			// TODO: Get applicable commands
+			vec![],
+		)));
 
 		commands
 	}
@@ -132,6 +136,6 @@ pub type CommandResult = Result<Command, CommandError>;
 
 #[deriving(Show)]
 pub enum CommandError {
-	Incomplete(String),
+	Incomplete(String, Vec<String>),
 	Invalid(&'static str, String),
 }

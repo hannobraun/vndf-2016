@@ -86,8 +86,10 @@ fn run<O: Output>(args: Args, mut output: O) {
 					frame.error.clear();
 				},
 				Err(error) => match error {
-					CommandError::Incomplete(partial_command) =>
-						frame.input = partial_command,
+					CommandError::Incomplete(partial_command, applicable) => {
+						frame.input    = partial_command;
+						frame.commands = applicable;
+					},
 					CommandError::Invalid(error, command) =>
 						frame.error = format!("{}: \"{}\"", error, command),
 				}
