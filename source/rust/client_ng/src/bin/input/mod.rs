@@ -75,10 +75,17 @@ impl Input {
 			}
 		}
 
+		let start_with = self.command_kinds
+			.start_with(self.current.as_slice())
+			.iter()
+			.map(|kind|
+				kind.name().to_string()
+			)
+			.collect();
+
 		commands.push(Err(CommandError::Incomplete(
 			self.current.clone(),
-			// TODO: Get applicable commands
-			vec![],
+			start_with,
 		)));
 
 		commands

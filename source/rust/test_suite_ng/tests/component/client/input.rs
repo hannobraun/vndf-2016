@@ -61,3 +61,19 @@ fn it_should_reset_the_error_after_a_successful_command() {
 	client.broadcast("This is a broadcast.");
 	client.wait_until(|frame| frame.error.len() == 0);
 }
+
+#[test]
+fn it_should_show_applicable_commands_depending_on_input() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	let frame = client.frame();
+	assert!(frame.commands.contains(&"broadcast".to_string()));
+	assert!(frame.commands.contains(&"stop-broadcast".to_string()));
+
+	client.input("bro");
+	client.wait_until(|frame|
+		!frame.commands.contains(&"stop-broadcast".to_string())
+	);
+	assert!(frame.commands.contains(&"broadcast".to_string()));
+}
