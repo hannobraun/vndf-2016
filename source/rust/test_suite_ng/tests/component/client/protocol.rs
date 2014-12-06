@@ -65,9 +65,6 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 		broadcasts.insert(broadcast);
 	}
 
-	let first_action = game_service.wait_until(|action| action.is_some());
-	first_action.unwrap().confirm();
-
 	let start_s = precise_time_s();
 	while broadcasts.len() > 0 {
 		if precise_time_s() - start_s > 0.5 {
