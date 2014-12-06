@@ -133,6 +133,7 @@ impl Command {
 pub type CommandResult = Result<Command, CommandError>;
 
 
+#[deriving(Show)]
 pub enum CommandError {
 	Incomplete(String),
 	Invalid(&'static str, String),
