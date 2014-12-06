@@ -107,17 +107,15 @@ impl Command {
 				}
 			},
 			"stop-broadcast" => {
-				match args {
-					Some(_) =>
+				match command_kinds::STOP_BROADCAST.parse(args) {
+					Ok(command) =>
+						Ok(command),
+					Err(error) =>
 						return Err(CommandError::Invalid(
-							"stop-broadcast has no arguments",
+							error,
 							full_command.clone()
 						)),
-					None =>
-						(),
 				}
-
-				Ok(Command::StopBroadcast)
 			}
 
 			_ =>
