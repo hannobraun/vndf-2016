@@ -84,5 +84,10 @@ fn it_should_display_help_messages() {
 	let mut client       = Client::start(game_service.port());
 
 	client.command("help");
-	client.wait_until(|frame| frame.status.len() > 0);
+	let help_help = client.wait_until(|frame| frame.status.len() > 0).status;
+
+	client.command("help broadcast");
+	let help_broadcast =
+		client.wait_until(|frame| frame.status != help_help).status;
+	assert!(help_broadcast.len() > 0);
 }

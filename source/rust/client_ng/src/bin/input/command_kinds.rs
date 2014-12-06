@@ -136,9 +136,17 @@ impl CommandKind for Help {
 
 	fn parse(
 		&self,
-		_args : Option<&str>,
-		_kinds: &CommandKinds,
+		args : Option<&str>,
+		kinds: &CommandKinds,
 	) -> Result<Command, &'static str> {
-		Ok(Command::Help("Type \"help <command>\" to learn about a command"))
+		let kind = match args {
+			Some(kind) => kind,
+			None       => "help",
+		};
+
+		match kinds.get(kind) {
+			Some(kind) => Ok(Command::Help(kind.help())),
+			None       => Err("Unknown command"),
+		}
 	}
 }
