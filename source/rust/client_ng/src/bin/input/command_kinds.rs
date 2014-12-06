@@ -4,10 +4,6 @@ use std::hash;
 use super::Command;
 
 
-pub static BROADCAST     : Broadcast     = Broadcast;
-pub static STOP_BROADCAST: StopBroadcast = StopBroadcast;
-
-
 pub trait CommandKind {
 	fn name(&self) -> &'static str;
 	fn parse(&self, args: Option<&str>) -> Result<Command, &'static str>;
@@ -50,6 +46,8 @@ impl CommandKinds {
 }
 
 
+pub static BROADCAST: Broadcast = Broadcast;
+
 pub struct Broadcast;
 
 impl CommandKind for Broadcast {
@@ -67,6 +65,8 @@ impl CommandKind for Broadcast {
 	}
 }
 
+
+pub static STOP_BROADCAST: StopBroadcast = StopBroadcast;
 
 pub struct StopBroadcast;
 
