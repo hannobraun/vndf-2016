@@ -43,6 +43,18 @@ impl CommandKinds {
 	pub fn get(&self, name: &str) -> Option<&CommandKind> {
 		self.kinds.get(name).map(|kind| *kind)
 	}
+
+	pub fn start_with(&self, partial_name: &str) -> Vec<&CommandKind> {
+		self.kinds
+			.iter()
+			.filter(|&(&name, _)|
+				name.starts_with(partial_name)
+			)
+			.map(|(_, &kind)|
+				kind
+			)
+			.collect()
+	}
 }
 
 
