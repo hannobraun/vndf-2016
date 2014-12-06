@@ -27,7 +27,6 @@ impl Screen {
 
 	pub fn clear(&mut self) -> IoResult<()> {
 		try!(write!(&mut self.stdout, "\x1b[2J")); // clear screen
-		try!(write!(&mut self.stdout, "\x1b[H")); // reset cursor
 		Ok(())
 	}
 
@@ -38,9 +37,11 @@ impl Screen {
 		y: u16,
 	) -> &mut LineBufferedWriter<StdWriter> {
 		// TODO: Improve error handling
-		(write!(&mut self.stdout, "\x1b[H")).unwrap(); // reset cursor
-		(write!(&mut self.stdout, "\x1b[{}C", x + 1)).unwrap(); // cursor right
-		(write!(&mut self.stdout, "\x1b[{}B", y + 1)).unwrap(); // cursor down
+		(write!(
+			&mut self.stdout,
+			"\x1b[{};{}H",
+			y + 1, x + 1
+		)).unwrap(); // set curso
 
 		&mut self.stdout
 	}
