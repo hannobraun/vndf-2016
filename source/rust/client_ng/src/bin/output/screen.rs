@@ -31,7 +31,17 @@ impl Screen {
 		Ok(())
 	}
 
-	pub fn buffer(&mut self) -> &mut LineBufferedWriter<StdWriter> {
+	/// Origin is in upper-left corner.
+	pub fn buffer_at(
+		&mut self,
+		x: u16,
+		y: u16,
+	) -> &mut LineBufferedWriter<StdWriter> {
+		// TODO: Improve error handling
+		(write!(&mut self.stdout, "\x1b[H")).unwrap(); // reset cursor
+		(write!(&mut self.stdout, "\x1b[{}C", x + 1)).unwrap(); // cursor right
+		(write!(&mut self.stdout, "\x1b[{}B", y + 1)).unwrap(); // cursor down
+
 		&mut self.stdout
 	}
 

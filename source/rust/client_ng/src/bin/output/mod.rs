@@ -28,38 +28,72 @@ impl PlayerOutput {
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		try!(self.screen.clear());
+		let mut y = 0;
 
 		try!(write!(
-			&mut self.screen.buffer(),
-			"Your Comm ID: {}\n\n",
+			&mut self.screen.buffer_at(0, y),
+			"Your Comm ID: {}",
 			frame.self_id
 		));
-
-		try!(write!(&mut self.screen.buffer(), "BROADCASTS\n"));
-		if frame.broadcasts.len() == 0 {
-			try!(write!(&mut self.screen.buffer(), "    none\n"));
-		}
-		for broadcast in frame.broadcasts.iter() {
-			try!(write!(
-				&mut self.screen.buffer(),
-				"    {}: {}\n",
-				broadcast.sender,
-				broadcast.message
-			));
-		}
-
-		try!(write!(&mut self.screen.buffer(), "\nCOMMANDS\n    "));
-		if frame.commands.len() == 0 {
-			try!(write!(&mut self.screen.buffer(), "none"));
-		}
-		for command in frame.commands.iter() {
-			try!(write!(&mut self.screen.buffer(), "{}    ", command));
-		}
-
-		try!(write!(&mut self.screen.buffer(), "\n\n{}\n", frame.status));
+		y += 2;
 
 		try!(write!(
-			&mut self.screen.buffer(),
+			&mut self.screen.buffer_at(0, y),
+			"BROADCASTS")
+		);
+		y += 1;
+
+		if frame.broadcasts.len() == 0 {
+			try!(write!(
+				&mut self.screen.buffer_at(4, y),
+				"none"
+			));
+			y += 1;
+		}
+
+		for broadcast in frame.broadcasts.iter() {
+			try!(write!(
+				&mut self.screen.buffer_at(4, y),
+				"{}: {}\n",
+				broadcast.sender, broadcast.message
+			));
+			y += 1;
+		}
+		y += 1;
+
+		try!(write!(
+			&mut self.screen.buffer_at(0, y),
+			"COMMANDS"
+		));
+		y += 1;
+
+		if frame.commands.len() == 0 {
+			try!(write!(
+				&mut self.screen.buffer_at(4, y),
+				"none"
+			));
+		}
+		y += 1;
+
+		let mut x = 4;
+		for command in frame.commands.iter() {
+			try!(write!(
+				&mut self.screen.buffer_at(x, y), "{}",
+				command
+			));
+			x += 4 + command.len() as u16;
+		}
+
+		y += 2;
+		try!(write!(
+			&mut self.screen.buffer_at(0, y),
+			"{}",
+			frame.status
+		));
+		y += 1;
+
+		try!(write!(
+			&mut self.screen.buffer_at(0, y),
 			"Enter command: {}",
 			frame.input
 		));
