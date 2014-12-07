@@ -79,9 +79,9 @@ impl Screen {
 		let (x, y) = self.cursor;
 		try!(write!(
 			&mut self.stdout,
-			"\x1b[{};{}H",
+			"\x1b[{};{}H", // set cursor
 			y + 1, x + 1
-		)); // set cursor
+		));
 
 		try!(self.stdout.flush());
 		Ok(())
