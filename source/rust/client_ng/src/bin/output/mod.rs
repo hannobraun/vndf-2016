@@ -101,7 +101,6 @@ impl PlayerOutput {
 				"none"
 			));
 		}
-		self.y += 1;
 
 		self.x = 4;
 		for command in frame.commands.iter() {
@@ -111,6 +110,8 @@ impl PlayerOutput {
 			));
 			self.x += 4 + command.len() as u16;
 		}
+
+		self.y += 1;
 
 		Ok(())
 	}
