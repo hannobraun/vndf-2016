@@ -39,29 +39,7 @@ impl Output for PlayerOutput {
 
 		try!(self.render_comm_id(frame));
 		try!(self.render_broadcasts(frame));
-
-		try!(write!(
-			&mut self.screen.buffer_at(0, self.y),
-			"COMMANDS"
-		));
-		self.y += 1;
-
-		if frame.commands.len() == 0 {
-			try!(write!(
-				&mut self.screen.buffer_at(4, self.y),
-				"none"
-			));
-		}
-		self.y += 1;
-
-		self.x = 4;
-		for command in frame.commands.iter() {
-			try!(write!(
-				&mut self.screen.buffer_at(self.x, self.y), "{}",
-				command
-			));
-			self.x += 4 + command.len() as u16;
-		}
+		try!(self.render_commands(frame));
 
 		self.y += 2;
 		try!(write!(
@@ -119,6 +97,33 @@ impl PlayerOutput {
 			self.y += 1;
 		}
 		self.y += 1;
+
+		Ok(())
+	}
+
+	fn render_commands(&mut self, frame: &Frame) -> IoResult<()> {
+		try!(write!(
+			&mut self.screen.buffer_at(0, self.y),
+			"COMMANDS"
+		));
+		self.y += 1;
+
+		if frame.commands.len() == 0 {
+			try!(write!(
+				&mut self.screen.buffer_at(4, self.y),
+				"none"
+			));
+		}
+		self.y += 1;
+
+		self.x = 4;
+		for command in frame.commands.iter() {
+			try!(write!(
+				&mut self.screen.buffer_at(self.x, self.y), "{}",
+				command
+			));
+			self.x += 4 + command.len() as u16;
+		}
 
 		Ok(())
 	}
