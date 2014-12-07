@@ -30,7 +30,7 @@ impl<H: hash::Writer> hash::Hash<H> for CommandKind + 'static {
 
 
 pub struct CommandKinds {
-	kinds: HashMap<&'static str, &'static CommandKind + 'static>,
+	kinds: HashMap<&'static str, &'static (CommandKind + 'static)>,
 }
 
 impl CommandKinds {
