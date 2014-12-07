@@ -48,10 +48,16 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		run(args, HeadlessOutput::new());
+		match HeadlessOutput::new() {
+			Ok(output) => run(args, output),
+			Err(error) => panic!("Error initializing output: {}", error),
+		}
 	}
 	else {
-		run(args, PlayerOutput::new());
+		match PlayerOutput::new() {
+			Ok(output) => run(args, output),
+			Err(error) => panic!("Error initializing output: {}", error),
+		}
 	}
 }
 

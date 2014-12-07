@@ -21,13 +21,13 @@ pub struct PlayerOutput {
 }
 
 impl PlayerOutput {
-	pub fn new() -> PlayerOutput {
-		PlayerOutput {
+	pub fn new() -> IoResult<PlayerOutput> {
+		Ok(PlayerOutput {
 			screen: Screen::new(80, 24),
 
 			x: 0,
 			y: 0,
-		}
+		})
 	}
 }
 
@@ -142,8 +142,8 @@ impl PlayerOutput {
 pub struct HeadlessOutput;
 
 impl HeadlessOutput {
-	pub fn new() -> HeadlessOutput {
-		HeadlessOutput
+	pub fn new() -> IoResult<HeadlessOutput> {
+		Ok(HeadlessOutput)
 	}
 }
 
