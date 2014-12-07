@@ -7,15 +7,17 @@ use std::io::{
 	LineBufferedWriter,
 };
 use std::io::stdio::StdWriter;
+use std::mem::swap;
 use std::str::from_utf8;
 
 use termios::Termios;
 
 
 pub struct Screen {
-	stdout: LineBufferedWriter<StdWriter>,
-	buffer: ScreenBuffer,
-	cursor: (u16, u16),
+	stdout  : LineBufferedWriter<StdWriter>,
+	buffer_a: ScreenBuffer,
+	buffer_b: ScreenBuffer,
+	cursor  : (u16, u16),
 }
 
 impl Screen {
@@ -28,29 +30,21 @@ impl Screen {
 		let width  = width  as uint;
 		let height = height as uint;
 
-		let buffer = Vec::from_fn(height, |_| Vec::from_elem(width, ' '));
+		let buffer_a = Vec::from_fn(height, |_| Vec::from_elem(width, ' '));
+		let buffer_b = buffer_a.clone();
 
 		Screen {
-			stdout: stdout(),
-			buffer: buffer,
-			cursor: (0, 0),
+			stdout  : stdout(),
+			buffer_a: buffer_a,
+			buffer_b: buffer_b,
+			cursor  : (0, 0),
 		}
-	}
-
-	pub fn clear(&mut self) -> IoResult<()> {
-		for line in self.buffer.iter_mut() {
-			for c in line.iter_mut() {
-				*c = ' ';
-			}
-		}
-
-		Ok(())
 	}
 
 	/// Origin is in upper-left corner.
 	pub fn buffer(&mut self, x: u16, y: u16) -> BufferWriter {
 		BufferWriter {
-			buffer: &mut self.buffer,
+			buffer: &mut self.buffer_a,
 			x     : x,
 			y     : y,
 		}
@@ -61,14 +55,25 @@ impl Screen {
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
-		try!(write!(&mut self.stdout, "\x1b[2J")); // clear screen
-		try!(write!(&mut self.stdout, "\x1b[H")); // reset cursor
-
-		for line in self.buffer.iter() {
-			for &c in line.iter() {
-				try!(self.stdout.write_char(c));
+		for (y, line) in self.buffer_a.iter().enumerate() {
+			for (x, &c) in line.iter().enumerate() {
+				if c != self.buffer_b[y][x] {
+					try!(write!(
+						&mut self.stdout,
+						"\x1b[{};{}H", // move cursor
+						y + 1, x + 1
+					));
+					try!(self.stdout.write_char(c));
+				}
 			}
-			try!(self.stdout.write_char('\n'));
+		}
+
+		swap(&mut self.buffer_a, &mut self.buffer_b);
+
+		for line in self.buffer_a.iter_mut() {
+			for c in line.iter_mut() {
+				*c = ' ';
+			}
 		}
 
 		let (x, y) = self.cursor;

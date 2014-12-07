@@ -33,7 +33,6 @@ impl PlayerOutput {
 
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		try!(self.screen.clear());
 		self.x = 0;
 		self.y = 0;
 
