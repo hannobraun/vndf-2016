@@ -129,11 +129,10 @@ impl PlayerOutput {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
-		try!(write!(
-			&mut self.screen.buffer(0, self.y),
-			"Enter command: {}",
-			frame.input
-		));
+		let input_prompt = format!("Enter command: {}", frame.input);
+
+		try!(self.screen.buffer(0, self.y).write(input_prompt.as_bytes()));
+		self.screen.set_cursor(input_prompt.len() as u16, self.y);
 
 		Ok(())
 	}
