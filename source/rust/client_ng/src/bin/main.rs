@@ -21,7 +21,6 @@ use args::Args;
 use client::network::Socket;
 use client::output::Frame;
 use common::protocol::{
-	Broadcast,
 	Percept,
 	Step,
 };
