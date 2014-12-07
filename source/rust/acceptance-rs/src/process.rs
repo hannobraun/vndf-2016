@@ -29,9 +29,8 @@ impl Process {
 	}
 
 	pub fn kill(&mut self) {
-		match self.process.signal_kill() {
-			Ok(())     => (),
-			Err(error) => print!("Error killing process: {}\n", error)
+		if let Err(error) = self.process.signal_kill() {
+			print!("Error killing process: {}\n", error);
 		}
 	}
 
