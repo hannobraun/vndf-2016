@@ -31,7 +31,7 @@ impl Screen {
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn buffer_at(
+	pub fn buffer(
 		&mut self,
 		x: u16,
 		y: u16,
