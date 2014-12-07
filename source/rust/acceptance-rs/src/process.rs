@@ -24,7 +24,7 @@ impl Process {
 			process: process,
 			stdout : to_reader(stdout_opt),
 			stderr : to_reader(stderr_opt),
-			stdin  : stdin_opt.expect("Expected stdin")
+			stdin  : stdin_opt.expect("Expected stdin"),
 		}
 	}
 
