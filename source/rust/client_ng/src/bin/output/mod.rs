@@ -79,7 +79,7 @@ impl PlayerOutput {
 		for broadcast in frame.broadcasts.iter() {
 			try!(write!(
 				&mut self.screen.buffer(4, self.y),
-				"{}: {}\n",
+				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
 			self.y += 1;
