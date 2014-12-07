@@ -72,7 +72,7 @@ impl Drop for Process {
 fn to_reader(pipe_opt: Option<PipeStream>) -> BufferedReader<PipeStream> {
 	let pipe = match pipe_opt {
 		Some(pipe) => pipe,
-		None       => panic!()
+		None       => panic!(),
 	};
 
 	BufferedReader::new(pipe)
