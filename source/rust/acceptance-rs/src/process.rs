@@ -42,9 +42,8 @@ impl Process {
 	}
 
 	pub fn write_stdin(&mut self, input: &str) {
-		match self.stdin.write_str(input) {
-			Ok(())     => (),
-			Err(error) => panic!("Failed to write to stdin: {}", error),
+		if let Err(error) = self.stdin.write_str(input) {
+			panic!("Failed to write to stdin: {}", error);
 		}
 	}
 
