@@ -14,7 +14,7 @@ pub struct Screen {
 }
 
 impl Screen {
-	pub fn new() -> Screen {
+	pub fn new(_width: u16, _height: u16) -> Screen {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
 		termios.echo(false);
 		termios.canonical_input(false);

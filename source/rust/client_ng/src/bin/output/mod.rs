@@ -23,7 +23,7 @@ pub struct PlayerOutput {
 impl PlayerOutput {
 	pub fn new() -> PlayerOutput {
 		PlayerOutput {
-			screen: Screen::new(),
+			screen: Screen::new(80, 24),
 
 			x: 0,
 			y: 0,
