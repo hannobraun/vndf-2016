@@ -59,7 +59,13 @@ impl PlayerOutput {
 
 		try!(write!(
 			&mut self.screen.buffer(0, self.y, screen_width),
-			"Your Comm ID: {}",
+			"SHIP INFO"
+		));
+		self.y += 1;
+
+		try!(write!(
+			&mut self.screen.buffer(4, self.y, screen_width),
+			"Comm ID: {}",
 			frame.self_id
 		));
 
