@@ -41,12 +41,7 @@ impl Output for PlayerOutput {
 		try!(self.render_broadcasts(frame));
 		try!(self.render_commands(frame));
 		try!(self.render_status(frame));
-
-		try!(write!(
-			&mut self.screen.buffer_at(0, self.y),
-			"Enter command: {}",
-			frame.input
-		));
+		try!(self.render_input(frame));
 
 		try!(self.screen.submit());
 
@@ -129,6 +124,16 @@ impl PlayerOutput {
 			frame.status
 		));
 		self.y += 1;
+
+		Ok(())
+	}
+
+	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
+		try!(write!(
+			&mut self.screen.buffer_at(0, self.y),
+			"Enter command: {}",
+			frame.input
+		));
 
 		Ok(())
 	}
