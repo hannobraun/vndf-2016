@@ -47,6 +47,10 @@ impl Screen {
 		})
 	}
 
+	pub fn width(&self) -> u16 {
+		self.buffer_a[0].len() as u16
+	}
+
 	/// Origin is in upper-left corner.
 	pub fn buffer(&mut self, x: u16, y: u16) -> BufferWriter {
 		BufferWriter {
