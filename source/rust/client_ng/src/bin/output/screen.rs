@@ -21,11 +21,17 @@ pub struct Screen {
 }
 
 impl Screen {
-	pub fn new(width: u16, height: u16) -> Screen {
+	pub fn new(width: u16, height: u16) -> IoResult<Screen> {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
 		termios.echo(false);
 		termios.canonical_input(false);
 		termios.set(libc::STDIN_FILENO);
+
+		let mut stdout = stdout();
+		match write!(&mut stdout, "\x1b[2J") { // clear screen
+			Ok(())     => (),
+			Err(error) => return Err(error),
+		}
 
 		let width  = width  as uint;
 		let height = height as uint;
@@ -33,12 +39,12 @@ impl Screen {
 		let buffer_a = Vec::from_fn(height, |_| Vec::from_elem(width, ' '));
 		let buffer_b = buffer_a.clone();
 
-		Screen {
-			stdout  : stdout(),
+		Ok(Screen {
+			stdout  : stdout,
 			buffer_a: buffer_a,
 			buffer_b: buffer_b,
 			cursor  : (0, 0),
-		}
+		})
 	}
 
 	/// Origin is in upper-left corner.

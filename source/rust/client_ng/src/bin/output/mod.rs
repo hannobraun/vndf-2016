@@ -22,8 +22,13 @@ pub struct PlayerOutput {
 
 impl PlayerOutput {
 	pub fn new() -> IoResult<PlayerOutput> {
+		let screen = match Screen::new(80, 24) {
+			Ok(screen) => screen,
+			Err(error) => return Err(error),
+		};
+
 		Ok(PlayerOutput {
-			screen: Screen::new(80, 24),
+			screen: screen,
 
 			x: 0,
 			y: 0,
