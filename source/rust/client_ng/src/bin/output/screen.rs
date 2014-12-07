@@ -15,6 +15,7 @@ use termios::Termios;
 pub struct Screen {
 	stdout: LineBufferedWriter<StdWriter>,
 	buffer: ScreenBuffer,
+	cursor: (u16, u16),
 }
 
 impl Screen {
@@ -32,6 +33,7 @@ impl Screen {
 		Screen {
 			stdout: stdout(),
 			buffer: buffer,
+			cursor: (0, 0),
 		}
 	}
 
@@ -54,6 +56,10 @@ impl Screen {
 		}
 	}
 
+	pub fn set_cursor(&mut self, x: u16, y: u16) {
+		self.cursor = (x, y);
+	}
+
 	pub fn submit(&mut self) -> IoResult<()> {
 		try!(write!(&mut self.stdout, "\x1b[2J")); // clear screen
 		try!(write!(&mut self.stdout, "\x1b[H")); // reset cursor
@@ -64,6 +70,13 @@ impl Screen {
 			}
 			try!(self.stdout.write_char('\n'));
 		}
+
+		let (x, y) = self.cursor;
+		try!(write!(
+			&mut self.stdout,
+			"\x1b[{};{}H",
+			y + 1, x + 1
+		)); // set cursor
 
 		try!(self.stdout.flush());
 		Ok(())
