@@ -128,9 +128,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 		let message = action_assembler.assemble(&mut encoder);
 
 		server.send_to(message);
-		match output.render(&frame) {
-			Ok(())     => (),
-			Err(error) => panic!("Error writing output: {}", error),
+		if let Err(error) = output.render(&frame) {
+			panic!("Error writing output: {}", error);
 		}
 
 		sleep(Duration::milliseconds(20));
