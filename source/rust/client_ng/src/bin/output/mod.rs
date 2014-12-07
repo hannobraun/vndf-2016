@@ -38,30 +38,7 @@ impl Output for PlayerOutput {
 		self.y = 0;
 
 		try!(self.render_comm_id(frame));
-
-		try!(write!(
-			&mut self.screen.buffer_at(0, self.y),
-			"BROADCASTS")
-		);
-		self.y += 1;
-
-		if frame.broadcasts.len() == 0 {
-			try!(write!(
-				&mut self.screen.buffer_at(4, self.y),
-				"none"
-			));
-			self.y += 1;
-		}
-
-		for broadcast in frame.broadcasts.iter() {
-			try!(write!(
-				&mut self.screen.buffer_at(4, self.y),
-				"{}: {}\n",
-				broadcast.sender, broadcast.message
-			));
-			self.y += 1;
-		}
-		self.y += 1;
+		try!(self.render_broadcasts(frame));
 
 		try!(write!(
 			&mut self.screen.buffer_at(0, self.y),
@@ -115,6 +92,34 @@ impl PlayerOutput {
 		));
 
 		self.y += 2;
+		Ok(())
+	}
+
+	fn render_broadcasts(&mut self, frame: &Frame) -> IoResult<()> {
+		try!(write!(
+			&mut self.screen.buffer_at(0, self.y),
+			"BROADCASTS")
+		);
+		self.y += 1;
+
+		if frame.broadcasts.len() == 0 {
+			try!(write!(
+				&mut self.screen.buffer_at(4, self.y),
+				"none"
+			));
+			self.y += 1;
+		}
+
+		for broadcast in frame.broadcasts.iter() {
+			try!(write!(
+				&mut self.screen.buffer_at(4, self.y),
+				"{}: {}\n",
+				broadcast.sender, broadcast.message
+			));
+			self.y += 1;
+		}
+		self.y += 1;
+
 		Ok(())
 	}
 }
