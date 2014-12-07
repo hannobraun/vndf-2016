@@ -37,12 +37,7 @@ impl Output for PlayerOutput {
 		self.x = 0;
 		self.y = 0;
 
-		try!(write!(
-			&mut self.screen.buffer_at(0, self.y),
-			"Your Comm ID: {}",
-			frame.self_id
-		));
-		self.y += 2;
+		try!(self.render_comm_id(frame));
 
 		try!(write!(
 			&mut self.screen.buffer_at(0, self.y),
@@ -107,6 +102,19 @@ impl Output for PlayerOutput {
 
 		try!(self.screen.submit());
 
+		Ok(())
+	}
+}
+
+impl PlayerOutput {
+	fn render_comm_id(&mut self, frame: &Frame) -> IoResult<()> {
+		try!(write!(
+			&mut self.screen.buffer_at(0, self.y),
+			"Your Comm ID: {}",
+			frame.self_id
+		));
+
+		self.y += 2;
 		Ok(())
 	}
 }
