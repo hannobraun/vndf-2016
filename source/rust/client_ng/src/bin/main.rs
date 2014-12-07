@@ -111,9 +111,8 @@ fn run<O: Output>(args: Args, mut output: O) {
 		}
 
 		for perception in  server.recv_from().into_iter() {
-			match perception.header.self_id {
-				Some(self_id) => frame.self_id = self_id,
-				None          => (),
+			if let Some(self_id) = perception.header.self_id {
+				frame.self_id = self_id;
 			}
 
 			frame.broadcasts = perception.update
