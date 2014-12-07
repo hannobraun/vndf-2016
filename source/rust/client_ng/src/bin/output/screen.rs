@@ -52,11 +52,12 @@ impl Screen {
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn buffer(&mut self, x: u16, y: u16) -> BufferWriter {
+	pub fn buffer(&mut self, x: u16, y: u16, limit: u16,) -> BufferWriter {
 		BufferWriter {
 			buffer: &mut self.buffer_a,
 			x     : x,
 			y     : y,
+			limit : limit,
 		}
 	}
 
@@ -106,6 +107,7 @@ struct BufferWriter<'r> {
 	buffer: &'r mut ScreenBuffer,
 	x     : u16,
 	y     : u16,
+	limit : u16,
 }
 
 impl<'r> Writer for BufferWriter<'r> {

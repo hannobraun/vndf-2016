@@ -55,8 +55,10 @@ impl Output for PlayerOutput {
 
 impl PlayerOutput {
 	fn render_comm_id(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
+
 		try!(write!(
-			&mut self.screen.buffer(0, self.y),
+			&mut self.screen.buffer(0, self.y, screen_width),
 			"Your Comm ID: {}",
 			frame.self_id
 		));
@@ -66,15 +68,17 @@ impl PlayerOutput {
 	}
 
 	fn render_broadcasts(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
+
 		try!(write!(
-			&mut self.screen.buffer(0, self.y),
+			&mut self.screen.buffer(0, self.y, screen_width),
 			"BROADCASTS")
 		);
 		self.y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer(4, self.y),
+				&mut self.screen.buffer(4, self.y, screen_width),
 				"none"
 			));
 			self.y += 1;
@@ -82,7 +86,7 @@ impl PlayerOutput {
 
 		for broadcast in frame.broadcasts.iter() {
 			try!(write!(
-				&mut self.screen.buffer(4, self.y),
+				&mut self.screen.buffer(4, self.y, screen_width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -94,15 +98,17 @@ impl PlayerOutput {
 	}
 
 	fn render_commands(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
+
 		try!(write!(
-			&mut self.screen.buffer(0, self.y),
+			&mut self.screen.buffer(0, self.y, screen_width),
 			"COMMANDS"
 		));
 		self.y += 1;
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer(4, self.y),
+				&mut self.screen.buffer(4, self.y, screen_width),
 				"none"
 			));
 		}
@@ -110,7 +116,7 @@ impl PlayerOutput {
 		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.buffer(self.x, self.y), "{}",
+				&mut self.screen.buffer(self.x, self.y, 15), "{}",
 				command
 			));
 			self.x += 4 + command.len() as u16;
@@ -122,9 +128,11 @@ impl PlayerOutput {
 	}
 
 	fn render_status(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
+
 		self.y += 2;
 		try!(write!(
-			&mut self.screen.buffer(0, self.y),
+			&mut self.screen.buffer(0, self.y, screen_width),
 			"{}",
 			frame.status
 		));
@@ -134,9 +142,14 @@ impl PlayerOutput {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
 		let input_prompt = format!("Enter command: {}", frame.input);
 
-		try!(self.screen.buffer(0, self.y).write(input_prompt.as_bytes()));
+		try!(
+			self.screen
+				.buffer(0, self.y, screen_width)
+				.write(input_prompt.as_bytes())
+		);
 		self.screen.set_cursor(input_prompt.len() as u16, self.y);
 
 		Ok(())
