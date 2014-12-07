@@ -57,7 +57,7 @@ impl Screen {
 			buffer: &mut self.buffer_a,
 			x     : x,
 			y     : y,
-			limit : limit,
+			limit : x + limit,
 		}
 	}
 
@@ -112,6 +112,14 @@ struct BufferWriter<'r> {
 
 impl<'r> Writer for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
+		if self.y >= self.buffer.len() as u16 {
+			return Err(IoError {
+				kind  : IoErrorKind::OtherIoError,
+				desc  : "y coordinate is out of bounds",
+				detail: None,
+			})
+		}
+
 		let s = match from_utf8(buf) {
 			Some(s) =>
 				s,
@@ -125,7 +133,11 @@ impl<'r> Writer for BufferWriter<'r> {
 		};
 
 		for c in s.chars() {
-			// TODO: Check bounds
+			if self.x >= self.limit || self.x >= self.buffer[0].len()  as u16 {
+				// Truncate everything beyond the limit
+				break;
+			}
+
 			let x = self.x as uint;
 			let y = self.y as uint;
 			self.buffer[y][x] = c;
