@@ -15,12 +15,18 @@ pub trait Output {
 
 pub struct PlayerOutput {
 	screen: Screen,
+
+	x: u16,
+	y: u16,
 }
 
 impl PlayerOutput {
 	pub fn new() -> PlayerOutput {
 		PlayerOutput {
 			screen: Screen::new(),
+
+			x: 0,
+			y: 0,
 		}
 	}
 }
@@ -28,72 +34,73 @@ impl PlayerOutput {
 impl Output for PlayerOutput {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		try!(self.screen.clear());
-		let mut y = 0;
+		self.x = 0;
+		self.y = 0;
 
 		try!(write!(
-			&mut self.screen.buffer_at(0, y),
+			&mut self.screen.buffer_at(0, self.y),
 			"Your Comm ID: {}",
 			frame.self_id
 		));
-		y += 2;
+		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.buffer_at(0, y),
+			&mut self.screen.buffer_at(0, self.y),
 			"BROADCASTS")
 		);
-		y += 1;
+		self.y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer_at(4, y),
+				&mut self.screen.buffer_at(4, self.y),
 				"none"
 			));
-			y += 1;
+			self.y += 1;
 		}
 
 		for broadcast in frame.broadcasts.iter() {
 			try!(write!(
-				&mut self.screen.buffer_at(4, y),
+				&mut self.screen.buffer_at(4, self.y),
 				"{}: {}\n",
 				broadcast.sender, broadcast.message
 			));
-			y += 1;
+			self.y += 1;
 		}
-		y += 1;
+		self.y += 1;
 
 		try!(write!(
-			&mut self.screen.buffer_at(0, y),
+			&mut self.screen.buffer_at(0, self.y),
 			"COMMANDS"
 		));
-		y += 1;
+		self.y += 1;
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer_at(4, y),
+				&mut self.screen.buffer_at(4, self.y),
 				"none"
 			));
 		}
-		y += 1;
+		self.y += 1;
 
-		let mut x = 4;
+		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.buffer_at(x, y), "{}",
+				&mut self.screen.buffer_at(self.x, self.y), "{}",
 				command
 			));
-			x += 4 + command.len() as u16;
+			self.x += 4 + command.len() as u16;
 		}
 
-		y += 2;
+		self.y += 2;
 		try!(write!(
-			&mut self.screen.buffer_at(0, y),
+			&mut self.screen.buffer_at(0, self.y),
 			"{}",
 			frame.status
 		));
-		y += 1;
+		self.y += 1;
 
 		try!(write!(
-			&mut self.screen.buffer_at(0, y),
+			&mut self.screen.buffer_at(0, self.y),
 			"Enter command: {}",
 			frame.input
 		));
