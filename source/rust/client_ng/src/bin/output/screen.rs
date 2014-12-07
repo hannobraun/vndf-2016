@@ -41,7 +41,7 @@ impl Screen {
 			&mut self.stdout,
 			"\x1b[{};{}H",
 			y + 1, x + 1
-		)).unwrap(); // set curso
+		)).unwrap(); // set cursor
 
 		&mut self.stdout
 	}
