@@ -41,7 +41,7 @@ impl Output for PlayerOutput {
 		self.x = 0;
 		self.y = 0;
 
-		try!(self.render_comm_id(frame));
+		try!(self.render_ship_info(frame));
 		try!(self.render_broadcasts(frame));
 		try!(self.render_commands(frame));
 		try!(self.render_status(frame));
@@ -54,7 +54,7 @@ impl Output for PlayerOutput {
 }
 
 impl PlayerOutput {
-	fn render_comm_id(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_ship_info(&mut self, frame: &Frame) -> IoResult<()> {
 		let screen_width = self.screen.width();
 
 		try!(write!(
