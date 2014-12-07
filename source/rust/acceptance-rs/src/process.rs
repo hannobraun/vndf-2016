@@ -6,7 +6,7 @@ pub struct Process {
 	process: io::Process,
 	stdout : BufferedReader<PipeStream>,
 	stderr : BufferedReader<PipeStream>,
-	stdin  : PipeStream
+	stdin  : PipeStream,
 }
 
 impl Process {
