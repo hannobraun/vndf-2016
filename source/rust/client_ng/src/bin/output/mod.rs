@@ -40,14 +40,7 @@ impl Output for PlayerOutput {
 		try!(self.render_comm_id(frame));
 		try!(self.render_broadcasts(frame));
 		try!(self.render_commands(frame));
-
-		self.y += 2;
-		try!(write!(
-			&mut self.screen.buffer_at(0, self.y),
-			"{}",
-			frame.status
-		));
-		self.y += 1;
+		try!(self.render_status(frame));
 
 		try!(write!(
 			&mut self.screen.buffer_at(0, self.y),
@@ -124,6 +117,18 @@ impl PlayerOutput {
 			));
 			self.x += 4 + command.len() as u16;
 		}
+
+		Ok(())
+	}
+
+	fn render_status(&mut self, frame: &Frame) -> IoResult<()> {
+		self.y += 2;
+		try!(write!(
+			&mut self.screen.buffer_at(0, self.y),
+			"{}",
+			frame.status
+		));
+		self.y += 1;
 
 		Ok(())
 	}
