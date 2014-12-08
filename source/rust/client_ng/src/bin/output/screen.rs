@@ -112,6 +112,10 @@ impl ScreenBuffer {
 		self.text[0].len() as u16
 	}
 
+	pub fn height(&self) -> u16 {
+		self.text.len() as u16
+	}
+
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
 			buffer: &self.text,
@@ -166,7 +170,7 @@ struct BufferWriter<'r> {
 
 impl<'r> Writer for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
-		if self.y >= self.buffer.text.len() as u16 {
+		if self.y >= self.buffer.height() {
 			return Err(IoError {
 				kind  : IoErrorKind::OtherIoError,
 				desc  : "y coordinate is out of bounds",
