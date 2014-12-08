@@ -14,6 +14,7 @@ pub struct Input {
 	receiver     : Receiver<char>,
 	current      : String,
 	command_kinds: CommandKinds,
+	start_with   : Vec<String>,
 }
 
 impl Input {
@@ -39,6 +40,7 @@ impl Input {
 			receiver     : receiver,
 			current      : String::new(),
 			command_kinds: CommandKinds::new(),
+			start_with   : Vec::new(),
 		}
 	}
 
@@ -75,7 +77,7 @@ impl Input {
 			}
 		}
 
-		let start_with = self.command_kinds
+		self.start_with = self.command_kinds
 			.start_with(self.current.as_slice())
 			.iter()
 			.map(|kind|
@@ -85,7 +87,7 @@ impl Input {
 
 		commands.push(Err(CommandError::Incomplete(
 			self.current.clone(),
-			start_with,
+			self.start_with.clone(),
 		)));
 
 		commands
