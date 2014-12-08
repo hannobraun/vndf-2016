@@ -41,14 +41,14 @@ impl Screen {
 
 		Ok(Screen {
 			stdout  : stdout,
-			buffer_a: buffer_a,
-			buffer_b: buffer_b,
+			buffer_a: ScreenBuffer { text: buffer_a },
+			buffer_b: ScreenBuffer { text: buffer_b },
 			cursor  : (0, 0),
 		})
 	}
 
 	pub fn width(&self) -> u16 {
-		self.buffer_a[0].len() as u16
+		self.buffer_a.text[0].len() as u16
 	}
 
 	/// Origin is in upper-left corner.
@@ -66,9 +66,9 @@ impl Screen {
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
-		for (y, line) in self.buffer_a.iter().enumerate() {
+		for (y, line) in self.buffer_a.text.iter().enumerate() {
 			for (x, &c) in line.iter().enumerate() {
-				if c != self.buffer_b[y][x] {
+				if c != self.buffer_b.text[y][x] {
 					try!(write!(
 						&mut self.stdout,
 						"\x1b[{};{}H", // move cursor
@@ -81,7 +81,7 @@ impl Screen {
 
 		swap(&mut self.buffer_a, &mut self.buffer_b);
 
-		for line in self.buffer_a.iter_mut() {
+		for line in self.buffer_a.text.iter_mut() {
 			for c in line.iter_mut() {
 				*c = ' ';
 			}
@@ -100,7 +100,9 @@ impl Screen {
 }
 
 
-type ScreenBuffer = Vec<Vec<char>>;
+struct ScreenBuffer {
+	text: Vec<Vec<char>>,
+}
 
 
 struct BufferWriter<'r> {
@@ -112,7 +114,7 @@ struct BufferWriter<'r> {
 
 impl<'r> Writer for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
-		if self.y >= self.buffer.len() as u16 {
+		if self.y >= self.buffer.text.len() as u16 {
 			return Err(IoError {
 				kind  : IoErrorKind::OtherIoError,
 				desc  : "y coordinate is out of bounds",
@@ -133,14 +135,14 @@ impl<'r> Writer for BufferWriter<'r> {
 		};
 
 		for c in s.chars() {
-			if self.x >= self.limit || self.x >= self.buffer[0].len()  as u16 {
+			if self.x >= self.limit || self.x >= self.buffer.text[0].len()  as u16 {
 				// Truncate everything beyond the limit
 				break;
 			}
 
 			let x = self.x as uint;
 			let y = self.y as uint;
-			self.buffer[y][x] = c;
+			self.buffer.text[y][x] = c;
 
 			self.x += 1;
 		}
