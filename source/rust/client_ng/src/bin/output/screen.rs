@@ -191,7 +191,7 @@ impl<'r> Writer for BufferWriter<'r> {
 		};
 
 		for c in s.chars() {
-			if self.x >= self.limit || self.x >= self.buffer.text[0].len()  as u16 {
+			if self.x >= self.limit || self.x >= self.buffer.width() {
 				// Truncate everything beyond the limit
 				break;
 			}
