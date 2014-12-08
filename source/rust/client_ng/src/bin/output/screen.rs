@@ -115,6 +115,41 @@ impl ScreenBuffer {
 	pub fn width(&self) -> u16 {
 		self.text[0].len() as u16
 	}
+
+	pub fn iter(&self) -> BufferIterator {
+		BufferIterator {
+			buffer: &self.text,
+			x     : 0,
+			y     : 0,
+		}
+	}
+}
+
+
+struct BufferIterator<'r> {
+	buffer: &'r Vec<Vec<char>>,
+	x     : uint,
+	y     : uint,
+}
+
+impl<'r> Iterator<(u16, u16, char)> for BufferIterator<'r> {
+	fn next(&mut self) -> Option<(u16, u16, char)> {
+		if self.x >= self.buffer[0].len() {
+			self.x  = 0;
+			self.y += 1;
+		}
+
+		if self.y >= self.buffer.len() {
+			return None;
+		}
+
+		let result =
+			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x]));
+
+		self.x += 1;
+
+		result
+	}
 }
 
 
