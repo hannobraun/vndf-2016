@@ -63,16 +63,14 @@ impl Screen {
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
-		for (y, line) in self.buffer_a.text.iter().enumerate() {
-			for (x, &c) in line.iter().enumerate() {
-				if c != self.buffer_b.text[y][x] {
-					try!(write!(
-						&mut self.stdout,
-						"\x1b[{};{}H", // move cursor
-						y + 1, x + 1
-					));
-					try!(self.stdout.write_char(c));
-				}
+		for (x, y, c) in self.buffer_a.iter() {
+			if c != self.buffer_b.text[y as uint][x as uint] {
+				try!(write!(
+					&mut self.stdout,
+					"\x1b[{};{}H", // move cursor
+					y + 1, x + 1
+				));
+				try!(self.stdout.write_char(c));
 			}
 		}
 
