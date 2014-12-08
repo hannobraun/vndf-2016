@@ -41,6 +41,8 @@ impl Output for PlayerOutput {
 		self.x = 0;
 		self.y = 0;
 
+		// TODO: Render everything bold
+
 		try!(self.render_ship_info(frame));
 		try!(self.render_broadcasts(frame));
 		try!(self.render_commands(frame));
@@ -158,6 +160,9 @@ impl PlayerOutput {
 				.write(input_prompt.as_bytes())
 		);
 		self.screen.set_cursor(input_prompt.len() as u16, self.y);
+
+		// TODO: If auto-complete is possible, render rest of command in normal,
+		//       non-bold gray.
 
 		Ok(())
 	}

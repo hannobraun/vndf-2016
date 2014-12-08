@@ -20,6 +20,8 @@ pub struct Screen {
 	cursor  : (u16, u16),
 }
 
+// TODO: Add color support
+// TODO: Add support for bold text
 impl Screen {
 	pub fn new(width: u16, height: u16) -> IoResult<Screen> {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
