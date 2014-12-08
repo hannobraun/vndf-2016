@@ -75,12 +75,7 @@ impl Screen {
 		}
 
 		swap(&mut self.buffer_a, &mut self.buffer_b);
-
-		for line in self.buffer_a.text.iter_mut() {
-			for c in line.iter_mut() {
-				*c = ' ';
-			}
-		}
+		self.buffer_a.clear();
 
 		let (x, y) = self.cursor;
 		try!(write!(
@@ -119,6 +114,14 @@ impl ScreenBuffer {
 			buffer: &self.text,
 			x     : 0,
 			y     : 0,
+		}
+	}
+
+	pub fn clear(&mut self) {
+		for line in self.text.iter_mut() {
+			for c in line.iter_mut() {
+				*c = ' ';
+			}
 		}
 	}
 }
