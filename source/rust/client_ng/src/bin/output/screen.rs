@@ -45,7 +45,7 @@ impl Screen {
 	}
 
 	pub fn width(&self) -> u16 {
-		self.buffer_a.text[0].len() as u16
+		self.buffer_a.width()
 	}
 
 	/// Origin is in upper-left corner.
@@ -110,6 +110,10 @@ impl ScreenBuffer {
 		ScreenBuffer {
 			text: Vec::from_fn(height, |_| Vec::from_elem(width, ' '))
 		}
+	}
+
+	pub fn width(&self) -> u16 {
+		self.text[0].len() as u16
 	}
 }
 
