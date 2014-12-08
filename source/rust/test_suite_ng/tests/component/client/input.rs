@@ -70,6 +70,17 @@ fn it_should_show_applicable_commands_depending_on_input() {
 }
 
 #[test]
+fn it_should_autocomplete_on_tab() {
+	let mut client = Client::start(34481);
+
+	client.input("broadcas");
+	client.wait_until(|frame| frame.input == "broadcas".to_string());
+
+	client.input("\x09"); // Tab
+	client.wait_until(|frame| frame.input == "broadcast ".to_string());
+}
+
+#[test]
 fn it_should_display_help_messages() {
 	let mut client = Client::start(34481);
 

@@ -53,6 +53,12 @@ impl Input {
 					if c == '\x7f' { // Backspace
 						self.current.pop();
 					}
+					else if c == '\x09' { // Tab
+						if self.start_with.len() == 1 {
+							self.current = self.start_with[0].clone();
+							self.current.push(' ');
+						}
+					}
 					else if c == '\n' {
 						commands.push(Command::parse(
 							&self.command_kinds,
