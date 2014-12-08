@@ -33,16 +33,13 @@ impl Screen {
 			Err(error) => return Err(error),
 		}
 
-		let width  = width  as uint;
-		let height = height as uint;
-
-		let buffer_a = Vec::from_fn(height, |_| Vec::from_elem(width, ' '));
-		let buffer_b = buffer_a.clone();
+		let buffer_a = ScreenBuffer::new(width, height);
+		let buffer_b = ScreenBuffer { text: buffer_a.text.clone() };
 
 		Ok(Screen {
 			stdout  : stdout,
-			buffer_a: ScreenBuffer { text: buffer_a },
-			buffer_b: ScreenBuffer { text: buffer_b },
+			buffer_a: buffer_a,
+			buffer_b: buffer_b,
 			cursor  : (0, 0),
 		})
 	}
@@ -102,6 +99,17 @@ impl Screen {
 
 struct ScreenBuffer {
 	text: Vec<Vec<char>>,
+}
+
+impl ScreenBuffer {
+	pub fn new(width: u16, height: u16) -> ScreenBuffer {
+		let width  = width  as uint;
+		let height = height as uint;
+
+		ScreenBuffer {
+			text: Vec::from_fn(height, |_| Vec::from_elem(width, ' '))
+		}
+	}
 }
 
 
