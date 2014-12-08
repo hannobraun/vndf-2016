@@ -63,14 +63,17 @@ impl Screen {
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
-		for (x, y, c) in self.buffer_a.iter() {
-			if c != self.buffer_b.text[y as uint][x as uint] {
-				try!(write!(
-					&mut self.stdout,
-					"\x1b[{};{}H", // move cursor
-					y + 1, x + 1
-				));
-				try!(self.stdout.write_char(c));
+		{
+			let mut iter = self.buffer_a.iter().zip(self.buffer_b.iter());
+			for ((x, y, c_a), (_, _, c_b)) in iter {
+				if c_a != c_b {
+					try!(write!(
+						&mut self.stdout,
+						"\x1b[{};{}H", // move cursor
+						y + 1, x + 1
+					));
+					try!(self.stdout.write_char(c_a));
+				}
 			}
 		}
 
