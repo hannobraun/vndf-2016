@@ -1,13 +1,9 @@
-use test_tools::{
-	Client,
-	MockGameService,
-};
+use test_tools::Client;
 
 
 #[test]
 fn it_should_display_typed_input_to_the_user() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	let input = "I'm typing, but not submitting yet, a command";
 	client.input(input);
@@ -17,8 +13,7 @@ fn it_should_display_typed_input_to_the_user() {
 
 #[test]
 fn it_should_ignore_control_characters() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	let input = "abc\x11\x12\x13\x14";
 	client.input(input);
@@ -28,8 +23,7 @@ fn it_should_ignore_control_characters() {
 
 #[test]
 fn it_should_remove_the_last_character_with_backspace() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	client.input("abc\x7f");
 	client.wait_until(|frame| frame.input.as_slice() == "ab");
@@ -43,8 +37,7 @@ fn it_should_remove_the_last_character_with_backspace() {
 
 #[test]
 fn it_should_display_an_error_when_entering_an_invalid_command() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	client.command("invalid-command");
 	client.wait_until(|frame| frame.status.len() > 0);
@@ -52,8 +45,7 @@ fn it_should_display_an_error_when_entering_an_invalid_command() {
 
 #[test]
 fn it_should_reset_the_error_after_a_successful_command() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	client.command("invalid-command");
 	client.wait_until(|frame| frame.status.len() > 0);
@@ -64,8 +56,7 @@ fn it_should_reset_the_error_after_a_successful_command() {
 
 #[test]
 fn it_should_show_applicable_commands_depending_on_input() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	let frame = client.frame();
 	assert!(frame.commands.contains(&"broadcast".to_string()));
@@ -80,8 +71,7 @@ fn it_should_show_applicable_commands_depending_on_input() {
 
 #[test]
 fn it_should_display_help_messages() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut client = Client::start(34481);
 
 	client.command("help");
 	let help_help = client.wait_until(|frame| frame.status.len() > 0).status;
