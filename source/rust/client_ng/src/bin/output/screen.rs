@@ -34,7 +34,7 @@ impl Screen {
 		}
 
 		let buffer_a = ScreenBuffer::new(width, height);
-		let buffer_b = ScreenBuffer { text: buffer_a.text.clone() };
+		let buffer_b = buffer_a.clone();
 
 		Ok(Screen {
 			stdout  : stdout,
@@ -97,6 +97,7 @@ impl Screen {
 }
 
 
+#[deriving(Clone)]
 struct ScreenBuffer {
 	text: Vec<Vec<char>>,
 }
