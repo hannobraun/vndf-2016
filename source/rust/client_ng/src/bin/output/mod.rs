@@ -48,11 +48,9 @@ impl Output for PlayerOutput {
 
 		self.screen.set_bold(true);
 
-		try!(self.render_ship_info(frame));
-		try!(self.render_broadcasts(frame));
-		try!(self.render_commands(frame));
-		try!(self.render_status(frame));
+		try!(self.render_communication(frame));
 		try!(self.render_input(frame));
+		try!(self.render_context_info(frame));
 
 		try!(self.screen.submit());
 
@@ -61,27 +59,21 @@ impl Output for PlayerOutput {
 }
 
 impl PlayerOutput {
-	fn render_ship_info(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
 		let screen_width = self.screen.width();
 
 		try!(write!(
 			&mut self.screen.buffer(0, self.y, screen_width),
-			"SHIP INFO"
+			"YOUR ID"
 		));
 		self.y += 1;
 
 		try!(write!(
 			&mut self.screen.buffer(4, self.y, screen_width),
-			"Comm ID: {}",
+			"{}",
 			frame.self_id
 		));
-
 		self.y += 2;
-		Ok(())
-	}
-
-	fn render_broadcasts(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
 
 		try!(write!(
 			&mut self.screen.buffer(0, self.y, screen_width),
@@ -132,57 +124,6 @@ impl PlayerOutput {
 		Ok(())
 	}
 
-	fn render_commands(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
-
-		try!(write!(
-			&mut self.screen.buffer(0, self.y, screen_width),
-			"COMMANDS"
-		));
-		self.y += 1;
-
-		if frame.commands.len() == 0 {
-			try!(write!(
-				&mut self.screen.buffer(4, self.y, screen_width),
-				"none"
-			));
-		}
-
-		self.x = 4;
-		for command in frame.commands.iter() {
-			try!(write!(
-				&mut self.screen.buffer(self.x, self.y, 15),
-				"{}",
-				command
-			));
-			self.x += 4 + command.len() as screen::Pos;
-		}
-
-		self.y += 1;
-
-		Ok(())
-	}
-
-	fn render_status(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
-
-		let status = match frame.status {
-			Status::Notice(ref s) => s.as_slice(),
-			Status::Error(ref s)  => s.as_slice(),
-			Status::None          => "",
-		};
-
-		self.y += 2;
-		try!(write!(
-			&mut self.screen.buffer(0, self.y, screen_width),
-			"{}",
-			status
-		));
-		self.y += 1;
-
-		Ok(())
-	}
-
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
 		let screen_width = self.screen.width();
 		let input_prompt = format!("Enter command: {}", frame.input);
@@ -210,6 +151,51 @@ impl PlayerOutput {
 			self.screen.set_bold(previous_bold);
 			self.screen.set_color(previous_color);
 		}
+
+		Ok(())
+	}
+
+	fn render_context_info(&mut self, frame: &Frame) -> IoResult<()> {
+		let screen_width = self.screen.width();
+
+		let status = match frame.status {
+			Status::Notice(ref s) => s.as_slice(),
+			Status::Error(ref s)  => s.as_slice(),
+			Status::None          => "",
+		};
+
+		self.y += 2;
+		try!(write!(
+			&mut self.screen.buffer(0, self.y, screen_width),
+			"{}",
+			status
+		));
+		self.y += 2;
+
+		try!(write!(
+			&mut self.screen.buffer(0, self.y, screen_width),
+			"COMMANDS"
+		));
+		self.y += 1;
+
+		if frame.commands.len() == 0 {
+			try!(write!(
+				&mut self.screen.buffer(4, self.y, screen_width),
+				"none"
+			));
+		}
+
+		self.x = 4;
+		for command in frame.commands.iter() {
+			try!(write!(
+				&mut self.screen.buffer(self.x, self.y, 15),
+				"{}",
+				command
+			));
+			self.x += 4 + command.len() as screen::Pos;
+		}
+
+		self.y += 1;
 
 		Ok(())
 	}
