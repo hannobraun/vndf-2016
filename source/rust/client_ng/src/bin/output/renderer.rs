@@ -190,7 +190,7 @@ impl Renderer {
 		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.buffer().writer(self.x, self.y, 15),
+				&mut self.screen.buffer().writer(self.x, self.y, self.x + 15),
 				"{}",
 				command
 			));
