@@ -39,9 +39,9 @@ pub struct Screen {
 	buffer_b: ScreenBuffer,
 	cursor  : (u16, u16),
 	bold    : bool,
+	color   : Color,
 }
 
-// TODO: Add color support
 impl Screen {
 	pub fn new(width: u16, height: u16) -> IoResult<Screen> {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
@@ -64,6 +64,7 @@ impl Screen {
 			buffer_b: buffer_b,
 			cursor  : (0, 0),
 			bold    : false,
+			color   : Color::default(),
 		})
 	}
 
@@ -79,13 +80,19 @@ impl Screen {
 			y     : y,
 			limit : x + limit,
 			bold  : self.bold,
-			color : Color::default(),
+			color : self.color,
 		}
 	}
 
 	pub fn set_bold(&mut self, bold: bool) -> bool {
 		let previous_value = self.bold;
 		self.bold = bold;
+		previous_value
+	}
+
+	pub fn set_color(&mut self, color: Color) -> Color {
+		let previous_value = self.color;
+		self.color = color;
 		previous_value
 	}
 
