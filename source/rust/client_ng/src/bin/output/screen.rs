@@ -73,6 +73,7 @@ impl Screen {
 			x     : x,
 			y     : y,
 			limit : x + limit,
+			bold  : false,
 		}
 	}
 
@@ -196,6 +197,7 @@ struct BufferWriter<'r> {
 	x     : u16,
 	y     : u16,
 	limit : u16,
+	bold  : bool,
 }
 
 impl<'r> Writer for BufferWriter<'r> {
@@ -230,7 +232,7 @@ impl<'r> Writer for BufferWriter<'r> {
 			let y = self.y as uint;
 			self.buffer.text[y][x] = C {
 				c   : c,
-				bold: false,
+				bold: self.bold,
 			};
 
 			self.x += 1;
