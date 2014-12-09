@@ -54,10 +54,6 @@ impl Screen {
 		&mut self.buffer_a
 	}
 
-	pub fn bold(&mut self, bold: bool) -> bool {
-		self.buffer_a.bold(bold)
-	}
-
 	pub fn color(&mut self, color: Color) -> Color {
 		self.buffer_a.color(color)
 	}

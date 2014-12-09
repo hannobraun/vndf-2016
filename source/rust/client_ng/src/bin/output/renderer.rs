@@ -41,7 +41,7 @@ impl Render for Renderer {
 		self.x = 0;
 		self.y = 0;
 
-		self.screen.bold(true);
+		self.screen.buffer().bold(true);
 
 		try!(self.render_communication(frame));
 		try!(self.render_input(frame));
@@ -133,7 +133,7 @@ impl Renderer {
 		self.screen.cursor(cursor_position, self.y);
 
 		if frame.commands.len() == 1 {
-			let previous_bold  = self.screen.bold(true);
+			let previous_bold  = self.screen.buffer().bold(true);
 			let previous_color = self.screen.color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
@@ -143,7 +143,7 @@ impl Renderer {
 				rest_of_command,
 			));
 
-			self.screen.bold(previous_bold);
+			self.screen.buffer().bold(previous_bold);
 			self.screen.color(previous_color);
 		}
 
