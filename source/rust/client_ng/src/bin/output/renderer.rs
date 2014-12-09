@@ -5,9 +5,11 @@ use client::output::{
 	Status,
 };
 
-use super::Render;
+use super::{
+	Render,
+	Screen,
+};
 use super::color::Color::Black;
-use super::screen::Screen;
 
 
 pub struct Renderer {
