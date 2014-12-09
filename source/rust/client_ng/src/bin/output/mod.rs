@@ -97,14 +97,36 @@ impl PlayerOutput {
 			self.y += 1;
 		}
 
+		let mut slots = if frame.broadcasts.len() > 5 {
+			4
+		}
+		else {
+			frame.broadcasts.len()
+		};
+
 		for broadcast in frame.broadcasts.iter() {
+			if slots == 0 {
+				break;
+			}
+
 			try!(write!(
 				&mut self.screen.buffer(4, self.y, screen_width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
 			self.y += 1;
+
+			slots -= 1;
 		}
+
+		if frame.broadcasts.len() > 5 {
+			try!(write!(
+				&mut self.screen.buffer(4, self.y, screen_width),
+				"(more)",
+			));
+			self.y += 1;
+		}
+
 		self.y += 1;
 
 		Ok(())
