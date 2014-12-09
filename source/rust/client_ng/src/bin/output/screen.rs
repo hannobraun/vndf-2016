@@ -88,7 +88,7 @@ impl Screen {
 					try!(write!(
 						&mut self.stdout,
 						"\x1b[{};{}H", // move cursor
-						y + 1, x + 1
+						y + 1, x + 1,
 					));
 					if c_a.bold {
 						try!(write!(
