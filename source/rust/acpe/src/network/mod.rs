@@ -134,13 +134,17 @@ impl SocketReceiver {
 
 #[cfg(test)]
 mod test {
+	use std::io::net::ip::Port;
+	use std::rand::random;
+
 	use network::Socket;
 
 
 	#[test]
 	fn it_should_not_block_forever_on_receive() {
-		// TODO: Use random_port.
-		Socket::new(34481);
+		let min_port = 40000;
+		let max_port = 50000;
+		Socket::new(random::<Port>() % (max_port - min_port) + min_port);
 
 		// Socket is dropped immediately, but its task won't notice if it blocks on
 		// the receive operation forever.
