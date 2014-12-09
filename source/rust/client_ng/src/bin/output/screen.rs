@@ -12,18 +12,22 @@ use std::str::from_utf8;
 
 use termios::Termios;
 
+use super::color::Color;
+
 
 #[deriving(Clone, Eq, PartialEq)]
 struct C {
-	c   : char,
-	bold: bool,
+	c    : char,
+	bold : bool,
+	color: Color,
 }
 
 impl C {
 	fn new() -> C {
 		C {
-			c   : ' ',
-			bold: false,
+			c    : ' ',
+			bold : false,
+			color: Color::default(),
 		}
 	}
 }
@@ -239,8 +243,9 @@ impl<'r> Writer for BufferWriter<'r> {
 			let x = self.x as uint;
 			let y = self.y as uint;
 			self.buffer.text[y][x] = C {
-				c   : c,
-				bold: self.bold,
+				c    : c,
+				bold : self.bold,
+				color: Color::default(),
 			};
 
 			self.x += 1;
