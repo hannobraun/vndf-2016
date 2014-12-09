@@ -4,7 +4,10 @@ use super::{
 	Pos,
 	Screen,
 };
-use super::buffer::ScreenBuffer;
+use super::buffer::{
+	C,
+	ScreenBuffer,
+};
 
 
 pub struct Section {
@@ -30,7 +33,31 @@ impl Section {
 			// TODO: Take position into account
 			try!(screen.buffer().set(x + 1, y + 1, c));
 		}
-		// TODO: Write border
+
+		let mut c = C::new();
+
+		c.c = '┏';
+		try!(screen.buffer().set(             0,               0, c));
+		c.c = '┓';
+		try!(screen.buffer().set(self.width - 1,               0, c));
+		c.c = '┗';
+		try!(screen.buffer().set(             0, self.height - 1, c));
+		c.c = '┛';
+		try!(screen.buffer().set(self.width - 1, self.height - 1, c));
+
+		c.c = '━';
+		for x in range(1, self.width - 1) {
+			for &y in [0, self.height - 1].iter() {
+				try!(screen.buffer().set(x, y, c));
+			}
+		}
+
+		c.c = '┃';
+		for &x in [0, self.width - 1].iter() {
+			for y in range(1, self.height - 1) {
+				try!(screen.buffer().set(x, y, c));
+			}
+		}
 
 		Ok(())
 	}
