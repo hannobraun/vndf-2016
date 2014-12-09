@@ -40,7 +40,7 @@ fn it_should_display_an_error_when_entering_an_invalid_command() {
 	let mut client = Client::start(34481);
 
 	client.command("invalid-command");
-	client.wait_until(|frame| frame.status.len() > 0);
+	client.wait_until(|frame| frame.status.is_error());
 }
 
 #[test]
@@ -48,10 +48,10 @@ fn it_should_reset_the_error_after_a_successful_command() {
 	let mut client = Client::start(34481);
 
 	client.command("invalid-command");
-	client.wait_until(|frame| frame.status.len() > 0);
+	client.wait_until(|frame| frame.status.is_error());
 
 	client.broadcast("This is a broadcast.");
-	client.wait_until(|frame| frame.status.len() == 0);
+	client.wait_until(|frame| frame.status.is_none());
 }
 
 #[test]
@@ -85,10 +85,10 @@ fn it_should_display_help_messages() {
 	let mut client = Client::start(34481);
 
 	client.command("help");
-	let help_help = client.wait_until(|frame| frame.status.len() > 0).status;
+	let help_help = client.wait_until(|frame| frame.status.is_notice()).status;
 
 	client.command("help broadcast");
 	let help_broadcast =
 		client.wait_until(|frame| frame.status != help_help).status;
-	assert!(help_broadcast.len() > 0);
+	assert!(help_broadcast.is_notice());
 }

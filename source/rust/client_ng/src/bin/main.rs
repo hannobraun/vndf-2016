@@ -19,7 +19,10 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use args::Args;
 use client::network::Socket;
-use client::output::Frame;
+use client::output::{
+	Frame,
+	Status,
+};
 use common::protocol::{
 	Percept,
 	Step,
@@ -65,7 +68,7 @@ fn run<O: Output>(args: Args, mut output: O) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
-		status    : String::new(),
+		status    : Status::None,
 		commands  : vec![],
 		broadcasts: vec![],
 	};
@@ -89,13 +92,13 @@ fn run<O: Output>(args: Args, mut output: O) {
 						Command::StopBroadcast =>
 							action_assembler.add_step(Step::StopBroadcast),
 						Command::Help(text) => {
-							frame.status = text.to_string();
+							frame.status = Status::Notice(text.to_string());
 							reset_status = false;
 						},
 					}
 
 					if reset_status {
-						frame.status.clear();
+						frame.status = Status::None;
 					}
 				},
 				Err(error) => match error {
@@ -104,7 +107,9 @@ fn run<O: Output>(args: Args, mut output: O) {
 						frame.commands = applicable;
 					},
 					CommandError::Invalid(error, command) =>
-						frame.status = format!("\"{}\": {}", command, error),
+						frame.status = Status::Error(
+							format!("\"{}\": {}", command, error)
+						),
 				}
 			}
 		}
