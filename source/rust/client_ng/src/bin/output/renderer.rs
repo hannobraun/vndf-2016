@@ -11,6 +11,7 @@ use super::{
 	Screen,
 };
 use super::Color::Black;
+use super::util::Section;
 
 
 pub struct Renderer {
@@ -55,30 +56,33 @@ impl Render for Renderer {
 
 impl Renderer {
 	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.buffer().width();
+		let     screen_width = self.screen.buffer().width();
+		let mut section      = Section::new(screen_width, 12);
+
+		section.buffer.bold(true);
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, screen_width),
+			&mut section.buffer.writer(0, self.y, screen_width),
 			"YOUR ID"
 		));
 		self.y += 1;
 
 		try!(write!(
-			&mut self.screen.buffer().writer(4, self.y, screen_width),
+			&mut section.buffer.writer(4, self.y, screen_width),
 			"{}",
 			frame.self_id
 		));
 		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, screen_width),
+			&mut section.buffer.writer(0, self.y, screen_width),
 			"BROADCASTS")
 		);
 		self.y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, self.y, screen_width),
 				"none"
 			));
 			self.y += 1;
@@ -97,7 +101,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, self.y, screen_width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -108,13 +112,15 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, self.y, screen_width),
 				"(more)",
 			));
 			self.y += 1;
 		}
 
 		self.y += 1;
+
+		try!(section.write(&mut self.screen));
 
 		Ok(())
 	}
