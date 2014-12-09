@@ -7,17 +7,14 @@ use client::output::{
 
 use super::Render;
 use super::color::Color::Black;
-use super::screen::{
-	mod,
-	Screen,
-};
+use super::screen::Screen;
 
 
 pub struct Renderer {
 	screen: Screen,
 
-	x: screen::Pos,
-	y: screen::Pos,
+	x: super::Pos,
+	y: super::Pos,
 }
 
 impl Renderer {
@@ -129,7 +126,7 @@ impl Renderer {
 				.write(input_prompt.as_bytes())
 		);
 
-		let cursor_position = input_prompt.len() as screen::Pos;
+		let cursor_position = input_prompt.len() as super::Pos;
 		self.screen.set_cursor(cursor_position, self.y);
 
 		if frame.commands.len() == 1 {
@@ -187,7 +184,7 @@ impl Renderer {
 				"{}",
 				command
 			));
-			self.x += 4 + command.len() as screen::Pos;
+			self.x += 4 + command.len() as super::Pos;
 		}
 
 		self.y += 1;

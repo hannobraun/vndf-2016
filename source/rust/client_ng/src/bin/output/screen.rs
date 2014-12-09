@@ -12,10 +12,8 @@ use std::str::from_utf8;
 
 use termios::Termios;
 
+use super::Pos;
 use super::color::Color;
-
-
-pub type Pos = u16;
 
 
 #[deriving(Clone, Eq, PartialEq)]

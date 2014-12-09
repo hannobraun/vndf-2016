@@ -17,3 +17,6 @@ mod screen;
 pub trait Render {
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
+
+
+pub type Pos = u16;
