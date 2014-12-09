@@ -64,7 +64,7 @@ fn main() {
 }
 
 
-fn run<R: Render>(args: Args, mut output: R) {
+fn run<R: Render>(args: Args, mut renderer: R) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
@@ -133,7 +133,7 @@ fn run<R: Render>(args: Args, mut output: R) {
 		let message = action_assembler.assemble(&mut encoder);
 
 		server.send_to(message);
-		if let Err(error) = output.render(&frame) {
+		if let Err(error) = renderer.render(&frame) {
 			panic!("Error writing output: {}", error);
 		}
 
