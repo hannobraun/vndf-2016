@@ -13,6 +13,12 @@ use std::str::from_utf8;
 use termios::Termios;
 
 
+#[deriving(Clone)]
+struct C {
+	c: char,
+}
+
+
 pub struct Screen {
 	stdout  : LineBufferedWriter<StdWriter>,
 	buffer_a: ScreenBuffer,
@@ -92,12 +98,6 @@ impl Screen {
 		try!(self.stdout.flush());
 		Ok(())
 	}
-}
-
-
-#[deriving(Clone)]
-struct C {
-	c: char,
 }
 
 
