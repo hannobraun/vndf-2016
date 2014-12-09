@@ -78,6 +78,23 @@ impl ScreenBuffer {
 		}
 	}
 
+	pub fn set(&mut self, x: Pos, y: Pos, c: C) -> IoResult<()> {
+		let x = x as uint;
+		let y = y as uint;
+
+		if y > self.buffer.len() || x > self.buffer[0].len() {
+			return Err(IoError {
+				kind  : IoErrorKind::OtherIoError,
+				desc  : "Out of bounds",
+				detail: None,
+			})
+		}
+
+		self.buffer[y][x] = c;
+
+		Ok(())
+	}
+
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
 			buffer: &self.buffer,
