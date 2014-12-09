@@ -1,10 +1,10 @@
-#[deriving(Clone)]
+#[deriving(Clone, Eq, PartialEq)]
 pub enum Color {
 	Normal(ColorName),
 	Bright(ColorName),
 }
 
-#[deriving(Clone)]
+#[deriving(Clone, Eq, PartialEq)]
 pub enum ColorName {
 	Black,
 	Red,
