@@ -81,7 +81,7 @@ impl Screen {
 			buffer: &mut self.buffer_a,
 			x     : x,
 			y     : y,
-			limit : x + limit,
+			limit : limit,
 			bold  : self.bold,
 			color : self.color,
 		}
