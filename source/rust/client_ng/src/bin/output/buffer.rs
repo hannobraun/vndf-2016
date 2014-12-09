@@ -32,6 +32,8 @@ impl C {
 #[deriving(Clone)]
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
+
+	pub bold: bool,
 }
 
 impl ScreenBuffer {
@@ -40,7 +42,8 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new()))
+			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
+			bold  : false,
 		}
 	}
 
