@@ -80,6 +80,7 @@ News for December:
 - Orion test flight
 - New Horizons wakes up from hibernation
 - ISRO launch: www.astrowatch.net/2014/11/india-has-its-own-orion-isros-unmanned.html
+- http://www.nytimes.com/interactive/2014/12/09/science/space/curiosity-rover-28-months-on-mars.html?_r=0
 
 News for any month:
 - Asteroid video by Scott Manley
