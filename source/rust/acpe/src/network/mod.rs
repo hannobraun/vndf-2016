@@ -142,9 +142,7 @@ mod test {
 
 	#[test]
 	fn it_should_not_block_forever_on_receive() {
-		let min_port = 40000;
-		let max_port = 50000;
-		Socket::new(random::<Port>() % (max_port - min_port) + min_port);
+		Socket::new(random::<Port>() % 10000 + 40000);
 
 		// Socket is dropped immediately, but its task won't notice if it blocks
 		// on the receive operation forever.
