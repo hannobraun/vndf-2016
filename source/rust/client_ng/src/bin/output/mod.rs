@@ -1,6 +1,9 @@
 use std::io::IoResult;
 
-use client::output::Frame;
+use client::output::{
+	Frame,
+	Status,
+};
 
 use self::color::Color::Black;
 use self::screen::Screen;
@@ -141,11 +144,17 @@ impl PlayerOutput {
 	fn render_status(&mut self, frame: &Frame) -> IoResult<()> {
 		let screen_width = self.screen.width();
 
+		let status = match frame.status {
+			Status::Notice(ref s) => s.as_slice(),
+			Status::Error(ref s)  => s.as_slice(),
+			Status::None          => "",
+		};
+
 		self.y += 2;
 		try!(write!(
 			&mut self.screen.buffer(0, self.y, screen_width),
 			"{}",
-			frame.status
+			status
 		));
 		self.y += 1;
 
