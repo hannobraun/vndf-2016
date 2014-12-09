@@ -9,10 +9,7 @@ use std::mem::swap;
 
 use termios::Termios;
 
-use super::{
-	Color,
-	Pos,
-};
+use super::Pos;
 use super::buffer::{
 	BufferWriter,
 	ScreenBuffer,
@@ -52,10 +49,6 @@ impl Screen {
 
 	pub fn buffer(&mut self) -> &mut ScreenBuffer {
 		&mut self.buffer_a
-	}
-
-	pub fn color(&mut self, color: Color) -> Color {
-		self.buffer_a.color(color)
 	}
 
 	pub fn cursor(&mut self, x: Pos, y: Pos) {
