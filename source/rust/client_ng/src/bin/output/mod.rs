@@ -9,6 +9,7 @@ pub use self::renderer::Renderer;
 pub use self::screen::Screen;
 
 
+mod buffer;
 mod color;
 mod headless;
 mod renderer;
@@ -24,7 +25,7 @@ pub type Pos = u16;
 
 
 #[deriving(Clone, Eq, PartialEq)]
-struct C {
+pub struct C {
 	c    : char,
 	bold : bool,
 	color: Color,
