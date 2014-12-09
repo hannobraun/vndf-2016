@@ -118,7 +118,7 @@ impl Renderer {
 			self.y += 1;
 		}
 
-		self.y += 1;
+		self.y += 3;
 
 		try!(section.write(&mut self.screen));
 

@@ -24,7 +24,7 @@ impl Section {
 	pub fn write(&self, screen: &mut Screen) -> IoResult<()> {
 		for (x, y, c) in self.buffer.iter() {
 			// TODO: Take position into account
-			try!(screen.buffer().set(x, y, c));
+			try!(screen.buffer().set(x + 1, y + 1, c));
 		}
 		// TODO: Write border
 
