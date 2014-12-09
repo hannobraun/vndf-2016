@@ -54,7 +54,6 @@ impl Screen {
 		self.buffer_a.width()
 	}
 
-	/// Origin is in upper-left corner.
 	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
 		self.buffer_a.writer(x, y, limit)
 	}
