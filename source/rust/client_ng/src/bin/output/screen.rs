@@ -50,6 +50,10 @@ impl Screen {
 		})
 	}
 
+	pub fn buffer(&mut self) -> &mut ScreenBuffer {
+		&mut self.buffer_a
+	}
+
 	pub fn width(&self) -> Pos {
 		self.buffer_a.width()
 	}
