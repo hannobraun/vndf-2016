@@ -9,6 +9,8 @@ use super::buffer::ScreenBuffer;
 
 pub struct Section {
 	pub buffer: ScreenBuffer,
+	pub width : Pos,
+	pub height: Pos,
 }
 
 impl Section {
@@ -18,6 +20,8 @@ impl Section {
 
 		Section {
 			buffer: ScreenBuffer::new(inner_width, inner_height),
+			width : width,
+			height: height,
 		}
 	}
 
