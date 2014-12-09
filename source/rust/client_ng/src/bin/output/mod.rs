@@ -5,6 +5,7 @@ use client::output::Frame;
 
 pub use self::headless::HeadlessRenderer;
 pub use self::renderer::Renderer;
+pub use self::screen::Screen;
 
 
 mod color;
