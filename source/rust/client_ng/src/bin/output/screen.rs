@@ -76,7 +76,7 @@ impl Screen {
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn buffer(&mut self, x: Pos, y: Pos, limit: Pos,) -> BufferWriter {
+	pub fn buffer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
 		BufferWriter {
 			buffer: &mut self.buffer_a,
 			x     : x,
