@@ -80,6 +80,7 @@ impl Screen {
 			y     : y,
 			limit : x + limit,
 			bold  : self.bold,
+			color : Color::default(),
 		}
 	}
 
@@ -215,6 +216,7 @@ struct BufferWriter<'r> {
 	y     : u16,
 	limit : u16,
 	bold  : bool,
+	color : Color,
 }
 
 impl<'r> Writer for BufferWriter<'r> {
@@ -250,7 +252,7 @@ impl<'r> Writer for BufferWriter<'r> {
 			self.buffer.text[y][x] = C {
 				c    : c,
 				bold : self.bold,
-				color: Color::default(),
+				color: self.color,
 			};
 
 			self.x += 1;
