@@ -55,6 +55,12 @@ impl ScreenBuffer {
 		self.buffer.len() as Pos
 	}
 
+	pub fn bold(&mut self, bold: bool) -> bool {
+		let previous_value = self.bold;
+		self.bold = bold;
+		previous_value
+	}
+
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
 			buffer: &self.buffer,

@@ -71,9 +71,7 @@ impl Screen {
 	}
 
 	pub fn bold(&mut self, bold: bool) -> bool {
-		let previous_value = self.buffer_a.bold;
-		self.buffer_a.bold = bold;
-		previous_value
+		self.buffer_a.bold(bold)
 	}
 
 	pub fn color(&mut self, color: Color) -> Color {
