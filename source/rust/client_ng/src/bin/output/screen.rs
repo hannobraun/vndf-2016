@@ -70,7 +70,7 @@ impl Screen {
 		}
 	}
 
-	pub fn set_bold(&mut self, bold: bool) -> bool {
+	pub fn bold(&mut self, bold: bool) -> bool {
 		let previous_value = self.bold;
 		self.bold = bold;
 		previous_value
