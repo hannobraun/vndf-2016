@@ -19,7 +19,7 @@ pub struct C {
 }
 
 impl C {
-	fn new() -> C {
+	pub fn new() -> C {
 		C {
 			c    : ' ',
 			bold : false,
