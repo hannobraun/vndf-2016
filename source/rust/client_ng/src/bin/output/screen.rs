@@ -9,8 +9,10 @@ use std::mem::swap;
 
 use termios::Termios;
 
-use super::Pos;
-use super::buffer::ScreenBuffer;
+use super::{
+	Pos,
+	ScreenBuffer,
+};
 
 
 pub struct Screen {
