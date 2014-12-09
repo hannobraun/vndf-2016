@@ -6,10 +6,27 @@ use std::io::{
 use std::str::from_utf8;
 
 use super::{
-	C,
 	Color,
 	Pos,
 };
+
+
+#[deriving(Clone, Eq, PartialEq)]
+pub struct C {
+	pub c    : char,
+	pub bold : bool,
+	pub color: Color,
+}
+
+impl C {
+	fn new() -> C {
+		C {
+			c    : ' ',
+			bold : false,
+			color: Color::default(),
+		}
+	}
+}
 
 
 #[deriving(Clone)]
