@@ -63,6 +63,12 @@ impl ScreenBuffer {
 		previous_value
 	}
 
+	pub fn color(&mut self, color: Color) -> Color {
+		let previous_value = self.color;
+		self.color = color;
+		previous_value
+	}
+
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
 			buffer: &self.buffer,

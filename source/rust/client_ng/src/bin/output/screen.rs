@@ -74,9 +74,7 @@ impl Screen {
 	}
 
 	pub fn color(&mut self, color: Color) -> Color {
-		let previous_value = self.buffer_a.color;
-		self.buffer_a.color = color;
-		previous_value
+		self.buffer_a.color(color)
 	}
 
 	pub fn set_cursor(&mut self, x: Pos, y: Pos) {
