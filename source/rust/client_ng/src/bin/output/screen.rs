@@ -54,10 +54,6 @@ impl Screen {
 		self.buffer_a.width()
 	}
 
-	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
-		self.buffer_a.writer(x, y, limit)
-	}
-
 	pub fn bold(&mut self, bold: bool) -> bool {
 		self.buffer_a.bold(bold)
 	}
@@ -68,6 +64,10 @@ impl Screen {
 
 	pub fn cursor(&mut self, x: Pos, y: Pos) {
 		self.cursor = (x, y);
+	}
+
+	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
+		self.buffer_a.writer(x, y, limit)
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
