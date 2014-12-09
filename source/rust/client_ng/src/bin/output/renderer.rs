@@ -10,7 +10,7 @@ use super::{
 	Render,
 	Screen,
 };
-use super::color::Color::Black;
+use super::Color::Black;
 
 
 pub struct Renderer {

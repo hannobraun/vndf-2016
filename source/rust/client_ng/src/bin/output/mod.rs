@@ -3,6 +3,7 @@ use std::io::IoResult;
 use client::output::Frame;
 
 
+pub use self::color::Color;
 pub use self::headless::HeadlessRenderer;
 pub use self::renderer::Renderer;
 pub use self::screen::Screen;
