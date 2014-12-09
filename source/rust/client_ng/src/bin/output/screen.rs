@@ -80,7 +80,7 @@ impl Screen {
 						"\x1b[{};{}H", // move cursor
 						y + 1, x + 1
 					));
-					try!(self.stdout.write_char(c_a));
+					try!(self.stdout.write_char(c_a.c));
 				}
 			}
 		}
@@ -148,8 +148,8 @@ struct BufferIterator<'r> {
 	y     : uint,
 }
 
-impl<'r> Iterator<(u16, u16, char)> for BufferIterator<'r> {
-	fn next(&mut self) -> Option<(u16, u16, char)> {
+impl<'r> Iterator<(u16, u16, C)> for BufferIterator<'r> {
+	fn next(&mut self) -> Option<(u16, u16, C)> {
 		if self.x >= self.buffer[0].len() {
 			self.x  = 0;
 			self.y += 1;
@@ -160,7 +160,7 @@ impl<'r> Iterator<(u16, u16, char)> for BufferIterator<'r> {
 		}
 
 		let result =
-			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x].c));
+			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x]));
 
 		self.x += 1;
 
