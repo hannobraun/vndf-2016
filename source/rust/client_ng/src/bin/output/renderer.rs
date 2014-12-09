@@ -130,7 +130,7 @@ impl Renderer {
 		);
 
 		let cursor_position = input_prompt.len() as Pos;
-		self.screen.set_cursor(cursor_position, self.y);
+		self.screen.cursor(cursor_position, self.y);
 
 		if frame.commands.len() == 1 {
 			let previous_bold  = self.screen.bold(true);

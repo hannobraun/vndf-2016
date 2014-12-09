@@ -66,7 +66,7 @@ impl Screen {
 		self.buffer_a.color(color)
 	}
 
-	pub fn set_cursor(&mut self, x: Pos, y: Pos) {
+	pub fn cursor(&mut self, x: Pos, y: Pos) {
 		self.cursor = (x, y);
 	}
 
