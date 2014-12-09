@@ -89,7 +89,7 @@ impl ScreenBuffer {
 	pub fn clear(&mut self) {
 		for line in self.buffer.iter_mut() {
 			for c in line.iter_mut() {
-				c.c = ' ';
+				*c = C::new();
 			}
 		}
 	}
