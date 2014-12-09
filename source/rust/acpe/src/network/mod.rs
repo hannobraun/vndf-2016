@@ -146,7 +146,7 @@ mod test {
 		let max_port = 50000;
 		Socket::new(random::<Port>() % (max_port - min_port) + min_port);
 
-		// Socket is dropped immediately, but its task won't notice if it blocks on
-		// the receive operation forever.
+		// Socket is dropped immediately, but its task won't notice if it blocks
+		// on the receive operation forever.
 	}
 }
