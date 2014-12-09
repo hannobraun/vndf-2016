@@ -134,7 +134,7 @@ impl Renderer {
 
 		if frame.commands.len() == 1 {
 			let previous_bold  = self.screen.bold(true);
-			let previous_color = self.screen.set_color(Black);
+			let previous_color = self.screen.color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
@@ -144,7 +144,7 @@ impl Renderer {
 			));
 
 			self.screen.bold(previous_bold);
-			self.screen.set_color(previous_color);
+			self.screen.color(previous_color);
 		}
 
 		Ok(())
