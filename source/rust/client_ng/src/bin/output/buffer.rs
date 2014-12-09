@@ -69,6 +69,21 @@ impl ScreenBuffer {
 		previous_value
 	}
 
+	/// Origin is in upper-left corner.
+	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
+		let bold  = self.bold;
+		let color = self.color;
+
+		BufferWriter {
+			buffer: self,
+			x     : x,
+			y     : y,
+			limit : limit,
+			bold  : bold, // TODO: Remove
+			color : color, // TODO: Remove
+		}
+	}
+
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
 			buffer: &self.buffer,
