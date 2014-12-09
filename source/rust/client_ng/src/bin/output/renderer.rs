@@ -61,31 +61,33 @@ impl Renderer {
 
 		section.buffer.bold(true);
 
-		try!(write!(
-			&mut section.buffer.writer(0, self.y, screen_width),
-			"YOUR ID"
-		));
-		self.y += 1;
+		let mut y = self.y;
 
 		try!(write!(
-			&mut section.buffer.writer(4, self.y, screen_width),
+			&mut section.buffer.writer(0, y, screen_width),
+			"YOUR ID"
+		));
+		y += 1;
+
+		try!(write!(
+			&mut section.buffer.writer(4, y, screen_width),
 			"{}",
 			frame.self_id
 		));
-		self.y += 2;
+		y += 2;
 
 		try!(write!(
-			&mut section.buffer.writer(0, self.y, screen_width),
+			&mut section.buffer.writer(0, y, screen_width),
 			"BROADCASTS")
 		);
-		self.y += 1;
+		y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut section.buffer.writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, y, screen_width),
 				"none"
 			));
-			self.y += 1;
+			y += 1;
 		}
 
 		let mut slots = if frame.broadcasts.len() > 5 {
@@ -101,24 +103,23 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut section.buffer.writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, y, screen_width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
-			self.y += 1;
+			y += 1;
 
 			slots -= 1;
 		}
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut section.buffer.writer(4, self.y, screen_width),
+				&mut section.buffer.writer(4, y, screen_width),
 				"(more)",
 			));
-			self.y += 1;
 		}
 
-		self.y += 3;
+		self.y += section.height;
 
 		try!(section.write(&mut self.screen));
 
