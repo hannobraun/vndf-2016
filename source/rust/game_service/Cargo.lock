@@ -10,7 +10,7 @@ dependencies = [
 [[package]]
 name = "cgmath"
 version = "0.0.1"
-source = "git+https://github.com/bjz/cgmath-rs.git#23f14b701b43a4a1cf5e0d502737429b16ba77c9"
+source = "git+https://github.com/bjz/cgmath-rs.git#6f058eab4be48606baf476f1d82fd497c153b5a4"
 
 [[package]]
 name = "epoll"
@@ -40,7 +40,7 @@ dependencies = [
 [[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#7602d924989a0c75c4cacec44afab0764da347d0"
+source = "git+https://github.com/hannobraun/rustecs.git#197fa77e655311dddf4b903911386a32bdc6b93f"
 dependencies = [
  "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
 ]
@@ -48,5 +48,5 @@ dependencies = [
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#7602d924989a0c75c4cacec44afab0764da347d0"
+source = "git+https://github.com/hannobraun/rustecs.git#197fa77e655311dddf4b903911386a32bdc6b93f"
 

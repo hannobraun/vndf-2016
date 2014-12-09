@@ -13,9 +13,13 @@ name = "acceptance"
 version = "0.1.0"
 
 [[package]]
+name = "acpe"
+version = "0.0.1"
+
+[[package]]
 name = "cgmath"
 version = "0.0.1"
-source = "git+https://github.com/bjz/cgmath-rs.git#23f14b701b43a4a1cf5e0d502737429b16ba77c9"
+source = "git+https://github.com/bjz/cgmath-rs.git#6f058eab4be48606baf476f1d82fd497c153b5a4"
 
 [[package]]
 name = "client"
@@ -26,20 +30,27 @@ dependencies = [
  "platform_cli 0.1.0",
  "platform_desktop 0.1.0",
  "protocol 0.1.0",
- "time 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "protocol_ng 0.0.1",
+ "common 0.0.1",
+]
+
+[[package]]
+name = "common"
+version = "0.0.1"
+dependencies = [
+ "acpe 0.0.1",
 ]
 
 [[package]]
 name = "device"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#4ef8c1dd8012e0df9ffaec2f6e27ebd9d12b3f3e"
+source = "git+https://github.com/gfx-rs/gfx-rs#bba7d66d5a7b3f2fafd018feedd67fd90042bf31"
 dependencies = [
  "gfx_gl 0.1.0 (git+https://github.com/gfx-rs/gfx_gl.git)",
 ]
@@ -51,7 +62,7 @@ version = "0.1.0"
 [[package]]
 name = "freetype-rs"
 version = "0.0.0"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#3f014f4a35addd0f9b90860b7a69e115c3a43d33"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#202c5440cd430ab2adbcdd62d4c7b5233202aee0"
 
 [[package]]
 name = "game"
@@ -74,13 +85,13 @@ dependencies = [
 
 [[package]]
 name = "gcc"
-version = "0.0.2"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "gfx"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#4ef8c1dd8012e0df9ffaec2f6e27ebd9d12b3f3e"
+source = "git+https://github.com/gfx-rs/gfx-rs#bba7d66d5a7b3f2fafd018feedd67fd90042bf31"
 dependencies = [
  "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
  "gfx_macros 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
@@ -98,27 +109,27 @@ dependencies = [
 [[package]]
 name = "gfx_macros"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#4ef8c1dd8012e0df9ffaec2f6e27ebd9d12b3f3e"
+source = "git+https://github.com/gfx-rs/gfx-rs#bba7d66d5a7b3f2fafd018feedd67fd90042bf31"
 
 [[package]]
 name = "gl_common"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#591e56b7cfa254664985f1a2a032134c0fd69155"
+source = "git+https://github.com/bjz/gl-rs.git#2d4aabf2cf7128b96f13a957bfe6050855d9d66c"
 
 [[package]]
 name = "gl_generator"
 version = "0.0.1"
-source = "git+https://github.com/bjz/gl-rs.git#591e56b7cfa254664985f1a2a032134c0fd69155"
+source = "git+https://github.com/bjz/gl-rs.git#2d4aabf2cf7128b96f13a957bfe6050855d9d66c"
 dependencies = [
  "gl_common 0.0.1 (git+https://github.com/bjz/gl-rs.git)",
  "khronos_api 0.0.2 (git+https://github.com/bjz/gl-rs.git)",
- "rust-xml 0.1.2-pre (git+https://github.com/netvl/rust-xml)",
+ "xml-rs 0.1.2 (git+https://github.com/netvl/xml-rs)",
 ]
 
 [[package]]
 name = "glfw"
 version = "0.0.1"
-source = "git+https://github.com/bjz/glfw-rs.git#599d595af274b5a18b6d31ecafe61c64d38452a0"
+source = "git+https://github.com/bjz/glfw-rs.git#74b62190969a25d2e8994ab63df1689362849491"
 dependencies = [
  "glfw-sys 3.0.4 (git+https://github.com/servo/glfw?ref=cargo-3.0.4)",
  "semver 0.1.3 (git+https://github.com/rust-lang/semver)",
@@ -132,7 +143,7 @@ source = "git+https://github.com/servo/glfw?ref=cargo-3.0.4#765dace7e4125b87c764
 [[package]]
 name = "khronos_api"
 version = "0.0.2"
-source = "git+https://github.com/bjz/gl-rs.git#591e56b7cfa254664985f1a2a032134c0fd69155"
+source = "git+https://github.com/bjz/gl-rs.git#2d4aabf2cf7128b96f13a957bfe6050855d9d66c"
 
 [[package]]
 name = "net"
@@ -172,26 +183,17 @@ dependencies = [
 ]
 
 [[package]]
-name = "protocol_ng"
-version = "0.0.1"
-
-[[package]]
 name = "render"
 version = "0.1.0"
-source = "git+https://github.com/gfx-rs/gfx-rs#4ef8c1dd8012e0df9ffaec2f6e27ebd9d12b3f3e"
+source = "git+https://github.com/gfx-rs/gfx-rs#bba7d66d5a7b3f2fafd018feedd67fd90042bf31"
 dependencies = [
  "device 0.1.0 (git+https://github.com/gfx-rs/gfx-rs)",
 ]
 
 [[package]]
-name = "rust-xml"
-version = "0.1.2-pre"
-source = "git+https://github.com/netvl/rust-xml#2d9df3267aeaa4d442e1e19a4dfed733cb1397ed"
-
-[[package]]
 name = "rustecs"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#7602d924989a0c75c4cacec44afab0764da347d0"
+source = "git+https://github.com/hannobraun/rustecs.git#197fa77e655311dddf4b903911386a32bdc6b93f"
 dependencies = [
  "rustecs_macros 0.1.0 (git+https://github.com/hannobraun/rustecs.git)",
 ]
@@ -199,12 +201,12 @@ dependencies = [
 [[package]]
 name = "rustecs_macros"
 version = "0.1.0"
-source = "git+https://github.com/hannobraun/rustecs.git#7602d924989a0c75c4cacec44afab0764da347d0"
+source = "git+https://github.com/hannobraun/rustecs.git#197fa77e655311dddf4b903911386a32bdc6b93f"
 
 [[package]]
 name = "semver"
 version = "0.1.3"
-source = "git+https://github.com/rust-lang/semver#29212953f839337c672d185dde74e14b5dfb1f46"
+source = "git+https://github.com/rust-lang/semver#25494009bf185ab2e4047362506e3aa3ba0c3dea"
 
 [[package]]
 name = "stb_image"
@@ -221,14 +223,19 @@ dependencies = [
  "game_service 0.1.0",
  "platform 0.1.0",
  "protocol 0.1.0",
- "time 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "time"
-version = "0.0.3"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gcc 0.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gcc 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "xml-rs"
+version = "0.1.2"
+source = "git+https://github.com/netvl/xml-rs#f103d7516d2c00bce0c934d8b135e5858cf0ea33"
 
