@@ -9,11 +9,6 @@ extern crate common;
 extern crate test_tools;
 
 
-mod unit {
-	mod acpe {
-		mod socket;
-	}
-}
 mod component {
 	mod client {
 		mod input;
