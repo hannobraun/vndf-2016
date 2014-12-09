@@ -33,7 +33,7 @@ use input::{
 	Input,
 };
 use output::{
-	HeadlessOutput,
+	HeadlessRenderer,
 	Output,
 	Renderer,
 };
@@ -50,7 +50,7 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		match HeadlessOutput::new() {
+		match HeadlessRenderer::new() {
 			Ok(output) => run(args, output),
 			Err(error) => panic!("Error initializing output: {}", error),
 		}

@@ -202,15 +202,15 @@ impl Renderer {
 }
 
 
-pub struct HeadlessOutput;
+pub struct HeadlessRenderer;
 
-impl HeadlessOutput {
-	pub fn new() -> IoResult<HeadlessOutput> {
-		Ok(HeadlessOutput)
+impl HeadlessRenderer {
+	pub fn new() -> IoResult<HeadlessRenderer> {
+		Ok(HeadlessRenderer)
 	}
 }
 
-impl Output for HeadlessOutput {
+impl Output for HeadlessRenderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		print!("{}\n", frame.to_json());
 		Ok(())
