@@ -96,8 +96,14 @@ impl Screen {
 
 
 #[deriving(Clone)]
+struct C {
+	c: char,
+}
+
+
+#[deriving(Clone)]
 struct ScreenBuffer {
-	text: Vec<Vec<char>>,
+	text: Vec<Vec<C>>,
 }
 
 impl ScreenBuffer {
@@ -106,7 +112,7 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			text: Vec::from_fn(height, |_| Vec::from_elem(width, ' '))
+			text: Vec::from_fn(height, |_| Vec::from_elem(width, C { c: ' ' }))
 		}
 	}
 
@@ -129,7 +135,7 @@ impl ScreenBuffer {
 	pub fn clear(&mut self) {
 		for line in self.text.iter_mut() {
 			for c in line.iter_mut() {
-				*c = ' ';
+				c.c = ' ';
 			}
 		}
 	}
@@ -137,7 +143,7 @@ impl ScreenBuffer {
 
 
 struct BufferIterator<'r> {
-	buffer: &'r Vec<Vec<char>>,
+	buffer: &'r Vec<Vec<C>>,
 	x     : uint,
 	y     : uint,
 }
@@ -154,7 +160,7 @@ impl<'r> Iterator<(u16, u16, char)> for BufferIterator<'r> {
 		}
 
 		let result =
-			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x]));
+			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x].c));
 
 		self.x += 1;
 
@@ -200,7 +206,7 @@ impl<'r> Writer for BufferWriter<'r> {
 
 			let x = self.x as uint;
 			let y = self.y as uint;
-			self.buffer.text[y][x] = c;
+			self.buffer.text[y][x] = C { c: c };
 
 			self.x += 1;
 		}
