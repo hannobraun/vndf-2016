@@ -2,6 +2,8 @@
 
 source project.conf
 
+PORT=$(expr $RANDOM % 10000 + 40000)
+
 # Prepare empty file for game service output.
 TMP_OUTPUT=/tmp/vndf-game-service.out.tmp
 rm -f $TMP_OUTPUT
@@ -10,7 +12,7 @@ touch $TMP_OUTPUT
 # Build game service and, if successful, start it in the background.
 cd $RUST_SOURCE/game_service_ng
 cargo build &&
-$GAME_SERVICE_BINARY_NG 34481 &> $TMP_OUTPUT &
+$GAME_SERVICE_BINARY_NG --port=$PORT &> $TMP_OUTPUT &
 GAME_SERVICE_PID=$!
 
 # Wait until the game service has output anything. That means it's either ready
@@ -45,4 +47,4 @@ trap "cleanup" SIGINT
 
 # Run the client
 cd $RUST_SOURCE/client_ng
-cargo run
+cargo run -- --server-port=$PORT
