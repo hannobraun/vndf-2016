@@ -32,9 +32,8 @@ impl C {
 #[deriving(Clone)]
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
-
-	pub bold : bool,
-	pub color: Color,
+	bold  : bool,
+	color : Color,
 }
 
 impl ScreenBuffer {
