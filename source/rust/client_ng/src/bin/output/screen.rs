@@ -153,7 +153,7 @@ impl Screen {
 
 #[deriving(Clone)]
 struct ScreenBuffer {
-	text: Vec<Vec<C>>,
+	buffer: Vec<Vec<C>>,
 }
 
 impl ScreenBuffer {
@@ -162,28 +162,28 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			text: Vec::from_fn(height, |_| Vec::from_elem(width, C::new()))
+			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new()))
 		}
 	}
 
 	pub fn width(&self) -> Pos {
-		self.text[0].len() as Pos
+		self.buffer[0].len() as Pos
 	}
 
 	pub fn height(&self) -> Pos {
-		self.text.len() as Pos
+		self.buffer.len() as Pos
 	}
 
 	pub fn iter(&self) -> BufferIterator {
 		BufferIterator {
-			buffer: &self.text,
+			buffer: &self.buffer,
 			x     : 0,
 			y     : 0,
 		}
 	}
 
 	pub fn clear(&mut self) {
-		for line in self.text.iter_mut() {
+		for line in self.buffer.iter_mut() {
 			for c in line.iter_mut() {
 				c.c = ' ';
 			}
@@ -258,7 +258,7 @@ impl<'r> Writer for BufferWriter<'r> {
 
 			let x = self.x as uint;
 			let y = self.y as uint;
-			self.buffer.text[y][x] = C {
+			self.buffer.buffer[y][x] = C {
 				c    : c,
 				bold : self.bold,
 				color: self.color,
