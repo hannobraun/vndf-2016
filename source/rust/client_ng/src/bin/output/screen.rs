@@ -90,7 +90,19 @@ impl Screen {
 						"\x1b[{};{}H", // move cursor
 						y + 1, x + 1
 					));
+					if c_a.bold {
+						try!(write!(
+							&mut self.stdout,
+							"\x1b[1m", // set bold
+						));
+					}
 					try!(self.stdout.write_char(c_a.c));
+					if c_a.bold {
+						try!(write!(
+							&mut self.stdout,
+							"\x1b[0m", // reset attributes
+						));
+					}
 				}
 			}
 		}
