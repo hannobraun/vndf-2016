@@ -19,6 +19,15 @@ struct C {
 	bold: bool,
 }
 
+impl C {
+	fn new() -> C {
+		C {
+			c   : ' ',
+			bold: false,
+		}
+	}
+}
+
 
 pub struct Screen {
 	stdout  : LineBufferedWriter<StdWriter>,
@@ -113,7 +122,7 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			text: Vec::from_fn(height, |_| Vec::from_elem(width, C { c: ' ', bold: false }))
+			text: Vec::from_fn(height, |_| Vec::from_elem(width, C::new()))
 		}
 	}
 
