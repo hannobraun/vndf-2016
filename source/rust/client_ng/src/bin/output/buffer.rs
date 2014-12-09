@@ -33,7 +33,8 @@ impl C {
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
 
-	pub bold: bool,
+	pub bold : bool,
+	pub color: Color,
 }
 
 impl ScreenBuffer {
@@ -44,6 +45,7 @@ impl ScreenBuffer {
 		ScreenBuffer {
 			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
 			bold  : false,
+			color : Color::default(),
 		}
 	}
 

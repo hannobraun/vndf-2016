@@ -24,7 +24,6 @@ pub struct Screen {
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
 	cursor  : (Pos, Pos),
-	color   : Color,
 }
 
 impl Screen {
@@ -48,7 +47,6 @@ impl Screen {
 			buffer_a: buffer_a,
 			buffer_b: buffer_b,
 			cursor  : (0, 0),
-			color   : Color::default(),
 		})
 	}
 
@@ -58,7 +56,8 @@ impl Screen {
 
 	/// Origin is in upper-left corner.
 	pub fn buffer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
-		let bold = self.buffer_a.bold;
+		let bold  = self.buffer_a.bold;
+		let color = self.buffer_a.color;
 
 		BufferWriter {
 			buffer: &mut self.buffer_a,
@@ -66,7 +65,7 @@ impl Screen {
 			y     : y,
 			limit : limit,
 			bold  : bold,
-			color : self.color,
+			color : color,
 		}
 	}
 
@@ -75,8 +74,8 @@ impl Screen {
 	}
 
 	pub fn color(&mut self, color: Color) -> Color {
-		let previous_value = self.color;
-		self.color = color;
+		let previous_value = self.buffer_a.color;
+		self.buffer_a.color = color;
 		previous_value
 	}
 
