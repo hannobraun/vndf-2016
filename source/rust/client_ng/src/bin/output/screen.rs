@@ -14,9 +14,9 @@ use termios::Termios;
 
 use super::{
 	C,
+	Color,
 	Pos,
 };
-use super::color::Color;
 
 
 pub struct Screen {
