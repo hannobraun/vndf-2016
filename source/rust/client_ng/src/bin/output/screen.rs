@@ -13,7 +13,7 @@ use std::str::from_utf8;
 use termios::Termios;
 
 
-#[deriving(Clone)]
+#[deriving(Clone, Eq, PartialEq)]
 struct C {
 	c: char,
 }
