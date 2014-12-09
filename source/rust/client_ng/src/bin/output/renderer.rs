@@ -5,7 +5,7 @@ use client::output::{
 	Status,
 };
 
-use super::Output;
+use super::Render;
 use super::color::Color::Black;
 use super::screen::{
 	mod,
@@ -36,7 +36,7 @@ impl Renderer {
 	}
 }
 
-impl Output for Renderer {
+impl Render for Renderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		self.x = 0;
 		self.y = 0;

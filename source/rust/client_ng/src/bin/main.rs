@@ -34,7 +34,7 @@ use input::{
 };
 use output::{
 	HeadlessRenderer,
-	Output,
+	Render,
 	Renderer,
 };
 
@@ -64,7 +64,7 @@ fn main() {
 }
 
 
-fn run<O: Output>(args: Args, mut output: O) {
+fn run<R: Render>(args: Args, mut output: R) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),

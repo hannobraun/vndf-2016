@@ -11,7 +11,7 @@ mod renderer;
 mod screen;
 
 
-pub trait Output {
+pub trait Render {
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
@@ -24,7 +24,7 @@ impl HeadlessRenderer {
 	}
 }
 
-impl Output for HeadlessRenderer {
+impl Render for HeadlessRenderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		print!("{}\n", frame.to_json());
 		Ok(())
