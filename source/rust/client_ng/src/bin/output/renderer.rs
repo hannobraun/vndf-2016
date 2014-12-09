@@ -124,7 +124,7 @@ impl Renderer {
 
 		self.y += section.height;
 
-		try!(section.write(&mut self.screen));
+		try!(section.write(0, 0, &mut self.screen));
 
 		Ok(())
 	}

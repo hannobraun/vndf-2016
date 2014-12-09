@@ -28,34 +28,33 @@ impl Section {
 		}
 	}
 
-	pub fn write(&self, screen: &mut Screen) -> IoResult<()> {
-		for (x, y, c) in self.buffer.iter() {
-			// TODO: Take position into account
-			try!(screen.buffer().set(x + 1, y + 1, c));
+	pub fn write(&self, x: Pos, y: Pos, screen: &mut Screen) -> IoResult<()> {
+		for (buffer_x, buffer_y, c) in self.buffer.iter() {
+			try!(screen.buffer().set(x + buffer_x + 1, y + buffer_y + 1, c));
 		}
 
 		let mut c = C::new();
 
 		c.c = '┏';
-		try!(screen.buffer().set(             0,               0, c));
+		try!(screen.buffer().set(x +              0, y +               0, c));
 		c.c = '┓';
-		try!(screen.buffer().set(self.width - 1,               0, c));
+		try!(screen.buffer().set(x + self.width - 1, y +               0, c));
 		c.c = '┗';
-		try!(screen.buffer().set(             0, self.height - 1, c));
+		try!(screen.buffer().set(x +              0, y + self.height - 1, c));
 		c.c = '┛';
-		try!(screen.buffer().set(self.width - 1, self.height - 1, c));
+		try!(screen.buffer().set(x + self.width - 1, y + self.height - 1, c));
 
 		c.c = '━';
-		for x in range(1, self.width - 1) {
-			for &y in [0, self.height - 1].iter() {
-				try!(screen.buffer().set(x, y, c));
+		for rel_x in range(1, self.width - 1) {
+			for &rel_y in [0, self.height - 1].iter() {
+				try!(screen.buffer().set(x + rel_x, y + rel_y, c));
 			}
 		}
 
 		c.c = '┃';
-		for &x in [0, self.width - 1].iter() {
-			for y in range(1, self.height - 1) {
-				try!(screen.buffer().set(x, y, c));
+		for &rel_x in [0, self.width - 1].iter() {
+			for rel_y in range(1, self.height - 1) {
+				try!(screen.buffer().set(x + rel_x, y + rel_y, c));
 			}
 		}
 
