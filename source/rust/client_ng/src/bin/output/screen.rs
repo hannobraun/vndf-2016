@@ -15,7 +15,8 @@ use termios::Termios;
 
 #[deriving(Clone, Eq, PartialEq)]
 struct C {
-	c: char,
+	c   : char,
+	bold: bool,
 }
 
 
@@ -112,7 +113,7 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			text: Vec::from_fn(height, |_| Vec::from_elem(width, C { c: ' ' }))
+			text: Vec::from_fn(height, |_| Vec::from_elem(width, C { c: ' ', bold: false }))
 		}
 	}
 
@@ -206,7 +207,10 @@ impl<'r> Writer for BufferWriter<'r> {
 
 			let x = self.x as uint;
 			let y = self.y as uint;
-			self.buffer.text[y][x] = C { c: c };
+			self.buffer.text[y][x] = C {
+				c   : c,
+				bold: false,
+			};
 
 			self.x += 1;
 		}
