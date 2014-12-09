@@ -15,6 +15,7 @@ mod color;
 mod headless;
 mod renderer;
 mod screen;
+mod util;
 
 
 pub trait Render {
