@@ -55,7 +55,7 @@ impl Screen {
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn buffer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
+	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
 		let bold  = self.buffer_a.bold;
 		let color = self.buffer_a.color;
 
