@@ -34,6 +34,7 @@ pub struct Screen {
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
 	cursor  : (u16, u16),
+	bold    : bool,
 }
 
 // TODO: Add color support
@@ -59,6 +60,7 @@ impl Screen {
 			buffer_a: buffer_a,
 			buffer_b: buffer_b,
 			cursor  : (0, 0),
+			bold    : false,
 		})
 	}
 
@@ -73,8 +75,14 @@ impl Screen {
 			x     : x,
 			y     : y,
 			limit : x + limit,
-			bold  : false,
+			bold  : self.bold,
 		}
+	}
+
+	pub fn set_bold(&mut self, bold: bool) -> bool {
+		let previous_value = self.bold;
+		self.bold = bold;
+		previous_value
 	}
 
 	pub fn set_cursor(&mut self, x: u16, y: u16) {
