@@ -5,6 +5,7 @@ use client::output::Frame;
 use self::screen::Screen;
 
 
+mod color;
 mod screen;
 
 
