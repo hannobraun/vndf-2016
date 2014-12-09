@@ -41,7 +41,7 @@ impl Output for PlayerOutput {
 		self.x = 0;
 		self.y = 0;
 
-		// TODO: Render everything bold
+		self.screen.set_bold(true);
 
 		try!(self.render_ship_info(frame));
 		try!(self.render_broadcasts(frame));
