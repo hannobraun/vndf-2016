@@ -2,6 +2,7 @@ use std::io::IoResult;
 
 use client::output::Frame;
 
+use self::color::Color::Black;
 use self::screen::Screen;
 
 
@@ -160,10 +161,24 @@ impl PlayerOutput {
 				.buffer(0, self.y, screen_width)
 				.write(input_prompt.as_bytes())
 		);
-		self.screen.set_cursor(input_prompt.len() as u16, self.y);
 
-		// TODO: If auto-complete is possible, render rest of command in normal,
-		//       non-bold gray.
+		let cursor_position = input_prompt.len() as u16;
+		self.screen.set_cursor(cursor_position, self.y);
+
+		if frame.commands.len() == 1 {
+			let previous_bold  = self.screen.set_bold(true);
+			let previous_color = self.screen.set_color(Black);
+
+			let rest_of_command = frame.commands[0][frame.input.len() ..];
+			try!(write!(
+				&mut self.screen.buffer(cursor_position, self.y, screen_width),
+				"{}",
+				rest_of_command,
+			));
+
+			self.screen.set_bold(previous_bold);
+			self.screen.set_color(previous_color);
+		}
 
 		Ok(())
 	}
