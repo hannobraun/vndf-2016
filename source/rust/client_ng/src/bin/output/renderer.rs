@@ -130,33 +130,41 @@ impl Renderer {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.buffer().width();
-		let input_prompt = format!("Enter command: {}", frame.input);
+		let     screen_width = self.screen.buffer().width();
+		// TODO: Reuse section
+		let mut section      = Section::new(screen_width, 4);
 
-		try!(
-			self.screen
-				.buffer()
-				.writer(0, self.y, screen_width)
-				.write(input_prompt.as_bytes())
-		);
+		section.buffer.bold(true);
 
-		let cursor_position = input_prompt.len() as Pos;
-		self.screen.cursor(cursor_position, self.y);
+		try!(write!(
+			&mut section.buffer.writer(0, 0, screen_width),
+			"ENTER COMMAND",
+		));
+
+		try!(write!(
+			&mut section.buffer.writer(4, 1, screen_width),
+			"{}",
+			frame.input,
+		));
+
+		let cursor_position = 1 + 4 + frame.input.len() as Pos;
+		self.screen.cursor(cursor_position, self.y + 2);
 
 		if frame.commands.len() == 1 {
-			let previous_bold  = self.screen.buffer().bold(true);
-			let previous_color = self.screen.buffer().color(Black);
+			section.buffer.bold(true);
+			section.buffer.color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut self.screen.buffer().writer(cursor_position, self.y, screen_width),
+				&mut section.buffer.writer(cursor_position, 1, screen_width),
 				"{}",
 				rest_of_command,
 			));
-
-			self.screen.buffer().bold(previous_bold);
-			self.screen.buffer().color(previous_color);
 		}
+
+		try!(section.write(0, self.y, &mut self.screen));
+
+		self.y += section.height;
 
 		Ok(())
 	}
