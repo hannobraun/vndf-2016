@@ -70,14 +70,11 @@ impl ScreenBuffer {
 
 	/// Origin is in upper-left corner.
 	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
-		let color = self.color;
-
 		BufferWriter {
 			buffer: self,
 			x     : x,
 			y     : y,
 			limit : limit,
-			color : color, // TODO: Remove
 		}
 	}
 
@@ -104,7 +101,6 @@ pub struct BufferWriter<'r> {
 	pub x     : Pos,
 	pub y     : Pos,
 	pub limit : Pos,
-	pub color : Color,
 }
 
 impl<'r> Writer for BufferWriter<'r> {
@@ -140,7 +136,7 @@ impl<'r> Writer for BufferWriter<'r> {
 			self.buffer.buffer[y][x] = C {
 				c    : c,
 				bold : self.buffer.bold,
-				color: self.color,
+				color: self.buffer.color,
 			};
 
 			self.x += 1;
