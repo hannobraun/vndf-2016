@@ -21,8 +21,8 @@ pub trait Output {
 pub struct PlayerOutput {
 	screen: Screen,
 
-	x: u16,
-	y: u16,
+	x: screen::Pos,
+	y: screen::Pos,
 }
 
 impl PlayerOutput {
@@ -133,7 +133,7 @@ impl PlayerOutput {
 				"{}",
 				command
 			));
-			self.x += 4 + command.len() as u16;
+			self.x += 4 + command.len() as screen::Pos;
 		}
 
 		self.y += 1;
@@ -171,7 +171,7 @@ impl PlayerOutput {
 				.write(input_prompt.as_bytes())
 		);
 
-		let cursor_position = input_prompt.len() as u16;
+		let cursor_position = input_prompt.len() as screen::Pos;
 		self.screen.set_cursor(cursor_position, self.y);
 
 		if frame.commands.len() == 1 {

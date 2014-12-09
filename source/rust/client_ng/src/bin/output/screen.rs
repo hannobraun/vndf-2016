@@ -15,6 +15,9 @@ use termios::Termios;
 use super::color::Color;
 
 
+pub type Pos = u16;
+
+
 #[deriving(Clone, Eq, PartialEq)]
 struct C {
 	c    : char,
@@ -37,13 +40,13 @@ pub struct Screen {
 	stdout  : LineBufferedWriter<StdWriter>,
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
-	cursor  : (u16, u16),
+	cursor  : (Pos, Pos),
 	bold    : bool,
 	color   : Color,
 }
 
 impl Screen {
-	pub fn new(width: u16, height: u16) -> IoResult<Screen> {
+	pub fn new(width: Pos, height: Pos) -> IoResult<Screen> {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
 		termios.echo(false);
 		termios.canonical_input(false);
@@ -68,12 +71,12 @@ impl Screen {
 		})
 	}
 
-	pub fn width(&self) -> u16 {
+	pub fn width(&self) -> Pos {
 		self.buffer_a.width()
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn buffer(&mut self, x: u16, y: u16, limit: u16,) -> BufferWriter {
+	pub fn buffer(&mut self, x: Pos, y: Pos, limit: Pos,) -> BufferWriter {
 		BufferWriter {
 			buffer: &mut self.buffer_a,
 			x     : x,
@@ -96,7 +99,7 @@ impl Screen {
 		previous_value
 	}
 
-	pub fn set_cursor(&mut self, x: u16, y: u16) {
+	pub fn set_cursor(&mut self, x: Pos, y: Pos) {
 		self.cursor = (x, y);
 	}
 
@@ -154,7 +157,7 @@ struct ScreenBuffer {
 }
 
 impl ScreenBuffer {
-	pub fn new(width: u16, height: u16) -> ScreenBuffer {
+	pub fn new(width: Pos, height: Pos) -> ScreenBuffer {
 		let width  = width  as uint;
 		let height = height as uint;
 
@@ -163,12 +166,12 @@ impl ScreenBuffer {
 		}
 	}
 
-	pub fn width(&self) -> u16 {
-		self.text[0].len() as u16
+	pub fn width(&self) -> Pos {
+		self.text[0].len() as Pos
 	}
 
-	pub fn height(&self) -> u16 {
-		self.text.len() as u16
+	pub fn height(&self) -> Pos {
+		self.text.len() as Pos
 	}
 
 	pub fn iter(&self) -> BufferIterator {
@@ -195,8 +198,8 @@ struct BufferIterator<'r> {
 	y     : uint,
 }
 
-impl<'r> Iterator<(u16, u16, C)> for BufferIterator<'r> {
-	fn next(&mut self) -> Option<(u16, u16, C)> {
+impl<'r> Iterator<(Pos, Pos, C)> for BufferIterator<'r> {
+	fn next(&mut self) -> Option<(Pos, Pos, C)> {
 		if self.x >= self.buffer[0].len() {
 			self.x  = 0;
 			self.y += 1;
@@ -207,7 +210,7 @@ impl<'r> Iterator<(u16, u16, C)> for BufferIterator<'r> {
 		}
 
 		let result =
-			Some((self.x as u16, self.y as u16, self.buffer[self.y][self.x]));
+			Some((self.x as Pos, self.y as Pos, self.buffer[self.y][self.x]));
 
 		self.x += 1;
 
@@ -218,9 +221,9 @@ impl<'r> Iterator<(u16, u16, C)> for BufferIterator<'r> {
 
 struct BufferWriter<'r> {
 	buffer: &'r mut ScreenBuffer,
-	x     : u16,
-	y     : u16,
-	limit : u16,
+	x     : Pos,
+	y     : Pos,
+	limit : Pos,
 	bold  : bool,
 	color : Color,
 }
