@@ -4,9 +4,9 @@
 		{
 			"path": ".",
 			"file_exclude_patterns": [
-				"vendor/*",
-				"output/*",
-				"source/**/target"
+				"/vendor/*",
+				"/output/*",
+				"/source/**/target"
 			]
 		}
 	]
