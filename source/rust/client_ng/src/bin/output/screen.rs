@@ -10,10 +10,7 @@ use std::mem::swap;
 use termios::Termios;
 
 use super::Pos;
-use super::buffer::{
-	BufferWriter,
-	ScreenBuffer,
-};
+use super::buffer::ScreenBuffer;
 
 
 pub struct Screen {
@@ -53,10 +50,6 @@ impl Screen {
 
 	pub fn cursor(&mut self, x: Pos, y: Pos) {
 		self.cursor = (x, y);
-	}
-
-	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
-		self.buffer_a.writer(x, y, limit)
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {

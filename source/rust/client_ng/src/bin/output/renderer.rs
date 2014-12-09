@@ -58,27 +58,27 @@ impl Renderer {
 		let screen_width = self.screen.buffer().width();
 
 		try!(write!(
-			&mut self.screen.writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, screen_width),
 			"YOUR ID"
 		));
 		self.y += 1;
 
 		try!(write!(
-			&mut self.screen.writer(4, self.y, screen_width),
+			&mut self.screen.buffer().writer(4, self.y, screen_width),
 			"{}",
 			frame.self_id
 		));
 		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, screen_width),
 			"BROADCASTS")
 		);
 		self.y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.screen.writer(4, self.y, screen_width),
+				&mut self.screen.buffer().writer(4, self.y, screen_width),
 				"none"
 			));
 			self.y += 1;
@@ -97,7 +97,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut self.screen.writer(4, self.y, screen_width),
+				&mut self.screen.buffer().writer(4, self.y, screen_width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -108,7 +108,7 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut self.screen.writer(4, self.y, screen_width),
+				&mut self.screen.buffer().writer(4, self.y, screen_width),
 				"(more)",
 			));
 			self.y += 1;
@@ -125,6 +125,7 @@ impl Renderer {
 
 		try!(
 			self.screen
+				.buffer()
 				.writer(0, self.y, screen_width)
 				.write(input_prompt.as_bytes())
 		);
@@ -138,7 +139,7 @@ impl Renderer {
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut self.screen.writer(cursor_position, self.y, screen_width),
+				&mut self.screen.buffer().writer(cursor_position, self.y, screen_width),
 				"{}",
 				rest_of_command,
 			));
@@ -161,21 +162,21 @@ impl Renderer {
 
 		self.y += 2;
 		try!(write!(
-			&mut self.screen.writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, screen_width),
 			"{}",
 			status
 		));
 		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, screen_width),
 			"COMMANDS"
 		));
 		self.y += 1;
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.writer(4, self.y, screen_width),
+				&mut self.screen.buffer().writer(4, self.y, screen_width),
 				"none"
 			));
 		}
@@ -183,7 +184,7 @@ impl Renderer {
 		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.writer(self.x, self.y, 15),
+				&mut self.screen.buffer().writer(self.x, self.y, 15),
 				"{}",
 				command
 			));
