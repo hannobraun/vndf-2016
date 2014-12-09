@@ -54,10 +54,6 @@ impl Screen {
 		&mut self.buffer_a
 	}
 
-	pub fn width(&self) -> Pos {
-		self.buffer_a.width()
-	}
-
 	pub fn bold(&mut self, bold: bool) -> bool {
 		self.buffer_a.bold(bold)
 	}

@@ -55,7 +55,7 @@ impl Render for Renderer {
 
 impl Renderer {
 	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
+		let screen_width = self.screen.buffer().width();
 
 		try!(write!(
 			&mut self.screen.writer(0, self.y, screen_width),
@@ -120,7 +120,7 @@ impl Renderer {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
+		let screen_width = self.screen.buffer().width();
 		let input_prompt = format!("Enter command: {}", frame.input);
 
 		try!(
@@ -151,7 +151,7 @@ impl Renderer {
 	}
 
 	fn render_context_info(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.width();
+		let screen_width = self.screen.buffer().width();
 
 		let status = match frame.status {
 			Status::Notice(ref s) => s.as_slice(),
