@@ -35,7 +35,7 @@ use input::{
 use output::{
 	HeadlessOutput,
 	Output,
-	PlayerOutput,
+	Renderer,
 };
 
 
@@ -56,7 +56,7 @@ fn main() {
 		}
 	}
 	else {
-		match PlayerOutput::new() {
+		match Renderer::new() {
 			Ok(output) => run(args, output),
 			Err(error) => panic!("Error initializing output: {}", error),
 		}

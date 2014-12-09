@@ -18,21 +18,21 @@ pub trait Output {
 }
 
 
-pub struct PlayerOutput {
+pub struct Renderer {
 	screen: Screen,
 
 	x: screen::Pos,
 	y: screen::Pos,
 }
 
-impl PlayerOutput {
-	pub fn new() -> IoResult<PlayerOutput> {
+impl Renderer {
+	pub fn new() -> IoResult<Renderer> {
 		let screen = match Screen::new(80, 24) {
 			Ok(screen) => screen,
 			Err(error) => return Err(error),
 		};
 
-		Ok(PlayerOutput {
+		Ok(Renderer {
 			screen: screen,
 
 			x: 0,
@@ -41,7 +41,7 @@ impl PlayerOutput {
 	}
 }
 
-impl Output for PlayerOutput {
+impl Output for Renderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		self.x = 0;
 		self.y = 0;
@@ -58,7 +58,7 @@ impl Output for PlayerOutput {
 	}
 }
 
-impl PlayerOutput {
+impl Renderer {
 	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
 		let screen_width = self.screen.width();
 
