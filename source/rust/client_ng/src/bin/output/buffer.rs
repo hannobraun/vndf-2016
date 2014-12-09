@@ -101,33 +101,6 @@ impl ScreenBuffer {
 }
 
 
-pub struct BufferIterator<'r> {
-	buffer: &'r Vec<Vec<C>>,
-	x     : uint,
-	y     : uint,
-}
-
-impl<'r> Iterator<(Pos, Pos, C)> for BufferIterator<'r> {
-	fn next(&mut self) -> Option<(Pos, Pos, C)> {
-		if self.x >= self.buffer[0].len() {
-			self.x  = 0;
-			self.y += 1;
-		}
-
-		if self.y >= self.buffer.len() {
-			return None;
-		}
-
-		let result =
-			Some((self.x as Pos, self.y as Pos, self.buffer[self.y][self.x]));
-
-		self.x += 1;
-
-		result
-	}
-}
-
-
 pub struct BufferWriter<'r> {
 	pub buffer: &'r mut ScreenBuffer,
 	pub x     : Pos,
@@ -177,5 +150,32 @@ impl<'r> Writer for BufferWriter<'r> {
 		}
 
 		Ok(())
+	}
+}
+
+
+pub struct BufferIterator<'r> {
+	buffer: &'r Vec<Vec<C>>,
+	x     : uint,
+	y     : uint,
+}
+
+impl<'r> Iterator<(Pos, Pos, C)> for BufferIterator<'r> {
+	fn next(&mut self) -> Option<(Pos, Pos, C)> {
+		if self.x >= self.buffer[0].len() {
+			self.x  = 0;
+			self.y += 1;
+		}
+
+		if self.y >= self.buffer.len() {
+			return None;
+		}
+
+		let result =
+			Some((self.x as Pos, self.y as Pos, self.buffer[self.y][self.x]));
+
+		self.x += 1;
+
+		result
 	}
 }
