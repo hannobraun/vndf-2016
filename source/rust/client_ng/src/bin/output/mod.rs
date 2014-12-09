@@ -21,3 +21,21 @@ pub trait Render {
 
 
 pub type Pos = u16;
+
+
+#[deriving(Clone, Eq, PartialEq)]
+struct C {
+	c    : char,
+	bold : bool,
+	color: Color,
+}
+
+impl C {
+	fn new() -> C {
+		C {
+			c    : ' ',
+			bold : false,
+			color: Color::default(),
+		}
+	}
+}

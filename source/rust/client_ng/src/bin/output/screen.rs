@@ -12,26 +12,11 @@ use std::str::from_utf8;
 
 use termios::Termios;
 
-use super::Pos;
+use super::{
+	C,
+	Pos,
+};
 use super::color::Color;
-
-
-#[deriving(Clone, Eq, PartialEq)]
-struct C {
-	c    : char,
-	bold : bool,
-	color: Color,
-}
-
-impl C {
-	fn new() -> C {
-		C {
-			c    : ' ',
-			bold : false,
-			color: Color::default(),
-		}
-	}
-}
 
 
 pub struct Screen {
