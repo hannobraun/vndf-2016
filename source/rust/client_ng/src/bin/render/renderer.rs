@@ -153,7 +153,7 @@ impl Renderer {
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut section.buffer.writer(cursor_position, 1, screen_width),
+				&mut section.buffer.writer(cursor_position - 1, 1, screen_width),
 				"{}",
 				rest_of_command,
 			));
