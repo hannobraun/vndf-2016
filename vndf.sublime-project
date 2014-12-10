@@ -6,7 +6,7 @@
 			"file_exclude_patterns": [
 				"/vendor/*",
 				"/output/*",
-				"/source/**/target"
+				"source/*/target/**"
 			]
 		}
 	]
