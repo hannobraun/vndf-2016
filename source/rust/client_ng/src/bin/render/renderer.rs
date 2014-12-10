@@ -66,33 +66,29 @@ impl Renderer {
 
 		section.buffer.bold(true);
 
-		let mut y = self.y;
+		let y = self.y;
 
 		try!(write!(
-			&mut section.buffer.writer(0, y, width),
+			&mut section.buffer.writer(0, y + 0, width),
 			"YOUR ID"
 		));
-		y += 1;
 
 		try!(write!(
-			&mut section.buffer.writer(4, y, width),
+			&mut section.buffer.writer(4, y + 1, width),
 			"{}",
 			frame.self_id
 		));
-		y += 2;
 
 		try!(write!(
-			&mut section.buffer.writer(0, y, width),
+			&mut section.buffer.writer(0, y + 3, width),
 			"BROADCASTS")
 		);
-		y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut section.buffer.writer(4, y, width),
+				&mut section.buffer.writer(4, y + 4, width),
 				"none"
 			));
-			y += 1;
 		}
 
 		let mut slots = if frame.broadcasts.len() > 5 {
@@ -102,24 +98,23 @@ impl Renderer {
 			frame.broadcasts.len()
 		};
 
-		for broadcast in frame.broadcasts.iter() {
+		for (i, broadcast) in frame.broadcasts.iter().enumerate() {
 			if slots == 0 {
 				break;
 			}
 
 			try!(write!(
-				&mut section.buffer.writer(4, y, width),
+				&mut section.buffer.writer(4, y + 4 + i as Pos, width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
-			y += 1;
 
 			slots -= 1;
 		}
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut section.buffer.writer(4, y, width),
+				&mut section.buffer.writer(4, y + 4 + 4, width),
 				"(more)",
 			));
 		}
