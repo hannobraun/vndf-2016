@@ -39,6 +39,8 @@ impl Renderer {
 
 impl Render for Renderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
+		// TODO: Color static UI elements blue
+
 		self.x = 0;
 		self.y = 0;
 
