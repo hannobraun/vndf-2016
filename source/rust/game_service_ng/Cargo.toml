@@ -12,5 +12,9 @@ path = "src/lib/lib.rs"
 name = "vndf-game-service-ng"
 
 
+[dependencies]
+time = "*"
+
+
 [dependencies.common]
 path = "../common"
