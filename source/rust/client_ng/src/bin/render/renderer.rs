@@ -60,36 +60,36 @@ impl Render for Renderer {
 
 impl Renderer {
 	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
-		let     screen_width = self.screen.buffer().width();
+		let     width   = self.screen.buffer().width();
 		// TODO: Reuse section
-		let mut section      = Section::new(screen_width, 12);
+		let mut section = Section::new(width, 12);
 
 		section.buffer.bold(true);
 
 		let mut y = self.y;
 
 		try!(write!(
-			&mut section.buffer.writer(0, y, screen_width),
+			&mut section.buffer.writer(0, y, width),
 			"YOUR ID"
 		));
 		y += 1;
 
 		try!(write!(
-			&mut section.buffer.writer(4, y, screen_width),
+			&mut section.buffer.writer(4, y, width),
 			"{}",
 			frame.self_id
 		));
 		y += 2;
 
 		try!(write!(
-			&mut section.buffer.writer(0, y, screen_width),
+			&mut section.buffer.writer(0, y, width),
 			"BROADCASTS")
 		);
 		y += 1;
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut section.buffer.writer(4, y, screen_width),
+				&mut section.buffer.writer(4, y, width),
 				"none"
 			));
 			y += 1;
@@ -108,7 +108,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut section.buffer.writer(4, y, screen_width),
+				&mut section.buffer.writer(4, y, width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -119,7 +119,7 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut section.buffer.writer(4, y, screen_width),
+				&mut section.buffer.writer(4, y, width),
 				"(more)",
 			));
 		}
