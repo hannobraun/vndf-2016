@@ -48,7 +48,7 @@ impl Render for Renderer {
 
 		// TODO: Those shouldn't be methods on Renderer but rather on separate
 		//       structs. The calls should return the height of the section.
-		try!(self.render_communication(frame));
+		try!(self.render_comm(frame));
 		try!(self.render_input(frame));
 		try!(self.render_context_info(frame));
 
@@ -59,7 +59,7 @@ impl Render for Renderer {
 }
 
 impl Renderer {
-	fn render_communication(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_comm(&mut self, frame: &Frame) -> IoResult<()> {
 		let     width   = self.screen.buffer().width();
 		// TODO: Reuse section
 		let mut section = Section::new(width, 12);
