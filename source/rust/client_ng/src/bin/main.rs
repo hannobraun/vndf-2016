@@ -32,7 +32,7 @@ use input::{
 	CommandError,
 	Input,
 };
-use output::{
+use render::{
 	HeadlessRenderer,
 	Render,
 	Renderer,
@@ -42,7 +42,7 @@ use output::{
 mod action_assembler;
 mod args;
 mod input;
-mod output;
+mod render;
 mod termios;
 
 
