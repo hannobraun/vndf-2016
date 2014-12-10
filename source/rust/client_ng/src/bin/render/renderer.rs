@@ -99,7 +99,9 @@ impl Renderer {
 			frame.broadcasts.len()
 		};
 
-		for (i, broadcast) in frame.broadcasts.iter().enumerate() {
+		let mut broadcasts = frame.broadcasts.clone();
+		broadcasts.sort_by(|a, b| a.sender.cmp(&b.sender));
+		for (i, broadcast) in broadcasts.iter().enumerate() {
 			if slots == 0 {
 				break;
 			}
