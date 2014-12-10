@@ -26,6 +26,10 @@ impl Client {
 		}
 	}
 
+	pub fn stop(&mut self) {
+		self.process.kill()
+	}
+
 	pub fn input(&mut self, input: &str) {
 		self.process.write_stdin(input);
 	}
