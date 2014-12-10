@@ -1,4 +1,5 @@
 use libc;
+use std::cmp::min;
 use std::io::{
 	stdout,
 	IoResult,
@@ -51,6 +52,9 @@ impl Screen {
 	}
 
 	pub fn cursor(&mut self, x: Pos, y: Pos) {
+		let x = min(x, self.buffer_a.width()  - 1);
+		let y = min(y, self.buffer_a.height() - 1);
+
 		self.cursor = (x, y);
 	}
 
