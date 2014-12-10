@@ -1,6 +1,6 @@
 use std::io::IoResult;
 
-use client::output::{
+use client::render::{
 	Frame,
 	Status,
 };

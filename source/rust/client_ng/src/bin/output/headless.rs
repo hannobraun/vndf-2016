@@ -1,6 +1,6 @@
 use std::io::IoResult;
 
-use client::output::Frame;
+use client::render::Frame;
 
 use super::Render;
 

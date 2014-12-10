@@ -19,7 +19,7 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use args::Args;
 use client::network::Socket;
-use client::output::{
+use client::render::{
 	Frame,
 	Status,
 };

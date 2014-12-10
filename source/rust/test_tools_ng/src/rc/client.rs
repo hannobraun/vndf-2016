@@ -3,7 +3,7 @@ use time::precise_time_s;
 
 use acceptance::Process;
 
-use client::output::Frame;
+use client::render::Frame;
 
 
 pub struct Client {

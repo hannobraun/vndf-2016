@@ -1,4 +1,4 @@
-use client::output::Frame;
+use client::render::Frame;
 use common::protocol::Broadcast;
 use test_tools::{
 	Client,

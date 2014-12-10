@@ -1,6 +1,6 @@
 use std::io::IoResult;
 
-use client::output::Frame;
+use client::render::Frame;
 
 
 pub use self::buffer::ScreenBuffer;
