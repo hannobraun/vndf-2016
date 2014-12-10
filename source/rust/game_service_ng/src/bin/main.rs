@@ -4,6 +4,7 @@
 extern crate getopts;
 
 extern crate acpe;
+extern crate time;
 
 extern crate common;
 extern crate game_service;
@@ -21,6 +22,7 @@ use acpe::protocol::{
 	PerceptionHeader,
 	Seq,
 };
+use time::precise_time_s;
 
 use args::Args;
 use common::protocol::{
@@ -35,9 +37,10 @@ mod args;
 
 
 struct Client {
-	id         : String,
-	last_action: Seq,
-	broadcast  : Option<String>,
+	id           : String,
+	last_action  : Seq,
+	last_active_s: f64,
+	broadcast    : Option<String>,
 }
 
 
@@ -63,9 +66,10 @@ fn main() {
 							match step {
 								Step::Login => {
 									clients.insert(address, Client {
-										id         : generate_id(),
-										last_action: action.header.id,
-										broadcast  : None,
+										id           : generate_id(),
+										last_action  : action.header.id,
+										last_active_s: precise_time_s(),
+										broadcast    : None,
 									});
 								},
 								Step::Broadcast(broadcast) => {
@@ -79,7 +83,8 @@ fn main() {
 							}
 						}
 
-						clients[address].last_action = action.header.id;
+						clients[address].last_action   = action.header.id;
+						clients[address].last_active_s = precise_time_s();
 					}
 				},
 				Err((error, address)) => {
