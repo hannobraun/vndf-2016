@@ -44,3 +44,17 @@ fn it_should_not_keep_sending_stopped_broadcasts() {
 	client.stop_broadcast();
 	client.wait_until(|frame| frame.broadcasts.len() == 0);
 }
+
+#[test]
+fn it_should_remove_clients_that_disconnected() {
+	let     game_service = GameService::start();
+	let mut client_a     = Client::start(game_service.port());
+	let mut client_b     = Client::start(game_service.port());
+
+	client_a.broadcast("Broadcast from A");
+	client_b.broadcast("Broadcast from B");
+	client_a.wait_until(|frame| frame.broadcasts.len() == 2);
+
+	client_b.stop();
+	client_a.wait_until(|frame| frame.broadcasts.len() == 1);
+}

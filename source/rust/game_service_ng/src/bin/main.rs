@@ -94,6 +94,15 @@ fn main() {
 			}
 		}
 
+		let now_s = precise_time_s();
+		clients = clients
+			.into_iter()
+			.filter(|&(_, ref client)|
+				// TODO: The timeout value should be confiurable.
+				client.last_active_s + 0.05 > now_s
+			)
+			.collect();
+
 		let broadcasts: Vec<Broadcast> = clients
 			.iter()
 			.filter_map(
