@@ -178,23 +178,20 @@ impl Renderer {
 			Status::None          => "",
 		};
 
-		self.y += 2;
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, width),
+			&mut self.screen.buffer().writer(0, self.y + 2, width),
 			"{}",
 			status
 		));
-		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, width),
+			&mut self.screen.buffer().writer(0, self.y + 4, width),
 			"COMMANDS"
 		));
-		self.y += 1;
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y, width),
+				&mut self.screen.buffer().writer(4, self.y + 5, width),
 				"none"
 			));
 		}
@@ -202,14 +199,12 @@ impl Renderer {
 		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.buffer().writer(self.x, self.y, self.x + 15),
+				&mut self.screen.buffer().writer(self.x, self.y + 5, self.x + 15),
 				"{}",
 				command
 			));
 			self.x += 4 + command.len() as Pos;
 		}
-
-		self.y += 1;
 
 		Ok(())
 	}
