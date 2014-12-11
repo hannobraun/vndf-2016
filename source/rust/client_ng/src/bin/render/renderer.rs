@@ -17,19 +17,25 @@ use super::util::Section;
 pub struct Renderer {
 	screen: Screen,
 
+	comm: Section,
+
 	x: Pos,
 	y: Pos,
 }
 
 impl Renderer {
 	pub fn new() -> IoResult<Renderer> {
-		let screen = match Screen::new(80, 24) {
+		let width = 80;
+
+		let screen = match Screen::new(width, 24) {
 			Ok(screen) => screen,
 			Err(error) => return Err(error),
 		};
 
 		Ok(Renderer {
 			screen: screen,
+
+			comm: Section::new(width, 12),
 
 			x: 0,
 			y: 0,
@@ -62,32 +68,30 @@ impl Render for Renderer {
 
 impl Renderer {
 	fn render_comm(&mut self, frame: &Frame, width: Pos) -> IoResult<()> {
-		// TODO: Reuse section
-		let mut section = Section::new(width, 12);
-
-		section.buffer.bold(true);
+		self.comm.buffer.clear();
+		self.comm.buffer.bold(true);
 
 		let y = self.y;
 
 		try!(write!(
-			&mut section.buffer.writer(0, y + 0, width),
+			&mut self.comm.buffer.writer(0, y + 0, width),
 			"YOUR ID"
 		));
 
 		try!(write!(
-			&mut section.buffer.writer(4, y + 1, width),
+			&mut self.comm.buffer.writer(4, y + 1, width),
 			"{}",
 			frame.self_id
 		));
 
 		try!(write!(
-			&mut section.buffer.writer(0, y + 3, width),
+			&mut self.comm.buffer.writer(0, y + 3, width),
 			"BROADCASTS")
 		);
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut section.buffer.writer(4, y + 4, width),
+				&mut self.comm.buffer.writer(4, y + 4, width),
 				"none"
 			));
 		}
@@ -107,7 +111,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut section.buffer.writer(4, y + 4 + i as Pos, width),
+				&mut self.comm.buffer.writer(4, y + 4 + i as Pos, width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -117,14 +121,14 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut section.buffer.writer(4, y + 4 + 4, width),
+				&mut self.comm.buffer.writer(4, y + 4 + 4, width),
 				"(more)",
 			));
 		}
 
-		self.y += section.height;
+		self.y += self.comm.height;
 
-		try!(section.write(0, 0, &mut self.screen));
+		try!(self.comm.write(0, 0, &mut self.screen));
 
 		Ok(())
 	}
