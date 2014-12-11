@@ -19,6 +19,7 @@ pub struct Renderer {
 
 	comm : Section,
 	input: Section,
+	info : Section,
 
 	x: Pos,
 	y: Pos,
@@ -38,6 +39,7 @@ impl Renderer {
 
 			comm : Section::new(width, 12),
 			input: Section::new(width,  4),
+			info : Section::new(width,  8),
 
 			x: 0,
 			y: 0,
@@ -172,6 +174,9 @@ impl Renderer {
 	fn render_context_info(&mut self, frame: &Frame) -> IoResult<()> {
 		let width = self.screen.buffer().width();
 
+		self.info.buffer.clear();
+		self.info.buffer.bold(true);
+
 		let status = match frame.status {
 			Status::Notice(ref s) => s.as_slice(),
 			Status::Error(ref s)  => s.as_slice(),
@@ -179,19 +184,19 @@ impl Renderer {
 		};
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y + 2, width),
+			&mut self.info.buffer.writer(0, 0, width),
 			"{}",
 			status
 		));
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y + 4, width),
+			&mut self.info.buffer.writer(0, 2, width),
 			"COMMANDS"
 		));
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y + 5, width),
+				&mut self.info.buffer.writer(4, 3, width),
 				"none"
 			));
 		}
@@ -199,12 +204,15 @@ impl Renderer {
 		self.x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.screen.buffer().writer(self.x, self.y + 5, self.x + 15),
+				&mut self.info.buffer.writer(self.x, 3, self.x + 15),
 				"{}",
 				command
 			));
 			self.x += 4 + command.len() as Pos;
 		}
+
+		try!(self.info.write(0, self.y, &mut self.screen));
+		self.y += self.info.buffer.height();
 
 		Ok(())
 	}
