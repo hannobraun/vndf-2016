@@ -125,7 +125,6 @@ impl Renderer {
 		}
 
 		self.y += self.comm.height;
-
 		try!(self.comm.write(0, 0, &mut self.screen));
 
 		Ok(())
