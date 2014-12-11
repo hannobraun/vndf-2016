@@ -98,7 +98,8 @@ fn main() {
 		clients = clients
 			.into_iter()
 			.filter(|&(_, ref client)|
-				// TODO: The timeout value should be confiurable.
+				// TODO: The timeout value should be configurable to satisfy
+				//       both real-world and testing requirements.
 				client.last_active_s + 0.05 > now_s
 			)
 			.collect();
