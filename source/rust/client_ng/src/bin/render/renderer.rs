@@ -162,7 +162,6 @@ impl Renderer {
 		}
 
 		try!(self.input.write(0, self.y, &mut self.screen));
-
 		self.y += self.input.height;
 
 		Ok(())
