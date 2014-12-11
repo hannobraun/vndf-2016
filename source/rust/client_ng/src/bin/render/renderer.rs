@@ -152,7 +152,6 @@ impl Renderer {
 		self.screen.cursor(cursor_position, self.y + 2);
 
 		if frame.commands.len() == 1 {
-			self.input.buffer.bold(true);
 			self.input.buffer.color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
