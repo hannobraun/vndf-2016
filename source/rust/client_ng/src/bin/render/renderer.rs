@@ -17,7 +17,8 @@ use super::util::Section;
 pub struct Renderer {
 	screen: Screen,
 
-	comm: Section,
+	comm : Section,
+	input: Section,
 
 	x: Pos,
 	y: Pos,
@@ -35,7 +36,8 @@ impl Renderer {
 		Ok(Renderer {
 			screen: screen,
 
-			comm: Section::new(width, 12),
+			comm : Section::new(width, 12),
+			input: Section::new(width,  4),
 
 			x: 0,
 			y: 0,
@@ -130,19 +132,18 @@ impl Renderer {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
-		let     screen_width = self.screen.buffer().width();
-		// TODO: Reuse section
-		let mut section      = Section::new(screen_width, 4);
+		let screen_width = self.screen.buffer().width();
 
-		section.buffer.bold(true);
+		self.input.buffer.clear();
+		self.input.buffer.bold(true);
 
 		try!(write!(
-			&mut section.buffer.writer(0, 0, screen_width),
+			&mut self.input.buffer.writer(0, 0, screen_width),
 			"ENTER COMMAND",
 		));
 
 		try!(write!(
-			&mut section.buffer.writer(4, 1, screen_width),
+			&mut self.input.buffer.writer(4, 1, screen_width),
 			"{}",
 			frame.input,
 		));
@@ -151,20 +152,20 @@ impl Renderer {
 		self.screen.cursor(cursor_position, self.y + 2);
 
 		if frame.commands.len() == 1 {
-			section.buffer.bold(true);
-			section.buffer.color(Black);
+			self.input.buffer.bold(true);
+			self.input.buffer.color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut section.buffer.writer(cursor_position - 1, 1, screen_width),
+				&mut self.input.buffer.writer(cursor_position - 1, 1, screen_width),
 				"{}",
 				rest_of_command,
 			));
 		}
 
-		try!(section.write(0, self.y, &mut self.screen));
+		try!(self.input.write(0, self.y, &mut self.screen));
 
-		self.y += section.height;
+		self.y += self.input.height;
 
 		Ok(())
 	}
