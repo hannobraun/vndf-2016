@@ -21,7 +21,6 @@ pub struct Renderer {
 	input: Section,
 	info : Section,
 
-	x: Pos,
 	y: Pos,
 }
 
@@ -41,7 +40,6 @@ impl Renderer {
 			input: Section::new(width,  4),
 			info : Section::new(width,  8),
 
-			x: 0,
 			y: 0,
 		})
 	}
@@ -51,7 +49,6 @@ impl Render for Renderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		// TODO: Color static UI elements blue
 
-		self.x = 0;
 		self.y = 0;
 
 		try!(self.render_comm(frame));
