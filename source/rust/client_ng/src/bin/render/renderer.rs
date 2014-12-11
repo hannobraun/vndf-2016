@@ -197,14 +197,14 @@ impl Renderer {
 			));
 		}
 
-		self.x = 4;
+		let mut x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.info.buffer.writer(self.x, 3, self.x + 15),
+				&mut self.info.buffer.writer(x, 3, x + 15),
 				"{}",
 				command
 			));
-			self.x += 4 + command.len() as Pos;
+			x += 4 + command.len() as Pos;
 		}
 
 		try!(self.info.write(0, self.y, &mut self.screen));
