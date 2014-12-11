@@ -71,27 +71,25 @@ impl Renderer {
 		self.comm.buffer.clear();
 		self.comm.buffer.bold(true);
 
-		let y = self.y;
-
 		try!(write!(
-			&mut self.comm.buffer.writer(0, y + 0, width),
+			&mut self.comm.buffer.writer(0, self.y + 0, width),
 			"YOUR ID"
 		));
 
 		try!(write!(
-			&mut self.comm.buffer.writer(4, y + 1, width),
+			&mut self.comm.buffer.writer(4, self.y + 1, width),
 			"{}",
 			frame.self_id
 		));
 
 		try!(write!(
-			&mut self.comm.buffer.writer(0, y + 3, width),
+			&mut self.comm.buffer.writer(0, self.y + 3, width),
 			"BROADCASTS")
 		);
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, y + 4, width),
+				&mut self.comm.buffer.writer(4, self.y + 4, width),
 				"none"
 			));
 		}
@@ -111,7 +109,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut self.comm.buffer.writer(4, y + 4 + i as Pos, width),
+				&mut self.comm.buffer.writer(4, self.y + 4 + i as Pos, width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -121,7 +119,7 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, y + 4 + 4, width),
+				&mut self.comm.buffer.writer(4, self.y + 4 + 4, width),
 				"(more)",
 			));
 		}
