@@ -18,8 +18,8 @@ pub struct Section {
 
 impl Section {
 	pub fn new(width: Pos, height: Pos) -> Section {
-		let inner_width  = width  - 1;
-		let inner_height = height - 1;
+		let inner_width  = width  - 2;
+		let inner_height = height - 2;
 
 		Section {
 			buffer: ScreenBuffer::new(inner_width, inner_height),
