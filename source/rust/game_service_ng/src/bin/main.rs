@@ -100,6 +100,8 @@ fn main() {
 			.filter(|&(_, ref client)|
 				// TODO: The timeout value should be configurable to satisfy
 				//       both real-world and testing requirements.
+				// TODO: Fine-tune timeout value. This is probably too low for
+				//       non-local connections.
 				client.last_active_s + 0.05 > now_s
 			)
 			.collect();
