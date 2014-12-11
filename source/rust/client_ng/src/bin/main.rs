@@ -134,7 +134,6 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 
 		server.send_to(message);
 		if let Err(error) = renderer.render(&frame) {
-			// TODO: Improve error handling
 			panic!("Error writing output: {}", error);
 		}
 
