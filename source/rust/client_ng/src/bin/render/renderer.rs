@@ -54,8 +54,6 @@ impl Render for Renderer {
 		self.x = 0;
 		self.y = 0;
 
-		self.screen.buffer().bold(true);
-
 		try!(self.render_comm(frame));
 		try!(self.render_input(frame));
 		try!(self.render_context_info(frame));
