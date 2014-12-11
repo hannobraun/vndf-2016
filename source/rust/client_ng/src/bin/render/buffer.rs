@@ -109,6 +109,9 @@ impl ScreenBuffer {
 				*c = C::new();
 			}
 		}
+
+		self.bold  = false;
+		self.color = Color::default();
 	}
 }
 
