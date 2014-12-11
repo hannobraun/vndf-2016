@@ -56,7 +56,7 @@ impl Render for Renderer {
 
 		try!(self.render_comm(frame));
 		try!(self.render_input(frame));
-		try!(self.render_context_info(frame));
+		try!(self.render_info(frame));
 
 		try!(self.screen.submit());
 
@@ -167,7 +167,7 @@ impl Renderer {
 		Ok(())
 	}
 
-	fn render_context_info(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_info(&mut self, frame: &Frame) -> IoResult<()> {
 		let width = self.screen.buffer().width();
 
 		self.info.buffer.clear();
