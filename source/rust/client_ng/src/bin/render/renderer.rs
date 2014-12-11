@@ -20,8 +20,6 @@ pub struct Renderer {
 	comm : Section,
 	input: Section,
 	info : Section,
-
-	y: Pos,
 }
 
 impl Renderer {
@@ -39,8 +37,6 @@ impl Renderer {
 			comm : Section::new(width, 12),
 			input: Section::new(width,  4),
 			info : Section::new(width,  8),
-
-			y: 0,
 		})
 	}
 }
@@ -49,11 +45,11 @@ impl Render for Renderer {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		// TODO: Color static UI elements blue
 
-		self.y = 0;
+		let mut y = 0;
 
-		try!(self.render_comm(frame));
-		try!(self.render_input(frame));
-		try!(self.render_info(frame));
+		try!(self.render_comm(frame, &mut y));
+		try!(self.render_input(frame, &mut y));
+		try!(self.render_info(frame, &mut y));
 
 		try!(self.screen.submit());
 
@@ -62,7 +58,7 @@ impl Render for Renderer {
 }
 
 impl Renderer {
-	fn render_comm(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_comm(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		let width = self.screen.buffer().width();
 
 		self.comm.buffer.clear();
@@ -121,13 +117,13 @@ impl Renderer {
 			));
 		}
 
-		self.y += self.comm.height;
-		try!(self.comm.write(0, 0, &mut self.screen));
+		*y += self.comm.height;
+		try!(self.comm.write(0, 0, &mut self.screen)); // TODO: Use y
 
 		Ok(())
 	}
 
-	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_input(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		let width = self.screen.buffer().width();
 
 		self.input.buffer.clear();
@@ -145,7 +141,7 @@ impl Renderer {
 		));
 
 		let cursor_position = 1 + 4 + frame.input.len() as Pos;
-		self.screen.cursor(cursor_position, self.y + 2);
+		self.screen.cursor(cursor_position, *y + 2);
 
 		if frame.commands.len() == 1 {
 			self.input.buffer.color(Black);
@@ -158,13 +154,13 @@ impl Renderer {
 			));
 		}
 
-		try!(self.input.write(0, self.y, &mut self.screen));
-		self.y += self.input.height;
+		try!(self.input.write(0, *y, &mut self.screen));
+		*y += self.input.height;
 
 		Ok(())
 	}
 
-	fn render_info(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		let width = self.screen.buffer().width();
 
 		self.info.buffer.clear();
@@ -204,8 +200,8 @@ impl Renderer {
 			x += 4 + command.len() as Pos;
 		}
 
-		try!(self.info.write(0, self.y, &mut self.screen));
-		self.y += self.info.buffer.height();
+		try!(self.info.write(0, *y, &mut self.screen));
+		*y += self.info.buffer.height();
 
 		Ok(())
 	}
