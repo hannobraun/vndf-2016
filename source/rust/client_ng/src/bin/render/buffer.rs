@@ -126,10 +126,15 @@ pub struct BufferWriter<'r> {
 impl<'r> Writer for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
 		if self.y >= self.buffer.height() {
+			let detail = format!(
+				"x: {}, y: {}, width: {}, height: {}",
+				self.x, self.y, self.buffer.width(), self.buffer.height(),
+			);
+
 			return Err(IoError {
 				kind  : IoErrorKind::OtherIoError,
 				desc  : "y coordinate is out of bounds",
-				detail: None,
+				detail: Some(detail),
 			})
 		}
 
