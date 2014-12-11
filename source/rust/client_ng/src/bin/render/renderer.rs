@@ -132,18 +132,18 @@ impl Renderer {
 	}
 
 	fn render_input(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.buffer().width();
+		let width = self.screen.buffer().width();
 
 		self.input.buffer.clear();
 		self.input.buffer.bold(true);
 
 		try!(write!(
-			&mut self.input.buffer.writer(0, 0, screen_width),
+			&mut self.input.buffer.writer(0, 0, width),
 			"ENTER COMMAND",
 		));
 
 		try!(write!(
-			&mut self.input.buffer.writer(4, 1, screen_width),
+			&mut self.input.buffer.writer(4, 1, width),
 			"{}",
 			frame.input,
 		));
@@ -156,7 +156,7 @@ impl Renderer {
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut self.input.buffer.writer(cursor_position - 1, 1, screen_width),
+				&mut self.input.buffer.writer(cursor_position - 1, 1, width),
 				"{}",
 				rest_of_command,
 			));
