@@ -170,7 +170,7 @@ impl Renderer {
 	}
 
 	fn render_context_info(&mut self, frame: &Frame) -> IoResult<()> {
-		let screen_width = self.screen.buffer().width();
+		let width = self.screen.buffer().width();
 
 		let status = match frame.status {
 			Status::Notice(ref s) => s.as_slice(),
@@ -180,21 +180,21 @@ impl Renderer {
 
 		self.y += 2;
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, width),
 			"{}",
 			status
 		));
 		self.y += 2;
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.y, screen_width),
+			&mut self.screen.buffer().writer(0, self.y, width),
 			"COMMANDS"
 		));
 		self.y += 1;
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.screen.buffer().writer(4, self.y, screen_width),
+				&mut self.screen.buffer().writer(4, self.y, width),
 				"none"
 			));
 		}
