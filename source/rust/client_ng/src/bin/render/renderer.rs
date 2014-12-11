@@ -117,8 +117,8 @@ impl Renderer {
 			));
 		}
 
+		try!(self.comm.write(0, *y, &mut self.screen));
 		*y += self.comm.height;
-		try!(self.comm.write(0, 0, &mut self.screen)); // TODO: Use y
 
 		Ok(())
 	}
