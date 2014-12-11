@@ -50,11 +50,9 @@ impl Render for Renderer {
 		self.x = 0;
 		self.y = 0;
 
-		let width = self.screen.buffer().width();
-
 		self.screen.buffer().bold(true);
 
-		try!(self.render_comm(frame, width));
+		try!(self.render_comm(frame));
 		try!(self.render_input(frame));
 		try!(self.render_context_info(frame));
 
@@ -65,7 +63,9 @@ impl Render for Renderer {
 }
 
 impl Renderer {
-	fn render_comm(&mut self, frame: &Frame, width: Pos) -> IoResult<()> {
+	fn render_comm(&mut self, frame: &Frame) -> IoResult<()> {
+		let width = self.screen.buffer().width();
+
 		self.comm.buffer.clear();
 		self.comm.buffer.bold(true);
 
