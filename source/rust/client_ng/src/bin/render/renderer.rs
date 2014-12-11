@@ -54,8 +54,6 @@ impl Render for Renderer {
 
 		self.screen.buffer().bold(true);
 
-		// TODO: Those shouldn't be methods on Renderer but rather on separate
-		//       structs. The calls should return the height of the section.
 		try!(self.render_comm(frame, width));
 		try!(self.render_input(frame));
 		try!(self.render_context_info(frame));
