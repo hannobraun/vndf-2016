@@ -1,3 +1,5 @@
+use std::kinds::marker::NoCopy;
+
 use root::MAX_PACKET_SIZE;
 
 use self::buf_writer::BufWriter;
@@ -9,13 +11,15 @@ use super::{
 
 
 pub struct Encoder {
-	buffer: [u8, ..MAX_PACKET_SIZE],
+	buffer : [u8, ..MAX_PACKET_SIZE],
+	no_copy: NoCopy,
 }
 
 impl Encoder {
 	pub fn new() -> Encoder {
 		Encoder {
-			buffer: [0, ..MAX_PACKET_SIZE],
+			buffer : [0, ..MAX_PACKET_SIZE],
+			no_copy: NoCopy,
 		}
 	}
 
