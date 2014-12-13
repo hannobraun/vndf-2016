@@ -48,7 +48,7 @@ impl<Step: Part> Action<Step> {
 impl<Step: Part> Message<ActionHeader, Step> for Action<Step> {}
 
 
-#[deriving(Clone, PartialEq, Show)]
+#[deriving(Clone, Copy, PartialEq, Show)]
 pub struct ActionHeader {
 	pub id: Seq,
 }
