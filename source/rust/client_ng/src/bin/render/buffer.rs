@@ -11,7 +11,7 @@ use super::{
 };
 
 
-#[deriving(Clone, Eq, PartialEq)]
+#[deriving(Clone, Copy, Eq, PartialEq)]
 pub struct C {
 	pub c    : char,
 	pub bold : bool,
