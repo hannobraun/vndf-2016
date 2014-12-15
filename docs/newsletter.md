@@ -75,12 +75,8 @@ Topic ideas:
 - Second inspirations series:
   - Homeworld
 
-News for December:
-- Hayabusa 2 launch: http://www.jspec.jaxa.jp/e/activity/hayabusa2.html (find better link for news)
-- Orion test flight
-- New Horizons wakes up from hibernation
-- ISRO launch: www.astrowatch.net/2014/11/india-has-its-own-orion-isros-unmanned.html
-- http://www.nytimes.com/interactive/2014/12/09/science/space/curiosity-rover-28-months-on-mars.html?_r=0
+News for January:
+- ...
 
 News for January:
 - http://www.space.com/27955-spacex-rocket-ocean-landing-platform.html
