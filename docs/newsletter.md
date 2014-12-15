@@ -59,11 +59,6 @@ Gaming News Resources
 # Plans
 
 Topic ideas:
-- An article about each game that inspires VNDF:
-  - ~~September: EVE Online~~
-  - ~~October: Kerbal Space Program~~
-  - ~~November: DayZ~~
-  - December: FTL (title: The Secret Project Edition)
 - January: NG announcement (title: Definitely Not April Fools)
 - Overview over text-based games (title: Self-Help for Text-based Game Devs)
 - Check the rest of the vision file for further topic ideas
