@@ -37,7 +37,8 @@ impl C {
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
 	bold  : bool,
-	color : Color,
+
+	foreground_color: Color,
 }
 
 impl ScreenBuffer {
@@ -48,7 +49,8 @@ impl ScreenBuffer {
 		ScreenBuffer {
 			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
 			bold  : false,
-			color : Color::default(),
+
+			foreground_color: Color::default(),
 		}
 	}
 
@@ -67,8 +69,8 @@ impl ScreenBuffer {
 	}
 
 	pub fn foreground_color(&mut self, color: Color) -> Color {
-		let previous_value = self.color;
-		self.color = color;
+		let previous_value = self.foreground_color;
+		self.foreground_color = color;
 		previous_value
 	}
 
@@ -114,8 +116,8 @@ impl ScreenBuffer {
 			}
 		}
 
-		self.bold  = false;
-		self.color = Color::default();
+		self.bold             = false;
+		self.foreground_color = Color::default();
 	}
 }
 
@@ -166,7 +168,7 @@ impl<'r> Writer for BufferWriter<'r> {
 				c   : c,
 				bold: self.buffer.bold,
 
-				foreground_color: self.buffer.color,
+				foreground_color: self.buffer.foreground_color,
 				background_color: None,
 			};
 
