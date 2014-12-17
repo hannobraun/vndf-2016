@@ -66,7 +66,7 @@ impl ScreenBuffer {
 		previous_value
 	}
 
-	pub fn color(&mut self, color: Color) -> Color {
+	pub fn foreground_color(&mut self, color: Color) -> Color {
 		let previous_value = self.color;
 		self.color = color;
 		previous_value

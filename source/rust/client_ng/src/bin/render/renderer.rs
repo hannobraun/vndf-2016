@@ -144,7 +144,7 @@ impl Renderer {
 		self.screen.cursor(cursor_position, *y + 2);
 
 		if frame.commands.len() == 1 {
-			self.input.buffer.color(Black);
+			self.input.buffer.foreground_color(Black);
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
