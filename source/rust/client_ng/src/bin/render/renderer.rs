@@ -83,12 +83,22 @@ impl Renderer {
 			"SENDING"
 		));
 
+		let is_sending = frame.broadcasts.iter().any(|broadcast|
+			broadcast.sender == frame.self_id
+		);
+
 		let foreground_color = self.comm.buffer.foreground_color(Black);
 		let background_color = self.comm.buffer.background_color(Some(White));
-		try!(write!(
-			&mut self.comm.buffer.writer(4, 4, width),
-			"Send Broadcast"
-		));
+		if is_sending {
+			// TODO: Display broadcast
+			// TODO: Display button to stop sending
+		}
+		else {
+			try!(write!(
+				&mut self.comm.buffer.writer(4, 4, width),
+				"Send Broadcast"
+			));
+		}
 		self.comm.buffer.foreground_color(foreground_color);
 		self.comm.buffer.background_color(background_color);
 
