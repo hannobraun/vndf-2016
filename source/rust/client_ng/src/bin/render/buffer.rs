@@ -36,7 +36,6 @@ impl C {
 #[deriving(Clone)]
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
-	bold  : bool,
 
 	foreground_color: Color,
 	background_color: Option<Color>,
@@ -49,7 +48,6 @@ impl ScreenBuffer {
 
 		ScreenBuffer {
 			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
-			bold  : true,
 
 			foreground_color: Color::default(),
 			background_color: None,
@@ -62,12 +60,6 @@ impl ScreenBuffer {
 
 	pub fn height(&self) -> Pos {
 		self.buffer.len() as Pos
-	}
-
-	pub fn bold(&mut self, bold: bool) -> bool {
-		let previous_value = self.bold;
-		self.bold = bold;
-		previous_value
 	}
 
 	pub fn foreground_color(&mut self, color: Color) -> Color {
@@ -92,6 +84,8 @@ impl ScreenBuffer {
 			x    : x,
 			y    : y,
 			limit: width,
+
+			bold: true,
 		}
 	}
 
@@ -127,7 +121,6 @@ impl ScreenBuffer {
 			}
 		}
 
-		self.bold             = false;
 		self.foreground_color = Color::default();
 	}
 }
@@ -142,6 +135,8 @@ pub struct BufferWriter<'r> {
 	pub x    : Pos,
 	pub y    : Pos,
 	pub limit: Pos,
+
+	bold: bool,
 }
 
 impl<'r> BufferWriter<'r> {
@@ -149,6 +144,10 @@ impl<'r> BufferWriter<'r> {
 		self.limit = limit;
 		self
 	}
+
+	// There is no setter for the bold attribute, for the simple reason that
+	// it's not currently needed and I don't want to see an unused warning all
+	// the time. Once one is needed again, it can be trivially added here.
 }
 
 impl<'r> Writer for BufferWriter<'r> {
@@ -188,7 +187,7 @@ impl<'r> Writer for BufferWriter<'r> {
 			let y = self.y as uint;
 			self.buffer.buffer[y][x] = C {
 				c   : c,
-				bold: self.buffer.bold,
+				bold: self.bold,
 
 				foreground_color: self.buffer.foreground_color,
 				background_color: self.buffer.background_color,
