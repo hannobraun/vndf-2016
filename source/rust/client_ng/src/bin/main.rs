@@ -73,7 +73,7 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 		broadcasts: vec![],
 	};
 
-	let mut input            = InputReader::new();
+	let mut input_reader     = InputReader::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();
@@ -81,7 +81,7 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		for result in input.read_commands().into_iter() {
+		for result in input_reader.read_commands().into_iter() {
 			match result {
 				Ok(command) => {
 					let mut reset_status = true;
