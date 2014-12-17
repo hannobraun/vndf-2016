@@ -79,6 +79,13 @@ impl Screen {
 						"\x1b[{}m", // set foreground color
 						c_a.foreground_color.foreground_code(),
 					));
+					if let Some(color) = c_a.background_color {
+						try!(write!(
+							&mut self.stdout,
+							"\x1b[{}m", // set background color
+							color.background_code(),
+						));
+					}
 					try!(self.stdout.write_char(c_a.c));
 					if c_a.bold {
 						try!(write!(
