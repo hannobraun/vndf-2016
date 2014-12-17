@@ -141,6 +141,13 @@ pub struct BufferWriter<'r> {
 	pub limit: Pos,
 }
 
+impl<'r> BufferWriter<'r> {
+	pub fn limit(mut self, limit: Pos) -> BufferWriter<'r> {
+		self.limit = limit;
+		self
+	}
+}
+
 impl<'r> Writer for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
 		if self.y >= self.buffer.height() {
