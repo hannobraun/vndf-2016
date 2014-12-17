@@ -84,12 +84,23 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let is_sending = frame.broadcasts.iter().any(|broadcast|
+		let sending_broadcast = frame.broadcasts.iter().find(|broadcast|
 			broadcast.sender == frame.self_id
 		);
 
-		if is_sending {
-			// TODO: Display broadcast
+		if let Some(broadcast) = sending_broadcast {
+			let button_text = "Stop Sending";
+
+			let width           = self.comm.buffer.width() - 4;
+			let button_width    = button_text.len() as Pos;
+			let broadcast_width = width - button_width - 2;
+
+			try!(write!(
+				&mut self.comm.buffer.writer(4, 4, broadcast_width),
+				"{}",
+				broadcast.message,
+			));
+
 			// TODO: Display button to stop sending
 		}
 		else {
