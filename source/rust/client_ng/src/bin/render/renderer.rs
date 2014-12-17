@@ -1,3 +1,4 @@
+use std::cmp::min;
 use std::io::IoResult;
 
 use client::render::{
@@ -94,14 +95,22 @@ impl Renderer {
 			let width           = self.comm.buffer.width() - 4;
 			let button_width    = button_text.len() as Pos;
 			let broadcast_width = width - button_width - 2;
+			let broadcast_width = min(
+				broadcast_width,
+				broadcast.message.len() as Pos,
+			);
 
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 4, broadcast_width),
+				&mut self.comm.buffer.writer(4, 4, 4 + broadcast_width),
 				"{}",
 				broadcast.message,
 			));
 
-			// TODO: Display button to stop sending
+			try!(button(
+				&mut self.comm.buffer,
+				4 + broadcast_width + 2, 4,
+				button_text,
+			));
 		}
 		else {
 			try!(button(
