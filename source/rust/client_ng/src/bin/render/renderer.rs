@@ -34,9 +34,9 @@ impl Renderer {
 		Ok(Renderer {
 			screen: screen,
 
-			comm : Section::new(width, 12),
+			comm : Section::new(width, 14),
 			input: Section::new(width,  4),
-			info : Section::new(width,  8),
+			info : Section::new(width,  6),
 		})
 	}
 }
