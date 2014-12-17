@@ -36,8 +36,6 @@ impl C {
 #[deriving(Clone)]
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
-
-	background_color: Option<Color>,
 }
 
 impl ScreenBuffer {
@@ -47,8 +45,6 @@ impl ScreenBuffer {
 
 		ScreenBuffer {
 			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
-
-			background_color: None,
 		}
 	}
 
@@ -58,12 +54,6 @@ impl ScreenBuffer {
 
 	pub fn height(&self) -> Pos {
 		self.buffer.len() as Pos
-	}
-
-	pub fn background_color(&mut self, color: Option<Color>) -> Option<Color> {
-		let previous_value = self.background_color;
-		self.background_color = color;
-		previous_value
 	}
 
 	/// Origin is in upper-left corner.
@@ -79,6 +69,7 @@ impl ScreenBuffer {
 
 			bold            : true,
 			foreground_color: Color::default(),
+			background_color: None,
 		}
 	}
 
@@ -129,6 +120,7 @@ pub struct BufferWriter<'r> {
 
 	bold            : bool,
 	foreground_color: Color,
+	background_color: Option<Color>,
 }
 
 impl<'r> BufferWriter<'r> {
@@ -143,6 +135,11 @@ impl<'r> BufferWriter<'r> {
 
 	pub fn foreground_color(mut self, color: Color) -> BufferWriter<'r> {
 		self.foreground_color = color;
+		self
+	}
+
+	pub fn background_color(mut self, color: Color) -> BufferWriter<'r> {
+		self.background_color = Some(color);
 		self
 	}
 }
@@ -187,7 +184,7 @@ impl<'r> Writer for BufferWriter<'r> {
 				bold: self.bold,
 
 				foreground_color: self.foreground_color,
-				background_color: self.buffer.background_color,
+				background_color: self.background_color,
 			};
 
 			self.x += 1;

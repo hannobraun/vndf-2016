@@ -245,15 +245,9 @@ impl Renderer {
 
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
-	let background_color = b.background_color(Some(White));
-
-	try!(
-		b
-			.writer(x, y)
-			.foreground_color(Black)
-			.write_str(text));
-
-	b.background_color(background_color);
-
-	Ok(())
+	b
+		.writer(x, y)
+		.foreground_color(Black)
+		.background_color(White)
+		.write_str(text)
 }
