@@ -49,7 +49,7 @@ impl ScreenBuffer {
 
 		ScreenBuffer {
 			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
-			bold  : false,
+			bold  : true,
 
 			foreground_color: Color::default(),
 			background_color: None,
