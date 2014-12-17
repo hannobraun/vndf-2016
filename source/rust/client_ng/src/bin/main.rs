@@ -30,7 +30,7 @@ use common::protocol::{
 use input::{
 	Command,
 	CommandError,
-	Input,
+	InputReader,
 };
 use render::{
 	HeadlessRenderer,
@@ -73,7 +73,7 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 		broadcasts: vec![],
 	};
 
-	let mut input            = Input::new();
+	let mut input            = InputReader::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();

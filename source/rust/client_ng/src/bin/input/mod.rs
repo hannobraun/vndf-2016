@@ -10,15 +10,15 @@ use self::command_kinds::{
 mod command_kinds;
 
 
-pub struct Input {
+pub struct InputReader {
 	receiver     : Receiver<char>,
 	current      : String,
 	command_kinds: CommandKinds,
 	start_with   : Vec<String>,
 }
 
-impl Input {
-	pub fn new() -> Input {
+impl InputReader {
+	pub fn new() -> InputReader {
 		let (sender, receiver) = channel();
 
 		spawn(proc() {
@@ -36,7 +36,7 @@ impl Input {
 			}
 		});
 
-		Input {
+		InputReader {
 			receiver     : receiver,
 			current      : String::new(),
 			command_kinds: CommandKinds::new(),
