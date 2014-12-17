@@ -76,13 +76,13 @@ impl Renderer {
 		));
 
 		try!(write!(
-			&mut self.comm.buffer.writer(0, 3, width),
+			&mut self.comm.buffer.writer(0, 6, width),
 			"BROADCASTS")
 		);
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 4, width),
+				&mut self.comm.buffer.writer(4, 7, width),
 				"none"
 			));
 		}
@@ -102,7 +102,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 4 + i as Pos, width),
+				&mut self.comm.buffer.writer(4, 7 + i as Pos, width),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -112,7 +112,7 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 4 + 4, width),
+				&mut self.comm.buffer.writer(4, 7 + 4, width),
 				"(more)",
 			));
 		}
