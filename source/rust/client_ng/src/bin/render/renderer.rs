@@ -65,7 +65,6 @@ impl Render for Renderer {
 impl Renderer {
 	fn render_comm(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.comm.buffer.clear();
-		self.comm.buffer.bold(true);
 
 		try!(write!(
 			&mut self.comm.buffer.writer(0, 0),
@@ -168,7 +167,6 @@ impl Renderer {
 
 	fn render_input(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.input.buffer.clear();
-		self.input.buffer.bold(true);
 
 		try!(write!(
 			&mut self.input.buffer.writer(0, 0),
@@ -203,7 +201,6 @@ impl Renderer {
 
 	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.info.buffer.clear();
-		self.info.buffer.bold(true);
 
 		let status = match frame.status {
 			Status::Notice(ref s) => s.as_slice(),
