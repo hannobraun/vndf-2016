@@ -76,6 +76,12 @@ impl ScreenBuffer {
 		previous_value
 	}
 
+	pub fn background_color(&mut self, color: Option<Color>) -> Option<Color> {
+		let previous_value = self.background_color;
+		self.background_color = color;
+		previous_value
+	}
+
 	/// Origin is in upper-left corner.
 	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
 		BufferWriter {
