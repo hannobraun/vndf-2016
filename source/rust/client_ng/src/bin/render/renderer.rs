@@ -10,7 +10,10 @@ use super::{
 	Render,
 	Screen,
 };
-use super::Color::Black;
+use super::Color::{
+	Black,
+	White,
+};
 use super::util::Section;
 
 
@@ -74,6 +77,20 @@ impl Renderer {
 			"{}",
 			frame.self_id
 		));
+
+		try!(write!(
+			&mut self.comm.buffer.writer(0, 3, width),
+			"SENDING"
+		));
+
+		let foreground_color = self.comm.buffer.foreground_color(Black);
+		let background_color = self.comm.buffer.background_color(Some(White));
+		try!(write!(
+			&mut self.comm.buffer.writer(4, 4, width),
+			"Send Broadcast"
+		));
+		self.comm.buffer.foreground_color(foreground_color);
+		self.comm.buffer.background_color(background_color);
 
 		try!(write!(
 			&mut self.comm.buffer.writer(0, 6, width),
