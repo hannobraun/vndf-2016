@@ -27,4 +27,17 @@ impl Color {
 			Color::White   => 37,
 		}
 	}
+
+	pub fn background_code(&self) -> u16 {
+		match *self {
+			Color::Black   => 40,
+			Color::Red     => 41,
+			Color::Green   => 42,
+			Color::Yellow  => 43,
+			Color::Blue    => 44,
+			Color::Magenta => 45,
+			Color::Cyan    => 46,
+			Color::White   => 47,
+		}
+	}
 }
