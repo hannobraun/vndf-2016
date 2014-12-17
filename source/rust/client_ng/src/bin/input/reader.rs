@@ -4,7 +4,7 @@ use std::io::stdin;
 use super::{
 	Command,
 	CommandError,
-	CommandResult,
+	Input,
 };
 use super::command_kinds::CommandKinds;
 
@@ -43,7 +43,7 @@ impl InputReader {
 		}
 	}
 
-	pub fn input(&mut self) -> Vec<CommandResult> {
+	pub fn input(&mut self) -> Input {
 		let mut commands = Vec::new();
 
 		loop {
@@ -95,6 +95,8 @@ impl InputReader {
 			self.start_with.clone(),
 		)));
 
-		commands
+		Input {
+			commands: commands,
+		}
 	}
 }
