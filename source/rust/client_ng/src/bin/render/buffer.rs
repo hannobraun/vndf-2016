@@ -135,9 +135,10 @@ impl ScreenBuffer {
 //       attributes to the write operation and removes the need to reset them.
 pub struct BufferWriter<'r> {
 	pub buffer: &'r mut ScreenBuffer,
-	pub x     : Pos,
-	pub y     : Pos,
-	pub limit : Pos,
+
+	pub x    : Pos,
+	pub y    : Pos,
+	pub limit: Pos,
 }
 
 impl<'r> Writer for BufferWriter<'r> {
