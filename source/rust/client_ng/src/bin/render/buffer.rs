@@ -130,11 +130,11 @@ impl ScreenBuffer {
 //       with defaults and provide a builder-style API to set them. This scopes
 //       attributes to the write operation and removes the need to reset them.
 pub struct BufferWriter<'r> {
-	pub buffer: &'r mut ScreenBuffer,
+	buffer: &'r mut ScreenBuffer,
 
-	pub x    : Pos,
-	pub y    : Pos,
-	pub limit: Pos,
+	x    : Pos,
+	y    : Pos,
+	limit: Pos,
 
 	bold: bool,
 }
