@@ -10,6 +10,7 @@ use super::{
 	Render,
 	Screen,
 };
+use super::buffer::ScreenBuffer;
 use super::Color::{
 	Black,
 	White,
@@ -87,20 +88,17 @@ impl Renderer {
 			broadcast.sender == frame.self_id
 		);
 
-		let foreground_color = self.comm.buffer.foreground_color(Black);
-		let background_color = self.comm.buffer.background_color(Some(White));
 		if is_sending {
 			// TODO: Display broadcast
 			// TODO: Display button to stop sending
 		}
 		else {
-			try!(write!(
-				&mut self.comm.buffer.writer(4, 4, width),
-				"Send Broadcast"
+			try!(button(
+				&mut self.comm.buffer,
+				4, 4,
+				"Send Broadcast",
 			));
 		}
-		self.comm.buffer.foreground_color(foreground_color);
-		self.comm.buffer.background_color(background_color);
 
 		try!(write!(
 			&mut self.comm.buffer.writer(0, 6, width),
@@ -232,4 +230,19 @@ impl Renderer {
 
 		Ok(())
 	}
+}
+
+
+fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
+	let width = b.width();
+
+	let foreground_color = b.foreground_color(Black);
+	let background_color = b.background_color(Some(White));
+
+	try!(b.writer(x, y, width).write_str(text));
+
+	b.foreground_color(foreground_color);
+	b.background_color(background_color);
+
+	Ok(())
 }
