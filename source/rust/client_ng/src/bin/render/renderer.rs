@@ -94,7 +94,7 @@ impl Renderer {
 
 		try!(write!(
 			&mut self.comm.buffer.writer(0, 6, width),
-			"BROADCASTS",
+			"RECEIVING",
 		));
 
 		if frame.broadcasts.len() == 0 {
