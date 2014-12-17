@@ -11,6 +11,11 @@ mod command_kinds;
 mod reader;
 
 
+pub struct Input {
+	pub commands: Vec<CommandResult>,
+}
+
+
 #[deriving(Show)]
 pub enum Command {
 	Help(&'static str),
