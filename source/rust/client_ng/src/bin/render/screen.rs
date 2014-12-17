@@ -77,7 +77,7 @@ impl Screen {
 					try!(write!(
 						&mut self.stdout,
 						"\x1b[{}m", // set foreground color
-						c_a.color.foreground_code(),
+						c_a.foreground_color.foreground_code(),
 					));
 					try!(self.stdout.write_char(c_a.c));
 					if c_a.bold {

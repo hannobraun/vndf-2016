@@ -13,17 +13,19 @@ use super::{
 
 #[deriving(Clone, Copy, Eq, PartialEq)]
 pub struct C {
-	pub c    : char,
-	pub bold : bool,
-	pub color: Color,
+	pub c   : char,
+	pub bold: bool,
+
+	pub foreground_color: Color,
 }
 
 impl C {
 	pub fn new() -> C {
 		C {
-			c    : ' ',
-			bold : false,
-			color: Color::default(),
+			c   : ' ',
+			bold: false,
+
+			foreground_color: Color::default(),
 		}
 	}
 }
@@ -159,9 +161,10 @@ impl<'r> Writer for BufferWriter<'r> {
 			let x = self.x as uint;
 			let y = self.y as uint;
 			self.buffer.buffer[y][x] = C {
-				c    : c,
-				bold : self.buffer.bold,
-				color: self.buffer.color,
+				c   : c,
+				bold: self.buffer.bold,
+
+				foreground_color: self.buffer.color,
 			};
 
 			self.x += 1;
