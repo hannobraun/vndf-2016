@@ -43,7 +43,7 @@ impl InputReader {
 		}
 	}
 
-	pub fn read_commands(&mut self) -> Vec<CommandResult> {
+	pub fn input(&mut self) -> Vec<CommandResult> {
 		let mut commands = Vec::new();
 
 		loop {
