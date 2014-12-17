@@ -39,6 +39,7 @@ pub struct ScreenBuffer {
 	bold  : bool,
 
 	foreground_color: Color,
+	background_color: Option<Color>,
 }
 
 impl ScreenBuffer {
@@ -51,6 +52,7 @@ impl ScreenBuffer {
 			bold  : false,
 
 			foreground_color: Color::default(),
+			background_color: None,
 		}
 	}
 
@@ -169,7 +171,7 @@ impl<'r> Writer for BufferWriter<'r> {
 				bold: self.buffer.bold,
 
 				foreground_color: self.buffer.foreground_color,
-				background_color: None,
+				background_color: self.buffer.background_color,
 			};
 
 			self.x += 1;
