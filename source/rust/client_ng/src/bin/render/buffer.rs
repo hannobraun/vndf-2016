@@ -88,9 +88,10 @@ impl ScreenBuffer {
 
 		BufferWriter {
 			buffer: self,
-			x     : x,
-			y     : y,
-			limit : width,
+
+			x    : x,
+			y    : y,
+			limit: width,
 		}
 	}
 
