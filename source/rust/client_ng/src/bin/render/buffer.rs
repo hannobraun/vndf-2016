@@ -17,6 +17,7 @@ pub struct C {
 	pub bold: bool,
 
 	pub foreground_color: Color,
+	pub background_color: Option<Color>,
 }
 
 impl C {
@@ -26,6 +27,7 @@ impl C {
 			bold: false,
 
 			foreground_color: Color::default(),
+			background_color: None,
 		}
 	}
 }
@@ -165,6 +167,7 @@ impl<'r> Writer for BufferWriter<'r> {
 				bold: self.buffer.bold,
 
 				foreground_color: self.buffer.color,
+				background_color: None,
 			};
 
 			self.x += 1;
