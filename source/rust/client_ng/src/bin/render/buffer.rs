@@ -83,12 +83,14 @@ impl ScreenBuffer {
 	}
 
 	/// Origin is in upper-left corner.
-	pub fn writer(&mut self, x: Pos, y: Pos, limit: Pos) -> BufferWriter {
+	pub fn writer(&mut self, x: Pos, y: Pos) -> BufferWriter {
+		let width = self.width();
+
 		BufferWriter {
 			buffer: self,
 			x     : x,
 			y     : y,
-			limit : limit,
+			limit : width,
 		}
 	}
 

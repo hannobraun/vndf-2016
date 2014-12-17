@@ -64,24 +64,22 @@ impl Render for Renderer {
 
 impl Renderer {
 	fn render_comm(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		let width = self.screen.buffer().width();
-
 		self.comm.buffer.clear();
 		self.comm.buffer.bold(true);
 
 		try!(write!(
-			&mut self.comm.buffer.writer(0, 0, width),
+			&mut self.comm.buffer.writer(0, 0),
 			"YOUR ID"
 		));
 
 		try!(write!(
-			&mut self.comm.buffer.writer(4, 1, width),
+			&mut self.comm.buffer.writer(4, 1),
 			"{}",
 			frame.self_id
 		));
 
 		try!(write!(
-			&mut self.comm.buffer.writer(0, 3, width),
+			&mut self.comm.buffer.writer(0, 3),
 			"SENDING"
 		));
 
@@ -101,7 +99,7 @@ impl Renderer {
 			);
 
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 4, 4 + broadcast_width),
+				&mut self.comm.buffer.writer(4, 4).limit(4 + broadcast_width),
 				"{}",
 				broadcast.message,
 			));
@@ -121,13 +119,13 @@ impl Renderer {
 		}
 
 		try!(write!(
-			&mut self.comm.buffer.writer(0, 6, width),
+			&mut self.comm.buffer.writer(0, 6),
 			"RECEIVING",
 		));
 
 		if frame.broadcasts.len() == 0 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 7, width),
+				&mut self.comm.buffer.writer(4, 7),
 				"none"
 			));
 		}
@@ -147,7 +145,7 @@ impl Renderer {
 			}
 
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 7 + i as Pos, width),
+				&mut self.comm.buffer.writer(4, 7 + i as Pos),
 				"{}: {}",
 				broadcast.sender, broadcast.message
 			));
@@ -157,7 +155,7 @@ impl Renderer {
 
 		if frame.broadcasts.len() > 5 {
 			try!(write!(
-				&mut self.comm.buffer.writer(4, 7 + 4, width),
+				&mut self.comm.buffer.writer(4, 7 + 4),
 				"(more)",
 			));
 		}
@@ -169,18 +167,16 @@ impl Renderer {
 	}
 
 	fn render_input(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		let width = self.screen.buffer().width();
-
 		self.input.buffer.clear();
 		self.input.buffer.bold(true);
 
 		try!(write!(
-			&mut self.input.buffer.writer(0, 0, width),
+			&mut self.input.buffer.writer(0, 0),
 			"ENTER COMMAND",
 		));
 
 		try!(write!(
-			&mut self.input.buffer.writer(4, 1, width),
+			&mut self.input.buffer.writer(4, 1),
 			"{}",
 			frame.input,
 		));
@@ -193,7 +189,7 @@ impl Renderer {
 
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut self.input.buffer.writer(cursor_position - 1, 1, width),
+				&mut self.input.buffer.writer(cursor_position - 1, 1),
 				"{}",
 				rest_of_command,
 			));
@@ -206,8 +202,6 @@ impl Renderer {
 	}
 
 	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		let width = self.screen.buffer().width();
-
 		self.info.buffer.clear();
 		self.info.buffer.bold(true);
 
@@ -218,19 +212,19 @@ impl Renderer {
 		};
 
 		try!(write!(
-			&mut self.info.buffer.writer(0, 0, width),
+			&mut self.info.buffer.writer(0, 0),
 			"{}",
 			status
 		));
 
 		try!(write!(
-			&mut self.info.buffer.writer(0, 2, width),
+			&mut self.info.buffer.writer(0, 2),
 			"COMMANDS"
 		));
 
 		if frame.commands.len() == 0 {
 			try!(write!(
-				&mut self.info.buffer.writer(4, 3, width),
+				&mut self.info.buffer.writer(4, 3),
 				"none"
 			));
 		}
@@ -238,7 +232,7 @@ impl Renderer {
 		let mut x = 4;
 		for command in frame.commands.iter() {
 			try!(write!(
-				&mut self.info.buffer.writer(x, 3, x + 15),
+				&mut self.info.buffer.writer(x, 3).limit(x + 15),
 				"{}",
 				command
 			));
@@ -254,12 +248,10 @@ impl Renderer {
 
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
-	let width = b.width();
-
 	let foreground_color = b.foreground_color(Black);
 	let background_color = b.background_color(Some(White));
 
-	try!(b.writer(x, y, width).write_str(text));
+	try!(b.writer(x, y).write_str(text));
 
 	b.foreground_color(foreground_color);
 	b.background_color(background_color);
