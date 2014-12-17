@@ -130,6 +130,9 @@ impl ScreenBuffer {
 }
 
 
+// TODO: Move attributes from ScreenBuffer into BufferWriter. Initialize them
+//       with defaults and provide a builder-style API to set them. This scopes
+//       attributes to the write operation and removes the need to reset them.
 pub struct BufferWriter<'r> {
 	pub buffer: &'r mut ScreenBuffer,
 	pub x     : Pos,
