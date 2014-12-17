@@ -183,11 +183,11 @@ impl Renderer {
 		self.screen.cursor(cursor_position, *y + 2);
 
 		if frame.commands.len() == 1 {
-			self.input.buffer.foreground_color(Black);
-
 			let rest_of_command = frame.commands[0][frame.input.len() ..];
 			try!(write!(
-				&mut self.input.buffer.writer(cursor_position - 1, 1),
+				&mut self.input.buffer
+					.writer(cursor_position - 1, 1)
+					.foreground_color(Black),
 				"{}",
 				rest_of_command,
 			));
@@ -245,12 +245,14 @@ impl Renderer {
 
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
-	let foreground_color = b.foreground_color(Black);
 	let background_color = b.background_color(Some(White));
 
-	try!(b.writer(x, y).write_str(text));
+	try!(
+		b
+			.writer(x, y)
+			.foreground_color(Black)
+			.write_str(text));
 
-	b.foreground_color(foreground_color);
 	b.background_color(background_color);
 
 	Ok(())
