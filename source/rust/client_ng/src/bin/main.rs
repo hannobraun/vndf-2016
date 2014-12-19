@@ -94,6 +94,8 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 				None =>
 					action_assembler.add_step(Step::StopBroadcast),
 			}
+
+			frame.status = Status::None;
 		}
 
 		previous_input = input.clone();
@@ -101,7 +103,7 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 		for result in input.commands.into_iter() {
 			match result {
 				Ok(_) =>
-					frame.status = Status::None,
+					(),
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command, applicable) => {
 						frame.input    = partial_command;
