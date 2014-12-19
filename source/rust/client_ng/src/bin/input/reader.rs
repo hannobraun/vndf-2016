@@ -98,13 +98,13 @@ impl InputReader {
 		)));
 
 		let mut invalid_error = None;
-		for command in commands.iter() {
-			let command = match *command {
-				Ok(ref command) =>
+		for command in commands.into_iter() {
+			let command = match command {
+				Ok(command) =>
 					command,
-				Err(ref error) => match *error {
-					CommandError::Invalid(error, ref command) => {
-						invalid_error = Some((error, command.clone()));
+				Err(error) => match error {
+					CommandError::Invalid(error, command) => {
+						invalid_error = Some((error, command));
 						continue;
 					},
 					_ =>
@@ -112,9 +112,9 @@ impl InputReader {
 				},
 			};
 
-			match *command {
-				Command::Broadcast(ref message) =>
-					self.broadcast = Some(message.clone()),
+			match command {
+				Command::Broadcast(message) =>
+					self.broadcast = Some(message),
 				Command::StopBroadcast =>
 					self.broadcast = None,
 			}
