@@ -26,7 +26,7 @@ impl Input {
 }
 
 
-#[deriving(Show)]
+#[deriving(Eq, PartialEq, Show)]
 pub enum Command {
 	Help(&'static str),
 	Broadcast(String),
