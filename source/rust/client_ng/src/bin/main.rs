@@ -98,6 +98,10 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 			frame.status = Status::None;
 		}
 
+		let (partial_command, applicable) = input.command.clone();
+		frame.input    = partial_command;
+		frame.commands = applicable;
+
 		previous_input = input.clone();
 
 		for result in input.commands.into_iter() {
@@ -105,10 +109,8 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 				Ok(_) =>
 					(),
 				Err(error) => match error {
-					CommandError::Incomplete(partial_command, applicable) => {
-						frame.input    = partial_command;
-						frame.commands = applicable;
-					},
+					CommandError::Incomplete(_, _) =>
+						(),
 					CommandError::Invalid(error, command) =>
 						frame.status = Status::Error(
 							format!("\"{}\": {}", command, error)
