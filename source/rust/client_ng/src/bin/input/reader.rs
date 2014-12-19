@@ -14,6 +14,7 @@ pub struct InputReader {
 	current      : String,
 	command_kinds: CommandKinds,
 	start_with   : Vec<String>,
+	broadcast    : Option<String>,
 }
 
 impl InputReader {
@@ -40,6 +41,7 @@ impl InputReader {
 			current      : String::new(),
 			command_kinds: CommandKinds::new(),
 			start_with   : Vec::new(),
+			broadcast    : None,
 		}
 	}
 
@@ -96,7 +98,7 @@ impl InputReader {
 		)));
 
 		Input {
-			broadcast: None,
+			broadcast: self.broadcast.clone(),
 			commands : commands,
 		}
 	}
