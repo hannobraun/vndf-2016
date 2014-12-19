@@ -2,7 +2,7 @@
 pub struct Input {
 	pub broadcast: Option<String>,
 	pub command  : (String, Vec<String>),
-	pub error    : Option<(&'static str, String)>,
+	pub error    : Option<(String, String)>,
 }
 
 impl Input {

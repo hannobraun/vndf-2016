@@ -105,7 +105,7 @@ impl InputReader {
 					command,
 				Err(error) => match error {
 					CommandError::Invalid(error, command) => {
-						invalid_error = Some((error, command));
+						invalid_error = Some((error.to_string(), command));
 						continue;
 					},
 					_ =>
