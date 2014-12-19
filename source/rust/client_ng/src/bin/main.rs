@@ -81,7 +81,9 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		for result in input_reader.input().commands.into_iter() {
+		let input = input_reader.input();
+
+		for result in input.commands.into_iter() {
 			match result {
 				Ok(command) => {
 					let mut reset_status = true;
