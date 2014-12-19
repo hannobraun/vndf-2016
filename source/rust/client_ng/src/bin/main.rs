@@ -18,6 +18,7 @@ use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
 use args::Args;
+use client::input::Input;
 use client::network::Socket;
 use client::render::{
 	Frame,
@@ -27,10 +28,7 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use input::{
-	Input,
-	InputReader,
-};
+use input::InputReader;
 use render::{
 	HeadlessRenderer,
 	Render,

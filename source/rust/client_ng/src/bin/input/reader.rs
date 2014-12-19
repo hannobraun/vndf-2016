@@ -1,10 +1,11 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
 
+use client::input::Input;
+
 use super::{
 	Command,
 	CommandError,
-	Input,
 };
 use super::command_kinds::CommandKinds;
 
