@@ -15,7 +15,6 @@ mod reader;
 pub struct Input {
 	pub broadcast: Option<String>,
 	pub command  : (String, Vec<String>),
-	pub commands : Vec<CommandResult>,
 	pub error    : Option<(&'static str, String)>,
 }
 
@@ -24,7 +23,6 @@ impl Input {
 		Input {
 			broadcast: None,
 			command  : (String::new(), Vec::new()),
-			commands : Vec::new(),
 			error    : None,
 		}
 	}
