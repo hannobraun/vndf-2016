@@ -28,7 +28,6 @@ use common::protocol::{
 	Step,
 };
 use input::{
-	Command,
 	CommandError,
 	Input,
 	InputReader,
@@ -101,20 +100,8 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 
 		for result in input.commands.into_iter() {
 			match result {
-				Ok(command) => {
-					let mut reset_status = true;
-
-					match command {
-						Command::Broadcast(_) =>
-							(),
-						Command::StopBroadcast =>
-							(),
-					}
-
-					if reset_status {
-						frame.status = Status::None;
-					}
-				},
+				Ok(_) =>
+					frame.status = Status::None,
 				Err(error) => match error {
 					CommandError::Incomplete(partial_command, applicable) => {
 						frame.input    = partial_command;
