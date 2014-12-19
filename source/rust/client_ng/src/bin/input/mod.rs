@@ -75,7 +75,7 @@ impl Command {
 pub type CommandResult = Result<Command, CommandError>;
 
 
-#[deriving(Show)]
+#[deriving(Eq, PartialEq, Show)]
 pub enum CommandError {
 	Incomplete(String, Vec<String>),
 	Invalid(&'static str, String),
