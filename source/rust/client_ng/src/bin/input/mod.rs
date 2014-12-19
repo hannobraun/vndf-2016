@@ -11,7 +11,7 @@ mod command_kinds;
 mod reader;
 
 
-#[deriving(Eq, PartialEq)]
+#[deriving(Clone, Eq, PartialEq)]
 pub struct Input {
 	pub broadcast: Option<String>,
 	pub commands : Vec<CommandResult>,
