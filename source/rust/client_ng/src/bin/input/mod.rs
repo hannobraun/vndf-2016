@@ -12,7 +12,8 @@ mod reader;
 
 
 pub struct Input {
-	pub commands: Vec<CommandResult>,
+	pub broadcast: Option<String>,
+	pub commands : Vec<CommandResult>,
 }
 
 

@@ -96,7 +96,8 @@ impl InputReader {
 		)));
 
 		Input {
-			commands: commands,
+			broadcast: None,
+			commands : commands,
 		}
 	}
 }
