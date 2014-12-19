@@ -1,4 +1,10 @@
-#[deriving(Clone, Eq, PartialEq)]
+use serialize::json::{
+	mod,
+	DecodeResult,
+};
+
+
+#[deriving(Clone, Decodable, Encodable, Eq, PartialEq)]
 pub struct Input {
 	pub broadcast: Option<String>,
 	pub command  : (String, Vec<String>),
@@ -12,5 +18,13 @@ impl Input {
 			command  : (String::new(), Vec::new()),
 			error    : None,
 		}
+	}
+
+	pub fn from_json(json: &str) -> DecodeResult<Input> {
+		json::decode(json)
+	}
+
+	pub fn to_json(&self) -> String {
+		json::encode(self)
 	}
 }
