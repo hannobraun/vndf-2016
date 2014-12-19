@@ -16,6 +16,15 @@ pub struct Input {
 	pub commands : Vec<CommandResult>,
 }
 
+impl Input {
+	pub fn new() -> Input {
+		Input {
+			broadcast: None,
+			commands : Vec::new(),
+		}
+	}
+}
+
 
 #[deriving(Show)]
 pub enum Command {
