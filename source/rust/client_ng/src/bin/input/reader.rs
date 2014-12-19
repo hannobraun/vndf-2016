@@ -108,8 +108,6 @@ impl InputReader {
 					self.broadcast = Some(message.clone()),
 				Command::StopBroadcast =>
 					self.broadcast = None,
-
-				_ => (),
 			}
 		}
 

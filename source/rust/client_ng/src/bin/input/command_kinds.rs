@@ -37,7 +37,6 @@ impl CommandKinds {
 	pub fn new() -> CommandKinds {
 		let mut kinds = HashMap::new();
 
-		kinds.insert(HELP.name()          , &HELP           as &CommandKind);
 		kinds.insert(BROADCAST.name()     , &BROADCAST      as &CommandKind);
 		kinds.insert(STOP_BROADCAST.name(), &STOP_BROADCAST as &CommandKind);
 
@@ -117,36 +116,5 @@ impl CommandKind for StopBroadcast {
 		}
 
 		Ok(Command::StopBroadcast)
-	}
-}
-
-
-static HELP: Help = Help;
-
-struct Help;
-
-impl CommandKind for Help {
-	fn name(&self) -> &'static str {
-		"help"
-	}
-
-	fn help(&self) -> &'static str {
-		"help <command> - Learn about a command (Example: help help)"
-	}
-
-	fn parse(
-		&self,
-		args : Option<&str>,
-		kinds: &CommandKinds,
-	) -> Result<Command, &'static str> {
-		let kind = match args {
-			Some(kind) => kind,
-			None       => "help",
-		};
-
-		match kinds.get(kind) {
-			Some(kind) => Ok(Command::Help(kind.help())),
-			None       => Err("Unknown command"),
-		}
 	}
 }

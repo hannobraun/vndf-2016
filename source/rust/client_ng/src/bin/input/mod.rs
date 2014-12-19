@@ -29,7 +29,6 @@ impl Input {
 
 #[deriving(Clone, Eq, PartialEq, Show)]
 pub enum Command {
-	Help(&'static str),
 	Broadcast(String),
 	StopBroadcast,
 }

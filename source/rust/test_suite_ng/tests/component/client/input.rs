@@ -79,16 +79,3 @@ fn it_should_autocomplete_on_tab() {
 	client.input("\x09"); // Tab
 	client.wait_until(|frame| frame.input == "broadcast ".to_string());
 }
-
-#[test]
-fn it_should_display_help_messages() {
-	let mut client = Client::start(34481);
-
-	client.command("help");
-	let help_help = client.wait_until(|frame| frame.status.is_notice()).status;
-
-	client.command("help broadcast");
-	let help_broadcast =
-		client.wait_until(|frame| frame.status != help_help).status;
-	assert!(help_broadcast.is_notice());
-}

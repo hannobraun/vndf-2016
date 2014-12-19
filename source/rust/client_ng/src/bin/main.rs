@@ -109,10 +109,6 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 							(),
 						Command::StopBroadcast =>
 							(),
-						Command::Help(text) => {
-							frame.status = Status::Notice(text.to_string());
-							reset_status = false;
-						},
 					}
 
 					if reset_status {
