@@ -97,6 +97,22 @@ impl InputReader {
 			self.start_with.clone(),
 		)));
 
+		for command in commands.iter() {
+			let command = match *command {
+				Ok(ref command) => command,
+				Err(_)          => continue,
+			};
+
+			match *command {
+				Command::Broadcast(ref message) =>
+					self.broadcast = Some(message.clone()),
+				Command::StopBroadcast =>
+					self.broadcast = None,
+
+				_ => (),
+			}
+		}
+
 		Input {
 			broadcast: self.broadcast.clone(),
 			commands : commands,
