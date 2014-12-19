@@ -30,6 +30,7 @@ use common::protocol::{
 use input::{
 	Command,
 	CommandError,
+	Input,
 	InputReader,
 };
 use render::{
@@ -73,6 +74,8 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 		broadcasts: vec![],
 	};
 
+	let mut previous_input = Input::new();
+
 	let mut input_reader     = InputReader::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Socket::new(args.server);
@@ -83,16 +86,29 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 	loop {
 		let input = input_reader.input();
 
+		if input != previous_input {
+			match input.broadcast {
+				Some(ref message) =>
+					// TODO: Reject broadcasts that are too large to fit into a
+					//       UDP packet.
+					action_assembler.add_step(Step::Broadcast(message.clone())),
+				None =>
+					action_assembler.add_step(Step::StopBroadcast),
+			}
+		}
+
+		previous_input = input.clone();
+
 		for result in input.commands.into_iter() {
 			match result {
 				Ok(command) => {
 					let mut reset_status = true;
 
 					match command {
-						Command::Broadcast(message) =>
-							action_assembler.add_step(Step::Broadcast(message)),
+						Command::Broadcast(_) =>
+							(),
 						Command::StopBroadcast =>
-							action_assembler.add_step(Step::StopBroadcast),
+							(),
 						Command::Help(text) => {
 							frame.status = Status::Notice(text.to_string());
 							reset_status = false;
