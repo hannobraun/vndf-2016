@@ -28,7 +28,6 @@ use common::protocol::{
 	Step,
 };
 use input::{
-	CommandError,
 	Input,
 	InputReader,
 };
@@ -102,22 +101,11 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 		frame.input    = partial_command;
 		frame.commands = applicable;
 
-		previous_input = input.clone();
-
-		for result in input.commands.into_iter() {
-			match result {
-				Ok(_) =>
-					(),
-				Err(error) => match error {
-					CommandError::Incomplete(_, _) =>
-						(),
-					CommandError::Invalid(error, command) =>
-						frame.status = Status::Error(
-							format!("\"{}\": {}", command, error)
-						),
-				}
-			}
+		if let Some((error, command)) = input.error.clone() {
+			frame.status = Status::Error(format!("\"{}\": {}", command, error))
 		}
+
+		previous_input = input.clone();
 
 		for perception in  server.recv_from().into_iter() {
 			if let Some(self_id) = perception.header.self_id {
