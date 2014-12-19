@@ -30,7 +30,7 @@ impl Client {
 		self.process.kill()
 	}
 
-	pub fn input(&mut self, input: &str) {
+	pub fn partial_command(&mut self, input: &str) {
 		self.process.write_stdin(input);
 	}
 
