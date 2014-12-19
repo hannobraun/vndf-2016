@@ -14,6 +14,7 @@ mod reader;
 #[deriving(Clone, Eq, PartialEq)]
 pub struct Input {
 	pub broadcast: Option<String>,
+	pub command  : (String, Vec<String>),
 	pub commands : Vec<CommandResult>,
 }
 
@@ -21,6 +22,7 @@ impl Input {
 	pub fn new() -> Input {
 		Input {
 			broadcast: None,
+			command  : (String::new(), Vec::new()),
 			commands : Vec::new(),
 		}
 	}

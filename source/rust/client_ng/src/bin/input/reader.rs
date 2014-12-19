@@ -113,6 +113,7 @@ impl InputReader {
 
 		Input {
 			broadcast: self.broadcast.clone(),
+			command  : (self.current.clone(), self.start_with.clone()),
 			commands : commands,
 		}
 	}
