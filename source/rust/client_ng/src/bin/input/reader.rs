@@ -97,10 +97,19 @@ impl InputReader {
 			self.start_with.clone(),
 		)));
 
+		let mut invalid_error = None;
 		for command in commands.iter() {
 			let command = match *command {
-				Ok(ref command) => command,
-				Err(_)          => continue,
+				Ok(ref command) =>
+					command,
+				Err(ref error) => match *error {
+					CommandError::Invalid(error, ref command) => {
+						invalid_error = Some((error, command.clone()));
+						continue;
+					},
+					_ =>
+						continue,
+				},
 			};
 
 			match *command {
@@ -115,6 +124,7 @@ impl InputReader {
 			broadcast: self.broadcast.clone(),
 			command  : (self.current.clone(), self.start_with.clone()),
 			commands : commands,
+			error    : invalid_error,
 		}
 	}
 }
