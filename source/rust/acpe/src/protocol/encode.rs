@@ -91,9 +91,9 @@ impl<'r, M: Message<H, P>, H: Header, P: Part> MessageEncoder<'r, M> {
 
 mod buf_writer {
 	// This is code from the Rust standard library. I copied it because I needed
-	// the BufWriter::into_slice method that I implemented here.
-
-	// TODO(83622128): Send PR to Rust project.
+	// the BufWriter::into_slice method that I implemented here. My pull request
+	// wasn't accepted because of the pending I/O reform, and BufWriter might
+	// well be removed. I'll just leave this here for now.
 
 
 	use std::io::{
