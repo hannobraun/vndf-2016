@@ -56,7 +56,6 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 	let mut game_service = MockGameService::start();
 	let mut client       = Client::start(game_service.port());
 
-	// Create enough clients to overflow the maximum packet size.
 	let     broadcast_text = "This is broadcast number";
 	let mut broadcasts     = HashSet::new();
 	for i in range(0, MAX_PACKET_SIZE / broadcast_text.len() + 1) {
