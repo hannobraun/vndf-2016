@@ -1,8 +1,3 @@
-use std::collections::HashSet;
-
-use acpe::MAX_PACKET_SIZE;
-use time::precise_time_s;
-
 use common::protocol::Step;
 use test_tools::{
 	Client,
@@ -53,38 +48,10 @@ fn it_should_keep_track_of_which_actions_are_confirmed() {
 
 #[test]
 fn it_should_distribute_large_payloads_over_multiple_packets() {
-	let mut game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
-
-	let     broadcast_text = "This is broadcast number";
-	let mut broadcasts     = HashSet::new();
-	for i in range(0, MAX_PACKET_SIZE / broadcast_text.len() + 1) {
-		let broadcast = format!("{} {}", broadcast_text, i);
-		client.broadcast(broadcast.as_slice());
-		broadcasts.insert(broadcast);
-	}
-
-	let start_s = precise_time_s();
-	while broadcasts.len() > 0 {
-		if precise_time_s() - start_s > 0.5 {
-			panic!("Not all actions arrived.");
-		}
-
-		match game_service.expect_action() {
-			Some(mut action) => {
-				action.confirm();
-				for step in action.inner.steps.into_iter() {
-					match step {
-						Step::Broadcast(broadcast) => {
-							broadcasts.remove(&broadcast);
-						},
-						_ =>
-							()
-					}
-				}
-			},
-			None =>
-				(),
-		}
-	}
+	// TODO(83305336): The previous version of this test relied on the client
+	//                 sending multiple broadcasts in a single action, which is
+	//                 wasteful behavior which can't be relied on. Once
+	//                 scheduling maneuvers has been implemented, it will be
+	//                 possible to legitimately overflow an action. This test
+	//                 should be re-introduced then.
 }
