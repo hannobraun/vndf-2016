@@ -98,10 +98,11 @@ fn main() {
 		clients = clients
 			.into_iter()
 			.filter(|&(_, ref client)|
-				// TODO: The timeout value should be configurable to satisfy
-				//       both real-world and testing requirements.
-				// TODO: Fine-tune timeout value. This is probably too low for
-				//       non-local connections.
+				// TODO(84970652): The timeout value should be configurable to
+				//                 satisfy both real-world and testing
+				//                 requirements.
+				// TODO(84970652): Fine-tune timeout value. This is probably too
+				//                 low for non-local connections.
 				client.last_active_s + 0.05 > now_s
 			)
 			.collect();
@@ -124,6 +125,11 @@ fn main() {
 				confirm_action: client.last_action,
 				self_id       : Some(client.id.clone()),
 			};
+			// TODO(84970652): It's not necessary to keep resending all the
+			//                 broadcasts every frame. The client should confirm
+			//                 the last sent perception and the server should
+			//                 only send what has changed. This requires a list
+			//                 of destroyed entities in Perception.
 			let mut broadcasts = broadcasts.clone();
 
 			let mut needs_to_send_perception = true;
