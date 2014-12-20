@@ -33,7 +33,7 @@ impl InputReader {
 					Ok(c) =>
 						sender.send(c),
 					Err(error) =>
-						panic!("Error reading from stdint: {}", error),
+						panic!("Error reading from stdin: {}", error),
 				}
 			}
 		});
