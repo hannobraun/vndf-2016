@@ -52,7 +52,7 @@ fn main() {
 	if args.headless {
 		let renderer = match HeadlessRenderer::new() {
 			Ok(renderer) => renderer,
-			Err(error)   => panic!("Error initializing output: {}", error),
+			Err(error)   => panic!("Error initializing renderer: {}", error),
 		};
 
 		run(args, renderer)
