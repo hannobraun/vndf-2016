@@ -1,3 +1,5 @@
+use client::input::Input;
+
 use self::command_kinds::{
 	CommandKind,
 	CommandKinds,
@@ -9,6 +11,11 @@ pub use self::reader::InputReader;
 
 mod command_kinds;
 mod reader;
+
+
+pub trait ReadInput {
+	fn input(&mut self) -> Input;
+}
 
 
 #[deriving(Clone, Eq, PartialEq, Show)]
