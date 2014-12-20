@@ -58,12 +58,12 @@ fn main() {
 		run(args, renderer)
 	}
 	else {
-		let output = match Renderer::new() {
-			Ok(output) => output,
-			Err(error) => panic!("Error initializing output: {}", error),
+		let renderer = match Renderer::new() {
+			Ok(renderer) => renderer,
+			Err(error)   => panic!("Error initializing output: {}", error),
 		};
 
-		run(args, output)
+		run(args, renderer)
 	}
 }
 
