@@ -138,7 +138,7 @@ fn run<I: ReadInput, R: Render>(
 
 		let message = action_assembler.assemble(&mut encoder);
 
-		server.send_to(message);
+		server.send_to(message.as_slice());
 		if let Err(error) = renderer.render(&frame) {
 			panic!("Error writing output: {}", error);
 		}

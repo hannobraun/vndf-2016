@@ -7,14 +7,14 @@ use acpe::protocol::{
 use common::protocol::Step;
 
 
-pub struct ActionAssembler<'r> {
+pub struct ActionAssembler {
 	next_seq : Seq,
 	added    : Vec<Step>,
-	assembled: Option<&'r [u8]>,
+	assembled: Option<Vec<u8>>,
 }
 
-impl<'r> ActionAssembler<'r> {
-	pub fn new() -> ActionAssembler<'r> {
+impl<'a> ActionAssembler {
+	pub fn new() -> ActionAssembler {
 		ActionAssembler {
 			next_seq : 0,
 			added    : Vec::new(),
@@ -26,10 +26,10 @@ impl<'r> ActionAssembler<'r> {
 		self.added.push(step);
 	}
 
-	pub fn assemble(&mut self, encoder: &mut Encoder) -> &[u8] {
+	pub fn assemble(&mut self, encoder: &mut Encoder) -> Vec<u8> {
 		match self.assembled {
-			Some(message) => return message.clone(),
-			None          => (),
+			Some(ref message) => return message.clone(),
+			None              => (),
 		}
 
 		let mut action = encoder.message(&ActionHeader { id: self.next_seq });
@@ -55,8 +55,11 @@ impl<'r> ActionAssembler<'r> {
 
 		let message = action.encode();
 
-		self.assembled = Some(message.clone());
-		message
+		let mut assembled = Vec::new();
+		assembled.push_all(message);
+
+		self.assembled = Some(assembled.clone());
+		assembled
 	}
 
 	pub fn process_receipt(&mut self, seq: Seq) {
