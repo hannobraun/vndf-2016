@@ -3,6 +3,7 @@ use time::precise_time_s;
 
 use acceptance::Process;
 
+use client::input::Input;
 use client::render::Frame;
 
 
@@ -28,6 +29,10 @@ impl Client {
 
 	pub fn stop(&mut self) {
 		self.process.kill()
+	}
+
+	pub fn input(&mut self, input: Input) {
+		self.process.write_stdin_line(input.to_json().as_slice());
 	}
 
 	pub fn partial_command(&mut self, input: &str) {
