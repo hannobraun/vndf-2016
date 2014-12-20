@@ -6,6 +6,7 @@ use self::command_kinds::{
 };
 
 
+pub use self::headless::HeadlessInputReader;
 pub use self::reader::InputReader;
 
 
