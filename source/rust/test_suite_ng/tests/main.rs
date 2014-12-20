@@ -11,7 +11,6 @@ extern crate test_tools;
 
 mod component {
 	mod client {
-		mod input;
 		mod protocol;
 	}
 	mod game_service {
