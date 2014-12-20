@@ -60,7 +60,7 @@ fn main() {
 	else {
 		let renderer = match Renderer::new() {
 			Ok(renderer) => renderer,
-			Err(error)   => panic!("Error initializing output: {}", error),
+			Err(error)   => panic!("Error initializing renderer: {}", error),
 		};
 
 		run(args, renderer)
