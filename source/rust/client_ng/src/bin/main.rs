@@ -49,13 +49,15 @@ mod termios;
 fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
+	let input_reader = InputReader::new();
+
 	if args.headless {
 		let renderer = match HeadlessRenderer::new() {
 			Ok(renderer) => renderer,
 			Err(error)   => panic!("Error initializing renderer: {}", error),
 		};
 
-		run(args, renderer)
+		run(args, input_reader, renderer)
 	}
 	else {
 		let renderer = match Renderer::new() {
@@ -63,12 +65,12 @@ fn main() {
 			Err(error)   => panic!("Error initializing renderer: {}", error),
 		};
 
-		run(args, renderer)
+		run(args, input_reader, renderer)
 	}
 }
 
 
-fn run<R: Render>(args: Args, mut renderer: R) {
+fn run<R: Render>(args: Args, mut input_reader: InputReader, mut renderer: R) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
@@ -79,7 +81,6 @@ fn run<R: Render>(args: Args, mut renderer: R) {
 
 	let mut previous_input = Input::new();
 
-	let mut input_reader     = InputReader::new();
 	let mut action_assembler = ActionAssembler::new();
 	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();
