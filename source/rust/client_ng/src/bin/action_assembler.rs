@@ -40,12 +40,13 @@ impl<'r> ActionAssembler<'r> {
 				None       => break,
 			};
 
-			// TODO: If a single step is too large for a UDP packet, it can
-			//       never be added and nothing will ever be sent again. The
-			//       following code should detect if the step being rejected is
-			//       the first and panic. Steps not fitting in a UDP message
-			//       should be a bug in step construction, so a panic is the
-			//       appropriate response here.
+			// TODO(84970610): If a single step is too large for a UDP packet,
+			//                 it can never be added and nothing will ever be
+			//                 sent again. The following code should detect if
+			//                 the step being rejected is the first and panic.
+			//                 Steps not fitting in a UDP message should be a
+			//                 bug in step construction, so a panic is the
+			//                 appropriate response here.
 			if !action.add(&step) {
 				self.added.insert(0, step);
 				break;

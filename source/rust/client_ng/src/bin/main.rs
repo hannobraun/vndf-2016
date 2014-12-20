@@ -100,8 +100,8 @@ fn run<I: ReadInput, R: Render>(
 		if input != previous_input {
 			match input.broadcast {
 				Some(ref message) =>
-					// TODO: Reject broadcasts that are too large to fit into a
-					//       UDP packet.
+					// TODO(84970610): Reject broadcasts that are too large to
+					//                 fit into a UDP packet.
 					action_assembler.add_step(Step::Broadcast(message.clone())),
 				None =>
 					action_assembler.add_step(Step::StopBroadcast),
