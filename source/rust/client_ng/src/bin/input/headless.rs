@@ -15,7 +15,7 @@ impl HeadlessInputReader {
 	pub fn new() -> HeadlessInputReader {
 		let (sender, receiver) = channel();
 
-		spawn(proc() {
+		spawn(move || {
 			let mut stdin = stdin();
 
 			loop {

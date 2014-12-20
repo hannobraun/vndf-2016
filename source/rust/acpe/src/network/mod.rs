@@ -75,7 +75,7 @@ impl SocketReceiver {
 	fn new(mut socket: UdpSocket) -> SocketReceiver {
 		let (sender, receiver) = channel();
 
-		spawn(proc() {
+		spawn(move || {
 			let mut should_run = true;
 			let mut buffer     = [0u8, ..MAX_PACKET_SIZE];
 

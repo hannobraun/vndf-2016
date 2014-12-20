@@ -23,7 +23,7 @@ impl InputReader {
 	pub fn new() -> InputReader {
 		let (sender, receiver) = channel();
 
-		spawn(proc() {
+		spawn(move || {
 			let mut stdin = stdin();
 
 			loop {
