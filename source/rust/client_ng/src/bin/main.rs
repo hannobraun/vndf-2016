@@ -29,6 +29,7 @@ use common::protocol::{
 	Step,
 };
 use input::{
+	HeadlessInputReader,
 	InputReader,
 	ReadInput,
 };
@@ -49,9 +50,9 @@ mod termios;
 fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
-	let input_reader = InputReader::new();
-
 	if args.headless {
+		let input_reader = HeadlessInputReader::new();
+
 		let renderer = match HeadlessRenderer::new() {
 			Ok(renderer) => renderer,
 			Err(error)   => panic!("Error initializing renderer: {}", error),
@@ -60,6 +61,8 @@ fn main() {
 		run(args, input_reader, renderer)
 	}
 	else {
+		let input_reader = InputReader::new();
+
 		let renderer = match Renderer::new() {
 			Ok(renderer) => renderer,
 			Err(error)   => panic!("Error initializing renderer: {}", error),

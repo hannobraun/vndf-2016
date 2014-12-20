@@ -40,11 +40,17 @@ impl Client {
 	}
 
 	pub fn broadcast(&mut self, broadcast: &str) {
-		self.command(format!("broadcast {}", broadcast).as_slice());
+		let mut input = Input::new();
+		input.broadcast = Some(broadcast.to_string());
+
+		self.input(input)
 	}
 
 	pub fn stop_broadcast(&mut self) {
-		self.command("stop-broadcast");
+		let mut input = Input::new();
+		input.broadcast = None;
+
+		self.input(input)
 	}
 
 	pub fn frame(&mut self) -> Frame {
