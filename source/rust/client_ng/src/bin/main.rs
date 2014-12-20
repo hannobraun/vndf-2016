@@ -70,7 +70,11 @@ fn main() {
 }
 
 
-fn run<R: Render>(args: Args, mut input_reader: InputReader, mut renderer: R) {
+fn run<I: ReadInput, R: Render>(
+	    args        : Args,
+	mut input_reader: I,
+	mut renderer    : R
+) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
