@@ -28,7 +28,10 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use input::InputReader;
+use input::{
+	InputReader,
+	ReadInput,
+};
 use render::{
 	HeadlessRenderer,
 	Render,
