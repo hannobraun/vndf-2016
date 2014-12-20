@@ -50,10 +50,12 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		match HeadlessRenderer::new() {
-			Ok(output) => run(args, output),
+		let output = match HeadlessRenderer::new() {
+			Ok(output) => output,
 			Err(error) => panic!("Error initializing output: {}", error),
-		}
+		};
+
+		run(args, output)
 	}
 	else {
 		match Renderer::new() {
