@@ -69,6 +69,7 @@ Topic ideas:
 - Recycle short story
 - Second inspirations series:
   - Homeworld
+  - Factorio
 
 News for January:
 - ...
