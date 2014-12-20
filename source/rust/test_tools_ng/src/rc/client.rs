@@ -35,10 +35,6 @@ impl Client {
 		self.process.write_stdin_line(input.to_json().as_slice());
 	}
 
-	pub fn partial_command(&mut self, input: &str) {
-		self.process.write_stdin(input);
-	}
-
 	pub fn command(&mut self, command: &str) {
 		self.process.write_stdin_line(command);
 	}
