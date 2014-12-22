@@ -10,20 +10,17 @@ use client::platform::{
 };
 
 use self::input::InputReader;
-use self::render::{
-	Render,
-	Renderer,
-};
+use self::render::Renderer;
 
 
 pub mod input;
 pub mod render;
 
 
-// TODO: Merge ReadInput and Render into PlatformIo
-pub trait PlatformIo: Render {
+pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
 	fn input(&mut self) -> Input;
+	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
 
@@ -49,9 +46,7 @@ impl PlatformIo for PlayerIo {
 	fn input(&mut self) -> Input {
 		self.input_reader.input()
 	}
-}
 
-impl Render for PlayerIo {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		self.renderer.render(frame)
 	}
@@ -104,9 +99,7 @@ impl PlatformIo for HeadlessIo {
 			}
 		}
 	}
-}
 
-impl Render for HeadlessIo {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		print!("{}\n", frame.to_json());
 		Ok(())
