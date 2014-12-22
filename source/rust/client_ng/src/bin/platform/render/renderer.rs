@@ -1,4 +1,3 @@
-use std::cmp::min;
 use std::io::IoResult;
 
 use client::platform::{
@@ -84,11 +83,7 @@ impl Renderer {
 
 			let width           = self.comm.buffer.width() - 4;
 			let button_width    = button_text.len() as Pos;
-			let broadcast_width = width - button_width - 2;
-			let broadcast_width = min(
-				broadcast_width,
-				broadcast.message.len() as Pos,
-			);
+			let broadcast_width = width - 2 - button_width - 2;
 
 			try!(text_input(
 				&mut self.comm.buffer,
