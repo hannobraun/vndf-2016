@@ -9,10 +9,7 @@ use client::platform::{
 	Input,
 };
 
-use self::input::{
-	InputReader,
-	ReadInput,
-};
+use self::input::InputReader;
 use self::render::{
 	Render,
 	Renderer,
@@ -24,8 +21,9 @@ pub mod render;
 
 
 // TODO: Merge ReadInput and Render into PlatformIo
-pub trait PlatformIo: ReadInput + Render {
+pub trait PlatformIo: Render {
 	fn new() -> IoResult<Self>;
+	fn input(&mut self) -> Input;
 }
 
 
@@ -47,9 +45,7 @@ impl PlatformIo for PlayerIo {
 			renderer    : renderer,
 		})
 	}
-}
 
-impl ReadInput for PlayerIo {
 	fn input(&mut self) -> Input {
 		self.input_reader.input()
 	}
@@ -95,9 +91,7 @@ impl PlatformIo for HeadlessIo {
 			last_input: Input::new(),
 		})
 	}
-}
 
-impl ReadInput for HeadlessIo {
 	fn input(&mut self) -> Input {
 		match self.receiver.try_recv() {
 			Ok(input) => {
