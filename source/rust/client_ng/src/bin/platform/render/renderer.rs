@@ -77,33 +77,28 @@ impl Renderer {
 		let broadcast = frame.broadcasts.iter().find(|broadcast|
 			broadcast.sender == frame.self_id
 		);
+		let (message, button_text) = match broadcast {
+			Some(broadcast) => (broadcast.message.as_slice(), "Stop Sending"),
+			None            => ("", "Send Broadcast"),
+		};
 
-		if let Some(broadcast) = broadcast {
-			let button_text = "Stop Sending";
+		let width           = self.comm.buffer.width() - 4;
+		let button_width    = button_text.len() as Pos;
+		// TODO: The text input width should stay the same, regardless of which
+		//       button is displayed next to it.
+		let broadcast_width = width - 2 - button_width - 2;
 
-			let width           = self.comm.buffer.width() - 4;
-			let button_width    = button_text.len() as Pos;
-			let broadcast_width = width - 2 - button_width - 2;
+		try!(text_input(
+			&mut self.comm.buffer,
+			4, 4, broadcast_width,
+			message,
+		));
 
-			try!(text_input(
-				&mut self.comm.buffer,
-				4, 4, broadcast_width,
-				broadcast.message.as_slice(),
-			));
-
-			try!(button(
-				&mut self.comm.buffer,
-				4 + broadcast_width + 2, 4,
-				button_text,
-			));
-		}
-		else {
-			try!(button(
-				&mut self.comm.buffer,
-				4, 4,
-				"Send Broadcast",
-			));
-		}
+		try!(button(
+			&mut self.comm.buffer,
+			4 + broadcast_width + 2, 4,
+			button_text,
+		));
 
 		try!(write!(
 			&mut self.comm.buffer.writer(0, 6),
