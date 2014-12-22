@@ -1,4 +1,4 @@
-use client::input::Input;
+use client::platform::Input;
 
 use self::command_kinds::{
 	CommandKind,

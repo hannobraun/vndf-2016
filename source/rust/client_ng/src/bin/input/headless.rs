@@ -1,7 +1,7 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
 
-use client::input::Input;
+use client::platform::Input;
 
 use super::ReadInput;
 

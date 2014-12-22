@@ -3,7 +3,7 @@ use time::precise_time_s;
 
 use acceptance::Process;
 
-use client::input::Input;
+use client::platform::Input;
 use client::render::Frame;
 
 

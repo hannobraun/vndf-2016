@@ -18,8 +18,8 @@ use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
 use args::Args;
-use client::input::Input;
 use client::network::Socket;
+use client::platform::Input;
 use client::render::{
 	Frame,
 	Status,

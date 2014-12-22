@@ -8,6 +8,6 @@ extern crate acpe;
 extern crate common;
 
 
-pub mod input;
 pub mod network;
+pub mod platform;
 pub mod render;
