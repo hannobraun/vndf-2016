@@ -6,7 +6,6 @@ use client::platform::Input;
 use super::{
 	Command,
 	CommandError,
-	ReadInput,
 };
 use super::command_kinds::CommandKinds;
 
@@ -46,10 +45,8 @@ impl InputReader {
 			broadcast    : None,
 		}
 	}
-}
 
-impl ReadInput for InputReader {
-	fn input(&mut self) -> Input {
+	pub fn input(&mut self) -> Input {
 		let mut commands = Vec::new();
 
 		loop {
