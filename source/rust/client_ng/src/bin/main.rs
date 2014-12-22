@@ -33,7 +33,7 @@ use platform::input::{
 	InputReader,
 	ReadInput,
 };
-use render::{
+use platform::render::{
 	HeadlessRenderer,
 	Render,
 	Renderer,
@@ -43,7 +43,6 @@ use render::{
 mod action_assembler;
 mod args;
 mod platform;
-mod render;
 mod termios;
 
 
