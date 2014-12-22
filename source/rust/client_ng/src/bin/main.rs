@@ -47,24 +47,24 @@ fn main() {
 	// TODO: Extract common code into function. This requires the constructor to
 	//       be part of PlatformIo.
 	if args.headless {
-		let platform = match HeadlessIo::new() {
+		let platform = match PlatformIo::new() {
 			Ok(platform) =>
 				platform,
 			Err(error) =>
 				panic!("Error initializing platform I/O: {}", error),
 		};
 
-		run(args, platform)
+		run::<HeadlessIo>(args, platform)
 	}
 	else {
-		let platform = match PlayerIo::new() {
+		let platform = match PlatformIo::new() {
 			Ok(platform) =>
 				platform,
 			Err(error) =>
 				panic!("Error initializing platform I/O: {}", error),
 		};
 
-		run(args, platform)
+		run::<PlayerIo>(args, platform)
 	}
 }
 

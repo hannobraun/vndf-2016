@@ -22,8 +22,9 @@ pub mod render;
 
 
 // TODO: Merge ReadInput and Render into PlatformIo
-// TODO: Add constructor method
-pub trait PlatformIo: ReadInput + Render {}
+pub trait PlatformIo: ReadInput + Render {
+	fn new() -> IoResult<Self>;
+}
 
 
 pub struct PlayerIo {
@@ -31,8 +32,8 @@ pub struct PlayerIo {
 	renderer    : Renderer,
 }
 
-impl PlayerIo {
-	pub fn new() -> IoResult<PlayerIo> {
+impl PlatformIo for PlayerIo {
+	fn new() -> IoResult<PlayerIo> {
 		let input_reader = InputReader::new();
 		let renderer = match Renderer::new() {
 			Ok(renderer) => renderer,
@@ -58,8 +59,6 @@ impl Render for PlayerIo {
 	}
 }
 
-impl PlatformIo for PlayerIo {}
-
 
 // TODO: Inline HeadlessInputRender and HeadlessRenderer
 pub struct HeadlessIo {
@@ -67,8 +66,8 @@ pub struct HeadlessIo {
 	renderer    : HeadlessRenderer,
 }
 
-impl HeadlessIo {
-	pub fn new() -> IoResult<HeadlessIo> {
+impl PlatformIo for HeadlessIo {
+	fn new() -> IoResult<HeadlessIo> {
 		let input_reader = HeadlessInputReader::new();
 		let renderer = match HeadlessRenderer::new() {
 			Ok(renderer) => renderer,
@@ -93,5 +92,3 @@ impl Render for HeadlessIo {
 		self.renderer.render(frame)
 	}
 }
-
-impl PlatformIo for HeadlessIo {}
