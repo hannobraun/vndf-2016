@@ -241,6 +241,8 @@ fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str) -> I
 	b
 		.writer(x, y)
 		.limit(x + width)
+		.foreground_color(White)
+		.background_color(Black)
 		.write_str(text)
 }
 
