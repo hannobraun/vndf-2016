@@ -20,6 +20,7 @@ pub mod render;
 
 
 // TODO: Merge ReadInput and Render into PlatformIo
+// TODO: Add constructor method
 pub trait PlatformIo: ReadInput + Render {}
 
 
