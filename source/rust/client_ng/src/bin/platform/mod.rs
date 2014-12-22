@@ -14,7 +14,6 @@ use self::input::{
 	ReadInput,
 };
 use self::render::{
-	HeadlessRenderer,
 	Render,
 	Renderer,
 };
@@ -63,11 +62,9 @@ impl Render for PlayerIo {
 }
 
 
-// TODO: Inline HeadlessInputRender and HeadlessRenderer
 pub struct HeadlessIo {
 	last_input: Input,
 	receiver  : Receiver<Input>,
-	renderer  : HeadlessRenderer,
 }
 
 impl PlatformIo for HeadlessIo {
@@ -93,15 +90,9 @@ impl PlatformIo for HeadlessIo {
 			}
 		});
 
-		let renderer = match HeadlessRenderer::new() {
-			Ok(renderer) => renderer,
-			Err(error)   => return Err(error),
-		};
-
 		Ok(HeadlessIo {
 			receiver  : receiver,
 			last_input: Input::new(),
-			renderer  : renderer,
 		})
 	}
 }
@@ -123,6 +114,7 @@ impl ReadInput for HeadlessIo {
 
 impl Render for HeadlessIo {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		self.renderer.render(frame)
+		print!("{}\n", frame.to_json());
+		Ok(())
 	}
 }
