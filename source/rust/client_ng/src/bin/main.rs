@@ -44,6 +44,8 @@ mod termios;
 fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
+	// TODO: Extract common code into function. This requires the constructor to
+	//       be part of PlatformIo.
 	if args.headless {
 		let platform = match HeadlessIo::new() {
 			Ok(platform) =>
