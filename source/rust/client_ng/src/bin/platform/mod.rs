@@ -1,4 +1,8 @@
-use std::io::IoResult;
+use std::comm::TryRecvError;
+use std::io::{
+	stdin,
+	IoResult,
+};
 
 use client::platform::{
 	Frame,
@@ -6,7 +10,6 @@ use client::platform::{
 };
 
 use self::input::{
-	HeadlessInputReader,
 	InputReader,
 	ReadInput,
 };
@@ -62,28 +65,59 @@ impl Render for PlayerIo {
 
 // TODO: Inline HeadlessInputRender and HeadlessRenderer
 pub struct HeadlessIo {
-	input_reader: HeadlessInputReader,
-	renderer    : HeadlessRenderer,
+	last_input: Input,
+	receiver  : Receiver<Input>,
+	renderer  : HeadlessRenderer,
 }
 
 impl PlatformIo for HeadlessIo {
 	fn new() -> IoResult<HeadlessIo> {
-		let input_reader = HeadlessInputReader::new();
+		let (sender, receiver) = channel();
+
+		spawn(move || {
+			let mut stdin = stdin();
+
+			loop {
+				// TODO(83541252): This operation should time out to ensure
+				//                 panic propagation between tasks.
+				match stdin.read_line() {
+					Ok(line) => match Input::from_json(line.as_slice()) {
+						Ok(input) =>
+							sender.send(input),
+						Err(error) =>
+							panic!("Error decoding input: {}\n", error),
+					},
+					Err(error) =>
+						panic!("Error reading from stdin: {}", error),
+				}
+			}
+		});
+
 		let renderer = match HeadlessRenderer::new() {
 			Ok(renderer) => renderer,
 			Err(error)   => return Err(error),
 		};
 
 		Ok(HeadlessIo {
-			input_reader: input_reader,
-			renderer    : renderer,
+			receiver  : receiver,
+			last_input: Input::new(),
+			renderer  : renderer,
 		})
 	}
 }
 
 impl ReadInput for HeadlessIo {
 	fn input(&mut self) -> Input {
-		self.input_reader.input()
+		match self.receiver.try_recv() {
+			Ok(input) => {
+				self.last_input = input.clone();
+				input
+			},
+			Err(error) => match error {
+				TryRecvError::Empty        => self.last_input.clone(),
+				TryRecvError::Disconnected => panic!("Channel disconnected"),
+			}
+		}
 	}
 }
 
