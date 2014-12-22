@@ -28,15 +28,10 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use platform::input::{
-	HeadlessInputReader,
-	InputReader,
-	ReadInput,
-};
-use platform::render::{
-	HeadlessRenderer,
-	Render,
-	Renderer,
+use platform::{
+	HeadlessIo,
+	PlatformIo,
+	PlayerIo,
 };
 
 
@@ -50,33 +45,29 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		let input_reader = HeadlessInputReader::new();
-
-		let renderer = match HeadlessRenderer::new() {
-			Ok(renderer) => renderer,
-			Err(error)   => panic!("Error initializing renderer: {}", error),
+		let platform = match HeadlessIo::new() {
+			Ok(platform) =>
+				platform,
+			Err(error) =>
+				panic!("Error initializing platform I/O: {}", error),
 		};
 
-		run(args, input_reader, renderer)
+		run(args, platform)
 	}
 	else {
-		let input_reader = InputReader::new();
-
-		let renderer = match Renderer::new() {
-			Ok(renderer) => renderer,
-			Err(error)   => panic!("Error initializing renderer: {}", error),
+		let platform = match PlayerIo::new() {
+			Ok(platform) =>
+				platform,
+			Err(error) =>
+				panic!("Error initializing platform I/O: {}", error),
 		};
 
-		run(args, input_reader, renderer)
+		run(args, platform)
 	}
 }
 
 
-fn run<I: ReadInput, R: Render>(
-	    args        : Args,
-	mut input_reader: I,
-	mut renderer    : R
-) {
+fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		input     : String::new(),
@@ -94,7 +85,7 @@ fn run<I: ReadInput, R: Render>(
 	action_assembler.add_step(Step::Login);
 
 	loop {
-		let input = input_reader.input();
+		let input = platform.input();
 
 		if input != previous_input {
 			match input.broadcast {
@@ -138,7 +129,7 @@ fn run<I: ReadInput, R: Render>(
 		let message = action_assembler.assemble(&mut encoder);
 
 		server.send_to(message.as_slice());
-		if let Err(error) = renderer.render(&frame) {
+		if let Err(error) = platform.render(&frame) {
 			panic!("Error writing output: {}", error);
 		}
 
