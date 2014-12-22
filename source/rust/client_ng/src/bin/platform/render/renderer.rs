@@ -233,12 +233,28 @@ impl Renderer {
 
 
 fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str) -> IoResult<()> {
-	b
-		.writer(x, y)
-		.limit(x + width)
-		.foreground_color(White)
-		.background_color(Black)
-		.write_str(text)
+	let limit = x + width;
+
+	try!(
+		b
+			.writer(x, y)
+			.limit(limit)
+			.foreground_color(White)
+			.background_color(Black)
+			.write_str(text)
+	);
+	for x in range(x + text.len() as u16, limit) {
+		try!(
+			b
+				.writer(x, y)
+				.limit(limit)
+				.foreground_color(White)
+				.background_color(Black)
+				.write_str(" ")
+		);
+	}
+
+	Ok(())
 }
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
