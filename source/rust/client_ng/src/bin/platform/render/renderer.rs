@@ -90,10 +90,10 @@ impl Renderer {
 				broadcast.message.len() as Pos,
 			);
 
-			try!(write!(
-				&mut self.comm.buffer.writer(4, 4).limit(4 + broadcast_width),
-				"{}",
-				broadcast.message,
+			try!(text_input(
+				&mut self.comm.buffer,
+				4, 4, broadcast_width,
+				broadcast.message.as_slice(),
 			));
 
 			try!(button(
@@ -236,6 +236,13 @@ impl Renderer {
 	}
 }
 
+
+fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str) -> IoResult<()> {
+	b
+		.writer(x, y)
+		.limit(x + width)
+		.write_str(text)
+}
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
 	b
