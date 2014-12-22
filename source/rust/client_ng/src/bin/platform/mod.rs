@@ -6,10 +6,12 @@ use client::platform::{
 };
 
 use self::input::{
+	HeadlessInputReader,
 	InputReader,
 	ReadInput,
 };
 use self::render::{
+	HeadlessRenderer,
 	Render,
 	Renderer,
 };
@@ -57,3 +59,39 @@ impl Render for PlayerIo {
 }
 
 impl PlatformIo for PlayerIo {}
+
+
+// TODO: Inline HeadlessInputRender and HeadlessRenderer
+pub struct HeadlessIo {
+	input_reader: HeadlessInputReader,
+	renderer    : HeadlessRenderer,
+}
+
+impl HeadlessIo {
+	pub fn new() -> IoResult<HeadlessIo> {
+		let input_reader = HeadlessInputReader::new();
+		let renderer = match HeadlessRenderer::new() {
+			Ok(renderer) => renderer,
+			Err(error)   => return Err(error),
+		};
+
+		Ok(HeadlessIo {
+			input_reader: input_reader,
+			renderer    : renderer,
+		})
+	}
+}
+
+impl ReadInput for HeadlessIo {
+	fn input(&mut self) -> Input {
+		self.input_reader.input()
+	}
+}
+
+impl Render for HeadlessIo {
+	fn render(&mut self, frame: &Frame) -> IoResult<()> {
+		self.renderer.render(frame)
+	}
+}
+
+impl PlatformIo for HeadlessIo {}
