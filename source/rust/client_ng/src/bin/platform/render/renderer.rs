@@ -74,11 +74,11 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let sending_broadcast = frame.broadcasts.iter().find(|broadcast|
+		let broadcast = frame.broadcasts.iter().find(|broadcast|
 			broadcast.sender == frame.self_id
 		);
 
-		if let Some(broadcast) = sending_broadcast {
+		if let Some(broadcast) = broadcast {
 			let button_text = "Stop Sending";
 
 			let width           = self.comm.buffer.width() - 4;
