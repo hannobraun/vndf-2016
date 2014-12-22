@@ -29,6 +29,21 @@ pub struct PlayerIo {
 	renderer    : Renderer,
 }
 
+impl PlayerIo {
+	pub fn new() -> IoResult<PlayerIo> {
+		let input_reader = InputReader::new();
+		let renderer = match Renderer::new() {
+			Ok(renderer) => renderer,
+			Err(error)   => return Err(error),
+		};
+
+		Ok(PlayerIo {
+			input_reader: input_reader,
+			renderer    : renderer,
+		})
+	}
+}
+
 impl ReadInput for PlayerIo {
 	fn input(&mut self) -> Input {
 		self.input_reader.input()
