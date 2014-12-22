@@ -8,7 +8,6 @@ use client::platform::{
 
 use super::{
 	Pos,
-	Render,
 	Screen,
 };
 use super::buffer::ScreenBuffer;
@@ -44,10 +43,8 @@ impl Renderer {
 			info : Section::new(width,  6),
 		})
 	}
-}
 
-impl Render for Renderer {
-	fn render(&mut self, frame: &Frame) -> IoResult<()> {
+	pub fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		let mut y = 0;
 
 		try!(self.render_comm(frame, &mut y));
@@ -58,9 +55,7 @@ impl Render for Renderer {
 
 		Ok(())
 	}
-}
 
-impl Renderer {
 	fn render_comm(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.comm.buffer.clear();
 
