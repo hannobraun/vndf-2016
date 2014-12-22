@@ -29,7 +29,7 @@ pub enum Command {
 impl Command {
 	fn parse(kinds: &CommandKinds, full_command: String) -> CommandResult {
 		let mut splits = full_command.splitn(1, ' ');
-		
+
 		let command = match splits.next() {
 			Some(command) =>
 				command,
