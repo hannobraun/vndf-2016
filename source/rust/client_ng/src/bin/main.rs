@@ -28,7 +28,7 @@ use common::protocol::{
 	Percept,
 	Step,
 };
-use input::{
+use platform::input::{
 	HeadlessInputReader,
 	InputReader,
 	ReadInput,
@@ -42,7 +42,7 @@ use render::{
 
 mod action_assembler;
 mod args;
-mod input;
+mod platform;
 mod render;
 mod termios;
 
