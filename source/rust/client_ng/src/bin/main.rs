@@ -44,30 +44,23 @@ mod termios;
 fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
-	// TODO: Extract common code into function. This requires the constructor to
-	//       be part of PlatformIo.
 	if args.headless {
-		let platform = match PlatformIo::new() {
-			Ok(platform) =>
-				platform,
-			Err(error) =>
-				panic!("Error initializing platform I/O: {}", error),
-		};
-
-		run::<HeadlessIo>(args, platform)
+		run::<HeadlessIo>(args, init_platform())
 	}
 	else {
-		let platform = match PlatformIo::new() {
-			Ok(platform) =>
-				platform,
-			Err(error) =>
-				panic!("Error initializing platform I/O: {}", error),
-		};
-
-		run::<PlayerIo>(args, platform)
+		run::<PlayerIo>(args, init_platform())
 	}
 }
 
+
+fn init_platform<P: PlatformIo>() -> P {
+	match PlatformIo::new() {
+		Ok(platform) =>
+			platform,
+		Err(error) =>
+			panic!("Error initializing platform I/O: {}", error),
+	}
+}
 
 fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut frame = Frame {
