@@ -3,8 +3,10 @@ use time::precise_time_s;
 
 use acceptance::Process;
 
-use client::platform::Input;
-use client::render::Frame;
+use client::platform::{
+	Frame,
+	Input,
+};
 
 
 pub struct Client {

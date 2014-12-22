@@ -19,9 +19,9 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use args::Args;
 use client::network::Socket;
-use client::platform::Input;
-use client::render::{
+use client::platform::{
 	Frame,
+	Input,
 	Status,
 };
 use common::protocol::{

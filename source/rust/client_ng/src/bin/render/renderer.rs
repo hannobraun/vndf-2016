@@ -1,7 +1,7 @@
 use std::cmp::min;
 use std::io::IoResult;
 
-use client::render::{
+use client::platform::{
 	Frame,
 	Status,
 };

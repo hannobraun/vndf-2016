@@ -10,4 +10,3 @@ extern crate common;
 
 pub mod network;
 pub mod platform;
-pub mod render;
