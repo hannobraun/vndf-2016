@@ -76,9 +76,15 @@ impl GameService {
 		&mut self,
 		condition: |&Option<ActionHandle>| -> bool
 	) -> Option<ActionHandle> {
+		let start_s = precise_time_s();
+
 		let mut action = self.expect_action();
 
 		while !condition(&action) {
+			if precise_time_s() - start_s > 0.5 {
+				panic!("Condition not satisfied after waiting");
+			}
+
 			action = self.expect_action();
 		}
 
