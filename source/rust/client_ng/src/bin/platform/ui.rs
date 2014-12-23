@@ -19,7 +19,7 @@ impl Ui {
 			if c == '\n' {
 				self.input_active = !self.input_active;
 
-				if !self.input_active {
+				if self.input_active {
 					self.input_text.clear();
 				}
 			}
