@@ -9,7 +9,7 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			input_active: false,
+			input_active: true,
 			input_text  : String::new(),
 		}
 	}
