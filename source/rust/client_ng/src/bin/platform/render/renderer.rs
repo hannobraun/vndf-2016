@@ -18,6 +18,10 @@ use super::Color::{
 use super::util::Section;
 
 
+const START_BROADCAST: &'static str = "Send Broadcast";
+const STOP_BROADCAST : &'static str = "Stop Sending";
+
+
 pub struct Renderer {
 	screen: Screen,
 
@@ -79,10 +83,10 @@ impl Renderer {
 
 		let message = ui.input_text.as_slice();
 		let button_text = if ui.input_active {
-			"Send Broadcast"
+			START_BROADCAST
 		}
 		else {
-			"Stop Sending"
+			STOP_BROADCAST
 		};
 
 		let width           = self.comm.buffer.width() - 4;
