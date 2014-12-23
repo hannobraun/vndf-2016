@@ -1,6 +1,6 @@
 pub struct Ui {
-	input_active: bool,
-	input_text  : String,
+	pub input_active: bool,
+	pub input_text  : String,
 }
 
 impl Ui {
