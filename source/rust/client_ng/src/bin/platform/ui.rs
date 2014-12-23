@@ -23,11 +23,13 @@ impl Ui {
 					self.input_text.clear();
 				}
 			}
-			else if c == '\x7f' { // Backspace
-				self.input_text.pop();
-			}
-			else {
-				self.input_text.push(c);
+			else if self.input_active {
+				if c == '\x7f' { // Backspace
+					self.input_text.pop();
+				}
+				else {
+					self.input_text.push(c);
+				}
 			}
 		}
 
