@@ -4,6 +4,7 @@ use client::platform::{
 	Frame,
 	Status,
 };
+use platform::ui::Ui;
 
 use super::{
 	Pos,
@@ -43,10 +44,10 @@ impl Renderer {
 		})
 	}
 
-	pub fn render(&mut self, frame: &Frame) -> IoResult<()> {
+	pub fn render(&mut self, frame: &Frame, ui: &Ui) -> IoResult<()> {
 		let mut y = 0;
 
-		try!(self.render_comm(frame, &mut y));
+		try!(self.render_comm(frame, ui, &mut y));
 		try!(self.render_input(frame, &mut y));
 		try!(self.render_info(frame, &mut y));
 
@@ -55,7 +56,12 @@ impl Renderer {
 		Ok(())
 	}
 
-	fn render_comm(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
+	fn render_comm(
+		&mut self,
+		frame: &Frame,
+		ui   : &Ui,
+		y    : &mut Pos
+	) -> IoResult<()> {
 		self.comm.buffer.clear();
 
 		try!(write!(
@@ -74,12 +80,12 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let broadcast = frame.broadcasts.iter().find(|broadcast|
-			broadcast.sender == frame.self_id
-		);
-		let (message, button_text) = match broadcast {
-			Some(broadcast) => (broadcast.message.as_slice(), "Stop Sending"),
-			None            => ("", "Send Broadcast"),
+		let message = ui.input_text.as_slice();
+		let button_text = if ui.input_active {
+			"Stop Sending"
+		}
+		else {
+			"Send Broadcast"
 		};
 
 		let width           = self.comm.buffer.width() - 4;
