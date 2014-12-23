@@ -20,7 +20,7 @@ pub struct Screen {
 	stdout  : LineBufferedWriter<StdWriter>,
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
-	cursor  : (Pos, Pos),
+	cursor  : Option<(Pos, Pos)>,
 }
 
 impl Screen {
@@ -43,7 +43,7 @@ impl Screen {
 			stdout  : stdout,
 			buffer_a: buffer_a,
 			buffer_b: buffer_b,
-			cursor  : (0, 0),
+			cursor  : None,
 		})
 	}
 
@@ -51,11 +51,8 @@ impl Screen {
 		&mut self.buffer_a
 	}
 
-	pub fn cursor(&mut self, x: Pos, y: Pos) {
-		let x = min(x, self.buffer_a.width()  - 1);
-		let y = min(y, self.buffer_a.height() - 1);
-
-		self.cursor = (x, y);
+	pub fn cursor(&mut self, pos: Option<(Pos, Pos)>) {
+		self.cursor = pos;
 	}
 
 	pub fn submit(&mut self) -> IoResult<()> {
@@ -100,12 +97,28 @@ impl Screen {
 		swap(&mut self.buffer_a, &mut self.buffer_b);
 		self.buffer_a.clear();
 
-		let (x, y) = self.cursor;
-		try!(write!(
-			&mut self.stdout,
-			"\x1b[{};{}H", // set cursor
-			y + 1, x + 1
-		));
+		match self.cursor {
+			Some((x, y)) => {
+				let x = min(x, self.buffer_a.width()  - 1);
+				let y = min(y, self.buffer_a.height() - 1);
+
+				try!(write!(
+					&mut self.stdout,
+					"\x1b[?25h", // show cursor
+				));
+				try!(write!(
+					&mut self.stdout,
+					"\x1b[{};{}H", // set cursor
+					y + 1, x + 1
+				));
+			},
+			None => {
+				try!(write!(
+					&mut self.stdout,
+					"\x1b[?25l", // hide cursor
+				));
+			},
+		}
 
 		try!(self.stdout.flush());
 		Ok(())
