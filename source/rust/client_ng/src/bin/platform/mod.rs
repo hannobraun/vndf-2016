@@ -11,10 +11,12 @@ use client::platform::{
 
 use self::input::InputReader;
 use self::render::Renderer;
+use self::ui::Ui;
 
 
 mod input;
 mod render;
+mod ui;
 
 
 pub trait PlatformIo {
@@ -26,12 +28,14 @@ pub trait PlatformIo {
 
 pub struct PlayerIo {
 	input_reader: InputReader,
+	ui          : Ui,
 	renderer    : Renderer,
 	chars       : Vec<char>,
 }
 
 impl PlatformIo for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
+		// TODO: Move down into struct initialization
 		let input_reader = InputReader::new();
 		let renderer = match Renderer::new() {
 			Ok(renderer) => renderer,
@@ -40,6 +44,7 @@ impl PlatformIo for PlayerIo {
 
 		Ok(PlayerIo {
 			input_reader: input_reader,
+			ui          : Ui::new(),
 			renderer    : renderer,
 			chars       : Vec::new(),
 		})
@@ -48,7 +53,7 @@ impl PlatformIo for PlayerIo {
 	fn input(&mut self) -> Input {
 		self.chars.clear();
 		let input = self.input_reader.input(&mut self.chars);
-		self.renderer.process_input(self.chars.as_slice());
+		self.ui.process_input(self.chars.as_slice());
 		input
 	}
 

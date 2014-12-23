@@ -17,20 +17,12 @@ use super::Color::{
 use super::util::Section;
 
 
-struct UiState {
-	input_active: bool,
-	input_text  : String,
-}
-
-
 pub struct Renderer {
 	screen: Screen,
 
 	comm : Section,
 	input: Section,
 	info : Section,
-
-	ui_state: UiState,
 }
 
 impl Renderer {
@@ -48,28 +40,7 @@ impl Renderer {
 			comm : Section::new(width, 14),
 			input: Section::new(width,  4),
 			info : Section::new(width,  6),
-
-			ui_state: UiState {
-				input_active: false,
-				input_text  : String::new(),
-			}
 		})
-	}
-
-	// TODO: This should probably live in a dedicated Ui struct, definitely not
-	//       in Renderer.
-	pub fn process_input(&mut self, chars: &[char]) {
-		for &c in chars.iter() {
-			if c == '\n' {
-				self.ui_state.input_active = !self.ui_state.input_active;
-			}
-			else if c == '\x7f' { // Backspace
-				self.ui_state.input_text.pop();
-			}
-			else {
-				self.ui_state.input_text.push(c);
-			}
-		}
 	}
 
 	pub fn render(&mut self, frame: &Frame) -> IoResult<()> {
