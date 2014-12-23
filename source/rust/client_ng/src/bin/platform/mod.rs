@@ -46,7 +46,10 @@ impl PlatformIo for PlayerIo {
 	}
 
 	fn input(&mut self) -> Input {
-		self.input_reader.input(&mut self.chars)
+		self.chars.clear();
+		let input = self.input_reader.input(&mut self.chars);
+		self.renderer.process_input(self.chars.as_slice());
+		input
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
