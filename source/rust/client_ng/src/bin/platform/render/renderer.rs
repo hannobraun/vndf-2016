@@ -1,3 +1,4 @@
+use std::cmp::max;
 use std::io::IoResult;
 
 use client::platform::{
@@ -89,10 +90,9 @@ impl Renderer {
 			STOP_BROADCAST
 		};
 
-		let width           = self.comm.buffer.width() - 4;
-		let button_width    = button_text.len() as Pos;
-		// TODO: The text input width should stay the same, regardless of which
-		//       button is displayed next to it.
+		let width = self.comm.buffer.width() - 4;
+		let button_width =
+			max(START_BROADCAST.len(), STOP_BROADCAST.len()) as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
 		try!(text_input(
