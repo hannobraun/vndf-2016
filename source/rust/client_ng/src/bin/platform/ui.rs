@@ -15,6 +15,10 @@ impl Ui {
 		for &c in chars.iter() {
 			if c == '\n' {
 				self.input_active = !self.input_active;
+
+				if !self.input_active {
+					self.input_text.clear();
+				}
 			}
 			else if c == '\x7f' { // Backspace
 				self.input_text.pop();
