@@ -46,12 +46,14 @@ impl InputReader {
 		}
 	}
 
-	pub fn input(&mut self) -> Input {
+	pub fn input(&mut self, chars: &mut Vec<char>) -> Input {
 		let mut commands = Vec::new();
 
 		loop {
 			match self.receiver.try_recv() {
 				Ok(c) => {
+					chars.push(c);
+
 					if c == '\x7f' { // Backspace
 						self.current.pop();
 					}

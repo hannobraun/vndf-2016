@@ -27,6 +27,7 @@ pub trait PlatformIo {
 pub struct PlayerIo {
 	input_reader: InputReader,
 	renderer    : Renderer,
+	chars       : Vec<char>,
 }
 
 impl PlatformIo for PlayerIo {
@@ -40,11 +41,12 @@ impl PlatformIo for PlayerIo {
 		Ok(PlayerIo {
 			input_reader: input_reader,
 			renderer    : renderer,
+			chars       : Vec::new(),
 		})
 	}
 
 	fn input(&mut self) -> Input {
-		self.input_reader.input()
+		self.input_reader.input(&mut self.chars)
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
