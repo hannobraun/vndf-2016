@@ -13,8 +13,8 @@ use self::input::InputReader;
 use self::render::Renderer;
 
 
-pub mod input;
-pub mod render;
+mod input;
+mod render;
 
 
 pub trait PlatformIo {
