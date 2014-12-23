@@ -1,21 +1,9 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
 
-use client::platform::Input;
-
-use super::{
-	Command,
-	CommandError,
-};
-use super::command_kinds::CommandKinds;
-
 
 pub struct InputReader {
-	receiver     : Receiver<char>,
-	current      : String,
-	command_kinds: CommandKinds,
-	start_with   : Vec<String>,
-	broadcast    : Option<String>,
+	receiver: Receiver<char>,
 }
 
 impl InputReader {
@@ -38,45 +26,15 @@ impl InputReader {
 		});
 
 		InputReader {
-			receiver     : receiver,
-			current      : String::new(),
-			command_kinds: CommandKinds::new(),
-			start_with   : Vec::new(),
-			broadcast    : None,
+			receiver: receiver,
 		}
 	}
 
-	pub fn input(&mut self, chars: &mut Vec<char>) -> Input {
-		let mut commands = Vec::new();
-
+	pub fn input(&mut self, chars: &mut Vec<char>) {
 		loop {
 			match self.receiver.try_recv() {
-				Ok(c) => {
-					chars.push(c);
-
-					if c == '\x7f' { // Backspace
-						self.current.pop();
-					}
-					else if c == '\x09' { // Tab
-						if self.start_with.len() == 1 {
-							self.current = self.start_with[0].clone();
-							self.current.push(' ');
-						}
-					}
-					else if c == '\n' {
-						commands.push(Command::parse(
-							&self.command_kinds,
-							self.current.clone(),
-						));
-						self.current.clear();
-					}
-					else if c.is_control() {
-						// ignore other control characters
-					}
-					else {
-						self.current.push(c);
-					}
-				},
+				Ok(c) =>
+					chars.push(c),
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
@@ -85,48 +43,6 @@ impl InputReader {
 						panic!("Channel disconnected"),
 				}
 			}
-		}
-
-		self.start_with = self.command_kinds
-			.start_with(self.current.as_slice())
-			.iter()
-			.map(|kind|
-				kind.name().to_string()
-			)
-			.collect();
-
-		commands.push(Err(CommandError::Incomplete(
-			self.current.clone(),
-			self.start_with.clone(),
-		)));
-
-		let mut invalid_error = None;
-		for command in commands.into_iter() {
-			let command = match command {
-				Ok(command) =>
-					command,
-				Err(error) => match error {
-					CommandError::Invalid(error, command) => {
-						invalid_error = Some((error.to_string(), command));
-						continue;
-					},
-					_ =>
-						continue,
-				},
-			};
-
-			match command {
-				Command::Broadcast(message) =>
-					self.broadcast = Some(message),
-				Command::StopBroadcast =>
-					self.broadcast = None,
-			}
-		}
-
-		Input {
-			broadcast: self.broadcast.clone(),
-			command  : (self.current.clone(), self.start_with.clone()),
-			error    : invalid_error,
 		}
 	}
 }
