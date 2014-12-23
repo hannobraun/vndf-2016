@@ -34,23 +34,28 @@ impl<'a> ActionAssembler {
 
 		let mut action = encoder.message(&ActionHeader { id: self.next_seq });
 
+		let mut is_first_step = true;
 		loop {
 			let step = match self.added.remove(0) {
 				Some(step) => step,
 				None       => break,
 			};
 
-			// TODO(84970610): If a single step is too large for a UDP packet,
-			//                 it can never be added and nothing will ever be
-			//                 sent again. The following code should detect if
-			//                 the step being rejected is the first and panic.
-			//                 Steps not fitting in a UDP message should be a
-			//                 bug in step construction, so a panic is the
-			//                 appropriate response here.
 			if !action.add(&step) {
+				if is_first_step {
+					panic!(
+						"Failed to add first step of an action. Since the \
+						action is still empty when adding the first step, this \
+						means the step is too large to ever be added to an \
+						action. This is a bug, as such a step should have been \
+						rejected when it was created."
+					);
+				}
 				self.added.insert(0, step);
 				break;
 			}
+
+			is_first_step = false;
 		}
 
 		let message = action.encode();
