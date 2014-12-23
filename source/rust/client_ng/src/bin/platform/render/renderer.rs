@@ -82,10 +82,10 @@ impl Renderer {
 
 		let message = ui.input_text.as_slice();
 		let button_text = if ui.input_active {
-			"Stop Sending"
+			"Send Broadcast"
 		}
 		else {
-			"Send Broadcast"
+			"Stop Sending"
 		};
 
 		let width           = self.comm.buffer.width() - 4;
