@@ -22,7 +22,6 @@ pub struct Renderer {
 	screen: Screen,
 
 	comm : Section,
-	input: Section,
 	info : Section,
 }
 
@@ -39,7 +38,6 @@ impl Renderer {
 			screen: screen,
 
 			comm : Section::new(width, 14),
-			input: Section::new(width,  4),
 			info : Section::new(width,  6),
 		})
 	}
@@ -48,7 +46,6 @@ impl Renderer {
 		let mut y = 0;
 
 		try!(self.render_comm(frame, ui, &mut y));
-		try!(self.render_input(frame, &mut y));
 		try!(self.render_info(frame, &mut y));
 
 		try!(self.screen.submit());
@@ -150,40 +147,6 @@ impl Renderer {
 
 		try!(self.comm.write(0, *y, &mut self.screen));
 		*y += self.comm.height;
-
-		Ok(())
-	}
-
-	fn render_input(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		self.input.buffer.clear();
-
-		try!(write!(
-			&mut self.input.buffer.writer(0, 0),
-			"ENTER COMMAND",
-		));
-
-		try!(write!(
-			&mut self.input.buffer.writer(4, 1),
-			"{}",
-			frame.input,
-		));
-
-		let cursor_position = 1 + 4 + frame.input.len() as Pos;
-		self.screen.cursor(cursor_position, *y + 2);
-
-		if frame.commands.len() == 1 {
-			let rest_of_command = frame.commands[0][frame.input.len() ..];
-			try!(write!(
-				&mut self.input.buffer
-					.writer(cursor_position - 1, 1)
-					.foreground_color(Black),
-				"{}",
-				rest_of_command,
-			));
-		}
-
-		try!(self.input.write(0, *y, &mut self.screen));
-		*y += self.input.height;
 
 		Ok(())
 	}
