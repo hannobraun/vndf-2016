@@ -35,15 +35,13 @@ pub struct PlayerIo {
 
 impl PlatformIo for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
-		// TODO: Move down into struct initialization
-		let input_reader = InputReader::new();
 		let renderer = match Renderer::new() {
 			Ok(renderer) => renderer,
 			Err(error)   => return Err(error),
 		};
 
 		Ok(PlayerIo {
-			input_reader: input_reader,
+			input_reader: InputReader::new(),
 			ui          : Ui::new(),
 			renderer    : renderer,
 			chars       : Vec::new(),
