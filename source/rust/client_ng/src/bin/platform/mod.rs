@@ -50,9 +50,9 @@ impl PlatformIo for PlayerIo {
 
 	fn input(&mut self) -> Input {
 		self.chars.clear();
-		let input = self.input_reader.input(&mut self.chars);
-		self.ui.process_input(self.chars.as_slice());
-		input
+		// TODO: InputReader should not return Input
+		self.input_reader.input(&mut self.chars);
+		self.ui.process_input(self.chars.as_slice())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
