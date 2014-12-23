@@ -97,6 +97,13 @@ impl Renderer {
 			message,
 		));
 
+		if ui.input_active {
+			self.screen.cursor(Some((1 + 4 + message.len() as u16, 1 + 4)));
+		}
+		else {
+			self.screen.cursor(None)
+		}
+
 		try!(button(
 			&mut self.comm.buffer,
 			4 + broadcast_width + 2, 4,
