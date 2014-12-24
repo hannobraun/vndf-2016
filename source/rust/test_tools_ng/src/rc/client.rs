@@ -37,10 +37,6 @@ impl Client {
 		self.process.write_stdin_line(input.to_json().as_slice());
 	}
 
-	pub fn command(&mut self, command: &str) {
-		self.process.write_stdin_line(command);
-	}
-
 	pub fn broadcast(&mut self, broadcast: &str) {
 		let mut input = Input::new();
 		input.broadcast = Some(broadcast.to_string());
