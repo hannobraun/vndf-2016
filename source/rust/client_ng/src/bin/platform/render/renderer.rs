@@ -249,8 +249,8 @@ fn list(
 
 	if items.len() > height as uint {
 		try!(write!(
-			&mut b.writer(x, y + height - 1).limit(limit),
-			"(more)",
+			&mut b.writer(limit - 1, y + height - 1).limit(limit),
+			"↓",
 		));
 	}
 
