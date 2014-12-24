@@ -84,33 +84,34 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		let input = platform.input();
 
 		if input != previous_input {
-			let mut reset_status = true;
-
 			match input.broadcast {
 				Some(ref message) =>
 					if message.len() == 0 {
 						frame.status = Status::Error(
 							"Broadcasts can not be empty".to_string()
 						);
-						reset_status = false;
 					}
 					else if message.len() > MAX_PACKET_SIZE / 2 {
 						frame.status = Status::Error(
 							"Broadcast message too long".to_string()
 						);
-						reset_status = false;
 					}
 					else {
 						action_assembler.add_step(
 							Step::Broadcast(message.clone())
-						)
-					},
-				None =>
-					action_assembler.add_step(Step::StopBroadcast),
-			}
+						);
 
-			if reset_status {
-				frame.status = Status::None;
+						frame.status = Status::Notice(
+							"Broadcast sent".to_string()
+						);
+					},
+				None => {
+					action_assembler.add_step(Step::StopBroadcast);
+
+					frame.status = Status::Notice(
+						"Stopped sending broadcast".to_string()
+					);
+				},
 			}
 		}
 
