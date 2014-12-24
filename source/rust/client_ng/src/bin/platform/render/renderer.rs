@@ -44,7 +44,7 @@ impl Renderer {
 		Ok(Renderer {
 			screen: screen,
 
-			comm : Section::new(width, 14),
+			comm : Section::new(width, 18),
 			info : Section::new(width,  6),
 		})
 	}
