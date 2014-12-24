@@ -121,42 +121,19 @@ impl Renderer {
 			"RECEIVING",
 		));
 
-		if frame.broadcasts.len() == 0 {
-			try!(write!(
-				&mut self.comm.buffer.writer(4, 7),
-				"none"
-			));
-		}
+		let mut broadcasts: Vec<String> = frame.broadcasts
+			.iter()
+			.map(|broadcast|
+				format!("{}: {}", broadcast.sender, broadcast.message)
+			)
+			.collect();
+		broadcasts.sort();
 
-		let mut slots = if frame.broadcasts.len() > 5 {
-			4
-		}
-		else {
-			frame.broadcasts.len()
-		};
-
-		let mut broadcasts = frame.broadcasts.clone();
-		broadcasts.sort_by(|a, b| a.sender.cmp(&b.sender));
-		for (i, broadcast) in broadcasts.iter().enumerate() {
-			if slots == 0 {
-				break;
-			}
-
-			try!(write!(
-				&mut self.comm.buffer.writer(4, 7 + i as Pos),
-				"{}: {}",
-				broadcast.sender, broadcast.message
-			));
-
-			slots -= 1;
-		}
-
-		if frame.broadcasts.len() > 5 {
-			try!(write!(
-				&mut self.comm.buffer.writer(4, 7 + 4),
-				"(more)",
-			));
-		}
+		try!(list(
+			&mut self.comm.buffer,
+			4, 7, 5,
+			broadcasts.as_slice(),
+		));
 
 		try!(self.comm.write(0, *y, &mut self.screen));
 		*y += self.comm.height;
@@ -225,4 +202,47 @@ fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
 		.foreground_color(Black)
 		.background_color(White)
 		.write_str(text)
+}
+
+fn list(
+	b     : &mut ScreenBuffer,
+	x     : Pos,
+	y     : Pos,
+	length: Pos,
+	items : &[String]
+) -> IoResult<()> {
+	if items.len() == 0 {
+		try!(write!(
+			&mut b.writer(x, y),
+			"none"
+		));
+
+		return Ok(());
+	}
+
+	let mut slots = if items.len() > length as uint {
+		(length - 1) as uint
+	}
+	else {
+		items.len()
+	};
+
+	for (i, item) in items.iter().enumerate() {
+		if slots == 0 {
+			break;
+		}
+
+		try!(b.writer(x, y + i as Pos).write_str(item.as_slice()));
+
+		slots -= 1;
+	}
+
+	if items.len() > length as uint {
+		try!(write!(
+			&mut b.writer(x, y + length - 1),
+			"(more)",
+		));
+	}
+
+	Ok(())
 }
