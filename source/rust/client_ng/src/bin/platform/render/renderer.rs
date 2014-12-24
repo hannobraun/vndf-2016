@@ -208,7 +208,7 @@ fn list(
 	b     : &mut ScreenBuffer,
 	x     : Pos,
 	y     : Pos,
-	length: Pos,
+	height: Pos,
 	items : &[String]
 ) -> IoResult<()> {
 	if items.len() == 0 {
@@ -220,8 +220,8 @@ fn list(
 		return Ok(());
 	}
 
-	let mut slots = if items.len() > length as uint {
-		(length - 1) as uint
+	let mut slots = if items.len() > height as uint {
+		(height - 1) as uint
 	}
 	else {
 		items.len()
@@ -237,9 +237,9 @@ fn list(
 		slots -= 1;
 	}
 
-	if items.len() > length as uint {
+	if items.len() > height as uint {
 		try!(write!(
-			&mut b.writer(x, y + length - 1),
+			&mut b.writer(x, y + height - 1),
 			"(more)",
 		));
 	}
