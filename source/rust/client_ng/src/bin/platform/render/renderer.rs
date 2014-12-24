@@ -1,4 +1,7 @@
-use std::cmp::max;
+use std::cmp::{
+	max,
+	min,
+};
 use std::io::IoResult;
 
 use client::platform::{
@@ -225,15 +228,10 @@ fn list(
 		return Ok(());
 	}
 
-	let mut slots = if items.len() > height as uint {
-		(height - 1) as uint
-	}
-	else {
-		items.len()
-	};
+	let mut n = min(items.len(), height as uint);
 
 	for (i, item) in items.iter().enumerate() {
-		if slots == 0 {
+		if n == 0 {
 			break;
 		}
 
@@ -244,7 +242,7 @@ fn list(
 				.write_str(item.as_slice())
 		);
 
-		slots -= 1;
+		n -= 1;
 	}
 
 	if items.len() > height as uint {
