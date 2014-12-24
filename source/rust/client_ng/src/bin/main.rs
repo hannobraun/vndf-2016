@@ -102,7 +102,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 
 						frame.status = Status::Notice(
-							"Broadcast sent".to_string()
+							"Sending broadcast".to_string()
 						);
 					},
 				None => {
