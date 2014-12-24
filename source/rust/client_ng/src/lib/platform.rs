@@ -6,7 +6,7 @@ use serialize::json::{
 use common::protocol::Broadcast;
 
 
-#[deriving(Clone, Decodable, Encodable, Eq, PartialEq)]
+#[deriving(Clone, Decodable, Encodable, Eq, PartialEq, Show)]
 pub struct Input {
 	pub broadcast: Option<String>,
 	pub command  : (String, Vec<String>),
