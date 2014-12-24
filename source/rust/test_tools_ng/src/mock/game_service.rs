@@ -74,13 +74,13 @@ impl GameService {
 
 	pub fn wait_until(
 		&mut self,
-		condition: |&Option<ActionHandle>| -> bool
+		condition: |&mut Option<ActionHandle>| -> bool
 	) -> Option<ActionHandle> {
 		let start_s = precise_time_s();
 
 		let mut action = self.expect_action();
 
-		while !condition(&action) {
+		while !condition(&mut action) {
 			if precise_time_s() - start_s > 0.5 {
 				panic!("Condition not satisfied after waiting");
 			}
