@@ -26,12 +26,13 @@ impl ActionAssembler {
 		self.added.push(step);
 	}
 
-	// TODO: If no action is confirmed, this will keep returning the same
-	//       message over and over. This is fine in production, since messages
-	//       are usually confirmed, but it complicates writing test cases with
-	//       a mock game service. A better behavior would be this: If new steps
-	//       have been added since the last assembling, the message should be
-	//       re-assembled with the steps being added.
+	// TODO(85118724): If no action is confirmed, this will keep returning the
+	//                 same message over and over. This is fine in production,
+	//                 since messages are usually confirmed, but it complicates
+	//                 writing test cases with a mock game service. A better
+	//                 behavior would be this: If new steps have been added
+	//                 since the last assembling, the message should be
+	//                 re-assembled with the steps being added.
 	pub fn assemble(&mut self, encoder: &mut Encoder) -> Vec<u8> {
 		match self.assembled {
 			Some(ref message) => return message.clone(),

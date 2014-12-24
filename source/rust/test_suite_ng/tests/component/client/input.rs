@@ -12,7 +12,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	let mut game_service = MockGameService::start();
 	let mut client       = Client::start(game_service.port());
 
-	// TODO: Remove confirmation once ActionAssembler stops insisting on it.
+	// TODO(85118724): Remove confirmation.
 	game_service.expect_action().unwrap().confirm(); // Confirm login
 
 	let invalid_broadcast = String::from_char(MAX_PACKET_SIZE + 1, 'a');
@@ -26,7 +26,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	client.broadcast(valid_broadcast.as_slice());
 	game_service.wait_until(|action| {
 		let action = action.as_mut().unwrap();
-		// TODO: Remove confirmation once ActionAssembler stops insisting on it.
+		// TODO(85118724): Remove confirmation.
 		action.confirm();
 		action.inner.steps.contains(
 			&Step::Broadcast(valid_broadcast.clone())
