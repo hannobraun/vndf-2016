@@ -129,9 +129,11 @@ impl Renderer {
 			.collect();
 		broadcasts.sort();
 
+		let width = self.comm.buffer.width();
 		try!(list(
 			&mut self.comm.buffer,
-			4, 7, 5,
+			4, 7,
+			5, width - 4,
 			broadcasts.as_slice(),
 		));
 
@@ -208,12 +210,13 @@ fn list(
 	b     : &mut ScreenBuffer,
 	x     : Pos,
 	y     : Pos,
+	width : Pos,
 	height: Pos,
 	items : &[String]
 ) -> IoResult<()> {
 	if items.len() == 0 {
 		try!(write!(
-			&mut b.writer(x, y),
+			&mut b.writer(x, y).limit(x + width),
 			"none"
 		));
 
@@ -232,14 +235,19 @@ fn list(
 			break;
 		}
 
-		try!(b.writer(x, y + i as Pos).write_str(item.as_slice()));
+		try!(
+			b
+				.writer(x, y + i as Pos)
+				.limit(x + width)
+				.write_str(item.as_slice())
+		);
 
 		slots -= 1;
 	}
 
 	if items.len() > height as uint {
 		try!(write!(
-			&mut b.writer(x, y + height - 1),
+			&mut b.writer(x, y + height - 1).limit(x + width),
 			"(more)",
 		));
 	}
