@@ -13,7 +13,7 @@ pub struct ActionAssembler {
 	assembled: Option<Vec<u8>>,
 }
 
-impl<'a> ActionAssembler {
+impl ActionAssembler {
 	pub fn new() -> ActionAssembler {
 		ActionAssembler {
 			next_seq : 0,
