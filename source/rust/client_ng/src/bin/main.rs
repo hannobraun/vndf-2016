@@ -113,10 +113,6 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 			}
 		}
 
-		if let Some((error, command)) = input.error.clone() {
-			frame.status = Status::Error(format!("\"{}\": {}", command, error))
-		}
-
 		previous_input = input.clone();
 
 		for perception in  server.recv_from().into_iter() {
