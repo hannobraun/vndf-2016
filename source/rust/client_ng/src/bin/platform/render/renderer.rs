@@ -186,28 +186,6 @@ impl Renderer {
 			));
 		}
 
-		try!(write!(
-			&mut self.info.buffer.writer(0, 2),
-			"COMMANDS"
-		));
-
-		if frame.commands.len() == 0 {
-			try!(write!(
-				&mut self.info.buffer.writer(4, 3),
-				"none"
-			));
-		}
-
-		let mut x = 4;
-		for command in frame.commands.iter() {
-			try!(write!(
-				&mut self.info.buffer.writer(x, 3).limit(x + 15),
-				"{}",
-				command
-			));
-			x += 4 + command.len() as Pos;
-		}
-
 		try!(self.info.write(0, *y, &mut self.screen));
 		*y += self.info.buffer.height();
 
