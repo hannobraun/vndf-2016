@@ -14,6 +14,7 @@ extern crate common;
 use std::io::timer::sleep;
 use std::time::Duration;
 
+use acpe::MAX_PACKET_SIZE;
 use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
@@ -83,16 +84,28 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		let input = platform.input();
 
 		if input != previous_input {
+			let mut reset_status = true;
+
 			match input.broadcast {
 				Some(ref message) =>
-					// TODO(84970610): Reject broadcasts that are too large to
-					//                 fit into a UDP packet.
-					action_assembler.add_step(Step::Broadcast(message.clone())),
+					if message.len() > MAX_PACKET_SIZE / 2 {
+						frame.status = Status::Error(
+							"Broadcast message too long".to_string()
+						);
+						reset_status = false;
+					}
+					else {
+						action_assembler.add_step(
+							Step::Broadcast(message.clone())
+						)
+					},
 				None =>
 					action_assembler.add_step(Step::StopBroadcast),
 			}
 
-			frame.status = Status::None;
+			if reset_status {
+				frame.status = Status::None;
+			}
 		}
 
 		let (partial_command, applicable) = input.command.clone();
