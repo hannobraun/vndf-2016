@@ -133,7 +133,7 @@ impl Renderer {
 		try!(list(
 			&mut self.comm.buffer,
 			4, 7,
-			5, width - 4,
+			width - 4, 5,
 			broadcasts.as_slice(),
 		));
 
