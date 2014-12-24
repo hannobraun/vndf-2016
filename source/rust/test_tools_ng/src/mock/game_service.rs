@@ -46,7 +46,7 @@ impl GameService {
 		self.port
 	}
 
-	// TODO: Move this into a trait that defines process wrappers?
+	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn expect_action(&mut self) -> Option<ActionHandle> {
 		let start_s = precise_time_s();
 
@@ -73,7 +73,7 @@ impl GameService {
 		}
 	}
 
-	// TODO: Move this into a trait that defines process wrappers?
+	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until(
 		&mut self,
 		condition: |&mut Option<ActionHandle>| -> bool

@@ -50,6 +50,7 @@ impl Client {
 		})
 	}
 
+	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn expect_perception(&mut self) -> Option<Perception<Percept>> {
 		let start_s = precise_time_s();
 
@@ -60,6 +61,7 @@ impl Client {
 		self.perceptions.remove(0)
 	}
 
+	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until(
 		&mut self,
 		condition: |&Option<Perception<Percept>>| -> bool
