@@ -14,6 +14,8 @@ use super::{
 use super::buffer::ScreenBuffer;
 use super::Color::{
 	Black,
+	Green,
+	Red,
 	White,
 };
 use super::util::Section;
@@ -165,17 +167,24 @@ impl Renderer {
 	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.info.buffer.clear();
 
-		let status = match frame.status {
-			Status::Notice(ref s) => s.as_slice(),
-			Status::Error(ref s)  => s.as_slice(),
-			Status::None          => "",
-		};
+		{
+			let status_writer = self.info.buffer.writer(0, 0);
 
-		try!(write!(
-			&mut self.info.buffer.writer(0, 0),
-			"{}",
-			status
-		));
+			let (mut status_writer, status) = match frame.status {
+				Status::Notice(ref s) =>
+					(status_writer.foreground_color(Green), s.as_slice()),
+				Status::Error(ref s) =>
+					(status_writer.foreground_color(Red), s.as_slice()),
+				Status::None =>
+					(status_writer, ""),
+			};
+
+			try!(write!(
+				&mut status_writer,
+				"{}",
+				status
+			));
+		}
 
 		try!(write!(
 			&mut self.info.buffer.writer(0, 2),
