@@ -214,9 +214,11 @@ fn list(
 	height: Pos,
 	items : &[String]
 ) -> IoResult<()> {
+	let limit = x + width;
+
 	if items.len() == 0 {
 		try!(write!(
-			&mut b.writer(x, y).limit(x + width),
+			&mut b.writer(x, y).limit(limit),
 			"none"
 		));
 
@@ -238,7 +240,7 @@ fn list(
 		try!(
 			b
 				.writer(x, y + i as Pos)
-				.limit(x + width)
+				.limit(limit)
 				.write_str(item.as_slice())
 		);
 
@@ -247,7 +249,7 @@ fn list(
 
 	if items.len() > height as uint {
 		try!(write!(
-			&mut b.writer(x, y + height - 1).limit(x + width),
+			&mut b.writer(x, y + height - 1).limit(limit),
 			"(more)",
 		));
 	}
