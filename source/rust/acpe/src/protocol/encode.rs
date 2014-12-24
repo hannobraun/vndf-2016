@@ -152,7 +152,7 @@ mod buf_writer {
 		/// Creates a new `BufWriter` which will wrap the specified buffer. The
 		/// writer initially starts at position 0.
 		#[inline]
-		pub fn new<'a>(buf: &'a mut [u8]) -> BufWriter<'a> {
+		pub fn new(buf: &'a mut [u8]) -> BufWriter<'a> {
 			BufWriter {
 				buf: buf,
 				pos: 0
