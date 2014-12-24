@@ -88,7 +88,13 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 			match input.broadcast {
 				Some(ref message) =>
-					if message.len() > MAX_PACKET_SIZE / 2 {
+					if message.len() == 0 {
+						frame.status = Status::Error(
+							"Broadcasts can not be empty".to_string()
+						);
+						reset_status = false;
+					}
+					else if message.len() > MAX_PACKET_SIZE / 2 {
 						frame.status = Status::Error(
 							"Broadcast message too long".to_string()
 						);

@@ -33,3 +33,12 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 		)
 	});
 }
+
+#[test]
+fn it_should_reject_empty_broadcasts() {
+	let     game_service = MockGameService::start();
+	let mut client       = Client::start(game_service.port());
+
+	client.broadcast("");
+	client.wait_until(|frame| frame.status.is_error());
+}
