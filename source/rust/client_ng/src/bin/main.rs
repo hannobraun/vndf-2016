@@ -66,9 +66,7 @@ fn init_platform<P: PlatformIo>() -> P {
 fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut frame = Frame {
 		self_id   : String::new(),
-		input     : String::new(),
 		status    : Status::None,
-		commands  : vec![],
 		broadcasts: vec![],
 	};
 
@@ -114,10 +112,6 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 				},
 			}
 		}
-
-		let (partial_command, applicable) = input.command.clone();
-		frame.input    = partial_command;
-		frame.commands = applicable;
 
 		if let Some((error, command)) = input.error.clone() {
 			frame.status = Status::Error(format!("\"{}\": {}", command, error))
