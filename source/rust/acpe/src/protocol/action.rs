@@ -59,7 +59,7 @@ impl Header for ActionHeader {
 	}
 
 	fn read(line: &str) -> Result<ActionHeader, String> {
-		match from_str(line) {
+		match line.parse() {
 			Some(id) => Ok(ActionHeader { id: id }),
 			None     => Err(format!("Header is not a number")),
 		}
