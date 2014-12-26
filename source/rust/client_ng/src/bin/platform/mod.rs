@@ -3,6 +3,7 @@ use std::io::{
 	stdin,
 	IoResult,
 };
+use std::thread::Thread;
 
 use client::platform::{
 	Frame,
@@ -69,7 +70,7 @@ impl PlatformIo for HeadlessIo {
 	fn new() -> IoResult<HeadlessIo> {
 		let (sender, receiver) = channel();
 
-		spawn(move || {
+		let guard = Thread::spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
@@ -87,6 +88,8 @@ impl PlatformIo for HeadlessIo {
 				}
 			}
 		});
+
+		guard.detach();
 
 		Ok(HeadlessIo {
 			receiver  : receiver,
