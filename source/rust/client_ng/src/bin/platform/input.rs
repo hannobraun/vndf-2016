@@ -1,5 +1,6 @@
 use std::comm::TryRecvError;
 use std::io::stdin;
+use std::thread::Thread;
 
 
 pub struct InputReader {
@@ -10,7 +11,7 @@ impl InputReader {
 	pub fn new() -> InputReader {
 		let (sender, receiver) = channel();
 
-		spawn(move || {
+		let guard = Thread::spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
@@ -24,6 +25,8 @@ impl InputReader {
 				}
 			}
 		});
+
+		guard.detach();
 
 		InputReader {
 			receiver: receiver,
