@@ -29,7 +29,7 @@ impl Args {
 		};
 
 		args.port = match matches.opt_str("p") {
-			Some(port) => from_str(port.as_slice()).unwrap(),
+			Some(port) => port.parse().unwrap(),
 			None       => args.port,
 		};
 
