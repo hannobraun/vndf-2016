@@ -157,9 +157,9 @@ impl<'r> Writer for BufferWriter<'r> {
 		}
 
 		let s = match from_utf8(buf) {
-			Some(s) =>
+			Ok(s) =>
 				s,
-			None =>
+			Err(_) =>
 				return Err(IoError {
 					kind  : IoErrorKind::OtherIoError,
 					desc  : "Tried to write invalid UTF-8",
