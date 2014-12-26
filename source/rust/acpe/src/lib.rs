@@ -1,7 +1,7 @@
 #![feature(slicing_syntax)]
 
 
-extern crate serialize;
+extern crate "rustc-serialize" as rustc_serialize;
 
 
 pub use root::MAX_PACKET_SIZE;

@@ -15,6 +15,9 @@ version = "0.1.0"
 [[package]]
 name = "acpe"
 version = "0.0.1"
+dependencies = [
+ "rustc-serialize 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "client_ng"
@@ -41,6 +44,11 @@ dependencies = [
 [[package]]
 name = "gcc"
 version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "rustc-serialize"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]

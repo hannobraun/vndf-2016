@@ -1,6 +1,7 @@
-use serialize::Encodable;
-use serialize::json;
 use std::io::IoResult;
+
+use rustc_serialize::Encodable;
+use rustc_serialize::json;
 
 use super::{
 	decode,
@@ -50,7 +51,7 @@ impl<P: Part> Perception<P> {
 impl<P: Part> Message<PerceptionHeader, P> for Perception<P> {}
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
 pub struct PerceptionHeader {
 	pub confirm_action: Seq,
 	pub self_id       : Option<String>,
