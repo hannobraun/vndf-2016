@@ -37,7 +37,7 @@ impl Args {
 			None       => "localhost".to_string(),
 		};
 		let port: Port = match matches.opt_str("p") {
-			Some(port) => from_str(port.as_slice()).unwrap(),
+			Some(port) => port.parse().unwrap(),
 			None       => 34481,
 		};
 
