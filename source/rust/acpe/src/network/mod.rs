@@ -5,6 +5,7 @@ use std::io::net::ip::{
 	SocketAddr,
 };
 use std::io::net::udp::UdpSocket;
+use std::thread::Thread;
 
 use root::MAX_PACKET_SIZE;
 
@@ -75,7 +76,7 @@ impl SocketReceiver {
 	fn new(mut socket: UdpSocket) -> SocketReceiver {
 		let (sender, receiver) = channel();
 
-		spawn(move || {
+		let guard = Thread::spawn(move || {
 			let mut should_run = true;
 			let mut buffer     = [0u8, ..MAX_PACKET_SIZE];
 
@@ -102,6 +103,8 @@ impl SocketReceiver {
 				}
 			}
 		});
+
+		guard.detach();
 
 		SocketReceiver {
 			receiver: receiver,
