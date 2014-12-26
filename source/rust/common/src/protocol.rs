@@ -1,11 +1,11 @@
-use serialize::Encodable;
-use serialize::json;
 use std::io::IoResult;
 
 use acpe::protocol::Part;
+use rustc_serialize::Encodable;
+use rustc_serialize::json;
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
 pub enum Step {
 	Login,
 	Broadcast(String),
@@ -35,7 +35,7 @@ impl Part for Step {
 }
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
 pub enum Percept {
 	Broadcast(Broadcast),
 }
@@ -63,7 +63,7 @@ impl Part for Percept {
 }
 
 
-#[deriving(Clone, Decodable, Encodable, PartialEq, Show)]
+#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
 pub struct Broadcast {
 	pub sender : String,
 	pub message: String,

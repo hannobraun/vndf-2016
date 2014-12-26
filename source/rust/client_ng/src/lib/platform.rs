@@ -1,4 +1,4 @@
-use serialize::json::{
+use rustc_serialize::json::{
 	mod,
 	DecodeResult,
 };
@@ -6,7 +6,7 @@ use serialize::json::{
 use common::protocol::Broadcast;
 
 
-#[deriving(Clone, Decodable, Encodable, Eq, PartialEq, Show)]
+#[deriving(Clone, RustcDecodable, RustcEncodable, Eq, PartialEq, Show)]
 pub struct Input {
 	pub broadcast: Option<String>,
 }
@@ -28,7 +28,7 @@ impl Input {
 }
 
 
-#[deriving(Decodable, Encodable, Show)]
+#[deriving(RustcDecodable, RustcEncodable, Show)]
 pub struct Frame {
 	pub self_id   : String,
 	pub status    : Status,
@@ -46,7 +46,7 @@ impl Frame {
 }
 
 
-#[deriving(Decodable, Encodable, Eq, PartialEq, Show)]
+#[deriving(RustcDecodable, RustcEncodable, Eq, PartialEq, Show)]
 pub enum Status {
 	Notice(String),
 	Error(String),
