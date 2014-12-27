@@ -115,7 +115,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		for perception in  server.recv_from().into_iter() {
+		for perception in  server.receive().into_iter() {
 			if let Some(self_id) = perception.header.self_id {
 				frame.self_id = self_id;
 			}
