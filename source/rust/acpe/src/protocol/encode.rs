@@ -35,7 +35,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, P> {
 		let mut writer = BufWriter::new(buffer);
 
-		match header.write(&mut writer) {
+		match header.assemble(&mut writer) {
 			Ok(()) =>
 				(),
 			Err(error) =>
@@ -52,7 +52,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match part.write(&mut writer) {
+			match part.assemble(&mut writer) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}

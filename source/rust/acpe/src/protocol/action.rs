@@ -16,7 +16,7 @@ pub struct ActionHeader {
 }
 
 impl Part for ActionHeader {
-	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		write!(writer, "{}\n", self.id)
 	}
 

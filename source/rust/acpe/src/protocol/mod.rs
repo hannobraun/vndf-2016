@@ -62,6 +62,6 @@ impl<Header: Part, Entity: Part> Message<Header, Entity> {
 
 
 pub trait Part {
-	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
+	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 	fn read(line: &str) -> Result<Self, String>;
 }

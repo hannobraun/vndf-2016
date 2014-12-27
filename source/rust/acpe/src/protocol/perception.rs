@@ -20,7 +20,7 @@ pub struct PerceptionHeader {
 }
 
 impl Part for PerceptionHeader {
-	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		try!(self.encode(&mut json::Encoder::new(writer)));
 		try!(writer.write_char('\n'));
 
