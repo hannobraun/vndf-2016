@@ -35,7 +35,7 @@ impl Socket {
 	}
 
 	pub fn receive(&self, messages: &mut Vec<Message>) {
-		self.receiver.recv(messages)
+		self.receiver.receive(messages)
 	}
 }
 
@@ -111,7 +111,7 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self, messages: &mut Vec<Message>) {
+	fn receive(&self, messages: &mut Vec<Message>) {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(result) => match result {
