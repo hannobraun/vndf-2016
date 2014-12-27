@@ -3,7 +3,10 @@ use std::collections::HashSet;
 use acpe::MAX_PACKET_SIZE;
 use time::precise_time_s;
 
-use common::protocol::Percept;
+use common::protocol::{
+	Broadcast,
+	Percept,
+};
 use test_tools::{
 	GameService,
 	MockClient,
@@ -99,4 +102,34 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 	for perception in perceptions.into_iter() {
 		assert!(perception.encode().len() <= MAX_PACKET_SIZE);
 	}
+}
+
+#[test]
+fn it_should_ignore_clients_that_havent_logged_in() {
+	let     game_service = GameService::start();
+	let mut client_1     = MockClient::start(game_service.port());
+	let mut client_2     = MockClient::start(game_service.port());
+
+	client_1.broadcast(
+		0,
+		"I haven't logged in, but send this anyway.".to_string()
+	);
+
+	let message = "This is a broadcast.".to_string();
+	client_2.login(0);
+	client_2.broadcast(1, message.clone());
+
+	client_2.wait_until(|perception|
+		if let &Some(ref perception) = perception {
+			perception.update.contains(
+				&Percept::Broadcast(Broadcast {
+					sender : perception.header.self_id.as_ref().unwrap().clone(),
+					message: message.clone(),
+				})
+			)
+		}
+		else {
+			false
+		}
+	);
 }
