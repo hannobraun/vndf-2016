@@ -20,7 +20,7 @@ impl Part for Step {
 		Ok(())
 	}
 
-	fn read(line: &str) -> Result<Step, String> {
+	fn disassemble(line: &str) -> Result<Step, String> {
 		match json::decode(line) {
 			Ok(part) =>
 				Ok(part),
@@ -48,7 +48,7 @@ impl Part for Percept {
 		Ok(())
 	}
 
-	fn read(line: &str) -> Result<Percept, String> {
+	fn disassemble(line: &str) -> Result<Percept, String> {
 		match json::decode(line) {
 			Ok(part) =>
 				Ok(part),

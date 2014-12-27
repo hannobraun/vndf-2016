@@ -29,7 +29,7 @@ pub fn decode<H: Part, P: Part>(
 		},
 	};
 
-	let header = match Part::read(header) {
+	let header = match Part::disassemble(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
@@ -39,7 +39,7 @@ pub fn decode<H: Part, P: Part>(
 			continue;
 		}
 
-		match Part::read(line) {
+		match Part::disassemble(line) {
 			Ok(part) =>
 				parts.push(part),
 			Err(error) =>

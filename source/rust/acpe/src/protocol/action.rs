@@ -20,7 +20,7 @@ impl Part for ActionHeader {
 		write!(writer, "{}\n", self.id)
 	}
 
-	fn read(line: &str) -> Result<ActionHeader, String> {
+	fn disassemble(line: &str) -> Result<ActionHeader, String> {
 		match line.parse() {
 			Some(id) => Ok(ActionHeader { id: id }),
 			None     => Err(format!("Header is not a number")),
