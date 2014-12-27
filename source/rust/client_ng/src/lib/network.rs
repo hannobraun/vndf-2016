@@ -35,7 +35,7 @@ impl Socket {
 		self.inner.receive(&mut messages);
 
 		messages
-			.into_iter()
+			.drain()
 			.map(|(message, _)|
 				Perception::decode(message.as_slice())
 					.unwrap_or_else(|error|
