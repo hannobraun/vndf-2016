@@ -35,12 +35,11 @@ impl Socket {
 	}
 
 	pub fn receive(&mut self) -> Vec<ReceiveResult> {
-		self.messages.clear();
 		self.inner.receive(&mut self.messages);
 
 		self.messages
-			.iter()
-			.map(|&(ref message, address)| {
+			.drain()
+			.map(|(message, address)| {
 				match decode_message(message.as_slice()) {
 					Ok(message) => Ok((message, address)),
 					Err(error)  => Err((error, address)),
