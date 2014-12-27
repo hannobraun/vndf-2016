@@ -6,7 +6,6 @@ use rustc_serialize::json;
 use super::{
 	decode,
 	Encoder,
-	Message,
 	Part,
 	Seq,
 };
@@ -46,8 +45,6 @@ impl<Percept: Part> Perception<Percept> {
 		perception.encode().to_vec()
 	}
 }
-
-impl<P: Part> Message<PerceptionHeader, P> for Perception<P> {}
 
 
 #[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
