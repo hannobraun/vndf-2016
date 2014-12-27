@@ -4,9 +4,13 @@ use rustc_serialize::Encodable;
 use rustc_serialize::json;
 
 use super::{
+	Message,
 	Part,
 	Seq,
 };
+
+
+pub type Perception<T> = Message<PerceptionHeader, T>;
 
 
 #[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]

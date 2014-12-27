@@ -10,7 +10,10 @@ pub use self::encode::{
 	Encoder,
 	MessageEncoder,
 };
-pub use self::perception::PerceptionHeader;
+pub use self::perception::{
+	Perception,
+	PerceptionHeader,
+};
 
 
 mod action;

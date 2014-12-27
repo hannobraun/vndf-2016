@@ -8,7 +8,7 @@ use acpe::network::{
 	Message,
 };
 use acpe::protocol::Message as AcpeMessage;
-use acpe::protocol::PerceptionHeader;
+use acpe::protocol::Perception;
 
 use common::protocol::Percept;
 
@@ -36,7 +36,7 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(&mut self, perceptions: &mut Vec<AcpeMessage<PerceptionHeader, Percept>>) {
+	pub fn receive(&mut self, perceptions: &mut Vec<Perception<Percept>>) {
 		self.inner.receive(&mut self.messages);
 
 		for (message, _) in self.messages.drain() {
