@@ -32,22 +32,20 @@ impl Client {
 		self.socket.send_to(data);
 	}
 
-	pub fn send_action(&mut self, action: Action<Step>) {
+	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
+		let action = Action {
+			header: ActionHeader { id: seq },
+			steps : steps,
+		};
 		self.send_data(action.encode().as_slice());
 	}
 
 	pub fn login(&mut self, seq: Seq) {
-		self.send_action(Action {
-			header: ActionHeader { id: seq },
-			steps : vec![Step::Login],
-		});
+		self.send_action(seq, vec![Step::Login]);
 	}
 
 	pub fn broadcast(&mut self, seq: Seq, text: String) {
-		self.send_action(Action {
-			header: ActionHeader { id: seq },
-			steps : vec![Step::Broadcast(text)],
-		})
+		self.send_action(seq, vec![Step::Broadcast(text)]);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
