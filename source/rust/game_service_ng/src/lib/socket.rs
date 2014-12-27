@@ -3,7 +3,10 @@ use std::io::net::ip::{
 	SocketAddr,
 };
 
-use acpe::network;
+use acpe::network::{
+	mod,
+	Message,
+};
 use acpe::protocol::Action;
 
 use common::protocol::Step;
@@ -15,12 +18,15 @@ pub type ReceiveResult =
 
 pub struct Socket {
 	pub inner: network::Socket,
+
+	messages: Vec<Message>,
 }
 
 impl Socket {
 	pub fn new(port: Port) -> Socket {
 		Socket {
-			inner: network::Socket::new(port),
+			inner   : network::Socket::new(port),
+			messages: Vec::new(),
 		}
 	}
 
@@ -29,12 +35,12 @@ impl Socket {
 	}
 
 	pub fn receive(&mut self) -> Vec<ReceiveResult> {
-		let mut messages = Vec::new();
-		self.inner.receive(&mut messages);
+		self.messages.clear();
+		self.inner.receive(&mut self.messages);
 
-		messages
-			.into_iter()
-			.map(|(message, address)| {
+		self.messages
+			.iter()
+			.map(|&(ref message, address)| {
 				match decode_message(message.as_slice()) {
 					Ok(message) => Ok((message, address)),
 					Err(error)  => Err((error, address)),
