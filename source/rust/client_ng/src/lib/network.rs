@@ -7,7 +7,8 @@ use acpe::network::{
 	mod,
 	Message,
 };
-use acpe::protocol::Perception;
+use acpe::protocol::Message as AcpeMessage;
+use acpe::protocol::PerceptionHeader;
 
 use common::protocol::Percept;
 
@@ -35,12 +36,12 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(&mut self, perceptions: &mut Vec<Perception<Percept>>) {
+	pub fn receive(&mut self, perceptions: &mut Vec<AcpeMessage<PerceptionHeader, Percept>>) {
 		self.inner.receive(&mut self.messages);
 
 		for (message, _) in self.messages.drain() {
 			perceptions.push(
-				Perception::decode(message.as_slice())
+				AcpeMessage::decode(message.as_slice())
 					.unwrap_or_else(|error|
 						panic!(
 							"Error decoding message from server. \

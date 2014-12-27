@@ -7,10 +7,10 @@ use time::precise_time_s;
 use acceptance::random_port;
 use acpe::network::SocketSender;
 use acpe::protocol::{
-	Action,
+	ActionHeader,
 	Encoder,
+	Message,
 	MessageEncoder,
-	Perception,
 	PerceptionHeader,
 	Seq,
 };
@@ -53,7 +53,7 @@ impl GameService {
 		confirm : Seq,
 		percepts: Vec<Percept>,
 	) {
-		let perception = Perception {
+		let perception = Message {
 			header: PerceptionHeader {
 				confirm_action: confirm,
 				self_id       : None,
@@ -114,7 +114,7 @@ impl GameService {
 
 
 pub struct ActionHandle {
-	pub inner  : Action<Step>,
+	pub inner  : Message<ActionHeader, Step>,
 	pub address: SocketAddr,
 
 	sender : SocketSender,

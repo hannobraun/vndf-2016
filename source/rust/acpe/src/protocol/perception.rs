@@ -4,47 +4,9 @@ use rustc_serialize::Encodable;
 use rustc_serialize::json;
 
 use super::{
-	decode,
-	Encoder,
 	Part,
 	Seq,
 };
-
-
-#[deriving(Clone, PartialEq, Show)]
-pub struct Perception<Percept> {
-	pub header: PerceptionHeader,
-	pub update: Vec<Percept>,
-}
-
-impl<Percept: Part> Perception<Percept> {
-	pub fn decode(message: &[u8]) -> Result<Perception<Percept>, String> {
-		let mut update = Vec::new();
-		match decode(message, &mut update) {
-			Ok(header) =>
-				Ok(Perception {
-					header: header,
-					update: update,
-				}),
-			Err(error) =>
-				Err(error),
-		}
-	}
-
-	/// This is a convenience method that makes encoding as easy as possible,
-	/// ignoring performance and error handling. Please don't use this outside
-	/// of test code.
-	pub fn encode(self) -> Vec<u8> {
-		let mut encoder = Encoder::new();
-
-		let mut perception = encoder.message(&self.header);
-		for percept in self.update.iter() {
-			perception.add(percept);
-		}
-
-		perception.encode().to_vec()
-	}
-}
 
 
 #[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]

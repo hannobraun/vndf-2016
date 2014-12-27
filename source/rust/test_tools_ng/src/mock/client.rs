@@ -1,9 +1,9 @@
 use std::io::net::ip::Port;
 
 use acpe::protocol::{
-	Action,
 	ActionHeader,
-	Perception,
+	Message,
+	PerceptionHeader,
 	Seq,
 };
 use time::precise_time_s;
@@ -17,7 +17,7 @@ use common::protocol::{
 
 pub struct Client {
 	socket     : Socket,
-	perceptions: Vec<Perception<Percept>>,
+	perceptions: Vec<Message<PerceptionHeader, Percept>>,
 }
 
 impl Client {
@@ -33,7 +33,7 @@ impl Client {
 	}
 
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
-		let action = Action {
+		let action = Message {
 			header: ActionHeader { id: seq },
 			update: steps,
 		};
@@ -49,7 +49,7 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_perception(&mut self) -> Option<Perception<Percept>> {
+	pub fn expect_perception(&mut self) -> Option<Message<PerceptionHeader, Percept>> {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -62,8 +62,8 @@ impl Client {
 	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until(
 		&mut self,
-		condition: |&Option<Perception<Percept>>| -> bool
-	) -> Option<Perception<Percept>> {
+		condition: |&Option<Message<PerceptionHeader, Percept>>| -> bool
+	) -> Option<Message<PerceptionHeader, Percept>> {
 		let start_s = precise_time_s();
 
 		let mut perception = self.expect_perception();

@@ -7,13 +7,14 @@ use acpe::network::{
 	mod,
 	Message,
 };
-use acpe::protocol::Action;
+use acpe::protocol::ActionHeader;
+use acpe::protocol::Message as AcpeMessage;
 
 use common::protocol::Step;
 
 
 pub type ReceiveResult =
-	Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;
+	Result<(AcpeMessage<ActionHeader, Step>, SocketAddr), (String, SocketAddr)>;
 
 
 pub struct Socket {
@@ -49,8 +50,8 @@ impl Socket {
 }
 
 
-fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
-	let message = match Action::decode(message) {
+fn decode_message(message: &[u8]) -> Result<AcpeMessage<ActionHeader, Step>, String> {
+	let message = match AcpeMessage::decode(message) {
 		Ok(message) =>
 			message,
 		Err(error) =>
