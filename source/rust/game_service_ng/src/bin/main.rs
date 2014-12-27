@@ -51,8 +51,9 @@ fn main() {
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		let received = socket.receive();
-		for result in received.into_iter() {
+		let mut received = socket.receive();
+
+		for result in received.drain() {
 			match result {
 				Ok((action, address)) => {
 					for step in action.steps.into_iter() {
