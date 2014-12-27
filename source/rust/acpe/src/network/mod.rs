@@ -35,9 +35,7 @@ impl Socket {
 	}
 
 	pub fn receive(&self, messages: &mut Vec<Message>) {
-		let m = self.receiver.recv();
-		messages.push_all(m.as_slice());
-
+		self.receiver.recv(messages)
 	}
 }
 
@@ -113,14 +111,12 @@ impl SocketReceiver {
 		}
 	}
 
-	fn recv(&self) -> Vec<Message> {
-		let mut results = Vec::new();
-
+	fn recv(&self, messages: &mut Vec<Message>) {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(result) => match result {
 					Some((vec, address)) =>
-						results.push((vec, address)),
+						messages.push((vec, address)),
 					None =>
 						(),
 				},
@@ -131,8 +127,6 @@ impl SocketReceiver {
 				}
 			}
 		}
-
-		results
 	}
 }
 
