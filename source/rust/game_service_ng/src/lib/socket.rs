@@ -7,8 +7,10 @@ use acpe::network::{
 	mod,
 	Message,
 };
-use acpe::protocol::Action;
-use acpe::protocol::Message as AcpeMessage;
+use acpe::protocol::{
+	mod,
+	Action,
+};
 
 use common::protocol::Step;
 
@@ -51,7 +53,7 @@ impl Socket {
 
 
 fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
-	let message = match AcpeMessage::decode(message) {
+	let message = match protocol::Message::decode(message) {
 		Ok(message) =>
 			message,
 		Err(error) =>
