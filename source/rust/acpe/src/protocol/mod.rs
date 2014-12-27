@@ -25,7 +25,7 @@ mod perception;
 pub type Seq = u64;
 
 
-pub trait Message<H: Header, P: Part> {}
+pub trait Message<H: Header, B: Part> {}
 
 
 pub trait Part {
