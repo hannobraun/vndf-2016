@@ -19,8 +19,8 @@ pub struct Perception<Percept> {
 	pub update: Vec<Percept>,
 }
 
-impl<P: Part> Perception<P> {
-	pub fn decode(message: &[u8]) -> Result<Perception<P>, String> {
+impl<Percept: Part> Perception<Percept> {
+	pub fn decode(message: &[u8]) -> Result<Perception<Percept>, String> {
 		let mut update = Vec::new();
 		match decode(message, &mut update) {
 			Ok(header) =>
