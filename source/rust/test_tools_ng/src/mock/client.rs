@@ -66,9 +66,15 @@ impl Client {
 		&mut self,
 		condition: |&Option<Perception<Percept>>| -> bool
 	) -> Option<Perception<Percept>> {
+		let start_s = precise_time_s();
+
 		let mut perception = self.expect_perception();
 
 		while !condition(&perception) {
+			if precise_time_s() - start_s > 0.5 {
+				panic!("Condition not satisfied after waiting");
+			}
+
 			perception = self.expect_perception();
 		}
 
