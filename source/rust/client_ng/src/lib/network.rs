@@ -48,6 +48,6 @@ impl Socket {
 	}
 
 	pub fn send_to(&mut self, message: &[u8]) {
-		self.inner.send_to(message, self.address);
+		self.inner.send(message, self.address);
 	}
 }

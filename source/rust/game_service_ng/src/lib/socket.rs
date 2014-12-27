@@ -25,7 +25,7 @@ impl Socket {
 	}
 
 	pub fn send_to(&mut self, message: &[u8], address: SocketAddr) {
-		self.inner.send_to(message, address)
+		self.inner.send(message, address)
 	}
 
 	pub fn recv_from(&self) -> Vec<ReceiveResult> {
