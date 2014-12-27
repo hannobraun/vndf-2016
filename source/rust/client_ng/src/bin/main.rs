@@ -76,6 +76,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut server           = Socket::new(args.server);
 	let mut encoder          = Encoder::new();
 
+	let mut perceptions = Vec::new();
+
 	action_assembler.add_step(Step::Login);
 
 	loop {
@@ -115,7 +117,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		for perception in  server.receive().into_iter() {
+		server.receive(&mut perceptions);
+		for perception in  perceptions.drain() {
 			if let Some(self_id) = perception.header.self_id {
 				frame.self_id = self_id;
 			}

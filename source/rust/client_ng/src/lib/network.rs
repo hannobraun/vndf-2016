@@ -35,12 +35,11 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(&mut self) -> Vec<Perception<Percept>> {
+	pub fn receive(&mut self, perceptions: &mut Vec<Perception<Percept>>) {
 		self.inner.receive(&mut self.messages);
 
-		self.messages
-			.drain()
-			.map(|(message, _)|
+		for (message, _) in self.messages.drain() {
+			perceptions.push(
 				Perception::decode(message.as_slice())
 					.unwrap_or_else(|error|
 						panic!(
@@ -49,8 +48,8 @@ impl Socket {
 							message, error
 						)
 					)
-			)
-			.collect()
+			);
+		}
 	}
 
 	pub fn send_to(&mut self, message: &[u8]) {

@@ -53,7 +53,7 @@ impl Client {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
-			self.perceptions.push_all(self.socket.receive().as_slice());
+			self.socket.receive(&mut self.perceptions);
 		}
 
 		self.perceptions.remove(0)
