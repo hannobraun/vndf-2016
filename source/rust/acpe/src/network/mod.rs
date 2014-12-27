@@ -34,7 +34,7 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> Vec<Message> {
+	pub fn receive(&self) -> Vec<Message> {
 		self.receiver.recv()
 	}
 }

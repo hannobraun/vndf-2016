@@ -29,7 +29,7 @@ impl Socket {
 	}
 
 	pub fn recv_from(&self) -> Vec<ReceiveResult> {
-		self.inner.recv_from()
+		self.inner.receive()
 			.into_iter()
 			.map(|(message, address)| {
 				match decode_message(message.as_slice()) {

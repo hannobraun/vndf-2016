@@ -32,7 +32,7 @@ impl Socket {
 
 	pub fn recv_from(&self) -> Vec<Perception<Percept>> {
 		self.inner
-			.recv_from()
+			.receive()
 			.into_iter()
 			.map(|(message, _)|
 				Perception::decode(message.as_slice())
