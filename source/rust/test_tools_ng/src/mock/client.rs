@@ -29,7 +29,7 @@ impl Client {
 	}
 
 	pub fn send_data(&mut self, data: &[u8]) {
-		self.socket.send_to(data);
+		self.socket.send(data);
 	}
 
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {

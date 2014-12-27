@@ -52,7 +52,7 @@ impl Socket {
 		}
 	}
 
-	pub fn send_to(&mut self, message: &[u8]) {
+	pub fn send(&mut self, message: &[u8]) {
 		self.inner.send(message, self.address);
 	}
 }
