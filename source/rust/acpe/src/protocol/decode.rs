@@ -1,12 +1,9 @@
 use std::io::BufReader;
 
-use super::{
-	Message,
-	Part,
-};
+use super::Part;
 
 
-pub fn decode<M: Message<H, P>, H: Part, P: Part>(
+pub fn decode<H: Part, P: Part>(
 	message: &[u8],
 	parts  : &mut Vec<P>
 ) -> Result<H, String> {
