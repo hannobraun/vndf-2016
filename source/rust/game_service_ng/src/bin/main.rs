@@ -1,6 +1,3 @@
-#![feature(slicing_syntax)]
-
-
 extern crate getopts;
 
 extern crate acpe;
