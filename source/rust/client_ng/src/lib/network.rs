@@ -7,8 +7,10 @@ use acpe::network::{
 	mod,
 	Message,
 };
-use acpe::protocol::Message as AcpeMessage;
-use acpe::protocol::Perception;
+use acpe::protocol::{
+	mod,
+	Perception,
+};
 
 use common::protocol::Percept;
 
@@ -41,7 +43,7 @@ impl Socket {
 
 		for (message, _) in self.messages.drain() {
 			perceptions.push(
-				AcpeMessage::decode(message.as_slice())
+				protocol::Message::decode(message.as_slice())
 					.unwrap_or_else(|error|
 						panic!(
 							"Error decoding message from server. \
