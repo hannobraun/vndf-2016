@@ -3,15 +3,19 @@ use std::io::net::ip::{
 	ToSocketAddr,
 };
 
-use acpe::network;
+use acpe::network::{
+	mod,
+	Message,
+};
 use acpe::protocol::Perception;
 
 use common::protocol::Percept;
 
 
 pub struct Socket {
-	address: SocketAddr,
-	inner  : network::Socket,
+	address : SocketAddr,
+	inner   : network::Socket,
+	messages: Vec<Message>,
 }
 
 impl Socket {
@@ -25,16 +29,16 @@ impl Socket {
 		let socket = network::Socket::new(0);
 
 		Socket {
-			address: address,
-			inner  : socket,
+			address : address,
+			inner   : socket,
+			messages: Vec::new(),
 		}
 	}
 
 	pub fn receive(&mut self) -> Vec<Perception<Percept>> {
-		let mut messages = Vec::new();
-		self.inner.receive(&mut messages);
+		self.inner.receive(&mut self.messages);
 
-		messages
+		self.messages
 			.drain()
 			.map(|(message, _)|
 				Perception::decode(message.as_slice())
