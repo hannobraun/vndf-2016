@@ -126,7 +126,7 @@ impl ActionHandle {
 	pub fn confirm(&mut self) {
 		let mut encoder = Encoder::new();
 
-		let perception: MessageEncoder<Perception<Percept>> =
+		let perception: MessageEncoder<PerceptionHeader, Percept> =
 			encoder.message(&PerceptionHeader {
 				confirm_action: self.inner.header.id,
 				self_id       : None,

@@ -22,7 +22,7 @@ impl Encoder {
 		}
 	}
 
-	pub fn message<M, H, P>(&mut self, header: &H) -> MessageEncoder<M>
+	pub fn message<M, H, P>(&mut self, header: &H) -> MessageEncoder<H, P>
 		where M: Message<H, P>, H: Part, P: Part
 	{
 		MessageEncoder::new(&mut self.buffer, header)
@@ -30,12 +30,12 @@ impl Encoder {
 }
 
 
-pub struct MessageEncoder<'r, Message> {
+pub struct MessageEncoder<'r, H, P> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, M: Message<H, P>, H: Part, P: Part> MessageEncoder<'r, M> {
-	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, M> {
+impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
+	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, P> {
 		let mut writer = BufWriter::new(buffer);
 
 		match header.write(&mut writer) {
