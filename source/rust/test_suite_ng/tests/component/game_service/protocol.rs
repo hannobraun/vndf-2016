@@ -133,3 +133,32 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 		}
 	);
 }
+
+#[test]
+fn it_should_ignore_client_sending_empty_action_before_login() {
+	let     game_service = GameService::start();
+	let mut client_1     = MockClient::start(game_service.port());
+	let mut client_2     = MockClient::start(game_service.port());
+
+	// Sending anything before logging in is invalid.
+	client_1.send_action(0, Vec::new());
+
+	// The game service should just ignore it and keep working.
+	let message = "This is a broadcast.".to_string();
+	client_2.login(0);
+	client_2.broadcast(1, message.clone());
+
+	client_2.wait_until(|perception|
+		if let &Some(ref perception) = perception {
+			perception.update.contains(
+				&Percept::Broadcast(Broadcast {
+					sender : perception.header.self_id.as_ref().unwrap().clone(),
+					message: message.clone(),
+				})
+			)
+		}
+		else {
+			false
+		}
+	);
+}

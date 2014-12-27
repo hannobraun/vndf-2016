@@ -55,33 +55,42 @@ fn main() {
 		for result in received.into_iter() {
 			match result {
 				Ok((action, address)) => {
-					if
-						clients.contains_key(&address)
-						|| action.steps[0] == Step::Login
-					{
-						for step in action.steps.into_iter() {
-							match step {
-								Step::Login => {
-									clients.insert(address, Client {
-										id           : generate_id(),
-										last_action  : action.header.id,
-										last_active_s: precise_time_s(),
-										broadcast    : None,
-									});
-								},
-								Step::Broadcast(broadcast) => {
-									clients[address].broadcast =
-										Some(broadcast);
-								},
-								Step::StopBroadcast => {
-									clients[address].broadcast =
-										None;
-								},
-							}
+					for step in action.steps.into_iter() {
+						match step {
+							Step::Login => {
+								clients.insert(address, Client {
+									id           : generate_id(),
+									last_action  : action.header.id,
+									last_active_s: precise_time_s(),
+									broadcast    : None,
+								});
+							},
+							Step::Broadcast(broadcast) => {
+								match clients.get_mut(&address) {
+									Some(client) =>
+										client.broadcast = Some(broadcast),
+									None =>
+										continue, // invalid, ignore
+								}
+							},
+							Step::StopBroadcast => {
+								match clients.get_mut(&address) {
+									Some(client) =>
+										client.broadcast = None,
+									None =>
+										continue, // invalid, ignore
+								}
+							},
 						}
+					}
 
-						clients[address].last_action   = action.header.id;
-						clients[address].last_active_s = precise_time_s();
+					match clients.get_mut(&address) {
+						Some(client) => {
+							client.last_action   = action.header.id;
+							client.last_active_s = precise_time_s();
+						},
+						None =>
+							continue, // invalid, ignore
 					}
 				},
 				Err((error, address)) => {
