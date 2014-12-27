@@ -96,9 +96,9 @@ impl GameService {
 
 
 pub struct ActionHandle {
-	pub inner: Action<Step>,
+	pub inner  : Action<Step>,
+	pub address: SocketAddr,
 
-	address: SocketAddr,
 	sender : SocketSender,
 }
 
