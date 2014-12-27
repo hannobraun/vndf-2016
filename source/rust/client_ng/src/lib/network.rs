@@ -30,7 +30,7 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(&self) -> Vec<Perception<Percept>> {
+	pub fn receive(&mut self) -> Vec<Perception<Percept>> {
 		let mut messages = Vec::new();
 		self.inner.receive(&mut messages);
 
