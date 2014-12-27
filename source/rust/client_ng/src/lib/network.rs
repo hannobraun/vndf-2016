@@ -31,8 +31,10 @@ impl Socket {
 	}
 
 	pub fn recv_from(&self) -> Vec<Perception<Percept>> {
-		self.inner
-			.receive()
+		let mut messages = Vec::new();
+		self.inner.receive(&mut messages);
+
+		messages
 			.into_iter()
 			.map(|(message, _)|
 				Perception::decode(message.as_slice())

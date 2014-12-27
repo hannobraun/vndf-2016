@@ -34,8 +34,10 @@ impl Socket {
 		self.sender.send(message, address)
 	}
 
-	pub fn receive(&self) -> Vec<Message> {
-		self.receiver.recv()
+	pub fn receive(&self, messages: &mut Vec<Message>) {
+		let m = self.receiver.recv();
+		messages.push_all(m.as_slice());
+
 	}
 }
 
