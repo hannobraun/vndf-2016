@@ -28,7 +28,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 		let action = action.as_mut().unwrap();
 		// TODO(85118724): Remove confirmation.
 		action.confirm();
-		action.inner.steps.contains(
+		action.inner.update.contains(
 			&Step::Broadcast(valid_broadcast.clone())
 		)
 	});

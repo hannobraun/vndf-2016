@@ -58,7 +58,7 @@ fn main() {
 		for result in received.drain() {
 			match result {
 				Ok((action, address)) => {
-					for step in action.steps.into_iter() {
+					for step in action.update.into_iter() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {

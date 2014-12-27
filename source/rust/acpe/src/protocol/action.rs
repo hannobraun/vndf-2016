@@ -12,7 +12,7 @@ use super::{
 #[deriving(Clone, PartialEq, Show)]
 pub struct Action<Step> {
 	pub header: ActionHeader,
-	pub steps : Vec<Step>,
+	pub update: Vec<Step>,
 }
 
 impl<Step: Part> Action<Step> {
@@ -22,7 +22,7 @@ impl<Step: Part> Action<Step> {
 			Ok(header) =>
 				Ok(Action {
 					header: header,
-					steps : steps,
+					update: steps,
 				}),
 			Err(error) =>
 				Err(error),
@@ -36,7 +36,7 @@ impl<Step: Part> Action<Step> {
 		let mut encoder = Encoder::new();
 
 		let mut action = encoder.message(&self.header);
-		for step in self.steps.iter() {
+		for step in self.update.iter() {
 			action.add(step);
 		}
 

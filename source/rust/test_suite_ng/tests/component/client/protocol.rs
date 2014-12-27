@@ -17,7 +17,7 @@ fn it_should_resend_actions_until_confirmed() {
 	// Assert either no action was sent or, if it was, that it was empty.
 	match game_service.expect_action() {
 		Some(action) =>
-			assert!(action.inner.steps.len() == 0),
+			assert!(action.inner.update.len() == 0),
 		None =>
 			(),
 	}
@@ -36,14 +36,14 @@ fn it_should_keep_track_of_which_actions_are_confirmed() {
 		client.broadcast(broadcast.as_slice());
 		game_service.wait_until(|action| {
 			let ref action = action.as_ref().unwrap().inner;
-			action.steps.contains(&Step::Broadcast(broadcast.clone()))
+			action.update.contains(&Step::Broadcast(broadcast.clone()))
 		});
 		login.confirm();
 	}
 
 	// Broadcast has never been confirmed. It should keep sending it.
 	let action = game_service.expect_action().unwrap().inner;
-	assert!(action.steps.contains(&Step::Broadcast(broadcast)));
+	assert!(action.update.contains(&Step::Broadcast(broadcast)));
 }
 
 #[test]
