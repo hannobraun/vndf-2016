@@ -34,18 +34,17 @@ impl Socket {
 		self.inner.send(message, address)
 	}
 
-	pub fn receive(&mut self) -> Vec<ReceiveResult> {
+	pub fn receive(&mut self, results: &mut Vec<ReceiveResult>) {
 		self.inner.receive(&mut self.messages);
 
-		self.messages
-			.drain()
-			.map(|(message, address)| {
-				match decode_message(message.as_slice()) {
-					Ok(message) => Ok((message, address)),
-					Err(error)  => Err((error, address)),
-				}
-			})
-			.collect()
+		for (message, address) in self.messages.drain() {
+			let result = match decode_message(message.as_slice()) {
+				Ok(message) => Ok((message, address)),
+				Err(error)  => Err((error, address)),
+			};
+
+			results.push(result);
+		}
 	}
 }
 

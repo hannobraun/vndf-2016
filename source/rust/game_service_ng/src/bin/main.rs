@@ -48,10 +48,12 @@ fn main() {
 	let mut socket  = Socket::new(args.port);
 	let mut encoder = Encoder::new();
 
+	let mut received = Vec::new();
+
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		let mut received = socket.receive();
+		socket.receive(&mut received);
 
 		for result in received.drain() {
 			match result {
