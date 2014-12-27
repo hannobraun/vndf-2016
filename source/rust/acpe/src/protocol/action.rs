@@ -3,7 +3,6 @@ use std::io::IoResult;
 use super::{
 	decode,
 	Encoder,
-	Message,
 	Part,
 	Seq,
 };
@@ -43,8 +42,6 @@ impl<Step: Part> Action<Step> {
 		action.encode().to_vec()
 	}
 }
-
-impl<Step: Part> Message<ActionHeader, Step> for Action<Step> {}
 
 
 #[deriving(Clone, Copy, PartialEq, Show)]
