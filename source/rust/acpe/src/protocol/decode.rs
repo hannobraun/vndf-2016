@@ -1,13 +1,12 @@
 use std::io::BufReader;
 
 use super::{
-	Header,
 	Message,
 	Part,
 };
 
 
-pub fn decode<M: Message<H, P>, H: Header, P: Part>(
+pub fn decode<M: Message<H, P>, H: Part, P: Part>(
 	message: &[u8],
 	parts  : &mut Vec<P>
 ) -> Result<H, String> {
@@ -33,7 +32,7 @@ pub fn decode<M: Message<H, P>, H: Header, P: Part>(
 		},
 	};
 
-	let header = match Header::read(header) {
+	let header = match Part::read(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};

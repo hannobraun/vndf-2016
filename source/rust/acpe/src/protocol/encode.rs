@@ -5,7 +5,6 @@ use root::MAX_PACKET_SIZE;
 use self::buf_writer::BufWriter;
 use super::{
 	Message,
-	Header,
 	Part,
 };
 
@@ -23,7 +22,7 @@ impl Encoder {
 		}
 	}
 
-	pub fn message<M: Message<H, P>, H: Header, P: Part>(&mut self, header: &H) -> MessageEncoder<M> {
+	pub fn message<M: Message<H, P>, H: Part, P: Part>(&mut self, header: &H) -> MessageEncoder<M> {
 		MessageEncoder::new(&mut self.buffer, header)
 	}
 }
@@ -33,7 +32,7 @@ pub struct MessageEncoder<'r, Message> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, M: Message<H, P>, H: Header, P: Part> MessageEncoder<'r, M> {
+impl<'r, M: Message<H, P>, H: Part, P: Part> MessageEncoder<'r, M> {
 	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, M> {
 		let mut writer = BufWriter::new(buffer);
 

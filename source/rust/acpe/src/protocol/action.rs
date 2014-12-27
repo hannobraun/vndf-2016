@@ -3,7 +3,6 @@ use std::io::IoResult;
 use super::{
 	decode,
 	Encoder,
-	Header,
 	Message,
 	Part,
 	Seq,
@@ -53,7 +52,7 @@ pub struct ActionHeader {
 	pub id: Seq,
 }
 
-impl Header for ActionHeader {
+impl Part for ActionHeader {
 	fn write<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		write!(writer, "{}\n", self.id)
 	}
