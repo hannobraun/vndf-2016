@@ -1,7 +1,10 @@
 use std::io::IoResult;
 
 
-pub use self::action::ActionHeader;
+pub use self::action::{
+	Action,
+	ActionHeader,
+};
 pub use self::decode::decode;
 pub use self::encode::{
 	Encoder,

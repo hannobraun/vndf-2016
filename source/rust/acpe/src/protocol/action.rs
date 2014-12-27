@@ -1,9 +1,13 @@
 use std::io::IoResult;
 
 use super::{
+	Message,
 	Part,
 	Seq,
 };
+
+
+pub type Action<T> = Message<ActionHeader, T>;
 
 
 #[deriving(Clone, Copy, PartialEq, Show)]
