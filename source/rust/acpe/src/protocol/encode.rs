@@ -3,10 +3,7 @@ use std::kinds::marker::NoCopy;
 use root::MAX_PACKET_SIZE;
 
 use self::buf_writer::BufWriter;
-use super::{
-	Message,
-	Part,
-};
+use super::Part;
 
 
 pub struct Encoder {
@@ -22,8 +19,8 @@ impl Encoder {
 		}
 	}
 
-	pub fn message<M, H, P>(&mut self, header: &H) -> MessageEncoder<H, P>
-		where M: Message<H, P>, H: Part, P: Part
+	pub fn message<H, P>(&mut self, header: &H) -> MessageEncoder<H, P>
+		where H: Part, P: Part
 	{
 		MessageEncoder::new(&mut self.buffer, header)
 	}
