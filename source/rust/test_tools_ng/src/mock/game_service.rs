@@ -69,7 +69,7 @@ impl GameService {
 		let start_s = precise_time_s();
 
 		while self.received.len() == 0 && precise_time_s() - start_s < 0.5 {
-			self.received.push_all(self.socket.recv_from().as_slice());
+			self.received.push_all(self.socket.receive().as_slice());
 		}
 
 		match self.received.remove(0) {

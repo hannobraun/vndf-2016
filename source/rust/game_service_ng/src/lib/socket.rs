@@ -28,7 +28,7 @@ impl Socket {
 		self.inner.send(message, address)
 	}
 
-	pub fn recv_from(&self) -> Vec<ReceiveResult> {
+	pub fn receive(&self) -> Vec<ReceiveResult> {
 		let mut messages = Vec::new();
 		self.inner.receive(&mut messages);
 
