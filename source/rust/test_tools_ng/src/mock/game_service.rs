@@ -61,7 +61,7 @@ impl GameService {
 			update: percepts,
 		};
 
-		self.socket.send_to(perception.encode().as_slice(), address);
+		self.socket.send(perception.encode().as_slice(), address);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.

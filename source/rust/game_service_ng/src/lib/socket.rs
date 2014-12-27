@@ -24,7 +24,7 @@ impl Socket {
 		}
 	}
 
-	pub fn send_to(&mut self, message: &[u8], address: SocketAddr) {
+	pub fn send(&mut self, message: &[u8], address: SocketAddr) {
 		self.inner.send(message, address)
 	}
 
