@@ -26,13 +26,13 @@ pub type Seq = u64;
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct Message<Header, BodyPart> {
+pub struct Message<Header, Entity> {
 	pub header: Header,
-	pub update: Vec<BodyPart>,
+	pub update: Vec<Entity>,
 }
 
-impl<Header: Part, BodyPart: Part> Message<Header, BodyPart> {
-	pub fn decode(buffer: &[u8]) -> Result<Message<Header, BodyPart>, String> {
+impl<Header: Part, Entity: Part> Message<Header, Entity> {
+	pub fn decode(buffer: &[u8]) -> Result<Message<Header, Entity>, String> {
 		let mut update = Vec::new();
 		match decode(buffer, &mut update) {
 			Ok(header) =>
