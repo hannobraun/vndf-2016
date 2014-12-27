@@ -12,6 +12,7 @@ use acpe::protocol::{
 	MessageEncoder,
 	Perception,
 	PerceptionHeader,
+	Seq,
 };
 
 use common::protocol::{
@@ -44,6 +45,23 @@ impl GameService {
 
 	pub fn port(&self) -> Port {
 		self.port
+	}
+
+	pub fn send_perception(
+		&mut self,
+		address : SocketAddr,
+		confirm : Seq,
+		percepts: Vec<Percept>,
+	) {
+		let perception = Perception {
+			header: PerceptionHeader {
+				confirm_action: confirm,
+				self_id       : None,
+			},
+			update: percepts,
+		};
+
+		self.socket.send_to(perception.encode().as_slice(), address);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
