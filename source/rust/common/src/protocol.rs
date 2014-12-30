@@ -1,4 +1,8 @@
+use acpe::protocol;
 use rustc_serialize::Encodable;
+
+
+pub type Action = protocol::Action<String, Step>;
 
 
 #[deriving(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
