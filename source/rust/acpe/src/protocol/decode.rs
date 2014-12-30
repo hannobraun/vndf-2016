@@ -7,7 +7,7 @@ use super::Part;
 
 pub fn decode<H: Part, P: Part>(
 	message: &[u8],
-	update : &mut Vec<P>
+	update : &mut Vec<P>,
 ) -> Result<H, String> {
 	let mut reader = BufReader::new(message);
 
