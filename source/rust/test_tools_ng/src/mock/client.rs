@@ -10,6 +10,7 @@ use time::precise_time_s;
 
 use client::network::Socket;
 use common::protocol::{
+	Action,
 	Percept,
 	Step,
 };
@@ -33,10 +34,10 @@ impl Client {
 	}
 
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
-		let action = Message {
+		let action = Action {
 			header : ActionHeader { id: seq },
 			update : steps,
-			destroy: Vec::<String>::new(),
+			destroy: Vec::new(),
 		};
 		self.send_data(action.encode().as_slice());
 	}
