@@ -5,7 +5,7 @@ use rustc_serialize::Encodable;
 use rustc_serialize::json;
 
 
-#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
+#[deriving(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum Step {
 	Login,
 	Broadcast(String),
