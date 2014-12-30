@@ -123,7 +123,7 @@ pub trait Encode {
 }
 
 impl<'e, T> Encode for T where T: Encodable<json::Encoder<'e>, IoError> {
-	fn encode<'a, W: Writer>(&self, writer: &'a mut W) -> IoResult<()> {
+	fn encode<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		// The API used here is inefficient, since it allocates a String for
 		// each encoding. There's a more efficient, Writer-based one, but I
 		// couldn't get it to work due to lifetime issues. This should be good
