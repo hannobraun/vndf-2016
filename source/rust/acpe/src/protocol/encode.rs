@@ -36,7 +36,11 @@ pub struct MessageEncoder<'r, H, P> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
+impl<'r, H, P> MessageEncoder<'r, H, P>
+	where
+		H: Part,
+		P: Part,
+{
 	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, P> {
 		let mut writer = BufWriter::new(buffer);
 
