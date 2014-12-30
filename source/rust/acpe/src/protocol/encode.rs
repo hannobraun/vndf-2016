@@ -8,7 +8,7 @@ use root::{
 };
 
 use self::buf_writer::BufWriter;
-use super::Part;
+use super::Encode;
 
 
 pub struct Encoder {
@@ -26,8 +26,8 @@ impl Encoder {
 
 	pub fn message<H, E>(&mut self, header: &H) -> MessageEncoder<H, E>
 		where
-			H: Part,
-			E: Part,
+			H: Encode,
+			E: Encode,
 	{
 		MessageEncoder::new(&mut self.buffer, header)
 	}
@@ -40,8 +40,8 @@ pub struct MessageEncoder<'r, H, E> {
 
 impl<'r, H, E> MessageEncoder<'r, H, E>
 	where
-		H: Part,
-		E: Part,
+		H: Encode,
+		E: Encode,
 {
 	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, E> {
 		let mut writer = BufWriter::new(buffer);
@@ -101,10 +101,10 @@ impl<'r, H, E> MessageEncoder<'r, H, E>
 fn write<W, E>(writer: &mut W, prefix: &str, entity: &E) -> IoResult<()>
 	where
 		W: Writer,
-		E: Part,
+		E: Encode,
 {
 	try!(write!(writer, "{} ", prefix));
-	try!(entity.assemble(writer));
+	try!(entity.encode(writer));
 	try!(write!(writer, "\n"));
 
 	Ok(())

@@ -43,8 +43,8 @@ pub struct Message<Header, Entity> {
 
 impl<Header, Entity> Message<Header, Entity>
 	where
-		Header: Decodable<json::Decoder, json::DecoderError> + Part,
-		Entity: Decodable<json::Decoder, json::DecoderError> + Part,
+		Header: Decodable<json::Decoder, json::DecoderError> + Encode,
+		Entity: Decodable<json::Decoder, json::DecoderError> + Encode,
 {
 	pub fn decode(buffer: &[u8]) -> Result<Message<Header, Entity>, String> {
 		let mut update = Vec::new();
