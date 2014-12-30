@@ -1,3 +1,4 @@
+use std::io::IoResult;
 use std::kinds::marker::NoCopy;
 
 use root::MAX_PACKET_SIZE;
@@ -52,7 +53,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match entity.assemble(&mut writer) {
+			match write(&mut writer, entity) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
@@ -84,6 +85,13 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 
 		self.writer.into_slice()[.. len as uint]
 	}
+}
+
+
+fn write<W: Writer, P: Part>(writer: &mut W, entity: &P) -> IoResult<()> {
+	try!(entity.assemble(writer));
+
+	Ok(())
 }
 
 
