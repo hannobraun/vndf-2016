@@ -76,11 +76,6 @@ impl<Header, Entity> Message<Header, Entity>
 }
 
 
-pub trait Part {
-	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
-}
-
-
 pub trait Encode {
 	fn encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
