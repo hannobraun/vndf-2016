@@ -1,12 +1,17 @@
 use std::io::BufReader;
 
-use root::UPDATE;
+use rustc_serialize::{
+	json,
+	Decodable,
+};
 
-use super::Part;
+use root::UPDATE;
 
 
 pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
-	where H: Part, P: Part
+	where
+		H: Decodable<json::Decoder, json::DecoderError>,
+		P: Decodable<json::Decoder, json::DecoderError>,
 {
 	let mut reader = BufReader::new(message);
 
@@ -30,7 +35,7 @@ pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
 		},
 	};
 
-	let header = match Part::disassemble(header) {
+	let header = match json::decode(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
@@ -57,9 +62,11 @@ pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
 		};
 
 		match directive {
-			UPDATE => match Part::disassemble(entity) {
-				Ok(entity) => update.push(entity),
-				Err(error) => return Err(error),
+			UPDATE => match json::decode(entity) {
+				Ok(entity) =>
+					update.push(entity),
+				Err(error) =>
+					return Err(format!("Error decoding entity: {}", error)),
 			},
 
 			_ => return Err(format!("Unknown directive: {}", directive)),

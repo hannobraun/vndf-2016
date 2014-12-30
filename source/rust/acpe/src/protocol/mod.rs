@@ -1,5 +1,10 @@
 use std::io::IoResult;
 
+use rustc_serialize::{
+	json,
+	Decodable,
+};
+
 
 pub use self::action::{
 	Action,
@@ -32,7 +37,11 @@ pub struct Message<Header, Entity> {
 	pub destroy: Vec<String>,
 }
 
-impl<Header: Part, Entity: Part> Message<Header, Entity> {
+impl<Header, Entity> Message<Header, Entity>
+	where
+		Header: Decodable<json::Decoder, json::DecoderError> + Part,
+		Entity: Decodable<json::Decoder, json::DecoderError> + Part,
+{
 	pub fn decode(buffer: &[u8]) -> Result<Message<Header, Entity>, String> {
 		let mut update = Vec::new();
 		match decode(buffer, &mut update) {
