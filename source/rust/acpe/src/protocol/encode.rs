@@ -34,7 +34,7 @@ impl Encoder {
 }
 
 
-pub struct MessageEncoder<'r, H, P> {
+pub struct MessageEncoder<'r, H, E> {
 	writer: BufWriter<'r>,
 }
 
