@@ -75,6 +75,7 @@ News for January:
 - ISRO launch
 - http://www.reddit.com/r/space/comments/2q5w22/the_first_launch_of_the_carrier_rocket_heavy/
 - http://www.space.com/27955-spacex-rocket-ocean-landing-platform.html
+- http://dawn.jpl.nasa.gov/feature_stories/Dawn_spacecraft_begins_approach.asp
 
 News for any month:
 - Asteroid video by Scott Manley
