@@ -97,7 +97,9 @@ impl<'r, H, P> MessageEncoder<'r, H, P>
 
 
 fn write<W, P>(writer: &mut W, prefix: &str, entity: &P) -> IoResult<()>
-	where W: Writer, P: Part
+	where
+		W: Writer,
+		P: Part,
 {
 	try!(write!(writer, "{} ", prefix));
 	try!(entity.assemble(writer));
