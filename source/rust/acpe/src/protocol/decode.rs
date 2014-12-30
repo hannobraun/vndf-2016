@@ -40,11 +40,8 @@ pub fn decode<H: Part, P: Part>(
 		}
 
 		match Part::disassemble(line) {
-			Ok(entity) =>
-				update.push(entity),
-			Err(error) =>
-				return Err(error),
-
+			Ok(entity) => update.push(entity),
+			Err(error) => return Err(error),
 		}
 	}
 
