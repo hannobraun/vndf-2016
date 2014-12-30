@@ -47,12 +47,12 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 		}
 	}
 
-	pub fn update(&mut self, part: &P) -> bool {
+	pub fn update(&mut self, entity: &P) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match part.assemble(&mut writer) {
+			match entity.assemble(&mut writer) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
