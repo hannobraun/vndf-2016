@@ -47,7 +47,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 		}
 	}
 
-	pub fn add(&mut self, part: &P) -> bool {
+	pub fn update(&mut self, part: &P) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {

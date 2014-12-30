@@ -55,7 +55,7 @@ impl<Header: Part, Entity: Part> Message<Header, Entity> {
 
 		let mut message = encoder.message(&self.header);
 		for body_part in self.update.iter() {
-			message.add(body_part);
+			message.update(body_part);
 		}
 
 		message.encode().to_vec()

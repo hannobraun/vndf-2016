@@ -48,7 +48,7 @@ impl ActionAssembler {
 				None       => break,
 			};
 
-			if !action.add(&step) {
+			if !action.update(&step) {
 				if is_first_step {
 					panic!(
 						"Failed to add first step of an action. Since the \

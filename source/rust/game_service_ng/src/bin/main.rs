@@ -206,7 +206,7 @@ fn send_perception(
 			None            => break,
 		};
 
-		if !perception.add(&Percept::Broadcast(broadcast.clone())) {
+		if !perception.update(&Percept::Broadcast(broadcast.clone())) {
 			broadcasts.push(broadcast);
 			break;
 		}
