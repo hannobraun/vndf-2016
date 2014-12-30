@@ -1,7 +1,9 @@
 use std::io::IoResult;
 
-use rustc_serialize::Encodable;
-use rustc_serialize::json;
+use rustc_serialize::{
+	json,
+	Encodable,
+};
 
 use super::{
 	Message,
