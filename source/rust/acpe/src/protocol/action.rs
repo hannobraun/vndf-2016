@@ -1,5 +1,10 @@
 use std::io::IoResult;
 
+use rustc_serialize::{
+	json,
+	Encodable,
+};
+
 use super::{
 	Message,
 	Part,
@@ -10,20 +15,23 @@ use super::{
 pub type Action<T> = Message<ActionHeader, T>;
 
 
-#[deriving(Clone, Copy, PartialEq, Show)]
+#[deriving(Clone, Copy, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub struct ActionHeader {
 	pub id: Seq,
 }
 
 impl Part for ActionHeader {
 	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
-		write!(writer, "{}\n", self.id)
+		try!(self.encode(&mut json::Encoder::new(writer)));
+		try!(writer.write_char('\n'));
+
+		Ok(())
 	}
 
 	fn disassemble(line: &str) -> Result<ActionHeader, String> {
-		match line.parse() {
-			Some(id) => Ok(ActionHeader { id: id }),
-			None     => Err(format!("Header is not a number")),
-		}
+		json::decode(line)
+			.map_err(|error|
+				format!("Error decoding action header: {}", error)
+			)
 	}
 }
