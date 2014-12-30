@@ -35,6 +35,14 @@ pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
 		},
 	};
 
+	let mut splits = header.splitn(1, ' ');
+	let     _      = splits.next(); // Ignore header directive
+
+	let header = match splits.next() {
+		Some(header) => header,
+		None         => return Err(format!("Invalid header")),
+	};
+
 	let header = match json::decode(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),

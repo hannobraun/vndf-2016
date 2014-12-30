@@ -2,6 +2,7 @@ use std::io::IoResult;
 use std::kinds::marker::NoCopy;
 
 use root::{
+	HEADER,
 	MAX_PACKET_SIZE,
 	UPDATE,
 };
@@ -39,7 +40,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, P> {
 		let mut writer = BufWriter::new(buffer);
 
-		match header.assemble(&mut writer) {
+		match write(&mut writer, HEADER, header) {
 			Ok(()) =>
 				(),
 			Err(error) =>
