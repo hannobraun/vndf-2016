@@ -22,7 +22,7 @@ impl Part for Step {
 }
 
 
-#[deriving(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
+#[deriving(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum Percept {
 	Broadcast(Broadcast),
 }
