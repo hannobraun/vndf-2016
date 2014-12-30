@@ -21,9 +21,9 @@ pub fn decode<H: Part, P: Part>(
 		},
 	};
 
-	let mut lines: Vec<&str> = message.split('\n').collect();
+	let mut lines = message.split('\n');
 
-	let header = match lines.remove(0) {
+	let header = match lines.next() {
 		Some(header) =>
 			header,
 		None => {
@@ -36,7 +36,7 @@ pub fn decode<H: Part, P: Part>(
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
 
-	for line in lines.into_iter() {
+	for line in lines {
 		if line.len() == 0 {
 			continue;
 		}
