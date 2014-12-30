@@ -1,5 +1,7 @@
 use std::io::BufReader;
 
+use root::UPDATE;
+
 use super::Part;
 
 
@@ -39,9 +41,29 @@ pub fn decode<H: Part, P: Part>(
 			continue;
 		}
 
-		match Part::disassemble(line) {
-			Ok(entity) => update.push(entity),
-			Err(error) => return Err(error),
+		let mut splits = line.splitn(1, ' ');
+
+		let directive = match splits.next() {
+			Some(directive) =>
+				directive,
+			None =>
+				return Err(format!("Invalid message line: Missing directive")),
+		};
+
+		let entity = match splits.next() {
+			Some(entity) =>
+				entity,
+			None =>
+				return Err(format!("Invalid message line: Missing entity")),
+		};
+
+		match directive {
+			UPDATE => match Part::disassemble(entity) {
+				Ok(entity) => update.push(entity),
+				Err(error) => return Err(error),
+			},
+
+			_ => return Err(format!("Unknown directive: {}", directive)),
 		}
 	}
 

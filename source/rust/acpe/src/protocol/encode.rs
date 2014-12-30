@@ -1,7 +1,10 @@
 use std::io::IoResult;
 use std::kinds::marker::NoCopy;
 
-use root::MAX_PACKET_SIZE;
+use root::{
+	MAX_PACKET_SIZE,
+	UPDATE,
+};
 
 use self::buf_writer::BufWriter;
 use super::Part;
@@ -89,6 +92,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 
 
 fn write<W: Writer, P: Part>(writer: &mut W, entity: &P) -> IoResult<()> {
+	try!(write!(writer, "{} ", UPDATE));
 	try!(entity.assemble(writer));
 
 	Ok(())
