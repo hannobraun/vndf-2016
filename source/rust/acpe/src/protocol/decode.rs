@@ -5,7 +5,7 @@ use super::Part;
 
 pub fn decode<H: Part, P: Part>(
 	message: &[u8],
-	parts  : &mut Vec<P>
+	update : &mut Vec<P>
 ) -> Result<H, String> {
 	let mut reader = BufReader::new(message);
 
@@ -41,7 +41,7 @@ pub fn decode<H: Part, P: Part>(
 
 		match Part::disassemble(line) {
 			Ok(part) =>
-				parts.push(part),
+				update.push(part),
 			Err(error) =>
 				return Err(error),
 
