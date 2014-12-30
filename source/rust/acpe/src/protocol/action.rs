@@ -27,11 +27,4 @@ impl Part for ActionHeader {
 
 		Ok(())
 	}
-
-	fn disassemble(line: &str) -> Result<ActionHeader, String> {
-		json::decode(line)
-			.map_err(|error|
-				format!("Error decoding action header: {}", error)
-			)
-	}
 }

@@ -28,11 +28,4 @@ impl Part for PerceptionHeader {
 
 		Ok(())
 	}
-
-	fn disassemble(line: &str) -> Result<PerceptionHeader, String> {
-		json::decode(line)
-			.map_err(|error|
-				format!("Error decoding perception header: {}", error)
-			)
-	}
 }

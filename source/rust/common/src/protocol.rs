@@ -19,19 +19,6 @@ impl Part for Step {
 
 		Ok(())
 	}
-
-	fn disassemble(line: &str) -> Result<Step, String> {
-		match json::decode(line) {
-			Ok(part) =>
-				Ok(part),
-			Err(error) =>
-				Err(format!(
-					"Error decoding step. \
-					Error: {}; Step: {}",
-					error, line,
-				)),
-		}
-	}
 }
 
 
@@ -46,19 +33,6 @@ impl Part for Percept {
 		try!(writer.write_char('\n'));
 
 		Ok(())
-	}
-
-	fn disassemble(line: &str) -> Result<Percept, String> {
-		match json::decode(line) {
-			Ok(part) =>
-				Ok(part),
-			Err(error) =>
-				Err(format!(
-					"Error decoding part. \
-					Error: {}; Part: {}",
-					error, line,
-				)),
-		}
 	}
 }
 

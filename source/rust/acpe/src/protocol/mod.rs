@@ -74,5 +74,4 @@ impl<Header, Entity> Message<Header, Entity>
 
 pub trait Part {
 	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
-	fn disassemble(line: &str) -> Result<Self, String>;
 }
