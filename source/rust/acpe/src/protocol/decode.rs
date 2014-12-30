@@ -8,20 +8,6 @@ use rustc_serialize::{
 use root::UPDATE;
 
 
-pub trait Decode {
-	fn decode(s: &str) -> Result<Self, String>;
-}
-
-impl<T> Decode for T where T: Decodable<json::Decoder, json::DecoderError> {
-	fn decode(s: &str) -> Result<Self, String> {
-		json::decode(s)
-			.map_err(|error|
-				format!("JSON decoding error: {}", error)
-			)
-	}
-}
-
-
 pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
 	where
 		H: Decode,
@@ -96,4 +82,18 @@ pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
 	}
 
 	Ok(header)
+}
+
+
+pub trait Decode {
+	fn decode(s: &str) -> Result<Self, String>;
+}
+
+impl<T> Decode for T where T: Decodable<json::Decoder, json::DecoderError> {
+	fn decode(s: &str) -> Result<Self, String> {
+		json::decode(s)
+			.map_err(|error|
+				format!("JSON decoding error: {}", error)
+			)
+	}
 }
