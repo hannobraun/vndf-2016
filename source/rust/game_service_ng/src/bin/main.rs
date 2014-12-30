@@ -97,7 +97,10 @@ fn main() {
 					}
 				},
 				Err((error, address)) => {
-					print!("Error receiving message from {}: {}", address, error);
+					print!(
+						"Error receiving message from {}: {}\n",
+						address, error
+					);
 					clients.remove(&address);
 				},
 			}
