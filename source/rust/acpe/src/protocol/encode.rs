@@ -1,5 +1,13 @@
-use std::io::IoResult;
+use std::io::{
+	IoError,
+	IoResult,
+};
 use std::kinds::marker::NoCopy;
+
+use rustc_serialize::{
+	json,
+	Encodable,
+};
 
 use root::{
 	HEADER,
@@ -8,7 +16,6 @@ use root::{
 };
 
 use self::buf_writer::BufWriter;
-use super::Encode;
 
 
 pub struct Encoder {
@@ -108,6 +115,21 @@ fn write<W, E>(writer: &mut W, prefix: &str, entity: &E) -> IoResult<()>
 	try!(write!(writer, "\n"));
 
 	Ok(())
+}
+
+
+pub trait Encode {
+	fn encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
+}
+
+impl<'e, T> Encode for T where T: Encodable<json::Encoder<'e>, IoError> {
+	fn encode<'a, W: Writer>(&self, writer: &'a mut W) -> IoResult<()> {
+		// The API used here is inefficient, since it allocates a String for
+		// each encoding. There's a more efficient, Writer-based one, but I
+		// couldn't get it to work due to lifetime issues. This should be good
+		// enough for now.
+		write!(writer, "{}", json::encode(self))
+	}
 }
 
 
