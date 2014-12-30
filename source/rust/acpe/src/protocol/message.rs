@@ -16,6 +16,7 @@ pub struct Message<Header, Id, Entity> {
 impl<Header, Id, Entity> Message<Header, Id, Entity>
 	where
 		Header: Decode + Encode,
+		Id    : Decode + Encode,
 		Entity: Decode + Encode,
 {
 	pub fn decode(
