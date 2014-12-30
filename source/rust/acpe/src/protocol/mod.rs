@@ -75,3 +75,17 @@ impl<Header, Entity> Message<Header, Entity>
 pub trait Part {
 	fn assemble<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
+
+
+pub trait Decode {
+	fn decode(s: &str) -> Result<Self, String>;
+}
+
+impl<T> Decode for T where T: Decodable<json::Decoder, json::DecoderError> {
+	fn decode(s: &str) -> Result<Self, String> {
+		json::decode(s)
+			.map_err(|error|
+				format!("JSON decoding error: {}", error)
+			)
+	}
+}
