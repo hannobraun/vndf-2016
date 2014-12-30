@@ -5,10 +5,9 @@ use root::UPDATE;
 use super::Part;
 
 
-pub fn decode<H: Part, P: Part>(
-	message: &[u8],
-	update : &mut Vec<P>,
-) -> Result<H, String> {
+pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
+	where H: Part, P: Part
+{
 	let mut reader = BufReader::new(message);
 
 	let message = match reader.read_to_string() {
