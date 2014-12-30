@@ -38,12 +38,12 @@ pub struct MessageEncoder<'r, H, E> {
 	writer: BufWriter<'r>,
 }
 
-impl<'r, H, P> MessageEncoder<'r, H, P>
+impl<'r, H, E> MessageEncoder<'r, H, E>
 	where
 		H: Part,
-		P: Part,
+		E: Part,
 {
-	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, P> {
+	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, E> {
 		let mut writer = BufWriter::new(buffer);
 
 		match write(&mut writer, HEADER, header) {
@@ -58,7 +58,7 @@ impl<'r, H, P> MessageEncoder<'r, H, P>
 		}
 	}
 
-	pub fn update(&mut self, entity: &P) -> bool {
+	pub fn update(&mut self, entity: &E) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
