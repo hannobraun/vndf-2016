@@ -41,16 +41,16 @@ impl Encoder {
 }
 
 
-pub struct MessageEncoder<'r, H, E> {
-	writer: BufWriter<'r>,
+pub struct MessageEncoder<'a, H, E> {
+	writer: BufWriter<'a>,
 }
 
-impl<'r, H, E> MessageEncoder<'r, H, E>
+impl<'a, H, E> MessageEncoder<'a, H, E>
 	where
 		H: Encode,
 		E: Encode,
 {
-	pub fn new(buffer: &'r mut [u8], header: &H) -> MessageEncoder<'r, H, E> {
+	pub fn new(buffer: &'a mut [u8], header: &H) -> MessageEncoder<'a, H, E> {
 		let mut writer = BufWriter::new(buffer);
 
 		match write(&mut writer, HEADER, header) {
@@ -92,7 +92,7 @@ impl<'r, H, E> MessageEncoder<'r, H, E>
 		true
 	}
 
-	pub fn encode(self) -> &'r [u8] {
+	pub fn encode(self) -> &'a [u8] {
 		let len = self.writer.tell().unwrap_or_else(|_|
 			panic!(
 				"I/O operation on BufWriter that cannot possibly fail still \
