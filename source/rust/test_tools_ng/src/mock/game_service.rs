@@ -7,7 +7,6 @@ use time::precise_time_s;
 use acceptance::random_port;
 use acpe::network::SocketSender;
 use acpe::protocol::{
-	ActionHeader,
 	Encoder,
 	Message,
 	MessageEncoder,
@@ -16,8 +15,8 @@ use acpe::protocol::{
 };
 
 use common::protocol::{
+	Action,
 	Percept,
-	Step,
 };
 use game_service::{
 	ReceiveResult,
@@ -115,7 +114,7 @@ impl GameService {
 
 
 pub struct ActionHandle {
-	pub inner  : Message<ActionHeader, String, Step>,
+	pub inner  : Action,
 	pub address: SocketAddr,
 
 	sender : SocketSender,
