@@ -38,7 +38,10 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(&mut self, perceptions: &mut Vec<Perception<Percept>>) {
+	pub fn receive(
+		&mut self,
+		perceptions: &mut Vec<Perception<String, Percept>>
+	) {
 		self.inner.receive(&mut self.messages);
 
 		for (message, _) in self.messages.drain() {

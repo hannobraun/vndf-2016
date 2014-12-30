@@ -16,7 +16,7 @@ use common::protocol::Step;
 
 
 pub type ReceiveResult =
-	Result<(Action<Step>, SocketAddr), (String, SocketAddr)>;
+	Result<(Action<String, Step>, SocketAddr), (String, SocketAddr)>;
 
 
 pub struct Socket {
@@ -52,7 +52,7 @@ impl Socket {
 }
 
 
-fn decode_message(message: &[u8]) -> Result<Action<Step>, String> {
+fn decode_message(message: &[u8]) -> Result<Action<String, Step>, String> {
 	let message = match protocol::Message::decode(message) {
 		Ok(message) =>
 			message,

@@ -4,7 +4,7 @@ use super::{
 };
 
 
-pub type Action<T> = Message<ActionHeader, T>;
+pub type Action<Id, Entity> = Message<ActionHeader, Id, Entity>;
 
 
 #[deriving(Clone, Copy, PartialEq, RustcDecodable, RustcEncodable, Show)]

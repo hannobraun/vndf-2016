@@ -59,7 +59,7 @@ impl GameService {
 				self_id       : None,
 			},
 			update : percepts,
-			destroy: Vec::new(),
+			destroy: Vec::<String>::new(),
 		};
 
 		self.socket.send(perception.encode().as_slice(), address);
@@ -115,7 +115,7 @@ impl GameService {
 
 
 pub struct ActionHandle {
-	pub inner  : Message<ActionHeader, Step>,
+	pub inner  : Message<ActionHeader, String, Step>,
 	pub address: SocketAddr,
 
 	sender : SocketSender,

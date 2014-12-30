@@ -7,18 +7,20 @@ use super::{
 
 
 #[deriving(Clone, PartialEq, Show)]
-pub struct Message<Header, Entity> {
+pub struct Message<Header, Id, Entity> {
 	pub header : Header,
 	pub update : Vec<Entity>,
-	pub destroy: Vec<String>,
+	pub destroy: Vec<Id>,
 }
 
-impl<Header, Entity> Message<Header, Entity>
+impl<Header, Id, Entity> Message<Header, Id, Entity>
 	where
 		Header: Decode + Encode,
 		Entity: Decode + Encode,
 {
-	pub fn decode(buffer: &[u8]) -> Result<Message<Header, Entity>, String> {
+	pub fn decode(
+		buffer: &[u8]
+	) -> Result<Message<Header, Id, Entity>, String> {
 		let mut update = Vec::new();
 		match decode(buffer, &mut update) {
 			Ok(header) =>

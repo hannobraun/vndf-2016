@@ -17,7 +17,7 @@ use common::protocol::{
 
 pub struct Client {
 	socket     : Socket,
-	perceptions: Vec<Message<PerceptionHeader, Percept>>,
+	perceptions: Vec<Message<PerceptionHeader, String, Percept>>,
 }
 
 impl Client {
@@ -36,7 +36,7 @@ impl Client {
 		let action = Message {
 			header : ActionHeader { id: seq },
 			update : steps,
-			destroy: Vec::new(),
+			destroy: Vec::<String>::new(),
 		};
 		self.send_data(action.encode().as_slice());
 	}
@@ -50,7 +50,7 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_perception(&mut self) -> Option<Message<PerceptionHeader, Percept>> {
+	pub fn expect_perception(&mut self) -> Option<Message<PerceptionHeader, String, Percept>> {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -63,8 +63,8 @@ impl Client {
 	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until(
 		&mut self,
-		condition: |&Option<Message<PerceptionHeader, Percept>>| -> bool
-	) -> Option<Message<PerceptionHeader, Percept>> {
+		condition: |&Option<Message<PerceptionHeader, String, Percept>>| -> bool
+	) -> Option<Message<PerceptionHeader, String, Percept>> {
 		let start_s = precise_time_s();
 
 		let mut perception = self.expect_perception();

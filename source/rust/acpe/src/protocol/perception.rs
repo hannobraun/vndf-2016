@@ -4,7 +4,7 @@ use super::{
 };
 
 
-pub type Perception<T> = Message<PerceptionHeader, T>;
+pub type Perception<Id, Entity> = Message<PerceptionHeader, Id, Entity>;
 
 
 #[deriving(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
