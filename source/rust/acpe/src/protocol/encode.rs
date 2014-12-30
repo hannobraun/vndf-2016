@@ -56,7 +56,7 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write(&mut writer, entity) {
+			match write(&mut writer, UPDATE, entity) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
@@ -91,10 +91,10 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 }
 
 
-fn write<W, P>(writer: &mut W, entity: &P) -> IoResult<()>
+fn write<W, P>(writer: &mut W, prefix: &str, entity: &P) -> IoResult<()>
 	where W: Writer, P: Part
 {
-	try!(write!(writer, "{} ", UPDATE));
+	try!(write!(writer, "{} ", prefix));
 	try!(entity.assemble(writer));
 
 	Ok(())
