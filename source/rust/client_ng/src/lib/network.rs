@@ -7,12 +7,9 @@ use acpe::network::{
 	mod,
 	Message,
 };
-use acpe::protocol::{
-	mod,
-	Perception,
-};
+use acpe::protocol;
 
-use common::protocol::Percept;
+use common::protocol::Perception;
 
 
 pub struct Socket {
@@ -38,10 +35,7 @@ impl Socket {
 		}
 	}
 
-	pub fn receive(
-		&mut self,
-		perceptions: &mut Vec<Perception<String, Percept>>
-	) {
+	pub fn receive(&mut self, perceptions: &mut Vec<Perception>) {
 		self.inner.receive(&mut self.messages);
 
 		for (message, _) in self.messages.drain() {
