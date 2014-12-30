@@ -2,8 +2,6 @@ use std::io::net::ip::Port;
 
 use acpe::protocol::{
 	ActionHeader,
-	Message,
-	PerceptionHeader,
 	Seq,
 };
 use time::precise_time_s;
@@ -11,14 +9,14 @@ use time::precise_time_s;
 use client::network::Socket;
 use common::protocol::{
 	Action,
-	Percept,
+	Perception,
 	Step,
 };
 
 
 pub struct Client {
 	socket     : Socket,
-	perceptions: Vec<Message<PerceptionHeader, String, Percept>>,
+	perceptions: Vec<Perception>,
 }
 
 impl Client {
@@ -51,7 +49,7 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_perception(&mut self) -> Option<Message<PerceptionHeader, String, Percept>> {
+	pub fn expect_perception(&mut self) -> Option<Perception> {
 		let start_s = precise_time_s();
 
 		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -64,8 +62,8 @@ impl Client {
 	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until(
 		&mut self,
-		condition: |&Option<Message<PerceptionHeader, String, Percept>>| -> bool
-	) -> Option<Message<PerceptionHeader, String, Percept>> {
+		condition: |&Option<Perception>| -> bool
+	) -> Option<Perception> {
 		let start_s = precise_time_s();
 
 		let mut perception = self.expect_perception();
