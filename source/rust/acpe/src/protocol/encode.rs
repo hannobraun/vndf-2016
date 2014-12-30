@@ -91,7 +91,9 @@ impl<'r, H: Part, P: Part> MessageEncoder<'r, H, P> {
 }
 
 
-fn write<W: Writer, P: Part>(writer: &mut W, entity: &P) -> IoResult<()> {
+fn write<W, P>(writer: &mut W, entity: &P) -> IoResult<()>
+	where W: Writer, P: Part
+{
 	try!(write!(writer, "{} ", UPDATE));
 	try!(entity.assemble(writer));
 
