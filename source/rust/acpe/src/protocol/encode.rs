@@ -25,7 +25,9 @@ impl Encoder {
 	}
 
 	pub fn message<H, E>(&mut self, header: &H) -> MessageEncoder<H, E>
-		where H: Part, E: Part
+		where
+			H: Part,
+			E: Part,
 	{
 		MessageEncoder::new(&mut self.buffer, header)
 	}
