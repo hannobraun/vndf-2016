@@ -34,8 +34,9 @@ impl Client {
 
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
 		let action = Message {
-			header: ActionHeader { id: seq },
-			update: steps,
+			header : ActionHeader { id: seq },
+			update : steps,
+			destroy: Vec::new(),
 		};
 		self.send_data(action.encode().as_slice());
 	}

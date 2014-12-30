@@ -58,7 +58,8 @@ impl GameService {
 				confirm_action: confirm,
 				self_id       : None,
 			},
-			update: percepts,
+			update : percepts,
+			destroy: Vec::new(),
 		};
 
 		self.socket.send(perception.encode().as_slice(), address);

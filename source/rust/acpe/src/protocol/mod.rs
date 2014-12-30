@@ -27,8 +27,9 @@ pub type Seq = u64;
 
 #[deriving(Clone, PartialEq, Show)]
 pub struct Message<Header, Entity> {
-	pub header: Header,
-	pub update: Vec<Entity>,
+	pub header : Header,
+	pub update : Vec<Entity>,
+	pub destroy: Vec<String>,
 }
 
 impl<Header: Part, Entity: Part> Message<Header, Entity> {
@@ -37,8 +38,9 @@ impl<Header: Part, Entity: Part> Message<Header, Entity> {
 		match decode(buffer, &mut update) {
 			Ok(header) =>
 				Ok(Message {
-					header: header,
-					update: update,
+					header : header,
+					update : update,
+					destroy: Vec::new(),
 				}),
 			Err(error) =>
 				Err(error),
