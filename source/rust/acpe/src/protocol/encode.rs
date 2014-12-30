@@ -97,6 +97,7 @@ fn write<W, P>(writer: &mut W, prefix: &str, entity: &P) -> IoResult<()>
 {
 	try!(write!(writer, "{} ", prefix));
 	try!(entity.assemble(writer));
+	try!(write!(writer, "\n"));
 
 	Ok(())
 }
