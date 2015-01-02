@@ -48,7 +48,7 @@ pub fn decode<H, I, E>(
 		None         => return Err(format!("Invalid header")),
 	};
 
-	target.header = match Decode::decode(header) {
+	target.header = match Decode::do_decode(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
@@ -75,7 +75,7 @@ pub fn decode<H, I, E>(
 		};
 
 		match directive {
-			UPDATE => match Decode::decode(entity) {
+			UPDATE => match Decode::do_decode(entity) {
 				Ok(entity) =>
 					target.update.push(entity),
 				Err(error) =>
@@ -91,11 +91,11 @@ pub fn decode<H, I, E>(
 
 
 pub trait Decode {
-	fn decode(s: &str) -> Result<Self, String>;
+	fn do_decode(s: &str) -> Result<Self, String>;
 }
 
 impl<T> Decode for T where T: Decodable<json::Decoder, json::DecoderError> {
-	fn decode(s: &str) -> Result<Self, String> {
+	fn do_decode(s: &str) -> Result<Self, String> {
 		json::decode(s)
 			.map_err(|error|
 				format!("JSON decoding error: {}", error)
