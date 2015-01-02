@@ -72,7 +72,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write(&mut writer, UPDATE, &[entity]) {
+			match write_update(&mut writer, entity) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
@@ -119,15 +119,13 @@ fn write_header<W, H>(writer: &mut W, header: &H) -> IoResult<()>
 	Ok(())
 }
 
-fn write<W, E>(writer: &mut W, prefix: &str, encodes: &[&E]) -> IoResult<()>
+fn write_update<W, E>(writer: &mut W, entity: &E) -> IoResult<()>
 	where
 		W: Writer,
 		E: Encode,
 {
-	try!(write!(writer, "{} ", prefix));
-	for encode in encodes.iter() {
-		try!(encode.do_encode(writer));
-	}
+	try!(write!(writer, "{} ", UPDATE));
+	try!(entity.do_encode(writer));
 	try!(write!(writer, "\n"));
 
 	Ok(())
