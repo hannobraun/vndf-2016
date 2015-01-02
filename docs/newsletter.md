@@ -83,6 +83,7 @@ News for any month:
 - http://www.reddit.com/r/space/comments/2k0slk/this_earth_universe_size_comparison_still_blows/
 - http://solarsystem.nasa.gov/europa/multimediaimagedetails.cfm?Subsite_IM_ID=8421&SiteID=4
 - http://www.reddit.com/r/space/comments/2niljz/human_spaceflight_everything_is_to_scale/
+- http://www.reddit.com/r/space/comments/2r0em5/a_pictorial_of_just_how_massive_space_is/
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
