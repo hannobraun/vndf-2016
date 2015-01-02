@@ -40,14 +40,6 @@ pub fn decode<H, I, E>(
 		},
 	};
 
-	let mut splits = header.splitn(1, ' ');
-	let     _      = splits.next(); // Ignore header directive
-
-	let header = match splits.next() {
-		Some(header) => header,
-		None         => return Err(format!("Invalid header")),
-	};
-
 	target.header = match Decode::do_decode(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),

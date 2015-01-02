@@ -10,7 +10,6 @@ use rustc_serialize::{
 };
 
 use root::{
-	HEADER,
 	MAX_PACKET_SIZE,
 	UPDATE,
 };
@@ -56,7 +55,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	) -> MessageEncoder<'a, H, I, E> {
 		let mut writer = BufWriter::new(buffer);
 
-		match write(&mut writer, HEADER, &[header]) {
+		match write_header(&mut writer, header) {
 			Ok(()) =>
 				(),
 			Err(error) =>
@@ -107,6 +106,18 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	}
 }
 
+
+
+fn write_header<W, H>(writer: &mut W, header: &H) -> IoResult<()>
+	where
+		W: Writer,
+		H: Encode,
+{
+	try!(header.do_encode(writer));
+	try!(write!(writer, "\n"));
+
+	Ok(())
+}
 
 fn write<W, E>(writer: &mut W, prefix: &str, encodes: &[&E]) -> IoResult<()>
 	where
