@@ -1,3 +1,5 @@
+use std::default::Default;
+
 use super::{
 	decode,
 	Decode,
@@ -15,7 +17,7 @@ pub struct Message<Header, Id, Entity> {
 
 impl<Header, Id, Entity> Message<Header, Id, Entity>
 	where
-		Header: Decode + Encode,
+		Header: Decode + Encode + Default,
 		Id    : Decode + Encode,
 		Entity: Decode + Encode,
 {
