@@ -50,7 +50,9 @@ impl ActionAssembler {
 				break
 			};
 
-			if !action.update(&step) {
+			// TODO: Once it is possible to delete previously scheduled
+			//       maneuvers, a real id must be passed here.
+			if !action.update(&0u64, &step) {
 				if is_first_step {
 					panic!(
 						"Failed to add first step of an action. Since the \

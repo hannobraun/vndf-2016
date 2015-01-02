@@ -209,7 +209,11 @@ fn send_perception(
 			None            => break,
 		};
 
-		if !perception.update(&Percept::Broadcast(broadcast.clone())) {
+		let could_add = perception.update(
+			&broadcast.sender,
+			&Percept::Broadcast(broadcast.clone())
+		);
+		if !could_add {
 			broadcasts.push(broadcast);
 			break;
 		}

@@ -44,7 +44,7 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 
 		let mut message = encoder.message(&self.header);
 		for entity in self.update.iter() {
-			message.update(entity);
+			message.update(&0u64, entity);
 		}
 
 		message.encode().to_vec()
