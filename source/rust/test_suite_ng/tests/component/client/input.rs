@@ -32,7 +32,9 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 		// TODO(85118724): Remove confirmation.
 		action.confirm();
 		action.inner.update.contains(
-			&Step::Broadcast(valid_broadcast.clone())
+			// TODO: This assumes that the client doesn't set ids for its action
+			//       entities.
+			&(0u64, Step::Broadcast(valid_broadcast.clone()))
 		)
 	});
 }

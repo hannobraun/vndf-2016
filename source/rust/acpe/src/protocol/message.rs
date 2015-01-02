@@ -11,7 +11,7 @@ use super::{
 #[deriving(Clone, PartialEq, Show)]
 pub struct Message<Header, Id, Entity> {
 	pub header : Header,
-	pub update : Vec<Entity>,
+	pub update : Vec<(Id, Entity)>,
 	pub destroy: Vec<Id>,
 }
 
@@ -43,8 +43,8 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		let mut encoder = Encoder::new();
 
 		let mut message = encoder.message(&self.header);
-		for entity in self.update.iter() {
-			message.update(&0u64, entity);
+		for (id, entity) in self.update.into_iter() {
+			message.update(&id, &entity);
 		}
 
 		message.encode().to_vec()

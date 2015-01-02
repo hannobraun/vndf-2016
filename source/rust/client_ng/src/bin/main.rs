@@ -125,7 +125,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 			frame.broadcasts = perception.update
 				.into_iter()
-				.map(|percept|
+				.map(|(_, percept)|
 					match percept {
 						Percept::Broadcast(broadcast) => broadcast,
 					}

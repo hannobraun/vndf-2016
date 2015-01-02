@@ -34,7 +34,7 @@ impl Client {
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
 		let action = Action {
 			header : ActionHeader { id: seq },
-			update : steps,
+			update : steps.into_iter().map(|step| (0u64, step)).collect(),
 			destroy: Vec::new(),
 		};
 		self.send_data(action.encode().as_slice());

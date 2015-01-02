@@ -57,7 +57,15 @@ impl GameService {
 				confirm_action: confirm,
 				self_id       : None,
 			},
-			update : percepts,
+			// TODO: This sends an empty string as the id. As soon as the client
+			//       actually does something with the ids, this will no longer
+			//       do.
+			update : percepts
+				.into_iter()
+				.map(|percept|
+					("".to_string(), percept)
+				)
+				.collect(),
 			destroy: Vec::new(),
 		};
 

@@ -71,7 +71,7 @@ pub fn decode<H, I, E>(
 			UPDATE => {
 				let mut splits = item.splitn(1, ' ');
 
-				let _: I = match splits.next() {
+				let id = match splits.next() {
 					Some(id) => match Decode::do_decode(id) {
 						Ok(id) =>
 							id,
@@ -100,7 +100,7 @@ pub fn decode<H, I, E>(
 						return Err(format!("Invalid update: No entity")),
 				};
 
-				target.update.push(entity);
+				target.update.push((id, entity));
 			},
 
 			_ => return Err(format!("Unknown directive: {}", directive)),

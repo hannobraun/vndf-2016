@@ -85,7 +85,7 @@ fn it_should_distribute_large_payloads_over_multiple_packets() {
 
 		match client.expect_perception() {
 			Some(perception) => {
-				for percept in perception.update.iter() {
+				for &(_, ref percept) in perception.update.iter() {
 					match *percept {
 						Percept::Broadcast(ref broadcast) => {
 							broadcasts.remove(&broadcast.message);
@@ -121,11 +121,15 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 	client_2.wait_until(|perception|
 		if let &Some(ref perception) = perception {
+			let sender = perception.header.self_id.as_ref().unwrap().clone();
 			perception.update.contains(
-				&Percept::Broadcast(Broadcast {
-					sender : perception.header.self_id.as_ref().unwrap().clone(),
-					message: message.clone(),
-				})
+				&(
+					sender.clone(),
+					Percept::Broadcast(Broadcast {
+						sender : sender.clone(),
+						message: message.clone(),
+					})
+				)
 			)
 		}
 		else {
@@ -150,11 +154,15 @@ fn it_should_ignore_client_sending_empty_action_before_login() {
 
 	client_2.wait_until(|perception|
 		if let &Some(ref perception) = perception {
+			let sender = perception.header.self_id.as_ref().unwrap().clone();
 			perception.update.contains(
-				&Percept::Broadcast(Broadcast {
-					sender : perception.header.self_id.as_ref().unwrap().clone(),
-					message: message.clone(),
-				})
+				&(
+					sender.clone(),
+					Percept::Broadcast(Broadcast {
+						sender : sender.clone(),
+						message: message.clone(),
+					})
+				)
 			)
 		}
 		else {
