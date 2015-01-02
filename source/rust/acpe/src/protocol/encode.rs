@@ -33,6 +33,7 @@ impl Encoder {
 	pub fn message<H, I, E>(&mut self, header: &H) -> MessageEncoder<H, I, E>
 		where
 			H: Encode,
+			I: Encode,
 			E: Encode,
 	{
 		MessageEncoder::new(&mut self.buffer, header)
@@ -47,6 +48,7 @@ pub struct MessageEncoder<'a, H, I, E> {
 impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	where
 		H: Encode,
+		I: Encode,
 		E: Encode,
 {
 	pub fn new(
