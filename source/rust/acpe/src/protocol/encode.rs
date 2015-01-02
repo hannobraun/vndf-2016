@@ -224,7 +224,7 @@ mod buf_writer {
 				})
 			}
 
-			slice::bytes::copy_memory(self.buf[mut self.pos..], buf);
+			slice::bytes::copy_memory(self.buf.slice_from_mut(self.pos), buf);
 			self.pos += buf.len();
 			Ok(())
 		}

@@ -56,7 +56,12 @@ impl Client {
 			self.socket.receive(&mut self.perceptions);
 		}
 
-		self.perceptions.remove(0)
+		if self.perceptions.len() > 0 {
+			Some(self.perceptions.remove(0))
+		}
+		else {
+			None
+		}
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.

@@ -72,8 +72,8 @@ impl GameService {
 			self.socket.receive(&mut self.received);
 		}
 
-		match self.received.remove(0) {
-			Some(result) => match result {
+		if self.received.len() > 0 {
+			match self.received.remove(0) {
 				Ok((action, address)) =>
 					Some(ActionHandle {
 						inner  : action,
@@ -85,9 +85,10 @@ impl GameService {
 						"Error receiving message from {}: {}",
 						address, error
 					),
-			},
-			None =>
-				None,
+			}
+		}
+		else {
+			None
 		}
 	}
 

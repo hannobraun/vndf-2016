@@ -43,9 +43,11 @@ impl ActionAssembler {
 
 		let mut is_first_step = true;
 		loop {
-			let step = match self.added.remove(0) {
-				Some(step) => step,
-				None       => break,
+			let step = if self.added.len() > 0 {
+				self.added.remove(0)
+			}
+			else {
+				break
 			};
 
 			if !action.update(&step) {
