@@ -24,16 +24,15 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
-		let mut update = Vec::new();
-		match decode(buffer, &mut update) {
-			Ok(header) =>
-				Ok(Message {
-					header : header,
-					update : update,
-					destroy: Vec::new(),
-				}),
-			Err(error) =>
-				Err(error),
+		let mut message = Message {
+			header : Default::default(),
+			update : Vec::new(),
+			destroy: Vec::new(),
+		};
+
+		match decode(buffer, &mut message) {
+			Ok(())     => Ok(message),
+			Err(error) => Err(error),
 		}
 	}
 

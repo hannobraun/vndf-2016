@@ -7,8 +7,13 @@ use rustc_serialize::{
 
 use root::UPDATE;
 
+use super::Message;
 
-pub fn decode<H, E>(source: &[u8], update: &mut Vec<E>) -> Result<H, String>
+
+pub fn decode<H, I, E>(
+	source: &[u8],
+	target: &mut Message<H, I, E>
+) -> Result<(), String>
 	where
 		H: Decode,
 		E: Decode,
@@ -43,7 +48,7 @@ pub fn decode<H, E>(source: &[u8], update: &mut Vec<E>) -> Result<H, String>
 		None         => return Err(format!("Invalid header")),
 	};
 
-	let header = match Decode::decode(header) {
+	target.header = match Decode::decode(header) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
@@ -72,7 +77,7 @@ pub fn decode<H, E>(source: &[u8], update: &mut Vec<E>) -> Result<H, String>
 		match directive {
 			UPDATE => match Decode::decode(entity) {
 				Ok(entity) =>
-					update.push(entity),
+					target.update.push(entity),
 				Err(error) =>
 					return Err(format!("Error decoding entity: {}", error)),
 			},
@@ -81,7 +86,7 @@ pub fn decode<H, E>(source: &[u8], update: &mut Vec<E>) -> Result<H, String>
 		}
 	}
 
-	Ok(header)
+	Ok(())
 }
 
 
