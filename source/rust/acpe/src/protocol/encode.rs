@@ -69,12 +69,12 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 		}
 	}
 
-	pub fn update(&mut self, _id: &I, entity: &E) -> bool {
+	pub fn update(&mut self, id: &I, entity: &E) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write_update(&mut writer, entity) {
+			match write_update(&mut writer, id, entity) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
@@ -121,12 +121,15 @@ fn write_header<W, H>(writer: &mut W, header: &H) -> IoResult<()>
 	Ok(())
 }
 
-fn write_update<W, E>(writer: &mut W, entity: &E) -> IoResult<()>
+fn write_update<W, I, E>(writer: &mut W, id: &I, entity: &E) -> IoResult<()>
 	where
 		W: Writer,
+		I: Encode,
 		E: Encode,
 {
 	try!(write!(writer, "{} ", UPDATE));
+	try!(id.do_encode(writer));
+	try!(write!(writer, " "));
 	try!(entity.do_encode(writer));
 	try!(write!(writer, "\n"));
 

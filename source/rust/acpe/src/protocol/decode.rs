@@ -16,6 +16,7 @@ pub fn decode<H, I, E>(
 ) -> Result<(), String>
 	where
 		H: Decode,
+		I: Decode,
 		E: Decode,
 {
 	let mut reader = BufReader::new(source);
@@ -59,19 +60,47 @@ pub fn decode<H, I, E>(
 				return Err(format!("Invalid message line: Missing directive")),
 		};
 
-		let entity = match splits.next() {
-			Some(entity) =>
-				entity,
+		let item = match splits.next() {
+			Some(item) =>
+				item,
 			None =>
 				return Err(format!("Invalid message line: Missing entity")),
 		};
 
 		match directive {
-			UPDATE => match Decode::do_decode(entity) {
-				Ok(entity) =>
-					target.update.push(entity),
-				Err(error) =>
-					return Err(format!("Error decoding entity: {}", error)),
+			UPDATE => {
+				let mut splits = item.splitn(1, ' ');
+
+				let _: I = match splits.next() {
+					Some(id) => match Decode::do_decode(id) {
+						Ok(id) =>
+							id,
+						Err(error) =>
+							return Err(
+								format!(
+									"Error decoding id: {}; Id: {}",
+									error, id,
+								)
+							),
+					},
+					None =>
+						return Err(format!("Invalid update: No id")),
+				};
+
+				let entity = match splits.next() {
+					Some(entity) => match Decode::do_decode(entity) {
+						Ok(entity) =>
+							entity,
+						Err(error) =>
+							return Err(
+								format!("Error decoding entity: {}", error)
+							),
+					},
+					None =>
+						return Err(format!("Invalid update: No entity")),
+				};
+
+				target.update.push(entity);
 			},
 
 			_ => return Err(format!("Unknown directive: {}", directive)),
