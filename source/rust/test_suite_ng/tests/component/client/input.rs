@@ -1,3 +1,5 @@
+use std::iter::repeat;
+
 use acpe::MAX_PACKET_SIZE;
 
 use common::protocol::Step;
@@ -15,8 +17,9 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	// TODO(85118724): Remove confirmation.
 	game_service.expect_action().unwrap().confirm(); // Confirm login
 
-	let invalid_broadcast = String::from_char(MAX_PACKET_SIZE + 1, 'a');
-	let valid_broadcast   = "This is a broadcast.".to_string();
+	let invalid_broadcast: String =
+		repeat('a').take(MAX_PACKET_SIZE + 1).collect();
+	let valid_broadcast = "This is a broadcast.".to_string();
 
 	// It should show an error, if the broadcast is invalid.
 	client.broadcast(invalid_broadcast.as_slice());
