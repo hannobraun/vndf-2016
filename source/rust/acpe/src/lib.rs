@@ -4,11 +4,7 @@
 extern crate "rustc-serialize" as rustc_serialize;
 
 
-pub use constants::{
-	DESTROY,
-	MAX_PACKET_SIZE,
-	UPDATE,
-};
+pub use constants::MAX_PACKET_SIZE;
 
 
 pub mod network;
