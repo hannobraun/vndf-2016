@@ -44,9 +44,14 @@ impl ScreenBuffer {
 		let width  = width  as uint;
 		let height = height as uint;
 
-		let buffer = Vec::from_fn(height, |_|
-			repeat(C::new()).take(width).collect()
-		);
+		let buffer =
+			range(0, height)
+				.map(|_|
+					repeat(C::new())
+						.take(width)
+						.collect()
+				)
+				.collect();
 
 		ScreenBuffer {
 			buffer: buffer,
