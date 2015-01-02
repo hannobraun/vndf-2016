@@ -8,12 +8,12 @@ use rustc_serialize::{
 use root::UPDATE;
 
 
-pub fn decode<H, P>(message: &[u8], update: &mut Vec<P>) -> Result<H, String>
+pub fn decode<H, P>(source: &[u8], update: &mut Vec<P>) -> Result<H, String>
 	where
 		H: Decode,
 		P: Decode,
 {
-	let mut reader = BufReader::new(message);
+	let mut reader = BufReader::new(source);
 
 	let message = match reader.read_to_string() {
 		Ok(message) =>
