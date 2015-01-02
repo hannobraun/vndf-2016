@@ -53,7 +53,7 @@ impl<'a, H, E> MessageEncoder<'a, H, E>
 	pub fn new(buffer: &'a mut [u8], header: &H) -> MessageEncoder<'a, H, E> {
 		let mut writer = BufWriter::new(buffer);
 
-		match write(&mut writer, HEADER, header) {
+		match write(&mut writer, HEADER, &[header]) {
 			Ok(()) =>
 				(),
 			Err(error) =>
@@ -70,7 +70,7 @@ impl<'a, H, E> MessageEncoder<'a, H, E>
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write(&mut writer, UPDATE, entity) {
+			match write(&mut writer, UPDATE, &[entity]) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
@@ -105,13 +105,15 @@ impl<'a, H, E> MessageEncoder<'a, H, E>
 }
 
 
-fn write<W, E>(writer: &mut W, prefix: &str, entity: &E) -> IoResult<()>
+fn write<W, E>(writer: &mut W, prefix: &str, encodes: &[&E]) -> IoResult<()>
 	where
 		W: Writer,
 		E: Encode,
 {
 	try!(write!(writer, "{} ", prefix));
-	try!(entity.do_encode(writer));
+	for encode in encodes.iter() {
+		try!(encode.do_encode(writer));
+	}
 	try!(write!(writer, "\n"));
 
 	Ok(())
