@@ -111,7 +111,7 @@ fn write<W, E>(writer: &mut W, prefix: &str, entity: &E) -> IoResult<()>
 		E: Encode,
 {
 	try!(write!(writer, "{} ", prefix));
-	try!(entity.encode(writer));
+	try!(entity.do_encode(writer));
 	try!(write!(writer, "\n"));
 
 	Ok(())
@@ -119,11 +119,11 @@ fn write<W, E>(writer: &mut W, prefix: &str, entity: &E) -> IoResult<()>
 
 
 pub trait Encode {
-	fn encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
+	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
 
 impl<'e, T> Encode for T where T: Encodable<json::Encoder<'e>, IoError> {
-	fn encode<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
+	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		// The API used here is inefficient, since it allocates a String for
 		// each encoding. There's a more efficient, Writer-based one, but I
 		// couldn't get it to work due to lifetime issues. This should be good
