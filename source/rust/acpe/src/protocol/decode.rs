@@ -5,7 +5,7 @@ use rustc_serialize::{
 	Decodable,
 };
 
-use root::UPDATE;
+use constants::UPDATE;
 
 use super::Message;
 

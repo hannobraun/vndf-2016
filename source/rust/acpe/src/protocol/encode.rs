@@ -9,7 +9,7 @@ use rustc_serialize::{
 	Encodable,
 };
 
-use root::{
+use constants::{
 	MAX_PACKET_SIZE,
 	UPDATE,
 };
