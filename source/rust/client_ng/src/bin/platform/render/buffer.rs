@@ -3,6 +3,7 @@ use std::io::{
 	IoErrorKind,
 	IoResult,
 };
+use std::iter::repeat;
 use std::str::from_utf8;
 
 use super::{
@@ -44,7 +45,9 @@ impl ScreenBuffer {
 		let height = height as uint;
 
 		ScreenBuffer {
-			buffer: Vec::from_fn(height, |_| Vec::from_elem(width, C::new())),
+			buffer: Vec::from_fn(height, |_|
+				repeat(C::new()).take(width).collect()
+			),
 		}
 	}
 
