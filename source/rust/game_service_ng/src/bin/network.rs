@@ -1,4 +1,10 @@
+use std::collections::HashMap;
+use std::io::net::ip::SocketAddr;
+
 use acpe::protocol::Seq;
+
+
+pub type Clients = HashMap<SocketAddr, Client>;
 
 
 pub struct Client {
