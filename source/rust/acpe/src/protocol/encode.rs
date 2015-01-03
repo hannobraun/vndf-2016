@@ -72,6 +72,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 
 	pub fn update(&mut self, id: &I, entity: &E) -> bool {
 		self.add_item(|writer| {
+			// TODO: This assumes the id contains no spaces.
 			try!(write!(writer, "{} ", UPDATE));
 			try!(id.do_encode(writer));
 			try!(write!(writer, " "));
