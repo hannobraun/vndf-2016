@@ -30,9 +30,8 @@ mod network;
 fn main() {
 	let args = Args::parse(os::args().as_slice());
 
-	let mut clients = HashMap::new();
-	let mut socket  = Socket::new(args.port);
-
+	let mut clients  = HashMap::new();
+	let mut socket   = Socket::new(args.port);
 	let mut receiver = Receiver::new();
 	let mut sender   = Sender::new();
 
