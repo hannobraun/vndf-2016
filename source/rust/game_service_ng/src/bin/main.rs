@@ -27,7 +27,10 @@ use common::protocol::{
 	Step,
 };
 use game_service::Socket;
-use network::Client;
+use network::{
+	Client,
+	Receiver,
+};
 
 
 mod args;
@@ -41,14 +44,14 @@ fn main() {
 	let mut socket  = Socket::new(args.port);
 	let mut encoder = Encoder::new();
 
-	let mut received = Vec::new();
+	let mut receiver = Receiver::new();
 
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		socket.receive(&mut received);
+		socket.receive(&mut receiver.received);
 
-		for result in received.drain() {
+		for result in receiver.received.drain() {
 			match result {
 				Ok((action, address)) => {
 					for (_, step) in action.update.into_iter() {
