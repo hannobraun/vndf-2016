@@ -62,7 +62,7 @@ impl Sender {
 
 fn send_perception(
 	encoder    : &mut Encoder,
-	header     : &PerceptionHeader,
+	header     : &PerceptionHeader<String>,
 	broadcasts : &mut Vec<Broadcast>,
 	socket     : &mut Socket,
 	address    : SocketAddr,

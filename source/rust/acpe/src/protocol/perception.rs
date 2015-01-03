@@ -4,11 +4,11 @@ use super::{
 };
 
 
-pub type Perception<Id, Entity> = Message<PerceptionHeader, Id, Entity>;
+pub type Perception<Id, Entity> = Message<PerceptionHeader<Id>, Id, Entity>;
 
 
 #[deriving(Clone, Default, PartialEq, RustcDecodable, RustcEncodable, Show)]
-pub struct PerceptionHeader {
+pub struct PerceptionHeader<Id> {
 	pub confirm_action: Seq,
-	pub self_id       : Option<String>,
+	pub self_id       : Option<Id>,
 }
