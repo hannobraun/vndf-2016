@@ -70,7 +70,15 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	}
 
 	pub fn update(&mut self, id: &I, entity: &E) -> bool {
-		self.add_item(|writer| write_update(writer, id, entity))
+		self.add_item(|writer| {
+			try!(write!(writer, "{} ", UPDATE));
+			try!(id.do_encode(writer));
+			try!(write!(writer, " "));
+			try!(entity.do_encode(writer));
+			try!(write!(writer, "\n"));
+
+			Ok(())
+		})
 	}
 
 	fn add_item(&mut self, f: |&mut BufWriter| -> IoResult<()>) -> bool {
@@ -119,21 +127,6 @@ fn write_header<W, H>(writer: &mut W, header: &H) -> IoResult<()>
 		H: Encode,
 {
 	try!(header.do_encode(writer));
-	try!(write!(writer, "\n"));
-
-	Ok(())
-}
-
-fn write_update<W, I, E>(writer: &mut W, id: &I, entity: &E) -> IoResult<()>
-	where
-		W: Writer,
-		I: Encode,
-		E: Encode,
-{
-	try!(write!(writer, "{} ", UPDATE));
-	try!(id.do_encode(writer));
-	try!(write!(writer, " "));
-	try!(entity.do_encode(writer));
 	try!(write!(writer, "\n"));
 
 	Ok(())
