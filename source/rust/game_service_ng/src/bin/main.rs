@@ -137,7 +137,7 @@ fn main() {
 				confirm_action: client.last_action,
 				self_id       : Some(client.id.clone()),
 			};
-			// TODO(84970652): It's not necessary to keep resending all the
+			// TODO(85373160): It's not necessary to keep resending all the
 			//                 broadcasts every frame. The client should confirm
 			//                 the last sent perception and the server should
 			//                 only send what has changed. This requires a list
