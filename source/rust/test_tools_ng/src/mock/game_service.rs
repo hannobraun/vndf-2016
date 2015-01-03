@@ -50,7 +50,7 @@ impl GameService {
 		&mut self,
 		address : SocketAddr,
 		confirm : Seq,
-		percepts: Vec<Percept>,
+		update  : Vec<Percept>,
 	) {
 		let perception = Perception {
 			header: PerceptionHeader {
@@ -60,7 +60,7 @@ impl GameService {
 			// TODO: This sends an empty string as the id. As soon as the client
 			//       actually does something with the ids, this will no longer
 			//       do.
-			update : percepts
+			update: update
 				.into_iter()
 				.map(|percept|
 					("".to_string(), percept)
