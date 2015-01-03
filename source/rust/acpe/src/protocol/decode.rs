@@ -5,7 +5,10 @@ use rustc_serialize::{
 	Decodable,
 };
 
-use constants::UPDATE;
+use constants::{
+	DESTROY,
+	UPDATE,
+};
 
 use super::Message;
 
@@ -101,6 +104,15 @@ pub fn decode<H, I, E>(
 				};
 
 				target.update.push((id, entity));
+			},
+
+			DESTROY => {
+				match Decode::do_decode(item) {
+					Ok(id) =>
+						target.destroy.push(id),
+					Err(error) =>
+						return Err(format!("Error decoding id: {}", error)),
+				}
 			},
 
 			_ => return Err(format!("Unknown directive: {}", directive)),
