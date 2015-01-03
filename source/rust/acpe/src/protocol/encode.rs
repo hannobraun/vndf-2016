@@ -113,7 +113,6 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 }
 
 
-
 fn write_header<W, H>(writer: &mut W, header: &H) -> IoResult<()>
 	where
 		W: Writer,
