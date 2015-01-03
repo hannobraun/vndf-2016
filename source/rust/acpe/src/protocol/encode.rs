@@ -70,11 +70,15 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	}
 
 	pub fn update(&mut self, id: &I, entity: &E) -> bool {
+		self.add_item(|writer| write_update(writer, id, entity))
+	}
+
+	fn add_item(&mut self, f: |&mut BufWriter| -> IoResult<()>) -> bool {
 		let mut buffer = [0, ..MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
-			match write_update(&mut writer, id, entity) {
+			match f(&mut writer) {
 				Ok(())  => (),
 				Err(_)  => return false,
 			}
