@@ -15,7 +15,7 @@ use super::Clients;
 
 
 pub struct Sender {
-	pub encoder: Encoder,
+	encoder: Encoder,
 }
 
 impl Sender {
