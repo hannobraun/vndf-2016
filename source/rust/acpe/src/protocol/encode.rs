@@ -10,6 +10,7 @@ use rustc_serialize::{
 };
 
 use constants::{
+	DESTROY,
 	MAX_PACKET_SIZE,
 	UPDATE,
 };
@@ -75,6 +76,16 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 			try!(id.do_encode(writer));
 			try!(write!(writer, " "));
 			try!(entity.do_encode(writer));
+			try!(write!(writer, "\n"));
+
+			Ok(())
+		})
+	}
+
+	pub fn destroy(&mut self, id: &I) -> bool {
+		self.add_item(|writer| {
+			try!(write!(writer, "{} ", DESTROY));
+			try!(id.do_encode(writer));
 			try!(write!(writer, "\n"));
 
 			Ok(())
