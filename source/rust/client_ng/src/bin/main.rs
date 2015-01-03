@@ -67,7 +67,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut frame = Frame {
 		self_id   : String::new(),
 		status    : Status::None,
-		broadcasts: vec![],
+		broadcasts: Vec::new(),
 	};
 
 	let mut previous_input = Input::new();
