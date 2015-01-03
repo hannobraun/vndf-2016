@@ -50,22 +50,14 @@ impl GameService {
 		&mut self,
 		address : SocketAddr,
 		confirm : Seq,
-		update  : Vec<Percept>,
+		update  : Vec<(String, Percept)>,
 	) {
 		let perception = Perception {
 			header: PerceptionHeader {
 				confirm_action: confirm,
 				self_id       : None,
 			},
-			// TODO: This sends an empty string as the id. As soon as the client
-			//       actually does something with the ids, this will no longer
-			//       do.
-			update: update
-				.into_iter()
-				.map(|percept|
-					("".to_string(), percept)
-				)
-				.collect(),
+			update : update,
 			destroy: Vec::new(),
 		};
 
