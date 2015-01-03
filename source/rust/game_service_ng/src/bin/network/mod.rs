@@ -5,9 +5,11 @@ use acpe::protocol::Seq;
 
 
 pub use self::receiver::Receiver;
+pub use self::sender::Sender;
 
 
 mod receiver;
+mod sender;
 
 
 pub type Clients = HashMap<SocketAddr, Client>;

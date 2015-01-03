@@ -25,7 +25,10 @@ use common::protocol::{
 	Percept,
 };
 use game_service::Socket;
-use network::Receiver;
+use network::{
+	Receiver,
+	Sender,
+};
 
 
 mod args;
@@ -37,9 +40,9 @@ fn main() {
 
 	let mut clients = HashMap::new();
 	let mut socket  = Socket::new(args.port);
-	let mut encoder = Encoder::new();
 
 	let mut receiver = Receiver::new();
+	let mut sender   = Sender::new();
 
 	print!("Listening on port {}\n", args.port);
 
@@ -87,7 +90,7 @@ fn main() {
 			let mut needs_to_send_perception = true;
 			while needs_to_send_perception {
 				send_perception(
-					&mut encoder,
+					&mut sender.encoder,
 					&header,
 					&mut broadcasts,
 					&mut socket,
