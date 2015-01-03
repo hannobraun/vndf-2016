@@ -17,7 +17,6 @@ use std::time::Duration;
 use acpe::protocol::{
 	Encoder,
 	PerceptionHeader,
-	Seq,
 };
 use time::precise_time_s;
 
@@ -28,17 +27,11 @@ use common::protocol::{
 	Step,
 };
 use game_service::Socket;
+use network::Client;
 
 
 mod args;
-
-
-struct Client {
-	id           : String,
-	last_action  : Seq,
-	last_active_s: f64,
-	broadcast    : Option<String>,
-}
+mod network;
 
 
 fn main() {
