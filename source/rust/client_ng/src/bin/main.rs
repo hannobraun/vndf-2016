@@ -135,8 +135,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		}
 
 		let message = action_assembler.assemble(&mut encoder);
-
 		server.send(message.as_slice());
+
 		if let Err(error) = platform.render(&frame) {
 			panic!("Error writing output: {}", error);
 		}
