@@ -15,7 +15,7 @@ use super::{
 
 
 pub struct Receiver {
-	pub received: Vec<ReceiveResult>,
+	received: Vec<ReceiveResult>,
 }
 
 impl Receiver {
