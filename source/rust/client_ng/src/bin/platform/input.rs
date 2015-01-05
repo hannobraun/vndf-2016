@@ -1,5 +1,9 @@
-use std::comm::TryRecvError;
 use std::io::stdin;
+use std::sync::mpsc::{
+	channel,
+	Receiver,
+	TryRecvError,
+};
 use std::thread::Thread;
 
 
@@ -19,7 +23,15 @@ impl InputReader {
 				//                 panic propagation between tasks.
 				match stdin.read_char() {
 					Ok(c) =>
-						sender.send(c),
+						match sender.send(c) {
+							Ok(()) =>
+								(),
+							Err(error) =>
+								panic!(
+									"Error sending character: {}",
+									error,
+								),
+						},
 					Err(error) =>
 						panic!("Error reading from stdin: {}", error),
 				}

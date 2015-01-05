@@ -26,7 +26,7 @@ impl Termios {
 			c_cflag : 0,
 			c_lflag : 0,
 			c_line  : 0,
-			c_cc    : [0, ..NCCS],
+			c_cc    : [0; NCCS],
 			c_ispeed: 0,
 			c_ospeed: 0,
 		};

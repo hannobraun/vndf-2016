@@ -208,7 +208,9 @@ pub struct BufferIterator<'r> {
 	y     : uint,
 }
 
-impl<'r> Iterator<(Pos, Pos, C)> for BufferIterator<'r> {
+impl<'r> Iterator for BufferIterator<'r> {
+	type Item = (Pos, Pos, C);
+
 	fn next(&mut self) -> Option<(Pos, Pos, C)> {
 		if self.x >= self.buffer[0].len() {
 			self.x  = 0;

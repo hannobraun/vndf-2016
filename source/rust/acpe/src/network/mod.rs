@@ -1,10 +1,14 @@
-use std::comm::TryRecvError;
 use std::io::IoErrorKind;
 use std::io::net::ip::{
 	Port,
 	SocketAddr,
 };
 use std::io::net::udp::UdpSocket;
+use std::sync::mpsc::{
+	channel,
+	Receiver,
+	TryRecvError,
+};
 use std::thread::Thread;
 
 use constants::MAX_PACKET_SIZE;
@@ -78,7 +82,7 @@ impl SocketReceiver {
 
 		let guard = Thread::spawn(move || {
 			let mut should_run = true;
-			let mut buffer     = [0u8, ..MAX_PACKET_SIZE];
+			let mut buffer     = [0u8; MAX_PACKET_SIZE];
 
 			while should_run {
 				socket.set_read_timeout(Some(20));
@@ -97,7 +101,7 @@ impl SocketReceiver {
 					},
 				};
 
-				match sender.send_opt(result) {
+				match sender.send(result) {
 					Ok(()) => (),
 					Err(_) => should_run = false,
 				}

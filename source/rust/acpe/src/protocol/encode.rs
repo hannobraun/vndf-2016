@@ -1,3 +1,4 @@
+use std::fmt;
 use std::io::{
 	IoError,
 	IoResult,
@@ -19,14 +20,14 @@ use self::buf_writer::BufWriter;
 
 
 pub struct Encoder {
-	buffer : [u8, ..MAX_PACKET_SIZE],
+	buffer : [u8; MAX_PACKET_SIZE],
 	no_copy: NoCopy,
 }
 
 impl Encoder {
 	pub fn new() -> Encoder {
 		Encoder {
-			buffer : [0, ..MAX_PACKET_SIZE],
+			buffer : [0; MAX_PACKET_SIZE],
 			no_copy: NoCopy,
 		}
 	}
@@ -94,7 +95,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 	}
 
 	fn add_item(&mut self, f: |&mut BufWriter| -> IoResult<()>) -> bool {
-		let mut buffer = [0, ..MAX_PACKET_SIZE];
+		let mut buffer = [0; MAX_PACKET_SIZE];
 
 		let len = {
 			let mut writer = BufWriter::new(&mut buffer);
@@ -149,7 +150,7 @@ pub trait Encode {
 	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
 
-impl<'e, T> Encode for T where T: Encodable<json::Encoder<'e>, IoError> {
+impl<T> Encode for T where T: for<'e> Encodable<json::Encoder<'e>, fmt::Error> {
 	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		// The API used here is inefficient, since it allocates a String for
 		// each encoding. There's a more efficient, Writer-based one, but I

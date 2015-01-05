@@ -33,7 +33,7 @@ pub struct termios {
 	pub c_cflag : tcflag_t,
 	pub c_lflag : tcflag_t,
 	pub c_line  : cc_t,
-	pub c_cc    : [cc_t, ..NCCS],
+	pub c_cc    : [cc_t; NCCS],
 	pub c_ispeed: speed_t,
 	pub c_ospeed: speed_t,
 }

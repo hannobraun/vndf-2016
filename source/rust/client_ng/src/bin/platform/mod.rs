@@ -1,7 +1,11 @@
-use std::comm::TryRecvError;
 use std::io::{
 	stdin,
 	IoResult,
+};
+use std::sync::mpsc::{
+	channel,
+	Receiver,
+	TryRecvError,
 };
 use std::thread::Thread;
 
@@ -79,7 +83,12 @@ impl PlatformIo for HeadlessIo {
 				match stdin.read_line() {
 					Ok(line) => match Input::from_json(line.as_slice()) {
 						Ok(input) =>
-							sender.send(input),
+							match sender.send(input) {
+								Ok(()) =>
+									(),
+								Err(error) =>
+									panic!("Error sending input: {}", error),
+							},
 						Err(error) =>
 							panic!("Error decoding input: {}\n", error),
 					},
