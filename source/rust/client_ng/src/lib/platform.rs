@@ -1,5 +1,5 @@
 use rustc_serialize::json::{
-	mod,
+	self,
 	DecodeResult,
 };
 

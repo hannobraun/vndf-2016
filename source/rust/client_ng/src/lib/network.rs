@@ -4,7 +4,7 @@ use std::io::net::ip::{
 };
 
 use acpe::network::{
-	mod,
+	self,
 	Message,
 };
 use acpe::protocol;
