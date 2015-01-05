@@ -7,9 +7,7 @@ use super::{
 pub type Action<Id, Entity> = Message<ActionHeader, Id, Entity>;
 
 
-#[deriving(
-	Clone, Copy, Default, PartialEq, RustcDecodable, RustcEncodable, Show
-)]
+#[derive(Clone, Copy, Default, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub struct ActionHeader {
 	pub id: Seq,
 }

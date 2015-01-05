@@ -8,7 +8,7 @@ use super::{
 };
 
 
-#[deriving(Clone, PartialEq, Show)]
+#[derive(Clone, PartialEq, Show)]
 pub struct Message<Header, Id, Entity> {
 	pub header : Header,
 	pub update : Vec<(Id, Entity)>,
