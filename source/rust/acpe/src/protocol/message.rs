@@ -11,6 +11,8 @@ use super::{
 #[derive(Clone, PartialEq, Show)]
 pub struct Message<Header, Id, Entity> {
 	pub header : Header,
+
+	// Main payload
 	pub update : Vec<(Id, Entity)>,
 	pub destroy: Vec<Id>,
 }
