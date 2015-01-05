@@ -44,7 +44,7 @@ impl Socket {
 }
 
 
-#[deriving(Clone)]
+#[derive(Clone)]
 pub struct SocketSender {
 	socket: UdpSocket,
 }
