@@ -43,6 +43,14 @@ impl Sender {
 			//                 of destroyed entities in Perception.
 			let mut broadcasts = broadcasts.clone();
 
+			// TODO: This just keeps sending perceptions over and over, until
+			//       all data is gone. This potentially means that there are
+			//       always several perceptions "in-flight". This makes it
+			//       complicated (i.e. impossible with the way things currently
+			//       work) to figure out which perceptions has been received by
+			//       the client, which means it can't be determined what data
+			//       needs to be resent. The solution: Only keep one perception
+			//       in-flight at any given time.
 			let mut needs_to_send_perception = true;
 			while needs_to_send_perception {
 				send_perception(
