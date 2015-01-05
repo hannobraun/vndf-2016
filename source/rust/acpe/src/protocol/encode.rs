@@ -169,7 +169,7 @@ mod buf_writer {
 
 
 	use std::io::{
-		mod,
+		self,
 		IoError,
 		IoResult,
 		SeekStyle,
