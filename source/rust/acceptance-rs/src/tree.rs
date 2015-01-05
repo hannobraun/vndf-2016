@@ -1,5 +1,5 @@
 use std::io::{
-	mod,
+	self,
 	fs,
 	File,
 };
