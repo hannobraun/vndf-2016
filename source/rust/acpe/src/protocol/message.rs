@@ -12,9 +12,13 @@ use super::{
 pub struct Message<Header, Id, Entity> {
 	pub header : Header,
 
+	// TODO: Control flow data
+
 	// Main payload
 	pub update : Vec<(Id, Entity)>,
 	pub destroy: Vec<Id>,
+
+	// TODO: Additional payload (generic)
 }
 
 impl<Header, Id, Entity> Message<Header, Id, Entity>
