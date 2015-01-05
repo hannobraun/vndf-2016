@@ -12,7 +12,7 @@ use super::{
 };
 
 
-#[deriving(Clone, Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq)]
 pub struct C {
 	pub c   : char,
 	pub bold: bool,
@@ -34,7 +34,7 @@ impl C {
 }
 
 
-#[deriving(Clone)]
+#[derive(Clone)]
 pub struct ScreenBuffer {
 	buffer: Vec<Vec<C>>,
 }
