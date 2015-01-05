@@ -1,8 +1,5 @@
 use std::fmt;
-use std::io::{
-	IoError,
-	IoResult,
-};
+use std::io::IoResult;
 use std::kinds::marker::NoCopy;
 
 use rustc_serialize::{
