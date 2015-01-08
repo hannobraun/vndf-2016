@@ -17,7 +17,7 @@ fn it_should_resend_actions_until_confirmed() {
 	// Assert either no action was sent or, if it was, that it was empty.
 	match game_service.expect_action() {
 		Some(action) =>
-			assert!(action.inner.update_items().count() == 0),
+			assert_eq!(action.inner.update_items().count(), 0),
 		None =>
 			(),
 	}
