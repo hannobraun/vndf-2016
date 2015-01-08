@@ -132,7 +132,6 @@ mod test {
 		let destroys: Vec<i32>           =
 			message.drain_destroy_items().collect();
 
-
 		assert_eq!(vec![update] , updates);
 		assert_eq!(vec![destroy], destroys);
 
