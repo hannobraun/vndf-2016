@@ -10,7 +10,7 @@ use super::{
 
 #[derive(Clone, PartialEq, Show)]
 pub struct Message<Header, Id, Entity> {
-	pub header : Header,
+	pub header: Header,
 
 	// TODO: Control flow data
 
