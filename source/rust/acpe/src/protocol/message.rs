@@ -29,14 +29,6 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		Id    : Decode + Encode,
 		Entity: Decode + Encode,
 {
-	pub fn new(header: Header) -> Message<Header, Id, Entity> {
-		Message {
-			header : header,
-			update : Vec::new(),
-			destroy: Vec::new(),
-		}
-	}
-
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -69,6 +61,14 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 }
 
 impl<Header, Id, Entity> Message<Header, Id, Entity> {
+	pub fn new(header: Header) -> Message<Header, Id, Entity> {
+		Message {
+			header : header,
+			update : Vec::new(),
+			destroy: Vec::new(),
+		}
+	}
+
 	pub fn update(&mut self, update: (Id, Entity)) {
 		self.update.push(update);
 	}
