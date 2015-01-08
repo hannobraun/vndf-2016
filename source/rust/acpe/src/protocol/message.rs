@@ -35,6 +35,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		}
 	}
 
+	pub fn update(&mut self, update: (Id, Entity)) {
+		self.update.push(update);
+	}
+
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -63,5 +67,23 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		}
 
 		message.encode().to_vec()
+	}
+}
+
+
+#[cfg(test)]
+mod test {
+	use super::Message;
+
+
+	#[test]
+	fn it_should_add_items() {
+		let mut message = Message::<String, _, _>::new();
+
+		let update = (0, "This represents an entity.".to_string());
+
+		message.update(update.clone());
+
+		assert_eq!(vec![update], message.update);
 	}
 }
