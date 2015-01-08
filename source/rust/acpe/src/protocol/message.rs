@@ -39,6 +39,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		self.update.push(update);
 	}
 
+	pub fn destroy(&mut self, destroy: Id) {
+		self.destroy.push(destroy);
+	}
+
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -80,10 +84,13 @@ mod test {
 	fn it_should_add_items() {
 		let mut message = Message::<String, _, _>::new();
 
-		let update = (0, "This represents an entity.".to_string());
+		let update  = (0, "This represents an entity.".to_string());
+		let destroy = 1;
 
 		message.update(update.clone());
+		message.destroy(destroy);
 
 		assert_eq!(vec![update], message.update);
+		assert_eq!(vec![destroy], message.destroy);
 	}
 }
