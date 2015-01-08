@@ -44,7 +44,7 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		self.destroy.push(destroy);
 	}
 
-	pub fn updates(&self) -> Iter<(Id, Entity)> {
+	pub fn update_items(&self) -> Iter<(Id, Entity)> {
 		self.update.iter()
 	}
 
@@ -99,7 +99,7 @@ mod test {
 		message.update(update.clone());
 		message.destroy(destroy);
 
-		let updates : Vec<&(i32, String)> = message.updates().collect();
+		let updates : Vec<&(i32, String)> = message.update_items().collect();
 		let destroys: Vec<&i32>           = message.destroy_items().collect();
 
 		assert_eq!(vec![&update] , updates);
