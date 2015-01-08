@@ -154,15 +154,14 @@ fn it_should_ignore_client_sending_empty_action_before_login() {
 	client_2.wait_until(|perception|
 		if let &Some(ref perception) = perception {
 			let sender = perception.header.self_id.as_ref().unwrap().clone();
-			perception.update.contains(
-				&(
-					sender.clone(),
-					Percept::Broadcast(Broadcast {
-						sender : sender.clone(),
-						message: message.clone(),
-					})
-				)
-			)
+			perception.update_items().any(|&(ref id, ref entity)| {
+				let percept = Percept::Broadcast(Broadcast {
+					sender : sender.clone(),
+					message: message.clone(),
+				});
+
+				id == &sender && entity == &percept
+			})
 		}
 		else {
 			false
