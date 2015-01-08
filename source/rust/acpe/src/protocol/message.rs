@@ -48,6 +48,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		self.update.iter()
 	}
 
+	pub fn destroy_items(&self) -> Iter<Id> {
+		self.destroy.iter()
+	}
+
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -95,9 +99,10 @@ mod test {
 		message.update(update.clone());
 		message.destroy(destroy);
 
-		let updates: Vec<&(i32, String)> = message.updates().collect();
+		let updates : Vec<&(i32, String)> = message.updates().collect();
+		let destroys: Vec<&i32>           = message.destroy_items().collect();
 
-		assert_eq!(vec![&update], updates);
-		assert_eq!(vec![destroy], message.destroy);
+		assert_eq!(vec![&update] , updates);
+		assert_eq!(vec![&destroy], destroys);
 	}
 }
