@@ -110,7 +110,7 @@ pub fn decode<H, I, E>(
 			DESTROY => {
 				match Decode::do_decode(item) {
 					Ok(id) =>
-						target.destroy.push(id),
+						target.destroy(id),
 					Err(error) =>
 						return Err(format!("Error decoding id: {}", error)),
 				}
