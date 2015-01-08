@@ -1,5 +1,3 @@
-#![feature(associated_types)]
-#![feature(default_type_params)]
 #![feature(slicing_syntax)]
 
 
