@@ -134,13 +134,9 @@ mod test {
 
 		assert_eq!(vec![update] , updates);
 		assert_eq!(vec![destroy], destroys);
-
-		let empty_updates : Vec<&(i32, String)> =
-			message.update_items().collect();
-		let empty_destroys: Vec<&i32>           =
-			message.destroy_items().collect();
-
-		assert_eq!(empty_updates.len() , 0);
-		assert_eq!(empty_destroys.len(), 0);
+		assert_eq!(message.update_items().count() , 0);
+		assert_eq!(message.destroy_items().count(), 0);
 	}
+
+
 }
