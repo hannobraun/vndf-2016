@@ -8,6 +8,9 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 time = "*"
 
 
+[dependencies.acpe]
+path = "../acpe"
+
 [dependencies.client_ng]
 path = "../client_ng"
 

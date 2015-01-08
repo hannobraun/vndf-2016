@@ -11,6 +11,9 @@ name = "test_tools"
 time = "*"
 
 
+[dependencies.acpe]
+path = "../acpe"
+
 [dependencies.client_ng]
 path = "../client_ng"
 

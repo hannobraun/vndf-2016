@@ -2,6 +2,7 @@
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
+ "acpe 0.0.1",
  "common 0.0.1",
 ]
 

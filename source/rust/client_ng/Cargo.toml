@@ -12,5 +12,8 @@ path = "src/lib/lib.rs"
 name = "vndf-client-ng"
 
 
+[dependencies.acpe]
+path = "../acpe"
+
 [dependencies.common]
 path = "../common"

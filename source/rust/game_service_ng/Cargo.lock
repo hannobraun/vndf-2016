@@ -2,6 +2,7 @@
 name = "game_service_ng"
 version = "0.0.1"
 dependencies = [
+ "acpe 0.0.1",
  "common 0.0.1",
  "time 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

@@ -16,5 +16,8 @@ name = "vndf-game-service-ng"
 time = "*"
 
 
+[dependencies.acpe]
+path = "../acpe"
+
 [dependencies.common]
 path = "../common"

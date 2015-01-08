@@ -3,6 +3,7 @@ name = "test_suite_ng"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
+ "acpe 0.0.1",
  "client_ng 0.0.1",
  "test_tools_ng 0.0.1",
  "time 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -23,6 +24,7 @@ dependencies = [
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
+ "acpe 0.0.1",
  "common 0.0.1",
 ]
 
@@ -37,6 +39,7 @@ dependencies = [
 name = "game_service_ng"
 version = "0.0.1"
 dependencies = [
+ "acpe 0.0.1",
  "common 0.0.1",
  "time 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
