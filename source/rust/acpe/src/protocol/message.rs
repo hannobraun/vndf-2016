@@ -73,8 +73,8 @@ impl<Header, Id, Entity> Message<Header, Id, Entity> {
 		self.update.push(update);
 	}
 
-	pub fn destroy(&mut self, destroy: Id) {
-		self.destroy.push(destroy);
+	pub fn destroy(&mut self, id: Id) {
+		self.destroy.push(id);
 	}
 
 	pub fn update_items(&self) -> Iter<(Id, Entity)> {
