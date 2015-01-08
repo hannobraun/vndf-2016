@@ -206,7 +206,7 @@ mod buf_writer {
 	/// # #![allow(unused_must_use)]
 	/// use std::io::BufWriter;
 	///
-	/// let mut buf = [0, ..4];
+	/// let mut buf = [0; 4];
 	/// {
 	///     let mut w = BufWriter::new(&mut buf);
 	///     w.write(&[0, 1, 2]);
