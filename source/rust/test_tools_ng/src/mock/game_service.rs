@@ -8,6 +8,7 @@ use acceptance::random_port;
 use acpe::network::SocketSender;
 use acpe::protocol::{
 	Encoder,
+	Message,
 	MessageEncoder,
 	PerceptionHeader,
 	Seq,
@@ -16,7 +17,6 @@ use acpe::protocol::{
 use common::protocol::{
 	Action,
 	Percept,
-	Perception,
 };
 use game_service::{
 	ReceiveResult,
@@ -52,14 +52,15 @@ impl GameService {
 		confirm : Seq,
 		update  : Vec<(String, Percept)>,
 	) {
-		let perception = Perception {
-			header: PerceptionHeader {
+		let mut perception: Message<PerceptionHeader<String>, _, _> =
+			Message::new(PerceptionHeader {
 				confirm_action: confirm,
 				self_id       : None,
-			},
-			update : update,
-			destroy: Vec::new(),
-		};
+			}
+		);
+		for update in update.into_iter() {
+			perception.update(update);
+		}
 
 		self.socket.send(perception.encode().as_slice(), address);
 	}
