@@ -17,8 +17,8 @@ pub struct Message<Header, Id, Entity> {
 	// TODO: Control flow data
 
 	// Main payload
-	pub update : Vec<(Id, Entity)>,
-	pub destroy: Vec<Id>,
+	update : Vec<(Id, Entity)>,
+	destroy: Vec<Id>,
 
 	// TODO: Additional payload (generic)
 }
