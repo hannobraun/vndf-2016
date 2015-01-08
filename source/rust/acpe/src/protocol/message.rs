@@ -1,5 +1,6 @@
 use std::default::Default;
 use std::slice::Iter;
+use std::vec::Drain;
 
 use super::{
 	decode,
@@ -83,6 +84,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity> {
 	pub fn destroy_items(&self) -> Iter<Id> {
 		self.destroy.iter()
 	}
+
+	pub fn drain_update_items(&mut self) -> Drain<(Id, Entity)> {
+		self.update.drain()
+	}
 }
 
 
@@ -106,5 +111,25 @@ mod test {
 
 		assert_eq!(vec![&update] , updates);
 		assert_eq!(vec![&destroy], destroys);
+	}
+
+	#[test]
+	fn it_should_provide_draining_iterators() {
+		let mut message = Message::<String, _, _>::new();
+
+		let update = (0, "This represents an entity.".to_string());
+
+		message.update(update.clone());
+
+		let updates: Vec<(i32, String)> =
+			message.drain_update_items().collect();
+
+
+		assert_eq!(vec![update], updates);
+
+		let empty_updates: Vec<&(i32, String)> =
+			message.update_items().collect();
+
+		assert_eq!(empty_updates.len(), 0);
 	}
 }
