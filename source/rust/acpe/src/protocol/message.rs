@@ -69,8 +69,8 @@ impl<Header, Id, Entity> Message<Header, Id, Entity> {
 		}
 	}
 
-	pub fn update(&mut self, update: (Id, Entity)) {
-		self.update.push(update);
+	pub fn update(&mut self, id: Id, entity: Entity) {
+		self.update.push((id, entity));
 	}
 
 	pub fn destroy(&mut self, id: Id) {
@@ -107,7 +107,7 @@ mod test {
 		let update  = (0, "This represents an entity.".to_string());
 		let destroy = 1;
 
-		message.update(update.clone());
+		message.update(update.0, update.1.clone());
 		message.destroy(destroy);
 
 		let updates : Vec<&(i32, String)> = message.update_items().collect();
@@ -124,7 +124,7 @@ mod test {
 		let update  = (0, "This represents an entity.".to_string());
 		let destroy = 1;
 
-		message.update(update.clone());
+		message.update(update.0, update.1.clone());
 		message.destroy(destroy);
 
 		let updates : Vec<(i32, String)> =

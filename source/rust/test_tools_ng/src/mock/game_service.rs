@@ -58,8 +58,8 @@ impl GameService {
 				self_id       : None,
 			}
 		);
-		for update in update.into_iter() {
-			perception.update(update);
+		for (id, entity) in update.into_iter() {
+			perception.update(id, entity);
 		}
 
 		self.socket.send(perception.encode().as_slice(), address);

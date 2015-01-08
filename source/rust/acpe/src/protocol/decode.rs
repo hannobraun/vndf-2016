@@ -104,7 +104,7 @@ pub fn decode<H, I, E>(
 						return Err(format!("Invalid update: No entity")),
 				};
 
-				target.update((id, entity));
+				target.update(id, entity);
 			},
 
 			DESTROY => {
