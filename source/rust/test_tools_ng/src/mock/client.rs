@@ -2,13 +2,13 @@ use std::io::net::ip::Port;
 
 use acpe::protocol::{
 	ActionHeader,
+	Message,
 	Seq,
 };
 use time::precise_time_s;
 
 use client::network::Socket;
 use common::protocol::{
-	Action,
 	Perception,
 	Step,
 };
@@ -32,11 +32,11 @@ impl Client {
 	}
 
 	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
-		let action = Action {
-			header : ActionHeader { id: seq },
-			update : steps.into_iter().map(|step| (0u64, step)).collect(),
-			destroy: Vec::new(),
-		};
+		let mut action = Message::new(ActionHeader { id: seq });
+		for step in steps.into_iter() {
+			action.update((0, step));
+		}
+
 		self.send_data(action.encode().as_slice());
 	}
 
