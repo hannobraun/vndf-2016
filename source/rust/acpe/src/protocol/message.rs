@@ -27,6 +27,14 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		Id    : Decode + Encode,
 		Entity: Decode + Encode,
 {
+	pub fn new() -> Message<Header, Id, Entity> {
+		Message {
+			header : Default::default(),
+			update : Vec::new(),
+			destroy: Vec::new(),
+		}
+	}
+
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -35,11 +43,7 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		// that scheme, Message::new() would create an empty message, then
 		// message.decode would decode a buffer, saving the result in that
 		// message.
-		let mut message = Message {
-			header : Default::default(),
-			update : Vec::new(),
-			destroy: Vec::new(),
-		};
+		let mut message = Message::new();
 
 		match decode(buffer, &mut message) {
 			Ok(())     => Ok(message),
