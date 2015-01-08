@@ -39,7 +39,13 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		// message.
 		let mut message = Message::new(Default::default());
 
-		match decode(buffer, &mut message) {
+		let result = decode(
+			buffer,
+			&mut message.header,
+			&mut message.update,
+			&mut message.destroy
+		);
+		match result {
 			Ok(())     => Ok(message),
 			Err(error) => Err(error),
 		}

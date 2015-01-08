@@ -10,12 +10,12 @@ use constants::{
 	UPDATE,
 };
 
-use super::Message;
-
 
 pub fn decode<Header, Id, Entity>(
-	source: &[u8],
-	target: &mut Message<Header, Id, Entity>
+	source : &[u8],
+	header : &mut Header,
+	update : &mut Vec<(Id, Entity)>,
+	destroy: &mut Vec<Id>,
 ) -> Result<(), String>
 	where
 		Header: Decode,
@@ -36,15 +36,15 @@ pub fn decode<Header, Id, Entity>(
 
 	let mut lines = message.split('\n');
 
-	let header = match lines.next() {
-		Some(header) =>
-			header,
+	let header_line = match lines.next() {
+		Some(header_line) =>
+			header_line,
 		None => {
 			return Err(format!("Header line is missing"));
 		},
 	};
 
-	target.header = match Decode::do_decode(header) {
+	*header = match Decode::do_decode(header_line) {
 		Ok(header) => header,
 		Err(error) => return Err(format!("Error decoding header: {}", error)),
 	};
@@ -104,13 +104,13 @@ pub fn decode<Header, Id, Entity>(
 						return Err(format!("Invalid update: No entity")),
 				};
 
-				target.update(id, entity);
+				update.push((id, entity));
 			},
 
 			DESTROY => {
 				match Decode::do_decode(item) {
 					Ok(id) =>
-						target.destroy(id),
+						destroy.push(id),
 					Err(error) =>
 						return Err(format!("Error decoding id: {}", error)),
 				}
