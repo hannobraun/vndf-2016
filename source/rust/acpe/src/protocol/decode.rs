@@ -128,7 +128,7 @@ pub trait Decode {
 	fn do_decode(s: &str) -> Result<Self, String>;
 }
 
-impl<T> Decode for T where T: Decodable<json::Decoder, json::DecoderError> {
+impl<T> Decode for T where T: Decodable {
 	fn do_decode(s: &str) -> Result<Self, String> {
 		json::decode(s)
 			.map_err(|error|

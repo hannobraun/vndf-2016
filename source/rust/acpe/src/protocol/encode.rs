@@ -1,4 +1,3 @@
-use std::fmt;
 use std::io::IoResult;
 use std::kinds::marker::NoCopy;
 
@@ -91,7 +90,9 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 		})
 	}
 
-	fn add_item(&mut self, f: |&mut BufWriter| -> IoResult<()>) -> bool {
+	fn add_item<F>(&mut self, f: F) -> bool
+		where F: Fn(&mut BufWriter) -> IoResult<()>
+	{
 		let mut buffer = [0; MAX_PACKET_SIZE];
 
 		let len = {
@@ -147,7 +148,7 @@ pub trait Encode {
 	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()>;
 }
 
-impl<T> Encode for T where T: for<'e> Encodable<json::Encoder<'e>, fmt::Error> {
+impl<T> Encode for T where T: for<'e> Encodable {
 	fn do_encode<W: Writer>(&self, writer: &mut W) -> IoResult<()> {
 		// The API used here is inefficient, since it allocates a String for
 		// each encoding. There's a more efficient, Writer-based one, but I

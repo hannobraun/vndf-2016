@@ -62,7 +62,9 @@ impl Client {
 		}
 	}
 
-	pub fn wait_until(&mut self, condition: |&Frame| -> bool) -> Frame {
+	pub fn wait_until<F>(&mut self, condition: F) -> Frame
+		where F: Fn(&Frame) -> bool
+	{
 		let start_s = precise_time_s();
 
 		let mut frame = self.frame();
