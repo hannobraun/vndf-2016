@@ -88,6 +88,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity> {
 	pub fn drain_update_items(&mut self) -> Drain<(Id, Entity)> {
 		self.update.drain()
 	}
+
+	pub fn drain_destroy_items(&mut self) -> Drain<Id> {
+		self.destroy.drain()
+	}
 }
 
 
@@ -117,19 +121,27 @@ mod test {
 	fn it_should_provide_draining_iterators() {
 		let mut message = Message::<String, _, _>::new();
 
-		let update = (0, "This represents an entity.".to_string());
+		let update  = (0, "This represents an entity.".to_string());
+		let destroy = 1;
 
 		message.update(update.clone());
+		message.destroy(destroy);
 
-		let updates: Vec<(i32, String)> =
+		let updates : Vec<(i32, String)> =
 			message.drain_update_items().collect();
+		let destroys: Vec<i32>           =
+			message.drain_destroy_items().collect();
 
 
-		assert_eq!(vec![update], updates);
+		assert_eq!(vec![update] , updates);
+		assert_eq!(vec![destroy], destroys);
 
-		let empty_updates: Vec<&(i32, String)> =
+		let empty_updates : Vec<&(i32, String)> =
 			message.update_items().collect();
+		let empty_destroys: Vec<&i32>           =
+			message.destroy_items().collect();
 
-		assert_eq!(empty_updates.len(), 0);
+		assert_eq!(empty_updates.len() , 0);
+		assert_eq!(empty_destroys.len(), 0);
 	}
 }
