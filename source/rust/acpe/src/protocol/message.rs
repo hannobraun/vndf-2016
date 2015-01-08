@@ -36,22 +36,6 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		}
 	}
 
-	pub fn update(&mut self, update: (Id, Entity)) {
-		self.update.push(update);
-	}
-
-	pub fn destroy(&mut self, destroy: Id) {
-		self.destroy.push(destroy);
-	}
-
-	pub fn update_items(&self) -> Iter<(Id, Entity)> {
-		self.update.iter()
-	}
-
-	pub fn destroy_items(&self) -> Iter<Id> {
-		self.destroy.iter()
-	}
-
 	pub fn decode(
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
@@ -80,6 +64,24 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		}
 
 		message.encode().to_vec()
+	}
+}
+
+impl<Header, Id, Entity> Message<Header, Id, Entity> {
+	pub fn update(&mut self, update: (Id, Entity)) {
+		self.update.push(update);
+	}
+
+	pub fn destroy(&mut self, destroy: Id) {
+		self.destroy.push(destroy);
+	}
+
+	pub fn update_items(&self) -> Iter<(Id, Entity)> {
+		self.update.iter()
+	}
+
+	pub fn destroy_items(&self) -> Iter<Id> {
+		self.destroy.iter()
 	}
 }
 
