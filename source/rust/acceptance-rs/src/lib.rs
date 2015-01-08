@@ -1,6 +1,3 @@
-#![feature(macro_rules)]
-
-
 use std::io::net::ip::Port;
 use std::rand::random;
 
