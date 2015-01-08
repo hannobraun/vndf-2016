@@ -33,7 +33,7 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		buffer: &[u8]
 	) -> Result<Message<Header, Id, Entity>, String> {
 		// Performance note:
-		// These allocations can be avoided by reusing and existing Message. In
+		// These allocations can be avoided by reusing an existing Message. In
 		// that scheme, Message::new() would create an empty message, then
 		// message.decode would decode a buffer, saving the result in that
 		// message.
