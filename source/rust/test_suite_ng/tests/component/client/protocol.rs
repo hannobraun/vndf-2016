@@ -45,10 +45,8 @@ fn it_should_keep_track_of_which_actions_are_confirmed() {
 
 	// Broadcast has never been confirmed. It should keep sending it.
 	let action = game_service.expect_action().unwrap().inner;
-	assert!(action.update.contains(
-		// TODO(83305336): This assumes that the client doesn't set ids for its
-		//                 action entities.
-		&(0u64, Step::Broadcast(broadcast))
+	assert!(action.update_items().any(|&(_, ref entity)|
+		entity == &Step::Broadcast(broadcast.clone())
 	));
 }
 
