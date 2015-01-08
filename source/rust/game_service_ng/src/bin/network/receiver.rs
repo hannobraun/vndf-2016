@@ -30,13 +30,15 @@ impl Receiver {
 
 		for result in self.received.drain() {
 			match result {
-				Ok((action, address)) => {
-					for (_, step) in action.update.into_iter() {
+				Ok((mut action, address)) => {
+					let action_id = action.header.id;
+
+					for (_, step) in action.drain_update_items() {
 						match step {
 							Step::Login => {
 								clients.insert(address, Client {
 									id           : generate_id(),
-									last_action  : action.header.id,
+									last_action  : action_id,
 									last_active_s: precise_time_s(),
 									broadcast    : None,
 								});
