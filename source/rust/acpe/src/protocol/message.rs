@@ -1,4 +1,5 @@
 use std::default::Default;
+use std::slice::Iter;
 
 use super::{
 	decode,
@@ -41,6 +42,10 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 
 	pub fn destroy(&mut self, destroy: Id) {
 		self.destroy.push(destroy);
+	}
+
+	pub fn updates(&self) -> Iter<(Id, Entity)> {
+		self.update.iter()
 	}
 
 	pub fn decode(
@@ -90,7 +95,9 @@ mod test {
 		message.update(update.clone());
 		message.destroy(destroy);
 
-		assert_eq!(vec![update], message.update);
+		let updates: Vec<&(i32, String)> = message.updates().collect();
+
+		assert_eq!(vec![&update], updates);
 		assert_eq!(vec![destroy], message.destroy);
 	}
 }
