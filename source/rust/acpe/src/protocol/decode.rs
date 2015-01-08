@@ -13,14 +13,14 @@ use constants::{
 use super::Message;
 
 
-pub fn decode<H, I, E>(
+pub fn decode<Header, Id, Entity>(
 	source: &[u8],
-	target: &mut Message<H, I, E>
+	target: &mut Message<Header, Id, Entity>
 ) -> Result<(), String>
 	where
-		H: Decode,
-		I: Decode,
-		E: Decode,
+		Header: Decode,
+		Id    : Decode,
+		Entity: Decode,
 {
 	let mut reader = BufReader::new(source);
 
