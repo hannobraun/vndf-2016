@@ -29,9 +29,9 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		Id    : Decode + Encode,
 		Entity: Decode + Encode,
 {
-	pub fn new() -> Message<Header, Id, Entity> {
+	pub fn new(header: Header) -> Message<Header, Id, Entity> {
 		Message {
-			header : Default::default(),
+			header : header,
 			update : Vec::new(),
 			destroy: Vec::new(),
 		}
@@ -45,7 +45,7 @@ impl<Header, Id, Entity> Message<Header, Id, Entity>
 		// that scheme, Message::new() would create an empty message, then
 		// message.decode would decode a buffer, saving the result in that
 		// message.
-		let mut message = Message::new();
+		let mut message = Message::new(Default::default());
 
 		match decode(buffer, &mut message) {
 			Ok(())     => Ok(message),
@@ -102,7 +102,7 @@ mod test {
 
 	#[test]
 	fn it_should_add_items() {
-		let mut message = Message::<String, _, _>::new();
+		let mut message = Message::new(0);
 
 		let update  = (0, "This represents an entity.".to_string());
 		let destroy = 1;
@@ -119,7 +119,7 @@ mod test {
 
 	#[test]
 	fn it_should_provide_draining_iterators() {
-		let mut message = Message::<String, _, _>::new();
+		let mut message = Message::new(0);
 
 		let update  = (0, "This represents an entity.".to_string());
 		let destroy = 1;
