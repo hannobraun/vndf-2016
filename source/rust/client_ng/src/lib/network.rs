@@ -44,7 +44,7 @@ impl Socket {
 					.unwrap_or_else(|error|
 						panic!(
 							"Error decoding message from server. \
-							Message: {}; Error: {}",
+							Message: {:?}; Error: {}",
 							message, error
 						)
 					)

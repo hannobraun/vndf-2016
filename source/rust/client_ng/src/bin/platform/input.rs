@@ -15,7 +15,7 @@ impl InputReader {
 	pub fn new() -> InputReader {
 		let (sender, receiver) = channel();
 
-		let guard = Thread::spawn(move || -> () {
+		Thread::spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
@@ -28,7 +28,7 @@ impl InputReader {
 								(),
 							Err(error) =>
 								panic!(
-									"Error sending character: {}",
+									"Error sending character: {:?}",
 									error,
 								),
 						},
@@ -37,8 +37,6 @@ impl InputReader {
 				}
 			}
 		});
-
-		guard.detach();
 
 		InputReader {
 			receiver: receiver,

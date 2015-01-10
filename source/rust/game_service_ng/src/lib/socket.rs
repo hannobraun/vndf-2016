@@ -55,7 +55,7 @@ fn decode_message(message: &[u8]) -> Result<Action, String> {
 		Err(error) =>
 			return Err((
 				format!(
-					"Error decoding message. Error: {}; Message: {}",
+					"Error decoding message. Error: {}; Message: {:?}",
 					error, message
 				)
 			)),

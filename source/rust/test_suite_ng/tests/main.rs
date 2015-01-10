@@ -1,6 +1,3 @@
-#![feature(phase)]
-
-
 extern crate acpe;
 extern crate time;
 

@@ -132,7 +132,7 @@ impl<T> Decode for T where T: Decodable {
 	fn do_decode(s: &str) -> Result<Self, String> {
 		json::decode(s)
 			.map_err(|error|
-				format!("JSON decoding error: {}", error)
+				format!("JSON decoding error: {:?}", error)
 			)
 	}
 }

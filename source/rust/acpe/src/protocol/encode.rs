@@ -1,5 +1,5 @@
 use std::io::IoResult;
-use std::kinds::marker::NoCopy;
+use std::marker::NoCopy;
 
 use rustc_serialize::{
 	json,
@@ -109,7 +109,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 				)
 			)
 		};
-		let addition = buffer[.. len as uint];
+		let addition = &buffer[.. len as uint];
 
 		match self.writer.write(addition) {
 			Ok(()) => (),
@@ -127,7 +127,7 @@ impl<'a, H, I, E> MessageEncoder<'a, H, I, E>
 			)
 		);
 
-		self.writer.into_slice()[.. len as uint]
+		&self.writer.into_slice()[.. len as uint]
 	}
 }
 

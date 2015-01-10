@@ -10,7 +10,7 @@ dependencies = [
 name = "acpe"
 version = "0.0.1"
 dependencies = [
- "rustc-serialize 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -22,6 +22,6 @@ dependencies = [
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.6"
+version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 

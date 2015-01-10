@@ -56,7 +56,7 @@ impl Client {
 		match Frame::from_json(line.as_slice()) {
 			Ok(frame)  => frame,
 			Err(error) => panic!(
-				"Error decoding frame. Error: {}; Frame: {}",
+				"Error decoding frame. Error: {:?}; Frame: {}",
 				error, line,
 			)
 		}

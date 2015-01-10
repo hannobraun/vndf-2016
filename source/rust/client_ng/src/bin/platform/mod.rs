@@ -74,7 +74,7 @@ impl PlatformIo for HeadlessIo {
 	fn new() -> IoResult<HeadlessIo> {
 		let (sender, receiver) = channel();
 
-		let guard = Thread::spawn(move || -> () {
+		Thread::spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
@@ -87,18 +87,16 @@ impl PlatformIo for HeadlessIo {
 								Ok(()) =>
 									(),
 								Err(error) =>
-									panic!("Error sending input: {}", error),
+									panic!("Error sending input: {:?}", error),
 							},
 						Err(error) =>
-							panic!("Error decoding input: {}\n", error),
+							panic!("Error decoding input: {:?}\n", error),
 					},
 					Err(error) =>
 						panic!("Error reading from stdin: {}", error),
 				}
 			}
 		});
-
-		guard.detach();
 
 		Ok(HeadlessIo {
 			receiver  : receiver,
