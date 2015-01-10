@@ -3,7 +3,7 @@ name = "test_suite_ng"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
- "acpe 0.0.1",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
  "client_ng 0.0.1",
  "test_tools_ng 0.0.1",
  "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -16,6 +16,7 @@ version = "0.1.0"
 [[package]]
 name = "acpe"
 version = "0.0.1"
+source = "git+https://github.com/hannobraun/acpe.git#3b06df2ac2d5823b5d7bc489d1d112ceed474697"
 dependencies = [
  "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -24,7 +25,7 @@ dependencies = [
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
  "common 0.0.1",
 ]
 
@@ -32,14 +33,14 @@ dependencies = [
 name = "common"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
 ]
 
 [[package]]
 name = "game_service_ng"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
  "common 0.0.1",
  "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -59,7 +60,7 @@ name = "test_tools_ng"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
- "acpe 0.0.1",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
  "client_ng 0.0.1",
  "game_service_ng 0.0.1",
  "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",

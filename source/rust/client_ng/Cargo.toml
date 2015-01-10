@@ -13,7 +13,7 @@ name = "vndf-client-ng"
 
 
 [dependencies.acpe]
-path = "../acpe"
+git = "https://github.com/hannobraun/acpe.git"
 
 [dependencies.common]
 path = "../common"

@@ -6,4 +6,4 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies.acpe]
-path = "../acpe"
+git = "https://github.com/hannobraun/acpe.git"

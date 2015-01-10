@@ -12,7 +12,7 @@ time = "*"
 
 
 [dependencies.acpe]
-path = "../acpe"
+git = "https://github.com/hannobraun/acpe.git"
 
 [dependencies.client_ng]
 path = "../client_ng"
