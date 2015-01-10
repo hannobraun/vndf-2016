@@ -21,7 +21,7 @@ extern {
 pub const ECHO   : tcflag_t = 0x08;
 pub const FAILURE: c_int    = -1;
 pub const ICANON : tcflag_t = 0x02;
-pub const NCCS   : uint     = 32;
+pub const NCCS   : usize    = 32;
 pub const SUCCESS: c_int    = 0;
 pub const TCSANOW: c_int    = 0;
 
