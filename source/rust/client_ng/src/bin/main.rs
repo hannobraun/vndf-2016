@@ -1,3 +1,4 @@
+#![allow(unstable)]
 #![feature(slicing_syntax)]
 
 

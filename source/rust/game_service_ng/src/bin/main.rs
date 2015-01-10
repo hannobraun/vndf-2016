@@ -1,3 +1,6 @@
+#![allow(unstable)]
+
+
 extern crate getopts;
 
 extern crate acpe;

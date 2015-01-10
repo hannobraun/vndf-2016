@@ -1,3 +1,6 @@
+#![allow(unstable)]
+
+
 extern crate acpe;
 
 extern crate common;
