@@ -228,7 +228,7 @@ fn list(
 		return Ok(());
 	}
 
-	let mut n = min(items.len(), height as uint);
+	let mut n = min(items.len(), height as usize);
 
 	for (i, item) in items.iter().enumerate() {
 		if n == 0 {
@@ -245,7 +245,7 @@ fn list(
 		n -= 1;
 	}
 
-	if items.len() > height as uint {
+	if items.len() > height as usize {
 		try!(write!(
 			&mut b.writer(limit - 1, y + height - 1).limit(limit),
 			"↓",
