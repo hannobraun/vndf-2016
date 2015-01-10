@@ -41,8 +41,8 @@ pub struct ScreenBuffer {
 
 impl ScreenBuffer {
 	pub fn new(width: Pos, height: Pos) -> ScreenBuffer {
-		let width  = width  as uint;
-		let height = height as uint;
+		let width  = width  as usize;
+		let height = height as usize;
 
 		let buffer =
 			range(0, height)
@@ -84,8 +84,8 @@ impl ScreenBuffer {
 	}
 
 	pub fn set(&mut self, x: Pos, y: Pos, c: C) -> IoResult<()> {
-		let x = x as uint;
-		let y = y as uint;
+		let x = x as usize;
+		let y = y as usize;
 
 		if y > self.buffer.len() || x > self.buffer[0].len() {
 			return Err(IoError {
@@ -184,8 +184,8 @@ impl<'r> Writer for BufferWriter<'r> {
 				break;
 			}
 
-			let x = self.x as uint;
-			let y = self.y as uint;
+			let x = self.x as usize;
+			let y = self.y as usize;
 			self.buffer.buffer[y][x] = C {
 				c   : c,
 				bold: self.bold,
@@ -204,8 +204,8 @@ impl<'r> Writer for BufferWriter<'r> {
 
 pub struct BufferIterator<'r> {
 	buffer: &'r Vec<Vec<C>>,
-	x     : uint,
-	y     : uint,
+	x     : usize,
+	y     : usize,
 }
 
 impl<'r> Iterator for BufferIterator<'r> {
