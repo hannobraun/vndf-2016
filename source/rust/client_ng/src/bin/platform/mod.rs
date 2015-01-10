@@ -90,7 +90,7 @@ impl PlatformIo for HeadlessIo {
 									panic!("Error sending input: {:?}", error),
 							},
 						Err(error) =>
-							panic!("Error decoding input: {:?}\n", error),
+							panic!("Error decoding input: {:?}", error),
 					},
 					Err(error) =>
 						panic!("Error reading from stdin: {}", error),
