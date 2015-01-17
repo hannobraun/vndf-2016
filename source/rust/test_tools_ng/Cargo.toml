@@ -17,6 +17,9 @@ git = "https://github.com/hannobraun/acpe.git"
 [dependencies.client_ng]
 path = "../client_ng"
 
+[dependencies.common]
+path = "../common"
+
 [dependencies.game_service_ng]
 path = "../game_service_ng"
 
