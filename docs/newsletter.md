@@ -59,7 +59,6 @@ Gaming News Resources
 # Plans
 
 Topic ideas:
-- January: NG announcement (title: Definitely Not April Fools)
 - Overview over text-based games (title: Self-Help for Text-based Game Devs)
 - Check the rest of the vision file for further topic ideas
 - Announcing the navigation prototype
@@ -71,11 +70,8 @@ Topic ideas:
   - Homeworld
   - Factorio
 
-News for January:
-- ISRO launch
-- http://www.reddit.com/r/space/comments/2q5w22/the_first_launch_of_the_carrier_rocket_heavy/
-- http://www.space.com/27955-spacex-rocket-ocean-landing-platform.html
-- http://dawn.jpl.nasa.gov/feature_stories/Dawn_spacecraft_begins_approach.asp
+News for February:
+- ...
 
 News for any month:
 - Asteroid video by Scott Manley
