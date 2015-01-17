@@ -5,5 +5,9 @@ version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
+[dependencies]
+rustc-serialize = "*"
+
+
 [dependencies.acpe]
 git = "https://github.com/hannobraun/acpe.git"

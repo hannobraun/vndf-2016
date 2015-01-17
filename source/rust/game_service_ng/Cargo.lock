@@ -20,6 +20,7 @@ name = "common"
 version = "0.0.1"
 dependencies = [
  "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
+ "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
