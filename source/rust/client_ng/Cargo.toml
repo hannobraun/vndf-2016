@@ -12,6 +12,10 @@ path = "src/lib/lib.rs"
 name = "vndf-client-ng"
 
 
+[dependencies]
+rustc-serialize = "*"
+
+
 [dependencies.acpe]
 git = "https://github.com/hannobraun/acpe.git"
 
