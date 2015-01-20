@@ -71,7 +71,7 @@ Topic ideas:
   - Factorio
 
 News for February:
-- ...
+- http://www.esa.int/Our_Activities/Launchers/IXV/Vega_ready_to_launch_spaceplane
 
 News for any month:
 - Asteroid video by Scott Manley
