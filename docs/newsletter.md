@@ -20,7 +20,6 @@ stories that will no longer be current for the next newsletter.
 1. Write email version of newsletter. Use previous newsletter as template.
   1. Copy the markup into a new text editor window. It's easier to edit there.
   1. Remove subscription information from header and footer
-  1. Remove anchor links
   1. Remove links to subscription in newsletter version
   1. Replace relative links with absolute ones; same for relative image sources
   1. Log into CleverReach, create new email as copy of last newsletter
