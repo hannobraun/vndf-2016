@@ -29,7 +29,8 @@ stories that will no longer be current for the next newsletter.
      unchanged
   1. Update teaser image
   1. Update link to online version
-  1. Make sure text version of email looks ok; Update link to online version
+  1. Make sure text version of email looks ok; Update link to online version in
+     text version
 1. Send preview version of newsletter to yourself. Check all links.
 1. Send email version of newsletter.
 1. Link online version in blog and deploy change.
