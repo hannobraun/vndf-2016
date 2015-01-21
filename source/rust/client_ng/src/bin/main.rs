@@ -122,8 +122,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 			}	
 		}
 
-		let message = network.action_assembler.assemble(&mut network.encoder);
-		network.server.send(message.as_slice());
+		network.update();
 
 		if let Err(error) = platform.render(&frame) {
 			panic!("Error writing output: {}", error);

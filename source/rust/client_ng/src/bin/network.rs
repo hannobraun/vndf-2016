@@ -50,4 +50,9 @@ impl Network {
 
 		self.perceptions.drain()
 	}
+
+	pub fn update(&mut self) {
+		let message = self.action_assembler.assemble(&mut self.encoder);
+		self.server.send(message.as_slice());
+	}
 }
