@@ -17,6 +17,8 @@ pub type Clients = HashMap<SocketAddr, Client>;
 
 pub struct Client {
 	pub id           : String,
+	// TODO: This field can be removed as soon as acpe is replaced, maybe
+	//       sooner.
 	pub last_action  : Seq,
 	pub last_active_s: f64,
 	pub broadcast    : Option<String>,
