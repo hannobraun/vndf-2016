@@ -6,6 +6,14 @@ pub type Action     = protocol::Action<u64, Step>;
 pub type Perception = protocol::Perception<String, Percept>;
 
 
+pub enum ClientEvent {
+	Login,
+	Heartbeat,
+	Broadcast(String),
+	StopBroadcast,
+}
+
+
 #[derive(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum Step {
 	Login,
