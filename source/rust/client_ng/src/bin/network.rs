@@ -4,12 +4,16 @@ use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
 use client::network::Socket;
-use common::protocol::Step;
+use common::protocol::{
+	Perception,
+	Step,
+};
 
 
 pub struct Network {
 	pub action_assembler: ActionAssembler,
 	pub encoder         : Encoder,
+	pub perceptions     : Vec<Perception>,
 	pub server          : Socket,
 }
 
@@ -17,6 +21,7 @@ impl Network {
 	pub fn new(server_address: SocketAddr) -> Network {
 		let mut action_assembler = ActionAssembler::new();
 		let     encoder          = Encoder::new();
+		let     perceptions      = Vec::new();
 		let     server           = Socket::new(server_address);
 
 		action_assembler.add_step(Step::Login);
@@ -24,6 +29,7 @@ impl Network {
 		Network {
 			action_assembler: action_assembler,
 			encoder         : encoder,
+			perceptions     : perceptions,
 			server          : server,
 		}
 	}

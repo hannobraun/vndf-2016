@@ -71,7 +71,6 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 	let mut network        = Network::new(args.server);
 	let mut previous_input = Input::new();
-	let mut perceptions    = Vec::new();
 
 	loop {
 		let input = platform.input();
@@ -108,8 +107,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		network.server.receive(&mut perceptions);
-		for mut perception in perceptions.drain() {
+		network.server.receive(&mut network.perceptions);
+		for mut perception in network.perceptions.drain() {
 			frame.broadcasts = perception
 				.drain_update_items()
 				.map(|(_, percept)|
