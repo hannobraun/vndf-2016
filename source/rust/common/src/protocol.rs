@@ -14,6 +14,13 @@ pub enum ClientEvent {
 }
 
 
+pub enum ServerEvent {
+	SelfId(String),
+	Broadcast(Broadcast),
+	StopBroadcast(String),
+}
+
+
 #[derive(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum Step {
 	Login,
