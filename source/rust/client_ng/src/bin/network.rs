@@ -28,7 +28,7 @@ impl Network {
 		}
 	}
 
-	pub fn send_event(&mut self, event: Step) {
+	pub fn send(&mut self, event: Step) {
 		self.action_assembler.add_step(event);
 	}
 }
