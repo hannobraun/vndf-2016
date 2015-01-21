@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::io::net::ip::SocketAddr;
 use std::vec::Drain;
 
@@ -7,14 +8,18 @@ use action_assembler::ActionAssembler;
 use client::network::Socket;
 use common::protocol::{
 	ClientEvent,
+	Percept,
 	Perception,
+	ServerEvent,
 	Step,
 };
 
 
 pub struct Network {
 	pub action_assembler: ActionAssembler,
+	pub broadcasters    : HashSet<String>,
 	pub encoder         : Encoder,
+	pub events          : Vec<ServerEvent>,
 	pub perceptions     : Vec<Perception>,
 	pub server          : Socket,
 }
@@ -30,7 +35,9 @@ impl Network {
 
 		Network {
 			action_assembler: action_assembler,
+			broadcasters    : HashSet::new(),
 			encoder         : encoder,
+			events          : Vec::new(),
 			perceptions     : perceptions,
 			server          : server,
 		}
@@ -47,16 +54,41 @@ impl Network {
 		self.action_assembler.add_step(step);
 	}
 
-	pub fn receive(&mut self) -> Drain<Perception> {
+	pub fn receive(&mut self) -> Drain<ServerEvent> {
 		self.server.receive(&mut self.perceptions);
 
-		for perception in self.perceptions.iter() {
+		for mut perception in self.perceptions.drain() {
+			let mut current_broadcasters = HashSet::new();
+
+			for (_, percept) in perception.drain_update_items() {
+				match percept {
+					Percept::Broadcast(broadcast) => {
+						current_broadcasters.insert(broadcast.sender.clone());
+						self.events.push(ServerEvent::Broadcast(broadcast));
+					},
+				}
+			}
+
+			match perception.header.self_id {
+				Some(self_id) =>
+					self.events.push(ServerEvent::SelfId(self_id)),
+				None =>
+					(),
+			}
+
+			for sender in self.broadcasters.drain() {
+				if !current_broadcasters.contains(&sender) {
+					self.events.push(ServerEvent::StopBroadcast(sender))
+				}
+			}
+			self.broadcasters = current_broadcasters;
+
 			self.action_assembler.process_receipt(
 				perception.header.confirm_action
 			);
 		}
 
-		self.perceptions.drain()
+		self.events.drain()
 	}
 
 	pub fn update(&mut self) {

@@ -11,6 +11,7 @@ extern crate client;
 extern crate common;
 
 
+use std::collections::HashMap;
 use std::io::timer::sleep;
 use std::time::Duration;
 
@@ -24,7 +25,7 @@ use client::platform::{
 };
 use common::protocol::{
 	ClientEvent,
-	Percept,
+	ServerEvent,
 };
 use network::Network;
 use platform::{
@@ -69,6 +70,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		broadcasts: Vec::new(),
 	};
 
+	let mut broadcasts     = HashMap::new();
 	let mut network        = Network::new(args.server);
 	let mut previous_input = Input::new();
 
@@ -107,20 +109,26 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		for mut perception in network.receive() {
-			frame.broadcasts = perception
-				.drain_update_items()
-				.map(|(_, percept)|
-					match percept {
-						Percept::Broadcast(broadcast) => broadcast,
-					}
-				)
-				.collect();
-
-			if let Some(self_id) = perception.header.self_id {
-				frame.self_id = self_id;
-			}	
+		for event in network.receive() {
+			match event {
+				ServerEvent::SelfId(self_id) => {
+					frame.self_id = self_id;
+				},
+				ServerEvent::Broadcast(broadcast) => {
+					broadcasts.insert(broadcast.sender.clone(), broadcast);
+				},
+				ServerEvent::StopBroadcast(sender) => {
+					broadcasts.remove(&sender);
+				},
+			}
 		}
+
+		frame.broadcasts = broadcasts
+			.iter()
+			.map(|(_, broadcast)|
+				broadcast.clone()
+			)
+			.collect();
 
 		network.update();
 
