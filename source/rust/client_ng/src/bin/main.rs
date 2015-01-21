@@ -15,11 +15,8 @@ use std::io::timer::sleep;
 use std::time::Duration;
 
 use acpe::MAX_PACKET_SIZE;
-use acpe::protocol::Encoder;
 
-use action_assembler::ActionAssembler;
 use args::Args;
-use client::network::Socket;
 use client::platform::{
 	Frame,
 	Input,
@@ -29,6 +26,7 @@ use common::protocol::{
 	Percept,
 	Step,
 };
+use network::Network;
 use platform::{
 	HeadlessIo,
 	PlatformIo,
@@ -38,6 +36,7 @@ use platform::{
 
 mod action_assembler;
 mod args;
+mod network;
 mod platform;
 mod termios;
 
@@ -70,15 +69,9 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		broadcasts: Vec::new(),
 	};
 
+	let mut network        = Network::new(args.server);
 	let mut previous_input = Input::new();
-
-	let mut action_assembler = ActionAssembler::new();
-	let mut server           = Socket::new(args.server);
-	let mut encoder          = Encoder::new();
-
-	let mut perceptions = Vec::new();
-
-	action_assembler.add_step(Step::Login);
+	let mut perceptions    = Vec::new();
 
 	loop {
 		let input = platform.input();
@@ -97,7 +90,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					}
 					else {
-						action_assembler.add_step(
+						network.action_assembler.add_step(
 							Step::Broadcast(message.clone())
 						);
 
@@ -106,7 +99,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					},
 				None => {
-					action_assembler.add_step(Step::StopBroadcast);
+					network.action_assembler.add_step(Step::StopBroadcast);
 
 					frame.status = Status::Notice(
 						"Stopped sending broadcast".to_string()
@@ -117,7 +110,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		server.receive(&mut perceptions);
+		network.server.receive(&mut perceptions);
 		for mut perception in perceptions.drain() {
 			frame.broadcasts = perception
 				.drain_update_items()
@@ -132,11 +125,11 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 				frame.self_id = self_id;
 			}
 
-			action_assembler.process_receipt(perception.header.confirm_action);
+			network.action_assembler.process_receipt(perception.header.confirm_action);
 		}
 
-		let message = action_assembler.assemble(&mut encoder);
-		server.send(message.as_slice());
+		let message = network.action_assembler.assemble(&mut network.encoder);
+		network.server.send(message.as_slice());
 
 		if let Err(error) = platform.render(&frame) {
 			panic!("Error writing output: {}", error);
