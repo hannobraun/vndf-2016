@@ -90,7 +90,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					}
 					else {
-						network.action_assembler.add_step(
+						network.send_event(
 							Step::Broadcast(message.clone())
 						);
 
@@ -99,7 +99,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					},
 				None => {
-					network.action_assembler.add_step(Step::StopBroadcast);
+					network.send_event(Step::StopBroadcast);
 
 					frame.status = Status::Notice(
 						"Stopped sending broadcast".to_string()
