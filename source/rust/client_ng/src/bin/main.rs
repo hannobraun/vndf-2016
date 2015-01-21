@@ -45,10 +45,10 @@ fn main() {
 	let args = Args::parse(std::os::args().as_slice());
 
 	if args.headless {
-		run::<HeadlessIo>(args, init_platform())
+		run(args, init_platform::<HeadlessIo>())
 	}
 	else {
-		run::<PlayerIo>(args, init_platform())
+		run(args, init_platform::<PlayerIo>())
 	}
 }
 
