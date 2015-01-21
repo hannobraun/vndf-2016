@@ -1,4 +1,5 @@
 use std::io::net::ip::SocketAddr;
+use std::vec::Drain;
 
 use acpe::protocol::Encoder;
 
@@ -36,5 +37,17 @@ impl Network {
 
 	pub fn send(&mut self, event: Step) {
 		self.action_assembler.add_step(event);
+	}
+
+	pub fn receive(&mut self) -> Drain<Perception> {
+		self.server.receive(&mut self.perceptions);
+
+		for perception in self.perceptions.iter() {
+			self.action_assembler.process_receipt(
+				perception.header.confirm_action
+			);
+		}
+
+		self.perceptions.drain()
 	}
 }

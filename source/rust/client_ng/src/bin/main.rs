@@ -107,8 +107,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		previous_input = input.clone();
 
-		network.server.receive(&mut network.perceptions);
-		for mut perception in network.perceptions.drain() {
+		for mut perception in network.receive() {
 			frame.broadcasts = perception
 				.drain_update_items()
 				.map(|(_, percept)|
@@ -120,9 +119,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 			if let Some(self_id) = perception.header.self_id {
 				frame.self_id = self_id;
-			}
-
-			network.action_assembler.process_receipt(perception.header.confirm_action);
+			}	
 		}
 
 		let message = network.action_assembler.assemble(&mut network.encoder);
