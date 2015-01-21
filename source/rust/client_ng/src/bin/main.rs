@@ -23,8 +23,8 @@ use client::platform::{
 	Status,
 };
 use common::protocol::{
+	ClientEvent,
 	Percept,
-	Step,
 };
 use network::Network;
 use platform::{
@@ -89,14 +89,14 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					}
 					else {
-						network.send(Step::Broadcast(message.clone()));
+						network.send(ClientEvent::Broadcast(message.clone()));
 
 						frame.status = Status::Notice(
 							"Sending broadcast".to_string()
 						);
 					},
 				None => {
-					network.send(Step::StopBroadcast);
+					network.send(ClientEvent::StopBroadcast);
 
 					frame.status = Status::Notice(
 						"Stopped sending broadcast".to_string()

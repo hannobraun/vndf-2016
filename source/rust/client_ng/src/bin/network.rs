@@ -6,6 +6,7 @@ use acpe::protocol::Encoder;
 use action_assembler::ActionAssembler;
 use client::network::Socket;
 use common::protocol::{
+	ClientEvent,
 	Perception,
 	Step,
 };
@@ -35,8 +36,15 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, event: Step) {
-		self.action_assembler.add_step(event);
+	pub fn send(&mut self, event: ClientEvent) {
+		let step = match event {
+			ClientEvent::Login              => Step::Login,
+			ClientEvent::Heartbeat          => return,
+			ClientEvent::Broadcast(message) => Step::Broadcast(message),
+			ClientEvent::StopBroadcast      => Step::StopBroadcast,
+		};
+
+		self.action_assembler.add_step(step);
 	}
 
 	pub fn receive(&mut self) -> Drain<Perception> {
