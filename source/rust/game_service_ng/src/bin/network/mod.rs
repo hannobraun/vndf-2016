@@ -16,8 +16,6 @@ pub type Clients = HashMap<SocketAddr, Client>;
 
 
 pub struct Client {
-	// TODO: Add field that mirrors the client's state, so we know what still
-	//       needs to be sent.
 	pub id           : String,
 	pub last_action  : Seq,
 	pub last_active_s: f64,
