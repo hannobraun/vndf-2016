@@ -1,7 +1,12 @@
 use std::collections::HashMap;
-use std::io::net::ip::SocketAddr;
+use std::io::net::ip::{
+	Port,
+	SocketAddr,
+};
 
 use acpe::protocol::Seq;
+
+use game_service::Socket;
 
 
 pub use self::receiver::Receiver;
@@ -22,4 +27,23 @@ pub struct Client {
 	pub last_action  : Seq,
 	pub last_active_s: f64,
 	pub broadcast    : Option<String>,
+}
+
+
+pub struct Network {
+	pub clients : Clients,
+	pub socket  : Socket,
+	pub receiver: Receiver,
+	pub sender  : Sender,
+}
+
+impl Network {
+	pub fn new(port: Port) -> Network {
+		Network {
+			clients : HashMap::new(),
+			socket  : Socket::new(port),
+			receiver: Receiver::new(),
+			sender  : Sender::new(),
+		}
+	}
 }

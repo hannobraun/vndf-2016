@@ -10,7 +10,6 @@ extern crate common;
 extern crate game_service;
 
 
-use std::collections::HashMap;
 use std::io::timer::sleep;
 use std::os;
 use std::time::Duration;
@@ -19,11 +18,7 @@ use time::precise_time_s;
 
 use args::Args;
 use common::protocol::Broadcast;
-use game_service::Socket;
-use network::{
-	Receiver,
-	Sender,
-};
+use network::Network;
 
 
 mod args;
@@ -33,18 +28,15 @@ mod network;
 fn main() {
 	let args = Args::parse(os::args().as_slice());
 
-	let mut clients  = HashMap::new();
-	let mut socket   = Socket::new(args.port);
-	let mut receiver = Receiver::new();
-	let mut sender   = Sender::new();
+	let mut network = Network::new(args.port);
 
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		receiver.receive(&mut socket, &mut clients);
+		network.receiver.receive(&mut network.socket, &mut network.clients);
 
 		let now_s = precise_time_s();
-		clients = clients
+		network.clients = network.clients
 			.into_iter()
 			.filter(|&(_, ref client)|
 				// TODO(84970652): The timeout value should be configurable to
@@ -56,7 +48,7 @@ fn main() {
 			)
 			.collect();
 
-		let broadcasts: Vec<Broadcast> = clients
+		let broadcasts: Vec<Broadcast> = network.clients
 			.iter()
 			.filter_map(
 				|(_, client)|
@@ -69,7 +61,7 @@ fn main() {
 			)
 			.collect();
 
-		sender.send(&mut socket, &mut clients, &broadcasts);
+		network.sender.send(&mut network.socket, &mut network.clients, &broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}
