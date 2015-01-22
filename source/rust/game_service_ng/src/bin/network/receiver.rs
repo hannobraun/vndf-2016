@@ -3,7 +3,6 @@ use std::io::net::ip::SocketAddr;
 use std::vec::Drain;
 
 use acpe::protocol::Seq;
-use time::precise_time_s;
 
 use common::protocol::{
 	ClientEvent,
@@ -13,8 +12,6 @@ use game_service::{
 	ReceiveResult,
 	Socket,
 };
-
-use super::Clients;
 
 
 pub struct Receiver {
@@ -30,7 +27,7 @@ impl Receiver {
 		}
 	}
 
-	pub fn receive(&mut self, socket: &mut Socket, clients: &mut Clients, last_actions: &mut HashMap<SocketAddr, Seq>)
+	pub fn receive(&mut self, socket: &mut Socket, last_actions: &mut HashMap<SocketAddr, Seq>)
 		-> Drain<(SocketAddr, ClientEvent)>
 	{
 		socket.receive(&mut self.received);
@@ -53,13 +50,7 @@ impl Receiver {
 						self.events.push((address, event));
 					}
 
-					match clients.get_mut(&address) {
-						Some(client) => {
-							client.last_active_s = precise_time_s();
-						},
-						None =>
-							continue, // invalid, ignore
-					}
+					self.events.push((address, ClientEvent::Heartbeat));
 				},
 				Err((error, address)) => {
 					print!(
