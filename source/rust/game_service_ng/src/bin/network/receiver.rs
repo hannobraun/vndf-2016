@@ -55,7 +55,6 @@ impl Receiver {
 						"Error receiving message from {}: {}\n",
 						address, error
 					);
-					clients.remove(&address);
 				},
 			}
 		}
