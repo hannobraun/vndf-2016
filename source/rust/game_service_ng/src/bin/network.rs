@@ -28,7 +28,7 @@ pub struct Network {
 	socket      : Socket,
 
 	encoder   : Encoder,
-	broadcasts: Vec<Broadcast>,
+	broadcasts: HashMap<String, Broadcast>,
 	recipients: HashMap<SocketAddr, String>,
 
 	received: Vec<ReceiveResult>,
@@ -42,7 +42,7 @@ impl Network {
 			socket      : Socket::new(port),
 
 			encoder   : Encoder::new(),
-			broadcasts: Vec::new(),
+			broadcasts: HashMap::new(),
 			recipients: HashMap::new(),
 
 			received: Vec::new(),
@@ -55,7 +55,11 @@ impl Network {
 			R: Iterator<Item = (SocketAddr, String)>,
 			B: Iterator<Item = Broadcast>,
 	{
-		self.broadcasts = broadcasts.collect();
+		self.broadcasts = broadcasts
+			.map(|broadcast|
+				(broadcast.sender.clone(), broadcast)
+			)
+			.collect();
 
 		for (address, ref id) in recipients {
 			self.recipients.insert(address, id.clone());
@@ -108,7 +112,12 @@ impl Network {
 			//                 the last sent perception and the server should
 			//                 only send what has changed. This requires a list
 			//                 of destroyed entities in Perception.
-			let mut broadcasts = self.broadcasts.clone();
+			let mut broadcasts = self.broadcasts
+				.iter()
+				.map(|(_, broadcast)|
+					broadcast.clone()
+				)
+				.collect();
 
 			// TODO: This just keeps sending perceptions over and over, until
 			//       all data is gone. This potentially means that there are
