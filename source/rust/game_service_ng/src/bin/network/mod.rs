@@ -10,14 +10,16 @@ use acpe::protocol::Seq;
 use common::protocol::{
 	Broadcast,
 	ClientEvent,
+	Step,
 };
-use game_service::Socket;
+use game_service::{
+	ReceiveResult,
+	Socket,
+};
 
-use self::receiver::Receiver;
 use self::sender::Sender;
 
 
-mod receiver;
 mod sender;
 
 
@@ -34,8 +36,10 @@ pub struct Client {
 pub struct Network {
 	last_actions: HashMap<SocketAddr, Seq>,
 	socket      : Socket,
-	receiver    : Receiver,
 	sender      : Sender,
+
+	received: Vec<ReceiveResult>,
+	events  : Vec<(SocketAddr, ClientEvent)>,
 }
 
 impl Network {
@@ -43,8 +47,10 @@ impl Network {
 		Network {
 			last_actions: HashMap::new(),
 			socket      : Socket::new(port),
-			receiver    : Receiver::new(),
 			sender      : Sender::new(),
+
+			received: Vec::new(),
+			events  : Vec::new(),
 		}
 	}
 
@@ -53,6 +59,37 @@ impl Network {
 	}
 
 	pub fn receive(&mut self) -> Drain<(SocketAddr, ClientEvent)> {
-		self.receiver.receive(&mut self.socket, &mut self.last_actions)
+		self.socket.receive(&mut self.received);
+
+		for result in self.received.drain() {
+			match result {
+				Ok((mut action, address)) => {
+					self.last_actions.insert(address, action.header.id);
+
+					for (_, step) in action.drain_update_items() {
+						let event = match step {
+							Step::Login =>
+								ClientEvent::Login,
+							Step::Broadcast(broadcast) =>
+								ClientEvent::Broadcast(broadcast),
+							Step::StopBroadcast =>
+								ClientEvent::StopBroadcast,
+						};
+
+						self.events.push((address, event));
+					}
+
+					self.events.push((address, ClientEvent::Heartbeat));
+				},
+				Err((error, address)) => {
+					print!(
+						"Error receiving message from {}: {}\n",
+						address, error
+					);
+				},
+			}
+		}
+
+		self.events.drain()
 	}
 }
