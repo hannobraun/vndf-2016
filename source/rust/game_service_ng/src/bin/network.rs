@@ -46,8 +46,7 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, recipients: &[(SocketAddr, String)], broadcasts: &Vec<Broadcast>)
-	{
+	pub fn send(&mut self, recipients: &[(SocketAddr, String)], broadcasts: &Vec<Broadcast>) {
 		for &(address, ref id) in recipients.iter() {
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],
