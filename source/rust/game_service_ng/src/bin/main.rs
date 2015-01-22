@@ -48,7 +48,7 @@ fn main() {
 			)
 			.collect();
 
-		let broadcasts: Vec<Broadcast> = network.clients
+		let broadcasts = network.clients
 			.iter()
 			.filter_map(
 				|(_, client)|
