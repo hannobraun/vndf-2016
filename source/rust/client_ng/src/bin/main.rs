@@ -91,7 +91,9 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 						);
 					}
 					else {
-						network.send(ClientEvent::Broadcast(message.clone()));
+						network.send(
+							ClientEvent::StartBroadcast(message.clone())
+						);
 
 						frame.status = Status::Notice(
 							"Sending broadcast".to_string()

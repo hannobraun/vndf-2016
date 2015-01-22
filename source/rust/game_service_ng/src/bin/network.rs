@@ -95,7 +95,7 @@ impl Network {
 							Step::Login =>
 								ClientEvent::Login,
 							Step::Broadcast(broadcast) =>
-								ClientEvent::Broadcast(broadcast),
+								ClientEvent::StartBroadcast(broadcast),
 							Step::StopBroadcast =>
 								ClientEvent::StopBroadcast,
 						};

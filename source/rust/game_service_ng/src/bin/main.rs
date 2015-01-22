@@ -61,7 +61,7 @@ fn main() {
 					// is updated below, no matter which event was received.
 					()
 				},
-				ClientEvent::Broadcast(broadcast) => {
+				ClientEvent::StartBroadcast(broadcast) => {
 					match clients.get_mut(&address) {
 						Some(client) =>
 							client.broadcast = Some(broadcast),

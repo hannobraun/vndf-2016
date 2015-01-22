@@ -10,8 +10,7 @@ pub type Perception = protocol::Perception<String, Percept>;
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
-	// TODO: Rename to StartBroadcast?
-	Broadcast(String),
+	StartBroadcast(String),
 	StopBroadcast,
 }
 

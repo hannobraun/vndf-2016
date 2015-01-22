@@ -45,10 +45,10 @@ impl Network {
 
 	pub fn send(&mut self, event: ClientEvent) {
 		let step = match event {
-			ClientEvent::Login              => Step::Login,
-			ClientEvent::Heartbeat          => return,
-			ClientEvent::Broadcast(message) => Step::Broadcast(message),
-			ClientEvent::StopBroadcast      => Step::StopBroadcast,
+			ClientEvent::Login                   => Step::Login,
+			ClientEvent::Heartbeat               => return,
+			ClientEvent::StartBroadcast(message) => Step::Broadcast(message),
+			ClientEvent::StopBroadcast           => Step::StopBroadcast,
 		};
 
 		self.action_assembler.add_step(step);
