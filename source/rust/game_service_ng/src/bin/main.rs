@@ -33,15 +33,15 @@ mod network;
 struct Client {
 	pub id           : String,
 	pub last_active_s: f64,
-	pub broadcast    : Option<String>,
 }
 
 
 fn main() {
 	let args = Args::parse(os::args().as_slice());
 
-	let mut clients = HashMap::new();
-	let mut network = Network::new(args.port);
+	let mut broadcasts = HashMap::new();
+	let mut clients    = HashMap::new();
+	let mut network    = Network::new(args.port);
 
 	print!("Listening on port {}\n", args.port);
 
@@ -52,7 +52,6 @@ fn main() {
 					clients.insert(address, Client {
 						id           : generate_id(),
 						last_active_s: precise_time_s(),
-						broadcast    : None,
 					});
 				},
 				ClientEvent::Heartbeat => {
@@ -62,19 +61,18 @@ fn main() {
 				},
 				ClientEvent::StartBroadcast(broadcast) => {
 					match clients.get_mut(&address) {
-						Some(client) =>
-							client.broadcast = Some(broadcast),
+						Some(client) => {
+							broadcasts.insert(address, Broadcast {
+								sender : client.id.clone(),
+								message: broadcast
+							});
+						},
 						None =>
 							continue, // invalid, ignore
 					}
 				},
 				ClientEvent::StopBroadcast => {
-					match clients.get_mut(&address) {
-						Some(client) =>
-							client.broadcast = None,
-						None =>
-							continue, // invalid, ignore
-					}
+					broadcasts.remove(&address);
 				},
 			}
 
@@ -100,6 +98,7 @@ fn main() {
 			}
 		}
 		for address in to_remove.drain() {
+			broadcasts.remove(&address);
 			clients.remove(&address);
 		}
 
@@ -110,16 +109,11 @@ fn main() {
 			)
 			.collect();
 
-		let broadcasts = clients
+		let broadcasts = broadcasts
 			.iter()
-			.filter_map(
-				|(_, client)|
-					client.broadcast.clone().map(|broadcast|
-						Broadcast {
-							sender : client.id.clone(),
-							message: broadcast,
-						}
-					)
+			.map(
+				|(_, broadcast)|
+					broadcast.clone()
 			)
 			.collect();
 
