@@ -23,15 +23,6 @@ use game_service::{
 };
 
 
-
-// TODO: Move into main
-pub struct Client {
-	pub id           : String,
-	pub last_active_s: f64,
-	pub broadcast    : Option<String>,
-}
-
-
 pub struct Network {
 	last_actions: HashMap<SocketAddr, Seq>,
 	socket      : Socket,

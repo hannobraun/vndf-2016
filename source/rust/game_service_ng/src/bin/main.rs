@@ -24,14 +24,18 @@ use common::protocol::{
 	Broadcast,
 	ClientEvent,
 };
-use network::{
-	Client,
-	Network,
-};
+use network::Network;
 
 
 mod args;
 mod network;
+
+
+struct Client {
+	pub id           : String,
+	pub last_active_s: f64,
+	pub broadcast    : Option<String>,
+}
 
 
 fn main() {
