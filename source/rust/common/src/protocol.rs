@@ -17,6 +17,7 @@ pub enum ClientEvent {
 }
 
 
+#[derive(Show)]
 pub enum ServerEvent {
 	SelfId(String),
 	StartBroadcast(Broadcast),
