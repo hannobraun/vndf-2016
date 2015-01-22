@@ -47,8 +47,8 @@ fn main() {
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		for (address, step) in network.receive() {
-			match step {
+		for (address, event) in network.receive() {
+			match event {
 				ClientEvent::Login => {
 					clients.insert(address, Client {
 						id           : generate_id(),
