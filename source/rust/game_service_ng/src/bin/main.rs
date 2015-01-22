@@ -51,9 +51,11 @@ fn main() {
 						broadcast    : None,
 					});
 				},
-				ClientEvent::Heartbeat =>
-					// TODO: Handle heartbeat event
-					(),
+				ClientEvent::Heartbeat => {
+					// Nothing to do here, really, as the the last active time
+					// is updated below, no matter which event was received.
+					()
+				},
 				ClientEvent::Broadcast(broadcast) => {
 					match clients.get_mut(&address) {
 						Some(client) =>
