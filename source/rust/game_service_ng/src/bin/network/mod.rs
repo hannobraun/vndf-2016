@@ -10,7 +10,7 @@ use time::precise_time_s;
 
 use common::protocol::{
 	Broadcast,
-	Step,
+	ClientEvent,
 };
 use game_service::Socket;
 
@@ -59,14 +59,17 @@ impl Network {
 	pub fn receive(&mut self) {
 		for (address, step) in self.receiver.receive(&mut self.socket, &mut self.clients, &mut self.last_actions) {
 			match step {
-				Step::Login => {
+				ClientEvent::Login => {
 					self.clients.insert(address, Client {
 						id           : generate_id(),
 						last_active_s: precise_time_s(),
 						broadcast    : None,
 					});
 				},
-				Step::Broadcast(broadcast) => {
+				ClientEvent::Heartbeat =>
+					// TODO: Handle heartbeat event
+					(),
+				ClientEvent::Broadcast(broadcast) => {
 					match self.clients.get_mut(&address) {
 						Some(client) =>
 							client.broadcast = Some(broadcast),
@@ -74,7 +77,7 @@ impl Network {
 							continue, // invalid, ignore
 					}
 				},
-				Step::StopBroadcast => {
+				ClientEvent::StopBroadcast => {
 					match self.clients.get_mut(&address) {
 						Some(client) =>
 							client.broadcast = None,

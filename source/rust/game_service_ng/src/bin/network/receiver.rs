@@ -5,7 +5,10 @@ use std::vec::Drain;
 use acpe::protocol::Seq;
 use time::precise_time_s;
 
-use common::protocol::Step;
+use common::protocol::{
+	ClientEvent,
+	Step,
+};
 use game_service::{
 	ReceiveResult,
 	Socket,
@@ -16,19 +19,19 @@ use super::Clients;
 
 pub struct Receiver {
 	received: Vec<ReceiveResult>,
-	steps   : Vec<(SocketAddr, Step)>,
+	events  : Vec<(SocketAddr, ClientEvent)>,
 }
 
 impl Receiver {
 	pub fn new() -> Receiver {
 		Receiver {
 			received: Vec::new(),
-			steps   : Vec::new(),
+			events  : Vec::new(),
 		}
 	}
 
 	pub fn receive(&mut self, socket: &mut Socket, clients: &mut Clients, last_actions: &mut HashMap<SocketAddr, Seq>)
-		-> Drain<(SocketAddr, Step)>
+		-> Drain<(SocketAddr, ClientEvent)>
 	{
 		socket.receive(&mut self.received);
 
@@ -38,7 +41,16 @@ impl Receiver {
 					last_actions.insert(address, action.header.id);
 
 					for (_, step) in action.drain_update_items() {
-						self.steps.push((address, step));
+						let event = match step {
+							Step::Login =>
+								ClientEvent::Login,
+							Step::Broadcast(broadcast) =>
+								ClientEvent::Broadcast(broadcast),
+							Step::StopBroadcast =>
+								ClientEvent::StopBroadcast,
+						};
+
+						self.events.push((address, event));
 					}
 
 					match clients.get_mut(&address) {
@@ -58,6 +70,6 @@ impl Receiver {
 			}
 		}
 
-		self.steps.drain()
+		self.events.drain()
 	}
 }
