@@ -10,6 +10,7 @@ extern crate common;
 extern crate game_service;
 
 
+use std::collections::HashMap;
 use std::io::timer::sleep;
 use std::os;
 use std::time::Duration;
@@ -28,15 +29,16 @@ mod network;
 fn main() {
 	let args = Args::parse(os::args().as_slice());
 
+	let mut clients = HashMap::new();
 	let mut network = Network::new(args.port);
 
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		network.receive();
+		network.receive(&mut clients);
 
 		let now_s = precise_time_s();
-		network.clients = network.clients
+		clients = clients
 			.into_iter()
 			.filter(|&(_, ref client)|
 				// TODO(84970652): The timeout value should be configurable to
@@ -48,7 +50,7 @@ fn main() {
 			)
 			.collect();
 
-		let broadcasts = network.clients
+		let broadcasts = clients
 			.iter()
 			.filter_map(
 				|(_, client)|
@@ -61,7 +63,7 @@ fn main() {
 			)
 			.collect();
 
-		network.send(&broadcasts);
+		network.send(&mut clients, &broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}

@@ -33,8 +33,6 @@ pub struct Client {
 
 
 pub struct Network {
-	pub clients: Clients,
-
 	last_actions: HashMap<SocketAddr, Seq>,
 	socket      : Socket,
 	receiver    : Receiver,
@@ -44,7 +42,6 @@ pub struct Network {
 impl Network {
 	pub fn new(port: Port) -> Network {
 		Network {
-			clients     : HashMap::new(),
 			last_actions: HashMap::new(),
 			socket      : Socket::new(port),
 			receiver    : Receiver::new(),
@@ -52,15 +49,15 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, broadcasts: &Vec<Broadcast>) {
-		self.sender.send(&mut self.socket, &mut self.clients, broadcasts, &mut self.last_actions);
+	pub fn send(&mut self, clients: &mut Clients, broadcasts: &Vec<Broadcast>) {
+		self.sender.send(&mut self.socket, clients, broadcasts, &mut self.last_actions);
 	}
 
-	pub fn receive(&mut self) {
+	pub fn receive(&mut self, clients: &mut Clients) {
 		for (address, step) in self.receiver.receive(&mut self.socket, &mut self.last_actions) {
 			match step {
 				ClientEvent::Login => {
-					self.clients.insert(address, Client {
+					clients.insert(address, Client {
 						id           : generate_id(),
 						last_active_s: precise_time_s(),
 						broadcast    : None,
@@ -70,7 +67,7 @@ impl Network {
 					// TODO: Handle heartbeat event
 					(),
 				ClientEvent::Broadcast(broadcast) => {
-					match self.clients.get_mut(&address) {
+					match clients.get_mut(&address) {
 						Some(client) =>
 							client.broadcast = Some(broadcast),
 						None =>
@@ -78,7 +75,7 @@ impl Network {
 					}
 				},
 				ClientEvent::StopBroadcast => {
-					match self.clients.get_mut(&address) {
+					match clients.get_mut(&address) {
 						Some(client) =>
 							client.broadcast = None,
 						None =>
@@ -87,7 +84,7 @@ impl Network {
 				},
 			}
 
-			match self.clients.get_mut(&address) {
+			match clients.get_mut(&address) {
 				Some(client) => {
 					client.last_active_s = precise_time_s();
 				},
