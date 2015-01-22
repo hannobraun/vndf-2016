@@ -1,6 +1,8 @@
 use acpe::protocol;
 use rustc_serialize::Encodable;
 
+use game::Broadcast;
+
 
 // TODO: Remove Action and Perception
 pub type Action     = protocol::Action<u64, Step>;
@@ -35,12 +37,4 @@ pub enum Step {
 #[derive(Clone, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum Percept {
 	Broadcast(Broadcast),
-}
-
-
-// TODO: Move to another module, something like common::game
-#[derive(Clone, RustcDecodable, RustcEncodable, PartialEq, Show)]
-pub struct Broadcast {
-	pub sender : String,
-	pub message: String,
 }

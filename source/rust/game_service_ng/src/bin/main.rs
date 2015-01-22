@@ -20,10 +20,9 @@ use std::time::Duration;
 use time::precise_time_s;
 
 use args::Args;
-use common::protocol::{
-	Broadcast,
-	ClientEvent,
-};
+
+use common::game::Broadcast;
+use common::protocol::ClientEvent;
 use network::Network;
 
 

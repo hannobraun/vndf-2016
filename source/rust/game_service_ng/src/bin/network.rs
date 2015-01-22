@@ -11,8 +11,8 @@ use acpe::protocol::{
 	Seq,
 };
 
+use common::game::Broadcast;
 use common::protocol::{
-	Broadcast,
 	ClientEvent,
 	Percept,
 	Step,

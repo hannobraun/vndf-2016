@@ -3,10 +3,8 @@ use std::collections::HashSet;
 use acpe::MAX_PACKET_SIZE;
 use time::precise_time_s;
 
-use common::protocol::{
-	Broadcast,
-	Percept,
-};
+use common::game::Broadcast;
+use common::protocol::Percept;
 use test_tools::{
 	GameService,
 	MockClient,
