@@ -8,9 +8,8 @@ use acpe::protocol::Seq;
 
 use game_service::Socket;
 
-
-pub use self::receiver::Receiver;
-pub use self::sender::Sender;
+use self::receiver::Receiver;
+use self::sender::Sender;
 
 
 mod receiver;
