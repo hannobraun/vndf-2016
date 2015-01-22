@@ -64,7 +64,9 @@ impl Network {
 				match percept {
 					Percept::Broadcast(broadcast) => {
 						current_broadcasters.insert(broadcast.sender.clone());
-						self.events.push(ServerEvent::Broadcast(broadcast));
+						self.events.push(
+							ServerEvent::StartBroadcast(broadcast)
+						);
 					},
 				}
 			}

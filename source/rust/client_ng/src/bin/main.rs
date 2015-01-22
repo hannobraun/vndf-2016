@@ -116,7 +116,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 				ServerEvent::SelfId(self_id) => {
 					frame.self_id = self_id;
 				},
-				ServerEvent::Broadcast(broadcast) => {
+				ServerEvent::StartBroadcast(broadcast) => {
 					broadcasts.insert(broadcast.sender.clone(), broadcast);
 				},
 				ServerEvent::StopBroadcast(sender) => {

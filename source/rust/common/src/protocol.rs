@@ -17,8 +17,7 @@ pub enum ClientEvent {
 
 pub enum ServerEvent {
 	SelfId(String),
-	// TODO: Rename to StartBroadcast?
-	Broadcast(Broadcast),
+	StartBroadcast(Broadcast),
 	StopBroadcast(String),
 }
 
