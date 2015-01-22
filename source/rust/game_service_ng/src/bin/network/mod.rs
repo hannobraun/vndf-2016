@@ -31,10 +31,11 @@ pub struct Client {
 
 
 pub struct Network {
-	pub clients : Clients,
-	pub socket  : Socket,
-	pub receiver: Receiver,
-	pub sender  : Sender,
+	pub clients: Clients,
+
+	socket  : Socket,
+	receiver: Receiver,
+	sender  : Sender,
 }
 
 impl Network {
