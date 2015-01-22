@@ -23,9 +23,6 @@ use game_service::{
 };
 
 
-// TODO: Move into main
-pub type Clients = HashMap<SocketAddr, Client>;
-
 
 // TODO: Move into main
 pub struct Client {
