@@ -57,7 +57,7 @@ impl Network {
 	}
 
 	pub fn receive(&mut self) {
-		for (address, action_id, step) in self.receiver.receive(&mut self.socket, &mut self.clients, &mut self.last_actions) {
+		for (address, _, step) in self.receiver.receive(&mut self.socket, &mut self.clients, &mut self.last_actions) {
 			match step {
 				Step::Login => {
 					self.clients.insert(address, Client {
@@ -65,7 +65,6 @@ impl Network {
 						last_active_s: precise_time_s(),
 						broadcast    : None,
 					});
-					self.last_actions.insert(address, action_id);
 				},
 				Step::Broadcast(broadcast) => {
 					match self.clients.get_mut(&address) {
