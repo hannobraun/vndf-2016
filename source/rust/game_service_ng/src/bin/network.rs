@@ -27,7 +27,9 @@ pub struct Network {
 	last_actions: HashMap<SocketAddr, Seq>,
 	socket      : Socket,
 
-	encoder: Encoder,
+	encoder   : Encoder,
+	broadcasts: Vec<Broadcast>,
+	recipients: HashMap<SocketAddr, String>,
 
 	received: Vec<ReceiveResult>,
 	events  : Vec<(SocketAddr, ClientEvent)>,
@@ -39,7 +41,9 @@ impl Network {
 			last_actions: HashMap::new(),
 			socket      : Socket::new(port),
 
-			encoder: Encoder::new(),
+			encoder   : Encoder::new(),
+			broadcasts: Vec::new(),
+			recipients: HashMap::new(),
 
 			received: Vec::new(),
 			events  : Vec::new(),
@@ -51,40 +55,10 @@ impl Network {
 			R: Iterator<Item = (SocketAddr, String)>,
 			B: Iterator<Item = Broadcast>,
 	{
-		let broadcasts: Vec<Broadcast> = broadcasts.collect();
+		self.broadcasts = broadcasts.collect();
 
 		for (address, ref id) in recipients {
-			let header = PerceptionHeader {
-				confirm_action: self.last_actions[address],
-				self_id       : Some(id.clone()),
-			};
-			// TODO(85373160): It's not necessary to keep resending all the
-			//                 broadcasts every frame. The client should confirm
-			//                 the last sent perception and the server should
-			//                 only send what has changed. This requires a list
-			//                 of destroyed entities in Perception.
-			let mut broadcasts = broadcasts.clone();
-
-			// TODO: This just keeps sending perceptions over and over, until
-			//       all data is gone. This potentially means that there are
-			//       always several perceptions "in-flight". This makes it
-			//       complicated (i.e. impossible with the way things currently
-			//       work) to figure out which perceptions has been received by
-			//       the client, which means it can't be determined what data
-			//       needs to be resent. The solution: Only keep one perception
-			//       in-flight at any given time.
-			let mut needs_to_send_perception = true;
-			while needs_to_send_perception {
-				send_perception(
-					&mut self.encoder,
-					&header,
-					&mut broadcasts,
-					&mut self.socket,
-					address,
-				);
-
-				needs_to_send_perception = broadcasts.len() > 0;
-			}
+			self.recipients.insert(address, id.clone());
 		}
 	}
 
@@ -121,6 +95,42 @@ impl Network {
 		}
 
 		self.events.drain()
+	}
+
+	pub fn update(&mut self) {
+		for (address, ref id) in self.recipients.drain() {
+			let header = PerceptionHeader {
+				confirm_action: self.last_actions[address],
+				self_id       : Some(id.clone()),
+			};
+			// TODO(85373160): It's not necessary to keep resending all the
+			//                 broadcasts every frame. The client should confirm
+			//                 the last sent perception and the server should
+			//                 only send what has changed. This requires a list
+			//                 of destroyed entities in Perception.
+			let mut broadcasts = self.broadcasts.clone();
+
+			// TODO: This just keeps sending perceptions over and over, until
+			//       all data is gone. This potentially means that there are
+			//       always several perceptions "in-flight". This makes it
+			//       complicated (i.e. impossible with the way things currently
+			//       work) to figure out which perceptions has been received by
+			//       the client, which means it can't be determined what data
+			//       needs to be resent. The solution: Only keep one perception
+			//       in-flight at any given time.
+			let mut needs_to_send_perception = true;
+			while needs_to_send_perception {
+				send_perception(
+					&mut self.encoder,
+					&header,
+					&mut broadcasts,
+					&mut self.socket,
+					address,
+				);
+
+				needs_to_send_perception = broadcasts.len() > 0;
+			}
+		}
 	}
 }
 

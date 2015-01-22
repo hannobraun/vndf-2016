@@ -115,6 +115,7 @@ fn main() {
 			);
 
 		network.send(recipients, broadcasts);
+		network.update();
 
 		sleep(Duration::milliseconds(20));
 	}
