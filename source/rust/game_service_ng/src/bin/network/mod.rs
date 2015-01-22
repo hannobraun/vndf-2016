@@ -45,4 +45,8 @@ impl Network {
 			sender  : Sender::new(),
 		}
 	}
+
+	pub fn receive(&mut self) {
+		self.receiver.receive(&mut self.socket, &mut self.clients);
+	}
 }

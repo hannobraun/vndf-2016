@@ -33,7 +33,7 @@ fn main() {
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		network.receiver.receive(&mut network.socket, &mut network.clients);
+		network.receive();
 
 		let now_s = precise_time_s();
 		network.clients = network.clients
