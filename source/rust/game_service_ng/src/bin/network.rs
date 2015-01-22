@@ -46,8 +46,11 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, recipients: &[(SocketAddr, String)], broadcasts: &Vec<Broadcast>) {
-		for &(address, ref id) in recipients.iter() {
+	pub fn send<'a, R>(&mut self, mut recipients: R, broadcasts: &Vec<Broadcast>)
+		where
+			R: Iterator<Item = &'a (SocketAddr, String)>,
+	{
+		for &(address, ref id) in recipients {
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],
 				self_id       : Some(id.clone()),

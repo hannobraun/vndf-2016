@@ -120,7 +120,7 @@ fn main() {
 			)
 			.collect();
 
-		network.send(recipients.as_slice(), &broadcasts);
+		network.send(recipients.iter(), &broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}
