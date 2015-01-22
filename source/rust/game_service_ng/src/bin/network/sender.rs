@@ -1,8 +1,10 @@
+use std::collections::HashMap;
 use std::io::net::ip::SocketAddr;
 
 use acpe::protocol::{
 	Encoder,
 	PerceptionHeader,
+	Seq,
 };
 
 use common::protocol::{
@@ -27,13 +29,14 @@ impl Sender {
 
 	pub fn send(
 		&mut self,
-		socket    : &mut Socket,
-		clients   : &mut Clients,
-		broadcasts: &Vec<Broadcast>,
+		socket      : &mut Socket,
+		clients     : &mut Clients,
+		broadcasts  : &Vec<Broadcast>,
+		last_actions: &mut HashMap<SocketAddr, Seq>,
 	) {
 		for (&address, client) in clients.iter() {
 			let header = PerceptionHeader {
-				confirm_action: client.last_action,
+				confirm_action: last_actions[address],
 				self_id       : Some(client.id.clone()),
 			};
 			// TODO(85373160): It's not necessary to keep resending all the

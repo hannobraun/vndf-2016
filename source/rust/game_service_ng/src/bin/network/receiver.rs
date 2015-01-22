@@ -1,5 +1,8 @@
+use std::collections::HashMap;
+use std::io::net::ip::SocketAddr;
 use std::rand::random;
 
+use acpe::protocol::Seq;
 use time::precise_time_s;
 
 use common::protocol::Step;
@@ -25,7 +28,7 @@ impl Receiver {
 		}
 	}
 
-	pub fn receive(&mut self, socket: &mut Socket, clients: &mut Clients) {
+	pub fn receive(&mut self, socket: &mut Socket, clients: &mut Clients, last_actions: &mut HashMap<SocketAddr, Seq>) {
 		socket.receive(&mut self.received);
 
 		for result in self.received.drain() {
@@ -38,10 +41,10 @@ impl Receiver {
 							Step::Login => {
 								clients.insert(address, Client {
 									id           : generate_id(),
-									last_action  : action_id,
 									last_active_s: precise_time_s(),
 									broadcast    : None,
 								});
+								last_actions.insert(address, action_id);
 							},
 							Step::Broadcast(broadcast) => {
 								match clients.get_mut(&address) {
@@ -64,12 +67,12 @@ impl Receiver {
 
 					match clients.get_mut(&address) {
 						Some(client) => {
-							client.last_action   = action.header.id;
 							client.last_active_s = precise_time_s();
 						},
 						None =>
 							continue, // invalid, ignore
 					}
+					last_actions.insert(address, action.header.id);
 				},
 				Err((error, address)) => {
 					print!(
