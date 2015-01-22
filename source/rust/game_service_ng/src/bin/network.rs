@@ -58,11 +58,12 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, clients: &mut Clients, broadcasts: &Vec<Broadcast>) {
-		for (&address, client) in clients.iter() {
+	pub fn send(&mut self, recipients: &[(SocketAddr, String)], broadcasts: &Vec<Broadcast>)
+	{
+		for &(address, ref id) in recipients.iter() {
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],
-				self_id       : Some(client.id.clone()),
+				self_id       : Some(id.clone()),
 			};
 			// TODO(85373160): It's not necessary to keep resending all the
 			//                 broadcasts every frame. The client should confirm

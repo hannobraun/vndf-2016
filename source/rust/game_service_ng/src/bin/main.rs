@@ -11,6 +11,7 @@ extern crate game_service;
 
 
 use std::collections::HashMap;
+use std::io::net::ip::SocketAddr;
 use std::io::timer::sleep;
 use std::os;
 use std::rand::random;
@@ -96,6 +97,13 @@ fn main() {
 			)
 			.collect();
 
+		let recipients: Vec<(SocketAddr, String)> = clients
+			.iter()
+			.map(|(address, client)|
+				(address.clone(), client.id.clone())
+			)
+			.collect();
+
 		let broadcasts = clients
 			.iter()
 			.filter_map(
@@ -109,7 +117,7 @@ fn main() {
 			)
 			.collect();
 
-		network.send(&mut clients, &broadcasts);
+		network.send(recipients.as_slice(), &broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}
