@@ -59,12 +59,12 @@ fn main() {
 					// is updated below, no matter which event was received.
 					()
 				},
-				ClientEvent::StartBroadcast(broadcast) => {
+				ClientEvent::StartBroadcast(message) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							broadcasts.insert(address, Broadcast {
 								sender : client.id.clone(),
-								message: broadcast
+								message: message,
 							});
 						},
 						None =>
