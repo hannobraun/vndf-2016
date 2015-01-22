@@ -37,6 +37,8 @@ impl Receiver {
 				Ok((mut action, address)) => {
 					let action_id = action.header.id;
 
+					last_actions.insert(address, action.header.id);
+
 					for (_, step) in action.drain_update_items() {
 						self.steps.push((address, action_id, step));
 					}
@@ -48,7 +50,6 @@ impl Receiver {
 						None =>
 							continue, // invalid, ignore
 					}
-					last_actions.insert(address, action.header.id);
 				},
 				Err((error, address)) => {
 					print!(
