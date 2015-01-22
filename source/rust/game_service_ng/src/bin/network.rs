@@ -46,10 +46,13 @@ impl Network {
 		}
 	}
 
-	pub fn send<R>(&mut self, mut recipients: R, broadcasts: &Vec<Broadcast>)
+	pub fn send<R, B>(&mut self, mut recipients: R, broadcasts: B)
 		where
 			R: Iterator<Item = (SocketAddr, String)>,
+			B: Iterator<Item = Broadcast>,
 	{
+		let broadcasts: Vec<Broadcast> = broadcasts.collect();
+
 		for (address, ref id) in recipients {
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],

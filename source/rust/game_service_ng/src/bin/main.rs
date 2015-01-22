@@ -112,10 +112,9 @@ fn main() {
 			.map(
 				|(_, broadcast)|
 					broadcast.clone()
-			)
-			.collect();
+			);
 
-		network.send(recipients, &broadcasts);
+		network.send(recipients, broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}
