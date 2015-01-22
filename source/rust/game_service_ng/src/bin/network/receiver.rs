@@ -16,7 +16,7 @@ use super::Clients;
 
 pub struct Receiver {
 	received: Vec<ReceiveResult>,
-	steps   : Vec<(SocketAddr, Seq, Step)>,
+	steps   : Vec<(SocketAddr, Step)>,
 }
 
 impl Receiver {
@@ -28,19 +28,17 @@ impl Receiver {
 	}
 
 	pub fn receive(&mut self, socket: &mut Socket, clients: &mut Clients, last_actions: &mut HashMap<SocketAddr, Seq>)
-		-> Drain<(SocketAddr, Seq, Step)>
+		-> Drain<(SocketAddr, Step)>
 	{
 		socket.receive(&mut self.received);
 
 		for result in self.received.drain() {
 			match result {
 				Ok((mut action, address)) => {
-					let action_id = action.header.id;
-
 					last_actions.insert(address, action.header.id);
 
 					for (_, step) in action.drain_update_items() {
-						self.steps.push((address, action_id, step));
+						self.steps.push((address, step));
 					}
 
 					match clients.get_mut(&address) {

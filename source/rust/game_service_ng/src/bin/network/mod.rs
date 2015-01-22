@@ -57,7 +57,7 @@ impl Network {
 	}
 
 	pub fn receive(&mut self) {
-		for (address, _, step) in self.receiver.receive(&mut self.socket, &mut self.clients, &mut self.last_actions) {
+		for (address, step) in self.receiver.receive(&mut self.socket, &mut self.clients, &mut self.last_actions) {
 			match step {
 				Step::Login => {
 					self.clients.insert(address, Client {
