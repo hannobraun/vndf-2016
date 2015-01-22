@@ -61,7 +61,7 @@ fn main() {
 			)
 			.collect();
 
-		network.sender.send(&mut network.socket, &mut network.clients, &broadcasts);
+		network.send(&broadcasts);
 
 		sleep(Duration::milliseconds(20));
 	}

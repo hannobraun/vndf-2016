@@ -6,6 +6,7 @@ use std::io::net::ip::{
 
 use acpe::protocol::Seq;
 
+use common::protocol::Broadcast;
 use game_service::Socket;
 
 use self::receiver::Receiver;
@@ -44,6 +45,10 @@ impl Network {
 			receiver: Receiver::new(),
 			sender  : Sender::new(),
 		}
+	}
+
+	pub fn send(&mut self, broadcasts: &Vec<Broadcast>) {
+		self.sender.send(&mut self.socket, &mut self.clients, broadcasts);
 	}
 
 	pub fn receive(&mut self) {
