@@ -21,7 +21,10 @@ use time::precise_time_s;
 use args::Args;
 
 use common::game::Broadcast;
-use common::protocol::ClientEvent;
+use common::protocol::{
+	ClientEvent,
+	ServerEvent,
+};
 use network::Network;
 
 
@@ -111,7 +114,7 @@ fn main() {
 			.iter()
 			.map(
 				|(_, broadcast)|
-					broadcast.clone()
+					ServerEvent::StartBroadcast(broadcast.clone())
 			);
 
 		network.send(recipients, broadcasts);

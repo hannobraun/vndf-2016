@@ -15,6 +15,7 @@ use common::game::Broadcast;
 use common::protocol::{
 	ClientEvent,
 	Percept,
+	ServerEvent,
 	Step,
 };
 use game_service::{
@@ -50,16 +51,22 @@ impl Network {
 		}
 	}
 
-	pub fn send<R, B>(&mut self, mut recipients: R, broadcasts: B)
+	pub fn send<R, E>(&mut self, mut recipients: R, mut events: E)
 		where
 			R: Iterator<Item = (SocketAddr, String)>,
-			B: Iterator<Item = Broadcast>,
+			E: Iterator<Item = ServerEvent>,
 	{
-		self.broadcasts = broadcasts
-			.map(|broadcast|
-				(broadcast.sender.clone(), broadcast)
-			)
-			.collect();
+		self.broadcasts.clear();
+		for event in events {
+			match event {
+				ServerEvent::StartBroadcast(broadcast) => {
+					self.broadcasts.insert(broadcast.sender.clone(), broadcast);
+				},
+
+				// TODO: Implement handling for other events
+				_ => (),
+			}
+		}
 
 		for (address, ref id) in recipients {
 			self.recipients.insert(address, id.clone());
