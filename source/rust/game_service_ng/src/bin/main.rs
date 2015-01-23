@@ -60,10 +60,16 @@ fn main() {
 		for (address, event) in incoming_events.drain() {
 			match event {
 				ClientEvent::Login => {
-					clients.insert(address, Client {
+					let client = Client {
 						id           : generate_id(),
 						last_active_s: precise_time_s(),
-					});
+					};
+
+					network.send(
+						vec![(address, client.id.clone())].into_iter(),
+						vec![ServerEvent::SelfId(client.id.clone())].iter()
+					);
+					clients.insert(address, client);
 				},
 				ClientEvent::Heartbeat => {
 					// Nothing to do here, really, as the the last active time
