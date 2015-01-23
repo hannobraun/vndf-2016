@@ -53,13 +53,13 @@ impl Network {
 
 	pub fn send<'a, R, E>(&mut self, mut recipients: R, mut events: E)
 		where
-			R: Iterator<Item = (SocketAddr, String)>,
+			R: Iterator<Item = SocketAddr>,
 			E: Iterator<Item = &'a ServerEvent>,
 	{
 		for event in events {
 			match *event {
 				ServerEvent::SelfId(ref self_id) => {
-					for (address, _) in recipients {
+					for address in recipients {
 						self.recipients.insert(address, Some(self_id.clone()));
 					}
 				},
@@ -75,7 +75,7 @@ impl Network {
 			}
 		}
 
-		for (address, _) in recipients {
+		for address in recipients {
 			if !self.recipients.contains_key(&address) {
 				self.recipients.insert(address, None);
 			}

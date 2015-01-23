@@ -66,7 +66,7 @@ fn main() {
 					};
 
 					network.send(
-						vec![(address, client.id.clone())].into_iter(),
+						vec![address].into_iter(),
 						vec![ServerEvent::SelfId(client.id.clone())].iter()
 					);
 					clients.insert(address, client);
@@ -132,8 +132,8 @@ fn main() {
 
 		let recipients = clients
 			.iter()
-			.map(|(address, client)|
-				(address.clone(), client.id.clone())
+			.map(|(&address, _)|
+				address
 			);
 
 		for (_, broadcast) in broadcasts.iter() {
