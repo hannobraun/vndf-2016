@@ -30,7 +30,7 @@ pub struct Network {
 
 	encoder   : Encoder,
 	broadcasts: HashMap<String, Broadcast>,
-	recipients: HashMap<SocketAddr, String>,
+	recipients: HashMap<SocketAddr, Option<String>>,
 
 	received: Vec<ReceiveResult>,
 	events  : Vec<(SocketAddr, ClientEvent)>,
@@ -75,7 +75,7 @@ impl Network {
 		}
 
 		for (address, ref id) in recipients {
-			self.recipients.insert(address, id.clone());
+			self.recipients.insert(address, Some(id.clone()));
 		}
 	}
 
@@ -118,7 +118,7 @@ impl Network {
 		for (address, ref id) in self.recipients.drain() {
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],
-				self_id       : Some(id.clone()),
+				self_id       : id.clone(),
 			};
 			// TODO(85373160): It's not necessary to keep resending all the
 			//                 broadcasts every frame. The client should confirm
