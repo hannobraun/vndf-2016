@@ -43,6 +43,7 @@ fn main() {
 
 	let mut broadcasts = HashMap::new();
 	let mut clients    = HashMap::new();
+	let mut events     = Vec::new();
 	let mut network    = Network::new(args.port);
 
 	print!("Listening on port {}\n", args.port);
@@ -110,14 +111,11 @@ fn main() {
 				(address.clone(), client.id.clone())
 			);
 
-		let events = broadcasts
-			.iter()
-			.map(
-				|(_, broadcast)|
-					ServerEvent::StartBroadcast(broadcast.clone())
-			);
+		for (_, broadcast) in broadcasts.iter() {
+			events.push(ServerEvent::StartBroadcast(broadcast.clone()));
+		}
 
-		network.send(recipients, events);
+		network.send(recipients, events.drain());
 		network.update();
 
 		sleep(Duration::milliseconds(20));
