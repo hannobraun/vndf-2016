@@ -57,7 +57,6 @@ impl Network {
 			R: Iterator<Item = (SocketAddr, String)>,
 			E: Iterator<Item = &'a ServerEvent>,
 	{
-		self.broadcasts.clear();
 		for event in events {
 			match *event {
 				ServerEvent::StartBroadcast(ref broadcast) => {
@@ -65,6 +64,9 @@ impl Network {
 						broadcast.sender.clone(),
 						broadcast.clone(),
 					);
+				},
+				ServerEvent::StopBroadcast(ref id) => {
+					self.broadcasts.remove(id);
 				},
 
 				// TODO: Implement handling for other events

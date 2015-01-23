@@ -77,7 +77,16 @@ fn main() {
 					}
 				},
 				ClientEvent::StopBroadcast => {
-					broadcasts.remove(&address);
+					match clients.get_mut(&address) {
+						Some(client) => {
+							broadcasts.remove(&address);
+							events.push(
+								ServerEvent::StopBroadcast(client.id.clone())
+							);
+						},
+						None =>
+							continue, // invalid, ignore
+					}
 				},
 			}
 
@@ -104,7 +113,9 @@ fn main() {
 		}
 		for address in to_remove.drain() {
 			broadcasts.remove(&address);
-			clients.remove(&address);
+			if let Some(client) = clients.remove(&address) {
+				events.push(ServerEvent::StopBroadcast(client.id));
+			}
 		}
 
 		let recipients = clients
