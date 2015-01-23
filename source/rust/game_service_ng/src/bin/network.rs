@@ -59,6 +59,11 @@ impl Network {
 	{
 		for event in events {
 			match *event {
+				ServerEvent::SelfId(ref self_id) => {
+					for (address, _) in recipients {
+						self.recipients.insert(address, Some(self_id.clone()));
+					}
+				},
 				ServerEvent::StartBroadcast(ref broadcast) => {
 					self.broadcasts.insert(
 						broadcast.sender.clone(),
@@ -68,9 +73,6 @@ impl Network {
 				ServerEvent::StopBroadcast(ref id) => {
 					self.broadcasts.remove(id);
 				},
-
-				// TODO: Implement handling for other events
-				_ => (),
 			}
 		}
 
