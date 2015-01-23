@@ -45,6 +45,7 @@ fn main() {
 	let mut clients    = HashMap::new();
 	let mut network    = Network::new(args.port);
 
+	let mut incoming_events = Vec::new();
 	let mut outgoing_events = Vec::new();
 
 	print!("Listening on port {}\n", args.port);
@@ -53,6 +54,10 @@ fn main() {
 		outgoing_events.clear();
 
 		for (address, event) in network.receive() {
+			incoming_events.push((address, event));
+		}
+
+		for (address, event) in incoming_events.drain() {
 			match event {
 				ClientEvent::Login => {
 					clients.insert(address, Client {
