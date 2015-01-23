@@ -110,14 +110,14 @@ fn main() {
 				(address.clone(), client.id.clone())
 			);
 
-		let broadcasts = broadcasts
+		let events = broadcasts
 			.iter()
 			.map(
 				|(_, broadcast)|
 					ServerEvent::StartBroadcast(broadcast.clone())
 			);
 
-		network.send(recipients, broadcasts);
+		network.send(recipients, events);
 		network.update();
 
 		sleep(Duration::milliseconds(20));
