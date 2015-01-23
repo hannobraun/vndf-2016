@@ -51,7 +51,6 @@ impl Network {
 		}
 	}
 
-	// TODO: Acquire repient id via SelfId event
 	pub fn send<'a, R, E>(&mut self, mut recipients: R, mut events: E)
 		where
 			R: Iterator<Item = (SocketAddr, String)>,
@@ -76,8 +75,10 @@ impl Network {
 			}
 		}
 
-		for (address, ref id) in recipients {
-			self.recipients.insert(address, Some(id.clone()));
+		for (address, _) in recipients {
+			if !self.recipients.contains_key(&address) {
+				self.recipients.insert(address, None);
+			}
 		}
 	}
 
