@@ -51,6 +51,7 @@ impl Network {
 		}
 	}
 
+	// TODO: Acquire repient id via SelfId event
 	pub fn send<'a, R, E>(&mut self, mut recipients: R, mut events: E)
 		where
 			R: Iterator<Item = (SocketAddr, String)>,
