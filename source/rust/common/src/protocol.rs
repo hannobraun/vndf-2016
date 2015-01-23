@@ -9,6 +9,7 @@ pub type Action     = protocol::Action<u64, Step>;
 pub type Perception = protocol::Perception<String, Percept>;
 
 
+#[derive(Show)]
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
