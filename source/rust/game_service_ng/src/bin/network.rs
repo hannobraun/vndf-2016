@@ -51,16 +51,19 @@ impl Network {
 		}
 	}
 
-	pub fn send<R, E>(&mut self, mut recipients: R, mut events: E)
+	pub fn send<'a, R, E>(&mut self, mut recipients: R, mut events: E)
 		where
 			R: Iterator<Item = (SocketAddr, String)>,
-			E: Iterator<Item = ServerEvent>,
+			E: Iterator<Item = &'a ServerEvent>,
 	{
 		self.broadcasts.clear();
 		for event in events {
-			match event {
-				ServerEvent::StartBroadcast(broadcast) => {
-					self.broadcasts.insert(broadcast.sender.clone(), broadcast);
+			match *event {
+				ServerEvent::StartBroadcast(ref broadcast) => {
+					self.broadcasts.insert(
+						broadcast.sender.clone(),
+						broadcast.clone(),
+					);
 				},
 
 				// TODO: Implement handling for other events

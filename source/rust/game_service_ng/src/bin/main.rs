@@ -49,6 +49,8 @@ fn main() {
 	print!("Listening on port {}\n", args.port);
 
 	loop {
+		events.clear();
+
 		for (address, event) in network.receive() {
 			match event {
 				ClientEvent::Login => {
@@ -115,7 +117,7 @@ fn main() {
 			events.push(ServerEvent::StartBroadcast(broadcast.clone()));
 		}
 
-		network.send(recipients, events.drain());
+		network.send(recipients, events.iter());
 		network.update();
 
 		sleep(Duration::milliseconds(20));
