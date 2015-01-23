@@ -43,13 +43,14 @@ fn main() {
 
 	let mut broadcasts = HashMap::new();
 	let mut clients    = HashMap::new();
-	let mut events     = Vec::new();
 	let mut network    = Network::new(args.port);
+
+	let mut outgoing_events = Vec::new();
 
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		events.clear();
+		outgoing_events.clear();
 
 		for (address, event) in network.receive() {
 			match event {
@@ -80,7 +81,7 @@ fn main() {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							broadcasts.remove(&address);
-							events.push(
+							outgoing_events.push(
 								ServerEvent::StopBroadcast(client.id.clone())
 							);
 						},
@@ -114,7 +115,7 @@ fn main() {
 		for address in to_remove.drain() {
 			broadcasts.remove(&address);
 			if let Some(client) = clients.remove(&address) {
-				events.push(ServerEvent::StopBroadcast(client.id));
+				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
 			}
 		}
 
@@ -125,10 +126,12 @@ fn main() {
 			);
 
 		for (_, broadcast) in broadcasts.iter() {
-			events.push(ServerEvent::StartBroadcast(broadcast.clone()));
+			outgoing_events.push(
+				ServerEvent::StartBroadcast(broadcast.clone())
+			);
 		}
 
-		network.send(recipients, events.iter());
+		network.send(recipients, outgoing_events.iter());
 		network.update();
 
 		sleep(Duration::milliseconds(20));
