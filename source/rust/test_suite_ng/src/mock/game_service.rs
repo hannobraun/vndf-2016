@@ -76,7 +76,7 @@ impl GameService {
 			match self.received.remove(0) {
 				Ok((action, address)) => {
 					let action_handle = ActionHandle {
-						inner  : action,
+						inner  : action.clone(),
 						address: address,
 					};
 
@@ -84,7 +84,7 @@ impl GameService {
 
 					let perception: MessageEncoder<PerceptionHeader<String>, String, Percept> =
 						encoder.message(&PerceptionHeader {
-							confirm_action: action_handle.inner.header.id,
+							confirm_action: action.header.id,
 							self_id       : None,
 						});
 
