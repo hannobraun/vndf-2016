@@ -51,8 +51,6 @@ fn main() {
 	print!("Listening on port {}\n", args.port);
 
 	loop {
-		outgoing_events.clear();
-
 		for (address, event) in network.receive() {
 			incoming_events.push((address, event));
 		}
@@ -67,7 +65,7 @@ fn main() {
 
 					network.send(
 						vec![address].into_iter(),
-						vec![ServerEvent::SelfId(client.id.clone())].iter()
+						vec![ServerEvent::SelfId(client.id.clone())].into_iter()
 					);
 					clients.insert(address, client);
 				},
@@ -142,7 +140,7 @@ fn main() {
 			);
 		}
 
-		network.send(recipients, outgoing_events.iter());
+		network.send(recipients, outgoing_events.drain());
 		network.update();
 
 		sleep(Duration::milliseconds(20));
