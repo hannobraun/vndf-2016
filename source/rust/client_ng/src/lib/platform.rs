@@ -23,7 +23,10 @@ impl Input {
 	}
 
 	pub fn to_json(&self) -> String {
-		json::encode(self)
+		match json::encode(self) {
+			Ok(encoded) => encoded,
+			Err(error)  => panic!("Encoding error: {}", error)
+		}
 	}
 }
 
@@ -41,7 +44,10 @@ impl Frame {
 	}
 
 	pub fn to_json(&self) -> String {
-		json::encode(self)
+		match json::encode(self) {
+			Ok(encoded) => encoded,
+			Err(error)  => panic!("Encoding error: {}", error)
+		}
 	}
 }
 

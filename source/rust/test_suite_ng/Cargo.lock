@@ -3,11 +3,11 @@ name = "test_suite_ng"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "client_ng 0.0.1",
  "common 0.0.1",
  "test_tools_ng 0.0.1",
- "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -17,45 +17,50 @@ version = "0.1.0"
 [[package]]
 name = "acpe"
 version = "0.0.1"
-source = "git+https://github.com/hannobraun/acpe.git#3b06df2ac2d5823b5d7bc489d1d112ceed474697"
+source = "git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup#e26b7354cb6c9c4c6a5efbd779ae5dc7ab0bdd4b"
 dependencies = [
- "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "common 0.0.1",
- "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "common"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
- "rustc-serialize 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
+ "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "game_service_ng"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "common 0.0.1",
- "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gcc"
-version = "0.1.4"
+version = "0.1.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "libc"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.7"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -63,18 +68,19 @@ name = "test_tools_ng"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git)",
+ "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "client_ng 0.0.1",
  "common 0.0.1",
  "game_service_ng 0.0.1",
- "time 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "time"
-version = "0.1.12"
+version = "0.1.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gcc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gcc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

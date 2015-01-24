@@ -18,6 +18,7 @@ time = "*"
 
 [dependencies.acpe]
 git = "https://github.com/hannobraun/acpe.git"
+branch = "vndf-fixup"
 
 [dependencies.common]
 path = "../common"
