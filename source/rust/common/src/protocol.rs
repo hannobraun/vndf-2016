@@ -9,7 +9,7 @@ pub type Action     = protocol::Action<u64, Step>;
 pub type Perception = protocol::Perception<String, Percept>;
 
 
-#[derive(RustcDecodable, RustcEncodable, Show)]
+#[derive(Eq, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
@@ -18,7 +18,7 @@ pub enum ClientEvent {
 }
 
 
-#[derive(RustcDecodable, RustcEncodable, Show)]
+#[derive(Eq, PartialEq, RustcDecodable, RustcEncodable, Show)]
 pub enum ServerEvent {
 	SelfId(String),
 	StartBroadcast(Broadcast),
