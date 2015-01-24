@@ -13,7 +13,6 @@ use acpe::protocol::{
 use common::protocol::{
 	Action,
 	ClientEvent,
-	Percept,
 	ServerEvent,
 	Step,
 };
@@ -40,24 +39,6 @@ impl GameService {
 
 	pub fn port(&self) -> Port {
 		self.port
-	}
-
-	pub fn send_perception(
-		&mut self,
-		address: SocketAddr,
-		update : Vec<(String, Percept)>,
-	) {
-		let events = update
-			.into_iter()
-			.map(|(_, percept)| {
-				let broadcast = match percept {
-					Percept::Broadcast(broadcast) => broadcast,
-				};
-
-				ServerEvent::StartBroadcast(broadcast)
-			});
-
-		self.network.send(Some(address).into_iter(), events);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
