@@ -5,16 +5,10 @@ use std::io::net::ip::{
 use time::precise_time_s;
 
 use acceptance::random_port;
-use acpe::protocol::{
-	ActionHeader,
-	Message,
-};
 
 use common::protocol::{
-	Action,
 	ClientEvent,
 	ServerEvent,
-	Step,
 };
 use game_service::network::Network;
 
@@ -42,19 +36,12 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_action(&mut self) -> Option<Action> {
+	pub fn expect_event(&mut self) -> Option<ClientEvent> {
 		let start_s = precise_time_s();
 
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.5 {
 			self.incoming.extend(self.network.receive());
 		}
-
-		self.incoming = self.incoming
-			.drain()
-			.filter(|&(_, ref event)|
-				event != &ClientEvent::Heartbeat
-			)
-			.collect();
 
 		if self.incoming.len() > 0 {
 			let (address, event) = self.incoming.remove(0);
@@ -67,21 +54,7 @@ impl GameService {
 			);
 			self.network.update();
 
-			let step = match event {
-				ClientEvent::Login =>
-					Step::Login,
-				ClientEvent::Heartbeat =>
-					panic!("Unexpected event: Heartbeat"),
-				ClientEvent::StartBroadcast(broadcast) =>
-					Step::Broadcast(broadcast),
-				ClientEvent::StopBroadcast =>
-					Step::StopBroadcast,
-			};
-
-			let mut action = Message::new(ActionHeader { id: 0 });
-			action.add_update(0, step);
-
-			Some(action)
+			Some(event)
 		}
 		else {
 			None
@@ -89,22 +62,22 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, condition: F) -> Option<Action>
+	pub fn wait_until<F>(&mut self, condition: F) -> Option<ClientEvent>
 		where
-			F: Fn(&mut Option<Action>) -> bool,
+			F: Fn(&mut Option<ClientEvent>) -> bool,
 	{
 		let start_s = precise_time_s();
 
-		let mut action = self.expect_action();
+		let mut event = self.expect_event();
 
-		while !condition(&mut action) {
+		while !condition(&mut event) {
 			if precise_time_s() - start_s > 0.5 {
 				panic!("Condition not satisfied after waiting");
 			}
 
-			action = self.expect_action();
+			event = self.expect_event();
 		}
 
-		action
+		event
 	}
 }

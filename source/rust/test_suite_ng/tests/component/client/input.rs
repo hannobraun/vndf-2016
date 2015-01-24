@@ -2,7 +2,7 @@ use std::iter::repeat;
 
 use acpe::MAX_PACKET_SIZE;
 
-use common::protocol::Step;
+use common::protocol::ClientEvent;
 use test_suite::{
 	Client,
 	MockGameService,
@@ -24,11 +24,9 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 
 	// And it should still work afterwards.
 	client.broadcast(valid_broadcast.as_slice());
-	game_service.wait_until(|action| {
-		let action = action.as_mut().unwrap();
-		action.update_items().any(|&(_, ref entity)|
-			entity == &Step::Broadcast(valid_broadcast.clone())
-		)
+	game_service.wait_until(|event| {
+		print!("event: {:?}\n", event);
+		event == &Some(ClientEvent::StartBroadcast(valid_broadcast.clone()))
 	});
 }
 
