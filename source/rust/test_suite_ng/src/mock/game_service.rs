@@ -90,7 +90,8 @@ impl GameService {
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
 	pub fn wait_until<F>(&mut self, condition: F) -> Option<Action>
-		where F: Fn(&mut Option<Action>) -> bool
+		where
+			F: Fn(&mut Option<Action>) -> bool,
 	{
 		let start_s = precise_time_s();
 
