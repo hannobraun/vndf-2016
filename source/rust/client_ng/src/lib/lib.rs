@@ -9,5 +9,6 @@ extern crate common;
 
 
 pub mod action_assembler;
+pub mod network;
 pub mod platform;
 pub mod socket;

@@ -4,8 +4,7 @@ use std::vec::Drain;
 
 use acpe::protocol::Encoder;
 
-use client::action_assembler::ActionAssembler;
-use client::socket::Socket;
+use action_assembler::ActionAssembler;
 use common::protocol::{
 	ClientEvent,
 	Percept,
@@ -13,6 +12,7 @@ use common::protocol::{
 	ServerEvent,
 	Step,
 };
+use socket::Socket;
 
 
 pub struct Network {

@@ -18,6 +18,7 @@ use std::time::Duration;
 use acpe::MAX_PACKET_SIZE;
 
 use args::Args;
+use client::network::Network;
 use client::platform::{
 	Frame,
 	Input,
@@ -27,7 +28,6 @@ use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use network::Network;
 use platform::{
 	HeadlessIo,
 	PlatformIo,
@@ -36,7 +36,6 @@ use platform::{
 
 
 mod args;
-mod network;
 mod platform;
 mod termios;
 
