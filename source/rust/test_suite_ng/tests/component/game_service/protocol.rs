@@ -43,7 +43,7 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 	client_1.broadcast(
 		0,
-		"I haven't logged in, but send this anyway.".to_string()
+		"I haven't logged in, but am sending this anyway.".to_string(),
 	);
 
 	let message = "This is a broadcast.".to_string();
