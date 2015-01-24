@@ -8,5 +8,6 @@ extern crate "rustc-serialize" as rustc_serialize;
 extern crate common;
 
 
+pub mod action_assembler;
 pub mod platform;
 pub mod socket;
