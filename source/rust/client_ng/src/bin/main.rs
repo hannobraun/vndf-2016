@@ -11,6 +11,11 @@ extern crate client;
 extern crate common;
 
 
+mod args;
+mod platform;
+mod termios;
+
+
 use std::collections::HashMap;
 use std::io::timer::sleep;
 use std::time::Duration;
@@ -33,11 +38,6 @@ use platform::{
 	PlatformIo,
 	PlayerIo,
 };
-
-
-mod args;
-mod platform;
-mod termios;
 
 
 fn main() {
