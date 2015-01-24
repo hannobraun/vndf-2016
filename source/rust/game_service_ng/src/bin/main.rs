@@ -62,10 +62,12 @@ fn main() {
 						last_active_s: precise_time_s(),
 					};
 
+					let login = ServerEvent::SelfId(client.id.clone());
 					network.send(
 						Some(address).into_iter(),
-						Some(ServerEvent::SelfId(client.id.clone())).into_iter()
+						Some(login).into_iter(),
 					);
+
 					clients.insert(address, client);
 				},
 				ClientEvent::Heartbeat => {
