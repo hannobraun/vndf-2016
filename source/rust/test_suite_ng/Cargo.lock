@@ -1,5 +1,5 @@
 [root]
-name = "test_suite_ng"
+name = "test_suite"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
