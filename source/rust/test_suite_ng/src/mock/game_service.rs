@@ -82,7 +82,17 @@ impl GameService {
 						sender : self.socket.inner.sender.clone(),
 					};
 
-					action_handle.confirm();
+					let mut encoder = Encoder::new();
+
+					let perception: MessageEncoder<PerceptionHeader<String>, String, Percept> =
+						encoder.message(&PerceptionHeader {
+							confirm_action: action_handle.inner.header.id,
+							self_id       : None,
+						});
+
+					let message = perception.encode();
+					action_handle.sender.send(message, action_handle.address);
+
 					Some(action_handle)
 				},
 				Err((error, address)) =>
@@ -127,17 +137,4 @@ pub struct ActionHandle {
 
 impl ActionHandle {
 	pub fn ignore(&self) {}
-
-	pub fn confirm(&mut self) {
-		let mut encoder = Encoder::new();
-
-		let perception: MessageEncoder<PerceptionHeader<String>, String, Percept> =
-			encoder.message(&PerceptionHeader {
-				confirm_action: self.inner.header.id,
-				self_id       : None,
-			});
-
-		let message = perception.encode();
-		self.sender.send(message, self.address);
-	}
 }
