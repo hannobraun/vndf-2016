@@ -1,4 +1,4 @@
-use test_tools::{
+use test_suite::{
 	GameService,
 	MockClient,
 };

@@ -6,7 +6,7 @@ dependencies = [
  "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "client_ng 0.0.1",
  "common 0.0.1",
- "test_tools_ng 0.0.1",
+ "game_service_ng 0.0.1",
  "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -62,18 +62,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "rustc-serialize"
 version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "test_tools_ng"
-version = "0.0.1"
-dependencies = [
- "acceptance 0.1.0",
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
- "client_ng 0.0.1",
- "common 0.0.1",
- "game_service_ng 0.0.1",
- "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "time"

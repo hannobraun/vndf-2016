@@ -1,5 +1,5 @@
 use common::protocol::Step;
-use test_tools::{
+use test_suite::{
 	Client,
 	MockGameService,
 };

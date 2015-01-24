@@ -6,7 +6,7 @@ extern crate time;
 
 extern crate client;
 extern crate common;
-extern crate test_tools;
+extern crate test_suite;
 
 
 mod component {

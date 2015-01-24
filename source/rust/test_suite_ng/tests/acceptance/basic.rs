@@ -1,6 +1,6 @@
 use client::platform::Frame;
 use common::game::Broadcast;
-use test_tools::{
+use test_suite::{
 	Client,
 	GameService,
 };

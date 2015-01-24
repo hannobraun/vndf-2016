@@ -3,7 +3,7 @@ use std::iter::repeat;
 use acpe::MAX_PACKET_SIZE;
 
 use common::protocol::Step;
-use test_tools::{
+use test_suite::{
 	Client,
 	MockGameService,
 };

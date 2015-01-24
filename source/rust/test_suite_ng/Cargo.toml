@@ -18,8 +18,8 @@ path = "../client_ng"
 [dependencies.common]
 path = "../common"
 
+[dependencies.game_service_ng]
+path = "../game_service_ng"
+
 [dependencies.acceptance]
 path = "../acceptance-rs"
-
-[dependencies.test_tools_ng]
-path = "../test_tools_ng"

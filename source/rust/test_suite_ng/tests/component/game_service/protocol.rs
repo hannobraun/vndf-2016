@@ -5,7 +5,7 @@ use time::precise_time_s;
 
 use common::game::Broadcast;
 use common::protocol::Percept;
-use test_tools::{
+use test_suite::{
 	GameService,
 	MockClient,
 };
