@@ -8,7 +8,6 @@ use acceptance::random_port;
 use acpe::protocol::{
 	ActionHeader,
 	Message,
-	Seq,
 };
 
 use common::protocol::{
@@ -45,9 +44,8 @@ impl GameService {
 
 	pub fn send_perception(
 		&mut self,
-		address : SocketAddr,
-		_       : Seq,
-		update  : Vec<(String, Percept)>,
+		address: SocketAddr,
+		update : Vec<(String, Percept)>,
 	) {
 		let events = update
 			.into_iter()
