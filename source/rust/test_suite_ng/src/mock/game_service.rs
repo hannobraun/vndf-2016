@@ -65,7 +65,7 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_action(&mut self) -> Option<ActionHandle> {
+	pub fn expect_action(&mut self) -> Option<Action> {
 		let start_s = precise_time_s();
 
 		while self.received.len() == 0 && precise_time_s() - start_s < 0.5 {
@@ -75,11 +75,6 @@ impl GameService {
 		if self.received.len() > 0 {
 			match self.received.remove(0) {
 				Ok((action, address)) => {
-					let action_handle = ActionHandle {
-						inner  : action.clone(),
-						address: address,
-					};
-
 					let mut encoder = Encoder::new();
 
 					let perception: MessageEncoder<PerceptionHeader<String>, String, Percept> =
@@ -91,7 +86,7 @@ impl GameService {
 					let message = perception.encode();
 					self.socket.send(message, address);
 
-					Some(action_handle)
+					Some(action)
 				},
 				Err((error, address)) =>
 					panic!(
@@ -106,8 +101,8 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, condition: F) -> Option<ActionHandle>
-		where F: Fn(&mut Option<ActionHandle>) -> bool
+	pub fn wait_until<F>(&mut self, condition: F) -> Option<Action>
+		where F: Fn(&mut Option<Action>) -> bool
 	{
 		let start_s = precise_time_s();
 
@@ -123,14 +118,4 @@ impl GameService {
 
 		action
 	}
-}
-
-
-pub struct ActionHandle {
-	pub inner  : Action,
-	pub address: SocketAddr,
-}
-
-impl ActionHandle {
-	pub fn ignore(&self) {}
 }

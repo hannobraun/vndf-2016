@@ -26,7 +26,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	client.broadcast(valid_broadcast.as_slice());
 	game_service.wait_until(|action| {
 		let action = action.as_mut().unwrap();
-		action.inner.update_items().any(|&(_, ref entity)|
+		action.update_items().any(|&(_, ref entity)|
 			entity == &Step::Broadcast(valid_broadcast.clone())
 		)
 	});
