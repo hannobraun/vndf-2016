@@ -91,7 +91,7 @@ impl GameService {
 						});
 
 					let message = perception.encode();
-					action_handle.sender.send(message, action_handle.address);
+					action_handle.sender.send(message, address);
 
 					Some(action_handle)
 				},
