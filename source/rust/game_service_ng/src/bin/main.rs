@@ -1,6 +1,9 @@
 #![allow(unstable)]
 
 
+mod args;
+
+
 extern crate getopts;
 
 extern crate acpe;
@@ -26,9 +29,6 @@ use common::protocol::{
 	ServerEvent,
 };
 use game_service::network::Network;
-
-
-mod args;
 
 
 struct Client {
