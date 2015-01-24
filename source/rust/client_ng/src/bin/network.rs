@@ -5,7 +5,7 @@ use std::vec::Drain;
 use acpe::protocol::Encoder;
 
 use action_assembler::ActionAssembler;
-use client::network::Socket;
+use client::socket::Socket;
 use common::protocol::{
 	ClientEvent,
 	Percept,
