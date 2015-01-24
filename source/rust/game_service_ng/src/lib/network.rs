@@ -18,7 +18,8 @@ use common::protocol::{
 	ServerEvent,
 	Step,
 };
-use game_service::{
+
+use super::{
 	ReceiveResult,
 	Socket,
 };

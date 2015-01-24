@@ -25,11 +25,10 @@ use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use network::Network;
+use game_service::network::Network;
 
 
 mod args;
-mod network;
 
 
 struct Client {
