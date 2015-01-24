@@ -5,7 +5,6 @@ use std::io::net::ip::{
 use time::precise_time_s;
 
 use acceptance::random_port;
-use acpe::network::SocketSender;
 use acpe::protocol::{
 	Encoder,
 	Message,
@@ -76,10 +75,9 @@ impl GameService {
 		if self.received.len() > 0 {
 			match self.received.remove(0) {
 				Ok((action, address)) => {
-					let mut action_handle = ActionHandle {
+					let action_handle = ActionHandle {
 						inner  : action,
 						address: address,
-						sender : self.socket.inner.sender.clone(),
 					};
 
 					let mut encoder = Encoder::new();
@@ -91,7 +89,7 @@ impl GameService {
 						});
 
 					let message = perception.encode();
-					action_handle.sender.send(message, address);
+					self.socket.send(message, address);
 
 					Some(action_handle)
 				},
@@ -131,8 +129,6 @@ impl GameService {
 pub struct ActionHandle {
 	pub inner  : Action,
 	pub address: SocketAddr,
-
-	sender : SocketSender,
 }
 
 impl ActionHandle {
