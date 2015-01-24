@@ -24,7 +24,7 @@ use game_service::network::Network;
 pub struct GameService {
 	port    : Port,
 	network : Network,
-	received: Vec<(SocketAddr, ClientEvent)>,
+	incoming: Vec<(SocketAddr, ClientEvent)>,
 }
 
 impl GameService {
@@ -35,7 +35,7 @@ impl GameService {
 		GameService {
 			port    : port,
 			network : network,
-			received: Vec::new(),
+			incoming: Vec::new(),
 		}
 	}
 
@@ -66,19 +66,19 @@ impl GameService {
 	pub fn expect_action(&mut self) -> Option<Action> {
 		let start_s = precise_time_s();
 
-		while self.received.len() == 0 && precise_time_s() - start_s < 0.5 {
-			self.received.extend(self.network.receive());
+		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.5 {
+			self.incoming.extend(self.network.receive());
 		}
 
-		self.received = self.received
+		self.incoming = self.incoming
 			.drain()
 			.filter(|&(_, ref event)|
 				event != &ClientEvent::Heartbeat
 			)
 			.collect();
 
-		if self.received.len() > 0 {
-			let (address, event) = self.received.remove(0);
+		if self.incoming.len() > 0 {
+			let (address, event) = self.incoming.remove(0);
 
 			// This makes sure that confirmations are sent back to the client.
 			// TODO: Remove
