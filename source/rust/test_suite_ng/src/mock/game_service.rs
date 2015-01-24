@@ -75,12 +75,16 @@ impl GameService {
 
 		if self.received.len() > 0 {
 			match self.received.remove(0) {
-				Ok((action, address)) =>
-					Some(ActionHandle {
+				Ok((action, address)) => {
+					let mut action_handle = ActionHandle {
 						inner  : action,
 						address: address,
 						sender : self.socket.inner.sender.clone(),
-					}),
+					};
+
+					action_handle.confirm();
+					Some(action_handle)
+				},
 				Err((error, address)) =>
 					panic!(
 						"Error receiving message from {}: {}",
