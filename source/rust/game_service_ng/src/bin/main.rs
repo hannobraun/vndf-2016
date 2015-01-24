@@ -63,8 +63,8 @@ fn main() {
 					};
 
 					network.send(
-						vec![address].into_iter(),
-						vec![ServerEvent::SelfId(client.id.clone())].into_iter()
+						Some(address).into_iter(),
+						Some(ServerEvent::SelfId(client.id.clone())).into_iter()
 					);
 					clients.insert(address, client);
 				},
