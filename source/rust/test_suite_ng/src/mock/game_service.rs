@@ -6,37 +6,35 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 use acpe::protocol::{
-	Encoder,
+	ActionHeader,
 	Message,
-	MessageEncoder,
-	PerceptionHeader,
 	Seq,
 };
 
 use common::protocol::{
 	Action,
+	ClientEvent,
 	Percept,
+	ServerEvent,
+	Step,
 };
-use game_service::{
-	ReceiveResult,
-	Socket,
-};
+use game_service::network::Network;
 
 
 pub struct GameService {
 	port    : Port,
-	socket  : Socket,
-	received: Vec<ReceiveResult>,
+	network : Network,
+	received: Vec<(SocketAddr, ClientEvent)>,
 }
 
 impl GameService {
 	pub fn start() -> GameService {
-		let port   = random_port(40000, 50000);
-		let socket = Socket::new(port);
+		let port    = random_port(40000, 50000);
+		let network = Network::new(port);
 
 		GameService {
 			port    : port,
-			socket  : socket,
+			network : network,
 			received: Vec::new(),
 		}
 	}
@@ -48,20 +46,20 @@ impl GameService {
 	pub fn send_perception(
 		&mut self,
 		address : SocketAddr,
-		confirm : Seq,
+		_       : Seq,
 		update  : Vec<(String, Percept)>,
 	) {
-		let mut perception: Message<PerceptionHeader<String>, _, _> =
-			Message::new(PerceptionHeader {
-				confirm_action: confirm,
-				self_id       : None,
-			}
-		);
-		for (id, entity) in update.into_iter() {
-			perception.add_update(id, entity);
-		}
+		let events = update
+			.into_iter()
+			.map(|(_, percept)| {
+				let broadcast = match percept {
+					Percept::Broadcast(broadcast) => broadcast,
+				};
 
-		self.socket.send(perception.encode().as_slice(), address);
+				ServerEvent::StartBroadcast(broadcast)
+			});
+
+		self.network.send(Some(address).into_iter(), events);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
@@ -69,31 +67,42 @@ impl GameService {
 		let start_s = precise_time_s();
 
 		while self.received.len() == 0 && precise_time_s() - start_s < 0.5 {
-			self.socket.receive(&mut self.received);
+			self.received.extend(self.network.receive());
 		}
 
+		self.received = self.received
+			.drain()
+			.filter(|&(_, ref event)|
+				event != &ClientEvent::Heartbeat
+			)
+			.collect();
+
 		if self.received.len() > 0 {
-			match self.received.remove(0) {
-				Ok((action, address)) => {
-					let mut encoder = Encoder::new();
+			let (address, event) = self.received.remove(0);
 
-					let perception: MessageEncoder<PerceptionHeader<String>, String, Percept> =
-						encoder.message(&PerceptionHeader {
-							confirm_action: action.header.id,
-							self_id       : None,
-						});
+			// This makes sure that confirmations are sent back to the client.
+			// TODO: Remove
+			self.network.send(
+				Some(address).into_iter(),
+				Some(ServerEvent::SelfId("".to_string())).into_iter(),
+			);
+			self.network.update();
 
-					let message = perception.encode();
-					self.socket.send(message, address);
+			let step = match event {
+				ClientEvent::Login =>
+					Step::Login,
+				ClientEvent::Heartbeat =>
+					panic!("Unexpected event: Heartbeat"),
+				ClientEvent::StartBroadcast(broadcast) =>
+					Step::Broadcast(broadcast),
+				ClientEvent::StopBroadcast =>
+					Step::StopBroadcast,
+			};
 
-					Some(action)
-				},
-				Err((error, address)) =>
-					panic!(
-						"Error receiving message from {}: {}",
-						address, error
-					),
-			}
+			let mut action = Message::new(ActionHeader { id: 0 });
+			action.add_update(0, step);
+
+			Some(action)
 		}
 		else {
 			None
