@@ -14,6 +14,7 @@ use common::protocol::{
 };
 
 
+// TODO: Rewrite on top of Network
 pub struct Client {
 	socket     : Socket,
 	perceptions: Vec<Perception>,
