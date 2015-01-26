@@ -48,8 +48,6 @@ fn main() {
 	let mut incoming_events = Vec::new();
 	let mut outgoing_events = Vec::new();
 
-	print!("Listening on port {}\n", args.port);
-
 	loop {
 		for (address, event) in network.receive() {
 			incoming_events.push((address, event));

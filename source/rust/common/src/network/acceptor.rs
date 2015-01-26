@@ -41,6 +41,8 @@ impl<R> Acceptor<R> where R: Decodable + Send {
 				Err(error)   => panic!("Error creating acceptor: {}", error),
 			};
 
+			print!("Listening on port {}\n", port);
+
 			loop {
 				let mut stream = match acceptor.accept() {
 					Ok(stream) => stream,
