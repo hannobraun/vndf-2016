@@ -18,6 +18,7 @@ use common::protocol::{
 };
 
 
+// TODO: Replace API with stream-based one
 pub struct Client {
 	network   : Network,
 	incoming  : Vec<ServerEvent>,
