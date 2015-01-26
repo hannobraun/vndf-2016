@@ -40,7 +40,7 @@ impl Client {
 		self.network.send_raw(data);
 	}
 
-	pub fn send_action(&mut self, _: Seq, steps: Vec<Step>) {
+	pub fn send_action(&mut self, steps: Vec<Step>) {
 		for step in steps.into_iter() {
 			let event = match step {
 				Step::Login =>
@@ -55,12 +55,12 @@ impl Client {
 		self.network.update();
 	}
 
-	pub fn login(&mut self, seq: Seq) {
-		self.send_action(seq, vec![Step::Login]);
+	pub fn login(&mut self, _: Seq) {
+		self.send_action(vec![Step::Login]);
 	}
 
-	pub fn broadcast(&mut self, seq: Seq, text: String) {
-		self.send_action(seq, vec![Step::Broadcast(text)]);
+	pub fn broadcast(&mut self, _: Seq, text: String) {
+		self.send_action(vec![Step::Broadcast(text)]);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
