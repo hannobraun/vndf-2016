@@ -4,8 +4,6 @@ use test_suite::{
 };
 
 
-// TODO: Rewrite using raw sockets. The mock client shouldn't be expected to
-//       have this low-level access.
 #[test]
 fn it_should_disconnect_clients_sending_invalid_data() {
 	let invalid_utf8    = [0x80u8];
