@@ -1,37 +1,24 @@
-use std::collections::HashMap;
 use std::io::net::ip::Port;
 
-use acpe::protocol::{
-	Message,
-	PerceptionHeader,
-};
 use time::precise_time_s;
 
 use client::network::Network;
-use common::game::Broadcast;
 use common::protocol::{
 	ClientEvent,
-	Percept,
-	Perception,
 	ServerEvent,
 };
 
 
-// TODO: Replace API with stream-based one
 pub struct Client {
-	network   : Network,
-	incoming  : Vec<ServerEvent>,
-	broadcasts: HashMap<String, Broadcast>,
-	self_id   : Option<String>,
+	network : Network,
+	incoming: Vec<ServerEvent>,
 }
 
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			network   : Network::new(("localhost", port)),
-			incoming  : Vec::new(),
-			broadcasts: HashMap::new(),
-			self_id   : None,
+			network : Network::new(("localhost", port)),
+			incoming: Vec::new(),
 		}
 	}
 
@@ -41,7 +28,7 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_perception(&mut self) -> Option<Perception> {
+	pub fn expect_event(&mut self) -> Option<ServerEvent> {
 		let start_s = precise_time_s();
 
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -50,36 +37,7 @@ impl Client {
 		self.network.update();
 
 		if self.incoming.len() > 0 {
-			for event in self.incoming.drain() {
-				match event {
-					ServerEvent::SelfId(self_id) => {
-						self.self_id = Some(self_id);
-					},
-					ServerEvent::StartBroadcast(broadcast) => {
-						self.broadcasts.insert(
-							broadcast.sender.clone(),
-							broadcast
-						);
-					},
-					ServerEvent::StopBroadcast(sender) => {
-						self.broadcasts.remove(&sender);
-					},
-				}
-			}
-
-			let mut perception = Message::new(PerceptionHeader {
-				confirm_action: 0,
-				self_id       : self.self_id.clone(),
-			});
-
-			for (_, broadcast) in self.broadcasts.iter() {
-				perception.add_update(
-					broadcast.sender.clone(),
-					Percept::Broadcast(broadcast.clone()),
-				);
-			}
-
-			Some(perception)
+			Some(self.incoming.remove(0))
 		}
 		else {
 			None
@@ -87,21 +45,21 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<Perception>
-		where F: FnMut(&Option<Perception>) -> bool
+	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<ServerEvent>
+		where F: FnMut(&Option<ServerEvent>) -> bool
 	{
 		let start_s = precise_time_s();
 
-		let mut perception = self.expect_perception();
+		let mut event = self.expect_event();
 
-		while !condition(&perception) {
+		while !condition(&event) {
 			if precise_time_s() - start_s > 0.5 {
 				panic!("Condition not satisfied after waiting");
 			}
 
-			perception = self.expect_perception();
+			event = self.expect_event();
 		}
 
-		perception
+		event
 	}
 }

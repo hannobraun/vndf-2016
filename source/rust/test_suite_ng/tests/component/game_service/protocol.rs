@@ -1,7 +1,6 @@
-use common::game::Broadcast;
 use common::protocol::{
 	ClientEvent,
-	Percept,
+	ServerEvent,
 };
 use test_suite::{
 	GameService,
@@ -23,24 +22,23 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	client_2.send(ClientEvent::Login);
 	client_2.send(ClientEvent::StartBroadcast(message.clone()));
 
-	let perception =
-		client_2.wait_until(|perception| {
-			match *perception {
-				Some(ref perception) => perception.update_items().count() == 1,
-				None                 => false,
+	let mut received_message = String::new();
+	client_2.wait_until(|event| {
+		if let &Some(ref event) = event {
+			if let &ServerEvent::StartBroadcast(ref broadcast) = event {
+				received_message = broadcast.message.clone();
+				true
 			}
-		})
-		.unwrap();
-
-	let percept = Percept::Broadcast(Broadcast {
-		sender : perception.header.self_id.as_ref().unwrap().clone(),
-		message: message.clone(),
+			else {
+				false
+			}
+		}
+		else {
+			false
+		}
 	});
-	let percepts: Vec<Percept> = perception
-		.update_items()
-		.map(|&(_, ref percept)| percept.clone())
-		.collect();
-	assert_eq!(percepts[0], percept);
+
+	assert_eq!(received_message, message)
 }
 
 #[test]
@@ -48,30 +46,44 @@ fn it_should_ignore_duplicate_logins() {
 	let     game_service = GameService::start();
 	let mut client       = MockClient::start(game_service.port());
 
-	let mut self_id = None;
+	client.send(ClientEvent::Login);
+	let event = client.expect_event().unwrap();
+
+	let self_id =
+		if let ServerEvent::SelfId(self_id) = event {
+			self_id
+		}
+		else {
+			panic!("Expected self id");
+		};
 
 	client.send(ClientEvent::Login);
-	client.wait_until(|perception| {
-		match *perception {
-			Some(ref perception) => {
-				self_id = perception.header.self_id.clone();
-				true
+	client.send(
+		ClientEvent::StartBroadcast("This is a broadcast.".to_string())
+	);
+
+	let mut received_self_id   = String::new();
+	let mut broadcast_received = false;
+	client.wait_until(|event| {
+		match *event {
+			Some(ref event) => {
+				match *event {
+					ServerEvent::SelfId(ref self_id) => {
+						received_self_id = self_id.clone();
+						broadcast_received
+					},
+					ServerEvent::StartBroadcast(_) => {
+						broadcast_received = true;
+						false
+					},
+					_ =>
+						false,
+				}
 			},
 			None =>
 				false,
 		}
 	});
 
-	// Log in a second time, expect to keep the same id.
-	client.send(ClientEvent::Login);
-	client.wait_until(|perception| {
-		match *perception {
-			Some(ref perception) => {
-				assert_eq!(perception.header.self_id, self_id);
-				true
-			},
-			None =>
-				false,
-		}
-	});
+	assert_eq!(self_id, received_self_id);
 }
