@@ -35,10 +35,6 @@ impl Client {
 		}
 	}
 
-	pub fn send_raw(&mut self, data: &[u8]) {
-		self.network.send_raw(data);
-	}
-
 	pub fn send_action(&mut self, steps: Vec<Step>) {
 		for step in steps.into_iter() {
 			let event = match step {
