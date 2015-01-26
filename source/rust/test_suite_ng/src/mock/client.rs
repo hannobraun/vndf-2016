@@ -55,7 +55,7 @@ impl Client {
 		self.network.update();
 	}
 
-	pub fn login(&mut self, _: Seq) {
+	pub fn login(&mut self) {
 		self.send_action(vec![Step::Login]);
 	}
 

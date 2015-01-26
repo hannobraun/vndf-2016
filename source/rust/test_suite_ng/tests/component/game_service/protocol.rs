@@ -18,7 +18,7 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	);
 
 	let message = "This is a broadcast.".to_string();
-	client_2.login(0);
+	client_2.login();
 	client_2.broadcast(1, message.clone());
 
 	let perception =
@@ -48,7 +48,7 @@ fn it_should_ignore_duplicate_logins() {
 
 	let mut self_id = None;
 
-	client.login(0);
+	client.login();
 	client.wait_until(|perception| {
 		match *perception {
 			Some(ref perception) => {
@@ -61,7 +61,7 @@ fn it_should_ignore_duplicate_logins() {
 	});
 
 	// Log in a second time, expect to keep the same id.
-	client.login(1);
+	client.login();
 	client.wait_until(|perception| {
 		match *perception {
 			Some(ref perception) => {
