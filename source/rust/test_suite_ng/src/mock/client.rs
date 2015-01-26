@@ -66,8 +66,8 @@ impl Client {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, condition: F) -> Option<Perception>
-		where F: Fn(&Option<Perception>) -> bool
+	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<Perception>
+		where F: FnMut(&Option<Perception>) -> bool
 	{
 		let start_s = precise_time_s();
 
