@@ -21,22 +21,24 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	client_2.login(0);
 	client_2.broadcast(1, message.clone());
 
-	client_2.wait_until(|perception|
-		if let &Some(ref perception) = perception {
-			let sender = perception.header.self_id.as_ref().unwrap().clone();
-			perception.update_items().any(|&(ref id, ref entity)| {
-				let percept = Percept::Broadcast(Broadcast {
-					sender : sender.clone(),
-					message: message.clone(),
-				});
+	let perception =
+		client_2.wait_until(|perception| {
+			match *perception {
+				Some(ref perception) => perception.update_items().count() == 1,
+				None                 => false,
+			}
+		})
+		.unwrap();
 
-				id == &sender && entity == &percept
-			})
-		}
-		else {
-			false
-		}
-	);
+	let percept = Percept::Broadcast(Broadcast {
+		sender : perception.header.self_id.as_ref().unwrap().clone(),
+		message: message.clone(),
+	});
+	let percepts: Vec<Percept> = perception
+		.update_items()
+		.map(|&(_, ref percept)| percept.clone())
+		.collect();
+	assert_eq!(percepts[0], percept);
 }
 
 #[test]
