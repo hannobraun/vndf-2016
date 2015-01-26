@@ -143,6 +143,7 @@ fn main() {
 			}
 		}
 		for address in to_remove.drain() {
+			print!("Removing {}\n", address);
 			broadcasts.remove(&address);
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
