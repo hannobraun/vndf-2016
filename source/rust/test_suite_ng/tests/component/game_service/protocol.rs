@@ -38,3 +38,36 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 		}
 	);
 }
+
+#[test]
+fn it_should_ignore_duplicate_logins() {
+	let     game_service = GameService::start();
+	let mut client       = MockClient::start(game_service.port());
+
+	let mut self_id = None;
+
+	client.login(0);
+	client.wait_until(|perception| {
+		match *perception {
+			Some(ref perception) => {
+				self_id = perception.header.self_id.clone();
+				true
+			},
+			None =>
+				false,
+		}
+	});
+
+	// Log in a second time, expect to keep the same id.
+	client.login(1);
+	client.wait_until(|perception| {
+		match *perception {
+			Some(ref perception) => {
+				assert_eq!(perception.header.self_id, self_id);
+				true
+			},
+			None =>
+				false,
+		}
+	});
+}

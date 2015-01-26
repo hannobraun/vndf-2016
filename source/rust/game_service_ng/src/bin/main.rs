@@ -58,19 +58,24 @@ fn main() {
 		for (address, event) in incoming_events.drain() {
 			match event {
 				ClientEvent::Login => {
-					let client = Client {
-						id           : generate_id(),
-						last_active_s: precise_time_s(),
-					};
+					if clients.contains_key(&address) {
+						print!("Ignoring Login: {}\n", address);
+					}
+					else {
+						let client = Client {
+							id           : generate_id(),
+							last_active_s: precise_time_s(),
+						};
 
-					let login = ServerEvent::SelfId(client.id.clone());
-					network.send(
-						Some(address).into_iter(),
-						Some(login).into_iter(),
-					);
+						let login = ServerEvent::SelfId(client.id.clone());
+						network.send(
+							Some(address).into_iter(),
+							Some(login).into_iter(),
+						);
 
-					print!("Login: {}, {:?}\n", address, client);
-					clients.insert(address, client);
+						print!("Login: {}, {:?}\n", address, client);
+						clients.insert(address, client);
+					}
 				},
 				ClientEvent::Heartbeat => {
 					print!("Heartbeat: {}\n", address);
