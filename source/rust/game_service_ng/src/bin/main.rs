@@ -69,9 +69,12 @@ fn main() {
 						Some(login).into_iter(),
 					);
 
+					print!("Login: {}, {:?}\n", address, client);
 					clients.insert(address, client);
 				},
 				ClientEvent::Heartbeat => {
+					print!("Heartbeat: {}\n", address);
+
 					// Nothing to do here, really, as the the last active time
 					// is updated below, no matter which event was received.
 					()
@@ -79,25 +82,33 @@ fn main() {
 				ClientEvent::StartBroadcast(message) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
-							broadcasts.insert(address, Broadcast {
+							let broadcast = Broadcast {
 								sender : client.id.clone(),
 								message: message,
-							});
+							};
+
+							print!("Broadcast: {}, {:?}\n", address, broadcast);
+							broadcasts.insert(address, broadcast);
 						},
-						None =>
-							continue, // invalid, ignore
+						None => {
+							print!("Ignoring broadcast: {}\n", address);
+							continue; // invalid, ignore
+						},
 					}
 				},
 				ClientEvent::StopBroadcast => {
 					match clients.get_mut(&address) {
 						Some(client) => {
+							print!("Stop Broadcast: {}\n", address);
 							broadcasts.remove(&address);
 							outgoing_events.push(
 								ServerEvent::StopBroadcast(client.id.clone())
 							);
 						},
-						None =>
-							continue, // invalid, ignore
+						None => {
+							print!("Ignoring Stop Broadcast: {}\n", address);
+							continue; // invalid, ignore
+						},
 					}
 				},
 			}
