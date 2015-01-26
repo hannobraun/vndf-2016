@@ -6,10 +6,7 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 
-use common::protocol::{
-	ClientEvent,
-	ServerEvent,
-};
+use common::protocol::ClientEvent;
 use game_service::network::Network;
 
 
@@ -44,14 +41,7 @@ impl GameService {
 		}
 
 		if self.incoming.len() > 0 {
-			let (address, event) = self.incoming.remove(0);
-
-			// This makes sure that confirmations are sent back to the client.
-			// TODO: Remove
-			self.network.send(
-				Some(address).into_iter(),
-				Some(ServerEvent::SelfId("".to_string())).into_iter(),
-			);
+			let (_, event) = self.incoming.remove(0);
 
 			Some(event)
 		}
