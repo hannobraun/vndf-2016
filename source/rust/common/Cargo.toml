@@ -7,8 +7,3 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 [dependencies]
 rustc-serialize = "*"
-
-
-[dependencies.acpe]
-git = "https://github.com/hannobraun/acpe.git"
-branch = "vndf-fixup"

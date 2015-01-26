@@ -15,10 +15,5 @@ name = "vndf-game-service-ng"
 [dependencies]
 time = "*"
 
-
-[dependencies.acpe]
-git = "https://github.com/hannobraun/acpe.git"
-branch = "vndf-fixup"
-
 [dependencies.common]
 path = "../common"

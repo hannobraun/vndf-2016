@@ -5,8 +5,6 @@
 extern crate getopts;
 extern crate libc;
 
-extern crate acpe;
-
 extern crate client;
 extern crate common;
 
@@ -19,8 +17,6 @@ mod termios;
 use std::collections::HashMap;
 use std::io::timer::sleep;
 use std::time::Duration;
-
-use acpe::MAX_PACKET_SIZE;
 
 use args::Args;
 use client::network::Network;
@@ -85,7 +81,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 							"Broadcasts can not be empty".to_string()
 						);
 					}
-					else if message.len() > MAX_PACKET_SIZE / 2 {
+					else if message.len() > 256 {
 						frame.status = Status::Error(
 							"Broadcast message too long".to_string()
 						);

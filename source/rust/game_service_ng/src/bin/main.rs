@@ -6,7 +6,6 @@ mod args;
 
 extern crate getopts;
 
-extern crate acpe;
 extern crate time;
 
 extern crate common;

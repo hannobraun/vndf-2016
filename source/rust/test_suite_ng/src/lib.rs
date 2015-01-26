@@ -1,7 +1,6 @@
 #![allow(unstable)]
 
 
-extern crate acpe;
 extern crate time;
 
 extern crate acceptance;

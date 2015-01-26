@@ -7,11 +7,6 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 [dependencies]
 time = "*"
 
-
-[dependencies.acpe]
-git = "https://github.com/hannobraun/acpe.git"
-branch = "vndf-fixup"
-
 [dependencies.client_ng]
 path = "../client_ng"
 

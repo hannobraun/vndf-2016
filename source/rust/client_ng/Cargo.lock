@@ -2,16 +2,7 @@
 name = "client_ng"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "common 0.0.1",
- "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "acpe"
-version = "0.0.1"
-source = "git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup#e26b7354cb6c9c4c6a5efbd779ae5dc7ab0bdd4b"
-dependencies = [
  "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -19,7 +10,6 @@ dependencies = [
 name = "common"
 version = "0.0.1"
 dependencies = [
- "acpe 0.0.1 (git+https://github.com/hannobraun/acpe.git?branch=vndf-fixup)",
  "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
