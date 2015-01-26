@@ -1,44 +1,58 @@
+use std::collections::HashMap;
 use std::io::net::ip::Port;
 
 use acpe::protocol::{
-	ActionHeader,
 	Message,
+	PerceptionHeader,
 	Seq,
 };
 use time::precise_time_s;
 
-use client::socket::Socket;
+use client::network::Network;
+use common::game::Broadcast;
 use common::protocol::{
+	ClientEvent,
+	Percept,
 	Perception,
+	ServerEvent,
 	Step,
 };
 
 
-// TODO: Rewrite on top of Network
 pub struct Client {
-	socket     : Socket,
-	perceptions: Vec<Perception>,
+	network   : Network,
+	incoming  : Vec<ServerEvent>,
+	broadcasts: HashMap<String, Broadcast>,
+	self_id   : Option<String>,
 }
 
 impl Client {
 	pub fn start(port: Port) -> Client {
 		Client {
-			socket     : Socket::new(("localhost", port)),
-			perceptions: Vec::new(),
+			network   : Network::new(("localhost", port)),
+			incoming  : Vec::new(),
+			broadcasts: HashMap::new(),
+			self_id   : None,
 		}
 	}
 
 	pub fn send_raw(&mut self, data: &[u8]) {
-		self.socket.send(data);
+		self.network.send_raw(data);
 	}
 
-	pub fn send_action(&mut self, seq: Seq, steps: Vec<Step>) {
-		let mut action = Message::new(ActionHeader { id: seq });
+	pub fn send_action(&mut self, _: Seq, steps: Vec<Step>) {
 		for step in steps.into_iter() {
-			action.add_update(0, step);
+			let event = match step {
+				Step::Login =>
+					ClientEvent::Login,
+				Step::Broadcast(broadcast) =>
+					ClientEvent::StartBroadcast(broadcast),
+				Step::StopBroadcast =>
+					ClientEvent::StopBroadcast,
+			};
+			self.network.send(event);
 		}
-
-		self.send_raw(action.encode().as_slice());
+		self.network.update();
 	}
 
 	pub fn login(&mut self, seq: Seq) {
@@ -53,12 +67,42 @@ impl Client {
 	pub fn expect_perception(&mut self) -> Option<Perception> {
 		let start_s = precise_time_s();
 
-		while self.perceptions.len() == 0 && precise_time_s() - start_s < 0.1 {
-			self.socket.receive(&mut self.perceptions);
+		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.1 {
+			self.incoming.extend(self.network.receive());
 		}
+		self.network.update();
 
-		if self.perceptions.len() > 0 {
-			Some(self.perceptions.remove(0))
+		if self.incoming.len() > 0 {
+			for event in self.incoming.drain() {
+				match event {
+					ServerEvent::SelfId(self_id) => {
+						self.self_id = Some(self_id);
+					},
+					ServerEvent::StartBroadcast(broadcast) => {
+						self.broadcasts.insert(
+							broadcast.sender.clone(),
+							broadcast
+						);
+					},
+					ServerEvent::StopBroadcast(sender) => {
+						self.broadcasts.remove(&sender);
+					},
+				}
+			}
+
+			let mut perception = Message::new(PerceptionHeader {
+				confirm_action: 0,
+				self_id       : self.self_id.clone(),
+			});
+
+			for (_, broadcast) in self.broadcasts.iter() {
+				perception.add_update(
+					broadcast.sender.clone(),
+					Percept::Broadcast(broadcast.clone()),
+				);
+			}
+
+			Some(perception)
 		}
 		else {
 			None
