@@ -54,6 +54,12 @@ impl Network {
 		self.action_assembler.add_step(step);
 	}
 
+	/// This method is intended for testing and should not be used in production
+	/// code.
+	pub fn send_raw(&mut self, message: &[u8]) {
+		self.server.send(message);
+	}
+
 	pub fn receive(&mut self) -> Drain<ServerEvent> {
 		self.server.receive(&mut self.perceptions);
 
