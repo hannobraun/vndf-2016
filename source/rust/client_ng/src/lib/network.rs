@@ -31,6 +31,4 @@ impl Network {
 			Err(())    => panic!("Error receiving from connection"),
 		}
 	}
-
-	pub fn update(&mut self) {}
 }

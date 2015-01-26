@@ -24,7 +24,6 @@ impl Client {
 
 	pub fn send(&mut self, event: ClientEvent) {
 		self.network.send(event);
-		self.network.update();
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
@@ -34,7 +33,6 @@ impl Client {
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.1 {
 			self.incoming.extend(self.network.receive());
 		}
-		self.network.update();
 
 		if self.incoming.len() > 0 {
 			Some(self.incoming.remove(0))
