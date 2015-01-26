@@ -31,6 +31,7 @@ use common::protocol::{
 use game_service::network::Network;
 
 
+#[derive(Show)]
 struct Client {
 	pub id           : String,
 	pub last_active_s: f64,
