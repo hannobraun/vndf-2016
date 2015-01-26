@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::collections::{
+	HashMap,
+	HashSet,
+};
 use std::io::net::ip::{
 	Port,
 	SocketAddr,
@@ -31,7 +34,8 @@ pub struct Network {
 
 	encoder   : Encoder,
 	broadcasts: HashMap<String, Broadcast>,
-	recipients: HashMap<SocketAddr, Option<String>>,
+	recipients: HashSet<SocketAddr>,
+	self_ids  : HashMap<SocketAddr, Option<String>>,
 
 	received: Vec<ReceiveResult>,
 	events  : Vec<(SocketAddr, ClientEvent)>,
@@ -45,7 +49,8 @@ impl Network {
 
 			encoder   : Encoder::new(),
 			broadcasts: HashMap::new(),
-			recipients: HashMap::new(),
+			recipients: HashSet::new(),
+			self_ids  : HashMap::new(),
 
 			received: Vec::new(),
 			events  : Vec::new(),
@@ -61,7 +66,8 @@ impl Network {
 			match event {
 				ServerEvent::SelfId(ref self_id) => {
 					for address in recipients {
-						self.recipients.insert(address, Some(self_id.clone()));
+						self.recipients.insert(address);
+						self.self_ids.insert(address, Some(self_id.clone()));
 					}
 				},
 				ServerEvent::StartBroadcast(ref broadcast) => {
@@ -77,8 +83,8 @@ impl Network {
 		}
 
 		for address in recipients {
-			if !self.recipients.contains_key(&address) {
-				self.recipients.insert(address, None);
+			if !self.recipients.contains(&address) {
+				self.recipients.insert(address);
 			}
 		}
 	}
@@ -119,10 +125,14 @@ impl Network {
 	}
 
 	pub fn update(&mut self) {
-		for (address, ref id) in self.recipients.drain() {
+		for address in self.recipients.drain() {
+			let self_id = match self.self_ids.get(&address) {
+				Some(self_id) => self_id.clone(),
+				None          => None,
+			};
 			let header = PerceptionHeader {
 				confirm_action: self.last_actions[address],
-				self_id       : id.clone(),
+				self_id       : self_id,
 			};
 			// TODO(85373160): It's not necessary to keep resending all the
 			//                 broadcasts every frame. The client should confirm
