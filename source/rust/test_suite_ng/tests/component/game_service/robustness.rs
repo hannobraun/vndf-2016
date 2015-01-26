@@ -1,3 +1,5 @@
+// TODO: Merge into protocol
+
 use test_suite::{
 	GameService,
 	MockClient,
