@@ -4,6 +4,7 @@ use std::io::{BufferedReader, PipeStream};
 
 pub struct Process {
 	process: io::Process,
+	path   : String,
 	stdout : BufferedReader<PipeStream>,
 	stderr : BufferedReader<PipeStream>,
 	stdin  : PipeStream,
@@ -22,6 +23,7 @@ impl Process {
 
 		Process {
 			process: process,
+			path   : path.to_string(),
 			stdout : to_reader(stdout_opt),
 			stderr : to_reader(stderr_opt),
 			stdin  : stdin_opt.expect("Expected stdin"),
@@ -58,6 +60,7 @@ impl Drop for Process {
 	fn drop(&mut self) {
 		self.kill();
 
+		print!("Output for process {}\n", self.path);
 		print!(
 			"stdout:\n{}\n",
 			self.stdout.read_to_string().unwrap(),
