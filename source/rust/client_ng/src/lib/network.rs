@@ -26,18 +26,13 @@ pub struct Network {
 
 impl Network {
 	pub fn new<T: ToSocketAddr>(server_address: T) -> Network {
-		let action_assembler = ActionAssembler::new();
-		let encoder          = Encoder::new();
-		let perceptions      = Vec::new();
-		let server           = Socket::new(server_address);
-
 		Network {
-			action_assembler: action_assembler,
+			action_assembler: ActionAssembler::new(),
 			broadcasters    : HashSet::new(),
-			encoder         : encoder,
+			encoder         : Encoder::new(),
 			events          : Vec::new(),
-			perceptions     : perceptions,
-			server          : server,
+			perceptions     : Vec::new(),
+			server          : Socket::new(server_address),
 		}
 	}
 
