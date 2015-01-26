@@ -1,5 +1,5 @@
 use std::collections::HashSet;
-use std::io::net::ip::SocketAddr;
+use std::io::net::ip::ToSocketAddr;
 use std::vec::Drain;
 
 use acpe::protocol::Encoder;
@@ -25,7 +25,7 @@ pub struct Network {
 }
 
 impl Network {
-	pub fn new(server_address: SocketAddr) -> Network {
+	pub fn new<T: ToSocketAddr>(server_address: T) -> Network {
 		let mut action_assembler = ActionAssembler::new();
 		let     encoder          = Encoder::new();
 		let     perceptions      = Vec::new();
