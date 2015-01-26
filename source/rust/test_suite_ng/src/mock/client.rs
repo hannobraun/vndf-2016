@@ -14,7 +14,6 @@ use common::protocol::{
 	Percept,
 	Perception,
 	ServerEvent,
-	Step,
 };
 
 
@@ -36,27 +35,9 @@ impl Client {
 		}
 	}
 
-	pub fn send_action(&mut self, steps: Vec<Step>) {
-		for step in steps.into_iter() {
-			let event = match step {
-				Step::Login =>
-					ClientEvent::Login,
-				Step::Broadcast(broadcast) =>
-					ClientEvent::StartBroadcast(broadcast),
-				Step::StopBroadcast =>
-					ClientEvent::StopBroadcast,
-			};
-			self.network.send(event);
-		}
+	pub fn send(&mut self, event: ClientEvent) {
+		self.network.send(event);
 		self.network.update();
-	}
-
-	pub fn login(&mut self) {
-		self.send_action(vec![Step::Login]);
-	}
-
-	pub fn broadcast(&mut self, text: String) {
-		self.send_action(vec![Step::Broadcast(text)]);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
