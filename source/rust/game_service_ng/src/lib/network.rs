@@ -74,6 +74,4 @@ impl Network {
 
 		self.incoming.drain()
 	}
-
-	pub fn update(&mut self) {}
 }

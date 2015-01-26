@@ -52,7 +52,6 @@ impl GameService {
 				Some(address).into_iter(),
 				Some(ServerEvent::SelfId("".to_string())).into_iter(),
 			);
-			self.network.update();
 
 			Some(event)
 		}

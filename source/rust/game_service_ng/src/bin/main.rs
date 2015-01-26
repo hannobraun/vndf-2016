@@ -161,7 +161,6 @@ fn main() {
 		}
 
 		network.send(recipients, outgoing_events.drain());
-		network.update();
 
 		sleep(Duration::milliseconds(20));
 	}
