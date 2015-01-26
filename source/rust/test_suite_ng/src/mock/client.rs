@@ -4,7 +4,6 @@ use std::io::net::ip::Port;
 use acpe::protocol::{
 	Message,
 	PerceptionHeader,
-	Seq,
 };
 use time::precise_time_s;
 
@@ -59,7 +58,7 @@ impl Client {
 		self.send_action(vec![Step::Login]);
 	}
 
-	pub fn broadcast(&mut self, _: Seq, text: String) {
+	pub fn broadcast(&mut self, text: String) {
 		self.send_action(vec![Step::Broadcast(text)]);
 	}
 

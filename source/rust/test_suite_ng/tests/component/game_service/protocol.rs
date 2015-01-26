@@ -13,13 +13,12 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	let mut client_2     = MockClient::start(game_service.port());
 
 	client_1.broadcast(
-		0,
 		"I haven't logged in, but am sending this anyway.".to_string(),
 	);
 
 	let message = "This is a broadcast.".to_string();
 	client_2.login();
-	client_2.broadcast(1, message.clone());
+	client_2.broadcast(message.clone());
 
 	let perception =
 		client_2.wait_until(|perception| {
