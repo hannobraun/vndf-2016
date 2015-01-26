@@ -28,7 +28,7 @@ impl Client {
 		}
 	}
 
-	pub fn send_data(&mut self, data: &[u8]) {
+	pub fn send_raw(&mut self, data: &[u8]) {
 		self.socket.send(data);
 	}
 
@@ -38,7 +38,7 @@ impl Client {
 			action.add_update(0, step);
 		}
 
-		self.send_data(action.encode().as_slice());
+		self.send_raw(action.encode().as_slice());
 	}
 
 	pub fn login(&mut self, seq: Seq) {
