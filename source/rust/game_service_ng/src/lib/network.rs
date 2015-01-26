@@ -1,200 +1,79 @@
-use std::collections::{
-	HashMap,
-	HashSet,
-};
+use std::collections::HashMap;
 use std::io::net::ip::{
 	Port,
 	SocketAddr,
 };
 use std::vec::Drain;
 
-use acpe::protocol::{
-	Encoder,
-	PerceptionHeader,
-	Seq,
+use common::network::{
+	Acceptor,
+	Connection,
 };
-
-use common::game::Broadcast;
 use common::protocol::{
 	ClientEvent,
-	Percept,
 	ServerEvent,
-	Step,
-};
-
-use super::{
-	ReceiveResult,
-	Socket,
 };
 
 
 pub struct Network {
-	last_actions: HashMap<SocketAddr, Seq>,
-	socket      : Socket,
-
-	encoder   : Encoder,
-	broadcasts: HashMap<String, Broadcast>,
-	recipients: HashSet<SocketAddr>,
-	self_ids  : HashMap<SocketAddr, Option<String>>,
-
-	received: Vec<ReceiveResult>,
-	events  : Vec<(SocketAddr, ClientEvent)>,
+	acceptor   : Acceptor<ClientEvent>,
+	connections: HashMap<SocketAddr, Connection<ClientEvent>>,
+	incoming   : Vec<(SocketAddr, ClientEvent)>,
+	to_remove  : Vec<SocketAddr>,
 }
 
 impl Network {
 	pub fn new(port: Port) -> Network {
 		Network {
-			last_actions: HashMap::new(),
-			socket      : Socket::new(port),
-
-			encoder   : Encoder::new(),
-			broadcasts: HashMap::new(),
-			recipients: HashSet::new(),
-			self_ids  : HashMap::new(),
-
-			received: Vec::new(),
-			events  : Vec::new(),
+			acceptor   : Acceptor::new(port),
+			connections: HashMap::new(),
+			incoming   : Vec::new(),
+			to_remove  : Vec::new(),
 		}
 	}
 
-	pub fn send<'a, R, E>(&mut self, mut recipients: R, mut events: E)
+	pub fn send<'a, R, E>(&mut self, mut recipients: R, events: E)
 		where
 			R: Iterator<Item = SocketAddr>,
 			E: Iterator<Item = ServerEvent>,
 	{
-		for event in events {
-			match event {
-				ServerEvent::SelfId(ref self_id) => {
-					for address in recipients {
-						self.recipients.insert(address);
-						self.self_ids.insert(address, Some(self_id.clone()));
-					}
-				},
-				ServerEvent::StartBroadcast(ref broadcast) => {
-					self.broadcasts.insert(
-						broadcast.sender.clone(),
-						broadcast.clone(),
-					);
-				},
-				ServerEvent::StopBroadcast(ref id) => {
-					self.broadcasts.remove(id);
-				},
-			}
-		}
+		let events: Vec<ServerEvent> = events.collect();
 
 		for address in recipients {
-			if !self.recipients.contains(&address) {
-				self.recipients.insert(address);
+			let mut recipient = match self.connections.get_mut(&address) {
+				Some(connection) => connection,
+				None             => continue,
+			};
+
+			if let Err(error) = recipient.send(events.iter()) {
+				self.to_remove.push(address);
+				print!("Error sending event to {}: {}\n", address, error)
 			}
 		}
 	}
 
 	pub fn receive(&mut self) -> Drain<(SocketAddr, ClientEvent)> {
-		self.socket.receive(&mut self.received);
+		self.connections.extend(self.acceptor.accept());
 
-		for result in self.received.drain() {
-			match result {
-				Ok((mut action, address)) => {
-					self.last_actions.insert(address, action.header.id);
+		for address in self.to_remove.drain() {
+			self.connections.remove(&address);
+		}
 
-					for (_, step) in action.drain_update_items() {
-						let event = match step {
-							Step::Login =>
-								ClientEvent::Login,
-							Step::Broadcast(broadcast) =>
-								ClientEvent::StartBroadcast(broadcast),
-							Step::StopBroadcast =>
-								ClientEvent::StopBroadcast,
-						};
-
-						self.events.push((address, event));
-					}
-
-					self.events.push((address, ClientEvent::Heartbeat));
+		for (address, connection) in self.connections.iter_mut() {
+			let events = match connection.receive() {
+				Ok(events) =>
+					events,
+				Err(()) => {
+					self.to_remove.push(*address);
+					continue;
 				},
-				Err((error, address)) => {
-					print!(
-						"Error receiving message from {}: {}\n",
-						address, error
-					);
-				},
-			}
-		}
-
-		self.events.drain()
-	}
-
-	pub fn update(&mut self) {
-		for address in self.recipients.drain() {
-			let self_id = match self.self_ids.get(&address) {
-				Some(self_id) => self_id.clone(),
-				None          => None,
 			};
-			let header = PerceptionHeader {
-				confirm_action: self.last_actions[address],
-				self_id       : self_id,
-			};
-			// TODO(85373160): It's not necessary to keep resending all the
-			//                 broadcasts every frame. The client should confirm
-			//                 the last sent perception and the server should
-			//                 only send what has changed. This requires a list
-			//                 of destroyed entities in Perception.
-			let mut broadcasts = self.broadcasts
-				.iter()
-				.map(|(_, broadcast)|
-					broadcast.clone()
-				)
-				.collect();
 
-			// TODO: This just keeps sending perceptions over and over, until
-			//       all data is gone. This potentially means that there are
-			//       always several perceptions "in-flight". This makes it
-			//       complicated (i.e. impossible with the way things currently
-			//       work) to figure out which perceptions has been received by
-			//       the client, which means it can't be determined what data
-			//       needs to be resent. The solution: Only keep one perception
-			//       in-flight at any given time.
-			let mut needs_to_send_perception = true;
-			while needs_to_send_perception {
-				send_perception(
-					&mut self.encoder,
-					&header,
-					&mut broadcasts,
-					&mut self.socket,
-					address,
-				);
-
-				needs_to_send_perception = broadcasts.len() > 0;
-			}
+			self.incoming.extend(events.map(|event| (*address, event)));
 		}
-	}
-}
 
-
-fn send_perception(
-	encoder    : &mut Encoder,
-	header     : &PerceptionHeader<String>,
-	broadcasts : &mut Vec<Broadcast>,
-	socket     : &mut Socket,
-	address    : SocketAddr,
-) {
-	let mut perception = encoder.message(header);
-	loop {
-		let broadcast = match broadcasts.pop() {
-			Some(broadcast) => broadcast,
-			None            => break,
-		};
-
-		let could_add = perception.update(
-			&broadcast.sender,
-			&Percept::Broadcast(broadcast.clone())
-		);
-		if !could_add {
-			broadcasts.push(broadcast);
-			break;
-		}
+		self.incoming.drain()
 	}
 
-	let message = perception.encode();
-	socket.send(message, address);
+	pub fn update(&mut self) {}
 }

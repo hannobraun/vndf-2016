@@ -62,19 +62,17 @@ fn it_should_ignore_duplicate_logins() {
 		ClientEvent::StartBroadcast("This is a broadcast.".to_string())
 	);
 
-	let mut received_self_id   = String::new();
-	let mut broadcast_received = false;
+	let mut received_self_id   = None;
 	client.wait_until(|event| {
 		match *event {
 			Some(ref event) => {
 				match *event {
 					ServerEvent::SelfId(ref self_id) => {
-						received_self_id = self_id.clone();
-						broadcast_received
+						received_self_id = Some(self_id.clone());
+						true
 					},
 					ServerEvent::StartBroadcast(_) => {
-						broadcast_received = true;
-						false
+						true
 					},
 					_ =>
 						false,
@@ -85,5 +83,7 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	assert_eq!(self_id, received_self_id);
+	if let Some(received_self_id) = received_self_id {
+		assert_eq!(self_id, received_self_id);
+	}
 }
