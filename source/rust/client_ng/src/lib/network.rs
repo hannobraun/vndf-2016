@@ -26,12 +26,10 @@ pub struct Network {
 
 impl Network {
 	pub fn new<T: ToSocketAddr>(server_address: T) -> Network {
-		let mut action_assembler = ActionAssembler::new();
-		let     encoder          = Encoder::new();
-		let     perceptions      = Vec::new();
-		let     server           = Socket::new(server_address);
-
-		action_assembler.add_step(Step::Login);
+		let action_assembler = ActionAssembler::new();
+		let encoder          = Encoder::new();
+		let perceptions      = Vec::new();
+		let server           = Socket::new(server_address);
 
 		Network {
 			action_assembler: action_assembler,

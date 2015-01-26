@@ -72,6 +72,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut network        = Network::new(args.server);
 	let mut previous_input = Input::new();
 
+	network.send(ClientEvent::Login);
+
 	loop {
 		let input = platform.input();
 
