@@ -30,3 +30,4 @@ A multiplayer game about freedom, adventure and hard choices.
 ## Elements
 
 * Realistic orbital mechanics
+* Highly customizable spaceships, built out of Lego-like blocks
