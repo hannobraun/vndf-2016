@@ -3,5 +3,5 @@
 source project.conf
 
 (echo "Updating client_ng..."; cd $CLIENT_SOURCE; cargo update)
-(echo "Updating game_service_ng..."; cd $RUST_SOURCE/game_service_ng; cargo update)
+(echo "Updating game_service_ng..."; cd $GAME_SERVICE_SOURCE; cargo update)
 (echo "Updating test_suite_ng..."; cd $RUST_SOURCE/test_suite_ng; cargo update)

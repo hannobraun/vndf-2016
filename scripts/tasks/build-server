@@ -3,5 +3,5 @@
 source project.conf
 
 (
-	cd $RUST_SOURCE/game_service_ng
+	cd $GAME_SERVICE_SOURCE
 	cargo build)

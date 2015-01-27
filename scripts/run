@@ -8,7 +8,7 @@ rm -f $TMP_OUTPUT
 touch $TMP_OUTPUT
 
 # Build game service and, if successful, start it in the background.
-cd $RUST_SOURCE/game_service_ng
+cd $GAME_SERVICE_SOURCE
 cargo build &&
 $GAME_SERVICE_BINARY &> $TMP_OUTPUT &
 GAME_SERVICE_PID=$!
