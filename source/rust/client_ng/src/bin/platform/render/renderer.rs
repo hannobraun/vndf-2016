@@ -87,7 +87,7 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let message = ui.input_text.as_slice();
+		let message = ui.broadcast_field.text();
 		let button_text = if ui.input_active {
 			START_BROADCAST
 		}
