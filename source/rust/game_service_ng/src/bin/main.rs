@@ -124,9 +124,10 @@ fn main() {
 			}
 		}
 
-		// TODO: Find out what precise_time_s is exactly. I have the suspicion
-		//       that this just returns the number of seconds since midnight and
-		//       will wrap again at midnight, leading to undesired behavior.
+		// TODO(86991762): Find out what precise_time_s is exactly. I have the
+		//                 suspicion that this just returns the number of
+		//                 seconds since midnight and will wrap again at
+		//                 midnight, leading to undesired behavior.
 		let     now_s     = precise_time_s();
 		let mut to_remove = Vec::new();
 		for (&address, client) in clients.iter() {
