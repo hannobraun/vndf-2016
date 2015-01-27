@@ -107,7 +107,7 @@ impl Renderer {
 		));
 
 		if ui.input_active {
-			self.screen.cursor(Some((1 + 4 + message.len() as u16, 1 + 4)));
+			self.screen.cursor(Some((1 + 4 + message.chars().count() as u16, 1 + 4)));
 		}
 		else {
 			self.screen.cursor(None)
@@ -190,7 +190,7 @@ fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str)
 			.background_color(Black)
 			.write_str(text)
 	);
-	for x in range(x + text.len() as u16, limit) {
+	for x in range(x + text.chars().count() as u16, limit) {
 		try!(
 			b
 				.writer(x, y)
