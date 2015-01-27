@@ -9,7 +9,7 @@ name = "client"
 path = "src/lib/lib.rs"
 
 [[bin]]
-name = "vndf-client-ng"
+name = "vndf-client"
 
 
 [dependencies]

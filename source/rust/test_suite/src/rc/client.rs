@@ -16,7 +16,7 @@ pub struct Client {
 impl Client {
 	pub fn start(port: Port) -> Client {
 		let process = Process::start(
-			"vndf-client-ng",
+			"vndf-client",
 			&[
 				"--headless",
 				"--server-host=localhost",
