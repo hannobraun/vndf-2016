@@ -1,4 +1,0 @@
-[package]
-name    = "epoll"
-version = "0.1.0"
-authors = [ "mail@hannobraun.de" ]
