@@ -2,9 +2,6 @@
 
 source project.conf
 
-# (
-# 	cd $RUST_SOURCE/client
-# 	cargo build) &&
 (
 	cd $RUST_SOURCE/client_ng
 	cargo build)
