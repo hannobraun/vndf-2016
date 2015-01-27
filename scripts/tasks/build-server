@@ -2,9 +2,6 @@
 
 source project.conf
 
-# (
-# 	cd $RUST_SOURCE/game_service
-# 	cargo build) &&
 (
 	cd $RUST_SOURCE/game_service_ng
 	cargo build)
