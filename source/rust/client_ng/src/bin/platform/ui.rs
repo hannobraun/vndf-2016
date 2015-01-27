@@ -4,6 +4,8 @@ use client::platform::Input;
 pub struct Ui {
 	pub input_active   : bool,
 	pub broadcast_field: TextField,
+
+	mode: TextInputMode,
 }
 
 impl Ui {
@@ -11,20 +13,53 @@ impl Ui {
 		Ui {
 			input_active   : true,
 			broadcast_field: TextField::new(),
+			mode           : TextInputMode::Regular,
 		}
 	}
 
 	pub fn process_input(&mut self, chars: &[char]) -> Input {
 		for &c in chars.iter() {
-			if c == '\n' {
-				self.input_active = !self.input_active;
+			match self.mode {
+				TextInputMode::Regular => {
+					if c == '\n' {
+						self.input_active = !self.input_active;
 
-				if self.input_active {
-					self.broadcast_field.activate();
-				}
-			}
-			else if self.input_active {
-				self.broadcast_field.process_char(c);
+						if self.input_active {
+							self.broadcast_field.activate();
+						}
+					}
+					else if c == '\x1b' { // Escape
+						self.mode = TextInputMode::Escape;
+					}
+					else if self.input_active {
+						self.broadcast_field.process_char(c);
+					}
+				},
+				TextInputMode::Escape => {
+					if c == '[' {
+						self.mode = TextInputMode::Cursor;
+					}
+					else {
+						// Unexpected character. Fall back to regular mode.
+						self.mode = TextInputMode::Regular;
+					}
+				},
+				TextInputMode::Cursor => {
+					if !self.input_active {
+						match c {
+							'A' => self.broadcast_field.process_char('↑'), // up
+							'B' => self.broadcast_field.process_char('↓'), // down
+							'C' => (), // right
+							'D' => (), // left
+							_   => (), // Unexpected character
+						}
+					}
+					else {
+						// Ignore, the text field won't know what to do with it
+					}
+
+					self.mode = TextInputMode::Regular;
+				},
 			}
 		}
 
@@ -68,4 +103,10 @@ impl TextField {
 			self.text.push(c);
 		}
 	}
+}
+
+enum TextInputMode {
+	Regular,
+	Escape,
+	Cursor,
 }
