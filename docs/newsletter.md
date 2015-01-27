@@ -72,6 +72,7 @@ Topic ideas:
 
 News for February:
 - http://www.esa.int/Our_Activities/Launchers/IXV/Vega_ready_to_launch_spaceplane
+- http://dawn.jpl.nasa.gov/feature_stories/dawn_captures_best-ever_view_dwarfplanet.asp
 
 News for any month:
 - Asteroid video by Scott Manley
