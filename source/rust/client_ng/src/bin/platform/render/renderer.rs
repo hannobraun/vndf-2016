@@ -97,7 +97,11 @@ impl Renderer {
 
 		let width = self.comm.buffer.width() - 4;
 		let button_width =
-			max(START_BROADCAST.len(), STOP_BROADCAST.len()) as Pos;
+			max(
+				START_BROADCAST.chars().count(),
+				STOP_BROADCAST.chars().count()
+			)
+			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
 		try!(text_input(
