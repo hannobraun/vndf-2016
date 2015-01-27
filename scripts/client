@@ -6,6 +6,3 @@ BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_BINARY)
 
 ./scripts/tasks/build-client &&
 $CLIENT_BINARY_NG
-# ./scripts/tasks/arrange-client $DIST_DIR &&
-# cd $DIST_DIR &&
-# $BINARY $@
