@@ -113,6 +113,7 @@ impl UiElement for TextField {
 	}
 }
 
+
 enum TextInputMode {
 	Regular,
 	Escape,
