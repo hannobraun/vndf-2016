@@ -3,7 +3,7 @@ name = "test_suite"
 version = "0.0.1"
 dependencies = [
  "acceptance 0.1.0",
- "client_ng 0.0.1",
+ "client 0.0.1",
  "common 0.0.1",
  "game_service_ng 0.0.1",
  "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -14,7 +14,7 @@ name = "acceptance"
 version = "0.1.0"
 
 [[package]]
-name = "client_ng"
+name = "client"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
