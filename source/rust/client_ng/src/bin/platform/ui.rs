@@ -76,6 +76,12 @@ impl Ui {
 }
 
 
+pub trait UiElement {
+	fn activate(&mut self);
+	fn process_char(&mut self, c: char);
+}
+
+
 pub struct TextField {
 	text: String,
 }
@@ -90,12 +96,14 @@ impl TextField {
 	pub fn text(&self) -> &str {
 		self.text.as_slice()
 	}
+}
 
-	pub fn activate(&mut self) {
+impl UiElement for TextField {
+	fn activate(&mut self) {
 		self.text.clear();
 	}
 
-	pub fn process_char(&mut self, c: char) {
+	fn process_char(&mut self, c: char) {
 		if c == '\x7f' { // Backspace
 			self.text.pop();
 		}
