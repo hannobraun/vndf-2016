@@ -252,7 +252,7 @@ fn list(
 		n -= 1;
 	}
 
-	if items.len() > height as usize {
+	if items.len() - first > height as usize {
 		try!(write!(
 			&mut b.writer(limit - 1, y + height - 1).limit(limit),
 			"↓",
