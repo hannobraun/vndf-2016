@@ -6,5 +6,5 @@ export PATH=$RUST_PATH:$PATH
 export RUST_TEST_TASKS=1
 
 ./scripts/tasks/build-vndf &&
-cd $RUST_SOURCE/test_suite_ng
+cd $TEST_SUITE_SOURCE
 cargo test

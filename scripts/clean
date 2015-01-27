@@ -4,4 +4,4 @@ source project.conf
 
 (echo "Cleaning client_ng..."; cd $CLIENT_SOURCE; cargo clean)
 (echo "Cleaning game_service_ng..."; cd $GAME_SERVICE_SOURCE; cargo clean)
-(echo "Cleaning test_suite_ng..."; cd $RUST_SOURCE/test_suite_ng; cargo clean)
+(echo "Cleaning test_suite_ng..."; cd $TEST_SUITE_SOURCE; cargo clean)
