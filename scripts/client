@@ -2,7 +2,5 @@
 
 source project.conf
 
-BINARY=$(pwd)/$DIST_BIN_DIR/$(basename $CLIENT_BINARY)
-
 ./scripts/tasks/build-client &&
 $CLIENT_BINARY_NG
