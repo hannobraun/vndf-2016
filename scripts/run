@@ -44,5 +44,5 @@ function cleanup {
 trap "cleanup" SIGINT
 
 # Run the client
-cd $RUST_SOURCE/client_ng
+cd $CLIENT_SOURCE
 cargo run

@@ -3,5 +3,5 @@
 source project.conf
 
 (
-	cd $RUST_SOURCE/client_ng
+	cd $CLIENT_SOURCE
 	cargo build)

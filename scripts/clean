@@ -2,6 +2,6 @@
 
 source project.conf
 
-(echo "Cleaning client_ng..."; cd $RUST_SOURCE/client_ng; cargo clean)
+(echo "Cleaning client_ng..."; cd $CLIENT_SOURCE; cargo clean)
 (echo "Cleaning game_service_ng..."; cd $RUST_SOURCE/game_service_ng; cargo clean)
 (echo "Cleaning test_suite_ng..."; cd $RUST_SOURCE/test_suite_ng; cargo clean)
