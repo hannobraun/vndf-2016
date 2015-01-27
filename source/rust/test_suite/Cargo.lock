@@ -5,7 +5,7 @@ dependencies = [
  "acceptance 0.1.0",
  "client 0.0.1",
  "common 0.0.1",
- "game_service_ng 0.0.1",
+ "game_service 0.0.1",
  "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -29,7 +29,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "game_service_ng"
+name = "game_service"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",

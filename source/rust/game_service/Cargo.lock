@@ -1,5 +1,5 @@
 [root]
-name = "game_service_ng"
+name = "game_service"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",

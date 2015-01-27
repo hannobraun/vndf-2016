@@ -13,7 +13,7 @@ path = "../client"
 [dependencies.common]
 path = "../common"
 
-[dependencies.game_service_ng]
+[dependencies.game_service]
 path = "../game_service"
 
 [dependencies.acceptance]
