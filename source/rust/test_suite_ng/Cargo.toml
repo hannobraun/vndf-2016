@@ -14,7 +14,7 @@ path = "../client"
 path = "../common"
 
 [dependencies.game_service_ng]
-path = "../game_service_ng"
+path = "../game_service"
 
 [dependencies.acceptance]
 path = "../acceptance-rs"
