@@ -8,7 +8,7 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 time = "*"
 
 [dependencies.client_ng]
-path = "../client_ng"
+path = "../client"
 
 [dependencies.common]
 path = "../common"
