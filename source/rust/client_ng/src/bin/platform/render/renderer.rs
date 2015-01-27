@@ -138,6 +138,7 @@ impl Renderer {
 			4, 7,
 			width - 4 - 4, 5,
 			broadcasts.as_slice(),
+			0,
 		));
 
 		try!(self.comm.write(0, *y, &mut self.screen));
@@ -215,7 +216,8 @@ fn list(
 	y     : Pos,
 	width : Pos,
 	height: Pos,
-	items : &[String]
+	items : &[String],
+	first : usize,
 ) -> IoResult<()> {
 	let limit = x + width;
 
@@ -230,7 +232,12 @@ fn list(
 
 	let mut n = min(items.len(), height as usize);
 
-	for (i, item) in items.iter().enumerate() {
+	let mut iter = items
+		.iter()
+		.skip(first)
+		.enumerate();
+
+	for (i, item) in iter {
 		if n == 0 {
 			break;
 		}
