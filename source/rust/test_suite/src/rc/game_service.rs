@@ -16,7 +16,7 @@ impl GameService {
 		let port = random_port(40000, 50000);
 
 		let mut process = Process::start(
-			"vndf-game-service-ng",
+			"vndf-game-service",
 			&[
 				format!("--port={}", port).as_slice(),
 			]
