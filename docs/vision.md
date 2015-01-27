@@ -29,4 +29,4 @@ A multiplayer game about freedom, adventure and hard choices.
 
 ## Elements
 
-* Realistic orbital mechanics.
+* Realistic orbital mechanics
