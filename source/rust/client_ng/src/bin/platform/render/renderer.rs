@@ -177,7 +177,9 @@ impl Renderer {
 }
 
 
-fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str) -> IoResult<()> {
+fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str)
+	-> IoResult<()>
+{
 	let limit = x + width;
 
 	try!(
