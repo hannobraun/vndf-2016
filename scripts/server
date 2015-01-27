@@ -4,4 +4,4 @@ source project.conf
 
 ./scripts/tasks/build-server &&
 cd source
-$GAME_SERVICE_BINARY_NG
+$GAME_SERVICE_BINARY

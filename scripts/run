@@ -10,7 +10,7 @@ touch $TMP_OUTPUT
 # Build game service and, if successful, start it in the background.
 cd $RUST_SOURCE/game_service_ng
 cargo build &&
-$GAME_SERVICE_BINARY_NG &> $TMP_OUTPUT &
+$GAME_SERVICE_BINARY &> $TMP_OUTPUT &
 GAME_SERVICE_PID=$!
 
 # Wait until the game service has output anything. That means it's either ready
