@@ -128,6 +128,11 @@ impl List {
 	}
 }
 
+impl UiElement for List {
+	fn activate(&mut self) {}
+	fn process_char(&mut self, _: char) {}
+}
+
 
 enum TextInputMode {
 	Regular,
