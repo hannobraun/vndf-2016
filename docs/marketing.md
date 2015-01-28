@@ -15,6 +15,14 @@
 
 ## Planned Measures
 
+### Webcasts
+
+* Regularly the game with hand-picked testers and record it. The videos can be
+  published on YouTube.
+* The goal is to further engage active fans and draw more people to the website
+  and mailing list.
+* This requires interesting game mechanics, preferably interesting gameplay.
+
 ### Linux Gaming Forums
 
 * As long as the game is Linux-exclusive, we may be able to use this to recruit
