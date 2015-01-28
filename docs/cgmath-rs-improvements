@@ -1,4 +1,0 @@
-cgmath-rs:
-- Convert functions like cgmath::rad into methods (Rad::new)
-- sin, cos etc. should be methods, mirroring the standard library
-- Quaternion doesn't implement ops
