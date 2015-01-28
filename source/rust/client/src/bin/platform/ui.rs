@@ -4,6 +4,7 @@ use client::platform::Input;
 pub struct Ui {
 	pub input_active   : bool,
 	pub broadcast_field: TextField,
+	pub broadcast_list : List,
 
 	mode: TextInputMode,
 }
@@ -13,6 +14,7 @@ impl Ui {
 		Ui {
 			input_active   : true,
 			broadcast_field: TextField::new(),
+			broadcast_list : List::new(),
 			mode           : TextInputMode::Regular,
 		}
 	}
@@ -109,6 +111,19 @@ impl UiElement for TextField {
 		}
 		else {
 			self.text.push(c);
+		}
+	}
+}
+
+
+pub struct List {
+	pub first: usize,
+}
+
+impl List {
+	pub fn new() -> List {
+		List {
+			first: 1,
 		}
 	}
 }

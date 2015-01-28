@@ -142,7 +142,7 @@ impl Renderer {
 			4, 7,
 			width - 4 - 4, 5,
 			broadcasts.as_slice(),
-			0,
+			ui.broadcast_list.first,
 		));
 
 		try!(self.comm.write(0, *y, &mut self.screen));
