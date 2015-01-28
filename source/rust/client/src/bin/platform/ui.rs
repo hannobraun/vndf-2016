@@ -123,7 +123,7 @@ pub struct List {
 impl List {
 	pub fn new() -> List {
 		List {
-			first: 1,
+			first: 0,
 		}
 	}
 }
