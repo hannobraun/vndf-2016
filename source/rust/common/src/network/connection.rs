@@ -60,6 +60,11 @@ impl<R> Connection<R> where R: Decodable + Send {
 							break;
 						}
 						else {
+							// The end of file error regularly occurs during
+							// normal operation, when nothing is available to be
+							// read. I don't know why this would happen in a
+							// blocking API, but it does, so we need to handle
+							// it.
 							continue;
 						}
 					},
