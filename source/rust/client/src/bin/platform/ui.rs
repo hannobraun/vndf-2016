@@ -2,7 +2,7 @@ use client::platform::Input;
 
 
 pub struct Ui {
-	pub input_active   : bool,
+	pub element_active : bool,
 	pub broadcast_field: TextField,
 	pub broadcast_list : List,
 
@@ -12,7 +12,7 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			input_active   : true,
+			element_active : true,
 			broadcast_field: TextField::new(),
 			broadcast_list : List::new(),
 			mode           : TextInputMode::Regular,
@@ -24,16 +24,16 @@ impl Ui {
 			match self.mode {
 				TextInputMode::Regular => {
 					if c == '\n' {
-						self.input_active = !self.input_active;
+						self.element_active = !self.element_active;
 
-						if self.input_active {
+						if self.element_active {
 							self.broadcast_field.activate();
 						}
 					}
 					else if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
 					}
-					else if self.input_active {
+					else if self.element_active {
 						self.broadcast_field.process_char(c);
 					}
 				},
@@ -47,7 +47,7 @@ impl Ui {
 					}
 				},
 				TextInputMode::Cursor => {
-					if !self.input_active {
+					if !self.element_active {
 						match c {
 							'A' => self.broadcast_field.process_char('↑'), // up
 							'B' => self.broadcast_field.process_char('↓'), // down
@@ -66,7 +66,7 @@ impl Ui {
 		}
 
 		let mut input = Input::new();
-		input.broadcast = if !self.input_active {
+		input.broadcast = if !self.element_active {
 			Some(self.broadcast_field.text().to_string())
 		}
 		else {

@@ -88,7 +88,7 @@ impl Renderer {
 		));
 
 		let message = ui.broadcast_field.text();
-		let button_text = if ui.input_active {
+		let button_text = if ui.element_active {
 			START_BROADCAST
 		}
 		else {
@@ -110,7 +110,7 @@ impl Renderer {
 			message,
 		));
 
-		if ui.input_active {
+		if ui.element_active {
 			self.screen.cursor(Some((1 + 4 + message.chars().count() as u16, 1 + 4)));
 		}
 		else {
