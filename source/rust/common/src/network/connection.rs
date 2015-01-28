@@ -66,11 +66,13 @@ impl<R> Connection<R> where R: Decodable + Send {
 							// blocking API, but it does, so we need to handle
 							// it.
 
-							// TODO: Is it possible that after a connection is
-							//       closed, we keep getting this error? In that
-							//       case, we'll continue here and never notice
-							//       that the channel was blocked, creating an
-							//       endless loop.
+							// TODO(87104828): Is it possible that after a
+							//                 connection is closed, we keep
+							//                 getting this error? In that case,
+							//                 we'll continue here and never
+							//                 notice that the channel was
+							//                 blocked, creating an endless
+							//                 loop.
 							continue;
 						}
 					},
