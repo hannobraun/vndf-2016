@@ -13,7 +13,7 @@ use super::data::TextField;
 
 
 pub trait Render<E, D> {
-	fn render(&mut self, b: &mut ScreenBuffer, element: &E, data: &D)
+	fn render(&mut self, buffer: &mut ScreenBuffer, element: &E, data: &D)
 		-> IoResult<()>;
 }
 
