@@ -6,6 +6,7 @@ pub mod render;
 use client::platform::Input;
 
 use self::data::{
+	Button,
 	List,
 	TextField,
 };
@@ -16,9 +17,10 @@ use self::input::{
 
 
 pub struct Ui {
-	pub element_active : bool,
-	pub broadcast_field: TextField,
-	pub broadcast_list : List,
+	pub element_active  : bool,
+	pub broadcast_button: Button,
+	pub broadcast_field : TextField,
+	pub broadcast_list  : List,
 
 	mode: TextInputMode,
 }
@@ -26,10 +28,11 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			element_active : true,
-			broadcast_field: TextField::new(),
-			broadcast_list : List::new(),
-			mode           : TextInputMode::Regular,
+			element_active  : true,
+			broadcast_button: Button,
+			broadcast_field : TextField::new(),
+			broadcast_list  : List::new(),
+			mode            : TextInputMode::Regular,
 		}
 	}
 
