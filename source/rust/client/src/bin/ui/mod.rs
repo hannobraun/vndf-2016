@@ -16,9 +16,9 @@ use self::input::{
 
 
 pub struct Ui {
-	pub element_active  : bool,
-	pub broadcast_form  : BroadcastForm,
-	pub broadcast_list  : List,
+	pub element_active: bool,
+	pub broadcast_form: BroadcastForm,
+	pub broadcast_list: List,
 
 	mode: TextInputMode,
 }
