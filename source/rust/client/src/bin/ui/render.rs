@@ -9,7 +9,10 @@ use render::Color::{
 	White,
 };
 
-use super::data::TextField;
+use super::data::{
+	Button,
+	TextField,
+};
 
 
 pub trait Render<E, D> {
@@ -22,6 +25,32 @@ pub trait Render<E, D> {
 		data   : &D
 	)
 		-> IoResult<()>;
+}
+
+
+pub struct RenderButton;
+
+pub struct ButtonData<'a> {
+	pub text: &'a str,
+}
+
+impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
+	fn render(
+		&mut self,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		_     : &Button,
+		data  : &ButtonData,
+	)
+		-> IoResult<()>
+	{
+		buffer
+			.writer(x, y)
+			.foreground_color(Black)
+			.background_color(White)
+			.write_str(data.text)
+	}
 }
 
 

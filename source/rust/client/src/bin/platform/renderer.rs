@@ -15,15 +15,14 @@ use render::{
 	Section,
 };
 use render::Color::{
-	Black,
 	Green,
 	Red,
-	White,
 };
 use ui::Ui;
 use ui::render::{
 	self,
 	Render,
+	RenderButton,
 	RenderTextField,
 };
 
@@ -119,10 +118,11 @@ impl Renderer {
 			},
 		));
 
-		try!(button(
+		try!(RenderButton.render(
 			&mut self.comm.buffer,
 			4 + broadcast_width + 2, 4,
-			button_text,
+			&ui.broadcast_button,
+			&render::ButtonData { text: button_text },
 		));
 
 		try!(write!(
@@ -182,14 +182,6 @@ impl Renderer {
 	}
 }
 
-
-fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
-	b
-		.writer(x, y)
-		.foreground_color(Black)
-		.background_color(White)
-		.write_str(text)
-}
 
 fn list(
 	b     : &mut ScreenBuffer,
