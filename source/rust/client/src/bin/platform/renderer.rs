@@ -17,8 +17,7 @@ use ui::Ui;
 use ui::render::{
 	self,
 	Render,
-	RenderBroadcastForm,
-	RenderList,
+	RenderCommTab,
 };
 
 
@@ -67,35 +66,6 @@ impl Renderer {
 	) -> IoResult<()> {
 		self.comm.buffer.clear();
 
-		try!(write!(
-			&mut self.comm.buffer.writer(0, 0),
-			"YOUR ID"
-		));
-
-		try!(write!(
-			&mut self.comm.buffer.writer(4, 1),
-			"{}",
-			frame.self_id
-		));
-
-		try!(write!(
-			&mut self.comm.buffer.writer(0, 3),
-			"SENDING"
-		));
-
-
-		try!(RenderBroadcastForm.render(
-			&mut self.comm.buffer,
-			4, 4,
-			&ui.comm_tab.broadcast_form,
-			&ui.comm_tab.is_sending,
-		));
-
-		try!(write!(
-			&mut self.comm.buffer.writer(0, 6),
-			"RECEIVING",
-		));
-
 		let mut broadcasts: Vec<String> = frame.broadcasts
 			.iter()
 			.map(|broadcast|
@@ -104,15 +74,13 @@ impl Renderer {
 			.collect();
 		broadcasts.sort();
 
-		let width = self.comm.buffer.width();
-		try!(RenderList.render(
+		try!(RenderCommTab.render(
 			&mut self.comm.buffer,
-			4, 7,
-			&ui.comm_tab.broadcast_list,
-			&render::ListData {
-				width : width - 4 - 4,
-				height: 5,
-				items : broadcasts.as_slice(),
+			0, 0,
+			&ui.comm_tab,
+			&render::CommTabData {
+				self_id   : frame.self_id.as_slice(),
+				broadcasts: broadcasts.as_slice(),
 			},
 		));
 

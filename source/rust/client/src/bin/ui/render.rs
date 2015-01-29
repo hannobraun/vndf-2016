@@ -16,6 +16,7 @@ use render::Color::{
 use super::data::{
 	BroadcastForm,
 	Button,
+	CommTab,
 	List,
 	TextField,
 };
@@ -110,6 +111,70 @@ impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
 			.foreground_color(Black)
 			.background_color(White)
 			.write_str(data.text)
+	}
+}
+
+
+pub struct RenderCommTab;
+
+pub struct CommTabData<'a> {
+	pub self_id   : &'a str,
+	pub broadcasts: &'a [String],
+}
+
+impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
+	fn render(
+		&mut self,
+		buffer : &mut ScreenBuffer,
+		x      : Pos,
+		y      : Pos,
+		element: &CommTab,
+		data   : &CommTabData,
+	)
+		-> IoResult<()>
+	{
+		try!(write!(
+			&mut buffer.writer(x, y),
+			"YOUR ID",
+		));
+
+		try!(write!(
+			&mut buffer.writer(x + 4, y + 1),
+			"{}",
+			data.self_id,
+		));
+
+		try!(write!(
+			&mut buffer.writer(x, y + 3),
+			"SENDING",
+		));
+
+
+		try!(RenderBroadcastForm.render(
+			buffer,
+			x + 4, y + 4,
+			&element.broadcast_form,
+			&element.is_sending,
+		));
+
+		try!(write!(
+			&mut buffer.writer(x, y + 6),
+			"RECEIVING",
+		));
+
+		let width = buffer.width();
+		try!(RenderList.render(
+			buffer,
+			x + 4, y + 7,
+			&element.broadcast_list,
+			&ListData {
+				width : width - 4 - 4,
+				height: 5,
+				items : data.broadcasts,
+			},
+		));
+
+		Ok(())
 	}
 }
 
