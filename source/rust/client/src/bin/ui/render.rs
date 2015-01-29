@@ -68,7 +68,7 @@ impl Render<TextField, TextFieldData> for RenderTextField {
 		x      : Pos,
 		y      : Pos,
 		element: &TextField,
-		data   : &TextFieldData
+		data   : &TextFieldData,
 	)
 		-> IoResult<()>
 	{
