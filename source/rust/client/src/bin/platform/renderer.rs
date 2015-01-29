@@ -1,4 +1,3 @@
-use std::cmp::min;
 use std::io::IoResult;
 
 use client::platform::{
@@ -8,7 +7,6 @@ use client::platform::{
 use render::{
 	Pos,
 	Screen,
-	ScreenBuffer,
 	Section,
 };
 use render::Color::{
@@ -17,8 +15,10 @@ use render::Color::{
 };
 use ui::Ui;
 use ui::render::{
+	self,
 	Render,
 	RenderBroadcastForm,
+	RenderList,
 };
 
 
@@ -105,12 +105,15 @@ impl Renderer {
 		broadcasts.sort();
 
 		let width = self.comm.buffer.width();
-		try!(list(
+		try!(RenderList.render(
 			&mut self.comm.buffer,
 			4, 7,
-			width - 4 - 4, 5,
-			broadcasts.as_slice(),
-			ui.broadcast_list.first,
+			&ui.broadcast_list,
+			&render::ListData {
+				width : width - 4 - 4,
+				height: 5,
+				items : broadcasts.as_slice(),
+			},
 		));
 
 		try!(self.comm.write(0, *y, &mut self.screen));
@@ -146,64 +149,4 @@ impl Renderer {
 
 		Ok(())
 	}
-}
-
-
-fn list(
-	b     : &mut ScreenBuffer,
-	x     : Pos,
-	y     : Pos,
-	width : Pos,
-	height: Pos,
-	items : &[String],
-	first : usize,
-) -> IoResult<()> {
-	let limit = x + width;
-
-	if items.len() == 0 {
-		try!(write!(
-			&mut b.writer(x, y).limit(limit),
-			"none"
-		));
-
-		return Ok(());
-	}
-
-	let mut n = min(items.len(), height as usize);
-
-	let mut iter = items
-		.iter()
-		.skip(first)
-		.enumerate();
-
-	for (i, item) in iter {
-		if n == 0 {
-			break;
-		}
-
-		try!(
-			b
-				.writer(x, y + i as Pos)
-				.limit(limit)
-				.write_str(item.as_slice())
-		);
-
-		n -= 1;
-	}
-
-	if first > 0 {
-		try!(write!(
-			&mut b.writer(limit - 1, y).limit(limit),
-			"↑",
-		));
-	}
-
-	if items.len() - first > height as usize {
-		try!(write!(
-			&mut b.writer(limit - 1, y + height - 1).limit(limit),
-			"↓",
-		));
-	}
-
-	Ok(())
 }

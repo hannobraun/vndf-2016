@@ -1,4 +1,7 @@
-use std::cmp::max;
+use std::cmp::{
+	max,
+	min,
+};
 use std::io::IoResult;
 
 use render::{
@@ -13,6 +16,7 @@ use render::Color::{
 use super::data::{
 	BroadcastForm,
 	Button,
+	List,
 	TextField,
 };
 
@@ -106,6 +110,77 @@ impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
 			.foreground_color(Black)
 			.background_color(White)
 			.write_str(data.text)
+	}
+}
+
+
+pub struct RenderList;
+
+pub struct ListData<'a> {
+	pub width : Pos,
+	pub height: Pos,
+	pub items : &'a [String],
+}
+
+impl<'a> Render<List, ListData<'a>> for RenderList {
+	fn render(
+		&mut self,
+		buffer : &mut ScreenBuffer,
+		x      : Pos,
+		y      : Pos,
+		element: &List,
+		data   : &ListData,
+	)
+		-> IoResult<()>
+	{
+		let limit = x + data.width;
+
+		if data.items.len() == 0 {
+			try!(write!(
+				&mut buffer.writer(x, y).limit(limit),
+				"none"
+			));
+
+			return Ok(());
+		}
+
+		let mut n = min(data.items.len(), data.height as usize);
+
+		let mut iter = data.items
+			.iter()
+			.skip(element.first)
+			.enumerate();
+
+		for (i, item) in iter {
+			if n == 0 {
+				break;
+			}
+
+			try!(
+				buffer
+					.writer(x, y + i as Pos)
+					.limit(limit)
+					.write_str(item.as_slice())
+			);
+
+			n -= 1;
+		}
+
+		if element.first > 0 {
+			try!(write!(
+				&mut buffer.writer(limit - 1, y).limit(limit),
+				"↑",
+			));
+		}
+
+		if data.items.len() - element.first > data.height as usize {
+			try!(write!(
+				&mut buffer.writer(limit - 1, y + data.height - 1).limit(limit),
+				"↓",
+			));
+		}
+
+		Ok(())
 	}
 }
 
