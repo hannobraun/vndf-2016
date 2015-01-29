@@ -8,10 +8,12 @@ use std::io::{
 use std::io::stdio::StdWriter;
 use std::mem::swap;
 
-use platform::Pos;
 use termios::Termios;
 
-use super::ScreenBuffer;
+use super::{
+	Pos,
+	ScreenBuffer,
+};
 
 
 pub struct Screen {

@@ -6,9 +6,10 @@ use std::io::{
 use std::iter::repeat;
 use std::str::from_utf8;
 
-use platform::Pos;
-
-use super::Color;
+use super::{
+	Color,
+	Pos,
+};
 
 
 #[derive(Clone, Copy, Eq, PartialEq)]

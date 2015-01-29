@@ -8,3 +8,6 @@ mod buffer;
 mod color;
 mod screen;
 mod util;
+
+
+pub type Pos = u16;

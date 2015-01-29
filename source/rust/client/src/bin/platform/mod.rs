@@ -24,9 +24,6 @@ use self::renderer::Renderer;
 use self::ui::Ui;
 
 
-pub type Pos = u16;
-
-
 pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
 	fn input(&mut self) -> Input;

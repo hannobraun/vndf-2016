@@ -8,8 +8,8 @@ use client::platform::{
 	Frame,
 	Status,
 };
-use platform::Pos;
 use platform::ui::Ui;
+use render::Pos;
 use render::Screen;
 use render::ScreenBuffer;
 use render::Color::{

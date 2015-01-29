@@ -1,8 +1,9 @@
 use std::io::IoResult;
 
-use platform::Pos;
-
-use super::Screen;
+use super::{
+	Pos,
+	Screen,
+};
 use super::buffer::{
 	C,
 	ScreenBuffer,
