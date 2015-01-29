@@ -101,10 +101,6 @@ impl TextField {
 			text: String::new(),
 		}
 	}
-
-	pub fn text(&self) -> &str {
-		self.text.as_slice()
-	}
 }
 
 
