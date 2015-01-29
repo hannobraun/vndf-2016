@@ -9,6 +9,3 @@ mod color;
 mod renderer;
 mod screen;
 mod util;
-
-
-pub type Pos = u16;

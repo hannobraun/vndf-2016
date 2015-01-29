@@ -8,12 +8,10 @@ use client::platform::{
 	Frame,
 	Status,
 };
+use platform::Pos;
 use platform::ui::Ui;
 
-use super::{
-	Pos,
-	Screen,
-};
+use super::Screen;
 use super::buffer::ScreenBuffer;
 use super::Color::{
 	Black,
