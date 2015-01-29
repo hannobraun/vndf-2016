@@ -1,4 +1,7 @@
-use super::data::TextField;
+use super::data::{
+	CommTab,
+	TextField,
+};
 
 
 pub trait ProcessInput<T> {
@@ -7,6 +10,34 @@ pub trait ProcessInput<T> {
 }
 
 pub enum Direction { Up, Down, Right, Left }
+
+
+pub struct CommTabProcessor;
+
+impl ProcessInput<CommTab> for CommTabProcessor {
+	fn process_char(&mut self, _element: &mut CommTab, _c: char) {
+		// TODO: Implement
+	}
+
+	fn process_cursor(&mut self, element: &mut CommTab, direction: Direction) {
+		if element.is_sending {
+			match direction {
+				Direction::Up =>
+					TextFieldProcessor.process_char(
+						&mut element.broadcast_form.text_field,
+						'↑',
+					),
+				Direction::Down =>
+					TextFieldProcessor.process_char(
+						&mut element.broadcast_form.text_field,
+						'↓',
+					),
+
+				_ => (),
+			}
+		}
+	}
+}
 
 
 pub struct TextFieldProcessor;

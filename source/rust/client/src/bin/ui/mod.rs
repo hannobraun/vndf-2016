@@ -7,6 +7,8 @@ use client::platform::Input;
 
 use self::data::CommTab;
 use self::input::{
+	CommTabProcessor,
+	Direction,
 	ProcessInput,
 	TextFieldProcessor,
 };
@@ -59,17 +61,19 @@ impl Ui {
 					}
 				},
 				TextInputMode::Cursor => {
-					if self.comm_tab.is_sending {
-						match c {
-							'A' => TextFieldProcessor.process_char(&mut self.comm_tab.broadcast_form.text_field, '↑'), // up
-							'B' => TextFieldProcessor.process_char(&mut self.comm_tab.broadcast_form.text_field, '↓'), // down
-							'C' => (), // right
-							'D' => (), // left
-							_   => (), // Unexpected character
-						}
-					}
-					else {
-						// Ignore, the text field won't know what to do with it
+					let direction = match c {
+						'A' => Some(Direction::Up),
+						'B' => Some(Direction::Down),
+						'C' => Some(Direction::Right),
+						'D' => Some(Direction::Left),
+						_   => None, // Unexpected character
+					};
+
+					if let Some(direction) = direction {
+						CommTabProcessor.process_cursor(
+							&mut self.comm_tab,
+							direction,
+						);
 					}
 
 					self.mode = TextInputMode::Regular;
