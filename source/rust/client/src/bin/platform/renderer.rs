@@ -11,15 +11,15 @@ use client::platform::{
 use platform::Pos;
 use platform::ui::Ui;
 
-use super::Screen;
-use super::buffer::ScreenBuffer;
-use super::Color::{
+use super::render::Screen;
+use super::render::ScreenBuffer;
+use super::render::Color::{
 	Black,
 	Green,
 	Red,
 	White,
 };
-use super::util::Section;
+use super::render::Section;
 
 
 const START_BROADCAST: &'static str = "Send Broadcast";
