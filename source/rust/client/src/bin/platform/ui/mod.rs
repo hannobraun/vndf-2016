@@ -91,11 +91,6 @@ impl Ui {
 }
 
 
-pub trait UiElement {
-	fn activate(&mut self);
-}
-
-
 pub struct TextField {
 	pub text: String,
 }
@@ -109,12 +104,6 @@ impl TextField {
 
 	pub fn text(&self) -> &str {
 		self.text.as_slice()
-	}
-}
-
-impl UiElement for TextField {
-	fn activate(&mut self) {
-		self.text.clear();
 	}
 }
 
