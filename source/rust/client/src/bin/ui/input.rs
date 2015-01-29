@@ -1,4 +1,5 @@
 use super::data::{
+	BroadcastForm,
 	CommTab,
 	TextField,
 };
@@ -10,6 +11,20 @@ pub trait ProcessInput<T> {
 }
 
 pub enum Direction { Up, Down, Right, Left }
+
+
+pub struct BroadcastFormProcessor;
+
+impl ProcessInput<BroadcastForm> for BroadcastFormProcessor {
+	fn process_char(&mut self, element: &mut BroadcastForm, c: char) {
+		TextFieldProcessor.process_char(
+			&mut element.text_field,
+			c,
+		)
+	}
+
+	fn process_cursor(&mut self, _: &mut BroadcastForm, _: Direction) {}
+}
 
 
 pub struct CommTabProcessor;
@@ -24,8 +39,8 @@ impl ProcessInput<CommTab> for CommTabProcessor {
 			}
 		}
 		else if !element.is_sending {
-			TextFieldProcessor.process_char(
-				&mut element.broadcast_form.text_field,
+			BroadcastFormProcessor.process_char(
+				&mut element.broadcast_form,
 				c,
 			);
 		}
@@ -35,13 +50,13 @@ impl ProcessInput<CommTab> for CommTabProcessor {
 		if element.is_sending {
 			match direction {
 				Direction::Up =>
-					TextFieldProcessor.process_char(
-						&mut element.broadcast_form.text_field,
+					BroadcastFormProcessor.process_char(
+						&mut element.broadcast_form,
 						'↑',
 					),
 				Direction::Down =>
-					TextFieldProcessor.process_char(
-						&mut element.broadcast_form.text_field,
+					BroadcastFormProcessor.process_char(
+						&mut element.broadcast_form,
 						'↓',
 					),
 
