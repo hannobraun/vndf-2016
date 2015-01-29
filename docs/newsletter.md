@@ -73,6 +73,8 @@ Topic ideas:
 News for February:
 - http://www.esa.int/Our_Activities/Launchers/IXV/Vega_ready_to_launch_spaceplane
 - http://dawn.jpl.nasa.gov/feature_stories/dawn_captures_best-ever_view_dwarfplanet.asp
+- http://www.reddit.com/r/space/comments/2tys5a/updated_space_events_of_2015_now_with_more_awesome/
+- http://www.reddit.com/r/space/comments/2tza6o/artists_rendering_of_what_the_rings_around_planet/
 
 News for any month:
 - Asteroid video by Scott Manley
