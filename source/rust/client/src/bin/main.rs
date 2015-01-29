@@ -1,4 +1,4 @@
-#![feature(collections, core, io, libc, os, rustc_private, slicing_syntax, std_misc)]
+#![feature(collections, core, io, libc, os, slicing_syntax, std_misc)]
 
 
 extern crate getopts;

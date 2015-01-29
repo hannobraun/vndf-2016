@@ -1,13 +1,10 @@
-use getopts::{
-	getopts,
-	optflag,
-	optopt,
-};
 use std::old_io::net::ip::{
 	Port,
 	SocketAddr,
 	ToSocketAddr,
 };
+
+use getopts::Options;
 
 
 pub struct Args {
@@ -17,17 +14,17 @@ pub struct Args {
 
 impl Args {
 	pub fn parse(args: &[String]) -> Args {
-		let opts = &[
-			optflag("h", "headless", "enable headless mode"),
-			optopt(
+		let mut opts = Options::new();
+		opts.optflag("h", "headless", "enable headless mode");
+		opts.optopt(
 				"h",
 				"server-host",
 				"server host to connect to",
 				"localhost",
-			),
-			optopt("p", "server-port", "server port to connect to", "34481"),
-		];
-		let matches = match getopts(args.tail(), opts) {
+			);
+		opts.optopt("p", "server-port", "server port to connect to", "34481");
+
+		let matches = match opts.parse(args.tail()) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
