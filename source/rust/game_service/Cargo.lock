@@ -3,6 +3,7 @@ name = "game_service"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
+ "getopts 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -16,6 +17,11 @@ dependencies = [
 [[package]]
 name = "gcc"
 version = "0.1.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "getopts"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]

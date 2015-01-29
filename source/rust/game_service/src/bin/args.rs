@@ -1,8 +1,6 @@
-use getopts::{
-	getopts,
-	optopt,
-};
 use std::old_io::net::ip::Port;
+
+use getopts::Options;
 
 
 pub struct Args {
@@ -15,15 +13,15 @@ impl Args {
 			port: 34481,
 		};
 
-		let opts = &[
-			optopt(
+		let mut opts = Options::new();
+		opts.optopt(
 				"p",
 				"port",
 				"port to listen on",
 				args.port.to_string().as_slice(),
-			),
-		];
-		let matches = match getopts(cli_args.tail(), opts) {
+			);
+
+		let matches = match opts.parse(cli_args.tail()) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};

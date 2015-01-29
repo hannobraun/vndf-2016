@@ -13,7 +13,8 @@ name = "vndf-game-service"
 
 
 [dependencies]
-time = "*"
+getopts = "*"
+time    = "*"
 
 [dependencies.common]
 path = "../common"

@@ -1,4 +1,4 @@
-#![feature(collections, core, io, os, rand, rustc_private, std_misc)]
+#![feature(collections, core, io, os, rand, std_misc)]
 
 
 mod args;
