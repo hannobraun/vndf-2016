@@ -87,8 +87,8 @@ impl Renderer {
 		try!(RenderBroadcastForm.render(
 			&mut self.comm.buffer,
 			4, 4,
-			&ui.broadcast_form,
-			&ui.is_sending,
+			&ui.comm_tab.broadcast_form,
+			&ui.comm_tab.is_sending,
 		));
 
 		try!(write!(
@@ -108,7 +108,7 @@ impl Renderer {
 		try!(RenderList.render(
 			&mut self.comm.buffer,
 			4, 7,
-			&ui.broadcast_list,
+			&ui.comm_tab.broadcast_list,
 			&render::ListData {
 				width : width - 4 - 4,
 				height: 5,

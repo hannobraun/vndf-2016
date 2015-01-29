@@ -5,10 +5,7 @@ pub mod render;
 
 use client::platform::Input;
 
-use self::data::{
-	BroadcastForm,
-	List,
-};
+use self::data::CommTab;
 use self::input::{
 	ProcessInput,
 	TextFieldProcessor,
@@ -16,9 +13,7 @@ use self::input::{
 
 
 pub struct Ui {
-	pub is_sending    : bool,
-	pub broadcast_form: BroadcastForm,
-	pub broadcast_list: List,
+	pub comm_tab: CommTab,
 
 	mode: TextInputMode,
 }
@@ -26,10 +21,8 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			is_sending    : false,
-			broadcast_form: BroadcastForm::new(),
-			broadcast_list: List::new(),
-			mode          : TextInputMode::Regular,
+			comm_tab: CommTab::new(),
+			mode    : TextInputMode::Regular,
 		}
 	}
 
@@ -38,18 +31,18 @@ impl Ui {
 			match self.mode {
 				TextInputMode::Regular => {
 					if c == '\n' {
-						self.is_sending = !self.is_sending;
+						self.comm_tab.is_sending = !self.comm_tab.is_sending;
 
-						if !self.is_sending {
-							self.broadcast_form.text_field.text.clear();
+						if !self.comm_tab.is_sending {
+							self.comm_tab.broadcast_form.text_field.text.clear();
 						}
 					}
 					else if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
 					}
-					else if !self.is_sending {
+					else if !self.comm_tab.is_sending {
 						TextFieldProcessor.process_char(
-							&mut self.broadcast_form.text_field,
+							&mut self.comm_tab.broadcast_form.text_field,
 							c,
 						);
 					}
@@ -64,10 +57,10 @@ impl Ui {
 					}
 				},
 				TextInputMode::Cursor => {
-					if self.is_sending {
+					if self.comm_tab.is_sending {
 						match c {
-							'A' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↑'), // up
-							'B' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↓'), // down
+							'A' => TextFieldProcessor.process_char(&mut self.comm_tab.broadcast_form.text_field, '↑'), // up
+							'B' => TextFieldProcessor.process_char(&mut self.comm_tab.broadcast_form.text_field, '↓'), // down
 							'C' => (), // right
 							'D' => (), // left
 							_   => (), // Unexpected character
@@ -83,8 +76,8 @@ impl Ui {
 		}
 
 		let mut input = Input::new();
-		input.broadcast = if self.is_sending {
-			Some(self.broadcast_form.text_field.text.clone())
+		input.broadcast = if self.comm_tab.is_sending {
+			Some(self.comm_tab.broadcast_form.text_field.text.clone())
 		}
 		else {
 			None
