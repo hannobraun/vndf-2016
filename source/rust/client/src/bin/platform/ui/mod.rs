@@ -5,6 +5,10 @@ pub mod input;
 use client::platform::Input;
 
 use self::data::List;
+use self::input::{
+	ProcessInput,
+	TextFieldProcessor,
+};
 
 
 pub struct Ui {
@@ -40,7 +44,10 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else if self.element_active {
-						self.broadcast_field.process_char(c);
+						TextFieldProcessor.process_char(
+							&mut self.broadcast_field,
+							c,
+						);
 					}
 				},
 				TextInputMode::Escape => {
@@ -55,8 +62,8 @@ impl Ui {
 				TextInputMode::Cursor => {
 					if !self.element_active {
 						match c {
-							'A' => self.broadcast_field.process_char('↑'), // up
-							'B' => self.broadcast_field.process_char('↓'), // down
+							'A' => TextFieldProcessor.process_char(&mut self.broadcast_field, '↑'), // up
+							'B' => TextFieldProcessor.process_char(&mut self.broadcast_field, '↓'), // down
 							'C' => (), // right
 							'D' => (), // left
 							_   => (), // Unexpected character
