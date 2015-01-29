@@ -1,4 +1,4 @@
-#![allow(unstable)]
+#![feature(collections, core, io, os, rand, rustc_private, std_misc)]
 
 
 mod args;
