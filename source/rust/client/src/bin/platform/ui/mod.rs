@@ -93,7 +93,6 @@ impl Ui {
 
 pub trait UiElement {
 	fn activate(&mut self);
-	fn process_char(&mut self, c: char);
 }
 
 
@@ -116,15 +115,6 @@ impl TextField {
 impl UiElement for TextField {
 	fn activate(&mut self) {
 		self.text.clear();
-	}
-
-	fn process_char(&mut self, c: char) {
-		if c == '\x7f' { // Backspace
-			self.text.pop();
-		}
-		else {
-			self.text.push(c);
-		}
 	}
 }
 
