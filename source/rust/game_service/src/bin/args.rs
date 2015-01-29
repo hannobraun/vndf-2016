@@ -13,15 +13,15 @@ impl Args {
 			port: 34481,
 		};
 
-		let mut opts = Options::new();
-		opts.optopt(
+		let mut options = Options::new();
+		options.optopt(
 				"p",
 				"port",
 				"port to listen on",
 				args.port.to_string().as_slice(),
 			);
 
-		let matches = match opts.parse(cli_args.tail()) {
+		let matches = match options.parse(cli_args.tail()) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
