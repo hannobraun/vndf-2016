@@ -21,9 +21,10 @@ pub trait Render<E, D> {
 pub struct RenderTextField;
 
 pub struct TextFieldData<'a> {
-	pub x    : Pos,
-	pub y    : Pos,
-	pub width: Pos,
+	pub x     : Pos,
+	pub y     : Pos,
+	pub width : Pos,
+	pub active: bool,
 }
 
 impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
@@ -56,6 +57,16 @@ impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 					.write_str(" ")
 			);
 		}
+
+		buffer.cursor = if data.active {
+			Some((
+				1 + data.x + text.chars().count() as u16,
+				1 + data.y,
+			))
+		}
+		else {
+			None
+		};
 
 		Ok(())
 	}

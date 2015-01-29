@@ -59,6 +59,8 @@ impl Renderer {
 	pub fn render(&mut self, frame: &Frame, ui: &Ui) -> IoResult<()> {
 		let mut y = 0;
 
+		self.screen.cursor(None);
+
 		try!(self.render_comm(frame, ui, &mut y));
 		try!(self.render_info(frame, &mut y));
 
@@ -91,7 +93,6 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let message = ui.broadcast_field.text.as_slice();
 		let button_text = if ui.element_active {
 			START_BROADCAST
 		}
@@ -112,18 +113,12 @@ impl Renderer {
 			&mut self.comm.buffer,
 			&ui.broadcast_field,
 			&render::TextFieldData {
-				x    : 4,
-				y    : 4,
-				width: broadcast_width,
+				x     : 4,
+				y     : 4,
+				width : broadcast_width,
+				active: ui.element_active,
 			},
 		));
-
-		if ui.element_active {
-			self.screen.cursor(Some((1 + 4 + message.chars().count() as u16, 1 + 4)));
-		}
-		else {
-			self.screen.cursor(None)
-		}
 
 		try!(button(
 			&mut self.comm.buffer,
