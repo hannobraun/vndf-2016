@@ -19,6 +19,8 @@ impl ProcessInput<TextField> for TextFieldProcessor {
 		else {
 			element.text.push(c);
 		}
+
+		// TODO: Add support for delete key (requires cursor movement)
 	}
 
 	fn process_cursor(&mut self, _element: &mut TextField, _d: Direction) {
