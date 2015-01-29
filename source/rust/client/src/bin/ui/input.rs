@@ -15,8 +15,20 @@ pub enum Direction { Up, Down, Right, Left }
 pub struct CommTabProcessor;
 
 impl ProcessInput<CommTab> for CommTabProcessor {
-	fn process_char(&mut self, _element: &mut CommTab, _c: char) {
-		// TODO: Implement
+	fn process_char(&mut self, element: &mut CommTab, c: char) {
+		if c == '\n' {
+			element.is_sending = !element.is_sending;
+
+			if !element.is_sending {
+				element.broadcast_form.text_field.text.clear();
+			}
+		}
+		else if !element.is_sending {
+			TextFieldProcessor.process_char(
+				&mut element.broadcast_form.text_field,
+				c,
+			);
+		}
 	}
 
 	fn process_cursor(&mut self, element: &mut CommTab, direction: Direction) {

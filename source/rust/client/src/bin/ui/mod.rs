@@ -10,7 +10,6 @@ use self::input::{
 	CommTabProcessor,
 	Direction,
 	ProcessInput,
-	TextFieldProcessor,
 };
 
 
@@ -34,19 +33,12 @@ impl Ui {
 		for &c in chars.iter() {
 			match self.mode {
 				TextInputMode::Regular => {
-					if c == '\n' {
-						self.comm_tab.is_sending = !self.comm_tab.is_sending;
-
-						if !self.comm_tab.is_sending {
-							self.comm_tab.broadcast_form.text_field.text.clear();
-						}
-					}
-					else if c == '\x1b' { // Escape
+					if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
 					}
-					else if !self.comm_tab.is_sending {
-						TextFieldProcessor.process_char(
-							&mut self.comm_tab.broadcast_form.text_field,
+					else {
+						CommTabProcessor.process_char(
+							&mut self.comm_tab,
 							c,
 						);
 					}
