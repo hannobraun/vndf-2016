@@ -14,17 +14,17 @@ pub struct Args {
 
 impl Args {
 	pub fn parse(args: &[String]) -> Args {
-		let mut opts = Options::new();
-		opts.optflag("h", "headless", "enable headless mode");
-		opts.optopt(
+		let mut options = Options::new();
+		options.optflag("h", "headless", "enable headless mode");
+		options.optopt(
 				"h",
 				"server-host",
 				"server host to connect to",
 				"localhost",
 			);
-		opts.optopt("p", "server-port", "server port to connect to", "34481");
+		options.optopt("p", "server-port", "server port to connect to", "34481");
 
-		let matches = match opts.parse(args.tail()) {
+		let matches = match options.parse(args.tail()) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
