@@ -97,7 +97,7 @@ pub trait UiElement {
 
 
 pub struct TextField {
-	text: String,
+	pub text: String,
 }
 
 impl TextField {
