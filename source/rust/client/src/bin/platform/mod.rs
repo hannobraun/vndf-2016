@@ -1,5 +1,4 @@
 mod input;
-mod render;
 mod renderer;
 mod ui;
 
