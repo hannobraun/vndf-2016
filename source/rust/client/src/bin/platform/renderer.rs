@@ -9,16 +9,18 @@ use client::platform::{
 	Status,
 };
 use platform::ui::Ui;
-use render::Pos;
-use render::Screen;
-use render::ScreenBuffer;
+use render::{
+	Pos,
+	Screen,
+	ScreenBuffer,
+	Section,
+};
 use render::Color::{
 	Black,
 	Green,
 	Red,
 	White,
 };
-use render::Section;
 
 
 const START_BROADCAST: &'static str = "Send Broadcast";
