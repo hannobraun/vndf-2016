@@ -17,6 +17,7 @@ pub struct Button;
 
 
 pub struct CommTab {
+	// TODO: is_sending should be derived from the game state, not saved here
 	pub is_sending    : bool,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
