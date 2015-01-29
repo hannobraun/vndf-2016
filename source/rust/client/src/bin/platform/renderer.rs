@@ -9,6 +9,11 @@ use client::platform::{
 	Status,
 };
 use platform::ui::Ui;
+use platform::ui::render::{
+	self,
+	Render,
+	RenderTextField,
+};
 use render::{
 	Pos,
 	Screen,
@@ -103,10 +108,14 @@ impl Renderer {
 			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
-		try!(text_input(
+		try!(RenderTextField.render(
 			&mut self.comm.buffer,
-			4, 4, broadcast_width,
-			message,
+			&ui.broadcast_field,
+			&render::TextFieldData {
+				x    : 4,
+				y    : 4,
+				width: broadcast_width,
+			},
 		));
 
 		if ui.element_active {
@@ -179,33 +188,6 @@ impl Renderer {
 	}
 }
 
-
-fn text_input(b: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, text: &str)
-	-> IoResult<()>
-{
-	let limit = x + width;
-
-	try!(
-		b
-			.writer(x, y)
-			.limit(limit)
-			.foreground_color(White)
-			.background_color(Black)
-			.write_str(text)
-	);
-	for x in range(x + text.chars().count() as u16, limit) {
-		try!(
-			b
-				.writer(x, y)
-				.limit(limit)
-				.foreground_color(White)
-				.background_color(Black)
-				.write_str(" ")
-		);
-	}
-
-	Ok(())
-}
 
 fn button(b: &mut ScreenBuffer, x: Pos, y: Pos, text: &str) -> IoResult<()> {
 	b
