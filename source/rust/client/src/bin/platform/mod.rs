@@ -1,3 +1,8 @@
+mod input;
+mod render;
+mod ui;
+
+
 use std::io::{
 	stdin,
 	IoResult,
@@ -17,11 +22,6 @@ use client::platform::{
 use self::input::InputReader;
 use self::render::Renderer;
 use self::ui::Ui;
-
-
-mod input;
-mod render;
-mod ui;
 
 
 pub trait PlatformIo {
