@@ -111,10 +111,9 @@ impl Renderer {
 
 		try!(RenderTextField.render(
 			&mut self.comm.buffer,
+			4, 4,
 			&ui.broadcast_field,
 			&render::TextFieldData {
-				x     : 4,
-				y     : 4,
 				width : broadcast_width,
 				active: ui.element_active,
 			},
