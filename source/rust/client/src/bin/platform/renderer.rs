@@ -1,7 +1,4 @@
-use std::cmp::{
-	max,
-	min,
-};
+use std::cmp::min;
 use std::io::IoResult;
 
 use client::platform::{
@@ -20,15 +17,9 @@ use render::Color::{
 };
 use ui::Ui;
 use ui::render::{
-	self,
 	Render,
-	RenderButton,
-	RenderTextField,
+	RenderBroadcastForm,
 };
-
-
-const START_BROADCAST: &'static str = "Send Broadcast";
-const STOP_BROADCAST : &'static str = "Stop Sending";
 
 
 pub struct Renderer {
@@ -92,37 +83,12 @@ impl Renderer {
 			"SENDING"
 		));
 
-		let button_text = if ui.element_active {
-			START_BROADCAST
-		}
-		else {
-			STOP_BROADCAST
-		};
 
-		let width = self.comm.buffer.width() - 4;
-		let button_width =
-			max(
-				START_BROADCAST.chars().count(),
-				STOP_BROADCAST.chars().count()
-			)
-			as Pos;
-		let broadcast_width = width - 2 - button_width - 2;
-
-		try!(RenderTextField.render(
+		try!(RenderBroadcastForm.render(
 			&mut self.comm.buffer,
 			4, 4,
-			&ui.broadcast_form.text_field,
-			&render::TextFieldData {
-				width : broadcast_width,
-				active: ui.element_active,
-			},
-		));
-
-		try!(RenderButton.render(
-			&mut self.comm.buffer,
-			4 + broadcast_width + 2, 4,
-			&ui.broadcast_form.button,
-			&render::ButtonData { text: button_text },
+			&ui.broadcast_form,
+			&!ui.element_active,
 		));
 
 		try!(write!(

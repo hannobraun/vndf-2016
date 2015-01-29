@@ -1,3 +1,4 @@
+use std::cmp::max;
 use std::io::IoResult;
 
 use render::{
@@ -10,6 +11,7 @@ use render::Color::{
 };
 
 use super::data::{
+	BroadcastForm,
 	Button,
 	TextField,
 };
@@ -25,6 +27,60 @@ pub trait Render<E, D> {
 		data   : &D
 	)
 		-> IoResult<()>;
+}
+
+
+pub struct RenderBroadcastForm;
+
+const START_BROADCAST: &'static str = "Send Broadcast";
+const STOP_BROADCAST : &'static str = "Stop Sending";
+
+impl Render<BroadcastForm, bool> for RenderBroadcastForm {
+	fn render(
+		&mut self,
+		buffer    : &mut ScreenBuffer,
+		x         : Pos,
+		y         : Pos,
+		element   : &BroadcastForm,
+		is_sending: &bool,
+	)
+		-> IoResult<()>
+	{
+		let button_text = if *is_sending {
+			STOP_BROADCAST
+		}
+		else {
+			START_BROADCAST
+		};
+
+		let width = buffer.width() - x;
+		let button_width =
+			max(
+				START_BROADCAST.chars().count(),
+				STOP_BROADCAST.chars().count()
+			)
+			as Pos;
+		let broadcast_width = width - 2 - button_width - 2;
+
+		try!(RenderTextField.render(
+			buffer,
+			x, y,
+			&element.text_field,
+			&TextFieldData {
+				width : broadcast_width,
+				active: !is_sending,
+			},
+		));
+
+		try!(RenderButton.render(
+			buffer,
+			x + broadcast_width + 2, y,
+			&element.button,
+			&ButtonData { text: button_text },
+		));
+
+		Ok(())
+	}
 }
 
 
