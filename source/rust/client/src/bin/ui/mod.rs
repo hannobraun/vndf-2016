@@ -16,7 +16,7 @@ use self::input::{
 
 
 pub struct Ui {
-	pub element_active: bool,
+	pub is_sending    : bool,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
 
@@ -26,7 +26,7 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			element_active: true,
+			is_sending    : false,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
 			mode          : TextInputMode::Regular,
@@ -38,16 +38,16 @@ impl Ui {
 			match self.mode {
 				TextInputMode::Regular => {
 					if c == '\n' {
-						self.element_active = !self.element_active;
+						self.is_sending = !self.is_sending;
 
-						if self.element_active {
+						if !self.is_sending {
 							self.broadcast_form.text_field.text.clear();
 						}
 					}
 					else if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
 					}
-					else if self.element_active {
+					else if !self.is_sending {
 						TextFieldProcessor.process_char(
 							&mut self.broadcast_form.text_field,
 							c,
@@ -64,7 +64,7 @@ impl Ui {
 					}
 				},
 				TextInputMode::Cursor => {
-					if !self.element_active {
+					if self.is_sending {
 						match c {
 							'A' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↑'), // up
 							'B' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↓'), // down
@@ -83,7 +83,7 @@ impl Ui {
 		}
 
 		let mut input = Input::new();
-		input.broadcast = if !self.element_active {
+		input.broadcast = if self.is_sending {
 			Some(self.broadcast_form.text_field.text.clone())
 		}
 		else {

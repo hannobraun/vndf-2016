@@ -88,7 +88,7 @@ impl Renderer {
 			&mut self.comm.buffer,
 			4, 4,
 			&ui.broadcast_form,
-			&!ui.element_active,
+			&ui.is_sending,
 		));
 
 		try!(write!(
