@@ -6,9 +6,8 @@ pub mod render;
 use client::platform::Input;
 
 use self::data::{
-	Button,
+	BroadcastForm,
 	List,
-	TextField,
 };
 use self::input::{
 	ProcessInput,
@@ -18,8 +17,7 @@ use self::input::{
 
 pub struct Ui {
 	pub element_active  : bool,
-	pub broadcast_button: Button,
-	pub broadcast_field : TextField,
+	pub broadcast_form  : BroadcastForm,
 	pub broadcast_list  : List,
 
 	mode: TextInputMode,
@@ -28,11 +26,10 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			element_active  : true,
-			broadcast_button: Button,
-			broadcast_field : TextField::new(),
-			broadcast_list  : List::new(),
-			mode            : TextInputMode::Regular,
+			element_active: true,
+			broadcast_form: BroadcastForm::new(),
+			broadcast_list: List::new(),
+			mode          : TextInputMode::Regular,
 		}
 	}
 
@@ -44,7 +41,7 @@ impl Ui {
 						self.element_active = !self.element_active;
 
 						if self.element_active {
-							self.broadcast_field.text.clear();
+							self.broadcast_form.text_field.text.clear();
 						}
 					}
 					else if c == '\x1b' { // Escape
@@ -52,7 +49,7 @@ impl Ui {
 					}
 					else if self.element_active {
 						TextFieldProcessor.process_char(
-							&mut self.broadcast_field,
+							&mut self.broadcast_form.text_field,
 							c,
 						);
 					}
@@ -69,8 +66,8 @@ impl Ui {
 				TextInputMode::Cursor => {
 					if !self.element_active {
 						match c {
-							'A' => TextFieldProcessor.process_char(&mut self.broadcast_field, '↑'), // up
-							'B' => TextFieldProcessor.process_char(&mut self.broadcast_field, '↓'), // down
+							'A' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↑'), // up
+							'B' => TextFieldProcessor.process_char(&mut self.broadcast_form.text_field, '↓'), // down
 							'C' => (), // right
 							'D' => (), // left
 							_   => (), // Unexpected character
@@ -87,7 +84,7 @@ impl Ui {
 
 		let mut input = Input::new();
 		input.broadcast = if !self.element_active {
-			Some(self.broadcast_field.text.clone())
+			Some(self.broadcast_form.text_field.text.clone())
 		}
 		else {
 			None

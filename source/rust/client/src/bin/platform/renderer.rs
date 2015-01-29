@@ -111,7 +111,7 @@ impl Renderer {
 		try!(RenderTextField.render(
 			&mut self.comm.buffer,
 			4, 4,
-			&ui.broadcast_field,
+			&ui.broadcast_form.text_field,
 			&render::TextFieldData {
 				width : broadcast_width,
 				active: ui.element_active,
@@ -121,7 +121,7 @@ impl Renderer {
 		try!(RenderButton.render(
 			&mut self.comm.buffer,
 			4 + broadcast_width + 2, 4,
-			&ui.broadcast_button,
+			&ui.broadcast_form.button,
 			&render::ButtonData { text: button_text },
 		));
 

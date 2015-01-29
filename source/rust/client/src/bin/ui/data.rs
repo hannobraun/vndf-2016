@@ -1,6 +1,21 @@
 pub struct Button;
 
 
+pub struct BroadcastForm {
+	pub text_field: TextField,
+	pub button    : Button,
+}
+
+impl BroadcastForm {
+	pub fn new() -> BroadcastForm {
+		BroadcastForm {
+			text_field: TextField::new(),
+			button    : Button,
+		}
+	}
+}
+
+
 pub struct List {
 	pub first: usize,
 }
