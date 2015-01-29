@@ -28,8 +28,6 @@ impl Ui {
 	}
 
 	pub fn process_input(&mut self, chars: &[char]) -> Input {
-		// TODO: Split this function up into multiple layered input processors.
-
 		for &c in chars.iter() {
 			match self.mode {
 				TextInputMode::Regular => {
