@@ -29,7 +29,7 @@ pub struct TextFieldData<'a> {
 impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 	fn render(
 		&mut self,
-		b      : &mut ScreenBuffer,
+		buffer : &mut ScreenBuffer,
 		element: &TextField,
 		data   : &TextFieldData
 	)
@@ -39,7 +39,7 @@ impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 		let limit = data.x + data.width;
 
 		try!(
-			b
+			buffer
 				.writer(data.x, data.y)
 				.limit(limit)
 				.foreground_color(White)
@@ -48,7 +48,7 @@ impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 		);
 		for x in range(data.x + text.chars().count() as u16, limit) {
 			try!(
-				b
+				buffer
 					.writer(x, data.y)
 					.limit(limit)
 					.foreground_color(White)
