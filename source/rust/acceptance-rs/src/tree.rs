@@ -1,4 +1,4 @@
-use std::io::{
+use std::old_io::{
 	self,
 	fs,
 	File,
@@ -37,7 +37,7 @@ impl TreeBuilder {
 	pub fn with_file(self, path: &str, contents: &str) -> TreeBuilder {
 		let path = self.root.join(path);
 
-		fs::mkdir_recursive(&path.dir_path(), io::USER_RWX)
+		fs::mkdir_recursive(&path.dir_path(), old_io::USER_RWX)
 			.unwrap_or_else(|e| panic!("failed to create tree root: {}", e));
 
 		File::create(&path)

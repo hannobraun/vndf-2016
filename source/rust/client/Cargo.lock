@@ -3,18 +3,18 @@ name = "client"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
- "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "common"
 version = "0.0.1"
 dependencies = [
- "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.9"
+version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 

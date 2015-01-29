@@ -3,7 +3,7 @@ use getopts::{
 	optflag,
 	optopt,
 };
-use std::io::net::ip::{
+use std::old_io::net::ip::{
 	Port,
 	SocketAddr,
 	ToSocketAddr,

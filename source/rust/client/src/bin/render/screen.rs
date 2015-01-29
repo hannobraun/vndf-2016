@@ -1,11 +1,11 @@
 use libc;
 use std::cmp::min;
-use std::io::{
+use std::old_io::{
 	stdout,
 	IoResult,
 	LineBufferedWriter,
 };
-use std::io::stdio::StdWriter;
+use std::old_io::stdio::StdWriter;
 use std::mem::swap;
 
 use termios::Termios;

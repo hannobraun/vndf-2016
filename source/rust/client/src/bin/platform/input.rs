@@ -1,4 +1,4 @@
-use std::io::stdin;
+use std::old_io::stdin;
 use std::sync::mpsc::{
 	channel,
 	Receiver,

@@ -1,4 +1,4 @@
-use std::io::IoResult;
+use std::old_io::IoResult;
 
 use super::{
 	Pos,

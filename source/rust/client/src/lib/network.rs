@@ -1,4 +1,4 @@
-use std::io::net::ip::ToSocketAddr;
+use std::old_io::net::ip::ToSocketAddr;
 use std::vec::Drain;
 
 use common::network::Connection;

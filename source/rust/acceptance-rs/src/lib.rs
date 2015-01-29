@@ -1,7 +1,7 @@
 #![allow(unstable)]
 
 
-use std::io::net::ip::Port;
+use std::old_io::net::ip::Port;
 use std::rand::random;
 
 

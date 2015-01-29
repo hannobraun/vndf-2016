@@ -2,7 +2,7 @@ use std::cmp::{
 	max,
 	min,
 };
-use std::io::IoResult;
+use std::old_io::IoResult;
 
 use render::{
 	Pos,

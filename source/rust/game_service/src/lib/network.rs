@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::io::net::ip::{
+use std::old_io::net::ip::{
 	Port,
 	SocketAddr,
 };

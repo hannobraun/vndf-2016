@@ -2,7 +2,7 @@ mod input;
 mod renderer;
 
 
-use std::io::{
+use std::old_io::{
 	stdin,
 	IoResult,
 };

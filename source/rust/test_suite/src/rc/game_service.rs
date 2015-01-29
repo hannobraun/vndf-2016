@@ -1,4 +1,4 @@
-use std::io::net::ip::Port;
+use std::old_io::net::ip::Port;
 
 use acceptance::{
 	random_port,

@@ -1,9 +1,9 @@
-use std::io;
-use std::io::{BufferedReader, PipeStream};
+use std::old_io;
+use std::old_io::{BufferedReader, PipeStream};
 
 
 pub struct Process {
-	process: io::Process,
+	process: old_io::Process,
 	path   : String,
 	stdout : BufferedReader<PipeStream>,
 	stderr : BufferedReader<PipeStream>,
@@ -12,7 +12,7 @@ pub struct Process {
 
 impl Process {
 	pub fn start(path: &str, args: &[&str]) -> Process {
-		let mut process = match io::Command::new(path).args(args).spawn() {
+		let mut process = match old_io::Command::new(path).args(args).spawn() {
 			Ok(process) => process,
 			Err(error)  => panic!("Failed to start process {}: {}", path, error)
 		};

@@ -1,10 +1,10 @@
-use std::io::{
+use std::old_io::{
 	BufferedReader,
 	IoResult,
 };
-use std::io::IoErrorKind::EndOfFile;
-use std::io::net::ip::ToSocketAddr;
-use std::io::net::tcp::TcpStream;
+use std::old_io::IoErrorKind::EndOfFile;
+use std::old_io::net::ip::ToSocketAddr;
+use std::old_io::net::tcp::TcpStream;
 use std::sync::mpsc::{
 	channel,
 	Receiver,

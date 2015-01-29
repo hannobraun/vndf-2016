@@ -1,4 +1,4 @@
-use std::io::{
+use std::old_io::{
 	IoError,
 	IoErrorKind,
 	IoResult,
@@ -154,7 +154,7 @@ impl<'r> BufferWriter<'r> {
 }
 
 impl<'r> Writer for BufferWriter<'r> {
-	fn write(&mut self, buf: &[u8]) -> IoResult<()> {
+	fn write_all(&mut self, buf: &[u8]) -> IoResult<()> {
 		if self.y >= self.buffer.height() {
 			let detail = format!(
 				"x: {}, y: {}, width: {}, height: {}",

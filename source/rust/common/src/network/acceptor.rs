@@ -1,10 +1,10 @@
-use std::io::Acceptor as IoAcceptor;
-use std::io::Listener;
-use std::io::net::ip::{
+use std::old_io::Acceptor as IoAcceptor;
+use std::old_io::Listener;
+use std::old_io::net::ip::{
 	Port,
 	SocketAddr,
 };
-use std::io::net::tcp::{
+use std::old_io::net::tcp::{
 	TcpListener,
 };
 use std::sync::mpsc::{

@@ -13,7 +13,7 @@ extern crate game_service;
 
 
 use std::collections::HashMap;
-use std::io::timer::sleep;
+use std::old_io::timer::sleep;
 use std::os;
 use std::rand::random;
 use std::time::Duration;

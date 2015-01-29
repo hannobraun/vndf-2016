@@ -17,7 +17,7 @@ mod ui;
 
 
 use std::collections::HashMap;
-use std::io::timer::sleep;
+use std::old_io::timer::sleep;
 use std::time::Duration;
 
 use args::Args;

@@ -2,7 +2,7 @@ use getopts::{
 	getopts,
 	optopt,
 };
-use std::io::net::ip::Port;
+use std::old_io::net::ip::Port;
 
 
 pub struct Args {

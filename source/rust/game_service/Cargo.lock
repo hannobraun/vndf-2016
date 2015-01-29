@@ -3,19 +3,19 @@ name = "game_service"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
- "time 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "common"
 version = "0.0.1"
 dependencies = [
- "rustc-serialize 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gcc"
-version = "0.1.6"
+version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -25,15 +25,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.9"
+version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "time"
-version = "0.1.14"
+version = "0.1.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gcc 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gcc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
