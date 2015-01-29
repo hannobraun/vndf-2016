@@ -1,4 +1,9 @@
+pub mod data;
+
+
 use client::platform::Input;
+
+use self::data::List;
 
 
 pub struct Ui {
@@ -111,19 +116,6 @@ impl UiElement for TextField {
 		}
 		else {
 			self.text.push(c);
-		}
-	}
-}
-
-
-pub struct List {
-	pub first: usize,
-}
-
-impl List {
-	pub fn new() -> List {
-		List {
-			first: 0,
 		}
 	}
 }
