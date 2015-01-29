@@ -56,12 +56,12 @@ impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
 
 pub struct RenderTextField;
 
-pub struct TextFieldData<'a> {
+pub struct TextFieldData {
 	pub width : Pos,
 	pub active: bool,
 }
 
-impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
+impl Render<TextField, TextFieldData> for RenderTextField {
 	fn render(
 		&mut self,
 		buffer : &mut ScreenBuffer,
