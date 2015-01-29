@@ -1,4 +1,5 @@
 pub mod data;
+pub mod input;
 
 
 use client::platform::Input;
