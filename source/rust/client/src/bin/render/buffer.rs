@@ -36,7 +36,8 @@ impl C {
 
 #[derive(Clone)]
 pub struct ScreenBuffer {
-	buffer: Vec<Vec<C>>,
+	    buffer: Vec<Vec<C>>,
+	pub cursor: Option<(Pos, Pos)>,
 }
 
 impl ScreenBuffer {
@@ -55,6 +56,7 @@ impl ScreenBuffer {
 
 		ScreenBuffer {
 			buffer: buffer,
+			cursor: None,
 		}
 	}
 
