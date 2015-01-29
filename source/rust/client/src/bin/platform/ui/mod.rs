@@ -80,7 +80,7 @@ impl Ui {
 
 		let mut input = Input::new();
 		input.broadcast = if !self.element_active {
-			Some(self.broadcast_field.text().to_string())
+			Some(self.broadcast_field.text.clone())
 		}
 		else {
 			None
