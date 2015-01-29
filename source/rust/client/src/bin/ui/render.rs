@@ -47,7 +47,7 @@ impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 				.background_color(Black)
 				.write_str(text)
 		);
-		for x in range(data.x + text.chars().count() as u16, limit) {
+		for x in range(data.x + text.chars().count() as Pos, limit) {
 			try!(
 				buffer
 					.writer(x, data.y)
@@ -60,7 +60,7 @@ impl<'a> Render<TextField, TextFieldData<'a>> for RenderTextField {
 
 		buffer.cursor = if data.active {
 			Some((
-				1 + data.x + text.chars().count() as u16,
+				1 + data.x + text.chars().count() as Pos,
 				1 + data.y,
 			))
 		}
