@@ -1,5 +1,4 @@
-#![allow(unstable)]
-#![feature(slicing_syntax)]
+#![feature(collections, core, io, libc, os, rustc_private, slicing_syntax, std_misc)]
 
 
 extern crate getopts;
