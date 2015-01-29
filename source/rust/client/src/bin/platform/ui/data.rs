@@ -9,3 +9,16 @@ impl List {
 		}
 	}
 }
+
+
+pub struct TextField {
+	pub text: String,
+}
+
+impl TextField {
+	pub fn new() -> TextField {
+		TextField {
+			text: String::new(),
+		}
+	}
+}

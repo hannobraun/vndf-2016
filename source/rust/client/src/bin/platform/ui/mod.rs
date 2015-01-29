@@ -4,7 +4,10 @@ pub mod input;
 
 use client::platform::Input;
 
-use self::data::List;
+use self::data::{
+	List,
+	TextField,
+};
 use self::input::{
 	ProcessInput,
 	TextFieldProcessor,
@@ -87,19 +90,6 @@ impl Ui {
 		};
 
 		input
-	}
-}
-
-
-pub struct TextField {
-	pub text: String,
-}
-
-impl TextField {
-	pub fn new() -> TextField {
-		TextField {
-			text: String::new(),
-		}
 	}
 }
 
