@@ -1,6 +1,3 @@
-pub struct Button;
-
-
 pub struct BroadcastForm {
 	pub text_field: TextField,
 	pub button    : Button,
@@ -14,6 +11,9 @@ impl BroadcastForm {
 		}
 	}
 }
+
+
+pub struct Button;
 
 
 pub struct List {
