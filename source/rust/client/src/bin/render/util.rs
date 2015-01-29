@@ -33,6 +33,10 @@ impl Section {
 			try!(screen.buffer().set(x + buffer_x + 1, y + buffer_y + 1, c));
 		}
 
+		if let Some(cursor) = self.buffer.cursor {
+			screen.cursor(Some(cursor));
+		}
+
 		let mut c = C::new();
 
 		c.c = '┏';
