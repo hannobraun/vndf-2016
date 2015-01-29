@@ -8,12 +8,6 @@ use client::platform::{
 	Frame,
 	Status,
 };
-use platform::ui::Ui;
-use platform::ui::render::{
-	self,
-	Render,
-	RenderTextField,
-};
 use render::{
 	Pos,
 	Screen,
@@ -25,6 +19,12 @@ use render::Color::{
 	Green,
 	Red,
 	White,
+};
+use ui::Ui;
+use ui::render::{
+	self,
+	Render,
+	RenderTextField,
 };
 
 

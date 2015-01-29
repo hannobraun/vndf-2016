@@ -13,6 +13,7 @@ mod args;
 mod platform;
 mod render;
 mod termios;
+mod ui;
 
 
 use std::collections::HashMap;

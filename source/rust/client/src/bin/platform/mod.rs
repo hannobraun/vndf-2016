@@ -1,6 +1,5 @@
 mod input;
 mod renderer;
-mod ui;
 
 
 use std::io::{
@@ -18,10 +17,10 @@ use client::platform::{
 	Frame,
 	Input,
 };
+use ui::Ui;
 
 use self::input::InputReader;
 use self::renderer::Renderer;
-use self::ui::Ui;
 
 
 pub trait PlatformIo {
