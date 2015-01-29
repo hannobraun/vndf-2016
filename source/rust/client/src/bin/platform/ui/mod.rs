@@ -37,7 +37,7 @@ impl Ui {
 						self.element_active = !self.element_active;
 
 						if self.element_active {
-							self.broadcast_field.activate();
+							self.broadcast_field.text.clear();
 						}
 					}
 					else if c == '\x1b' { // Escape
