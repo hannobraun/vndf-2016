@@ -32,13 +32,13 @@ pub struct CommTabProcessor;
 impl ProcessInput<CommTab> for CommTabProcessor {
 	fn process_char(&mut self, element: &mut CommTab, c: char) {
 		if c == '\n' {
-			element.is_sending = !element.is_sending;
+			element.element_active = !element.element_active;
 
-			if !element.is_sending {
+			if element.element_active {
 				element.broadcast_form.text_field.text.clear();
 			}
 		}
-		else if !element.is_sending {
+		else if element.element_active {
 			BroadcastFormProcessor.process_char(
 				&mut element.broadcast_form,
 				c,
@@ -47,7 +47,7 @@ impl ProcessInput<CommTab> for CommTabProcessor {
 	}
 
 	fn process_cursor(&mut self, element: &mut CommTab, direction: Direction) {
-		if element.is_sending {
+		if !element.element_active {
 			match direction {
 				Direction::Up =>
 					BroadcastFormProcessor.process_char(

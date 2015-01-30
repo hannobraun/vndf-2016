@@ -154,7 +154,7 @@ impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
 			buffer,
 			x + 4, y + 4,
 			&element.broadcast_form,
-			&element.is_sending,
+			&!element.element_active,
 		));
 
 		try!(write!(

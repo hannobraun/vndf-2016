@@ -72,11 +72,11 @@ impl Ui {
 		}
 
 		let mut input = Input::new();
-		input.broadcast = if self.comm_tab.is_sending {
-			Some(self.comm_tab.broadcast_form.text_field.text.clone())
+		input.broadcast = if self.comm_tab.element_active {
+			None
 		}
 		else {
-			None
+			Some(self.comm_tab.broadcast_form.text_field.text.clone())
 		};
 
 		input

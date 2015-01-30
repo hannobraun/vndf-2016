@@ -17,8 +17,7 @@ pub struct Button;
 
 
 pub struct CommTab {
-	// TODO: is_sending should be derived from the game state, not saved here
-	pub is_sending    : bool,
+	pub element_active: bool,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
 }
@@ -26,7 +25,7 @@ pub struct CommTab {
 impl CommTab {
 	pub fn new() -> CommTab {
 		CommTab {
-			is_sending    : false,
+			element_active: true,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
 		}
