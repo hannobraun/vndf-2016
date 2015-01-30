@@ -12,7 +12,7 @@ use super::input::ProcessInput;
 pub trait Element: ProcessInput {}
 
 
-#[derive(Eq, PartialEq)]
+#[derive(Copy, Eq, PartialEq)]
 pub enum Status {
 	Passive,
 	Selected,
