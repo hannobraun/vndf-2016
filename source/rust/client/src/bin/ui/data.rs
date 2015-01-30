@@ -67,7 +67,7 @@ impl CommTab {
 		}
 	}
 
-	pub fn active_element_mut(&mut self) -> &mut Element {
+	pub fn selected_element_mut(&mut self) -> &mut Element {
 		match self.selected_index % 2 {
 			0 => &mut self.broadcast_form,
 			1 => &mut self.broadcast_list,
