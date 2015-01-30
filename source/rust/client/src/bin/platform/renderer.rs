@@ -17,7 +17,6 @@ use ui::Ui;
 use ui::render::{
 	self,
 	Render,
-	RenderCommTab,
 };
 
 
@@ -74,10 +73,9 @@ impl Renderer {
 			.collect();
 		broadcasts.sort();
 
-		try!(RenderCommTab.render(
+		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
 			0, 0,
-			&ui.comm_tab,
 			&render::CommTabData {
 				self_id   : frame.self_id.as_slice(),
 				broadcasts: broadcasts.as_slice(),

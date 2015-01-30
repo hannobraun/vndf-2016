@@ -20,31 +20,21 @@ use super::data::{
 };
 
 
-pub trait Render<E, D> {
-	fn render(
-		&mut self,
-		buffer : &mut ScreenBuffer,
-		x      : Pos,
-		y      : Pos,
-		element: &E,
-		data   : &D
-	)
+pub trait Render<D> {
+	fn render(&mut self, buffer : &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
 		-> IoResult<()>;
 }
 
 
-pub struct RenderBroadcastForm;
-
 const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
-impl Render<BroadcastForm, bool> for RenderBroadcastForm {
+impl Render<bool> for BroadcastForm {
 	fn render(
 		&mut self,
 		buffer    : &mut ScreenBuffer,
 		x         : Pos,
 		y         : Pos,
-		element   : &BroadcastForm,
 		is_active: &bool,
 	)
 		-> IoResult<()>
@@ -65,20 +55,18 @@ impl Render<BroadcastForm, bool> for RenderBroadcastForm {
 			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
-		try!(RenderTextField.render(
+		try!(self.text_field.render(
 			buffer,
 			x, y,
-			&element.text_field,
 			&TextFieldData {
 				width : broadcast_width,
 				active: *is_active,
 			},
 		));
 
-		try!(RenderButton.render(
+		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
-			&element.button,
 			&ButtonData { text: button_text },
 		));
 
@@ -87,19 +75,16 @@ impl Render<BroadcastForm, bool> for RenderBroadcastForm {
 }
 
 
-pub struct RenderButton;
-
 pub struct ButtonData<'a> {
 	pub text: &'a str,
 }
 
-impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
+impl<'a> Render<ButtonData<'a>> for Button {
 	fn render(
 		&mut self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		_     : &Button,
 		data  : &ButtonData,
 	)
 		-> IoResult<()>
@@ -113,20 +98,17 @@ impl<'a> Render<Button, ButtonData<'a>> for RenderButton {
 }
 
 
-pub struct RenderCommTab;
-
 pub struct CommTabData<'a> {
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
 }
 
-impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
+impl<'a> Render<CommTabData<'a>> for CommTab {
 	fn render(
 		&mut self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		element: &CommTab,
 		data   : &CommTabData,
 	)
 		-> IoResult<()>
@@ -148,11 +130,10 @@ impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
 		));
 
 
-		try!(RenderBroadcastForm.render(
+		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
-			&element.broadcast_form,
-			&element.element_active,
+			&self.element_active,
 		));
 
 		try!(write!(
@@ -161,10 +142,9 @@ impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
 		));
 
 		let width = buffer.width();
-		try!(RenderList.render(
+		try!(self.broadcast_list.render(
 			buffer,
 			x + 4, y + 7,
-			&element.broadcast_list,
 			&ListData {
 				width : width - 4 - 4,
 				height: 5,
@@ -177,21 +157,18 @@ impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
 }
 
 
-pub struct RenderList;
-
 pub struct ListData<'a> {
 	pub width : Pos,
 	pub height: Pos,
 	pub items : &'a [String],
 }
 
-impl<'a> Render<List, ListData<'a>> for RenderList {
+impl<'a> Render<ListData<'a>> for List {
 	fn render(
 		&mut self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		element: &List,
 		data   : &ListData,
 	)
 		-> IoResult<()>
@@ -212,7 +189,7 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 
 		let mut iter = items
 			.iter()
-			.skip(element.first);
+			.skip(self.first);
 
 		for i in range(0, data.height) {
 			let item_length = match iter.next() {
@@ -244,14 +221,14 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 			}
 		}
 
-		if element.first > 0 {
+		if self.first > 0 {
 			try!(write!(
 				&mut buffer.writer(limit - 1, y).limit(limit),
 				"↑",
 			));
 		}
 
-		if items.len() - element.first > data.height as usize {
+		if items.len() - self.first > data.height as usize {
 			try!(write!(
 				&mut buffer.writer(limit - 1, y + data.height - 1).limit(limit),
 				"↓",
@@ -263,25 +240,22 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 }
 
 
-pub struct RenderTextField;
-
 pub struct TextFieldData {
 	pub width : Pos,
 	pub active: bool,
 }
 
-impl Render<TextField, TextFieldData> for RenderTextField {
+impl Render<TextFieldData> for TextField {
 	fn render(
 		&mut self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		element: &TextField,
 		data   : &TextFieldData,
 	)
 		-> IoResult<()>
 	{
-		let text  = element.text.as_slice();
+		let text  = self.text.as_slice();
 		let limit = x + data.width;
 
 		let (foreground_color, background_color) = if data.active {
