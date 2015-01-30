@@ -271,12 +271,14 @@ impl Render<TextField, TextFieldData> for RenderTextField {
 		let text  = element.text.as_slice();
 		let limit = x + data.width;
 
+		let (foreground_color, background_color) = (White, Black);
+
 		try!(
 			buffer
 				.writer(x, y)
 				.limit(limit)
-				.foreground_color(White)
-				.background_color(Black)
+				.foreground_color(foreground_color)
+				.background_color(background_color)
 				.write_str(text)
 		);
 		for x in range(x + text.chars().count() as Pos, limit) {
@@ -284,8 +286,8 @@ impl Render<TextField, TextFieldData> for RenderTextField {
 				buffer
 					.writer(x, y)
 					.limit(limit)
-					.foreground_color(White)
-					.background_color(Black)
+					.foreground_color(foreground_color)
+					.background_color(background_color)
 					.write_str(" ")
 			);
 		}
