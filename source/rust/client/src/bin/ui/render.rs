@@ -47,15 +47,15 @@ impl Render<BroadcastForm, bool> for RenderBroadcastForm {
 		x         : Pos,
 		y         : Pos,
 		element   : &BroadcastForm,
-		is_sending: &bool,
+		is_active: &bool,
 	)
 		-> IoResult<()>
 	{
-		let button_text = if *is_sending {
-			STOP_BROADCAST
+		let button_text = if *is_active {
+			START_BROADCAST
 		}
 		else {
-			START_BROADCAST
+			STOP_BROADCAST
 		};
 
 		let width = buffer.width() - x;
@@ -73,7 +73,7 @@ impl Render<BroadcastForm, bool> for RenderBroadcastForm {
 			&element.text_field,
 			&TextFieldData {
 				width : broadcast_width,
-				active: !is_sending,
+				active: *is_active,
 			},
 		));
 
@@ -154,7 +154,7 @@ impl<'a> Render<CommTab, CommTabData<'a>> for RenderCommTab {
 			buffer,
 			x + 4, y + 4,
 			&element.broadcast_form,
-			&!element.element_active,
+			&element.element_active,
 		));
 
 		try!(write!(
