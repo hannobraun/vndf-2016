@@ -69,7 +69,7 @@ impl Render for BroadcastForm {
 			x, y,
 			&TextFieldArgs {
 				width : broadcast_width,
-				active: !args.sending,
+				active: args.active && !args.sending,
 			},
 		));
 
@@ -159,7 +159,7 @@ impl<'a> Render for CommTab {
 			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
-				active : self.element_active,
+				active : self.form_is_active(),
 				sending: args.is_sending,
 			},
 		));
