@@ -104,20 +104,20 @@ impl<'a> Render for Button {
 }
 
 
-pub struct CommTabData<'a> {
+pub struct CommTabArgs<'a> {
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
 }
 
 impl<'a> Render for CommTab {
-	type Args = CommTabData<'a>;
+	type Args = CommTabArgs<'a>;
 
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &CommTabData,
+		data   : &CommTabArgs,
 	)
 		-> IoResult<()>
 	{
