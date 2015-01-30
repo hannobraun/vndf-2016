@@ -8,7 +8,6 @@ use render::{
 use render::Color::{
 	Black,
 	White,
-	Yellow,
 };
 
 use super::data::{
@@ -65,12 +64,19 @@ impl Render for BroadcastForm {
 			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
+		let text_field_status = if args.active && !args.sending {
+			Status::Active
+		}
+		else {
+			Status::Passive
+		};
+
 		try!(self.text_field.render(
 			buffer,
 			x, y,
 			&TextFieldArgs {
 				width : broadcast_width,
-				active: args.active && !args.sending,
+				status: text_field_status,
 			},
 		));
 
@@ -275,7 +281,7 @@ impl<'a> Render for List {
 
 pub struct TextFieldArgs {
 	pub width : Pos,
-	pub active: bool,
+	pub status: Status,
 }
 
 impl Render for TextField {
@@ -293,12 +299,7 @@ impl Render for TextField {
 		let text  = self.text.as_slice();
 		let limit = x + args.width;
 
-		let (foreground_color, background_color) = if args.active {
-			(Black, Yellow)
-		}
-		else {
-			(White, Black)
-		};
+		let (foreground_color, background_color) = args.status.colors();
 
 		try!(
 			buffer
@@ -319,7 +320,7 @@ impl Render for TextField {
 			);
 		}
 
-		buffer.cursor = if args.active {
+		buffer.cursor = if args.status == Status::Active {
 			Some((1 + x + text.chars().count() as Pos, 1 + y))
 		}
 		else {
