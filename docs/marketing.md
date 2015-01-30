@@ -15,6 +15,14 @@
 
 ## Planned Measures
 
+### Introduction to Orbital Mechanics
+
+* Write a simple simulation software.
+* Use that to create a series of videos to explain orbital mechanics.
+* The videos can serve as an introduction to more advanced content, like
+  webcasts of playin the game.
+* They can also funnel people to the website and mailing list.
+
 ### Webcasts
 
 * Regularly the game with hand-picked testers and record it. The videos can be
