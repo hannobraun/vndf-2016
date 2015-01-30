@@ -117,7 +117,7 @@ impl<'a> Render for CommTab {
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &CommTabArgs,
+		args   : &CommTabArgs,
 	)
 		-> IoResult<()>
 	{
@@ -129,7 +129,7 @@ impl<'a> Render for CommTab {
 		try!(write!(
 			&mut buffer.writer(x + 4, y + 1),
 			"{}",
-			data.self_id,
+			args.self_id,
 		));
 
 		try!(write!(
@@ -156,7 +156,7 @@ impl<'a> Render for CommTab {
 			&ListData {
 				width : width - 4 - 4,
 				height: 5,
-				items : data.broadcasts,
+				items : args.broadcasts,
 			},
 		));
 
