@@ -160,10 +160,10 @@ impl<'a> Render for CommTab {
 			"SENDING",
 		));
 
-		let form_status = if self.form_is_active() && self.element_active {
+		let form_status = if self.form_is_selected() && self.element_active {
 			Status::Active
 		}
-		else if self.form_is_active() {
+		else if self.form_is_selected() {
 			Status::Selected
 		}
 		else {

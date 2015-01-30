@@ -75,7 +75,7 @@ impl CommTab {
 		}
 	}
 
-	pub fn form_is_active(&self) -> bool {
+	pub fn form_is_selected(&self) -> bool {
 		self.selected_index % 2 == 0
 	}
 
