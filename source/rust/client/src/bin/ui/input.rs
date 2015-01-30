@@ -5,55 +5,45 @@ use super::data::{
 };
 
 
-pub trait ProcessInput<T> {
-	fn process_char(&mut self, element: &mut T, c: char);
-	fn process_cursor(&mut self, element: &mut T, direction: Direction);
+pub trait ProcessInput {
+	fn process_char(&mut self, c: char);
+	fn process_cursor(&mut self, direction: Direction);
 }
 
 pub enum Direction { Up, Down, Right, Left }
 
 
-pub struct BroadcastFormProcessor;
-
-impl ProcessInput<BroadcastForm> for BroadcastFormProcessor {
-	fn process_char(&mut self, element: &mut BroadcastForm, c: char) {
-		TextFieldProcessor.process_char(
-			&mut element.text_field,
-			c,
-		)
+impl ProcessInput for BroadcastForm {
+	fn process_char(&mut self, c: char) {
+		self.text_field.process_char(c)
 	}
 
-	fn process_cursor(&mut self, _: &mut BroadcastForm, _: Direction) {}
+	fn process_cursor(&mut self, _: Direction) {}
 }
 
 
-pub struct CommTabProcessor;
-
-impl ProcessInput<CommTab> for CommTabProcessor {
-	fn process_char(&mut self, element: &mut CommTab, c: char) {
+impl ProcessInput for CommTab {
+	fn process_char(&mut self, c: char) {
 		if c == '\n' {
-			element.element_active = !element.element_active;
+			self.element_active = !self.element_active;
 
-			if element.element_active {
-				element.broadcast_form.text_field.text.clear();
+			if self.element_active {
+				self.broadcast_form.text_field.text.clear();
 			}
 		}
-		else if element.element_active {
-			BroadcastFormProcessor.process_char(
-				&mut element.broadcast_form,
-				c,
-			);
+		else if self.element_active {
+			self.broadcast_form.process_char(c);
 		}
 	}
 
-	fn process_cursor(&mut self, element: &mut CommTab, direction: Direction) {
-		if element.element_active {
+	fn process_cursor(&mut self, direction: Direction) {
+		if self.element_active {
 			// TODO: Pass direction to active element
 		}
 		else {
 			match direction {
-				Direction::Up   => element.selected_index -= 1,
-				Direction::Down => element.selected_index -= 1,
+				Direction::Up   => self.selected_index -= 1,
+				Direction::Down => self.selected_index -= 1,
 				_               => (),
 			}
 		}
@@ -61,21 +51,19 @@ impl ProcessInput<CommTab> for CommTabProcessor {
 }
 
 
-pub struct TextFieldProcessor;
-
-impl ProcessInput<TextField> for TextFieldProcessor {
-	fn process_char(&mut self, element: &mut TextField, c: char) {
+impl ProcessInput for TextField {
+	fn process_char(&mut self, c: char) {
 		if c == '\x7f' { // Backspace
-			element.text.pop();
+			self.text.pop();
 		}
 		else {
-			element.text.push(c);
+			self.text.push(c);
 		}
 
 		// TODO: Add support for delete key (requires cursor movement)
 	}
 
-	fn process_cursor(&mut self, _element: &mut TextField, _d: Direction) {
+	fn process_cursor(&mut self, _d: Direction) {
 		// TODO: Add support cursor movement
 	}
 }

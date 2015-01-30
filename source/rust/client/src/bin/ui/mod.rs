@@ -7,7 +7,6 @@ use client::platform::Input;
 
 use self::data::CommTab;
 use self::input::{
-	CommTabProcessor,
 	Direction,
 	ProcessInput,
 };
@@ -35,10 +34,7 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else {
-						CommTabProcessor.process_char(
-							&mut self.comm_tab,
-							c,
-						);
+						self.comm_tab.process_char(c);
 					}
 				},
 				TextInputMode::Escape => {
@@ -60,10 +56,7 @@ impl Ui {
 					};
 
 					if let Some(direction) = direction {
-						CommTabProcessor.process_cursor(
-							&mut self.comm_tab,
-							direction,
-						);
+						self.comm_tab.process_cursor(direction);
 					}
 
 					self.mode = TextInputMode::Regular;
