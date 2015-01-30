@@ -39,7 +39,11 @@ impl ProcessInput for CommTab {
 
 	fn process_cursor(&mut self, direction: Direction) {
 		if self.element_active {
-			// TODO: Pass direction to active element
+			match self.selected_index % 2 {
+				0 => self.broadcast_form.process_cursor(direction),
+				1 => self.broadcast_list.process_cursor(direction),
+				_ => panic!("This should not happen"),
+			}
 		}
 		else {
 			match direction {
