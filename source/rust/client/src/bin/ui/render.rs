@@ -16,6 +16,7 @@ use super::data::{
 	Button,
 	CommTab,
 	List,
+	Status,
 	TextField,
 };
 
@@ -73,12 +74,19 @@ impl Render for BroadcastForm {
 			},
 		));
 
+		let button_status = if args.active {
+			Status::Active
+		}
+		else {
+			Status::Passive
+		};
+
 		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
 			&ButtonArgs {
 				text  : button_text,
-				active: args.active,
+				status: button_status,
 			},
 		));
 
@@ -89,7 +97,7 @@ impl Render for BroadcastForm {
 
 pub struct ButtonArgs<'a> {
 	pub text  : &'a str,
-	pub active: bool,
+	pub status: Status,
 }
 
 impl<'a> Render for Button {
@@ -104,12 +112,7 @@ impl<'a> Render for Button {
 	)
 		-> IoResult<()>
 	{
-		let (foreground_color, background_color) = if args.active {
-			(Black, Yellow)
-		}
-		else {
-			(Black, White)
-		};
+		let (foreground_color, background_color) = args.status.colors();
 
 		buffer
 			.writer(x, y)
