@@ -179,19 +179,19 @@ impl<'a> Render for List {
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &ListArgs,
+		args   : &ListArgs,
 	)
 		-> IoResult<()>
 	{
-		let limit = x + data.width;
+		let limit = x + args.width;
 
 		let (foreground_color, background_color) = (White, Black);
 
-		let items: Vec<String> = if data.items.len() == 0 {
+		let items: Vec<String> = if args.items.len() == 0 {
 			vec!["none".to_string()]
 		}
 		else {
-			data.items
+			args.items
 				.iter()
 				.map(|s| s.clone())
 				.collect()
@@ -201,7 +201,7 @@ impl<'a> Render for List {
 			.iter()
 			.skip(self.first);
 
-		for i in range(0, data.height) {
+		for i in range(0, args.height) {
 			let item_length = match iter.next() {
 				Some(item) => {
 					try!(
@@ -238,9 +238,9 @@ impl<'a> Render for List {
 			));
 		}
 
-		if items.len() - self.first > data.height as usize {
+		if items.len() - self.first > args.height as usize {
 			try!(write!(
-				&mut buffer.writer(limit - 1, y + data.height - 1).limit(limit),
+				&mut buffer.writer(limit - 1, y + args.height - 1).limit(limit),
 				"↓",
 			));
 		}
