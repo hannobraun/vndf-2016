@@ -31,19 +31,23 @@ pub trait Render {
 const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
+pub struct BroadcastFormArgs {
+	pub active: bool,
+}
+
 impl Render for BroadcastForm {
-	type Args = bool;
+	type Args = BroadcastFormArgs;
 
 	fn render(
 		&self,
-		buffer   : &mut ScreenBuffer,
-		x        : Pos,
-		y        : Pos,
-		is_active: &bool,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		args  : &BroadcastFormArgs,
 	)
 		-> IoResult<()>
 	{
-		let button_text = if *is_active {
+		let button_text = if args.active {
 			START_BROADCAST
 		}
 		else {
@@ -64,7 +68,7 @@ impl Render for BroadcastForm {
 			x, y,
 			&TextFieldArgs {
 				width : broadcast_width,
-				active: *is_active,
+				active: args.active,
 			},
 		));
 
@@ -73,7 +77,7 @@ impl Render for BroadcastForm {
 			x + broadcast_width + 2, y,
 			&ButtonArgs {
 				text  : button_text,
-				active: *is_active,
+				active: args.active,
 			},
 		));
 
@@ -152,7 +156,9 @@ impl<'a> Render for CommTab {
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
-			&self.element_active,
+			&BroadcastFormArgs {
+				active: self.element_active,
+			},
 		));
 
 		try!(write!(
