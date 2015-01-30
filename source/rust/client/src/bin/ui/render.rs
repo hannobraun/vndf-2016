@@ -71,7 +71,10 @@ impl Render for BroadcastForm {
 		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
-			&ButtonArgs { text: button_text },
+			&ButtonArgs {
+				text  : button_text,
+				active: *is_active,
+			},
 		));
 
 		Ok(())
@@ -80,7 +83,8 @@ impl Render for BroadcastForm {
 
 
 pub struct ButtonArgs<'a> {
-	pub text: &'a str,
+	pub text  : &'a str,
+	pub active: bool,
 }
 
 impl<'a> Render for Button {
@@ -95,7 +99,12 @@ impl<'a> Render for Button {
 	)
 		-> IoResult<()>
 	{
-		let (foreground_color, background_color) = (Black, White);
+		let (foreground_color, background_color) = if args.active {
+			(Black, Yellow)
+		}
+		else {
+			(Black, White)
+		};
 
 		buffer
 			.writer(x, y)
