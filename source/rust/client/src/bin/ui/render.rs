@@ -62,7 +62,7 @@ impl Render for BroadcastForm {
 		try!(self.text_field.render(
 			buffer,
 			x, y,
-			&TextFieldData {
+			&TextFieldArgs {
 				width : broadcast_width,
 				active: *is_active,
 			},
@@ -250,20 +250,20 @@ impl<'a> Render for List {
 }
 
 
-pub struct TextFieldData {
+pub struct TextFieldArgs {
 	pub width : Pos,
 	pub active: bool,
 }
 
 impl Render for TextField {
-	type Args = TextFieldData;
+	type Args = TextFieldArgs;
 
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &TextFieldData,
+		data   : &TextFieldArgs,
 	)
 		-> IoResult<()>
 	{
