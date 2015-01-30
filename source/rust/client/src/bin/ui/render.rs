@@ -1,7 +1,4 @@
-use std::cmp::{
-	max,
-	min,
-};
+use std::cmp::max;
 use std::old_io::IoResult;
 
 use render::{
@@ -212,27 +209,29 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 			return Ok(());
 		}
 
-		let mut n = min(data.items.len(), data.height as usize);
-
 		let mut iter = data.items
 			.iter()
-			.skip(element.first)
-			.enumerate();
+			.skip(element.first);
 
-		for (i, item) in iter {
-			if n == 0 {
-				break;
-			}
+		for i in range(0, data.height) {
+			let item_length = match iter.next() {
+				Some(item) => {
+					try!(
+						buffer
+							.writer(x, y + i as Pos)
+							.limit(limit)
+							.foreground_color(foreground_color)
+							.background_color(background_color)
+							.write_str(item.as_slice())
+					);
 
-			try!(
-				buffer
-					.writer(x, y + i as Pos)
-					.limit(limit)
-					.foreground_color(foreground_color)
-					.background_color(background_color)
-					.write_str(item.as_slice())
-			);
-			for x in range(x + item.chars().count() as Pos, limit - 1) {
+					item.chars().count()
+				},
+				None =>
+					0,
+			};
+
+			for x in range(x + item_length as Pos, limit - 1) {
 				try!(
 					buffer
 						.writer(x, y + i as Pos)
@@ -242,8 +241,6 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 						.write_char(' ')
 				);
 			}
-
-			n -= 1;
 		}
 
 		if element.first > 0 {
