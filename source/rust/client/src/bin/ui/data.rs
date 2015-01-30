@@ -48,6 +48,14 @@ impl CommTab {
 			_ => panic!("This should not happen"),
 		}
 	}
+
+	pub fn form_is_active(&self) -> bool {
+		self.active_index % 2 == 0
+	}
+
+	pub fn list_is_active(&self) -> bool {
+		self.active_index % 2 == 1
+	}
 }
 
 
