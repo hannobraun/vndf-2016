@@ -200,16 +200,17 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 
 		let (foreground_color, background_color) = (White, Black);
 
-		if data.items.len() == 0 {
-			try!(write!(
-				&mut buffer.writer(x, y).limit(limit),
-				"none"
-			));
-
-			return Ok(());
+		let items: Vec<String> = if data.items.len() == 0 {
+			vec!["none".to_string()]
 		}
+		else {
+			data.items
+				.iter()
+				.map(|s| s.clone())
+				.collect()
+		};
 
-		let mut iter = data.items
+		let mut iter = items
 			.iter()
 			.skip(element.first);
 
@@ -250,7 +251,7 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 			));
 		}
 
-		if data.items.len() - element.first > data.height as usize {
+		if items.len() - element.first > data.height as usize {
 			try!(write!(
 				&mut buffer.writer(limit - 1, y + data.height - 1).limit(limit),
 				"↓",
