@@ -2,15 +2,20 @@
 
 ## Active Measures
 
+Detailed documentation about active marketing measures is provided elsewhere.
+This document only lists the goals of those measures.
+
 ### Website
 
-* Main point of reference for everyone wanting to know more about the project.
-* Primary purpose right now is to feed to mailing list.
+* Provide information to those interested in the project.
+* Collect search engine traffic.
+* Feed the mailing list. (primary goal)
 
 ### Mailing List
 
-* Keeps those interested in the project engaged.
-* Can be used as a tool to recruit testers etc.
+* Keep those interested in the project engaged. (primary goal)
+* Produce content for the website.
+* Serve as a recruitment tool for testers and customers as needed.
 
 
 ## Planned Measures
