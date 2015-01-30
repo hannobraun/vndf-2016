@@ -47,20 +47,14 @@ impl ProcessInput<CommTab> for CommTabProcessor {
 	}
 
 	fn process_cursor(&mut self, element: &mut CommTab, direction: Direction) {
-		if !element.element_active {
+		if element.element_active {
+			// TODO: Pass direction to active element
+		}
+		else {
 			match direction {
-				Direction::Up =>
-					BroadcastFormProcessor.process_char(
-						&mut element.broadcast_form,
-						'↑',
-					),
-				Direction::Down =>
-					BroadcastFormProcessor.process_char(
-						&mut element.broadcast_form,
-						'↓',
-					),
-
-				_ => (),
+				Direction::Up   => element.selected_index -= 1,
+				Direction::Down => element.selected_index -= 1,
+				_               => (),
 			}
 		}
 	}

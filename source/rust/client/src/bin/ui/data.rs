@@ -18,6 +18,7 @@ pub struct Button;
 
 pub struct CommTab {
 	pub element_active: bool,
+	pub selected_index: u8,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
 }
@@ -26,6 +27,7 @@ impl CommTab {
 	pub fn new() -> CommTab {
 		CommTab {
 			element_active: true,
+			selected_index: 0,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
 		}
