@@ -28,7 +28,7 @@ impl ProcessInput for CommTab {
 		if c == '\n' {
 			self.element_active = !self.element_active;
 
-			if self.element_active {
+			if self.element_active && self.form_is_selected() {
 				self.broadcast_form.text_field.text.clear();
 			}
 		}
