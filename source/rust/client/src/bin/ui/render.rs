@@ -36,9 +36,9 @@ impl Render for BroadcastForm {
 
 	fn render(
 		&self,
-		buffer    : &mut ScreenBuffer,
-		x         : Pos,
-		y         : Pos,
+		buffer   : &mut ScreenBuffer,
+		x        : Pos,
+		y        : Pos,
 		is_active: &bool,
 	)
 		-> IoResult<()>
