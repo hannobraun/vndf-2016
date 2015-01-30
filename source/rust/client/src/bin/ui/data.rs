@@ -1,6 +1,9 @@
 use super::input::ProcessInput;
 
 
+pub trait Element: ProcessInput {}
+
+
 pub struct BroadcastForm {
 	pub text_field: TextField,
 	pub button    : Button,
@@ -14,6 +17,8 @@ impl BroadcastForm {
 		}
 	}
 }
+
+impl Element for BroadcastForm {}
 
 
 pub struct Button;
@@ -57,6 +62,8 @@ impl List {
 		}
 	}
 }
+
+impl Element for List {}
 
 
 pub struct TextField {
