@@ -21,7 +21,7 @@ use super::data::{
 
 
 pub trait Render<D> {
-	fn render(&mut self, buffer : &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
+	fn render(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
 		-> IoResult<()>;
 }
 
