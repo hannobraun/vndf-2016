@@ -1,4 +1,4 @@
-mod input;
+mod input_reader;
 mod renderer;
 
 
@@ -19,7 +19,7 @@ use client::platform::{
 };
 use ui::Ui;
 
-use self::input::InputReader;
+use self::input_reader::InputReader;
 use self::renderer::Renderer;
 
 
