@@ -201,6 +201,8 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 	{
 		let limit = x + data.width;
 
+		let (foreground_color, background_color) = (White, Black);
+
 		if data.items.len() == 0 {
 			try!(write!(
 				&mut buffer.writer(x, y).limit(limit),
@@ -226,8 +228,20 @@ impl<'a> Render<List, ListData<'a>> for RenderList {
 				buffer
 					.writer(x, y + i as Pos)
 					.limit(limit)
+					.foreground_color(foreground_color)
+					.background_color(background_color)
 					.write_str(item.as_slice())
 			);
+			for x in range(x + item.chars().count() as Pos, limit - 1) {
+				try!(
+					buffer
+						.writer(x, y + i as Pos)
+						.limit(limit)
+						.foreground_color(foreground_color)
+						.background_color(background_color)
+						.write_char(' ')
+				);
+			}
 
 			n -= 1;
 		}
