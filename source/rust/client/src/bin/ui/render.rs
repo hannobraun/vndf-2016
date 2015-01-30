@@ -71,7 +71,7 @@ impl Render for BroadcastForm {
 		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
-			&ButtonData { text: button_text },
+			&ButtonArgs { text: button_text },
 		));
 
 		Ok(())
@@ -79,19 +79,19 @@ impl Render for BroadcastForm {
 }
 
 
-pub struct ButtonData<'a> {
+pub struct ButtonArgs<'a> {
 	pub text: &'a str,
 }
 
 impl<'a> Render for Button {
-	type Args = ButtonData<'a>;
+	type Args = ButtonArgs<'a>;
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		args  : &ButtonData,
+		args  : &ButtonArgs,
 	)
 		-> IoResult<()>
 	{
