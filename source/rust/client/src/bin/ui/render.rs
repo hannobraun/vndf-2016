@@ -21,7 +21,7 @@ use super::data::{
 
 
 pub trait Render<D> {
-	fn render(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
+	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
 		-> IoResult<()>;
 }
 
@@ -31,7 +31,7 @@ const STOP_BROADCAST : &'static str = "Stop Sending";
 
 impl Render<bool> for BroadcastForm {
 	fn render(
-		&mut self,
+		&self,
 		buffer    : &mut ScreenBuffer,
 		x         : Pos,
 		y         : Pos,
@@ -81,7 +81,7 @@ pub struct ButtonData<'a> {
 
 impl<'a> Render<ButtonData<'a>> for Button {
 	fn render(
-		&mut self,
+		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
@@ -105,7 +105,7 @@ pub struct CommTabData<'a> {
 
 impl<'a> Render<CommTabData<'a>> for CommTab {
 	fn render(
-		&mut self,
+		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
@@ -165,7 +165,7 @@ pub struct ListData<'a> {
 
 impl<'a> Render<ListData<'a>> for List {
 	fn render(
-		&mut self,
+		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
@@ -247,7 +247,7 @@ pub struct TextFieldData {
 
 impl Render<TextFieldData> for TextField {
 	fn render(
-		&mut self,
+		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
