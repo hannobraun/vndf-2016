@@ -20,8 +20,10 @@ use super::data::{
 };
 
 
-pub trait Render<D> {
-	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, data: &D)
+pub trait Render {
+	type Args;
+
+	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, data: &Self::Args)
 		-> IoResult<()>;
 }
 
@@ -29,7 +31,9 @@ pub trait Render<D> {
 const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
-impl Render<bool> for BroadcastForm {
+impl Render for BroadcastForm {
+	type Args = bool;
+
 	fn render(
 		&self,
 		buffer    : &mut ScreenBuffer,
@@ -79,7 +83,9 @@ pub struct ButtonData<'a> {
 	pub text: &'a str,
 }
 
-impl<'a> Render<ButtonData<'a>> for Button {
+impl<'a> Render for Button {
+	type Args = ButtonData<'a>;
+
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
@@ -103,7 +109,9 @@ pub struct CommTabData<'a> {
 	pub broadcasts: &'a [String],
 }
 
-impl<'a> Render<CommTabData<'a>> for CommTab {
+impl<'a> Render for CommTab {
+	type Args = CommTabData<'a>;
+
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
@@ -163,7 +171,9 @@ pub struct ListData<'a> {
 	pub items : &'a [String],
 }
 
-impl<'a> Render<ListData<'a>> for List {
+impl<'a> Render for List {
+	type Args = ListData<'a>;
+
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
@@ -245,7 +255,9 @@ pub struct TextFieldData {
 	pub active: bool,
 }
 
-impl Render<TextFieldData> for TextField {
+impl Render for TextField {
+	type Args = TextFieldData;
+
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
