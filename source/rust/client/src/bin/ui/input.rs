@@ -54,7 +54,13 @@ impl ProcessInput for CommTab {
 
 impl ProcessInput for List {
 	fn process_char(&mut self, _: char) {}
-	fn process_cursor(&mut self, _: Direction) {}
+	fn process_cursor(&mut self, direction: Direction) {
+		match direction {
+			Direction::Up   => self.first -= 1,
+			Direction::Down => self.first += 1,
+			_               => (),
+		}
+	}
 }
 
 
