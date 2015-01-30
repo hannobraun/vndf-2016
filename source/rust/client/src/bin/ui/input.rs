@@ -33,7 +33,7 @@ impl ProcessInput for CommTab {
 			}
 		}
 		else if self.element_active {
-			self.broadcast_form.process_char(c);
+			self.active_element().process_char(c);
 		}
 	}
 
