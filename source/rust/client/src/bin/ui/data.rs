@@ -1,3 +1,6 @@
+use super::input::ProcessInput;
+
+
 pub struct BroadcastForm {
 	pub text_field: TextField,
 	pub button    : Button,
@@ -30,6 +33,14 @@ impl CommTab {
 			selected_index: 0,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
+		}
+	}
+
+	pub fn active_element(&mut self) -> &mut ProcessInput {
+		match self.selected_index % 2 {
+			0 => &mut self.broadcast_form,
+			1 => &mut self.broadcast_list,
+			_ => panic!("This should not happen"),
 		}
 	}
 }
