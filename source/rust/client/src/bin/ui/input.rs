@@ -1,6 +1,7 @@
 use super::data::{
 	BroadcastForm,
 	CommTab,
+	List,
 	TextField,
 };
 
@@ -48,6 +49,12 @@ impl ProcessInput for CommTab {
 			}
 		}
 	}
+}
+
+
+impl ProcessInput for List {
+	fn process_char(&mut self, _: char) {}
+	fn process_cursor(&mut self, _: Direction) {}
 }
 
 
