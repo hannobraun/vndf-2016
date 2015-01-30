@@ -33,13 +33,13 @@ impl ProcessInput for CommTab {
 			}
 		}
 		else if self.element_active {
-			self.active_element().process_char(c);
+			self.active_element_mut().process_char(c);
 		}
 	}
 
 	fn process_cursor(&mut self, direction: Direction) {
 		if self.element_active {
-			self.active_element().process_cursor(direction)
+			self.active_element_mut().process_cursor(direction)
 		}
 		else {
 			match direction {
