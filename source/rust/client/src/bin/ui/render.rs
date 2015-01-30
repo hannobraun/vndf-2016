@@ -95,10 +95,12 @@ impl<'a> Render for Button {
 	)
 		-> IoResult<()>
 	{
+		let (foreground_color, background_color) = (Black, White);
+
 		buffer
 			.writer(x, y)
-			.foreground_color(Black)
-			.background_color(White)
+			.foreground_color(foreground_color)
+			.background_color(background_color)
 			.write_str(args.text)
 	}
 }
