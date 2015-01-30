@@ -48,11 +48,11 @@ impl Render for BroadcastForm {
 	)
 		-> IoResult<()>
 	{
-		let button_text = if args.active {
-			START_BROADCAST
+		let button_text = if args.sending {
+			STOP_BROADCAST
 		}
 		else {
-			STOP_BROADCAST
+			START_BROADCAST
 		};
 
 		let width = buffer.width() - x;
@@ -69,7 +69,7 @@ impl Render for BroadcastForm {
 			x, y,
 			&TextFieldArgs {
 				width : broadcast_width,
-				active: args.active,
+				active: !args.sending,
 			},
 		));
 
@@ -159,7 +159,7 @@ impl<'a> Render for CommTab {
 			x + 4, y + 4,
 			&BroadcastFormArgs {
 				active : self.element_active,
-				sending: self.element_active,
+				sending: !self.element_active,
 			},
 		));
 
