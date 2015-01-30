@@ -123,6 +123,7 @@ impl<'a> Render for Button {
 pub struct CommTabArgs<'a> {
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
+	pub is_sending: bool,
 }
 
 impl<'a> Render for CommTab {
@@ -159,7 +160,7 @@ impl<'a> Render for CommTab {
 			x + 4, y + 4,
 			&BroadcastFormArgs {
 				active : self.element_active,
-				sending: !self.element_active,
+				sending: args.is_sending,
 			},
 		));
 
