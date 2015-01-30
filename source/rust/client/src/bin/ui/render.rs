@@ -84,12 +84,20 @@ impl Render for BroadcastForm {
 			},
 		));
 
+		let button_status =
+			if args.status == Status::Selected || args.status == Status::Active {
+				Status::Active
+			}
+			else {
+				Status::Passive
+			};
+
 		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
 			&ButtonArgs {
 				text  : button_text,
-				status: args.status,
+				status: button_status,
 			},
 		));
 
