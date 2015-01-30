@@ -43,8 +43,8 @@ impl ProcessInput for CommTab {
 		}
 		else {
 			match direction {
-				Direction::Up   => self.selected_index -= 1,
-				Direction::Down => self.selected_index -= 1,
+				Direction::Up   => self.active_index -= 1,
+				Direction::Down => self.active_index -= 1,
 				_               => (),
 			}
 		}

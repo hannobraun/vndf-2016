@@ -21,7 +21,7 @@ pub struct Button;
 
 pub struct CommTab {
 	pub element_active: bool,
-	pub selected_index: u8,
+	pub active_index  : u8,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
 }
@@ -30,14 +30,14 @@ impl CommTab {
 	pub fn new() -> CommTab {
 		CommTab {
 			element_active: true,
-			selected_index: 0,
+			active_index  : 0,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
 		}
 	}
 
 	pub fn active_element(&mut self) -> &mut ProcessInput {
-		match self.selected_index % 2 {
+		match self.active_index % 2 {
 			0 => &mut self.broadcast_form,
 			1 => &mut self.broadcast_list,
 			_ => panic!("This should not happen"),
