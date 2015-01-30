@@ -263,14 +263,14 @@ impl Render for TextField {
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &TextFieldArgs,
+		args   : &TextFieldArgs,
 	)
 		-> IoResult<()>
 	{
 		let text  = self.text.as_slice();
-		let limit = x + data.width;
+		let limit = x + args.width;
 
-		let (foreground_color, background_color) = if data.active {
+		let (foreground_color, background_color) = if args.active {
 			(Black, Yellow)
 		}
 		else {
@@ -296,7 +296,7 @@ impl Render for TextField {
 			);
 		}
 
-		buffer.cursor = if data.active {
+		buffer.cursor = if args.active {
 			Some((1 + x + text.chars().count() as Pos, 1 + y))
 		}
 		else {
