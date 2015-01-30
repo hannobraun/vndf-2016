@@ -60,6 +60,10 @@ Gaming News Resources
 
 Topic ideas:
 - Overview over text-based games (title: Self-Help for Text-based Game Devs)
+- Series about different text-based games:
+  - Dwarve Fortress
+  - NetHack
+  - ...
 - Check the rest of the vision file for further topic ideas
 - Announcing the navigation prototype
 - Beyond the navigation prototype (once it's out)
