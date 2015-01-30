@@ -91,7 +91,7 @@ impl<'a> Render for Button {
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		data  : &ButtonData,
+		args  : &ButtonData,
 	)
 		-> IoResult<()>
 	{
@@ -99,7 +99,7 @@ impl<'a> Render for Button {
 			.writer(x, y)
 			.foreground_color(Black)
 			.background_color(White)
-			.write_str(data.text)
+			.write_str(args.text)
 	}
 }
 
