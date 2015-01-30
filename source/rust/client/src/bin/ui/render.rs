@@ -11,6 +11,7 @@ use render::{
 use render::Color::{
 	Black,
 	White,
+	Yellow,
 };
 
 use super::data::{
@@ -271,7 +272,12 @@ impl Render<TextField, TextFieldData> for RenderTextField {
 		let text  = element.text.as_slice();
 		let limit = x + data.width;
 
-		let (foreground_color, background_color) = (White, Black);
+		let (foreground_color, background_color) = if data.active {
+			(Black, Yellow)
+		}
+		else {
+			(White, Black)
+		};
 
 		try!(
 			buffer
