@@ -153,7 +153,7 @@ impl<'a> Render for CommTab {
 		try!(self.broadcast_list.render(
 			buffer,
 			x + 4, y + 7,
-			&ListData {
+			&ListArgs {
 				width : width - 4 - 4,
 				height: 5,
 				items : args.broadcasts,
@@ -165,21 +165,21 @@ impl<'a> Render for CommTab {
 }
 
 
-pub struct ListData<'a> {
+pub struct ListArgs<'a> {
 	pub width : Pos,
 	pub height: Pos,
 	pub items : &'a [String],
 }
 
 impl<'a> Render for List {
-	type Args = ListData<'a>;
+	type Args = ListArgs<'a>;
 
 	fn render(
 		&self,
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		data   : &ListData,
+		data   : &ListArgs,
 	)
 		-> IoResult<()>
 	{
