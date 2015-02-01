@@ -7,31 +7,6 @@ use common::game::Broadcast;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, Eq, PartialEq)]
-pub struct Input {
-	pub broadcast: Option<String>,
-}
-
-impl Input {
-	pub fn new() -> Input {
-		Input {
-			broadcast: None,
-		}
-	}
-
-	pub fn from_json(json: &str) -> DecodeResult<Input> {
-		json::decode(json)
-	}
-
-	pub fn to_json(&self) -> String {
-		match json::encode(self) {
-			Ok(encoded) => encoded,
-			Err(error)  => panic!("Encoding error: {}", error)
-		}
-	}
-}
-
-
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable, Eq, PartialEq)]
 pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
