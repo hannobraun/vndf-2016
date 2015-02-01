@@ -17,7 +17,12 @@ pub enum Direction { Up, Down, Right, Left }
 
 impl ProcessInput for BroadcastForm {
 	fn process_char(&mut self, c: char) {
-		self.text_field.process_char(c)
+		if c == '\n' {
+			self.button.process_char(c)
+		}
+		else {
+			self.text_field.process_char(c)
+		}
 	}
 
 	fn process_cursor(&mut self, _: Direction) {}
