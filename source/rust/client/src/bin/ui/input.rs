@@ -1,5 +1,6 @@
 use super::data::{
 	BroadcastForm,
+	Button,
 	CommTab,
 	List,
 	TextField,
@@ -17,6 +18,18 @@ pub enum Direction { Up, Down, Right, Left }
 impl ProcessInput for BroadcastForm {
 	fn process_char(&mut self, c: char) {
 		self.text_field.process_char(c)
+	}
+
+	fn process_cursor(&mut self, _: Direction) {}
+}
+
+
+impl ProcessInput for Button {
+	fn process_char(&mut self, c: char) {
+		self.was_activated = false;
+		if c == '\n' {
+			self.was_activated = true;
+		}
 	}
 
 	fn process_cursor(&mut self, _: Direction) {}
