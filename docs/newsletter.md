@@ -88,6 +88,7 @@ News for any month:
 - http://www.reddit.com/r/space/comments/2niljz/human_spaceflight_everything_is_to_scale/
 - http://www.reddit.com/r/space/comments/2r0em5/a_pictorial_of_just_how_massive_space_is/
 - https://www.youtube.com/watch?v=82p-DYgGFjI
+- http://www.reddit.com/r/space/comments/2u9kpt/an_updated_rockets_of_the_world/
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
