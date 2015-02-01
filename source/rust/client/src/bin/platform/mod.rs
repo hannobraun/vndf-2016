@@ -12,10 +12,10 @@ use std::sync::mpsc::{
 	TryRecvError,
 };
 use std::thread::Thread;
+use std::vec::Drain;
 
 use client::platform::{
 	Frame,
-	Input,
 	InputEvent,
 };
 use ui::Ui;
@@ -26,7 +26,7 @@ use self::renderer::Renderer;
 
 pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
-	fn input(&mut self) -> Input;
+	fn input(&mut self) -> Drain<InputEvent>;
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
@@ -36,7 +36,6 @@ pub struct PlayerIo {
 	ui          : Ui,
 	renderer    : Renderer,
 	chars       : Vec<char>,
-	last_input  : Input,
 }
 
 impl PlatformIo for PlayerIo {
@@ -51,24 +50,13 @@ impl PlatformIo for PlayerIo {
 			ui          : Ui::new(),
 			renderer    : renderer,
 			chars       : Vec::new(),
-			last_input  : Input::new(),
 		})
 	}
 
-	fn input(&mut self) -> Input {
+	fn input(&mut self) -> Drain<InputEvent> {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
-
-		for event in self.ui.process_input(self.chars.as_slice()) {
-			match event {
-				InputEvent::StartBroadcast(message) =>
-					self.last_input.broadcast = Some(message),
-				InputEvent::StopBroadcast =>
-					self.last_input.broadcast = None,
-			}
-		}
-
-		self.last_input.clone()
+		self.ui.process_input(self.chars.as_slice())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
@@ -78,9 +66,8 @@ impl PlatformIo for PlayerIo {
 
 
 pub struct HeadlessIo {
-	last_input: Input,
-	events    : Vec<InputEvent>,
-	receiver  : Receiver<InputEvent>,
+	events  : Vec<InputEvent>,
+	receiver: Receiver<InputEvent>,
 }
 
 impl PlatformIo for HeadlessIo {
@@ -112,13 +99,12 @@ impl PlatformIo for HeadlessIo {
 		});
 
 		Ok(HeadlessIo {
-			events    : Vec::new(),
-			receiver  : receiver,
-			last_input: Input::new(),
+			events  : Vec::new(),
+			receiver: receiver,
 		})
 	}
 
-	fn input(&mut self) -> Input {
+	fn input(&mut self) -> Drain<InputEvent> {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(event) =>
@@ -130,16 +116,7 @@ impl PlatformIo for HeadlessIo {
 			}
 		}
 
-		for event in self.events.drain() {
-			match event {
-				InputEvent::StartBroadcast(message) =>
-					self.last_input.broadcast = Some(message),
-				InputEvent::StopBroadcast =>
-					self.last_input.broadcast = None,
-			}
-		}
-
-		self.last_input.clone()
+		self.events.drain()
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {

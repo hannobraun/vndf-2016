@@ -23,7 +23,7 @@ use args::Args;
 use client::network::Network;
 use client::platform::{
 	Frame,
-	Input,
+	InputEvent,
 	Status,
 };
 use common::protocol::{
@@ -67,16 +67,13 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 	let mut broadcasts     = HashMap::new();
 	let mut network        = Network::new(args.server);
-	let mut previous_input = Input::new();
 
 	network.send(ClientEvent::Login);
 
 	loop {
-		let input = platform.input();
-
-		if input != previous_input {
-			match input.broadcast {
-				Some(ref message) =>
+		for event in platform.input() {
+			match event {
+				InputEvent::StartBroadcast(message) =>
 					if message.len() == 0 {
 						frame.status = Status::Error(
 							"Broadcasts can not be empty".to_string()
@@ -96,7 +93,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 							"Sending broadcast".to_string()
 						);
 					},
-				None => {
+				InputEvent::StopBroadcast => {
 					network.send(ClientEvent::StopBroadcast);
 
 					frame.status = Status::Notice(
@@ -105,8 +102,6 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 				},
 			}
 		}
-
-		previous_input = input.clone();
 
 		for event in network.receive() {
 			match event {
