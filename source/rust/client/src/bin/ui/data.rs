@@ -47,11 +47,15 @@ impl BroadcastForm {
 impl Element for BroadcastForm {}
 
 
-pub struct Button;
+pub struct Button {
+	pub was_activated: bool,
+}
 
 impl Button {
 	pub fn new() -> Button {
-		Button
+		Button {
+			was_activated: false,
+		}
 	}
 }
 
