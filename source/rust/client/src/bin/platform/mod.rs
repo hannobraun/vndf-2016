@@ -16,6 +16,7 @@ use std::thread::Thread;
 use client::platform::{
 	Frame,
 	Input,
+	InputEvent,
 };
 use ui::Ui;
 
@@ -66,7 +67,8 @@ impl PlatformIo for PlayerIo {
 
 pub struct HeadlessIo {
 	last_input: Input,
-	receiver  : Receiver<Input>,
+	events    : Vec<InputEvent>,
+	receiver  : Receiver<InputEvent>,
 }
 
 impl PlatformIo for HeadlessIo {
@@ -80,9 +82,9 @@ impl PlatformIo for HeadlessIo {
 				// TODO(83541252): This operation should time out to ensure
 				//                 panic propagation between tasks.
 				match stdin.read_line() {
-					Ok(line) => match Input::from_json(line.as_slice()) {
-						Ok(input) =>
-							match sender.send(input) {
+					Ok(line) => match InputEvent::from_json(line.as_slice()) {
+						Ok(event) =>
+							match sender.send(event) {
 								Ok(()) =>
 									(),
 								Err(error) =>
@@ -98,22 +100,34 @@ impl PlatformIo for HeadlessIo {
 		});
 
 		Ok(HeadlessIo {
+			events    : Vec::new(),
 			receiver  : receiver,
 			last_input: Input::new(),
 		})
 	}
 
 	fn input(&mut self) -> Input {
-		match self.receiver.try_recv() {
-			Ok(input) => {
-				self.last_input = input.clone();
-				input
-			},
-			Err(error) => match error {
-				TryRecvError::Empty        => self.last_input.clone(),
-				TryRecvError::Disconnected => panic!("Channel disconnected"),
+		loop {
+			match self.receiver.try_recv() {
+				Ok(event) =>
+					self.events.push(event),
+				Err(error) => match error {
+					TryRecvError::Empty        => break,
+					TryRecvError::Disconnected => panic!("Channel disconnected"),
+				}
 			}
 		}
+
+		for event in self.events.drain() {
+			match event {
+				InputEvent::StartBroadcast(message) =>
+					self.last_input.broadcast = Some(message),
+				InputEvent::StopBroadcast =>
+					self.last_input.broadcast = None,
+			}
+		}
+
+		self.last_input.clone()
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {

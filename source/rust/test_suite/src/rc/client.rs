@@ -5,7 +5,7 @@ use acceptance::Process;
 
 use client::platform::{
 	Frame,
-	Input,
+	InputEvent,
 };
 
 
@@ -33,22 +33,16 @@ impl Client {
 		self.process.kill()
 	}
 
-	pub fn input(&mut self, input: Input) {
-		self.process.write_stdin_line(input.to_json().as_slice());
+	pub fn input(&mut self, event: InputEvent) {
+		self.process.write_stdin_line(event.to_json().as_slice());
 	}
 
 	pub fn broadcast(&mut self, broadcast: &str) {
-		let mut input = Input::new();
-		input.broadcast = Some(broadcast.to_string());
-
-		self.input(input)
+		self.input(InputEvent::StartBroadcast(broadcast.to_string()))
 	}
 
 	pub fn stop_broadcast(&mut self) {
-		let mut input = Input::new();
-		input.broadcast = None;
-
-		self.input(input)
+		self.input(InputEvent::StopBroadcast)
 	}
 
 	pub fn frame(&mut self) -> Frame {
