@@ -1,4 +1,4 @@
-#[derive(Clone, Eq, PartialEq, RustcDecodable, RustcEncodable, Show)]
+#[derive(Clone, Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Broadcast {
 	pub sender : String,
 	pub message: String,
