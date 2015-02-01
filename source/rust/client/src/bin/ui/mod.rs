@@ -3,7 +3,9 @@ pub mod input;
 pub mod render;
 
 
-use client::platform::Input;
+use std::vec::Drain;
+
+use client::platform::InputEvent;
 
 use self::data::CommTab;
 use self::input::{
@@ -15,7 +17,8 @@ use self::input::{
 pub struct Ui {
 	pub comm_tab: CommTab,
 
-	mode: TextInputMode,
+	mode  : TextInputMode,
+	events: Vec<InputEvent>,
 }
 
 impl Ui {
@@ -23,10 +26,11 @@ impl Ui {
 		Ui {
 			comm_tab: CommTab::new(),
 			mode    : TextInputMode::Regular,
+			events  : Vec::new(),
 		}
 	}
 
-	pub fn process_input(&mut self, chars: &[char]) -> Input {
+	pub fn process_input(&mut self, chars: &[char]) -> Drain<InputEvent> {
 		for &c in chars.iter() {
 			match self.mode {
 				TextInputMode::Regular => {
@@ -64,15 +68,16 @@ impl Ui {
 			}
 		}
 
-		let mut input = Input::new();
-		input.broadcast = if self.comm_tab.element_active {
-			None
+		// TODO: Only send broadcast event, if form is selected.
+		if self.comm_tab.element_active {
+			self.events.push(InputEvent::StopBroadcast);
 		}
 		else {
-			Some(self.comm_tab.broadcast_form.text_field.text.clone())
+			let message = self.comm_tab.broadcast_form.text_field.text.clone();
+			self.events.push(InputEvent::StartBroadcast(message));
 		};
 
-		input
+		self.events.drain()
 	}
 }
 
