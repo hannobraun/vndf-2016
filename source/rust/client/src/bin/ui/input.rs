@@ -65,6 +65,7 @@ impl ProcessInput for List {
 impl ProcessInput for TextField {
 	fn process_char(&mut self, c: char) {
 		if c == '\x7f' { // Backspace
+			// TODO(87369840): Take cursor position into account.
 			self.text.pop();
 		}
 		else {
