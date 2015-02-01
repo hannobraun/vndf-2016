@@ -39,7 +39,7 @@ impl BroadcastForm {
 	pub fn new() -> BroadcastForm {
 		BroadcastForm {
 			text_field: TextField::new(),
-			button    : Button,
+			button    : Button::new(),
 		}
 	}
 }
@@ -48,6 +48,12 @@ impl Element for BroadcastForm {}
 
 
 pub struct Button;
+
+impl Button {
+	pub fn new() -> Button {
+		Button
+	}
+}
 
 
 pub struct CommTab {
