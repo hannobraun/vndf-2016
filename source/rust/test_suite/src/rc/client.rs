@@ -37,7 +37,7 @@ impl Client {
 		self.process.write_stdin_line(event.to_json().as_slice());
 	}
 
-	pub fn broadcast(&mut self, broadcast: &str) {
+	pub fn start_broadcast(&mut self, broadcast: &str) {
 		self.input(InputEvent::StartBroadcast(broadcast.to_string()))
 	}
 
