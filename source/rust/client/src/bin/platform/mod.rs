@@ -26,7 +26,7 @@ use self::renderer::Renderer;
 
 pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
-	fn update(&mut self) -> Drain<InputEvent>;
+	fn update(&mut self, frame: &Frame) -> Drain<InputEvent>;
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
@@ -36,7 +36,6 @@ pub struct PlayerIo {
 	ui          : Ui,
 	renderer    : Renderer,
 	chars       : Vec<char>,
-	last_frame  : Frame,
 }
 
 impl PlatformIo for PlayerIo {
@@ -51,18 +50,16 @@ impl PlatformIo for PlayerIo {
 			ui          : Ui::new(),
 			renderer    : renderer,
 			chars       : Vec::new(),
-			last_frame  : Frame::new(),
 		})
 	}
 
-	fn update(&mut self) -> Drain<InputEvent> {
+	fn update(&mut self, frame: &Frame) -> Drain<InputEvent> {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
-		self.ui.process_input(&self.last_frame, self.chars.as_slice())
+		self.ui.process_input(frame, self.chars.as_slice())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		self.last_frame = frame.clone();
 		self.renderer.render(frame, &self.ui)
 	}
 }
@@ -107,7 +104,7 @@ impl PlatformIo for HeadlessIo {
 		})
 	}
 
-	fn update(&mut self) -> Drain<InputEvent> {
+	fn update(&mut self, _: &Frame) -> Drain<InputEvent> {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(event) =>

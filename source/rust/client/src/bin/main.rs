@@ -67,7 +67,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	network.send(ClientEvent::Login);
 
 	loop {
-		for event in platform.update() {
+		for event in platform.update(&frame) {
 			match event {
 				InputEvent::StartBroadcast(message) =>
 					if message.len() == 0 {
