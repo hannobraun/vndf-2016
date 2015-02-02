@@ -33,7 +33,7 @@ impl Ui {
 		}
 	}
 
-	pub fn process_input(&mut self, frame: &Frame, chars: &[char])
+	pub fn update(&mut self, frame: &Frame, chars: &[char])
 		-> Drain<InputEvent>
 	{
 		for &c in chars.iter() {
