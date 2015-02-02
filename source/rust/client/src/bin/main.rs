@@ -61,8 +61,8 @@ fn init_platform<P: PlatformIo>() -> P {
 fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut frame = Frame::new();
 
-	let mut broadcasts     = HashMap::new();
-	let mut network        = Network::new(args.server);
+	let mut broadcasts = HashMap::new();
+	let mut network    = Network::new(args.server);
 
 	network.send(ClientEvent::Login);
 
