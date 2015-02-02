@@ -188,7 +188,10 @@ impl<'a> Render for CommTab {
 			"RECEIVING",
 		));
 
-		let list_status = if self.list_is_selected() {
+		let list_status = if self.list_is_selected() && self.element_active {
+			Status::Active
+		}
+		else if self.list_is_selected() {
 			Status::Selected
 		}
 		else {
