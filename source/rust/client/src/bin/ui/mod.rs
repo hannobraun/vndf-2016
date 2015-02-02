@@ -5,7 +5,10 @@ pub mod render;
 
 use std::vec::Drain;
 
-use client::platform::InputEvent;
+use client::platform::{
+	Frame,
+	InputEvent,
+};
 
 use self::data::CommTab;
 use self::input::{
@@ -30,7 +33,9 @@ impl Ui {
 		}
 	}
 
-	pub fn process_input(&mut self, chars: &[char]) -> Drain<InputEvent> {
+	pub fn process_input(&mut self, _: &Frame, chars: &[char])
+		-> Drain<InputEvent>
+	{
 		for &c in chars.iter() {
 			match self.mode {
 				TextInputMode::Regular => {

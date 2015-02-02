@@ -36,6 +36,7 @@ pub struct PlayerIo {
 	ui          : Ui,
 	renderer    : Renderer,
 	chars       : Vec<char>,
+	last_frame  : Frame,
 }
 
 impl PlatformIo for PlayerIo {
@@ -50,16 +51,18 @@ impl PlatformIo for PlayerIo {
 			ui          : Ui::new(),
 			renderer    : renderer,
 			chars       : Vec::new(),
+			last_frame  : Frame::new(),
 		})
 	}
 
 	fn input(&mut self) -> Drain<InputEvent> {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
-		self.ui.process_input(self.chars.as_slice())
+		self.ui.process_input(&self.last_frame, self.chars.as_slice())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
+		self.last_frame = frame.clone();
 		self.renderer.render(frame, &self.ui)
 	}
 }
