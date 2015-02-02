@@ -31,7 +31,6 @@ impl ProcessInput for BroadcastForm {
 
 impl ProcessInput for Button {
 	fn process_char(&mut self, c: char) {
-		self.was_activated = false;
 		if c == '\n' {
 			self.was_activated = true;
 		}
