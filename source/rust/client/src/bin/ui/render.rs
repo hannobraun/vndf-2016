@@ -192,6 +192,13 @@ impl<'a> Render for CommTab {
 			"RECEIVING",
 		));
 
+		let list_status = if self.list_is_selected() {
+			Status::Selected
+		}
+		else {
+			Status::Passive
+		};
+
 		let width = buffer.width();
 		try!(self.broadcast_list.render(
 			buffer,
@@ -200,6 +207,7 @@ impl<'a> Render for CommTab {
 				width : width - 4 - 4,
 				height: 5,
 				items : args.broadcasts,
+				status: list_status,
 			},
 		));
 
@@ -212,6 +220,7 @@ pub struct ListArgs<'a> {
 	pub width : Pos,
 	pub height: Pos,
 	pub items : &'a [String],
+	pub status: Status,
 }
 
 impl<'a> Render for List {
