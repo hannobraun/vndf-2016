@@ -59,11 +59,7 @@ fn init_platform<P: PlatformIo>() -> P {
 }
 
 fn run<P: PlatformIo>(args: Args, mut platform: P) {
-	let mut frame = Frame {
-		self_id   : String::new(),
-		status    : Status::None,
-		broadcasts: Vec::new(),
-	};
+	let mut frame = Frame::new();
 
 	let mut broadcasts     = HashMap::new();
 	let mut network        = Network::new(args.server);

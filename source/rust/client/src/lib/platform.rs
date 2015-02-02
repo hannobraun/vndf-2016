@@ -34,6 +34,14 @@ pub struct Frame {
 }
 
 impl Frame {
+	pub fn new() -> Frame {
+		Frame {
+			self_id   : String::new(),
+			status    : Status::None,
+			broadcasts: Vec::new(),
+		}
+	}
+
 	pub fn from_json(json: &str) -> DecodeResult<Frame> {
 		json::decode(json)
 	}
