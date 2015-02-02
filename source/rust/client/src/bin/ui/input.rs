@@ -49,6 +49,10 @@ impl ProcessInput for CommTab {
 			if self.element_active && self.form_is_selected() {
 				self.broadcast_form.text_field.text.clear();
 			}
+
+			if self.form_is_selected() {
+				self.broadcast_form.process_char(c);
+			}
 		}
 		else if self.element_active {
 			self.selected_element_mut().process_char(c);
