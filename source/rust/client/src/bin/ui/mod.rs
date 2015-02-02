@@ -33,7 +33,7 @@ impl Ui {
 		}
 	}
 
-	pub fn process_input(&mut self, _: &Frame, chars: &[char])
+	pub fn process_input(&mut self, frame: &Frame, chars: &[char])
 		-> Drain<InputEvent>
 	{
 		for &c in chars.iter() {
@@ -73,14 +73,24 @@ impl Ui {
 			}
 		}
 
-		// TODO: Only send broadcast event, if form is selected.
-		if self.comm_tab.element_active {
-			self.events.push(InputEvent::StopBroadcast);
+		let is_sending = frame.broadcasts
+			.iter()
+			.any(|broadcast|
+				broadcast.sender == frame.self_id
+			);
+
+		if self.comm_tab.broadcast_form.button.was_activated {
+			self.comm_tab.broadcast_form.button.was_activated = false;
+
+			if is_sending {
+				self.events.push(InputEvent::StopBroadcast);
+			}
+			else {
+				let message =
+					self.comm_tab.broadcast_form.text_field.text.clone();
+				self.events.push(InputEvent::StartBroadcast(message));
+			}
 		}
-		else {
-			let message = self.comm_tab.broadcast_form.text_field.text.clone();
-			self.events.push(InputEvent::StartBroadcast(message));
-		};
 
 		self.events.drain()
 	}
