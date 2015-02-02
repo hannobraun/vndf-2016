@@ -62,7 +62,7 @@ impl ProcessInput for CommTab {
 	fn process_cursor(&mut self, direction: Direction) {
 		match direction {
 			Direction::Up   => self.selected_index -= 1,
-			Direction::Down => self.selected_index -= 1,
+			Direction::Down => self.selected_index += 1,
 
 			_ => if self.element_active {
 				self.selected_element_mut().process_cursor(direction)
