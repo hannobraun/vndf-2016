@@ -26,7 +26,7 @@ impl InputEvent {
 }
 
 
-#[derive(Debug, RustcDecodable, RustcEncodable)]
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Frame {
 	pub self_id   : String,
 	pub status    : Status,
@@ -55,7 +55,7 @@ impl Frame {
 }
 
 
-#[derive(Debug, RustcDecodable, RustcEncodable, Eq, PartialEq)]
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable, Eq, PartialEq)]
 pub enum Status {
 	Notice(String),
 	Error(String),
