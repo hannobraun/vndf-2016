@@ -88,10 +88,6 @@ impl CommTab {
 	pub fn form_is_selected(&self) -> bool {
 		self.selected_index % 2 == 0
 	}
-
-	pub fn list_is_selected(&self) -> bool {
-		self.selected_index % 2 == 1
-	}
 }
 
 
