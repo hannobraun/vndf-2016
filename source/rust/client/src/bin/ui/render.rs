@@ -61,16 +61,17 @@ impl Render for BroadcastForm {
 			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
-		let text_field_status =
-			if args.status == Status::Active && !args.sending {
-				Status::Active
-			}
-			else if args.status == Status::Active {
+		let text_field_status = if args.selected {
+			if args.sending {
 				Status::Selected
 			}
 			else {
-				args.status
-			};
+				Status::Active
+			}
+		}
+		else {
+			Status::Passive
+		};
 
 		try!(self.text_field.render(
 			buffer,
