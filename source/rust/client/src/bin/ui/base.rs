@@ -1,9 +1,12 @@
 pub enum InputEvent {
 	Char(char),
+
 	CursorLeft,
 	CursorRight,
 	CursorUp,
 	CursorDown,
+
+	Enter,
 }
 
 
