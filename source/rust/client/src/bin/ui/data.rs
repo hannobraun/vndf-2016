@@ -9,9 +9,6 @@ use render::Color::{
 use super::input::ProcessInput;
 
 
-pub trait Element: ProcessInput {}
-
-
 #[derive(Copy, Eq, PartialEq)]
 pub enum Status {
 	Passive,
@@ -44,8 +41,6 @@ impl BroadcastForm {
 	}
 }
 
-impl Element for BroadcastForm {}
-
 
 pub struct Button {
 	pub was_activated: bool,
@@ -77,7 +72,7 @@ impl CommTab {
 		}
 	}
 
-	pub fn selected_element_mut(&mut self) -> &mut Element {
+	pub fn selected_element_mut(&mut self) -> &mut ProcessInput {
 		match self.selected_index % 2 {
 			0 => &mut self.broadcast_form,
 			1 => &mut self.broadcast_list,
@@ -106,8 +101,6 @@ impl List {
 		}
 	}
 }
-
-impl Element for List {}
 
 
 pub struct TextField {
