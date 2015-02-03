@@ -1,3 +1,7 @@
+use super::base::{
+	Direction,
+	ProcessInput,
+};
 use super::state::{
 	BroadcastForm,
 	Button,
@@ -5,14 +9,6 @@ use super::state::{
 	List,
 	TextField,
 };
-
-
-pub trait ProcessInput {
-	fn process_char(&mut self, c: char);
-	fn process_cursor(&mut self, direction: Direction);
-}
-
-pub enum Direction { Up, Down, Right, Left }
 
 
 impl ProcessInput for BroadcastForm {

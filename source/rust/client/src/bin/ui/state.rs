@@ -6,7 +6,7 @@ use render::Color::{
 	Yellow,
 };
 
-use super::input::ProcessInput;
+use super::base::ProcessInput;
 
 
 #[derive(Copy, Eq, PartialEq)]

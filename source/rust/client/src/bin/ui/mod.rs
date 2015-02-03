@@ -1,3 +1,4 @@
+pub mod base;
 pub mod input;
 pub mod render;
 pub mod state;
@@ -10,7 +11,7 @@ use client::platform::{
 	InputEvent,
 };
 
-use self::input::{
+use self::base::{
 	Direction,
 	ProcessInput,
 };
