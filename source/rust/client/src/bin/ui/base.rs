@@ -13,6 +13,10 @@ use render::Color::{
 };
 
 
+pub trait ProcessInput {
+	fn process_event(&mut self, event: InputEvent);
+}
+
 pub enum InputEvent {
 	Char(char),
 
@@ -23,11 +27,6 @@ pub enum InputEvent {
 
 	Backspace,
 	Enter,
-}
-
-
-pub trait ProcessInput {
-	fn process_event(&mut self, event: InputEvent);
 }
 
 
