@@ -28,8 +28,9 @@ const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
 pub struct BroadcastFormArgs {
-	pub status : Status,
-	pub sending: bool,
+	pub status  : Status,
+	pub selected: bool,
+	pub sending : bool,
 }
 
 impl Render for BroadcastForm {
@@ -178,8 +179,9 @@ impl<'a> Render for CommTab {
 			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
-				status : form_status,
-				sending: args.is_sending,
+				status  : form_status,
+				selected: self.form_is_selected(),
+				sending : args.is_sending,
 			},
 		));
 
