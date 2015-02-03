@@ -82,13 +82,12 @@ impl Render for BroadcastForm {
 			},
 		));
 
-		let button_status =
-			if args.status == Status::Selected || args.status == Status::Active {
-				Status::Active
-			}
-			else {
-				Status::Passive
-			};
+		let button_status = if args.selected {
+			Status::Active
+		}
+		else {
+			Status::Passive
+		};
 
 		try!(self.button.render(
 			buffer,
