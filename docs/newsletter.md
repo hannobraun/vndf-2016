@@ -79,6 +79,7 @@ News for February:
 - http://dawn.jpl.nasa.gov/feature_stories/dawn_captures_best-ever_view_dwarfplanet.asp
 - http://www.reddit.com/r/space/comments/2tys5a/updated_space_events_of_2015_now_with_more_awesome/
 - http://www.reddit.com/r/space/comments/2tza6o/artists_rendering_of_what_the_rings_around_planet/
+- http://motherboard.vice.com/read/why-we-should-build-cloud-cities-on-venus
 
 News for any month:
 - Asteroid video by Scott Manley
