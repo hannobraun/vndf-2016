@@ -6,13 +6,15 @@ use render::{
 	ScreenBuffer,
 };
 
-use super::base::Render;
+use super::base::{
+	Render,
+	Status,
+};
 use super::state::{
 	BroadcastForm,
 	Button,
 	CommTab,
 	List,
-	Status,
 	TextField,
 };
 

@@ -4,6 +4,13 @@ use render::{
 	Pos,
 	ScreenBuffer,
 };
+use render::Color::{
+	self,
+	Black,
+	Blue,
+	White,
+	Yellow,
+};
 
 
 pub enum InputEvent {
@@ -29,4 +36,22 @@ pub trait Render {
 
 	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &Self::Args)
 		-> IoResult<()>;
+}
+
+
+#[derive(Copy, Eq, PartialEq)]
+pub enum Status {
+	Passive,
+	Selected,
+	Active,
+}
+
+impl Status {
+	pub fn colors(&self) -> (Color, Color) {
+		match *self {
+			Status::Passive  => (White, Black ),
+			Status::Selected => (White, Blue  ),
+			Status::Active   => (Black, Yellow),
+		}
+	}
 }

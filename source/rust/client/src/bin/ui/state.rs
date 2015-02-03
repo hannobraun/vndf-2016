@@ -1,30 +1,5 @@
-use render::Color::{
-	self,
-	Black,
-	Blue,
-	White,
-	Yellow,
-};
 
 use super::base::ProcessInput;
-
-
-#[derive(Copy, Eq, PartialEq)]
-pub enum Status {
-	Passive,
-	Selected,
-	Active,
-}
-
-impl Status {
-	pub fn colors(&self) -> (Color, Color) {
-		match *self {
-			Status::Passive  => (White, Black ),
-			Status::Selected => (White, Blue  ),
-			Status::Active   => (Black, Yellow),
-		}
-	}
-}
 
 
 pub struct BroadcastForm {
