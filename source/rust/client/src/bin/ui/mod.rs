@@ -13,6 +13,7 @@ use client::platform::{
 
 use self::base::ProcessInput;
 use self::base::InputEvent::{
+	Backspace,
 	Char,
 	CursorDown,
 	CursorLeft,
@@ -47,6 +48,9 @@ impl Ui {
 				TextInputMode::Regular => {
 					if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
+					}
+					else if c == '\x7f' { // Backspace
+						self.comm_tab.process_event(Backspace);
 					}
 					else if c == '\n' {
 						self.comm_tab.process_event(Enter);

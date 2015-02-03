@@ -3,6 +3,7 @@ use super::base::{
 	ProcessInput,
 };
 use super::base::InputEvent::{
+	Backspace,
 	Char,
 	CursorDown,
 	CursorUp,
@@ -77,17 +78,10 @@ impl ProcessInput for List {
 impl ProcessInput for TextField {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			Char(c) =>
-				// TODO: Backspace should be a separate variant of InputEvent.
-				if c == '\x7f' { // Backspace
-					// TODO(87369840): Take cursor position into account.
-					self.text.pop();
-				}
-				else {
-					self.text.push(c);
-				},
-
-			_ => (),
+			// TODO(87369840): Take cursor position into account.
+			Backspace => { self.text.pop(); },
+			Char(c)   => self.text.push(c),
+			_         => (),
 		}
 
 		// TODO(87369840): Add support cursor movement
