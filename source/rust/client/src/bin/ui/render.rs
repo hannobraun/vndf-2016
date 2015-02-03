@@ -6,7 +6,7 @@ use render::{
 	ScreenBuffer,
 };
 
-use super::data::{
+use super::state::{
 	BroadcastForm,
 	Button,
 	CommTab,

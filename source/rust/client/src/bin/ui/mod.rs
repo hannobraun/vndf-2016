@@ -1,6 +1,6 @@
-pub mod data;
 pub mod input;
 pub mod render;
+pub mod state;
 
 
 use std::vec::Drain;
@@ -10,11 +10,11 @@ use client::platform::{
 	InputEvent,
 };
 
-use self::data::CommTab;
 use self::input::{
 	Direction,
 	ProcessInput,
 };
+use self::state::CommTab;
 
 
 pub struct Ui {
