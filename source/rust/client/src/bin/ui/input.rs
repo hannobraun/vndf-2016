@@ -6,6 +6,7 @@ use super::base::InputEvent::{
 	Char,
 	CursorDown,
 	CursorUp,
+	Enter,
 };
 use super::state::{
 	BroadcastForm,
@@ -19,16 +20,8 @@ use super::state::{
 impl ProcessInput for BroadcastForm {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			Char(c) =>
-				// TODO: Enter should be a separate variant of InputEvent.
-				if c == '\n' {
-					self.button.process_event(event)
-				}
-				else {
-					self.text_field.process_event(event)
-				},
-
-			_ => (),
+			Enter => self.button.process_event(event),
+			_     => self.text_field.process_event(event),
 		}
 	}
 }
@@ -37,11 +30,8 @@ impl ProcessInput for BroadcastForm {
 impl ProcessInput for Button {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			Char(c) =>
-				if c == '\n' {
-					self.was_activated = true;
-				},
-			_ => (),
+			Enter => self.was_activated = true,
+			_     => (),
 		}
 	}
 }
@@ -50,22 +40,17 @@ impl ProcessInput for Button {
 impl ProcessInput for CommTab {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			Char(c) =>
-				// TODO: Enter should be a separate variant of InputEvent
-				if c == '\n' {
-					self.element_active = !self.element_active;
+			Enter => {
+				self.element_active = !self.element_active;
 
-					if self.element_active && self.form_is_selected() {
-						self.broadcast_form.text_field.text.clear();
-					}
-
-					if self.form_is_selected() {
-						self.broadcast_form.process_event(event);
-					}
+				if self.element_active && self.form_is_selected() {
+					self.broadcast_form.text_field.text.clear();
 				}
-				else if self.element_active {
-					self.selected_element_mut().process_event(event);
-				},
+
+				if self.form_is_selected() {
+					self.broadcast_form.process_event(event);
+				}
+			},
 
 			CursorUp   => self.selected_index -= 1,
 			CursorDown => self.selected_index += 1,

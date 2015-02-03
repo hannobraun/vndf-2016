@@ -18,6 +18,7 @@ use self::base::InputEvent::{
 	CursorLeft,
 	CursorRight,
 	CursorUp,
+	Enter,
 };
 use self::state::CommTab;
 
@@ -46,6 +47,9 @@ impl Ui {
 				TextInputMode::Regular => {
 					if c == '\x1b' { // Escape
 						self.mode = TextInputMode::Escape;
+					}
+					else if c == '\n' {
+						self.comm_tab.process_event(Enter);
 					}
 					else {
 						self.comm_tab.process_event(Char(c));
