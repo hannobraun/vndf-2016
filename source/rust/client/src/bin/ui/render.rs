@@ -28,7 +28,6 @@ const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
 pub struct BroadcastFormArgs {
-	pub status  : Status,
 	pub selected: bool,
 	pub sending : bool,
 }
@@ -165,21 +164,10 @@ impl<'a> Render for CommTab {
 			"SENDING",
 		));
 
-		let form_status = if self.form_is_selected() && self.element_active {
-			Status::Active
-		}
-		else if self.form_is_selected() {
-			Status::Selected
-		}
-		else {
-			Status::Passive
-		};
-
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
-				status  : form_status,
 				selected: self.form_is_selected(),
 				sending : args.is_sending,
 			},
