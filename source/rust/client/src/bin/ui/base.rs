@@ -10,5 +10,3 @@ pub enum InputEvent {
 pub trait ProcessInput {
 	fn process_event(&mut self, event: InputEvent);
 }
-
-pub enum Direction { Up, Down, Right, Left }
