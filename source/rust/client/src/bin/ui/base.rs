@@ -6,6 +6,7 @@ pub enum InputEvent {
 	CursorUp,
 	CursorDown,
 
+	Backspace,
 	Enter,
 }
 
