@@ -6,6 +6,7 @@ use render::{
 	ScreenBuffer,
 };
 
+use super::base::Render;
 use super::state::{
 	BroadcastForm,
 	Button,
@@ -14,14 +15,6 @@ use super::state::{
 	Status,
 	TextField,
 };
-
-
-pub trait Render {
-	type Args;
-
-	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &Self::Args)
-		-> IoResult<()>;
-}
 
 
 const START_BROADCAST: &'static str = "Send Broadcast";

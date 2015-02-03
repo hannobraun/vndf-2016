@@ -14,10 +14,8 @@ use render::Color::{
 	Red,
 };
 use ui::Ui;
-use ui::render::{
-	self,
-	Render,
-};
+use ui::base::Render;
+use ui::render;
 
 
 pub struct Renderer {
