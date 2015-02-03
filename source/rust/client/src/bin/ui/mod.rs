@@ -11,9 +11,13 @@ use client::platform::{
 	InputEvent,
 };
 
-use self::base::{
-	Direction,
-	ProcessInput,
+use self::base::ProcessInput;
+use self::base::InputEvent::{
+	Char,
+	CursorDown,
+	CursorLeft,
+	CursorRight,
+	CursorUp,
 };
 use self::state::CommTab;
 
@@ -44,7 +48,7 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else {
-						self.comm_tab.process_char(c);
+						self.comm_tab.process_event(Char(c));
 					}
 				},
 				TextInputMode::Escape => {
@@ -57,16 +61,16 @@ impl Ui {
 					}
 				},
 				TextInputMode::Cursor => {
-					let direction = match c {
-						'A' => Some(Direction::Up),
-						'B' => Some(Direction::Down),
-						'C' => Some(Direction::Right),
-						'D' => Some(Direction::Left),
+					let event = match c {
+						'A' => Some(CursorUp),
+						'B' => Some(CursorDown),
+						'C' => Some(CursorRight),
+						'D' => Some(CursorLeft),
 						_   => None, // Unexpected character
 					};
 
-					if let Some(direction) = direction {
-						self.comm_tab.process_cursor(direction);
+					if let Some(event) = event {
+						self.comm_tab.process_event(event);
 					}
 
 					self.mode = TextInputMode::Regular;

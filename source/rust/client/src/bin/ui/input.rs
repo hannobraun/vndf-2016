@@ -1,6 +1,11 @@
 use super::base::{
-	Direction,
+	InputEvent,
 	ProcessInput,
+};
+use super::base::InputEvent::{
+	Char,
+	CursorDown,
+	CursorUp,
 };
 use super::state::{
 	BroadcastForm,
@@ -12,55 +17,61 @@ use super::state::{
 
 
 impl ProcessInput for BroadcastForm {
-	fn process_char(&mut self, c: char) {
-		if c == '\n' {
-			self.button.process_char(c)
-		}
-		else {
-			self.text_field.process_char(c)
+	fn process_event(&mut self, event: InputEvent) {
+		match event {
+			Char(c) =>
+				// TODO: Enter should be a separate variant of InputEvent.
+				if c == '\n' {
+					self.button.process_event(event)
+				}
+				else {
+					self.text_field.process_event(event)
+				},
+
+			_ => (),
 		}
 	}
-
-	fn process_cursor(&mut self, _: Direction) {}
 }
 
 
 impl ProcessInput for Button {
-	fn process_char(&mut self, c: char) {
-		if c == '\n' {
-			self.was_activated = true;
+	fn process_event(&mut self, event: InputEvent) {
+		match event {
+			Char(c) =>
+				if c == '\n' {
+					self.was_activated = true;
+				},
+			_ => (),
 		}
 	}
-
-	fn process_cursor(&mut self, _: Direction) {}
 }
 
 
 impl ProcessInput for CommTab {
-	fn process_char(&mut self, c: char) {
-		if c == '\n' {
-			self.element_active = !self.element_active;
+	fn process_event(&mut self, event: InputEvent) {
+		match event {
+			Char(c) =>
+				// TODO: Enter should be a separate variant of InputEvent
+				if c == '\n' {
+					self.element_active = !self.element_active;
 
-			if self.element_active && self.form_is_selected() {
-				self.broadcast_form.text_field.text.clear();
-			}
+					if self.element_active && self.form_is_selected() {
+						self.broadcast_form.text_field.text.clear();
+					}
 
-			if self.form_is_selected() {
-				self.broadcast_form.process_char(c);
-			}
-		}
-		else if self.element_active {
-			self.selected_element_mut().process_char(c);
-		}
-	}
+					if self.form_is_selected() {
+						self.broadcast_form.process_event(event);
+					}
+				}
+				else if self.element_active {
+					self.selected_element_mut().process_event(event);
+				},
 
-	fn process_cursor(&mut self, direction: Direction) {
-		match direction {
-			Direction::Up   => self.selected_index -= 1,
-			Direction::Down => self.selected_index += 1,
+			CursorUp   => self.selected_index -= 1,
+			CursorDown => self.selected_index += 1,
 
 			_ => if self.element_active {
-				self.selected_element_mut().process_cursor(direction)
+				self.selected_element_mut().process_event(event)
 			},
 		}
 	}
@@ -68,31 +79,33 @@ impl ProcessInput for CommTab {
 
 
 impl ProcessInput for List {
-	fn process_char(&mut self, _: char) {}
-	fn process_cursor(&mut self, direction: Direction) {
-		match direction {
-			Direction::Up   => self.first -= 1,
-			Direction::Down => self.first += 1,
-			_               => (),
+	fn process_event(&mut self, event: InputEvent) {
+		match event {
+			CursorUp   => self.first -= 1,
+			CursorDown => self.first += 1,
+			_          => (),
 		}
 	}
 }
 
 
 impl ProcessInput for TextField {
-	fn process_char(&mut self, c: char) {
-		if c == '\x7f' { // Backspace
-			// TODO(87369840): Take cursor position into account.
-			self.text.pop();
-		}
-		else {
-			self.text.push(c);
+	fn process_event(&mut self, event: InputEvent) {
+		match event {
+			Char(c) =>
+				// TODO: Backspace should be a separate variant of InputEvent.
+				if c == '\x7f' { // Backspace
+					// TODO(87369840): Take cursor position into account.
+					self.text.pop();
+				}
+				else {
+					self.text.push(c);
+				},
+
+			_ => (),
 		}
 
-		// TODO(87369840): Add support for delete key (requires cursor movement)
-	}
-
-	fn process_cursor(&mut self, _d: Direction) {
 		// TODO(87369840): Add support cursor movement
+		// TODO(87369840): Add support for delete key (requires cursor movement)
 	}
 }
