@@ -1,9 +1,14 @@
-use super::base::ProcessInput;
+use super::base::{
+	ProcessInput,
+	Status,
+};
 
 
 pub struct BroadcastForm {
 	pub text_field: TextField,
 	pub button    : Button,
+
+	pub text_field_status: Status,
 }
 
 impl BroadcastForm {
@@ -11,6 +16,8 @@ impl BroadcastForm {
 		BroadcastForm {
 			text_field: TextField::new(),
 			button    : Button::new(),
+
+			text_field_status: Status::Passive,
 		}
 	}
 }
