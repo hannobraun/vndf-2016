@@ -23,8 +23,9 @@ const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
 pub struct BroadcastFormArgs {
-	pub selected: bool,
-	pub sending : bool,
+	pub selected         : bool,
+	pub sending          : bool,
+	pub text_field_status: Status,
 }
 
 impl Render for BroadcastForm {
@@ -55,24 +56,12 @@ impl Render for BroadcastForm {
 			as Pos;
 		let broadcast_width = width - 2 - button_width - 2;
 
-		let text_field_status = if args.selected {
-			if args.sending {
-				Status::Selected
-			}
-			else {
-				Status::Active
-			}
-		}
-		else {
-			Status::Passive
-		};
-
 		try!(self.text_field.render(
 			buffer,
 			x, y,
 			&TextFieldArgs {
 				width : broadcast_width,
-				status: text_field_status,
+				status: args.text_field_status,
 			},
 		));
 
@@ -159,12 +148,26 @@ impl<'a> Render for CommTab {
 			"SENDING",
 		));
 
+		// TODO: Move this upwards along the call chain.
+		let text_field_status = if self.form_is_selected() {
+			if args.is_sending {
+				Status::Selected
+			}
+			else {
+				Status::Active
+			}
+		}
+		else {
+			Status::Passive
+		};
+
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
-				selected: self.form_is_selected(),
-				sending : args.is_sending,
+				selected         : self.form_is_selected(),
+				sending          : args.is_sending,
+				text_field_status: text_field_status,
 			},
 		));
 
