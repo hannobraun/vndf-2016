@@ -15,6 +15,11 @@ use render::Color::{
 };
 use ui::Ui;
 use ui::base::Render;
+use ui::base::Status::{
+	Active,
+	Passive,
+	Selected,
+};
 use ui::render;
 
 
@@ -78,13 +83,26 @@ impl Renderer {
 				broadcast.sender == frame.self_id
 			);
 
+		let broadcast_field_status = if ui.comm_tab.form_is_selected() {
+			if is_sending {
+				Selected
+			}
+			else {
+				Active
+			}
+		}
+		else {
+			Passive
+		};
+
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
 			0, 0,
 			&render::CommTabArgs {
-				self_id   : frame.self_id.as_slice(),
-				broadcasts: broadcasts.as_slice(),
-				is_sending: is_sending,
+				self_id               : frame.self_id.as_slice(),
+				broadcasts            : broadcasts.as_slice(),
+				is_sending            : is_sending,
+				broadcast_field_status: broadcast_field_status,
 			},
 		));
 
