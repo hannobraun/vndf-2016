@@ -19,7 +19,6 @@ use ui::base::{
 	Update,
 };
 use ui::render;
-use ui::update::BroadcastFormArgs;
 
 
 // TODO: Merge into Ui
@@ -82,13 +81,8 @@ impl Renderer {
 				broadcast.sender == frame.self_id
 			);
 
-		let is_selected = ui.comm_tab.form_is_selected();
-
-		// TODO: Move to update method on CommTab
-		ui.comm_tab.broadcast_form.update(&BroadcastFormArgs {
-			is_selected: is_selected,
-			is_sending : is_sending,
-		});
+		// TODO: Move into Ui
+		ui.comm_tab.update(&is_sending);
 
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,

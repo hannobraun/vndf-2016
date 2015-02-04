@@ -6,7 +6,10 @@ use super::base::{
 	Status,
 	Update,
 };
-use super::state::BroadcastForm;
+use super::state::{
+	BroadcastForm,
+	CommTab,
+};
 
 
 const START_BROADCAST: &'static str = "Send Broadcast";
@@ -56,5 +59,19 @@ impl Update for BroadcastForm {
 				STOP_BROADCAST.chars().count()
 			)
 			as Pos;
+	}
+}
+
+
+impl Update for CommTab {
+	type Args = bool;
+
+	fn update(&mut self, &is_sending: &bool) {
+		let is_selected = self.form_is_selected();
+
+		self.broadcast_form.update(&BroadcastFormArgs {
+			is_selected: is_selected,
+			is_sending : is_sending,
+		});
 	}
 }
