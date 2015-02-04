@@ -18,24 +18,23 @@ use super::state::{
 };
 
 
-pub struct BroadcastFormArgs<'a> {
-	pub button_width: Pos,
-}
+// TODO: Replace with ()
+pub struct BroadcastFormArgs;
 
-impl<'a> Render for BroadcastForm {
-	type Args = BroadcastFormArgs<'a>;
+impl Render for BroadcastForm {
+	type Args = BroadcastFormArgs;
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		args  : &BroadcastFormArgs,
+		_     : &BroadcastFormArgs,
 	)
 		-> IoResult<()>
 	{
 		let total_width      = buffer.width() - x;
-		let text_field_width = total_width - 2 - args.button_width - 2;
+		let text_field_width = total_width - 2 - self.button_width - 2;
 
 		try!(self.text_field.render(
 			buffer,
@@ -89,10 +88,9 @@ impl<'a> Render for Button {
 
 
 pub struct CommTabArgs<'a> {
-	pub self_id               : &'a str,
-	pub broadcasts            : &'a [String],
-	pub is_sending            : bool,
-	pub broadcast_button_width: Pos,
+	pub self_id   : &'a str,
+	pub broadcasts: &'a [String],
+	pub is_sending: bool,
 }
 
 impl<'a> Render for CommTab {
@@ -126,9 +124,7 @@ impl<'a> Render for CommTab {
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
-			&BroadcastFormArgs {
-				button_width : args.broadcast_button_width,
-			},
+			&BroadcastFormArgs,
 		));
 
 		try!(write!(

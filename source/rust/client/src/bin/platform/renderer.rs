@@ -120,7 +120,7 @@ impl Renderer {
 				START_BROADCAST
 			};
 
-		let broadcast_button_width =
+		ui.comm_tab.broadcast_form.button_width =
 			max(
 				START_BROADCAST.chars().count(),
 				STOP_BROADCAST.chars().count()
@@ -134,7 +134,6 @@ impl Renderer {
 				self_id                : frame.self_id.as_slice(),
 				broadcasts             : broadcasts.as_slice(),
 				is_sending             : is_sending,
-				broadcast_button_width : broadcast_button_width,
 			},
 		));
 
