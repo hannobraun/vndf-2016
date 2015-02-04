@@ -95,14 +95,22 @@ impl Renderer {
 			Passive
 		};
 
+		let broadcast_button_status = if ui.comm_tab.form_is_selected() {
+			Active
+		}
+		else {
+			Passive
+		};
+
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
 			0, 0,
 			&render::CommTabArgs {
-				self_id               : frame.self_id.as_slice(),
-				broadcasts            : broadcasts.as_slice(),
-				is_sending            : is_sending,
-				broadcast_field_status: broadcast_field_status,
+				self_id                : frame.self_id.as_slice(),
+				broadcasts             : broadcasts.as_slice(),
+				is_sending             : is_sending,
+				broadcast_field_status : broadcast_field_status,
+				broadcast_button_status: broadcast_button_status,
 			},
 		));
 

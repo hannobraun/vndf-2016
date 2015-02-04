@@ -96,10 +96,11 @@ impl<'a> Render for Button {
 
 
 pub struct CommTabArgs<'a> {
-	pub self_id               : &'a str,
-	pub broadcasts            : &'a [String],
-	pub is_sending            : bool,
-	pub broadcast_field_status: Status,
+	pub self_id                : &'a str,
+	pub broadcasts             : &'a [String],
+	pub is_sending             : bool,
+	pub broadcast_field_status : Status,
+	pub broadcast_button_status: Status,
 }
 
 impl<'a> Render for CommTab {
@@ -131,14 +132,6 @@ impl<'a> Render for CommTab {
 		));
 
 		// TODO: Move this upwards along the call chain.
-		let button_status = if self.form_is_selected() {
-			Status::Active
-		}
-		else {
-			Status::Passive
-		};
-
-		// TODO: Move this upwards along the call chain.
 		let button_text = if args.is_sending {
 			STOP_BROADCAST
 		}
@@ -159,7 +152,7 @@ impl<'a> Render for CommTab {
 			x + 4, y + 4,
 			&BroadcastFormArgs {
 				text_field_status: args.broadcast_field_status,
-				button_status    : button_status,
+				button_status    : args.broadcast_button_status,
 				button_text      : button_text,
 				button_width     : button_width,
 			},
