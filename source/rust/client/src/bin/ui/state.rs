@@ -17,6 +17,7 @@ impl BroadcastForm {
 			text_field: TextField::new(),
 			button    : Button::new(),
 
+			// Transient state
 			text_field_status: Status::Passive,
 		}
 	}
