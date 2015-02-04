@@ -9,6 +9,7 @@ use super::base::{
 use super::state::{
 	BroadcastForm,
 	CommTab,
+	List,
 };
 
 
@@ -68,10 +69,27 @@ impl Update for CommTab {
 
 	fn update(&mut self, &is_sending: &bool) {
 		let form_is_selected = self.form_is_selected();
+		let list_is_selected = self.list_is_selected();
 
 		self.broadcast_form.update(&BroadcastFormArgs {
 			is_selected: form_is_selected,
 			is_sending : is_sending,
 		});
+
+		self.broadcast_list.update(&list_is_selected);
+	}
+}
+
+
+impl Update for List {
+	type Args = bool;
+
+	fn update(&mut self, &is_selected: &bool) {
+		self.status = if is_selected {
+			Status::Selected
+		}
+		else {
+			Status::Passive
+		};
 	}
 }
