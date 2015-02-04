@@ -46,6 +46,8 @@ impl Button {
 
 
 pub struct CommTab {
+	// TODO: Remove this field. We have all the status fields now, so we should
+	//       work with them.
 	pub element_active: bool,
 	pub selected_index: u8,
 	pub broadcast_form: BroadcastForm,
