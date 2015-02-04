@@ -86,6 +86,8 @@ News for any month:
 - http://www.reddit.com/r/space/comments/2r0em5/a_pictorial_of_just_how_massive_space_is/
 - https://www.youtube.com/watch?v=82p-DYgGFjI
 - http://www.reddit.com/r/space/comments/2u9kpt/an_updated_rockets_of_the_world/
+- http://www.reddit.com/r/space/comments/2uncnm/manned_reentry_vehicles_everything_to_scale_added/
+- http://vimeo.com/117815404
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
