@@ -2,6 +2,7 @@ pub mod base;
 pub mod input;
 pub mod render;
 pub mod state;
+pub mod update;
 
 
 use std::vec::Drain;

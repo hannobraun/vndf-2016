@@ -1,4 +1,3 @@
-use std::cmp::max;
 use std::old_io::IoResult;
 
 use client::platform::{
@@ -15,17 +14,12 @@ use render::Color::{
 	Red,
 };
 use ui::Ui;
-use ui::base::Render;
-use ui::base::Status::{
-	Active,
-	Passive,
-	Selected,
+use ui::base::{
+	Render,
+	Update,
 };
 use ui::render;
-
-
-const START_BROADCAST: &'static str = "Send Broadcast";
-const STOP_BROADCAST : &'static str = "Stop Sending";
+use ui::update::BroadcastFormArgs;
 
 
 // TODO: Merge into Ui
@@ -88,44 +82,13 @@ impl Renderer {
 				broadcast.sender == frame.self_id
 			);
 
-		// TODO: Move into update method on BroadcastForm
-		ui.comm_tab.broadcast_form.text_field_status =
-			if ui.comm_tab.form_is_selected() {
-				if is_sending {
-					Selected
-				}
-				else {
-					Active
-				}
-			}
-			else {
-				Passive
-			};
+		let is_selected = ui.comm_tab.form_is_selected();
 
-		// TODO: Move into update method on BroadcastForm
-		ui.comm_tab.broadcast_form.button_status =
-			if ui.comm_tab.form_is_selected() {
-				Active
-			}
-			else {
-				Passive
-			};
-
-		// TODO: Move into update method on BroadcastForm
-		ui.comm_tab.broadcast_form.button_text =
-			if is_sending {
-				STOP_BROADCAST
-			}
-			else {
-				START_BROADCAST
-			};
-
-		ui.comm_tab.broadcast_form.button_width =
-			max(
-				START_BROADCAST.chars().count(),
-				STOP_BROADCAST.chars().count()
-			)
-			as Pos;
+		// TODO: Move to update method on CommTab
+		ui.comm_tab.broadcast_form.update(&BroadcastFormArgs {
+			is_selected: is_selected,
+			is_sending : is_sending,
+		});
 
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
