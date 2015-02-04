@@ -111,12 +111,14 @@ impl Renderer {
 				Passive
 			};
 
-		let broadcast_button_text = if is_sending {
-			STOP_BROADCAST
-		}
-		else {
-			START_BROADCAST
-		};
+		// TODO: Move into update method on BroadcastForm
+		ui.comm_tab.broadcast_form.button_text =
+			if is_sending {
+				STOP_BROADCAST
+			}
+			else {
+				START_BROADCAST
+			};
 
 		let broadcast_button_width =
 			max(
@@ -132,7 +134,6 @@ impl Renderer {
 				self_id                : frame.self_id.as_slice(),
 				broadcasts             : broadcasts.as_slice(),
 				is_sending             : is_sending,
-				broadcast_button_text  : broadcast_button_text,
 				broadcast_button_width : broadcast_button_width,
 			},
 		));
