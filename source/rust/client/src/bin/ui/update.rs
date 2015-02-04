@@ -67,10 +67,10 @@ impl Update for CommTab {
 	type Args = bool;
 
 	fn update(&mut self, &is_sending: &bool) {
-		let is_selected = self.form_is_selected();
+		let form_is_selected = self.form_is_selected();
 
 		self.broadcast_form.update(&BroadcastFormArgs {
-			is_selected: is_selected,
+			is_selected: form_is_selected,
 			is_sending : is_sending,
 		});
 	}
