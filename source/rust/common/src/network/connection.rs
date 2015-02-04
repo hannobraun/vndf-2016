@@ -50,6 +50,7 @@ impl<R> Connection<R> where R: Decodable + Send {
 
 		Thread::spawn(move || {
 			let mut reader = BufferedReader::new(stream);
+			let mut errors = 0;
 
 			loop {
 				let event = match reader.read_line() {
@@ -65,18 +66,29 @@ impl<R> Connection<R> where R: Decodable + Send {
 							// read. I don't know why this would happen in a
 							// blocking API, but it does, so we need to handle
 							// it.
+							// There's one problem though: End of file also
+							// occurs when the connection has been closed. My
+							// theory: If it happens too many times in a row,
+							// the connection is gone and this thread should
+							// die.
+							// This is not pretty, but probably not worth
+							// putting too much effort into. The real solution
+							// would be to switch to a non-blocking API once a
+							// compelling one becomes available.
 
-							// TODO(87104828): Is it possible that after a
-							//                 connection is closed, we keep
-							//                 getting this error? In that case,
-							//                 we'll continue here and never
-							//                 notice that the channel was
-							//                 blocked, creating an endless
-							//                 loop.
-							continue;
+							if errors > 10 {
+								print!("Too many end of file errors.\n");
+								break;
+							}
+							else {
+								errors += 1;
+								continue;
+							}
 						}
 					},
 				};
+
+				errors = 0;
 
 				let event = match json::decode(event.as_slice()) {
 					Ok(event)  => event,
