@@ -30,3 +30,5 @@ Articles should be posted to the relevant places (foremorst /r/rust_gamedev).
   - Details to be determined, as I don't have tests like that yet.
 - Data Management (June)
   - Details to be determined. Write about whatever solution I end up with.
+- Tools
+  - Everything about the development environment: Sublime Text, Bash, Git, ...
