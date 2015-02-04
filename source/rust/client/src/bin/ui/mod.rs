@@ -12,7 +12,10 @@ use client::platform::{
 	InputEvent,
 };
 
-use self::base::ProcessInput;
+use self::base::{
+	ProcessInput,
+	Update,
+};
 use self::base::InputEvent::{
 	Backspace,
 	Char,
@@ -92,6 +95,8 @@ impl Ui {
 			.any(|broadcast|
 				broadcast.sender == frame.self_id
 			);
+
+		self.comm_tab.update(&is_sending);
 
 		if self.comm_tab.broadcast_form.button.was_activated {
 			self.comm_tab.broadcast_form.button.was_activated = false;

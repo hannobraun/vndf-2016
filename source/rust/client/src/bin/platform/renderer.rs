@@ -14,10 +14,7 @@ use render::Color::{
 	Red,
 };
 use ui::Ui;
-use ui::base::{
-	Render,
-	Update,
-};
+use ui::base::Render;
 use ui::render;
 
 
@@ -80,9 +77,6 @@ impl Renderer {
 			.any(|broadcast|
 				broadcast.sender == frame.self_id
 			);
-
-		// TODO: Move into Ui
-		ui.comm_tab.update(&is_sending);
 
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
