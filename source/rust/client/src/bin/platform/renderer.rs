@@ -82,9 +82,9 @@ impl Renderer {
 			&mut self.comm.buffer,
 			0, 0,
 			&render::CommTabArgs {
-				self_id                : frame.self_id.as_slice(),
-				broadcasts             : broadcasts.as_slice(),
-				is_sending             : is_sending,
+				self_id   : frame.self_id.as_slice(),
+				broadcasts: broadcasts.as_slice(),
+				is_sending: is_sending,
 			},
 		));
 
