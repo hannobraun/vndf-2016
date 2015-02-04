@@ -57,7 +57,7 @@ impl Screen {
 
 	pub fn submit(&mut self) -> IoResult<()> {
 		{
-			let mut iter = self.buffer_a.iter().zip(self.buffer_b.iter());
+			let iter = self.buffer_a.iter().zip(self.buffer_b.iter());
 			for ((x, y, c_a), (_, _, c_b)) in iter {
 				if c_a != c_b {
 					try!(write!(
