@@ -19,6 +19,7 @@ use super::state::{
 };
 
 
+// TODO: Remove
 const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
@@ -101,6 +102,7 @@ pub struct CommTabArgs<'a> {
 	pub is_sending             : bool,
 	pub broadcast_field_status : Status,
 	pub broadcast_button_status: Status,
+	pub broadcast_button_text  : &'a str,
 }
 
 impl<'a> Render for CommTab {
@@ -132,14 +134,6 @@ impl<'a> Render for CommTab {
 		));
 
 		// TODO: Move this upwards along the call chain.
-		let button_text = if args.is_sending {
-			STOP_BROADCAST
-		}
-		else {
-			START_BROADCAST
-		};
-
-		// TODO: Move this upwards along the call chain.
 		let button_width =
 			max(
 				START_BROADCAST.chars().count(),
@@ -153,7 +147,7 @@ impl<'a> Render for CommTab {
 			&BroadcastFormArgs {
 				text_field_status: args.broadcast_field_status,
 				button_status    : args.broadcast_button_status,
-				button_text      : button_text,
+				button_text      : args.broadcast_button_text,
 				button_width     : button_width,
 			},
 		));

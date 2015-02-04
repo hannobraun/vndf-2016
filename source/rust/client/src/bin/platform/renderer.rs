@@ -23,6 +23,10 @@ use ui::base::Status::{
 use ui::render;
 
 
+const START_BROADCAST: &'static str = "Send Broadcast";
+const STOP_BROADCAST : &'static str = "Stop Sending";
+
+
 // TODO: Merge into Ui
 pub struct Renderer {
 	screen: Screen,
@@ -102,6 +106,13 @@ impl Renderer {
 			Passive
 		};
 
+		let broadcast_button_text = if is_sending {
+			STOP_BROADCAST
+		}
+		else {
+			START_BROADCAST
+		};
+
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
 			0, 0,
@@ -111,6 +122,7 @@ impl Renderer {
 				is_sending             : is_sending,
 				broadcast_field_status : broadcast_field_status,
 				broadcast_button_status: broadcast_button_status,
+				broadcast_button_text  : broadcast_button_text,
 			},
 		));
 
