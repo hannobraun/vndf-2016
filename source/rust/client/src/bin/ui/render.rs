@@ -42,8 +42,8 @@ impl<'a> Render for BroadcastForm {
 	)
 		-> IoResult<()>
 	{
-		let width = buffer.width() - x;
-		let text_field_width = width - 2 - args.button_width - 2;
+		let total_width      = buffer.width() - x;
+		let text_field_width = total_width - 2 - args.button_width - 2;
 
 		try!(self.text_field.render(
 			buffer,
