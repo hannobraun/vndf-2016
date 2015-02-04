@@ -43,7 +43,7 @@ impl Renderer {
 		})
 	}
 
-	pub fn render(&mut self, frame: &Frame, ui: &mut Ui) -> IoResult<()> {
+	pub fn render(&mut self, frame: &Frame, ui: &Ui) -> IoResult<()> {
 		let mut y = 0;
 
 		self.screen.cursor(None);
@@ -59,7 +59,7 @@ impl Renderer {
 	fn render_comm(
 		&mut self,
 		frame: &Frame,
-		ui   : &mut Ui,
+		ui   : &Ui,
 		y    : &mut Pos
 	) -> IoResult<()> {
 		self.comm.buffer.clear();

@@ -60,7 +60,7 @@ impl PlatformIo for PlayerIo {
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		self.renderer.render(frame, &mut self.ui)
+		self.renderer.render(frame, &self.ui)
 	}
 }
 
