@@ -18,6 +18,7 @@ use ui::base::Render;
 use ui::render;
 
 
+// TODO: Merge into Ui
 pub struct Renderer {
 	screen: Screen,
 
