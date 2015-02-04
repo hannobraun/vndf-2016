@@ -176,7 +176,7 @@ impl<'a> Render for List {
 	{
 		let limit = x + args.width;
 
-		let (foreground_color, background_color) = args.status.colors();
+		let (foreground_color, background_color) = self.status.colors();
 
 		let items: Vec<String> = if args.items.len() == 0 {
 			vec!["none".to_string()]
