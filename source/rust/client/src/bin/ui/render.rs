@@ -27,6 +27,7 @@ pub struct BroadcastFormArgs<'a> {
 	pub text_field_status: Status,
 	pub button_status    : Status,
 	pub button_text      : &'a str,
+	pub button_width     : Pos,
 }
 
 impl<'a> Render for BroadcastForm {
@@ -42,13 +43,7 @@ impl<'a> Render for BroadcastForm {
 		-> IoResult<()>
 	{
 		let width = buffer.width() - x;
-		let button_width =
-			max(
-				START_BROADCAST.chars().count(),
-				STOP_BROADCAST.chars().count()
-			)
-			as Pos;
-		let broadcast_width = width - 2 - button_width - 2;
+		let broadcast_width = width - 2 - args.button_width - 2;
 
 		try!(self.text_field.render(
 			buffer,
@@ -164,6 +159,14 @@ impl<'a> Render for CommTab {
 			START_BROADCAST
 		};
 
+		// TODO: Move this upwards along the call chain.
+		let button_width =
+			max(
+				START_BROADCAST.chars().count(),
+				STOP_BROADCAST.chars().count()
+			)
+			as Pos;
+
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
@@ -172,6 +175,7 @@ impl<'a> Render for CommTab {
 				text_field_status: text_field_status,
 				button_status    : button_status,
 				button_text      : button_text,
+				button_width     : button_width,
 			},
 		));
 
