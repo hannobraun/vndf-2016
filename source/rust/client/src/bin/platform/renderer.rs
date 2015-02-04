@@ -1,3 +1,4 @@
+use std::cmp::max;
 use std::old_io::IoResult;
 
 use client::platform::{
@@ -113,6 +114,13 @@ impl Renderer {
 			START_BROADCAST
 		};
 
+		let broadcast_button_width =
+			max(
+				START_BROADCAST.chars().count(),
+				STOP_BROADCAST.chars().count()
+			)
+			as Pos;
+
 		try!(ui.comm_tab.render(
 			&mut self.comm.buffer,
 			0, 0,
@@ -123,6 +131,7 @@ impl Renderer {
 				broadcast_field_status : broadcast_field_status,
 				broadcast_button_status: broadcast_button_status,
 				broadcast_button_text  : broadcast_button_text,
+				broadcast_button_width : broadcast_button_width,
 			},
 		));
 

@@ -1,4 +1,3 @@
-use std::cmp::max;
 use std::old_io::IoResult;
 
 use render::{
@@ -18,10 +17,6 @@ use super::state::{
 	TextField,
 };
 
-
-// TODO: Remove
-const START_BROADCAST: &'static str = "Send Broadcast";
-const STOP_BROADCAST : &'static str = "Stop Sending";
 
 pub struct BroadcastFormArgs<'a> {
 	pub text_field_status: Status,
@@ -103,6 +98,7 @@ pub struct CommTabArgs<'a> {
 	pub broadcast_field_status : Status,
 	pub broadcast_button_status: Status,
 	pub broadcast_button_text  : &'a str,
+	pub broadcast_button_width : Pos,
 }
 
 impl<'a> Render for CommTab {
@@ -133,14 +129,6 @@ impl<'a> Render for CommTab {
 			"SENDING",
 		));
 
-		// TODO: Move this upwards along the call chain.
-		let button_width =
-			max(
-				START_BROADCAST.chars().count(),
-				STOP_BROADCAST.chars().count()
-			)
-			as Pos;
-
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
@@ -148,7 +136,7 @@ impl<'a> Render for CommTab {
 				text_field_status: args.broadcast_field_status,
 				button_status    : args.broadcast_button_status,
 				button_text      : args.broadcast_button_text,
-				button_width     : button_width,
+				button_width     : args.broadcast_button_width,
 			},
 		));
 
