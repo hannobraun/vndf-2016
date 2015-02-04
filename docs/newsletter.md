@@ -59,16 +59,12 @@ Gaming News Resources
 # Plans
 
 Topic ideas:
-- Overview over text-based games (title: Self-Help for Text-based Game Devs)
 - Series about different text-based games:
-  - Dwarve Fortress
-  - NetHack
-  - ...
-- Check the rest of the vision file for further topic ideas
-- Announcing the navigation prototype
-- Beyond the navigation prototype (once it's out)
+  - Dwarve Fortress (February)
+  - NetHack (March)
+  - Choice of Games (April)
+  - An interactive fiction game (May)
 - Looking back on my marketing efforts: How it started
-- Visual inspiration: Galactica's DRADIS
 - Recycle short story
 - Second inspirations series:
   - Homeworld
