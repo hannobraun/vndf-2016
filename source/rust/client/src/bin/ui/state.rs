@@ -46,9 +46,6 @@ impl Button {
 
 
 pub struct CommTab {
-	// TODO: Remove this field. We have all the status fields now, so we should
-	//       work with them.
-	pub element_active: bool,
 	pub selected_index: u8,
 	pub broadcast_form: BroadcastForm,
 	pub broadcast_list: List,
@@ -57,7 +54,6 @@ pub struct CommTab {
 impl CommTab {
 	pub fn new() -> CommTab {
 		CommTab {
-			element_active: true,
 			selected_index: 0,
 			broadcast_form: BroadcastForm::new(),
 			broadcast_list: List::new(),
