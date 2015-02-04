@@ -107,7 +107,7 @@ impl<R> Connection<R> where R: Decodable + Send {
 		connection
 	}
 
-	pub fn send<Es, E>(&mut self, mut events: Es) -> IoResult<()>
+	pub fn send<Es, E>(&mut self, events: Es) -> IoResult<()>
 		where
 			Es: Iterator<Item=E>,
 			E : Encodable,
