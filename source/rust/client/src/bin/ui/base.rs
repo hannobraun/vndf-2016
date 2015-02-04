@@ -30,6 +30,13 @@ pub enum InputEvent {
 }
 
 
+pub trait Update {
+	type Args;
+
+	fn update(&mut self, args: &Self::Args);
+}
+
+
 pub trait Render {
 	type Args;
 
