@@ -86,7 +86,12 @@ impl Update for List {
 
 	fn update(&mut self, &is_selected: &bool) {
 		self.status = if is_selected {
-			Status::Selected
+			if self.activated {
+				Status::Active
+			}
+			else {
+				Status::Selected
+			}
 		}
 		else {
 			Status::Passive
