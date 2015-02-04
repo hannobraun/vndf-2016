@@ -1,4 +1,4 @@
-#![feature(core, io, path, slicing_syntax)]
+#![feature(io, path, slicing_syntax)]
 
 
 extern crate "rustc-serialize" as rustc_serialize;

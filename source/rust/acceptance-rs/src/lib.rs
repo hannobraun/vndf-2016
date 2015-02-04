@@ -1,4 +1,4 @@
-#![feature(collections, core, io, os, path, rand)]
+#![feature(core, io, os, path, rand)]
 
 
 use std::old_io::net::ip::Port;

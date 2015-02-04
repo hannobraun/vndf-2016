@@ -1,4 +1,4 @@
-#![feature(collections, core)]
+#![feature(core)]
 
 
 extern crate time;
