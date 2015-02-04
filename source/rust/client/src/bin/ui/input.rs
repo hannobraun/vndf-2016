@@ -49,8 +49,6 @@ impl ProcessInput for CommTab {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
 			Enter => {
-				self.element_active = !self.element_active;
-
 				if self.form_is_selected() {
 					self.broadcast_form.process_event(event);
 				}
