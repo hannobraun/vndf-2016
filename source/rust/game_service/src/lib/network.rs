@@ -32,7 +32,7 @@ impl Network {
 		}
 	}
 
-	pub fn send<'a, R, E>(&mut self, mut recipients: R, events: E)
+	pub fn send<'a, R, E>(&mut self, recipients: R, events: E)
 		where
 			R: Iterator<Item = SocketAddr>,
 			E: Iterator<Item = ServerEvent>,
