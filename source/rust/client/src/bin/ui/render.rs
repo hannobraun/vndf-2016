@@ -22,14 +22,15 @@ use super::state::{
 const START_BROADCAST: &'static str = "Send Broadcast";
 const STOP_BROADCAST : &'static str = "Stop Sending";
 
-pub struct BroadcastFormArgs {
+pub struct BroadcastFormArgs<'a> {
 	pub sending          : bool,
 	pub text_field_status: Status,
 	pub button_status    : Status,
+	pub button_text      : &'a str,
 }
 
-impl Render for BroadcastForm {
-	type Args = BroadcastFormArgs;
+impl<'a> Render for BroadcastForm {
+	type Args = BroadcastFormArgs<'a>;
 
 	fn render(
 		&self,
@@ -40,13 +41,6 @@ impl Render for BroadcastForm {
 	)
 		-> IoResult<()>
 	{
-		let button_text = if args.sending {
-			STOP_BROADCAST
-		}
-		else {
-			START_BROADCAST
-		};
-
 		let width = buffer.width() - x;
 		let button_width =
 			max(
@@ -69,7 +63,7 @@ impl Render for BroadcastForm {
 			buffer,
 			x + broadcast_width + 2, y,
 			&ButtonArgs {
-				text  : button_text,
+				text  : args.button_text,
 				status: args.button_status,
 			},
 		));
@@ -162,6 +156,14 @@ impl<'a> Render for CommTab {
 			Status::Passive
 		};
 
+		// TODO: Move this upwards along the call chain.
+		let button_text = if args.is_sending {
+			STOP_BROADCAST
+		}
+		else {
+			START_BROADCAST
+		};
+
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
@@ -169,6 +171,7 @@ impl<'a> Render for CommTab {
 				sending          : args.is_sending,
 				text_field_status: text_field_status,
 				button_status    : button_status,
+				button_text      : button_text,
 			},
 		));
 
