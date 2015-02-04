@@ -19,9 +19,8 @@ use super::state::{
 
 
 pub struct BroadcastFormArgs<'a> {
-	pub button_status: Status,
-	pub button_text  : &'a str,
-	pub button_width : Pos,
+	pub button_text : &'a str,
+	pub button_width: Pos,
 }
 
 impl<'a> Render for BroadcastForm {
@@ -53,7 +52,7 @@ impl<'a> Render for BroadcastForm {
 			x + text_field_width + 2, y,
 			&ButtonArgs {
 				text  : args.button_text,
-				status: args.button_status,
+				status: self.button_status,
 			},
 		));
 
@@ -91,12 +90,11 @@ impl<'a> Render for Button {
 
 
 pub struct CommTabArgs<'a> {
-	pub self_id                : &'a str,
-	pub broadcasts             : &'a [String],
-	pub is_sending             : bool,
-	pub broadcast_button_status: Status,
-	pub broadcast_button_text  : &'a str,
-	pub broadcast_button_width : Pos,
+	pub self_id               : &'a str,
+	pub broadcasts            : &'a [String],
+	pub is_sending            : bool,
+	pub broadcast_button_text : &'a str,
+	pub broadcast_button_width: Pos,
 }
 
 impl<'a> Render for CommTab {
@@ -131,7 +129,6 @@ impl<'a> Render for CommTab {
 			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
-				button_status: args.broadcast_button_status,
 				button_text  : args.broadcast_button_text,
 				button_width : args.broadcast_button_width,
 			},

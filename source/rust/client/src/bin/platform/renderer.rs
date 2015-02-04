@@ -102,12 +102,14 @@ impl Renderer {
 				Passive
 			};
 
-		let broadcast_button_status = if ui.comm_tab.form_is_selected() {
-			Active
-		}
-		else {
-			Passive
-		};
+		// TODO: Move into update method on BroadcastForm
+		ui.comm_tab.broadcast_form.button_status =
+			if ui.comm_tab.form_is_selected() {
+				Active
+			}
+			else {
+				Passive
+			};
 
 		let broadcast_button_text = if is_sending {
 			STOP_BROADCAST
@@ -130,7 +132,6 @@ impl Renderer {
 				self_id                : frame.self_id.as_slice(),
 				broadcasts             : broadcasts.as_slice(),
 				is_sending             : is_sending,
-				broadcast_button_status: broadcast_button_status,
 				broadcast_button_text  : broadcast_button_text,
 				broadcast_button_width : broadcast_button_width,
 			},
