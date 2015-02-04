@@ -48,8 +48,10 @@ impl ProcessInput for Button {
 impl ProcessInput for CommTab {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			CursorUp   => self.selected_index -= 1,
-			CursorDown => self.selected_index += 1,
+			CursorUp   if !self.broadcast_list.activated =>
+				self.selected_index -= 1,
+			CursorDown if !self.broadcast_list.activated =>
+				self.selected_index += 1,
 
 			_ => self.selected_element_mut().process_event(event),
 		}
