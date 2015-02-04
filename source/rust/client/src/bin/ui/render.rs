@@ -18,18 +18,15 @@ use super::state::{
 };
 
 
-// TODO: Replace with ()
-pub struct BroadcastFormArgs;
-
 impl Render for BroadcastForm {
-	type Args = BroadcastFormArgs;
+	type Args = ();
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		_     : &BroadcastFormArgs,
+		_     : &(),
 	)
 		-> IoResult<()>
 	{
@@ -123,7 +120,7 @@ impl<'a> Render for CommTab {
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
-			&BroadcastFormArgs,
+			&(),
 		));
 
 		try!(write!(
