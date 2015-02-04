@@ -26,6 +26,7 @@ pub struct BroadcastFormArgs {
 	pub selected         : bool,
 	pub sending          : bool,
 	pub text_field_status: Status,
+	pub button_status    : Status,
 }
 
 impl Render for BroadcastForm {
@@ -65,19 +66,12 @@ impl Render for BroadcastForm {
 			},
 		));
 
-		let button_status = if args.selected {
-			Status::Active
-		}
-		else {
-			Status::Passive
-		};
-
 		try!(self.button.render(
 			buffer,
 			x + broadcast_width + 2, y,
 			&ButtonArgs {
 				text  : button_text,
-				status: button_status,
+				status: args.button_status,
 			},
 		));
 
@@ -161,6 +155,14 @@ impl<'a> Render for CommTab {
 			Status::Passive
 		};
 
+		// TODO: Move this upwards along the call chain.
+		let button_status = if self.form_is_selected() {
+			Status::Active
+		}
+		else {
+			Status::Passive
+		};
+
 		try!(self.broadcast_form.render(
 			buffer,
 			x + 4, y + 4,
@@ -168,6 +170,7 @@ impl<'a> Render for CommTab {
 				selected         : self.form_is_selected(),
 				sending          : args.is_sending,
 				text_field_status: text_field_status,
+				button_status    : button_status,
 			},
 		));
 
