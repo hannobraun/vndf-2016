@@ -90,7 +90,6 @@ impl<'a> Render for Button {
 pub struct CommTabArgs<'a> {
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
-	pub is_sending: bool,
 }
 
 impl<'a> Render for CommTab {
