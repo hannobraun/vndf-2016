@@ -56,9 +56,7 @@ impl ProcessInput for CommTab {
 			CursorUp   => self.selected_index -= 1,
 			CursorDown => self.selected_index += 1,
 
-			_ => if self.element_active {
-				self.selected_element_mut().process_event(event)
-			},
+			_ => self.selected_element_mut().process_event(event),
 		}
 	}
 }
