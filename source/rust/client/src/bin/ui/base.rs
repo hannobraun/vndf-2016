@@ -38,6 +38,10 @@ pub trait Update {
 
 
 pub trait Render {
+	// TODO: The way we're handling transient data now, having separate
+	//       arguments to the render method seems redundant. Once the transient
+	//       data stuff has settled a bit and is more elegant, this can probably
+	//       be removed.
 	type Args;
 
 	fn render(&self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &Self::Args)
