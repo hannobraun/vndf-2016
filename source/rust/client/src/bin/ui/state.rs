@@ -84,12 +84,17 @@ impl CommTab {
 
 pub struct List {
 	pub first: usize,
+
+	// Transient state
+	pub status: Status,
 }
 
 impl List {
 	pub fn new() -> List {
 		List {
 			first: 0,
+
+			status: Status::Passive,
 		}
 	}
 }
