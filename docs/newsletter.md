@@ -60,7 +60,7 @@ Gaming News Resources
 
 Topic ideas:
 - Series about different text-based games:
-  - Dwarve Fortress (February)
+  - Dwarf Fortress (February)
   - NetHack (March)
   - Choice of Games (April)
   - An interactive fiction game (May)
