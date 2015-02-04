@@ -60,6 +60,7 @@ impl ProcessInput for CommTab {
 impl ProcessInput for List {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
+			Enter      => self.activated = !self.activated,
 			CursorUp   => self.first -= 1,
 			CursorDown => self.first += 1,
 			_          => (),
