@@ -1,6 +1,7 @@
 use super::base::{
 	InputEvent,
 	ProcessInput,
+	Status,
 };
 use super::base::InputEvent::{
 	Backspace,
@@ -21,8 +22,14 @@ use super::state::{
 impl ProcessInput for BroadcastForm {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
-			Enter => self.button.process_event(event),
-			_     => self.text_field.process_event(event),
+			Enter => {
+				if self.text_field_status != Status::Active {
+					self.text_field.text.clear();
+				}
+
+				self.button.process_event(event)
+			},
+			_ => self.text_field.process_event(event),
 		}
 	}
 }
@@ -43,10 +50,6 @@ impl ProcessInput for CommTab {
 		match event {
 			Enter => {
 				self.element_active = !self.element_active;
-
-				if self.element_active && self.form_is_selected() {
-					self.broadcast_form.text_field.text.clear();
-				}
 
 				if self.form_is_selected() {
 					self.broadcast_form.process_event(event);
