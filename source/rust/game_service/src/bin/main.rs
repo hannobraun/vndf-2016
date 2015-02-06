@@ -1,4 +1,4 @@
-#![feature(collections, core, io, os, rand, std_misc)]
+#![feature(collections, core, env, io, rand, std_misc)]
 
 
 mod args;
@@ -13,8 +13,8 @@ extern crate game_service;
 
 
 use std::collections::HashMap;
+use std::env;
 use std::old_io::timer::sleep;
-use std::os;
 use std::rand::random;
 use std::time::Duration;
 
@@ -38,7 +38,7 @@ struct Client {
 
 
 fn main() {
-	let args = Args::parse(os::args().into_iter());
+	let args = Args::parse(env::args());
 
 	let mut broadcasts = HashMap::new();
 	let mut clients    = HashMap::new();
