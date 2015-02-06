@@ -76,16 +76,22 @@ impl Update for CommTab {
 			is_sending : is_sending,
 		});
 
-		self.broadcast_list.update(&list_is_selected);
+		self.broadcast_list.update(&ListArgs {
+			is_selected: list_is_selected,
+		});
 	}
 }
 
 
-impl Update for List {
-	type Args = bool;
+pub struct ListArgs {
+	is_selected: bool,
+}
 
-	fn update(&mut self, &is_selected: &bool) {
-		self.status = if is_selected {
+impl Update for List {
+	type Args = ListArgs;
+
+	fn update(&mut self, args: &ListArgs) {
+		self.status = if args.is_selected {
 			if self.activated {
 				Status::Active
 			}
