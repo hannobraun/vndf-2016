@@ -3,20 +3,20 @@ name = "client"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
- "getopts 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "getopts 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "common"
 version = "0.0.1"
 dependencies = [
- "rustc-serialize 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "getopts"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "log 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -29,6 +29,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "rustc-serialize"
-version = "0.2.11"
+version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
