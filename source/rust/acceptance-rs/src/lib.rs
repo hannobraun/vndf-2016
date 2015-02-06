@@ -21,5 +21,5 @@ pub use tree::{
 
 
 pub fn random_port(min: Port, max: Port) -> Port {
-	random::<Port>() % (max - min) + min
+	random() % (max - min) + min
 }
