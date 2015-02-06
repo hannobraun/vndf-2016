@@ -1,3 +1,4 @@
+use std::ffi::AsOsStr;
 use std::old_io::net::ip::{
 	Port,
 	SocketAddr,
@@ -13,7 +14,11 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse(args: &[String]) -> Args {
+	pub fn parse<I>(args: I) -> Args
+		where
+			I: Iterator,
+			<I as Iterator>::Item: AsOsStr,
+	{
 		let mut options = Options::new();
 		options.optflag("h", "headless", "enable headless mode");
 		options.optopt(
@@ -24,7 +29,7 @@ impl Args {
 			);
 		options.optopt("p", "server-port", "server port to connect to", "34481");
 
-		let matches = match options.parse(args.tail()) {
+		let matches = match options.parse(args) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};

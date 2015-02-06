@@ -38,7 +38,7 @@ use platform::{
 
 
 fn main() {
-	let args = Args::parse(std::os::args().as_slice());
+	let args = Args::parse(std::os::args().into_iter());
 
 	if args.headless {
 		run(args, init_platform::<HeadlessIo>())
