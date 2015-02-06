@@ -1,7 +1,7 @@
 use std::old_io::net::ip::Port;
 use time::precise_time_s;
 
-use acceptance::Process;
+use acceptance::process::Process;
 
 use client::platform::{
 	Frame,
