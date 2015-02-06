@@ -1,4 +1,4 @@
-#![feature(collections, core, io, libc, os, slicing_syntax, std_misc)]
+#![feature(collections, core, env, io, libc, slicing_syntax, std_misc)]
 
 
 extern crate getopts;
@@ -16,6 +16,7 @@ mod ui;
 
 
 use std::collections::HashMap;
+use std::env;
 use std::old_io::timer::sleep;
 use std::time::Duration;
 
@@ -38,7 +39,7 @@ use platform::{
 
 
 fn main() {
-	let args = Args::parse(std::os::args().into_iter());
+	let args = Args::parse(env::args());
 
 	if args.headless {
 		run(args, init_platform::<HeadlessIo>())
