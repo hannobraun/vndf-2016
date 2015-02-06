@@ -8,7 +8,7 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse(cli_args: &[String]) -> Args {
+	pub fn parse<I>(cli_args: I) -> Args where I: Iterator<Item=String> {
 		let mut args = Args {
 			port: 34481,
 		};
@@ -21,7 +21,7 @@ impl Args {
 				args.port.to_string().as_slice(),
 			);
 
-		let matches = match options.parse(cli_args.tail()) {
+		let matches = match options.parse(cli_args) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};

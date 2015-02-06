@@ -38,7 +38,7 @@ struct Client {
 
 
 fn main() {
-	let args = Args::parse(os::args().as_slice());
+	let args = Args::parse(os::args().into_iter());
 
 	let mut broadcasts = HashMap::new();
 	let mut clients    = HashMap::new();
