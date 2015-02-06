@@ -26,6 +26,7 @@ use self::base::InputEvent::{
 	Enter,
 };
 use self::state::CommTab;
+use self::update::CommTabArgs;
 
 
 pub struct Ui {
@@ -96,7 +97,9 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
-		self.comm_tab.update(&is_sending);
+		self.comm_tab.update(&CommTabArgs {
+			is_sending: is_sending,
+		});
 
 		if self.comm_tab.broadcast_form.button.was_activated {
 			self.comm_tab.broadcast_form.button.was_activated = false;

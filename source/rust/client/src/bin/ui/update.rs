@@ -64,16 +64,20 @@ impl Update for BroadcastForm {
 }
 
 
-impl Update for CommTab {
-	type Args = bool;
+pub struct CommTabArgs {
+	pub is_sending: bool,
+}
 
-	fn update(&mut self, &is_sending: &bool) {
+impl Update for CommTab {
+	type Args = CommTabArgs;
+
+	fn update(&mut self, args: &CommTabArgs) {
 		let form_is_selected = self.form_is_selected();
 		let list_is_selected = self.list_is_selected();
 
 		self.broadcast_form.update(&BroadcastFormArgs {
 			is_selected: form_is_selected,
-			is_sending : is_sending,
+			is_sending : args.is_sending,
 		});
 
 		self.broadcast_list.update(&ListArgs {
