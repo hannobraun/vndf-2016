@@ -78,7 +78,7 @@ impl Renderer {
 			&render::CommTabArgs {
 				self_id    : frame.self_id.as_slice(),
 				broadcasts : broadcasts.as_slice(),
-				list_height: 5,
+				list_height: ui.broadcast_list_height,
 			},
 		));
 

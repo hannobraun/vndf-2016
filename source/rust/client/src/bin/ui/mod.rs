@@ -11,6 +11,7 @@ use client::platform::{
 	Frame,
 	InputEvent,
 };
+use render::Pos;
 
 use self::base::{
 	ProcessInput,
@@ -34,6 +35,11 @@ pub struct Ui {
 
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
+
+	// TODO: This is not very pretty, and a sign that the strict separation of
+	//       at least update and render isn't working out. I should find a way
+	//       to work more towards an immediate-mode approach.
+	pub broadcast_list_height: Pos,
 }
 
 impl Ui {
@@ -42,6 +48,8 @@ impl Ui {
 			comm_tab: CommTab::new(),
 			mode    : TextInputMode::Regular,
 			events  : Vec::new(),
+
+			broadcast_list_height: 5,
 		}
 	}
 
