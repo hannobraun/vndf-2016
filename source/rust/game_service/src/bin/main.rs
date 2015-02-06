@@ -1,10 +1,11 @@
-#![feature(collections, core, env, io, rand, std_misc)]
+#![feature(collections, core, env, io, std_misc)]
 
 
 mod args;
 
 
 extern crate getopts;
+extern crate rand;
 extern crate time;
 
 extern crate common;
@@ -14,9 +15,9 @@ extern crate game_service;
 use std::collections::HashMap;
 use std::env;
 use std::old_io::timer::sleep;
-use std::rand::random;
 use std::time::Duration;
 
+use rand::random;
 use time::precise_time_s;
 
 use args::Args;
