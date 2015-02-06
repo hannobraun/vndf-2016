@@ -76,8 +76,9 @@ impl Renderer {
 			&mut self.comm.buffer,
 			0, 0,
 			&render::CommTabArgs {
-				self_id   : frame.self_id.as_slice(),
-				broadcasts: broadcasts.as_slice(),
+				self_id    : frame.self_id.as_slice(),
+				broadcasts : broadcasts.as_slice(),
+				list_height: 5,
 			},
 		));
 

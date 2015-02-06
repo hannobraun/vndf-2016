@@ -85,8 +85,9 @@ impl<'a> Render for Button {
 
 
 pub struct CommTabArgs<'a> {
-	pub self_id   : &'a str,
-	pub broadcasts: &'a [String],
+	pub self_id    : &'a str,
+	pub broadcasts : &'a [String],
+	pub list_height: Pos,
 }
 
 impl<'a> Render for CommTab {
@@ -134,7 +135,7 @@ impl<'a> Render for CommTab {
 			x + 4, y + 7,
 			&ListArgs {
 				width : width - 4 - 4,
-				height: 5,
+				height: args.list_height,
 				items : args.broadcasts,
 			},
 		));
