@@ -1,4 +1,5 @@
 use std::old_io::net::ip::Port;
+use std::ffi::AsOsStr;
 
 use getopts::Options;
 
@@ -8,7 +9,11 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse<I>(cli_args: I) -> Args where I: Iterator<Item=String> {
+	pub fn parse<I>(cli_args: I) -> Args
+		where
+			I: Iterator,
+			<I as Iterator>::Item: AsOsStr,
+	{
 		let mut args = Args {
 			port: 34481,
 		};
