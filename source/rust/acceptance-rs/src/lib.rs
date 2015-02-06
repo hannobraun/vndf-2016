@@ -13,7 +13,6 @@ use std::old_io::net::ip::Port;
 use rand::random;
 
 
-pub use self::process::Process;
 pub use tree::{
 	Tree,
 	TreeBuilder,
