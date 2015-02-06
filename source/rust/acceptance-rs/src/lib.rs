@@ -1,8 +1,12 @@
-#![feature(core, env, io, path, rand)]
+#![feature(core, env, io, path)]
+
+
+extern crate rand;
 
 
 use std::old_io::net::ip::Port;
-use std::rand::random;
+
+use rand::random;
 
 
 pub use self::process::Process;
