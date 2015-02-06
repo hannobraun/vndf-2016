@@ -4,6 +4,11 @@
 extern crate rand;
 
 
+pub mod process;
+
+mod tree;
+
+
 use std::old_io::net::ip::Port;
 
 use rand::random;
@@ -14,11 +19,6 @@ pub use tree::{
 	Tree,
 	TreeBuilder,
 };
-
-
-pub mod process;
-
-mod tree;
 
 
 pub fn random_port(min: Port, max: Port) -> Port {
