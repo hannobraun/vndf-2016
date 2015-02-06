@@ -1,9 +1,9 @@
+use std::env;
 use std::old_io::{
 	self,
 	fs,
 	File,
 };
-use std::os;
 use std::rand::random;
 
 
@@ -24,7 +24,7 @@ pub struct TreeBuilder {
 
 impl TreeBuilder {
 	pub fn new() -> TreeBuilder {
-		let root = os::tmpdir()
+		let root = env::temp_dir()
 			.join(
 				format!("acceptance-rs-tree-{}", random::<u16>()).as_slice()
 			);
