@@ -88,7 +88,7 @@ impl Update for CommTab {
 
 
 pub struct ListArgs {
-	is_selected: bool,
+	pub is_selected: bool,
 }
 
 impl Update for List {
