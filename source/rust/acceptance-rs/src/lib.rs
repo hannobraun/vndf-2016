@@ -5,8 +5,7 @@ extern crate rand;
 
 
 pub mod process;
-
-mod tree;
+pub mod tree;
 
 
 use std::old_io::net::ip::Port;
