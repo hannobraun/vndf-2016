@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-export PATH=$PATH:$(pwd)/source/rust/rocks/target
-
-cd source/rust/rocks
-cargo test &&
-cargo run -- --root $HTTP_SOURCE --port 3000
