@@ -1,4 +1,7 @@
-use std::cmp::max;
+use std::cmp::{
+	max,
+	min,
+};
 
 use render::Pos;
 
@@ -65,7 +68,9 @@ impl Update for BroadcastForm {
 
 
 pub struct CommTabArgs {
-	pub is_sending: bool,
+	pub is_sending : bool,
+	pub list_length: usize,
+	pub list_height: Pos,
 }
 
 impl Update for CommTab {
@@ -82,6 +87,8 @@ impl Update for CommTab {
 
 		self.broadcast_list.update(&ListArgs {
 			is_selected: list_is_selected,
+			length     : args.list_length,
+			height     : args.list_height,
 		});
 	}
 }
@@ -89,6 +96,8 @@ impl Update for CommTab {
 
 pub struct ListArgs {
 	pub is_selected: bool,
+	pub length     : usize,
+	pub height     : Pos,
 }
 
 impl Update for List {
@@ -106,5 +115,8 @@ impl Update for List {
 		else {
 			Status::Passive
 		};
+
+		let max_first = max(0, args.length as isize - args.height as isize);
+		self.first = min(self.first, max_first as usize);
 	}
 }

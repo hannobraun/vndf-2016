@@ -106,7 +106,9 @@ impl Ui {
 			);
 
 		self.comm_tab.update(&CommTabArgs {
-			is_sending: is_sending,
+			is_sending : is_sending,
+			list_length: frame.broadcasts.len(),
+			list_height: self.broadcast_list_height,
 		});
 
 		if self.comm_tab.broadcast_form.button.was_activated {
