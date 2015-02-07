@@ -63,7 +63,7 @@ impl ProcessInput for List {
 	fn process_event(&mut self, event: InputEvent) {
 		match event {
 			Enter      => self.activated = !self.activated,
-			CursorUp   => self.first -= 1,
+			CursorUp   => if self.first > 0 { self.first -= 1 },
 			CursorDown => self.first += 1,
 			_          => (),
 		}
