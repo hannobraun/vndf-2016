@@ -3,7 +3,6 @@
 source project.conf
 
 rm -rf output &&
-./scripts/init &&
 ./scripts/tasks/run-tests &&
 ./scripts/tasks/build-vndf &&
 # ./scripts/tasks/arrange-client &&
