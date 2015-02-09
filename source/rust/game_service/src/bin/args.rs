@@ -17,9 +17,7 @@ impl Args {
 	{
 		let mut args = Args {
 			port            : 34481,
-			// TODO(84970652): Fine-tune timeout value. This is probably too low
-			//                 for non-local connections.
-			client_timeout_s: 0.05,
+			client_timeout_s: 0.5,
 		};
 
 		let mut options = Options::new();
