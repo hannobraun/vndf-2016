@@ -4,9 +4,7 @@ source project.conf
 
 START_SCRIPT_CONTENTS="\
 #!/usr/bin/env bash
-./bin/$(basename $CLIENT_BINARY) --server-host $SERVER_ADDRESS \
-	1>> stdout.log \
-	2>> stderr.log
+./bin/$(basename $CLIENT_BINARY) --server-host $SERVER_ADDRESS 2>> stderr.log
 stty echo
 stty icanon
 "
