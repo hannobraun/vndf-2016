@@ -4,7 +4,7 @@ source project.conf
 
 START_SCRIPT_CONTENTS="\
 #!/usr/bin/env bash
-./bin/$(basename $CLIENT_BINARY) --address $SERVER_ADDRESS \
+./bin/$(basename $CLIENT_BINARY) --server-host $SERVER_ADDRESS \
 	1>> stdout.log \
 	2>> stderr.log"
 START_SCRIPT=$DIST_DIR/vndf
