@@ -17,6 +17,7 @@ impl GameService {
 			"vndf-game-service",
 			&[
 				format!("--port={}", port).as_slice(),
+				format!("--client-timeout={}", 0.05).as_slice(),
 			]
 		);
 		process.read_stdout_line(); // Make sure it's ready
