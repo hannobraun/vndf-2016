@@ -127,12 +127,7 @@ fn main() {
 		let     now_s     = precise_time_s();
 		let mut to_remove = Vec::new();
 		for (&address, client) in clients.iter() {
-			// TODO(84970652): The timeout value should be configurable to
-			//                 satisfy both real-world and testing
-			//                 requirements.
-			// TODO(84970652): Fine-tune timeout value. This is probably too low
-			//                 for non-local connections.
-			if client.last_active_s + 0.05 < now_s {
+			if client.last_active_s + args.client_timeout_s < now_s {
 				to_remove.push(address);
 			}
 		}
