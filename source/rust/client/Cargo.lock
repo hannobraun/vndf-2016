@@ -3,7 +3,7 @@ name = "client"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
- "getopts 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "getopts 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -16,7 +16,7 @@ dependencies = [
 
 [[package]]
 name = "getopts"
-version = "0.2.2"
+version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "log 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
