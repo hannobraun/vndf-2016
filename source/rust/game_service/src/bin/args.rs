@@ -20,11 +20,11 @@ impl Args {
 
 		let mut options = Options::new();
 		options.optopt(
-				"",
-				"port",
-				"port to listen on",
-				args.port.to_string().as_slice(),
-			);
+			"",
+			"port",
+			"port to listen on",
+			args.port.to_string().as_slice(),
+		);
 
 		let matches = match options.parse(cli_args) {
 			Ok(matches) => matches,
