@@ -30,10 +30,14 @@ pub struct Connection<R> {
 }
 
 impl<R> Connection<R> where R: Decodable + Send {
-	pub fn new<T: ToSocketAddr>(address: T) -> Connection<R> {
-		let stream = match TcpStream::connect(address) {
+	pub fn new<T: ToSocketAddr>(to_address: T) -> Connection<R> {
+		let address = to_address.to_socket_addr();
+		let stream = match TcpStream::connect(to_address) {
 			Ok(stream) => stream,
-			Err(error) => panic!("Error connecting stream: {}", error),
+			Err(error) => panic!(
+				"Error connecting to {:?}: {}",
+				address, error,
+			),
 		};
 
 		Connection::from_stream(stream)
