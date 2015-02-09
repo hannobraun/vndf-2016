@@ -32,7 +32,7 @@ impl Args {
 		options.optopt(
 			"",
 			"client-timeout",
-			"timeout value after which a client is considered inactive",
+			"timeout after which a client is considered inactive (in seconds)",
 			args.client_timeout_s.to_string().as_slice()
 		);
 
