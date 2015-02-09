@@ -5,13 +5,12 @@ source project.conf
 rm -rf output &&
 ./scripts/tasks/run-tests &&
 ./scripts/tasks/build-vndf &&
-# ./scripts/tasks/arrange-client &&
-# ./scripts/tasks/package-client &&
+./scripts/tasks/arrange-client &&
+./scripts/tasks/package-client &&
 mkdir -p $CONTAINER_DIR &&
 cp source/docker/Dockerfile $CONTAINER_DIR &&
 cp -r source/http/public/vndf.de $CONTAINER_DIR/http &&
 cp -r source/nginx $CONTAINER_DIR &&
-cp -r source/upstart $CONTAINER_DIR #&&
-# cp source/initial-state.json $CONTAINER_DIR &&
-# cp $CLIENT_ARCHIVE $CONTAINER_DIR/http &&
-# cp $GAME_SERVICE_BINARY $CONTAINER_DIR
+cp -r source/upstart $CONTAINER_DIR &&
+cp $CLIENT_ARCHIVE $CONTAINER_DIR/http &&
+cp $GAME_SERVICE_BINARY $CONTAINER_DIR

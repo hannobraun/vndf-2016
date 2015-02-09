@@ -16,6 +16,4 @@ mkdir -p $DIST_BIN_DIR
 
 echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
 chmod a+x $START_SCRIPT &&
-cp -rf source/fonts $DIST_DIR &&
-cp -rf source/images $DIST_DIR &&
 cp $CLIENT_BINARY $DIST_BIN_DIR
