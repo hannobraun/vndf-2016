@@ -20,7 +20,7 @@ impl Args {
 
 		let mut options = Options::new();
 		options.optopt(
-				"p",
+				"",
 				"port",
 				"port to listen on",
 				args.port.to_string().as_slice(),
@@ -31,7 +31,7 @@ impl Args {
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
-		args.port = match matches.opt_str("p") {
+		args.port = match matches.opt_str("port") {
 			Some(port) => port.parse().unwrap(),
 			None       => args.port,
 		};
