@@ -128,11 +128,18 @@ fn main() {
 		let mut to_remove = Vec::new();
 		for (&address, client) in clients.iter() {
 			if client.last_active_s + args.client_timeout_s < now_s {
-				to_remove.push(address);
+				to_remove.push((
+					address,
+					client.last_active_s,
+					now_s,
+				));
 			}
 		}
-		for address in to_remove.drain() {
-			print!("Removing {}\n", address);
+		for (address, last_active_s, now_s) in to_remove.drain() {
+			print!(
+				"Removing {} (last active: {}, time of removal: {})\n",
+				address, last_active_s, now_s,
+			);
 			broadcasts.remove(&address);
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
