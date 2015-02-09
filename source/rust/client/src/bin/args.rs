@@ -20,31 +20,31 @@ impl Args {
 			<I as Iterator>::Item: AsOsStr,
 	{
 		let mut options = Options::new();
-		options.optflag("h", "headless", "enable headless mode");
+		options.optflag("", "headless", "enable headless mode");
 		options.optopt(
-				"h",
+				"",
 				"server-host",
 				"server host to connect to",
 				"localhost",
 			);
-		options.optopt("p", "server-port", "server port to connect to", "34481");
+		options.optopt("", "server-port", "server port to connect to", "34481");
 
 		let matches = match options.parse(args) {
 			Ok(matches) => matches,
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
-		let host = match matches.opt_str("h") {
+		let host = match matches.opt_str("server-host") {
 			Some(host) => host,
 			None       => "localhost".to_string(),
 		};
-		let port: Port = match matches.opt_str("p") {
+		let port: Port = match matches.opt_str("server-port") {
 			Some(port) => port.parse().unwrap(),
 			None       => 34481,
 		};
 
 		Args {
-			headless: matches.opt_present("h"),
+			headless: matches.opt_present("headless"),
 			server  : (host.as_slice(), port).to_socket_addr().unwrap(),
 		}
 	}
