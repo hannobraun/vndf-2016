@@ -22,11 +22,11 @@ impl Args {
 		let mut options = Options::new();
 		options.optflag("", "headless", "enable headless mode");
 		options.optopt(
-				"",
-				"server-host",
-				"server host to connect to",
-				"localhost",
-			);
+			"",
+			"server-host",
+			"server host to connect to",
+			"localhost",
+		);
 		options.optopt("", "server-port", "server port to connect to", "34481");
 
 		let matches = match options.parse(args) {
