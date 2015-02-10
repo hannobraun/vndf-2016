@@ -1,12 +1,11 @@
 use std::old_io::net::ip::Port;
 use time::precise_time_s;
 
-use acceptance::process::Process;
-
 use client::platform::{
 	Frame,
 	InputEvent,
 };
+use process::Process;
 
 
 pub struct Client {

@@ -16,6 +16,3 @@ path = "../common"
 
 [dependencies.game_service]
 path = "../game_service"
-
-[dependencies.acceptance]
-path = "../acceptance-rs"

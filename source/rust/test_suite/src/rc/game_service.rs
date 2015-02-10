@@ -1,7 +1,6 @@
 use std::old_io::net::ip::Port;
 
-use acceptance::process::Process;
-
+use process::Process;
 use util::random_port;
 
 

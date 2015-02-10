@@ -1,8 +1,0 @@
-[package]
-name    = "acceptance"
-version = "0.1.0"
-authors = [ "mail@hannobraun.de" ]
-
-
-[dependencies]
-rand = "*"
