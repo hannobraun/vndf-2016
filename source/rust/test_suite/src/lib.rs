@@ -10,8 +10,8 @@ extern crate common;
 extern crate game_service;
 
 
-pub use self::mock::client::Client as MockClient;
-pub use self::mock::game_service::GameService as MockGameService;
+pub use self::mock::Client as MockClient;
+pub use self::mock::GameService as MockGameService;
 pub use self::rc::client::Client;
 pub use self::rc::game_service::GameService;
 
