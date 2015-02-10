@@ -23,7 +23,12 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	// And it should still work afterwards.
 	client.start_broadcast(valid_broadcast.as_slice());
 	game_service.wait_until(|event| {
-		event == &Some(ClientEvent::StartBroadcast(valid_broadcast.clone()))
+		if let &mut Some((_, ref event)) = event {
+			event == &ClientEvent::StartBroadcast(valid_broadcast.clone())
+		}
+		else {
+			false
+		}
 	});
 }
 

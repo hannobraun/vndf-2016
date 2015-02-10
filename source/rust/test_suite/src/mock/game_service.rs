@@ -33,7 +33,7 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn expect_event(&mut self) -> Option<ClientEvent> {
+	pub fn expect_event(&mut self) -> Option<(SocketAddr, ClientEvent)> {
 		let start_s = precise_time_s();
 
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.5 {
@@ -41,7 +41,7 @@ impl GameService {
 		}
 
 		if self.incoming.len() > 0 {
-			let (_, event) = self.incoming.remove(0);
+			let event = self.incoming.remove(0);
 
 			Some(event)
 		}
@@ -51,9 +51,10 @@ impl GameService {
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, condition: F) -> Option<ClientEvent>
+	pub fn wait_until<F>(&mut self, condition: F)
+		-> Option<(SocketAddr, ClientEvent)>
 		where
-			F: Fn(&mut Option<ClientEvent>) -> bool,
+			F: Fn(&mut Option<(SocketAddr, ClientEvent)>) -> bool,
 	{
 		let start_s = precise_time_s();
 
