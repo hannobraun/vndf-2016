@@ -3,15 +3,15 @@ use common::protocol::{
 	ServerEvent,
 };
 use test_suite::{
-	Client,
-	MockGameService,
+	rc,
+	mock,
 };
 
 
 #[test]
 fn it_should_display_an_error_if_connection_to_server_is_lost() {
-	let mut game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut game_service = mock::GameService::start();
+	let mut client       = rc::Client::start(game_service.port());
 
 	let event = game_service.wait_until(|event|
 		if let &mut Some((_, ref event)) = event {
