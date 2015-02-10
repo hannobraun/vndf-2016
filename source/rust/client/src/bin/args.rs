@@ -9,8 +9,9 @@ use getopts::Options;
 
 
 pub struct Args {
-	pub headless: bool,
-	pub server  : SocketAddr,
+	pub headless     : bool,
+	pub server       : SocketAddr,
+	pub net_timeout_s: f64,
 }
 
 impl Args {
@@ -37,6 +38,12 @@ impl Args {
 			"server port to connect to",
 			"34481",
 		);
+		options.optopt(
+			"",
+			"network-timeout",
+			"network timeout in seconds",
+			"0.5"
+		);
 
 		let matches = match options.parse(args) {
 			Ok(matches) => matches,
@@ -51,10 +58,15 @@ impl Args {
 			Some(port) => port.parse().unwrap(),
 			None       => 34481,
 		};
+		let net_timeout_s = match matches.opt_str("network-timeout") {
+			Some(timeout_s) => timeout_s.parse().unwrap(),
+			None            => 0.5,
+		};
 
 		Args {
-			headless: matches.opt_present("headless"),
-			server  : (host.as_slice(), port).to_socket_addr().unwrap(),
+			headless     : matches.opt_present("headless"),
+			server       : (host.as_slice(), port).to_socket_addr().unwrap(),
+			net_timeout_s: net_timeout_s,
 		}
 	}
 }

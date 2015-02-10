@@ -125,7 +125,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 			last_server_activity = precise_time_s();
 		}
 
-		if precise_time_s() - last_server_activity > 0.5 {
+		if precise_time_s() - last_server_activity > args.net_timeout_s {
 			frame.status = Status::Error(
 				"Lost connection to server".to_string()
 			);
