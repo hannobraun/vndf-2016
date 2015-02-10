@@ -6,7 +6,10 @@ use time::precise_time_s;
 
 use acceptance::random_port;
 
-use common::protocol::ClientEvent;
+use common::protocol::{
+	ClientEvent,
+	ServerEvent,
+};
 use game_service::network::Network;
 
 
@@ -30,6 +33,10 @@ impl GameService {
 
 	pub fn port(&self) -> Port {
 		self.port
+	}
+
+	pub fn send(&mut self, address: SocketAddr, event: ServerEvent) {
+		self.network.send(Some(address).into_iter(), &[event]);
 	}
 
 	// TODO(85118666): Make generic and move into a trait called Mock.
