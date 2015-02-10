@@ -1,8 +1,7 @@
-#![feature(core, env, io, path)]
+#![feature(io)]
 
 
 extern crate rand;
 
 
 pub mod process;
-pub mod tree;
