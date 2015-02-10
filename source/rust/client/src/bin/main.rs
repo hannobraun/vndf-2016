@@ -102,6 +102,9 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		for event in network.receive() {
 			match event {
+				ServerEvent::Heartbeat => {
+					// TODO: Remember time of last heartbeat.
+				},
 				ServerEvent::SelfId(self_id) => {
 					frame.self_id = self_id;
 				},

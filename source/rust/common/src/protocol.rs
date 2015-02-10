@@ -14,6 +14,7 @@ pub enum ClientEvent {
 
 #[derive(Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum ServerEvent {
+	Heartbeat,
 	SelfId(String),
 	StartBroadcast(Broadcast),
 	StopBroadcast(String),
