@@ -160,6 +160,10 @@ fn main() {
 
 		network.send(recipients, outgoing_events.drain());
 
+		// TODO: While physics will generally need to happen on a fixed
+		//       interval, there's not really a reason to delay other kinds of
+		//       logic by sleeping. For example, broadcasts can be handled
+		//       immediately.
 		sleep(Duration::milliseconds(20));
 	}
 }
