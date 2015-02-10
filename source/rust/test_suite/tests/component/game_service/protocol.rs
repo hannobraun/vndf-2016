@@ -3,16 +3,16 @@ use common::protocol::{
 	ServerEvent,
 };
 use test_suite::{
-	GameService,
-	MockClient,
+	mock,
+	rc,
 };
 
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
-	let     game_service = GameService::start();
-	let mut client_1     = MockClient::start(game_service.port());
-	let mut client_2     = MockClient::start(game_service.port());
+	let     game_service = rc::GameService::start();
+	let mut client_1     = mock::Client::start(game_service.port());
+	let mut client_2     = mock::Client::start(game_service.port());
 
 	client_1.send(ClientEvent::StartBroadcast(
 		"I haven't logged in, but am sending this anyway.".to_string(),
@@ -43,8 +43,8 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 #[test]
 fn it_should_ignore_duplicate_logins() {
-	let     game_service = GameService::start();
-	let mut client       = MockClient::start(game_service.port());
+	let     game_service = rc::GameService::start();
+	let mut client       = mock::Client::start(game_service.port());
 
 	client.send(ClientEvent::Login);
 	let event = client.expect_event().unwrap();
@@ -90,8 +90,8 @@ fn it_should_ignore_duplicate_logins() {
 
 #[test]
 fn it_should_send_regular_heartbeats() {
-	let     game_service = GameService::start();
-	let mut client       = MockClient::start(game_service.port());
+	let     game_service = rc::GameService::start();
+	let mut client       = mock::Client::start(game_service.port());
 
 	client.send(ClientEvent::Login);
 
