@@ -87,3 +87,13 @@ fn it_should_ignore_duplicate_logins() {
 		assert_eq!(self_id, received_self_id);
 	}
 }
+
+#[test]
+fn it_should_send_regular_heartbeats() {
+	let     game_service = GameService::start();
+	let mut client       = MockClient::start(game_service.port());
+
+	client.send(ClientEvent::Login);
+
+	client.wait_until(|event| *event == Some(ServerEvent::Heartbeat));
+}

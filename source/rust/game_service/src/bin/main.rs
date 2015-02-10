@@ -157,6 +157,7 @@ fn main() {
 				ServerEvent::StartBroadcast(broadcast.clone())
 			);
 		}
+		outgoing_events.push(ServerEvent::Heartbeat);
 
 		network.send(recipients, outgoing_events.as_slice());
 		outgoing_events.clear();
