@@ -21,6 +21,7 @@ impl Client {
 				"--headless",
 				"--server-host=localhost",
 				format!("--server-port={}", port).as_slice(),
+				format!("--network-timeout={}", 0.05).as_slice(),
 			]
 		);
 
