@@ -1,5 +1,8 @@
 use std::old_io;
-use std::old_io::{BufferedReader, PipeStream};
+use std::old_io::{
+	BufferedReader,
+	PipeStream,
+};
 
 
 pub struct Process {
