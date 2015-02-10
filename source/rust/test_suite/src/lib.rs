@@ -17,7 +17,4 @@ pub use self::rc::game_service::GameService;
 
 
 pub mod mock;
-pub mod rc {
-	pub mod client;
-	pub mod game_service;
-}
+pub mod rc;
