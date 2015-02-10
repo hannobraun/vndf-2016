@@ -2,15 +2,15 @@ use std::iter::repeat;
 
 use common::protocol::ClientEvent;
 use test_suite::{
-	Client,
-	MockGameService,
+	mock,
+	rc,
 };
 
 
 #[test]
 fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
-	let mut game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let mut game_service = mock::GameService::start();
+	let mut client       = rc::Client::start(game_service.port());
 
 	let invalid_broadcast: String =
 		repeat('a').take(512 + 1).collect();
@@ -34,8 +34,8 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 
 #[test]
 fn it_should_reject_empty_broadcasts() {
-	let     game_service = MockGameService::start();
-	let mut client       = Client::start(game_service.port());
+	let     game_service = mock::GameService::start();
+	let mut client       = rc::Client::start(game_service.port());
 
 	client.start_broadcast("");
 	client.wait_until(|frame| frame.status.is_error());
