@@ -13,3 +13,4 @@ extern crate game_service;
 
 pub mod mock;
 pub mod rc;
+pub mod util;

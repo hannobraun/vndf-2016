@@ -1,7 +1,8 @@
 use std::old_io::net::ip::Port;
 
-use acceptance::random_port;
 use acceptance::process::Process;
+
+use util::random_port;
 
 
 pub struct GameService {

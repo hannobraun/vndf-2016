@@ -4,13 +4,12 @@ use std::old_io::net::ip::{
 };
 use time::precise_time_s;
 
-use acceptance::random_port;
-
 use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
 use game_service::network::Network;
+use util::random_port;
 
 
 pub struct GameService {
