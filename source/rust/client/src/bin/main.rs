@@ -21,6 +21,8 @@ use std::env;
 use std::old_io::timer::sleep;
 use std::time::Duration;
 
+use time::precise_time_s;
+
 use args::Args;
 use client::network::Network;
 use client::platform::{
@@ -66,6 +68,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	let mut broadcasts = HashMap::new();
 	let mut network    = Network::new(args.server);
 
+	let mut last_server_activity = precise_time_s();
+
 	network.send(ClientEvent::Login);
 
 	loop {
@@ -104,7 +108,8 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		for event in network.receive() {
 			match event {
 				ServerEvent::Heartbeat => {
-					// TODO: Remember time of last heartbeat.
+					// Nothing to do here. The activity time is updated below
+					// for all types of messages.
 				},
 				ServerEvent::SelfId(self_id) => {
 					frame.self_id = self_id;
@@ -116,6 +121,14 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 					broadcasts.remove(&sender);
 				},
 			}
+
+			last_server_activity = precise_time_s();
+		}
+
+		if precise_time_s() - last_server_activity > 0.5 {
+			frame.status = Status::Error(
+				"Lost connection to server".to_string()
+			);
 		}
 
 		frame.broadcasts = broadcasts
