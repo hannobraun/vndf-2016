@@ -67,7 +67,7 @@ fn main() {
 						let login = ServerEvent::SelfId(client.id.clone());
 						network.send(
 							Some(address).into_iter(),
-							Some(login).into_iter(),
+							&[login],
 						);
 
 						print!("Login: {}, {:?}\n", address, client);
@@ -158,7 +158,8 @@ fn main() {
 			);
 		}
 
-		network.send(recipients, outgoing_events.drain());
+		network.send(recipients, outgoing_events.as_slice());
+		outgoing_events.clear();
 
 		// TODO: While physics will generally need to happen on a fixed
 		//       interval, there's not really a reason to delay other kinds of

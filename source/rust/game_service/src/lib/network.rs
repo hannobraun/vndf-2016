@@ -32,13 +32,10 @@ impl Network {
 		}
 	}
 
-	pub fn send<R, E>(&mut self, recipients: R, events: E)
+	pub fn send<R>(&mut self, recipients: R, events: &[ServerEvent])
 		where
 			R: Iterator<Item = SocketAddr>,
-			E: Iterator<Item = ServerEvent>,
 	{
-		let events: Vec<ServerEvent> = events.collect();
-
 		for address in recipients {
 			let mut recipient = match self.connections.get_mut(&address) {
 				Some(connection) => connection,
