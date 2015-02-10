@@ -3,6 +3,7 @@
 
 extern crate getopts;
 extern crate libc;
+extern crate time;
 
 extern crate client;
 extern crate common;

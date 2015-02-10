@@ -15,6 +15,7 @@ name = "vndf-client"
 [dependencies]
 getopts         = "*"
 rustc-serialize = "*"
+time            = "*"
 
 [dependencies.common]
 path = "../common"
