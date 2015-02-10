@@ -2,6 +2,7 @@
 
 
 extern crate time;
+extern crate rand;
 
 extern crate acceptance;
 

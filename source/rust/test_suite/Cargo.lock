@@ -6,6 +6,7 @@ dependencies = [
  "client 0.0.1",
  "common 0.0.1",
  "game_service 0.0.1",
+ "rand 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

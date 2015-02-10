@@ -5,6 +5,7 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
+rand = "*"
 time = "*"
 
 [dependencies.client]
