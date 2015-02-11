@@ -64,7 +64,7 @@ Topic ideas:
   - NetHack (March)
   - Choice of Games (April)
   - An interactive fiction game (May)
-- To Years of Von Neumann Defense Force (June, no need to interrupt the series)
+- Two Years of Von Neumann Defense Force (June, no need to interrupt the series)
 - The VNDF tech blog (July)
 - Looking back on my marketing efforts: How it started
 - Recycle short story
