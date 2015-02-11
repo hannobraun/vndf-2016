@@ -1,4 +1,4 @@
-#![feature(collections, core)]
+#![feature(collections)]
 
 
 extern crate common;
