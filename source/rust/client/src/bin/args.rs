@@ -60,7 +60,7 @@ impl Args {
 		};
 		let net_timeout_s = match matches.opt_str("network-timeout") {
 			Some(timeout_s) => timeout_s.parse().unwrap(),
-			None            => 0.5,
+			None            => 5.0,
 		};
 
 		Args {

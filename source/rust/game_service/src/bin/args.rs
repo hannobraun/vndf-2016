@@ -17,7 +17,7 @@ impl Args {
 	{
 		let mut args = Args {
 			port            : 34481,
-			client_timeout_s: 0.5,
+			client_timeout_s: 5.0,
 		};
 
 		let mut options = Options::new();
