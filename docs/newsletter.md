@@ -72,22 +72,16 @@ Topic ideas:
   - Homeworld
   - Factorio
 
-News for February:
-- http://dawn.jpl.nasa.gov/feature_stories/dawn_captures_best-ever_view_dwarfplanet.asp
-- http://www.reddit.com/r/space/comments/2tys5a/updated_space_events_of_2015_now_with_more_awesome/
-- http://www.reddit.com/r/space/comments/2tza6o/artists_rendering_of_what_the_rings_around_planet/
-- http://motherboard.vice.com/read/why-we-should-build-cloud-cities-on-venus
-- http://www.esa.int/Our_Activities/Launchers/IXV/ESA_experimental_spaceplane_completes_research_flight
+News for March:
+- ...
 
 News for any month:
-- Asteroid video by Scott Manley
 - https://kheckeroth.com/solarSystem/
 - http://www.reddit.com/r/space/comments/2k0slk/this_earth_universe_size_comparison_still_blows/
 - http://solarsystem.nasa.gov/europa/multimediaimagedetails.cfm?Subsite_IM_ID=8421&SiteID=4
 - http://www.reddit.com/r/space/comments/2niljz/human_spaceflight_everything_is_to_scale/
 - http://www.reddit.com/r/space/comments/2r0em5/a_pictorial_of_just_how_massive_space_is/
 - https://www.youtube.com/watch?v=82p-DYgGFjI
-- http://www.reddit.com/r/space/comments/2u9kpt/an_updated_rockets_of_the_world/
 - http://www.reddit.com/r/space/comments/2uncnm/manned_reentry_vehicles_everything_to_scale_added/
 - http://vimeo.com/117815404
 - https://www.youtube.com/watch?v=eWQIryll8y8
