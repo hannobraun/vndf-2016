@@ -52,9 +52,14 @@ impl<R> Connection<R> where R: Decodable + Send {
 	pub fn from_stream(stream: TcpStream) -> Connection<R> {
 		let (sender, receiver) = channel();
 
+		let stream_2 = match stream.try_clone() {
+			Ok(stream) => stream,
+			Err(error) => panic!("Failed to clone stream: {}", error),
+		};
+
 		let connection = Connection {
 			events  : Vec::new(),
-			stream  : stream.try_clone().unwrap(),
+			stream  : stream_2,
 			receiver: receiver,
 		};
 
