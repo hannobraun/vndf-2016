@@ -1,4 +1,4 @@
-#![feature(core, io)]
+#![feature(core, io, process)]
 
 
 extern crate time;
