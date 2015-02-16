@@ -32,15 +32,15 @@ impl Process {
 			Err(error)  => panic!("Failed to start process {}: {}", path, error)
 		};
 
-		let stdout     = process.stdout.take();
-		let stderr_opt = process.stderr.take();
-		let stdin_opt  = process.stdin.take();
+		let stdout    = process.stdout.take();
+		let stderr    = process.stderr.take();
+		let stdin_opt = process.stdin.take();
 
 		Process {
 			process: process,
 			path   : path.to_string(),
 			stdout : to_reader(stdout),
-			stderr : to_reader(stderr_opt),
+			stderr : to_reader(stderr),
 			stdin  : stdin_opt.expect("Expected stdin"),
 		}
 	}
