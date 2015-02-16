@@ -1,9 +1,9 @@
 use std::ffi::AsOsStr;
-use std::old_io::net::ip::{
-	Port,
+use std::net::{
 	SocketAddr,
-	ToSocketAddr,
+	ToSocketAddrs,
 };
+use std::old_io::net::ip::Port;
 
 use getopts::Options;
 
@@ -65,7 +65,7 @@ impl Args {
 
 		Args {
 			headless     : matches.opt_present("headless"),
-			server       : (host.as_slice(), port).to_socket_addr().unwrap(),
+			server       : (host.as_slice(), port).to_socket_addrs().unwrap().next().unwrap(),
 			net_timeout_s: net_timeout_s,
 		}
 	}

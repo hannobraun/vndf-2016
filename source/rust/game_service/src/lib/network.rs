@@ -1,8 +1,6 @@
 use std::collections::HashMap;
-use std::old_io::net::ip::{
-	Port,
-	SocketAddr,
-};
+use std::net::SocketAddr;
+use std::old_io::net::ip::Port;
 use std::vec::Drain;
 
 use common::network::{

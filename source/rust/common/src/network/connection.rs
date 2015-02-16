@@ -1,10 +1,13 @@
-use std::old_io::{
-	BufferedReader,
-	IoResult,
+use std::io::prelude::*;
+use std::io::{
+	self,
+	BufReader,
 };
-use std::old_io::IoErrorKind::EndOfFile;
-use std::old_io::net::ip::ToSocketAddr;
-use std::old_io::net::tcp::TcpStream;
+use std::net::{
+	SocketAddr,
+	TcpStream,
+	ToSocketAddrs,
+};
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -30,13 +33,13 @@ pub struct Connection<R> {
 }
 
 impl<R> Connection<R> where R: Decodable + Send {
-	pub fn new<T: ToSocketAddr>(to_address: T) -> Connection<R> {
-		let address = to_address.to_socket_addr();
-		let stream = match TcpStream::connect(to_address) {
+	pub fn new<T: ToSocketAddrs>(to_address: T) -> Connection<R> {
+		let addresses = to_address.to_socket_addrs();
+		let stream = match TcpStream::connect(&to_address) {
 			Ok(stream) => stream,
 			Err(error) => panic!(
 				"Error connecting to {:?}: {}",
-				address, error,
+				addresses.unwrap().collect::<Vec<SocketAddr>>(), error,
 			),
 		};
 
@@ -48,56 +51,43 @@ impl<R> Connection<R> where R: Decodable + Send {
 
 		let connection = Connection {
 			events  : Vec::new(),
-			stream  : stream.clone(),
+			stream  : stream.try_clone().unwrap(),
 			receiver: receiver,
 		};
 
 		Thread::spawn(move || {
-			let mut reader = BufferedReader::new(stream);
-			let mut errors = 0;
+			let mut reader = BufReader::new(stream);
 
 			loop {
-				let event = match reader.read_line() {
+				let mut line = String::new();
+				if let Err(error) = reader.read_line(&mut line) {
+					print!("Error reading line: {}\n", error);
+					break;
+				}
+
+				// TODO: Before porting to std::net, there would be no zero-
+				//       length reads. Instead, the EndOfFile error would be
+				//       returned. This happened during normal operation, but
+				//       also when the connection was closed.
+				//       To handle all situations somewhat correctly, there was
+				//       code here to count how many EndOfFile errors happened
+				//       in a row, and assumed the connection was closed when it
+				//       happened too often.
+				//       I'm not sure what the situation is with std::net. I've
+				//       written the following code with the assumption that a
+				//       closed connection will eventually result in an error.
+				//       If this assumption is false (as it was with the old
+				//       API), this needs some special handling.
+				if line.len() == 0 {
+					// Nothing received for now, start loop from the top to try
+					// again.
+					continue;
+				}
+
+				let event = match json::decode(line.as_slice()) {
 					Ok(event)  => event,
 					Err(error) => {
-						if error.kind != EndOfFile {
-							print!("Error reading line: {}\n", error);
-							break;
-						}
-						else {
-							// The end of file error regularly occurs during
-							// normal operation, when nothing is available to be
-							// read. I don't know why this would happen in a
-							// blocking API, but it does, so we need to handle
-							// it.
-							// There's one problem though: End of file also
-							// occurs when the connection has been closed. My
-							// theory: If it happens too many times in a row,
-							// the connection is gone and this thread should
-							// die.
-							// This is not pretty, but probably not worth
-							// putting too much effort into. The real solution
-							// would be to switch to a non-blocking API once a
-							// compelling one becomes available.
-
-							if errors > 10 {
-								print!("Too many end of file errors.\n");
-								break;
-							}
-							else {
-								errors += 1;
-								continue;
-							}
-						}
-					},
-				};
-
-				errors = 0;
-
-				let event = match json::decode(event.as_slice()) {
-					Ok(event)  => event,
-					Err(error) => {
-						print!("Error decoding \"{}\": {}\n", event, error);
+						print!("Error decoding \"{}\": {}\n", line, error);
 						continue;
 					},
 				};
@@ -111,7 +101,7 @@ impl<R> Connection<R> where R: Decodable + Send {
 		connection
 	}
 
-	pub fn send<Es, E>(&mut self, events: Es) -> IoResult<()>
+	pub fn send<Es, E>(&mut self, events: Es) -> io::Result<()>
 		where
 			Es: Iterator<Item=E>,
 			E : Encodable,
@@ -122,7 +112,7 @@ impl<R> Connection<R> where R: Decodable + Send {
 				Err(error) => panic!("Encoding error: {}", error),
 			};
 
-			try!(self.stream.write_line(event.as_slice()))
+			try!(write!(&mut self.stream, "{}\n", event));
 		}
 
 		Ok(())

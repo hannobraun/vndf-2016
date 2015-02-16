@@ -1,4 +1,4 @@
-use std::old_io::net::ip::ToSocketAddr;
+use std::net::ToSocketAddrs;
 use std::vec::Drain;
 
 use common::network::Connection;
@@ -13,7 +13,7 @@ pub struct Network {
 }
 
 impl Network {
-	pub fn new<T: ToSocketAddr>(server_address: T) -> Network {
+	pub fn new<T: ToSocketAddrs>(server_address: T) -> Network {
 		Network {
 			connection: Connection::new(server_address),
 		}

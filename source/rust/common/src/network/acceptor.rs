@@ -1,12 +1,8 @@
-use std::old_io::Acceptor as IoAcceptor;
-use std::old_io::Listener;
-use std::old_io::net::ip::{
-	Port,
+use std::net::{
 	SocketAddr,
-};
-use std::old_io::net::tcp::{
 	TcpListener,
 };
+use std::old_io::net::ip::Port;
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -32,25 +28,17 @@ impl<R> Acceptor<R> where R: Decodable + Send {
 	pub fn new(port: Port) -> Acceptor<R> {
 		let (sender, receiver) = channel();
 		Thread::spawn(move || {
-			let listener = match TcpListener::bind(("0.0.0.0", port)) {
+			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
 				Ok(listener) => listener,
 				Err(error)   => panic!("Error binding listener: {}", error),
-			};
-			let mut acceptor = match listener.listen() {
-				Ok(acceptor) => acceptor,
-				Err(error)   => panic!("Error creating acceptor: {}", error),
 			};
 
 			print!("Listening on port {}\n", port);
 
 			loop {
-				let mut stream = match acceptor.accept() {
-					Ok(stream) => stream,
+				let (stream, address) = match listener.accept() {
+					Ok(result) => result,
 					Err(error) => panic!("Error accepting stream: {}", error),
-				};
-				let address = match stream.peer_name() {
-					Ok(address) => address,
-					Err(error)  => panic!("Error getting address: {}", error),
 				};
 
 				let connection = Connection::from_stream(stream);

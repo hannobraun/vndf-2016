@@ -1,7 +1,5 @@
-use std::old_io::net::ip::{
-	Port,
-	SocketAddr,
-};
+use std::net::SocketAddr;
+use std::old_io::net::ip::Port;
 
 use time::precise_time_s;
 
