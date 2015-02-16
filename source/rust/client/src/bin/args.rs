@@ -63,9 +63,24 @@ impl Args {
 			None            => 5.0,
 		};
 
+		let server_address = (host.as_slice(), port);
+		let server_address = match server_address.to_socket_addrs() {
+			Ok(mut addresses) => match addresses.next() {
+				Some(address) =>
+					address,
+				None =>
+					panic!("Expected server address ({:?})", server_address),
+			},
+			Err(error) =>
+				panic!(
+					"Error parsing server address ({:?}): {}",
+					server_address, error,
+				),
+		};
+
 		Args {
 			headless     : matches.opt_present("headless"),
-			server       : (host.as_slice(), port).to_socket_addrs().unwrap().next().unwrap(),
+			server       : server_address,
 			net_timeout_s: net_timeout_s,
 		}
 	}
