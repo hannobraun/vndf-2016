@@ -97,7 +97,7 @@ impl<R> Connection<R> where R: Decodable + Send {
 				let event = match json::decode(event.as_slice()) {
 					Ok(event)  => event,
 					Err(error) => {
-						print!("Decoding error: {}\n", error);
+						print!("Error decoding \"{}\": {}\n", event, error);
 						continue;
 					},
 				};
