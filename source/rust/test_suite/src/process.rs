@@ -94,6 +94,7 @@ impl Drop for Process {
 	}
 }
 
+
 fn to_buffered<R: Read>(reader: Option<R>) -> BufReader<R> {
 	BufReader::new(reader.expect("Expected reader"))
 }
