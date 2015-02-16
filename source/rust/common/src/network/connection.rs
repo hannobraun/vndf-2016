@@ -110,10 +110,10 @@ impl<R> Connection<R> where R: Decodable + Send {
 		connection
 	}
 
-	pub fn send<Events, E>(&mut self, events: Events) -> io::Result<()>
+	pub fn send<Events, Event>(&mut self, events: Events) -> io::Result<()>
 		where
-			Events: Iterator<Item=E>,
-			E     : Encodable,
+			Events: Iterator<Item=Event>,
+			Event : Encodable,
 	{
 		for event in events {
 			let event = match json::encode(&event) {
