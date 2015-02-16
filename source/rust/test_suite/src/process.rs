@@ -94,8 +94,8 @@ impl Drop for Process {
 	}
 }
 
-fn to_reader<R: Read>(pipe_opt: Option<R>) -> BufReader<R> {
-	let pipe = match pipe_opt {
+fn to_reader<R: Read>(reader: Option<R>) -> BufReader<R> {
+	let pipe = match reader {
 		Some(pipe) => pipe,
 		None       => panic!(),
 	};
