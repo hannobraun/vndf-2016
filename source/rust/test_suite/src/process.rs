@@ -95,10 +95,5 @@ impl Drop for Process {
 }
 
 fn to_buffered<R: Read>(reader: Option<R>) -> BufReader<R> {
-	let pipe = match reader {
-		Some(pipe) => pipe,
-		None       => panic!(),
-	};
-
-	BufReader::new(pipe)
+	BufReader::new(reader.expect("Expected reader"))
 }
