@@ -39,6 +39,9 @@ impl<R> Connection<R> where R: Decodable + Send {
 			Ok(stream) => stream,
 			Err(error) => panic!(
 				"Error connecting to {:?}: {}",
+				// TODO: This is crap. It wouldn't have to be crap, if Debug was
+				//       implemented for std::option::IntoIter, so maybe I
+				//       should do that.
 				addresses.unwrap().collect::<Vec<SocketAddr>>(), error,
 			),
 		};
