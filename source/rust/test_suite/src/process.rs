@@ -39,8 +39,8 @@ impl Process {
 		Process {
 			process: process,
 			path   : path.to_string(),
-			stdout : to_reader(stdout),
-			stderr : to_reader(stderr),
+			stdout : to_buffered(stdout),
+			stderr : to_buffered(stderr),
 			stdin  : stdin.expect("Expected stdin"),
 		}
 	}
@@ -94,7 +94,7 @@ impl Drop for Process {
 	}
 }
 
-fn to_reader<R: Read>(reader: Option<R>) -> BufReader<R> {
+fn to_buffered<R: Read>(reader: Option<R>) -> BufReader<R> {
 	let pipe = match reader {
 		Some(pipe) => pipe,
 		None       => panic!(),
