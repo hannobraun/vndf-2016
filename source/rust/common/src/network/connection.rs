@@ -65,9 +65,10 @@ impl<R> Connection<R> where R: Decodable + Send {
 
 		Thread::spawn(move || {
 			let mut reader = BufReader::new(stream);
+			let mut line   = String::new();
 
 			loop {
-				let mut line = String::new();
+				line.clear();
 				if let Err(error) = reader.read_line(&mut line) {
 					print!("Error reading line: {}\n", error);
 					break;
