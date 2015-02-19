@@ -22,8 +22,8 @@ use ui::render;
 pub struct Renderer {
 	screen: Screen,
 
-	comm : Section,
-	info : Section,
+	comm: Section,
+	info: Section,
 }
 
 impl Renderer {
@@ -38,8 +38,8 @@ impl Renderer {
 		Ok(Renderer {
 			screen: screen,
 
-			comm : Section::new(width, 18),
-			info : Section::new(width,  6),
+			comm: Section::new(width, 18),
+			info: Section::new(width,  6),
 		})
 	}
 
