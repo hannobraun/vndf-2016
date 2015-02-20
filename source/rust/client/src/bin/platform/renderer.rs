@@ -48,7 +48,7 @@ impl Renderer {
 
 		self.screen.cursor(None);
 
-		try!(self.render_comm(frame, ui, &mut y));
+		try!(self.render_main(frame, ui, &mut y));
 		try!(self.render_info(frame, &mut y));
 
 		try!(self.screen.submit());
@@ -56,7 +56,7 @@ impl Renderer {
 		Ok(())
 	}
 
-	fn render_comm(
+	fn render_main(
 		&mut self,
 		frame: &Frame,
 		ui   : &Ui,
