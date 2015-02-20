@@ -252,7 +252,7 @@ impl<'a> Render for TabSwitcher {
 		self.comm_tab.render(
 			buffer,
 			x,
-			y,
+			y + 2,
 			&CommTabArgs {
 				self_id    : args.self_id,
 				broadcasts : args.broadcasts,
