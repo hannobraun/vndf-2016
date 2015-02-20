@@ -4,6 +4,7 @@ use render::{
 	Pos,
 	ScreenBuffer,
 };
+use render::C;
 
 use super::base::{
 	Render,
@@ -249,6 +250,12 @@ impl<'a> Render for TabSwitcher {
 	)
 		-> IoResult<()>
 	{
+		let mut c = C::new();
+		c.c = '─';
+		for x in range(x, buffer.width()) {
+			try!(buffer.set(x, y + 1, c));
+		}
+
 		self.comm_tab.render(
 			buffer,
 			x,
