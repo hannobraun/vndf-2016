@@ -26,12 +26,12 @@ use self::base::InputEvent::{
 	CursorUp,
 	Enter,
 };
-use self::state::CommTab;
+use self::state::TabSwitcher;
 use self::update::CommTabArgs;
 
 
 pub struct Ui {
-	pub comm_tab: CommTab,
+	pub tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
@@ -45,9 +45,9 @@ pub struct Ui {
 impl Ui {
 	pub fn new() -> Ui {
 		Ui {
-			comm_tab: CommTab::new(),
-			mode    : TextInputMode::Regular,
-			events  : Vec::new(),
+			tab_switcher: TabSwitcher::new(),
+			mode        : TextInputMode::Regular,
+			events      : Vec::new(),
 
 			broadcast_list_height: 5,
 		}
@@ -63,13 +63,13 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else if c == '\x7f' { // Backspace
-						self.comm_tab.process_event(Backspace);
+						self.tab_switcher.process_event(Backspace);
 					}
 					else if c == '\n' {
-						self.comm_tab.process_event(Enter);
+						self.tab_switcher.process_event(Enter);
 					}
 					else {
-						self.comm_tab.process_event(Char(c));
+						self.tab_switcher.process_event(Char(c));
 					}
 				},
 				TextInputMode::Escape => {
@@ -91,7 +91,7 @@ impl Ui {
 					};
 
 					if let Some(event) = event {
-						self.comm_tab.process_event(event);
+						self.tab_switcher.process_event(event);
 					}
 
 					self.mode = TextInputMode::Regular;
@@ -105,21 +105,21 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
-		self.comm_tab.update(&CommTabArgs {
+		self.tab_switcher.comm_tab.update(&CommTabArgs {
 			is_sending : is_sending,
 			list_length: frame.broadcasts.len(),
 			list_height: self.broadcast_list_height,
 		});
 
-		if self.comm_tab.broadcast_form.button.was_activated {
-			self.comm_tab.broadcast_form.button.was_activated = false;
+		if self.tab_switcher.comm_tab.broadcast_form.button.was_activated {
+			self.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
 
 			if is_sending {
 				self.events.push(InputEvent::StopBroadcast);
 			}
 			else {
 				let message =
-					self.comm_tab.broadcast_form.text_field.text.clone();
+					self.tab_switcher.comm_tab.broadcast_form.text_field.text.clone();
 				self.events.push(InputEvent::StartBroadcast(message));
 			}
 		}

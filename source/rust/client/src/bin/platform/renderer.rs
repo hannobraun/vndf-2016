@@ -72,10 +72,10 @@ impl Renderer {
 			.collect();
 		broadcasts.sort();
 
-		try!(ui.comm_tab.render(
+		try!(ui.tab_switcher.render(
 			&mut self.main.buffer,
 			0, 0,
-			&render::CommTabArgs {
+			&render::TabSwitcherArgs {
 				self_id    : frame.self_id.as_slice(),
 				broadcasts : broadcasts.as_slice(),
 				list_height: ui.broadcast_list_height,
