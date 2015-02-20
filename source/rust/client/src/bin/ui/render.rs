@@ -14,6 +14,7 @@ use super::state::{
 	Button,
 	CommTab,
 	List,
+	TabSwitcher,
 	TextField,
 };
 
@@ -226,6 +227,38 @@ impl<'a> Render for List {
 		}
 
 		Ok(())
+	}
+}
+
+
+pub struct TabSwitcherArgs<'a> {
+	pub self_id    : &'a str,
+	pub broadcasts : &'a [String],
+	pub list_height: Pos,
+}
+
+impl<'a> Render for TabSwitcher {
+	type Args = TabSwitcherArgs<'a>;
+
+	fn render(
+		&self,
+		buffer : &mut ScreenBuffer,
+		x      : Pos,
+		y      : Pos,
+		args   : &TabSwitcherArgs,
+	)
+		-> IoResult<()>
+	{
+		self.comm_tab.render(
+			buffer,
+			x,
+			y,
+			&CommTabArgs {
+				self_id    : args.self_id,
+				broadcasts : args.broadcasts,
+				list_height: args.list_height,
+			},
+		)
 	}
 }
 
