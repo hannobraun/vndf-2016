@@ -98,6 +98,19 @@ impl List {
 }
 
 
+pub struct TabSwitcher {
+	pub comm_tab: CommTab,
+}
+
+impl TabSwitcher {
+	pub fn new() -> TabSwitcher {
+		TabSwitcher {
+			comm_tab: CommTab::new(),
+		}
+	}
+}
+
+
 pub struct TextField {
 	pub text: String,
 }
