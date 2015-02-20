@@ -250,6 +250,12 @@ impl<'a> Render for TabSwitcher {
 	)
 		-> IoResult<()>
 	{
+		try!(
+			buffer
+				.writer(x, y)
+				.write_str("Comm | Nav")
+		);
+
 		let mut c = C::new();
 		c.c = '─';
 		for x in range(x, buffer.width()) {
