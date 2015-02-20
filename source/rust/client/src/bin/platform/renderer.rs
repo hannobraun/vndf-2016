@@ -22,7 +22,7 @@ use ui::render;
 pub struct Renderer {
 	screen: Screen,
 
-	comm: Section,
+	main: Section,
 	info: Section,
 }
 
@@ -38,7 +38,7 @@ impl Renderer {
 		Ok(Renderer {
 			screen: screen,
 
-			comm: Section::new(width, 18),
+			main: Section::new(width, 18),
 			info: Section::new(width,  6),
 		})
 	}
@@ -62,7 +62,7 @@ impl Renderer {
 		ui   : &Ui,
 		y    : &mut Pos
 	) -> IoResult<()> {
-		self.comm.buffer.clear();
+		self.main.buffer.clear();
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
 			.iter()
@@ -73,7 +73,7 @@ impl Renderer {
 		broadcasts.sort();
 
 		try!(ui.comm_tab.render(
-			&mut self.comm.buffer,
+			&mut self.main.buffer,
 			0, 0,
 			&render::CommTabArgs {
 				self_id    : frame.self_id.as_slice(),
@@ -82,8 +82,8 @@ impl Renderer {
 			},
 		));
 
-		try!(self.comm.write(0, *y, &mut self.screen));
-		*y += self.comm.height;
+		try!(self.main.write(0, *y, &mut self.screen));
+		*y += self.main.height;
 
 		Ok(())
 	}
