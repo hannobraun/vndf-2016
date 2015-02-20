@@ -15,6 +15,7 @@ use super::state::{
 	Button,
 	CommTab,
 	List,
+	TabSwitcher,
 	TextField,
 };
 
@@ -67,6 +68,13 @@ impl ProcessInput for List {
 			CursorDown => self.first += 1,
 			_          => (),
 		}
+	}
+}
+
+
+impl ProcessInput for TabSwitcher {
+	fn process_event(&mut self, event: InputEvent) {
+		self.comm_tab.process_event(event)
 	}
 }
 
