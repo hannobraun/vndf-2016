@@ -31,10 +31,7 @@ impl Screen {
 		termios.set(libc::STDIN_FILENO);
 
 		let mut stdout = stdout();
-		match write!(&mut stdout, "\x1b[2J") { // clear screen
-			Ok(())     => (),
-			Err(error) => return Err(error),
-		}
+		try!(write!(&mut stdout, "\x1b[2J")); // clear screen
 
 		let buffer_a = ScreenBuffer::new(width, height);
 		let buffer_b = buffer_a.clone();
