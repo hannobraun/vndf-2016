@@ -40,10 +40,7 @@ pub struct PlayerIo {
 
 impl PlatformIo for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
-		let renderer = match Renderer::new() {
-			Ok(renderer) => renderer,
-			Err(error)   => return Err(error),
-		};
+		let renderer = try!(Renderer::new());
 
 		Ok(PlayerIo {
 			input_reader: InputReader::new(),
