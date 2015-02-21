@@ -1,11 +1,10 @@
-use std::old_io::net::ip::Port;
 use std::ffi::AsOsStr;
 
 use getopts::Options;
 
 
 pub struct Args {
-	pub port            : Port,
+	pub port            : u16,
 	pub client_timeout_s: f64,
 }
 
