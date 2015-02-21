@@ -1,15 +1,13 @@
-use std::old_io::{
-	Append,
+use std::fs::{
 	File,
-	Write,
+	OpenOptions,
 };
 
 
 pub fn writer() -> File {
-	File::open_mode(
-		&Path::new("debug.out"),
-		Append,
-		Write,
-	)
-	.unwrap()
+	OpenOptions::new()
+		.write(true)
+		.append(true)
+		.open(&Path::new("debug.out"))
+		.unwrap()
 }
