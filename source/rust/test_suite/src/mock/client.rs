@@ -1,5 +1,3 @@
-use std::old_io::net::ip::Port;
-
 use time::precise_time_s;
 
 use client::network::Network;
@@ -15,7 +13,7 @@ pub struct Client {
 }
 
 impl Client {
-	pub fn start(port: Port) -> Client {
+	pub fn start(port: u16) -> Client {
 		Client {
 			network : Network::new(("localhost", port)),
 			incoming: Vec::new(),
