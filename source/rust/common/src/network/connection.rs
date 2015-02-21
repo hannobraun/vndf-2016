@@ -16,7 +16,7 @@ use std::sync::mpsc::TryRecvError::{
 	Disconnected,
 	Empty,
 };
-use std::thread::Thread;
+use std::thread::spawn;
 use std::vec::Drain;
 
 use rustc_serialize::{
@@ -63,7 +63,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 			receiver: receiver,
 		};
 
-		Thread::spawn(move || {
+		spawn(move || {
 			let mut reader = BufReader::new(stream);
 			let mut line   = String::new();
 
