@@ -1,8 +1,6 @@
-use std::old_io::net::ip::Port;
-
 use rand::random;
 
 
-pub fn random_port(min: Port, max: Port) -> Port {
+pub fn random_port(min: u16, max: u16) -> u16 {
 	random() % (max - min) + min
 }
