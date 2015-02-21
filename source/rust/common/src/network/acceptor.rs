@@ -2,7 +2,6 @@ use std::net::{
 	SocketAddr,
 	TcpListener,
 };
-use std::old_io::net::ip::Port;
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -25,7 +24,7 @@ pub struct Acceptor<R> {
 }
 
 impl<R> Acceptor<R> where R: Decodable + Send + 'static {
-	pub fn new(port: Port) -> Acceptor<R> {
+	pub fn new(port: u16) -> Acceptor<R> {
 		let (sender, receiver) = channel();
 		Thread::spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
