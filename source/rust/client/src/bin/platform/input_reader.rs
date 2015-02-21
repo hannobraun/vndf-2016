@@ -4,7 +4,7 @@ use std::sync::mpsc::{
 	Receiver,
 	TryRecvError,
 };
-use std::thread::Thread;
+use std::thread::spawn;
 
 
 pub struct InputReader {
@@ -15,7 +15,7 @@ impl InputReader {
 	pub fn new() -> InputReader {
 		let (sender, receiver) = channel();
 
-		Thread::spawn(move || -> () {
+		spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
