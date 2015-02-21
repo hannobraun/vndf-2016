@@ -1,11 +1,9 @@
-use std::old_io::net::ip::Port;
-
 use process::Process;
 use util::random_port;
 
 
 pub struct GameService {
-	port    : Port,
+	port    : u16,
 	_process: Process,
 }
 
@@ -28,7 +26,7 @@ impl GameService {
 		}
 	}
 
-	pub fn port(&self) -> Port {
+	pub fn port(&self) -> u16 {
 		self.port
 	}
 }
