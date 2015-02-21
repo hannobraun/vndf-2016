@@ -11,7 +11,7 @@ use std::sync::mpsc::{
 	Receiver,
 	TryRecvError,
 };
-use std::thread::Thread;
+use std::thread::spawn;
 use std::vec::Drain;
 
 use client::platform::{
@@ -71,7 +71,7 @@ impl PlatformIo for HeadlessIo {
 	fn new() -> IoResult<HeadlessIo> {
 		let (sender, receiver) = channel();
 
-		Thread::spawn(move || -> () {
+		spawn(move || -> () {
 			let mut stdin = stdin();
 
 			loop {
