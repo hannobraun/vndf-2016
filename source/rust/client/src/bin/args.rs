@@ -3,7 +3,6 @@ use std::net::{
 	SocketAddr,
 	ToSocketAddrs,
 };
-use std::old_io::net::ip::Port;
 
 use getopts::Options;
 
@@ -54,7 +53,7 @@ impl Args {
 			Some(host) => host,
 			None       => "localhost".to_string(),
 		};
-		let port: Port = match matches.opt_str("server-port") {
+		let port: u16 = match matches.opt_str("server-port") {
 			Some(port) => port.parse().unwrap(),
 			None       => 34481,
 		};
