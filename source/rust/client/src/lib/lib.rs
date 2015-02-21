@@ -1,4 +1,4 @@
-#![feature(collections, fs, io, net, path)]
+#![feature(collections, fs, net, path)]
 
 
 extern crate "rustc-serialize" as rustc_serialize;
