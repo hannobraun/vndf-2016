@@ -1,4 +1,4 @@
-#![feature(collections, core, env, io, std_misc)]
+#![feature(collections, core, env, io, old_io, std_misc)]
 
 
 mod args;
