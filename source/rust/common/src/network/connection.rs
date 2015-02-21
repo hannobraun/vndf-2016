@@ -32,7 +32,7 @@ pub struct Connection<R> {
 	receiver: Receiver<R>,
 }
 
-impl<R> Connection<R> where R: Decodable + Send {
+impl<R> Connection<R> where R: Decodable + Send + 'static {
 	pub fn new<T: ToSocketAddrs>(to_address: T) -> Connection<R> {
 		let addresses = to_address.to_socket_addrs();
 		let stream = match TcpStream::connect(&to_address) {

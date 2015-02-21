@@ -24,7 +24,7 @@ pub struct Acceptor<R> {
 	connections: Vec<(SocketAddr, Connection<R>)>,
 }
 
-impl<R> Acceptor<R> where R: Decodable + Send {
+impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 	pub fn new(port: Port) -> Acceptor<R> {
 		let (sender, receiver) = channel();
 		Thread::spawn(move || {
