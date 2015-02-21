@@ -1,4 +1,4 @@
-#![feature(collections, core, env, io, old_io, libc, net, std_misc)]
+#![feature(collections, core, env, old_io, libc, net, std_misc)]
 
 
 extern crate getopts;
