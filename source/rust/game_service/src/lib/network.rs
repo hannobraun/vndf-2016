@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
-use std::old_io::net::ip::Port;
 use std::vec::Drain;
 
 use common::network::{
@@ -21,7 +20,7 @@ pub struct Network {
 }
 
 impl Network {
-	pub fn new(port: Port) -> Network {
+	pub fn new(port: u16) -> Network {
 		Network {
 			acceptor   : Acceptor::new(port),
 			connections: HashMap::new(),
