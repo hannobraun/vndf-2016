@@ -1,5 +1,4 @@
 use std::net::SocketAddr;
-use std::old_io::net::ip::Port;
 
 use time::precise_time_s;
 
@@ -12,7 +11,7 @@ use util::random_port;
 
 
 pub struct GameService {
-	port    : Port,
+	port    : u16,
 	network : Network,
 	incoming: Vec<(SocketAddr, ClientEvent)>,
 }
@@ -29,7 +28,7 @@ impl GameService {
 		}
 	}
 
-	pub fn port(&self) -> Port {
+	pub fn port(&self) -> u16 {
 		self.port
 	}
 
