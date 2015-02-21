@@ -10,7 +10,7 @@ use std::sync::mpsc::TryRecvError::{
 	Disconnected,
 	Empty,
 };
-use std::thread::Thread;
+use std::thread::spawn;
 use std::vec::Drain;
 
 use rustc_serialize::Decodable;
@@ -26,7 +26,7 @@ pub struct Acceptor<R> {
 impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 	pub fn new(port: u16) -> Acceptor<R> {
 		let (sender, receiver) = channel();
-		Thread::spawn(move || {
+		spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
 				Ok(listener) => listener,
 				Err(error)   => panic!("Error binding listener: {}", error),
