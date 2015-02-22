@@ -64,8 +64,9 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		};
 
 		spawn(move || {
-			let mut reader = BufReader::new(stream);
-			let mut line   = String::new();
+			let mut reader     = BufReader::new(stream);
+			let mut line       = String::new();
+			let mut zero_reads = 0;
 
 			loop {
 				line.clear();
@@ -74,24 +75,34 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 					break;
 				}
 
-				// TODO: Before porting to std::net, there would be no zero-
-				//       length reads. Instead, the EndOfFile error would be
-				//       returned. This happened during normal operation, but
-				//       also when the connection was closed.
-				//       To handle all situations somewhat correctly, there was
-				//       code here to count how many EndOfFile errors happened
-				//       in a row, and assumed the connection was closed when it
-				//       happened too often.
-				//       I'm not sure what the situation is with std::net. I've
-				//       written the following code with the assumption that a
-				//       closed connection will eventually result in an error.
-				//       If this assumption is false (as it was with the old
-				//       API), this needs some special handling.
+				// A read of length zero can mean one of two things:
+				// - No data available for now. I don't know why it still
+				//   returns (shouldn't it block?), but that's what it does, so
+				//   we need to handle it.
+				// - Connection is closed. I don't know how we would find out
+				//   reliably that this is the case, but simply counting the
+				//   number of zero-length reads seems to work well.
+				//
+				// Please note that this solution doesn't need to be perfect.
+				// Eventually, we'll use UDP and there will be no connection to
+				// take care of, nor a per-connection thread that could go into
+				// an endless loop.
 				if line.len() == 0 {
-					// Nothing received for now, start loop from the top to try
-					// again.
-					continue;
+					if zero_reads < 128 {
+						// Nothing received for now, start loop from the top to
+						// try again.
+						zero_reads += 1;
+						continue;
+					}
+					else {
+						print!(
+							"Too many zero-length reads. Closing connection.\n"
+						);
+						break;
+					}
 				}
+
+				zero_reads = 0;
 
 				let event = match json::decode(line.as_slice()) {
 					Ok(event)  => event,
