@@ -4,10 +4,7 @@ use client::platform::{
 	Frame,
 	Status,
 };
-use render::{
-	Pos,
-	Section,
-};
+use render::Pos;
 use render::Color::{
 	Green,
 	Red,
@@ -18,20 +15,11 @@ use ui::render;
 
 
 // TODO: Merge into Ui
-pub struct Renderer {
-	main: Section,
-	info: Section,
-}
+pub struct Renderer;
 
 impl Renderer {
 	pub fn new() -> IoResult<Renderer> {
-		let width = 80;
-
-		Ok(Renderer {
-
-			main: Section::new(width, 18),
-			info: Section::new(width,  6),
-		})
+		Ok(Renderer)
 	}
 
 	pub fn render(&mut self, frame: &Frame, ui: &mut Ui) -> IoResult<()> {
@@ -53,7 +41,7 @@ impl Renderer {
 		ui   : &mut Ui,
 		y    : &mut Pos
 	) -> IoResult<()> {
-		self.main.buffer.clear();
+		ui.main.buffer.clear();
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
 			.iter()
@@ -64,7 +52,7 @@ impl Renderer {
 		broadcasts.sort();
 
 		try!(ui.tab_switcher.render(
-			&mut self.main.buffer,
+			&mut ui.main.buffer,
 			0, 0,
 			&render::TabSwitcherArgs {
 				self_id    : frame.self_id.as_slice(),
@@ -73,8 +61,8 @@ impl Renderer {
 			},
 		));
 
-		try!(self.main.write(0, *y, &mut ui.screen));
-		*y += self.main.height;
+		try!(ui.main.write(0, *y, &mut ui.screen));
+		*y += ui.main.height;
 
 		Ok(())
 	}
@@ -82,10 +70,10 @@ impl Renderer {
 	fn render_info(&mut self,frame: &Frame, ui: &mut Ui, y: &mut Pos)
 		-> IoResult<()>
 	{
-		self.info.buffer.clear();
+		ui.info.buffer.clear();
 
 		{
-			let status_writer = self.info.buffer.writer(0, 0);
+			let status_writer = ui.info.buffer.writer(0, 0);
 
 			let (mut status_writer, status) = match frame.status {
 				Status::Notice(ref s) =>
@@ -103,8 +91,8 @@ impl Renderer {
 			));
 		}
 
-		try!(self.info.write(0, *y, &mut ui.screen));
-		*y += self.info.buffer.height();
+		try!(ui.info.write(0, *y, &mut ui.screen));
+		*y += ui.info.buffer.height();
 
 		Ok(())
 	}

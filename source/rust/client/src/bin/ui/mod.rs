@@ -15,6 +15,7 @@ use client::platform::{
 use render::{
 	Pos,
 	Screen,
+	Section,
 };
 
 use self::base::{
@@ -36,6 +37,8 @@ use self::update::CommTabArgs;
 
 pub struct Ui {
 	pub screen      : Screen,
+	pub main        : Section,
+	pub info        : Section,
 	pub tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
@@ -55,6 +58,8 @@ impl Ui {
 
 		Ok(Ui {
 			screen      : screen,
+			main        : Section::new(width, 18),
+			info        : Section::new(width,  6),
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
