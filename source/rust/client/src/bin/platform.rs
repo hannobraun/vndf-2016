@@ -16,7 +16,7 @@ use client::platform::{
 };
 use ui::Ui;
 
-use super::input_reader::InputReader;
+use super::input::InputReader;
 
 
 pub trait PlatformIo {
