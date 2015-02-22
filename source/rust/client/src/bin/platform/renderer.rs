@@ -35,12 +35,9 @@ impl Renderer {
 		Ok(())
 	}
 
-	fn render_main(
-		&mut self,
-		frame: &Frame,
-		ui   : &mut Ui,
-		y    : &mut Pos
-	) -> IoResult<()> {
+	fn render_main(&mut self, frame: &Frame, ui: &mut Ui, y: &mut Pos)
+		-> IoResult<()>
+	{
 		ui.main.buffer.clear();
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
