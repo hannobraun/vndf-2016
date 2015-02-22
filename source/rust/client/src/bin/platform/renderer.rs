@@ -6,7 +6,6 @@ use client::platform::{
 };
 use render::{
 	Pos,
-	Screen,
 	Section,
 };
 use render::Color::{
@@ -20,8 +19,6 @@ use ui::render;
 
 // TODO: Merge into Ui
 pub struct Renderer {
-	screen: Screen,
-
 	main: Section,
 	info: Section,
 }
@@ -30,13 +27,7 @@ impl Renderer {
 	pub fn new() -> IoResult<Renderer> {
 		let width = 80;
 
-		let screen = match Screen::new(width, 24) {
-			Ok(screen) => screen,
-			Err(error) => return Err(error),
-		};
-
 		Ok(Renderer {
-			screen: screen,
 
 			main: Section::new(width, 18),
 			info: Section::new(width,  6),
@@ -46,12 +37,12 @@ impl Renderer {
 	pub fn render(&mut self, frame: &Frame, ui: &mut Ui) -> IoResult<()> {
 		let mut y = 0;
 
-		self.screen.cursor(None);
+		ui.screen.cursor(None);
 
 		try!(self.render_main(frame, ui, &mut y));
-		try!(self.render_info(frame, &mut y));
+		try!(self.render_info(frame, ui, &mut y));
 
-		try!(self.screen.submit());
+		try!(ui.screen.submit());
 
 		Ok(())
 	}
@@ -82,13 +73,15 @@ impl Renderer {
 			},
 		));
 
-		try!(self.main.write(0, *y, &mut self.screen));
+		try!(self.main.write(0, *y, &mut ui.screen));
 		*y += self.main.height;
 
 		Ok(())
 	}
 
-	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
+	fn render_info(&mut self,frame: &Frame, ui: &mut Ui, y: &mut Pos)
+		-> IoResult<()>
+	{
 		self.info.buffer.clear();
 
 		{
@@ -110,7 +103,7 @@ impl Renderer {
 			));
 		}
 
-		try!(self.info.write(0, *y, &mut self.screen));
+		try!(self.info.write(0, *y, &mut ui.screen));
 		*y += self.info.buffer.height();
 
 		Ok(())

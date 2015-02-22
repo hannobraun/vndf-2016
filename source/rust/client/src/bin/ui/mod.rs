@@ -12,7 +12,10 @@ use client::platform::{
 	Frame,
 	InputEvent,
 };
-use render::Pos;
+use render::{
+	Pos,
+	Screen,
+};
 
 use self::base::{
 	ProcessInput,
@@ -32,6 +35,7 @@ use self::update::CommTabArgs;
 
 
 pub struct Ui {
+	pub screen      : Screen,
 	pub tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
@@ -45,7 +49,15 @@ pub struct Ui {
 
 impl Ui {
 	pub fn new() -> IoResult<Ui> {
+		let width = 80;
+
+		let screen = match Screen::new(width, 24) {
+			Ok(screen) => screen,
+			Err(error) => return Err(error),
+		};
+
 		Ok(Ui {
+			screen      : screen,
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
