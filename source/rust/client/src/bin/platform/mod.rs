@@ -41,10 +41,11 @@ pub struct PlayerIo {
 impl PlatformIo for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
 		let renderer = try!(Renderer::new());
+		let ui       = try!(Ui::new());
 
 		Ok(PlayerIo {
 			input_reader: InputReader::new(),
-			ui          : Ui::new(),
+			ui          : ui,
 			renderer    : renderer,
 			chars       : Vec::new(),
 		})

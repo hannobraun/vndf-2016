@@ -5,6 +5,7 @@ pub mod state;
 pub mod update;
 
 
+use std::old_io::IoResult;
 use std::vec::Drain;
 
 use client::platform::{
@@ -43,14 +44,14 @@ pub struct Ui {
 }
 
 impl Ui {
-	pub fn new() -> Ui {
-		Ui {
+	pub fn new() -> IoResult<Ui> {
+		Ok(Ui {
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
 
 			broadcast_list_height: 5,
-		}
+		})
 	}
 
 	pub fn update(&mut self, frame: &Frame, chars: &[char])
