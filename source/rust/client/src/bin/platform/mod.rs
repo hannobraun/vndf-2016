@@ -1,5 +1,4 @@
 mod input_reader;
-mod renderer;
 
 
 use std::old_io::{
@@ -21,7 +20,6 @@ use client::platform::{
 use ui::Ui;
 
 use self::input_reader::InputReader;
-use self::renderer::Renderer;
 
 
 pub trait PlatformIo {
@@ -34,19 +32,16 @@ pub trait PlatformIo {
 pub struct PlayerIo {
 	input_reader: InputReader,
 	ui          : Ui,
-	renderer    : Renderer,
 	chars       : Vec<char>,
 }
 
 impl PlatformIo for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
-		let renderer = try!(Renderer::new());
-		let ui       = try!(Ui::new());
+		let ui = try!(Ui::new());
 
 		Ok(PlayerIo {
 			input_reader: InputReader::new(),
 			ui          : ui,
-			renderer    : renderer,
 			chars       : Vec::new(),
 		})
 	}
@@ -58,7 +53,7 @@ impl PlatformIo for PlayerIo {
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		self.renderer.render(frame, &mut self.ui)
+		self.ui.render(frame)
 	}
 }
 
