@@ -1,6 +1,3 @@
-mod input_reader;
-
-
 use std::old_io::{
 	stdin,
 	IoResult,
@@ -19,7 +16,7 @@ use client::platform::{
 };
 use ui::Ui;
 
-use self::input_reader::InputReader;
+use super::input_reader::InputReader;
 
 
 pub trait PlatformIo {

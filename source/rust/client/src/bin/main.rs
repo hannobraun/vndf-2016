@@ -10,6 +10,7 @@ extern crate common;
 
 
 mod args;
+mod input_reader;
 mod platform;
 mod render;
 mod termios;
