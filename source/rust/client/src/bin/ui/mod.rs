@@ -51,10 +51,7 @@ impl Ui {
 	pub fn new() -> IoResult<Ui> {
 		let width = 80;
 
-		let screen = match Screen::new(width, 24) {
-			Ok(screen) => screen,
-			Err(error) => return Err(error),
-		};
+		let screen = try!(Screen::new(width, 24));
 
 		Ok(Ui {
 			screen      : screen,
