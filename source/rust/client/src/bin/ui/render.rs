@@ -250,11 +250,25 @@ impl<'a> Render for TabSwitcher {
 	)
 		-> IoResult<()>
 	{
-		try!(
-			buffer
-				.writer(x, y)
-				.write_str("Comm | Nav")
-		);
+		let headers = ["Comm", "Nav"];
+		let mut header_x = x;
+		for (i, header) in headers.iter().enumerate() {
+			try!(
+				buffer
+					.writer(header_x, y)
+					.write_str(header)
+			);
+			header_x += header.chars().count() as Pos;
+
+			if i + 1 < headers.len() {
+				try!(
+					buffer
+						.writer(header_x, y)
+						.write_str(" | ")
+				);
+				header_x += 3;
+			}
+		}
 
 		let mut c = C::new();
 		c.c = '─';
