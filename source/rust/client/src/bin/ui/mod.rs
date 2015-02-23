@@ -15,7 +15,6 @@ use client::platform::{
 use render::{
 	Pos,
 	Screen,
-	Section,
 };
 
 use self::base::{
@@ -34,6 +33,7 @@ use self::base::InputEvent::{
 };
 use self::state::{
 	InfoSection,
+	MainSection,
 	TabSwitcher,
 };
 use self::update::CommTabArgs;
@@ -41,7 +41,7 @@ use self::update::CommTabArgs;
 
 pub struct Ui {
 	screen      : Screen,
-	main        : Section,
+	main        : MainSection,
 	info        : InfoSection,
 	tab_switcher: TabSwitcher,
 
@@ -62,7 +62,7 @@ impl Ui {
 
 		Ok(Ui {
 			screen      : screen,
-			main        : Section::new(width, 18),
+			main        : MainSection::new(width, 18),
 			info        : InfoSection::new(width,  6),
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
@@ -168,7 +168,7 @@ impl Ui {
 	}
 
 	fn render_main(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		self.main.buffer.clear();
+		self.main.section.buffer.clear();
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
 			.iter()
@@ -179,7 +179,7 @@ impl Ui {
 		broadcasts.sort();
 
 		try!(self.tab_switcher.render(
-			&mut self.main.buffer,
+			&mut self.main.section.buffer,
 			0, 0,
 			&render::TabSwitcherArgs {
 				self_id    : frame.self_id.as_slice(),
@@ -188,7 +188,7 @@ impl Ui {
 			},
 		));
 
-		try!(self.main.write(0, *y, &mut self.screen));
+		try!(self.main.section.write(0, *y, &mut self.screen));
 		*y += self.main.height;
 
 		Ok(())

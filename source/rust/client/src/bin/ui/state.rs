@@ -1,4 +1,7 @@
-use render::Pos;
+use render::{
+	Pos,
+	Section,
+};
 
 use super::base::{
 	ProcessInput,
@@ -108,6 +111,26 @@ impl List {
 			first    : 0,
 
 			status: Status::Passive,
+		}
+	}
+}
+
+
+pub struct MainSection {
+	pub width : Pos,
+	pub height: Pos,
+
+	// TODO: Remove
+	pub section: Section,
+}
+
+impl MainSection {
+	pub fn new(width: Pos, height: Pos) -> MainSection {
+		MainSection {
+			width : width,
+			height: height,
+
+			section: Section::new(width, height),
 		}
 	}
 }
