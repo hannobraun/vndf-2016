@@ -201,8 +201,10 @@ impl Ui {
 	}
 
 	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
+		let buffer = self.screen.buffer();
+
 		try!(draw_border(
-			self.screen.buffer(),
+			buffer,
 			0,
 			*y,
 			self.info.width,
@@ -210,7 +212,7 @@ impl Ui {
 		));
 
 		{
-			let status_writer = self.screen.buffer().writer(1, *y + 1);
+			let status_writer = buffer.writer(1, *y + 1);
 
 			let (mut status_writer, status) = match frame.status {
 				Status::Notice(ref s) =>
