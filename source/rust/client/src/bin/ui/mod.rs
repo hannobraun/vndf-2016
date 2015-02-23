@@ -78,32 +78,7 @@ impl Ui {
 		-> IoResult<Drain<InputEvent>>
 	{
 		self.process_input(chars);
-
-		let is_sending = frame.broadcasts
-			.iter()
-			.any(|broadcast|
-				broadcast.sender == frame.self_id
-			);
-
-		self.tab_switcher.comm_tab.update(&CommTabArgs {
-			is_sending : is_sending,
-			list_length: frame.broadcasts.len(),
-			list_height: self.broadcast_list_height,
-		});
-
-		if self.tab_switcher.comm_tab.broadcast_form.button.was_activated {
-			self.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
-
-			if is_sending {
-				self.events.push(InputEvent::StopBroadcast);
-			}
-			else {
-				let message =
-					self.tab_switcher.comm_tab.broadcast_form.text_field.text.clone();
-				self.events.push(InputEvent::StartBroadcast(message));
-			}
-		}
-
+		self.generate_events(frame);
 		try!(self.render(frame));
 
 		Ok(self.events.drain())
@@ -150,6 +125,33 @@ impl Ui {
 
 					self.mode = TextInputMode::Regular;
 				},
+			}
+		}
+	}
+
+	fn generate_events(&mut self, frame: &Frame) {
+		let is_sending = frame.broadcasts
+			.iter()
+			.any(|broadcast|
+				broadcast.sender == frame.self_id
+			);
+
+		self.tab_switcher.comm_tab.update(&CommTabArgs {
+			is_sending : is_sending,
+			list_length: frame.broadcasts.len(),
+			list_height: self.broadcast_list_height,
+		});
+
+		if self.tab_switcher.comm_tab.broadcast_form.button.was_activated {
+			self.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
+
+			if is_sending {
+				self.events.push(InputEvent::StopBroadcast);
+			}
+			else {
+				let message =
+					self.tab_switcher.comm_tab.broadcast_form.text_field.text.clone();
+				self.events.push(InputEvent::StartBroadcast(message));
 			}
 		}
 	}
