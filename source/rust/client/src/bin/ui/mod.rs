@@ -166,7 +166,7 @@ impl Ui {
 		self.screen.cursor(None);
 
 		try!(self.render_main(frame, &mut y));
-		try!(self.render_info(frame, y));
+		try!(self.render_info(&frame.status, y));
 
 		try!(self.screen.submit());
 
@@ -200,7 +200,7 @@ impl Ui {
 		Ok(())
 	}
 
-	fn render_info(&mut self, frame: &Frame, y: Pos) -> IoResult<()> {
+	fn render_info(&mut self, status: &Status, y: Pos) -> IoResult<()> {
 		let buffer = self.screen.buffer();
 		let x      = 0;
 
@@ -215,7 +215,7 @@ impl Ui {
 		{
 			let status_writer = buffer.writer(x + 1, y + 1);
 
-			let (mut status_writer, status) = match frame.status {
+			let (mut status_writer, status) = match *status {
 				Status::Notice(ref s) =>
 					(status_writer.foreground_color(Green), s.as_slice()),
 				Status::Error(ref s) =>
