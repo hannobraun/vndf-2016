@@ -87,13 +87,13 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else if c == '\x7f' { // Backspace
-						self.main.tab_switcher.process_event(Backspace);
+						self.main.process_event(Backspace);
 					}
 					else if c == '\n' {
-						self.main.tab_switcher.process_event(Enter);
+						self.main.process_event(Enter);
 					}
 					else {
-						self.main.tab_switcher.process_event(Char(c));
+						self.main.process_event(Char(c));
 					}
 				},
 				TextInputMode::Escape => {
@@ -115,7 +115,7 @@ impl Ui {
 					};
 
 					if let Some(event) = event {
-						self.main.tab_switcher.process_event(event);
+						self.main.process_event(event);
 					}
 
 					self.mode = TextInputMode::Regular;
