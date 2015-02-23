@@ -199,7 +199,7 @@ impl Ui {
 		Ok(())
 	}
 
-	fn render_info(&mut self,frame: &Frame, y: &mut Pos) -> IoResult<()> {
+	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
 		self.info.section.buffer.clear();
 
 		{
