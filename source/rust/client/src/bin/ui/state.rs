@@ -1,4 +1,7 @@
-use render::Pos;
+use render::{
+	Pos,
+	Section,
+};
 
 use super::base::{
 	ProcessInput,
@@ -74,6 +77,19 @@ impl CommTab {
 
 	pub fn list_is_selected(&self) -> bool {
 		self.selected_index % 2 == 1
+	}
+}
+
+
+pub struct InfoSection {
+	pub section: Section,
+}
+
+impl InfoSection {
+	pub fn new(width: Pos, height: Pos) -> InfoSection {
+		InfoSection {
+			section: Section::new(width, height),
+		}
 	}
 }
 
