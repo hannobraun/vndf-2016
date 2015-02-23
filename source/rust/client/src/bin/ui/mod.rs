@@ -13,7 +13,6 @@ use client::platform::{
 	InputEvent,
 };
 use render::{
-	draw_border,
 	Pos,
 	Screen,
 };
@@ -32,6 +31,7 @@ use self::base::InputEvent::{
 	CursorUp,
 	Enter,
 };
+use self::render::MainSectionArgs;
 use self::state::{
 	InfoSection,
 	MainSection,
@@ -167,36 +167,15 @@ impl Ui {
 	}
 
 	fn render_main(&mut self, frame: &Frame) -> IoResult<()> {
-		let buffer = self.screen.buffer();
-		let x      = 0;
-		let y      = 0;
-
-		try!(draw_border(
-			buffer,
-			x, y,
-			self.main.width,
-			self.main.height,
-		));
-
-		let mut broadcasts: Vec<String> = frame.broadcasts
-			.iter()
-			.map(|broadcast|
-				format!("{}: {}", broadcast.sender, broadcast.message)
-			)
-			.collect();
-		broadcasts.sort();
-
-		try!(self.main.tab_switcher.render(
-			buffer,
-			x + 1, y + 1,
-			&render::TabSwitcherArgs {
-				self_id    : frame.self_id.as_slice(),
-				broadcasts : broadcasts.as_slice(),
-				list_height: self.broadcast_list_height,
-			},
-		));
-
-		Ok(())
+		self.main.render(
+			self.screen.buffer(),
+			0, 0,
+			&MainSectionArgs {
+				self_id              : frame.self_id.as_slice(),
+				broadcasts           : frame.broadcasts.as_slice(),
+				broadcast_list_height: self.broadcast_list_height,
+			}
+		)
 	}
 }
 

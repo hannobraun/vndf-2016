@@ -1,6 +1,7 @@
 use std::old_io::IoResult;
 
 use client::platform::Status as InfoStatus;
+use common::game::Broadcast;
 use render::{
 	draw_border,
 	Pos,
@@ -22,6 +23,7 @@ use super::state::{
 	CommTab,
 	InfoSection,
 	List,
+	MainSection,
 	TabHeader,
 	TabSwitcher,
 	TextField,
@@ -277,6 +279,54 @@ impl<'a> Render for List {
 				"↓",
 			));
 		}
+
+		Ok(())
+	}
+}
+
+
+pub struct MainSectionArgs<'a> {
+	pub self_id              : &'a str,
+	pub broadcasts           : &'a [Broadcast],
+	pub broadcast_list_height: Pos,
+}
+
+impl<'a> Render for MainSection {
+	type Args = MainSectionArgs<'a>;
+
+	fn render(
+		&self,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		args  : &MainSectionArgs,
+	)
+		-> IoResult<()>
+	{
+		try!(draw_border(
+			buffer,
+			x, y,
+			self.width,
+			self.height,
+		));
+
+		let mut broadcasts: Vec<String> = args.broadcasts
+			.iter()
+			.map(|broadcast|
+				format!("{}: {}", broadcast.sender, broadcast.message)
+			)
+			.collect();
+		broadcasts.sort();
+
+		try!(self.tab_switcher.render(
+			buffer,
+			x + 1, y + 1,
+			&TabSwitcherArgs {
+				self_id    : args.self_id,
+				broadcasts : broadcasts.as_slice(),
+				list_height: args.broadcast_list_height,
+			},
+		));
 
 		Ok(())
 	}
