@@ -14,6 +14,7 @@ use client::platform::{
 	Status,
 };
 use render::{
+	draw_border,
 	Pos,
 	Screen,
 	Section,
@@ -206,10 +207,16 @@ impl Ui {
 	}
 
 	fn render_info(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		self.info.section.buffer.clear();
+		try!(draw_border(
+			self.screen.buffer(),
+			0,
+			*y,
+			self.width,
+			self.info_height
+		));
 
 		{
-			let status_writer = self.info.section.buffer.writer(0, 0);
+			let status_writer = self.screen.buffer().writer(1, *y + 1);
 
 			let (mut status_writer, status) = match frame.status {
 				Status::Notice(ref s) =>
@@ -226,9 +233,6 @@ impl Ui {
 				status
 			));
 		}
-
-		try!(self.info.section.write(0, *y, &mut self.screen));
-		*y += self.info.section.buffer.height();
 
 		Ok(())
 	}
