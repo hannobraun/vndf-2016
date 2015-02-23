@@ -1,7 +1,4 @@
-use render::{
-	Pos,
-	Section,
-};
+use render::Pos;
 
 use super::base::{
 	ProcessInput,
@@ -82,8 +79,6 @@ impl CommTab {
 
 
 pub struct InfoSection {
-	pub section: Section,
-
 	pub width : Pos,
 	pub height: Pos,
 }
@@ -91,8 +86,6 @@ pub struct InfoSection {
 impl InfoSection {
 	pub fn new(width: Pos, height: Pos) -> InfoSection {
 		InfoSection {
-			section: Section::new(width, height),
-
 			width : width,
 			height: height,
 		}
