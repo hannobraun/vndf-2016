@@ -145,6 +145,8 @@ impl Ui {
 			}
 		}
 
+		try!(self.render(frame));
+
 		Ok(self.events.drain())
 	}
 

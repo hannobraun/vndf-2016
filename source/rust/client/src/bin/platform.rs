@@ -49,8 +49,9 @@ impl PlatformIo for PlayerIo {
 		self.ui.update(frame, self.chars.as_slice())
 	}
 
-	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		self.ui.render(frame)
+	fn render(&mut self, _: &Frame) -> IoResult<()> {
+		// TODO: Remove
+		Ok(())
 	}
 }
 
