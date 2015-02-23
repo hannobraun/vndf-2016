@@ -22,7 +22,6 @@ use super::input::InputReader;
 pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>>;
-	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
 
@@ -47,11 +46,6 @@ impl PlatformIo for PlayerIo {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
 		self.ui.update(frame, self.chars.as_slice())
-	}
-
-	fn render(&mut self, _: &Frame) -> IoResult<()> {
-		// TODO: Remove
-		Ok(())
 	}
 }
 
@@ -110,10 +104,5 @@ impl PlatformIo for HeadlessIo {
 		print!("{}\n", frame.to_json());
 
 		Ok(self.events.drain())
-	}
-
-	fn render(&mut self, _: &Frame) -> IoResult<()> {
-		// TODO: Remove
-		Ok(())
 	}
 }
