@@ -13,6 +13,7 @@ use client::platform::{
 	InputEvent,
 };
 use render::{
+	draw_border,
 	Pos,
 	Screen,
 };
@@ -166,7 +167,12 @@ impl Ui {
 	}
 
 	fn render_main(&mut self, frame: &Frame) -> IoResult<()> {
-		self.main.section.buffer.clear();
+		try!(draw_border(
+			self.screen.buffer(),
+			0, 0,
+			self.main.width,
+			self.main.height,
+		));
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
 			.iter()
@@ -177,16 +183,14 @@ impl Ui {
 		broadcasts.sort();
 
 		try!(self.main.tab_switcher.render(
-			&mut self.main.section.buffer,
-			0, 0,
+			&mut self.screen.buffer(),
+			1, 1,
 			&render::TabSwitcherArgs {
 				self_id    : frame.self_id.as_slice(),
 				broadcasts : broadcasts.as_slice(),
 				list_height: self.broadcast_list_height,
 			},
 		));
-
-		try!(self.main.section.write(0, 0, &mut self.screen));
 
 		Ok(())
 	}
