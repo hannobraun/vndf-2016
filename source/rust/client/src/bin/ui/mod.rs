@@ -167,11 +167,12 @@ impl Ui {
 	}
 
 	fn render_main(&mut self, frame: &Frame) -> IoResult<()> {
-		let x = 0;
-		let y = 0;
+		let buffer = self.screen.buffer();
+		let x      = 0;
+		let y      = 0;
 
 		try!(draw_border(
-			self.screen.buffer(),
+			buffer,
 			x, y,
 			self.main.width,
 			self.main.height,
@@ -186,7 +187,7 @@ impl Ui {
 		broadcasts.sort();
 
 		try!(self.main.tab_switcher.render(
-			&mut self.screen.buffer(),
+			buffer,
 			x + 1, y + 1,
 			&render::TabSwitcherArgs {
 				self_id    : frame.self_id.as_slice(),
