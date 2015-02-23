@@ -219,7 +219,7 @@ impl Ui {
 				Status::Notice(ref s) =>
 					(status_writer.foreground_color(Green), s.as_slice()),
 				Status::Error(ref s) =>
-					(status_writer.foreground_color(Red), s.as_slice()),
+					(status_writer.foreground_color(Red  ), s.as_slice()),
 				Status::None =>
 					(status_writer, ""),
 			};
