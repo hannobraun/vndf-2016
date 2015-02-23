@@ -150,7 +150,7 @@ impl Ui {
 		Ok(self.events.drain())
 	}
 
-	pub fn render(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		let mut y = 0;
 
 		self.screen.cursor(None);
