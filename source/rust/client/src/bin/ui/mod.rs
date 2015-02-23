@@ -34,7 +34,6 @@ use self::base::InputEvent::{
 use self::state::{
 	InfoSection,
 	MainSection,
-	TabSwitcher,
 };
 use self::update::CommTabArgs;
 
@@ -43,7 +42,6 @@ pub struct Ui {
 	screen      : Screen,
 	main        : MainSection,
 	info        : InfoSection,
-	tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
@@ -64,7 +62,6 @@ impl Ui {
 			screen      : screen,
 			main        : MainSection::new(width, 18),
 			info        : InfoSection::new(width,  6),
-			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
 
@@ -90,13 +87,13 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else if c == '\x7f' { // Backspace
-						self.tab_switcher.process_event(Backspace);
+						self.main.tab_switcher.process_event(Backspace);
 					}
 					else if c == '\n' {
-						self.tab_switcher.process_event(Enter);
+						self.main.tab_switcher.process_event(Enter);
 					}
 					else {
-						self.tab_switcher.process_event(Char(c));
+						self.main.tab_switcher.process_event(Char(c));
 					}
 				},
 				TextInputMode::Escape => {
@@ -118,7 +115,7 @@ impl Ui {
 					};
 
 					if let Some(event) = event {
-						self.tab_switcher.process_event(event);
+						self.main.tab_switcher.process_event(event);
 					}
 
 					self.mode = TextInputMode::Regular;
@@ -134,21 +131,21 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
-		self.tab_switcher.comm_tab.update(&CommTabArgs {
+		self.main.tab_switcher.comm_tab.update(&CommTabArgs {
 			is_sending : is_sending,
 			list_length: frame.broadcasts.len(),
 			list_height: self.broadcast_list_height,
 		});
 
-		if self.tab_switcher.comm_tab.broadcast_form.button.was_activated {
-			self.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
+		if self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated {
+			self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
 
 			if is_sending {
 				self.events.push(InputEvent::StopBroadcast);
 			}
 			else {
 				let message =
-					self.tab_switcher.comm_tab.broadcast_form.text_field.text.clone();
+					self.main.tab_switcher.comm_tab.broadcast_form.text_field.text.clone();
 				self.events.push(InputEvent::StartBroadcast(message));
 			}
 		}
@@ -180,7 +177,7 @@ impl Ui {
 			.collect();
 		broadcasts.sort();
 
-		try!(self.tab_switcher.render(
+		try!(self.main.tab_switcher.render(
 			&mut self.main.section.buffer,
 			0, 0,
 			&render::TabSwitcherArgs {

@@ -120,6 +120,8 @@ pub struct MainSection {
 	pub width : Pos,
 	pub height: Pos,
 
+	pub tab_switcher: TabSwitcher,
+
 	// TODO: Remove
 	pub section: Section,
 }
@@ -129,6 +131,8 @@ impl MainSection {
 		MainSection {
 			width : width,
 			height: height,
+
+			tab_switcher: TabSwitcher::new(),
 
 			section: Section::new(width, height),
 		}
