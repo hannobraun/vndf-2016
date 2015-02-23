@@ -211,8 +211,8 @@ impl Ui {
 			self.screen.buffer(),
 			0,
 			*y,
-			self.width,
-			self.info_height
+			self.info.width,
+			self.info.height
 		));
 
 		{
