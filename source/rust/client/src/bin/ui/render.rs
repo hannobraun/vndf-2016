@@ -15,6 +15,7 @@ use super::state::{
 	Button,
 	CommTab,
 	List,
+	TabHeader,
 	TabSwitcher,
 	TextField,
 };
@@ -228,6 +229,29 @@ impl<'a> Render for List {
 		}
 
 		Ok(())
+	}
+}
+
+
+pub struct TabHeaderArgs<'a> {
+	pub label: &'a str,
+}
+
+impl<'a> Render for TabHeader {
+	type Args = TabHeaderArgs<'a>;
+
+	fn render(
+		&self,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		args  : &TabHeaderArgs,
+	)
+		-> IoResult<()>
+	{
+		buffer
+			.writer(x, y)
+			.write_str(args.label)
 	}
 }
 
