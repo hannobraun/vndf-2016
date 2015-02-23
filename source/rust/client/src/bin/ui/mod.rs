@@ -61,14 +61,15 @@ pub struct Ui {
 
 impl Ui {
 	pub fn new() -> IoResult<Ui> {
-		let width = 80;
+		let width       = 80;
+		let info_height = 6;
 
 		let screen = try!(Screen::new(width, 24));
 
 		Ok(Ui {
 			screen      : screen,
 			main        : Section::new(width, 18),
-			info        : InfoSection::new(width,  6),
+			info        : InfoSection::new(width,  info_height),
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
