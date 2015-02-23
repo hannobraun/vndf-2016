@@ -10,6 +10,7 @@ use super::buffer::{
 };
 
 
+// TODO: Remove
 pub struct Section {
 	pub buffer: ScreenBuffer,
 	pub width : Pos,
