@@ -274,15 +274,21 @@ impl<'a> Render for TabSwitcher {
 	)
 		-> IoResult<()>
 	{
-		let headers = ["Comm", "Nav"];
+		let headers = [
+			("Comm", &self.comm_header),
+			("Nav" , &self.nav_header ),
+		];
 		let mut header_x = x;
-		for (i, header) in headers.iter().enumerate() {
-			try!(
-				buffer
-					.writer(header_x, y)
-					.write_str(header)
-			);
-			header_x += header.chars().count() as Pos;
+		for (i, &(label, header)) in headers.iter().enumerate() {
+			try!(header.render(
+				buffer,
+				header_x,
+				y,
+				&TabHeaderArgs {
+					label: label,
+				},
+			));
+			header_x += label.chars().count() as Pos;
 
 			if i + 1 < headers.len() {
 				try!(
