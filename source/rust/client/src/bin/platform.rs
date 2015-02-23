@@ -46,7 +46,7 @@ impl PlatformIo for PlayerIo {
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
-		Ok(self.ui.update(frame, self.chars.as_slice()))
+		self.ui.update(frame, self.chars.as_slice())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {

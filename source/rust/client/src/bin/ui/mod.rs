@@ -75,7 +75,7 @@ impl Ui {
 	}
 
 	pub fn update(&mut self, frame: &Frame, chars: &[char])
-		-> Drain<InputEvent>
+		-> IoResult<Drain<InputEvent>>
 	{
 		for &c in chars.iter() {
 			match self.mode {
@@ -145,7 +145,7 @@ impl Ui {
 			}
 		}
 
-		self.events.drain()
+		Ok(self.events.drain())
 	}
 
 	pub fn render(&mut self, frame: &Frame) -> IoResult<()> {
