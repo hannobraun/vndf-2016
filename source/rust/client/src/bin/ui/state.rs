@@ -102,12 +102,18 @@ pub struct TabHeader;
 
 
 pub struct TabSwitcher {
+	pub comm_header: TabHeader,
+	pub nav_header : TabHeader,
+
 	pub comm_tab: CommTab,
 }
 
 impl TabSwitcher {
 	pub fn new() -> TabSwitcher {
 		TabSwitcher {
+			comm_header: TabHeader,
+			nav_header : TabHeader,
+
 			comm_tab: CommTab::new(),
 		}
 	}
