@@ -150,10 +150,6 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 
 		network.send(ClientEvent::Heartbeat);
 
-		if let Err(error) = platform.render(&frame) {
-			panic!("Error writing output: {}", error);
-		}
-
 		sleep(Duration::milliseconds(20));
 	}
 }
