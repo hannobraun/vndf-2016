@@ -98,6 +98,9 @@ impl List {
 }
 
 
+pub struct TabHeader;
+
+
 pub struct TabSwitcher {
 	pub comm_tab: CommTab,
 }
