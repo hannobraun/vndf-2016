@@ -1,7 +1,4 @@
-use render::{
-	Pos,
-	Section,
-};
+use render::Pos;
 
 use super::base::{
 	ProcessInput,
@@ -121,9 +118,6 @@ pub struct MainSection {
 	pub height: Pos,
 
 	pub tab_switcher: TabSwitcher,
-
-	// TODO: Remove
-	pub section: Section,
 }
 
 impl MainSection {
@@ -133,8 +127,6 @@ impl MainSection {
 			height: height,
 
 			tab_switcher: TabSwitcher::new(),
-
-			section: Section::new(width, height),
 		}
 	}
 }
