@@ -9,7 +9,6 @@ pub use self::buffer::ScreenBuffer;
 pub use self::color::Color;
 pub use self::screen::Screen;
 pub use self::util::draw_border;
-pub use self::util::Section;
 
 
 pub type Pos = u16;

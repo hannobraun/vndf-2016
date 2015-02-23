@@ -1,48 +1,10 @@
 use std::old_io::IoResult;
 
-use super::{
-	Pos,
-	Screen,
-};
+use super::Pos;
 use super::buffer::{
 	C,
 	ScreenBuffer,
 };
-
-
-// TODO: Remove
-pub struct Section {
-	pub buffer: ScreenBuffer,
-	pub width : Pos,
-	pub height: Pos,
-}
-
-impl Section {
-	pub fn new(width: Pos, height: Pos) -> Section {
-		let inner_width  = width  - 2;
-		let inner_height = height - 2;
-
-		Section {
-			buffer: ScreenBuffer::new(inner_width, inner_height),
-			width : width,
-			height: height,
-		}
-	}
-
-	pub fn write(&self, x: Pos, y: Pos, screen: &mut Screen) -> IoResult<()> {
-		for (buffer_x, buffer_y, c) in self.buffer.iter() {
-			try!(screen.buffer().set(x + buffer_x + 1, y + buffer_y + 1, c));
-		}
-
-		if let Some(cursor) = self.buffer.cursor {
-			screen.cursor(Some(cursor));
-		}
-
-		try!(draw_border(screen.buffer(), x, y, self.width, self.height));
-
-		Ok(())
-	}
-}
 
 
 pub fn draw_border(
