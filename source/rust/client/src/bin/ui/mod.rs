@@ -45,6 +45,9 @@ use self::update::CommTabArgs;
 
 
 pub struct Ui {
+	width      : Pos,
+	info_height: Pos,
+
 	pub screen      : Screen,
 	pub main        : Section,
 	pub info        : InfoSection,
@@ -67,6 +70,8 @@ impl Ui {
 		let screen = try!(Screen::new(width, 24));
 
 		Ok(Ui {
+			width       : width,
+			info_height : info_height,
 			screen      : screen,
 			main        : Section::new(width, 18),
 			info        : InfoSection::new(width,  info_height),
