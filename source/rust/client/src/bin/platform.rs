@@ -95,7 +95,7 @@ impl PlatformIo for HeadlessIo {
 		})
 	}
 
-	fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
+	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(event) =>
@@ -107,11 +107,13 @@ impl PlatformIo for HeadlessIo {
 			}
 		}
 
+		print!("{}\n", frame.to_json());
+
 		Ok(self.events.drain())
 	}
 
-	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		print!("{}\n", frame.to_json());
+	fn render(&mut self, _: &Frame) -> IoResult<()> {
+		// TODO: Remove
 		Ok(())
 	}
 }
