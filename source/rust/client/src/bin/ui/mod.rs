@@ -37,14 +37,17 @@ use self::base::InputEvent::{
 	CursorUp,
 	Enter,
 };
-use self::state::TabSwitcher;
+use self::state::{
+	InfoSection,
+	TabSwitcher,
+};
 use self::update::CommTabArgs;
 
 
 pub struct Ui {
 	pub screen      : Screen,
 	pub main        : Section,
-	pub info        : Section,
+	pub info        : InfoSection,
 	pub tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
@@ -65,7 +68,7 @@ impl Ui {
 		Ok(Ui {
 			screen      : screen,
 			main        : Section::new(width, 18),
-			info        : Section::new(width,  6),
+			info        : InfoSection::new(width,  6),
 			tab_switcher: TabSwitcher::new(),
 			mode        : TextInputMode::Regular,
 			events      : Vec::new(),
@@ -197,10 +200,10 @@ impl Ui {
 	}
 
 	fn render_info(&mut self,frame: &Frame, y: &mut Pos) -> IoResult<()> {
-		self.info.buffer.clear();
+		self.info.section.buffer.clear();
 
 		{
-			let status_writer = self.info.buffer.writer(0, 0);
+			let status_writer = self.info.section.buffer.writer(0, 0);
 
 			let (mut status_writer, status) = match frame.status {
 				Status::Notice(ref s) =>
@@ -218,8 +221,8 @@ impl Ui {
 			));
 		}
 
-		try!(self.info.write(0, *y, &mut self.screen));
-		*y += self.info.buffer.height();
+		try!(self.info.section.write(0, *y, &mut self.screen));
+		*y += self.info.section.buffer.height();
 
 		Ok(())
 	}
