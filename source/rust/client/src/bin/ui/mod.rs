@@ -160,7 +160,11 @@ impl Ui {
 		self.screen.cursor(None);
 
 		try!(self.render_main(frame, &mut y));
-		try!(self.info.render(self.screen.buffer(), 0, y, &frame.status));
+		try!(self.info.render(
+			self.screen.buffer(),
+			0, self.main.height,
+			&frame.status,
+		));
 
 		try!(self.screen.submit());
 
