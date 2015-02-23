@@ -155,11 +155,9 @@ impl Ui {
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
-		let mut y = 0;
-
 		self.screen.cursor(None);
 
-		try!(self.render_main(frame, &mut y));
+		try!(self.render_main(frame));
 		try!(self.info.render(
 			self.screen.buffer(),
 			0, self.main.height,
@@ -171,7 +169,7 @@ impl Ui {
 		Ok(())
 	}
 
-	fn render_main(&mut self, frame: &Frame, y: &mut Pos) -> IoResult<()> {
+	fn render_main(&mut self, frame: &Frame) -> IoResult<()> {
 		self.main.section.buffer.clear();
 
 		let mut broadcasts: Vec<String> = frame.broadcasts
@@ -192,8 +190,7 @@ impl Ui {
 			},
 		));
 
-		try!(self.main.section.write(0, *y, &mut self.screen));
-		*y += self.main.height;
+		try!(self.main.section.write(0, 0, &mut self.screen));
 
 		Ok(())
 	}
