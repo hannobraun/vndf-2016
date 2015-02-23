@@ -154,7 +154,15 @@ impl Ui {
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
 		self.screen.cursor(None);
 
-		try!(self.render_main(frame));
+		try!(self.main.render(
+			self.screen.buffer(),
+			0, 0,
+			&MainSectionArgs {
+				self_id              : frame.self_id.as_slice(),
+				broadcasts           : frame.broadcasts.as_slice(),
+				broadcast_list_height: self.broadcast_list_height,
+			}
+		));
 		try!(self.info.render(
 			self.screen.buffer(),
 			0, self.main.height,
@@ -164,18 +172,6 @@ impl Ui {
 		try!(self.screen.submit());
 
 		Ok(())
-	}
-
-	fn render_main(&mut self, frame: &Frame) -> IoResult<()> {
-		self.main.render(
-			self.screen.buffer(),
-			0, 0,
-			&MainSectionArgs {
-				self_id              : frame.self_id.as_slice(),
-				broadcasts           : frame.broadcasts.as_slice(),
-				broadcast_list_height: self.broadcast_list_height,
-			}
-		)
 	}
 }
 
