@@ -37,14 +37,14 @@ impl Section {
 			screen.cursor(Some(cursor));
 		}
 
-		try!(border(screen.buffer(), x, y, self.width, self.height));
+		try!(draw_border(screen.buffer(), x, y, self.width, self.height));
 
 		Ok(())
 	}
 }
 
 
-pub fn border(
+pub fn draw_border(
 	buffer: &mut ScreenBuffer,
 	x     : Pos,
 	y     : Pos,
