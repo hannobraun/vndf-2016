@@ -14,14 +14,9 @@ use client::platform::{
 	Status,
 };
 use render::{
-	draw_border,
 	Pos,
 	Screen,
 	Section,
-};
-use render::Color::{
-	Green,
-	Red,
 };
 
 use self::base::{
@@ -201,37 +196,7 @@ impl Ui {
 	}
 
 	fn render_info(&mut self, status: &Status, y: Pos) -> IoResult<()> {
-		let buffer = self.screen.buffer();
-		let x      = 0;
-
-		try!(draw_border(
-			buffer,
-			x,
-			y,
-			self.info.width,
-			self.info.height
-		));
-
-		{
-			let status_writer = buffer.writer(x + 1, y + 1);
-
-			let (mut status_writer, status) = match *status {
-				Status::Notice(ref s) =>
-					(status_writer.foreground_color(Green), s.as_slice()),
-				Status::Error(ref s) =>
-					(status_writer.foreground_color(Red  ), s.as_slice()),
-				Status::None =>
-					(status_writer, ""),
-			};
-
-			try!(write!(
-				&mut status_writer,
-				"{}",
-				status
-			));
-		}
-
-		Ok(())
+		self.info.render(self.screen.buffer(), 0, y, status)
 	}
 }
 

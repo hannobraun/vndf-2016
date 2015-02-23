@@ -1,10 +1,16 @@
 use std::old_io::IoResult;
 
+use client::platform::Status as InfoStatus;
 use render::{
+	draw_border,
 	Pos,
 	ScreenBuffer,
 };
 use render::C;
+use render::Color::{
+	Green,
+	Red,
+};
 
 use super::base::{
 	Render,
@@ -14,6 +20,7 @@ use super::state::{
 	BroadcastForm,
 	Button,
 	CommTab,
+	InfoSection,
 	List,
 	TabHeader,
 	TabSwitcher,
@@ -148,6 +155,50 @@ impl<'a> Render for CommTab {
 }
 
 
+impl Render for InfoSection {
+	type Args = InfoStatus;
+
+	fn render(
+		&self,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		status: &InfoStatus,
+	)
+		-> IoResult<()>
+	{
+		try!(draw_border(
+			buffer,
+			x,
+			y,
+			self.width,
+			self.height
+		));
+
+		{
+			let status_writer = buffer.writer(x + 1, y + 1);
+
+			let (mut status_writer, status) = match *status {
+				InfoStatus::Notice(ref s) =>
+					(status_writer.foreground_color(Green), s.as_slice()),
+				InfoStatus::Error(ref s) =>
+					(status_writer.foreground_color(Red  ), s.as_slice()),
+				InfoStatus::None =>
+					(status_writer, ""),
+			};
+
+			try!(write!(
+				&mut status_writer,
+				"{}",
+				status
+			));
+		}
+
+		Ok(())
+	}
+}
+
+
 pub struct ListArgs<'a> {
 	pub width : Pos,
 	pub height: Pos,
@@ -159,10 +210,10 @@ impl<'a> Render for List {
 
 	fn render(
 		&self,
-		buffer : &mut ScreenBuffer,
-		x      : Pos,
-		y      : Pos,
-		args   : &ListArgs,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		args  : &ListArgs,
 	)
 		-> IoResult<()>
 	{
