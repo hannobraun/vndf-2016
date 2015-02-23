@@ -49,10 +49,10 @@ pub struct Ui {
 	width      : Pos,
 	info_height: Pos,
 
-	pub screen      : Screen,
-	pub main        : Section,
-	pub info        : InfoSection,
-	pub tab_switcher: TabSwitcher,
+	screen      : Screen,
+	main        : Section,
+	info        : InfoSection,
+	tab_switcher: TabSwitcher,
 
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
