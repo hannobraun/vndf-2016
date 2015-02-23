@@ -21,7 +21,7 @@ use super::input::InputReader;
 
 pub trait PlatformIo {
 	fn new() -> IoResult<Self>;
-	fn update(&mut self, frame: &Frame) -> Drain<InputEvent>;
+	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>>;
 	fn render(&mut self, frame: &Frame) -> IoResult<()>;
 }
 
@@ -43,10 +43,10 @@ impl PlatformIo for PlayerIo {
 		})
 	}
 
-	fn update(&mut self, frame: &Frame) -> Drain<InputEvent> {
+	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		self.chars.clear();
 		self.input_reader.input(&mut self.chars);
-		self.ui.update(frame, self.chars.as_slice())
+		Ok(self.ui.update(frame, self.chars.as_slice()))
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
@@ -94,7 +94,7 @@ impl PlatformIo for HeadlessIo {
 		})
 	}
 
-	fn update(&mut self, _: &Frame) -> Drain<InputEvent> {
+	fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(event) =>
@@ -106,7 +106,7 @@ impl PlatformIo for HeadlessIo {
 			}
 		}
 
-		self.events.drain()
+		Ok(self.events.drain())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {

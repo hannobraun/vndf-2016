@@ -74,35 +74,44 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 	network.send(ClientEvent::Login);
 
 	loop {
-		for event in platform.update(&frame) {
-			match event {
-				InputEvent::StartBroadcast(message) =>
-					if message.len() == 0 {
-						frame.status = Status::Error(
-							"Broadcasts can not be empty".to_string()
-						);
-					}
-					else if message.len() > 256 {
-						frame.status = Status::Error(
-							"Broadcast message too long".to_string()
-						);
-					}
-					else {
-						network.send(
-							ClientEvent::StartBroadcast(message.clone())
-						);
+		// TODO: This additional block is temporarily needed, until render is
+		//       merged into update. Remove it, once possible.
+		{
+			let input_events = match platform.update(&frame) {
+				Ok(events) => events,
+				Err(error) => panic!("Error updating platform code: {}", error),
+			};
+
+			for event in input_events {
+				match event {
+					InputEvent::StartBroadcast(message) =>
+						if message.len() == 0 {
+							frame.status = Status::Error(
+								"Broadcasts can not be empty".to_string()
+							);
+						}
+						else if message.len() > 256 {
+							frame.status = Status::Error(
+								"Broadcast message too long".to_string()
+							);
+						}
+						else {
+							network.send(
+								ClientEvent::StartBroadcast(message.clone())
+							);
+
+							frame.status = Status::Notice(
+								"Sending broadcast".to_string()
+							);
+						},
+					InputEvent::StopBroadcast => {
+						network.send(ClientEvent::StopBroadcast);
 
 						frame.status = Status::Notice(
-							"Sending broadcast".to_string()
+							"Stopped sending broadcast".to_string()
 						);
 					},
-				InputEvent::StopBroadcast => {
-					network.send(ClientEvent::StopBroadcast);
-
-					frame.status = Status::Notice(
-						"Stopped sending broadcast".to_string()
-					);
-				},
+				}
 			}
 		}
 
