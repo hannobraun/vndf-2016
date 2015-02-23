@@ -169,8 +169,7 @@ impl Render for InfoSection {
 	{
 		try!(draw_border(
 			buffer,
-			x,
-			y,
+			x, y,
 			self.width,
 			self.height
 		));
