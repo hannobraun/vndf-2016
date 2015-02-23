@@ -39,10 +39,9 @@ use self::update::CommTabArgs;
 
 
 pub struct Ui {
-	screen      : Screen,
-	main        : MainSection,
-	info        : InfoSection,
-
+	screen: Screen,
+	main  : MainSection,
+	info  : InfoSection,
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
 
@@ -59,11 +58,11 @@ impl Ui {
 		let screen = try!(Screen::new(width, 24));
 
 		Ok(Ui {
-			screen      : screen,
-			main        : MainSection::new(width, 18),
-			info        : InfoSection::new(width,  6),
-			mode        : TextInputMode::Regular,
-			events      : Vec::new(),
+			screen: screen,
+			main  : MainSection::new(width, 18),
+			info  : InfoSection::new(width,  6),
+			mode  : TextInputMode::Regular,
+			events: Vec::new(),
 
 			broadcast_list_height: 5,
 		})
