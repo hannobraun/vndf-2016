@@ -207,7 +207,6 @@ impl<'a> Update for MainSection {
 			x + 1, y + 1,
 			&TabSwitcherArgs {
 				is_sending : args.is_sending,
-				list_length: args.list_length,
 				list_height: args.list_height,
 				broadcasts : args.broadcasts,
 			},
@@ -227,7 +226,6 @@ impl Update for TabHeader {
 
 pub struct TabSwitcherArgs<'a> {
 	pub is_sending : bool,
-	pub list_length: usize,
 	pub list_height: Pos,
 	pub broadcasts : &'a [String],
 }
