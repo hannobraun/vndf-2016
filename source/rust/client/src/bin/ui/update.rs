@@ -115,7 +115,6 @@ impl<'a> Update for Button {
 
 pub struct CommTabArgs<'a> {
 	pub is_sending : bool,
-	pub list_length: usize,
 	pub list_height: Pos,
 	pub broadcasts : &'a [String],
 }
@@ -246,7 +245,6 @@ impl<'a> Update for TabSwitcher {
 			x, y + 2,
 			&CommTabArgs {
 				is_sending : args.is_sending,
-				list_length: args.list_length,
 				list_height: args.list_height,
 				broadcasts : args.broadcasts,
 			},
