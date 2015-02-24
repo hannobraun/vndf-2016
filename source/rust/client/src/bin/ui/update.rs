@@ -113,14 +113,15 @@ impl<'a> Update for Button {
 }
 
 
-pub struct CommTabArgs {
+pub struct CommTabArgs<'a> {
 	pub is_sending : bool,
 	pub list_length: usize,
 	pub list_height: Pos,
+	pub broadcasts : &'a [String],
 }
 
-impl Update for CommTab {
-	type Args = CommTabArgs;
+impl<'a> Update for CommTab {
+	type Args = CommTabArgs<'a>;
 
 	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
 		let form_is_selected = self.form_is_selected();
@@ -243,6 +244,7 @@ impl<'a> Update for TabSwitcher {
 				is_sending : args.is_sending,
 				list_length: args.list_length,
 				list_height: args.list_height,
+				broadcasts : args.broadcasts,
 			},
 		)
 	}
