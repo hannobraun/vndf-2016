@@ -114,10 +114,9 @@ impl<'a> Update for Button {
 
 
 pub struct CommTabArgs<'a> {
-	pub is_sending : bool,
-	pub self_id    : &'a str,
-	pub list_height: Pos,
-	pub broadcasts : &'a [String],
+	pub is_sending: bool,
+	pub self_id   : &'a str,
+	pub broadcasts: &'a [String],
 }
 
 impl<'a> Update for CommTab {
@@ -165,7 +164,7 @@ impl<'a> Update for CommTab {
 			&ListArgs {
 				is_selected: list_is_selected,
 				width      : width - 4 - 4,
-				height     : args.list_height,
+				height     : 5,
 				items      : args.broadcasts,
 			},
 		)
@@ -214,10 +213,9 @@ impl<'a> Update for List {
 
 
 pub struct MainArgs<'a> {
-	pub is_sending : bool,
-	pub self_id    : &'a str,
-	pub list_height: Pos,
-	pub broadcasts : &'a [String],
+	pub is_sending: bool,
+	pub self_id   : &'a str,
+	pub broadcasts: &'a [String],
 }
 
 impl<'a> Update for MainSection {
@@ -228,10 +226,9 @@ impl<'a> Update for MainSection {
 			b,
 			x + 1, y + 1,
 			&TabSwitcherArgs {
-				is_sending : args.is_sending,
-				self_id    : args.self_id,
-				list_height: args.list_height,
-				broadcasts : args.broadcasts,
+				is_sending: args.is_sending,
+				self_id   : args.self_id,
+				broadcasts: args.broadcasts,
 			},
 		)
 	}
@@ -252,10 +249,9 @@ impl<'a> Update for TabHeader {
 
 
 pub struct TabSwitcherArgs<'a> {
-	pub is_sending : bool,
-	pub self_id    : &'a str,
-	pub list_height: Pos,
-	pub broadcasts : &'a [String],
+	pub is_sending: bool,
+	pub self_id   : &'a str,
+	pub broadcasts: &'a [String],
 }
 
 impl<'a> Update for TabSwitcher {
@@ -295,10 +291,9 @@ impl<'a> Update for TabSwitcher {
 			buffer,
 			x, y + 2,
 			&CommTabArgs {
-				is_sending : args.is_sending,
-				self_id    : args.self_id,
-				list_height: args.list_height,
-				broadcasts : args.broadcasts,
+				is_sending: args.is_sending,
+				self_id   : args.self_id,
+				broadcasts: args.broadcasts,
 			},
 		)
 	}

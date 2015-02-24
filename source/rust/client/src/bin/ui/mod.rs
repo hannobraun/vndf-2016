@@ -12,10 +12,7 @@ use client::platform::{
 	Frame,
 	InputEvent,
 };
-use render::{
-	Pos,
-	Screen,
-};
+use render::Screen;
 
 use self::base::{
 	ProcessInput,
@@ -45,11 +42,6 @@ pub struct Ui {
 	info  : InfoSection,
 	mode  : TextInputMode,
 	events: Vec<InputEvent>,
-
-	// TODO: This is not very pretty, and a sign that the strict separation of
-	//       at least update and render isn't working out. I should find a way
-	//       to work more towards an immediate-mode approach.
-	pub broadcast_list_height: Pos,
 }
 
 impl Ui {
@@ -64,8 +56,6 @@ impl Ui {
 			info  : InfoSection::new(width,  6),
 			mode  : TextInputMode::Regular,
 			events: Vec::new(),
-
-			broadcast_list_height: 5,
 		})
 	}
 
@@ -143,10 +133,9 @@ impl Ui {
 			self.screen.buffer(),
 			0, 0,
 			&MainArgs {
-				is_sending : is_sending,
-				self_id    : frame.self_id.as_slice(),
-				list_height: self.broadcast_list_height,
-				broadcasts : broadcasts.as_slice(),
+				is_sending: is_sending,
+				self_id   : frame.self_id.as_slice(),
+				broadcasts: broadcasts.as_slice(),
 			}
 		));
 		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &()));
