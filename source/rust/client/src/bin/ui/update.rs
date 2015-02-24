@@ -142,10 +142,22 @@ impl Update for List {
 }
 
 
-impl Update for MainSection {
-	type Args = ();
+pub struct MainArgs {
+	pub is_sending : bool,
+	pub list_length: usize,
+	pub list_height: Pos,
+}
 
-	fn update(&mut self, _: &()) {}
+impl Update for MainSection {
+	type Args = MainArgs;
+
+	fn update(&mut self, args: &MainArgs) {
+		self.tab_switcher.update(&TabSwitcherArgs {
+			is_sending : args.is_sending,
+			list_length: args.list_length,
+			list_height: args.list_height,
+		})
+	}
 }
 
 
@@ -156,11 +168,25 @@ impl Update for TabHeader {
 }
 
 
-impl Update for TabSwitcher {
-	type Args = ();
+pub struct TabSwitcherArgs {
+	pub is_sending : bool,
+	pub list_length: usize,
+	pub list_height: Pos,
+}
 
-	fn update(&mut self, _: &()) {
+impl Update for TabSwitcher {
+	type Args = TabSwitcherArgs;
+
+	fn update(&mut self, args: &TabSwitcherArgs) {
 		// TODO: Set currently selected TabHeader to active.
+
+		self.comm_header.update(&());
+		self.nav_header.update(&());
+		self.comm_tab.update(&CommTabArgs {
+			is_sending : args.is_sending,
+			list_length: args.list_length,
+			list_height: args.list_height,
+		});
 	}
 }
 

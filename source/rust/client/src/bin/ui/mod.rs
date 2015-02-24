@@ -36,7 +36,7 @@ use self::state::{
 	InfoSection,
 	MainSection,
 };
-use self::update::CommTabArgs;
+use self::update::MainArgs;
 
 
 pub struct Ui {
@@ -131,11 +131,12 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
-		self.main.tab_switcher.comm_tab.update(&CommTabArgs {
+		self.main.update(&MainArgs {
 			is_sending : is_sending,
 			list_length: frame.broadcasts.len(),
 			list_height: self.broadcast_list_height,
 		});
+		self.info.update(&());
 
 		if self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated {
 			self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
