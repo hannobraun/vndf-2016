@@ -349,7 +349,7 @@ impl<'a> Render for TabHeader {
 	)
 		-> IoResult<()>
 	{
-		let (foreground_color, background_color) = Status::Passive.colors();
+		let (foreground_color, background_color) = self.status.colors();
 
 		buffer
 			.writer(x, y)

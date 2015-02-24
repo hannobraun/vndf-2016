@@ -132,11 +132,16 @@ impl MainSection {
 }
 
 
-pub struct TabHeader;
+pub struct TabHeader {
+	// Transient data
+	pub status: Status,
+}
 
 impl TabHeader {
 	pub fn new() -> TabHeader {
-		TabHeader
+		TabHeader {
+			status: Status::Passive,
+		}
 	}
 }
 
