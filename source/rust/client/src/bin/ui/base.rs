@@ -33,7 +33,13 @@ pub enum InputEvent {
 pub trait Update {
 	type Args;
 
-	fn update(&mut self, args: &Self::Args);
+	fn update(
+		&mut self,
+		b   : &mut ScreenBuffer,
+		x   : Pos,
+		y   : Pos,
+		args: &Self::Args
+	);
 }
 
 
