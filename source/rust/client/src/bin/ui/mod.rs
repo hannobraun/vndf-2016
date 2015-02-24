@@ -73,7 +73,7 @@ impl Ui {
 		-> IoResult<Drain<InputEvent>>
 	{
 		self.process_input(chars);
-		self.generate_events(frame);
+		try!(self.generate_events(frame));
 		try!(self.render(frame));
 
 		Ok(self.events.drain())
@@ -124,7 +124,7 @@ impl Ui {
 		}
 	}
 
-	fn generate_events(&mut self, frame: &Frame) {
+	fn generate_events(&mut self, frame: &Frame) -> IoResult<()> {
 		let is_sending = frame.broadcasts
 			.iter()
 			.any(|broadcast|
@@ -154,6 +154,8 @@ impl Ui {
 				self.events.push(InputEvent::StartBroadcast(message));
 			}
 		}
+
+		Ok(())
 	}
 
 	fn render(&mut self, frame: &Frame) -> IoResult<()> {
