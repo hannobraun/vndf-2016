@@ -118,7 +118,7 @@ impl Update for CommTab {
 
 		try!(self.broadcast_form.update(
 			b,
-			x, y,
+			x + 4, y + 4,
 			&BroadcastFormArgs {
 				is_selected: form_is_selected,
 				is_sending : args.is_sending,
