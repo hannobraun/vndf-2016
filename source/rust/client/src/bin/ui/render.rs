@@ -18,7 +18,6 @@ use super::base::{
 	Status,
 };
 use super::state::{
-	CommTab,
 	InfoSection,
 	MainSection,
 	TabSwitcher,
@@ -146,29 +145,6 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 }
 
 
-pub struct CommTabArgs<'a> {
-	pub self_id    : &'a str,
-	pub broadcasts : &'a [String],
-	pub list_height: Pos,
-}
-
-impl<'a> Render for CommTab {
-	type Args = CommTabArgs<'a>;
-
-	fn render(
-		&self,
-		_: &mut ScreenBuffer,
-		_: Pos,
-		_: Pos,
-		_: &CommTabArgs,
-	)
-		-> IoResult<()>
-	{
-		Ok(())
-	}
-}
-
-
 impl Render for InfoSection {
 	type Args = InfoStatus;
 
@@ -274,7 +250,7 @@ impl<'a> Render for TabSwitcher {
 		buffer : &mut ScreenBuffer,
 		x      : Pos,
 		y      : Pos,
-		args   : &TabSwitcherArgs,
+		_      : &TabSwitcherArgs,
 	)
 		-> IoResult<()>
 	{
@@ -284,15 +260,6 @@ impl<'a> Render for TabSwitcher {
 			try!(buffer.set(x, y + 1, c));
 		}
 
-		self.comm_tab.render(
-			buffer,
-			x,
-			y + 2,
-			&CommTabArgs {
-				self_id    : args.self_id,
-				broadcasts : args.broadcasts,
-				list_height: args.list_height,
-			},
-		)
+		Ok(())
 	}
 }
