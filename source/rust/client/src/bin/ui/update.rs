@@ -11,6 +11,7 @@ use render::{
 
 use super::base::{
 	Status,
+	Render,
 	Update,
 };
 use super::state::{
@@ -97,8 +98,8 @@ pub struct ButtonArgs<'a> {
 impl<'a> Update for Button {
 	type Args = ButtonArgs<'a>;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &ButtonArgs) -> IoResult<()> {
-		Ok(())
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ButtonArgs) -> IoResult<()> {
+		self.render(buffer, x, y, args)
 	}
 }
 

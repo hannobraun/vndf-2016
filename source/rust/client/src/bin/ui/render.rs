@@ -55,15 +55,6 @@ impl Render for BroadcastForm {
 			},
 		));
 
-		try!(self.button.render(
-			buffer,
-			x + text_field_width + 2, y,
-			&ButtonArgs {
-				text  : self.button_text,
-				status: self.button_status,
-			},
-		));
-
 		Ok(())
 	}
 }
