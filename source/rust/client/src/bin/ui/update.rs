@@ -193,7 +193,6 @@ impl<'a> Update for List {
 
 pub struct MainArgs<'a> {
 	pub is_sending : bool,
-	pub list_length: usize,
 	pub list_height: Pos,
 	pub broadcasts : &'a [String],
 }
