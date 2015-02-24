@@ -240,13 +240,14 @@ impl<'a> Update for TabSwitcher {
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
 		// TODO: Set currently selected TabHeader to active.
 
-		let headers = [
-			("Comm", &self.comm_header),
-			("Nav" , &self.nav_header ),
+		let mut headers = [
+			("Comm", &mut self.comm_header),
+			("Nav" , &mut self.nav_header ),
 		];
+		let numer_of_headers = headers.len();
 		let mut header_x = x;
-		for (i, &(label, header)) in headers.iter().enumerate() {
-			try!(header.render(
+		for (i, &mut (label, ref mut header)) in headers.iter_mut().enumerate() {
+			try!(header.update(
 				buffer,
 				header_x,
 				y,
@@ -256,7 +257,7 @@ impl<'a> Update for TabSwitcher {
 			));
 			header_x += label.chars().count() as Pos;
 
-			if i + 1 < headers.len() {
+			if i + 1 < numer_of_headers {
 				try!(
 					buffer
 						.writer(header_x, y)
