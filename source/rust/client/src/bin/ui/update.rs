@@ -79,6 +79,11 @@ impl Update for BroadcastForm {
 }
 
 
+pub struct ButtonArgs<'a> {
+	pub text  : &'a str,
+	pub status: Status,
+}
+
 impl Update for Button {
 	type Args = ();
 

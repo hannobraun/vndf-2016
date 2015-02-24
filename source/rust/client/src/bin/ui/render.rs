@@ -28,6 +28,7 @@ use super::state::{
 	TabSwitcher,
 	TextField,
 };
+use super::update::ButtonArgs;
 
 
 impl Render for BroadcastForm {
@@ -67,11 +68,6 @@ impl Render for BroadcastForm {
 	}
 }
 
-
-pub struct ButtonArgs<'a> {
-	pub text  : &'a str,
-	pub status: Status,
-}
 
 impl<'a> Render for Button {
 	type Args = ButtonArgs<'a>;
