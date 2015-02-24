@@ -84,10 +84,10 @@ pub struct ButtonArgs<'a> {
 	pub status: Status,
 }
 
-impl Update for Button {
-	type Args = ();
+impl<'a> Update for Button {
+	type Args = ButtonArgs<'a>;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &ButtonArgs) -> IoResult<()> {
 		Ok(())
 	}
 }
