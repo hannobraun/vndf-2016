@@ -189,9 +189,7 @@ impl Render for InfoSection {
 
 
 pub struct MainSectionArgs<'a> {
-	pub self_id              : &'a str,
-	pub broadcasts           : &'a [Broadcast],
-	pub broadcast_list_height: Pos,
+	pub broadcasts: &'a [Broadcast],
 }
 
 impl<'a> Render for MainSection {
