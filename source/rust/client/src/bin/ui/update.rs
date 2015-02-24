@@ -139,7 +139,7 @@ impl<'a> Update for CommTab {
 
 		self.broadcast_list.update(
 			buffer,
-			x, y,
+			x + 4, y + 7,
 			&ListArgs {
 				is_selected: list_is_selected,
 				width      : width - 4 - 4,
