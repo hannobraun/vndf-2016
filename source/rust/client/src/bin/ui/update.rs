@@ -37,7 +37,7 @@ pub struct BroadcastFormArgs {
 impl Update for BroadcastForm {
 	type Args = BroadcastFormArgs;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &BroadcastFormArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &BroadcastFormArgs) -> IoResult<()> {
 		self.text_field_status =
 			if args.is_selected {
 				if args.is_sending {
@@ -74,7 +74,17 @@ impl Update for BroadcastForm {
 			)
 			as Pos;
 
-		Ok(())
+		let total_width      = buffer.width() - x;
+		let text_field_width = total_width - 2 - self.button_width - 2;
+
+		self.button.update(
+			buffer,
+			x + text_field_width + 2, y,
+			&ButtonArgs {
+				text  : self.button_text,
+				status: self.button_status,
+			},
+		)
 	}
 }
 
