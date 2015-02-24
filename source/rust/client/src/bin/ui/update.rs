@@ -143,7 +143,6 @@ impl<'a> Update for CommTab {
 			x, y,
 			&ListArgs {
 				is_selected: list_is_selected,
-				length     : args.list_length,
 				width      : width - 4 - 4,
 				height     : args.list_height,
 				items      : args.broadcasts,
@@ -164,7 +163,6 @@ impl Update for InfoSection {
 
 pub struct ListArgs<'a> {
 	pub is_selected: bool,
-	pub length     : usize,
 	pub width      : Pos,
 	pub height     : Pos,
 	pub items      : &'a [String],
