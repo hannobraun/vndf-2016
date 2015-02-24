@@ -122,12 +122,12 @@ pub struct CommTabArgs<'a> {
 impl<'a> Update for CommTab {
 	type Args = CommTabArgs<'a>;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
 		let form_is_selected = self.form_is_selected();
 		let list_is_selected = self.list_is_selected();
 
 		try!(self.broadcast_form.update(
-			b,
+			buffer,
 			x + 4, y + 4,
 			&BroadcastFormArgs {
 				is_selected: form_is_selected,
@@ -135,10 +135,10 @@ impl<'a> Update for CommTab {
 			},
 		));
 
-		let width = b.width();
+		let width = buffer.width();
 
 		self.broadcast_list.update(
-			b,
+			buffer,
 			x, y,
 			&ListArgs {
 				is_selected: list_is_selected,
