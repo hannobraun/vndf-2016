@@ -314,32 +314,6 @@ impl<'a> Render for TabSwitcher {
 	)
 		-> IoResult<()>
 	{
-		let headers = [
-			("Comm", &self.comm_header),
-			("Nav" , &self.nav_header ),
-		];
-		let mut header_x = x;
-		for (i, &(label, header)) in headers.iter().enumerate() {
-			try!(header.render(
-				buffer,
-				header_x,
-				y,
-				&TabHeaderArgs {
-					label: label,
-				},
-			));
-			header_x += label.chars().count() as Pos;
-
-			if i + 1 < headers.len() {
-				try!(
-					buffer
-						.writer(header_x, y)
-						.write_str(" | ")
-				);
-				header_x += 3;
-			}
-		}
-
 		let mut c = C::new();
 		c.c = '─';
 		for x in range(x, buffer.width()) {

@@ -10,6 +10,7 @@ use render::{
 };
 
 use super::base::{
+	Render,
 	Status,
 	Update,
 };
@@ -221,8 +222,8 @@ pub struct TabHeaderArgs<'a> {
 impl<'a> Update for TabHeader {
 	type Args = TabHeaderArgs<'a>;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &TabHeaderArgs) -> IoResult<()> {
-		Ok(())
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> IoResult<()> {
+		self.render(buffer, x, y, args)
 	}
 }
 
@@ -239,12 +240,32 @@ impl<'a> Update for TabSwitcher {
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
 		// TODO: Set currently selected TabHeader to active.
 
-		try!(self.comm_header.update(buffer, x, y, &TabHeaderArgs {
-			label: "Comm",
-		}));
-		try!(self.nav_header.update(buffer, x, y, &TabHeaderArgs {
-			label: "Nav",
-		}));
+		let headers = [
+			("Comm", &self.comm_header),
+			("Nav" , &self.nav_header ),
+		];
+		let mut header_x = x;
+		for (i, &(label, header)) in headers.iter().enumerate() {
+			try!(header.render(
+				buffer,
+				header_x,
+				y,
+				&TabHeaderArgs {
+					label: label,
+				},
+			));
+			header_x += label.chars().count() as Pos;
+
+			if i + 1 < headers.len() {
+				try!(
+					buffer
+						.writer(header_x, y)
+						.write_str(" | ")
+				);
+				header_x += 3;
+			}
+		}
+
 		self.comm_tab.update(
 			buffer,
 			x, y + 2,
