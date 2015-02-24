@@ -10,7 +10,6 @@ use render::{
 };
 
 use super::base::{
-	Render,
 	Status,
 	Update,
 };
@@ -256,6 +255,6 @@ impl Update for TextField {
 	type Args = TextFieldArgs;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TextFieldArgs) -> IoResult<()> {
-		self.render(buffer, x, y, args)
+		render::text_field(buffer, x, y, args.status, args.width, self.text.as_slice())
 	}
 }

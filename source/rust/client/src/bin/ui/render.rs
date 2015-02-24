@@ -24,9 +24,7 @@ use super::state::{
 	MainSection,
 	TabHeader,
 	TabSwitcher,
-	TextField,
 };
-use super::update::TextFieldArgs;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -37,6 +35,40 @@ pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &
 		.foreground_color(foreground_color)
 		.background_color(background_color)
 		.write_str(text)
+}
+
+pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> IoResult<()> {
+	let limit = x + width;
+
+	let (foreground_color, background_color) = status.colors();
+
+	try!(
+		buffer
+			.writer(x, y)
+			.limit(limit)
+			.foreground_color(foreground_color)
+			.background_color(background_color)
+			.write_str(text)
+	);
+	for x in range(x + text.chars().count() as Pos, limit) {
+		try!(
+			buffer
+				.writer(x, y)
+				.limit(limit)
+				.foreground_color(foreground_color)
+				.background_color(background_color)
+				.write_str(" ")
+		);
+	}
+
+	buffer.cursor = if status == Status::Active {
+		Some((1 + x + text.chars().count() as Pos, 1 + y))
+	}
+	else {
+		None
+	};
+
+	Ok(())
 }
 
 
@@ -358,53 +390,5 @@ impl<'a> Render for TabSwitcher {
 				list_height: args.list_height,
 			},
 		)
-	}
-}
-
-
-impl Render for TextField {
-	type Args = TextFieldArgs;
-
-	fn render(
-		&self,
-		buffer : &mut ScreenBuffer,
-		x      : Pos,
-		y      : Pos,
-		args   : &TextFieldArgs,
-	)
-		-> IoResult<()>
-	{
-		let text  = self.text.as_slice();
-		let limit = x + args.width;
-
-		let (foreground_color, background_color) = args.status.colors();
-
-		try!(
-			buffer
-				.writer(x, y)
-				.limit(limit)
-				.foreground_color(foreground_color)
-				.background_color(background_color)
-				.write_str(text)
-		);
-		for x in range(x + text.chars().count() as Pos, limit) {
-			try!(
-				buffer
-					.writer(x, y)
-					.limit(limit)
-					.foreground_color(foreground_color)
-					.background_color(background_color)
-					.write_str(" ")
-			);
-		}
-
-		buffer.cursor = if args.status == Status::Active {
-			Some((1 + x + text.chars().count() as Pos, 1 + y))
-		}
-		else {
-			None
-		};
-
-		Ok(())
 	}
 }
