@@ -46,25 +46,13 @@ impl Render for BroadcastForm {
 
 	fn render(
 		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		_     : &(),
+		_: &mut ScreenBuffer,
+		_: Pos,
+		_: Pos,
+		_: &(),
 	)
 		-> IoResult<()>
 	{
-		let total_width      = buffer.width() - x;
-		let text_field_width = total_width - 2 - self.button_width - 2;
-
-		try!(self.text_field.render(
-			buffer,
-			x, y,
-			&TextFieldArgs {
-				width : text_field_width,
-				status: self.text_field_status,
-			},
-		));
-
 		Ok(())
 	}
 }

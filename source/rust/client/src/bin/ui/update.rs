@@ -10,6 +10,7 @@ use render::{
 };
 
 use super::base::{
+	Render,
 	Status,
 	Update,
 };
@@ -254,7 +255,7 @@ pub struct TextFieldArgs {
 impl Update for TextField {
 	type Args = TextFieldArgs;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &TextFieldArgs) -> IoResult<()> {
-		Ok(())
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TextFieldArgs) -> IoResult<()> {
+		self.render(buffer, x, y, args)
 	}
 }
