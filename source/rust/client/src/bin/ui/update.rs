@@ -214,6 +214,10 @@ impl<'a> Update for MainSection {
 }
 
 
+pub struct TabHeaderArgs<'a> {
+	pub label: &'a str,
+}
+
 impl Update for TabHeader {
 	type Args = ();
 

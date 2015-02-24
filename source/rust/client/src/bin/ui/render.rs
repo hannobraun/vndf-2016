@@ -24,6 +24,7 @@ use super::state::{
 	TabHeader,
 	TabSwitcher,
 };
+use super::update::TabHeaderArgs;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -271,10 +272,6 @@ impl<'a> Render for MainSection {
 	}
 }
 
-
-pub struct TabHeaderArgs<'a> {
-	pub label: &'a str,
-}
 
 impl<'a> Render for TabHeader {
 	type Args = TabHeaderArgs<'a>;
