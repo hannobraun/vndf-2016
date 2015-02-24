@@ -237,6 +237,11 @@ impl Update for TabSwitcher {
 }
 
 
+pub struct TextFieldArgs {
+	pub width : Pos,
+	pub status: Status,
+}
+
 impl Update for TextField {
 	type Args = ();
 

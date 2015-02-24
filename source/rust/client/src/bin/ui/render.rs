@@ -27,6 +27,7 @@ use super::state::{
 	TabSwitcher,
 	TextField,
 };
+use super::update::TextFieldArgs;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -396,11 +397,6 @@ impl<'a> Render for TabSwitcher {
 	}
 }
 
-
-pub struct TextFieldArgs {
-	pub width : Pos,
-	pub status: Status,
-}
 
 impl Render for TextField {
 	type Args = TextFieldArgs;
