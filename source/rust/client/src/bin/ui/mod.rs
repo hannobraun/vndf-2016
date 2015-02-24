@@ -131,7 +131,7 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
-		self.main.update(
+		try!(self.main.update(
 			self.screen.buffer(),
 			0, 0,
 			&MainArgs {
@@ -139,8 +139,8 @@ impl Ui {
 				list_length: frame.broadcasts.len(),
 				list_height: self.broadcast_list_height,
 			}
-		);
-		self.info.update(self.screen.buffer(), 0, self.main.height, &());
+		));
+		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &()));
 
 		if self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated {
 			self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;

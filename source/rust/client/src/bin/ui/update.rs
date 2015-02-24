@@ -2,6 +2,7 @@ use std::cmp::{
 	max,
 	min,
 };
+use std::old_io::IoResult;
 
 use render::{
 	Pos,
@@ -36,7 +37,7 @@ pub struct BroadcastFormArgs {
 impl Update for BroadcastForm {
 	type Args = BroadcastFormArgs;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &BroadcastFormArgs) {
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &BroadcastFormArgs) -> IoResult<()> {
 		self.text_field_status =
 			if args.is_selected {
 				if args.is_sending {
@@ -72,6 +73,8 @@ impl Update for BroadcastForm {
 				STOP_BROADCAST.chars().count()
 			)
 			as Pos;
+
+		Ok(())
 	}
 }
 
@@ -79,7 +82,9 @@ impl Update for BroadcastForm {
 impl Update for Button {
 	type Args = ();
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) {}
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+		Ok(())
+	}
 }
 
 
@@ -92,18 +97,18 @@ pub struct CommTabArgs {
 impl Update for CommTab {
 	type Args = CommTabArgs;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) {
+	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
 		let form_is_selected = self.form_is_selected();
 		let list_is_selected = self.list_is_selected();
 
-		self.broadcast_form.update(
+		try!(self.broadcast_form.update(
 			b,
 			x, y,
 			&BroadcastFormArgs {
 				is_selected: form_is_selected,
 				is_sending : args.is_sending,
 			},
-		);
+		));
 
 		self.broadcast_list.update(
 			b,
@@ -113,7 +118,7 @@ impl Update for CommTab {
 				length     : args.list_length,
 				height     : args.list_height,
 			},
-		);
+		)
 	}
 }
 
@@ -121,7 +126,9 @@ impl Update for CommTab {
 impl Update for InfoSection {
 	type Args = ();
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) {}
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+		Ok(())
+	}
 }
 
 
@@ -134,7 +141,7 @@ pub struct ListArgs {
 impl Update for List {
 	type Args = ListArgs;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &ListArgs) {
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &ListArgs) -> IoResult<()> {
 		self.status = if args.is_selected {
 			if self.activated {
 				Status::Active
@@ -149,6 +156,8 @@ impl Update for List {
 
 		let max_first = max(0, args.length as isize - args.height as isize);
 		self.first = min(self.first, max_first as usize);
+
+		Ok(())
 	}
 }
 
@@ -162,7 +171,7 @@ pub struct MainArgs {
 impl Update for MainSection {
 	type Args = MainArgs;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) {
+	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
 		self.tab_switcher.update(
 			b,
 			x, y,
@@ -179,7 +188,9 @@ impl Update for MainSection {
 impl Update for TabHeader {
 	type Args = ();
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) {}
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+		Ok(())
+	}
 }
 
 
@@ -192,11 +203,11 @@ pub struct TabSwitcherArgs {
 impl Update for TabSwitcher {
 	type Args = TabSwitcherArgs;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) {
+	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
 		// TODO: Set currently selected TabHeader to active.
 
-		self.comm_header.update(b, x, y, &());
-		self.nav_header.update(b, x, y, &());
+		try!(self.comm_header.update(b, x, y, &()));
+		try!(self.nav_header.update(b, x, y, &()));
 		self.comm_tab.update(
 			b,
 			x, y,
@@ -205,7 +216,7 @@ impl Update for TabSwitcher {
 				list_length: args.list_length,
 				list_height: args.list_height,
 			},
-		);
+		)
 	}
 }
 
@@ -213,5 +224,7 @@ impl Update for TabSwitcher {
 impl Update for TextField {
 	type Args = ();
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) {}
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+		Ok(())
+	}
 }

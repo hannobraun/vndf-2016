@@ -39,7 +39,8 @@ pub trait Update {
 		x   : Pos,
 		y   : Pos,
 		args: &Self::Args
-	);
+	)
+	-> IoResult<()>;
 }
 
 
