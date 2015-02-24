@@ -221,36 +221,22 @@ impl<'a> Render for MainSection {
 			.collect();
 		broadcasts.sort();
 
-		try!(self.tab_switcher.render(
-			buffer,
-			x + 1, y + 1,
-			&TabSwitcherArgs {
-				self_id    : args.self_id,
-				broadcasts : broadcasts.as_slice(),
-				list_height: args.broadcast_list_height,
-			},
-		));
+		try!(self.tab_switcher.render(buffer, x + 1, y + 1, &()));
 
 		Ok(())
 	}
 }
 
 
-pub struct TabSwitcherArgs<'a> {
-	pub self_id    : &'a str,
-	pub broadcasts : &'a [String],
-	pub list_height: Pos,
-}
-
 impl<'a> Render for TabSwitcher {
-	type Args = TabSwitcherArgs<'a>;
+	type Args = ();
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		_     : &TabSwitcherArgs,
+		_     : &(),
 	)
 		-> IoResult<()>
 	{
