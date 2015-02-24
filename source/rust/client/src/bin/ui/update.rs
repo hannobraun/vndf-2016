@@ -189,7 +189,7 @@ impl Update for MainSection {
 	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
 		self.tab_switcher.update(
 			b,
-			x, y,
+			x + 1, y + 1,
 			&TabSwitcherArgs {
 				is_sending : args.is_sending,
 				list_length: args.list_length,
