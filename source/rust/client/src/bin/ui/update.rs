@@ -236,17 +236,17 @@ pub struct TabSwitcherArgs<'a> {
 impl<'a> Update for TabSwitcher {
 	type Args = TabSwitcherArgs<'a>;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
 		// TODO: Set currently selected TabHeader to active.
 
-		try!(self.comm_header.update(b, x, y, &TabHeaderArgs {
+		try!(self.comm_header.update(buffer, x, y, &TabHeaderArgs {
 			label: "Comm",
 		}));
-		try!(self.nav_header.update(b, x, y, &TabHeaderArgs {
+		try!(self.nav_header.update(buffer, x, y, &TabHeaderArgs {
 			label: "Nav",
 		}));
 		self.comm_tab.update(
-			b,
+			buffer,
 			x, y + 2,
 			&CommTabArgs {
 				is_sending : args.is_sending,
