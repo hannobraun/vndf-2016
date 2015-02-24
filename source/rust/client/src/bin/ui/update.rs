@@ -187,14 +187,15 @@ impl Update for List {
 }
 
 
-pub struct MainArgs {
+pub struct MainArgs<'a> {
 	pub is_sending : bool,
 	pub list_length: usize,
 	pub list_height: Pos,
+	pub broadcasts : &'a [String],
 }
 
-impl Update for MainSection {
-	type Args = MainArgs;
+impl<'a> Update for MainSection {
+	type Args = MainArgs<'a>;
 
 	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
 		self.tab_switcher.update(

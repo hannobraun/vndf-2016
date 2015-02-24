@@ -131,6 +131,14 @@ impl Ui {
 				broadcast.sender == frame.self_id
 			);
 
+		let mut broadcasts: Vec<String> = frame.broadcasts
+			.iter()
+			.map(|broadcast|
+				format!("{}: {}", broadcast.sender, broadcast.message)
+			)
+			.collect();
+		broadcasts.sort();
+
 		try!(self.main.update(
 			self.screen.buffer(),
 			0, 0,
@@ -138,6 +146,7 @@ impl Ui {
 				is_sending : is_sending,
 				list_length: frame.broadcasts.len(),
 				list_height: self.broadcast_list_height,
+				broadcasts : broadcasts.as_slice(),
 			}
 		));
 		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &()));
