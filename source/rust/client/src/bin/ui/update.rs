@@ -136,13 +136,17 @@ impl<'a> Update for CommTab {
 			},
 		));
 
+		let width = b.width();
+
 		self.broadcast_list.update(
 			b,
 			x, y,
 			&ListArgs {
 				is_selected: list_is_selected,
 				length     : args.list_length,
+				width      : width - 4 - 4,
 				height     : args.list_height,
+				items      : args.broadcasts,
 			},
 		)
 	}
@@ -158,14 +162,16 @@ impl Update for InfoSection {
 }
 
 
-pub struct ListArgs {
+pub struct ListArgs<'a> {
 	pub is_selected: bool,
 	pub length     : usize,
+	pub width      : Pos,
 	pub height     : Pos,
+	pub items      : &'a [String],
 }
 
-impl Update for List {
-	type Args = ListArgs;
+impl<'a> Update for List {
+	type Args = ListArgs<'a>;
 
 	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &ListArgs) -> IoResult<()> {
 		self.status = if args.is_selected {
