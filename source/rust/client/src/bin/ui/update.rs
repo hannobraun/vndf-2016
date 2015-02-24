@@ -124,6 +124,27 @@ impl<'a> Update for CommTab {
 	type Args = CommTabArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
+		try!(write!(
+			&mut buffer.writer(x, y),
+			"YOUR ID",
+		));
+
+		try!(write!(
+			&mut buffer.writer(x + 4, y + 1),
+			"{}",
+			args.self_id,
+		));
+
+		try!(write!(
+			&mut buffer.writer(x, y + 3),
+			"SENDING",
+		));
+
+		try!(write!(
+			&mut buffer.writer(x, y + 6),
+			"RECEIVING",
+		));
+
 		let form_is_selected = self.form_is_selected();
 		let list_is_selected = self.list_is_selected();
 

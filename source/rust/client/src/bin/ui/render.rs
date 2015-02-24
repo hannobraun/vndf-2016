@@ -157,34 +157,13 @@ impl<'a> Render for CommTab {
 
 	fn render(
 		&self,
-		buffer : &mut ScreenBuffer,
-		x      : Pos,
-		y      : Pos,
-		args   : &CommTabArgs,
+		_: &mut ScreenBuffer,
+		_: Pos,
+		_: Pos,
+		_: &CommTabArgs,
 	)
 		-> IoResult<()>
 	{
-		try!(write!(
-			&mut buffer.writer(x, y),
-			"YOUR ID",
-		));
-
-		try!(write!(
-			&mut buffer.writer(x + 4, y + 1),
-			"{}",
-			args.self_id,
-		));
-
-		try!(write!(
-			&mut buffer.writer(x, y + 3),
-			"SENDING",
-		));
-
-		try!(write!(
-			&mut buffer.writer(x, y + 6),
-			"RECEIVING",
-		));
-
 		Ok(())
 	}
 }
