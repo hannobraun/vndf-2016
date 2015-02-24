@@ -82,6 +82,8 @@ impl ProcessInput for MainSection {
 
 impl ProcessInput for TabSwitcher {
 	fn process_event(&mut self, event: InputEvent) {
+		// TODO: If the left or right cursor keys are pressed, update the
+		//       currently selected tab.
 		self.comm_tab.process_event(event)
 	}
 }
