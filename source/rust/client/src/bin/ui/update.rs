@@ -10,6 +10,7 @@ use render::{
 };
 
 use super::base::{
+	Render,
 	Status,
 	Update,
 };
@@ -170,7 +171,7 @@ pub struct ListArgs<'a> {
 impl<'a> Update for List {
 	type Args = ListArgs<'a>;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, args: &ListArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ListArgs) -> IoResult<()> {
 		self.status = if args.is_selected {
 			if self.activated {
 				Status::Active
@@ -186,7 +187,11 @@ impl<'a> Update for List {
 		let max_first = max(0, args.items.len() as isize - args.height as isize);
 		self.first = min(self.first, max_first as usize);
 
-		Ok(())
+		self.render(buffer, x, y, &render::ListArgs {
+			width : args.width,
+			height: args.height,
+			items : args.items,
+		})
 	}
 }
 

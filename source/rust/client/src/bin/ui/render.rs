@@ -111,17 +111,6 @@ impl<'a> Render for CommTab {
 			"RECEIVING",
 		));
 
-		let width = buffer.width();
-		try!(self.broadcast_list.render(
-			buffer,
-			x + 4, y + 7,
-			&ListArgs {
-				width : width - 4 - 4,
-				height: args.list_height,
-				items : args.broadcasts,
-			},
-		));
-
 		Ok(())
 	}
 }
