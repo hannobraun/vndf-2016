@@ -134,6 +134,12 @@ impl MainSection {
 
 pub struct TabHeader;
 
+impl TabHeader {
+	pub fn new() -> TabHeader {
+		TabHeader
+	}
+}
+
 
 pub struct TabSwitcher {
 	pub comm_header: TabHeader,
@@ -145,8 +151,8 @@ pub struct TabSwitcher {
 impl TabSwitcher {
 	pub fn new() -> TabSwitcher {
 		TabSwitcher {
-			comm_header: TabHeader,
-			nav_header : TabHeader,
+			comm_header: TabHeader::new(),
+			nav_header : TabHeader::new(),
 
 			comm_tab: CommTab::new(),
 		}
