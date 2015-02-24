@@ -144,6 +144,7 @@ impl Ui {
 			0, 0,
 			&MainArgs {
 				is_sending : is_sending,
+				self_id    : frame.self_id.as_slice(),
 				list_height: self.broadcast_list_height,
 				broadcasts : broadcasts.as_slice(),
 			}
