@@ -225,7 +225,7 @@ impl Update for TabSwitcher {
 		try!(self.nav_header.update(b, x, y, &()));
 		self.comm_tab.update(
 			b,
-			x, y,
+			x, y + 2,
 			&CommTabArgs {
 				is_sending : args.is_sending,
 				list_length: args.list_length,
