@@ -11,8 +11,14 @@ use super::base::{
 };
 use super::state::{
 	BroadcastForm,
+	Button,
 	CommTab,
+	InfoSection,
 	List,
+	MainSection,
+	TabHeader,
+	TabSwitcher,
+	TextField,
 };
 
 
@@ -67,6 +73,13 @@ impl Update for BroadcastForm {
 }
 
 
+impl Update for Button {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {}
+}
+
+
 pub struct CommTabArgs {
 	pub is_sending : bool,
 	pub list_length: usize,
@@ -91,6 +104,13 @@ impl Update for CommTab {
 			height     : args.list_height,
 		});
 	}
+}
+
+
+impl Update for InfoSection {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {}
 }
 
 
@@ -122,5 +142,31 @@ impl Update for List {
 }
 
 
-// TODO: Implement Update for TabSwitcher. Set currently selected TabHeader to
-//       active.
+impl Update for MainSection {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {}
+}
+
+
+impl Update for TabHeader {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {}
+}
+
+
+impl Update for TabSwitcher {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {
+		// TODO: Set currently selected TabHeader to active.
+	}
+}
+
+
+impl Update for TextField {
+	type Args = ();
+
+	fn update(&mut self, _: &()) {}
+}
