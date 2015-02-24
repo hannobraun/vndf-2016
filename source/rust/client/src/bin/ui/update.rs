@@ -10,7 +10,6 @@ use render::{
 };
 
 use super::base::{
-	Render,
 	Status,
 	Update,
 };
@@ -223,7 +222,7 @@ impl<'a> Update for TabHeader {
 	type Args = TabHeaderArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> IoResult<()> {
-		self.render(buffer, x, y, args)
+		render::tab_header(buffer, x, y, self.status, args.label)
 	}
 }
 

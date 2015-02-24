@@ -21,10 +21,8 @@ use super::state::{
 	CommTab,
 	InfoSection,
 	MainSection,
-	TabHeader,
 	TabSwitcher,
 };
-use super::update::TabHeaderArgs;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -101,6 +99,16 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 	}
 
 	Ok(())
+}
+
+pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, label: &str) -> IoResult<()> {
+	let (foreground_color, background_color) = status.colors();
+
+	buffer
+		.writer(x, y)
+		.foreground_color(foreground_color)
+		.background_color(background_color)
+		.write_str(label)
 }
 
 pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> IoResult<()> {
@@ -269,29 +277,6 @@ impl<'a> Render for MainSection {
 		));
 
 		Ok(())
-	}
-}
-
-
-impl<'a> Render for TabHeader {
-	type Args = TabHeaderArgs<'a>;
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		args  : &TabHeaderArgs,
-	)
-		-> IoResult<()>
-	{
-		let (foreground_color, background_color) = self.status.colors();
-
-		buffer
-			.writer(x, y)
-			.foreground_color(foreground_color)
-			.background_color(background_color)
-			.write_str(args.label)
 	}
 }
 
