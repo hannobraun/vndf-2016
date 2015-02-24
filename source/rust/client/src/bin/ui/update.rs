@@ -10,7 +10,6 @@ use render::{
 };
 
 use super::base::{
-	Render,
 	Status,
 	Update,
 };
@@ -187,11 +186,7 @@ impl<'a> Update for List {
 		let max_first = max(0, args.items.len() as isize - args.height as isize);
 		self.first = min(self.first, max_first as usize);
 
-		self.render(buffer, x, y, &render::ListArgs {
-			width : args.width,
-			height: args.height,
-			items : args.items,
-		})
+		render::list(buffer, x, y, self.status, args.width, args.height, self.first, args.items)
 	}
 }
 

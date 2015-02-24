@@ -20,7 +20,6 @@ use super::base::{
 use super::state::{
 	CommTab,
 	InfoSection,
-	List,
 	MainSection,
 	TabHeader,
 	TabSwitcher,
@@ -35,6 +34,72 @@ pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &
 		.foreground_color(foreground_color)
 		.background_color(background_color)
 		.write_str(text)
+}
+
+pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, height: Pos, first: usize, items: &[String]) -> IoResult<()> {
+	let limit = x + width;
+
+	let (foreground_color, background_color) = status.colors();
+
+	let items: Vec<String> = if items.len() == 0 {
+		vec!["none".to_string()]
+	}
+	else {
+		items
+			.iter()
+			.map(|s| s.clone())
+			.collect()
+	};
+
+	let mut iter = items
+		.iter()
+		.skip(first);
+
+	for i in range(0, height) {
+		let item_length = match iter.next() {
+			Some(item) => {
+				try!(
+					buffer
+						.writer(x, y + i as Pos)
+						.limit(limit)
+						.foreground_color(foreground_color)
+						.background_color(background_color)
+						.write_str(item.as_slice())
+				);
+
+				item.chars().count()
+			},
+			None =>
+				0,
+		};
+
+		for x in range(x + item_length as Pos, limit - 1) {
+			try!(
+				buffer
+					.writer(x, y + i as Pos)
+					.limit(limit)
+					.foreground_color(foreground_color)
+					.background_color(background_color)
+					.write_char(' ')
+			);
+		}
+	}
+
+	if first > 0 {
+		try!(write!(
+			&mut buffer.writer(limit - 1, y).limit(limit),
+			"↑",
+		));
+	}
+
+	if items.len() - first > height as usize {
+		try!(write!(
+			&mut buffer.writer(limit - 1, y + height - 1).limit(limit),
+			"↓",
+		));
+	}
+
+	Ok(())
 }
 
 pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> IoResult<()> {
@@ -151,91 +216,6 @@ impl Render for InfoSection {
 				&mut status_writer,
 				"{}",
 				status
-			));
-		}
-
-		Ok(())
-	}
-}
-
-
-pub struct ListArgs<'a> {
-	pub width : Pos,
-	pub height: Pos,
-	pub items : &'a [String],
-}
-
-impl<'a> Render for List {
-	type Args = ListArgs<'a>;
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		args  : &ListArgs,
-	)
-		-> IoResult<()>
-	{
-		let limit = x + args.width;
-
-		let (foreground_color, background_color) = self.status.colors();
-
-		let items: Vec<String> = if args.items.len() == 0 {
-			vec!["none".to_string()]
-		}
-		else {
-			args.items
-				.iter()
-				.map(|s| s.clone())
-				.collect()
-		};
-
-		let mut iter = items
-			.iter()
-			.skip(self.first);
-
-		for i in range(0, args.height) {
-			let item_length = match iter.next() {
-				Some(item) => {
-					try!(
-						buffer
-							.writer(x, y + i as Pos)
-							.limit(limit)
-							.foreground_color(foreground_color)
-							.background_color(background_color)
-							.write_str(item.as_slice())
-					);
-
-					item.chars().count()
-				},
-				None =>
-					0,
-			};
-
-			for x in range(x + item_length as Pos, limit - 1) {
-				try!(
-					buffer
-						.writer(x, y + i as Pos)
-						.limit(limit)
-						.foreground_color(foreground_color)
-						.background_color(background_color)
-						.write_char(' ')
-				);
-			}
-		}
-
-		if self.first > 0 {
-			try!(write!(
-				&mut buffer.writer(limit - 1, y).limit(limit),
-				"↑",
-			));
-		}
-
-		if items.len() - self.first > args.height as usize {
-			try!(write!(
-				&mut buffer.writer(limit - 1, y + args.height - 1).limit(limit),
-				"↓",
 			));
 		}
 
