@@ -243,9 +243,9 @@ pub struct TextFieldArgs {
 }
 
 impl Update for TextField {
-	type Args = ();
+	type Args = TextFieldArgs;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &TextFieldArgs) -> IoResult<()> {
 		Ok(())
 	}
 }
