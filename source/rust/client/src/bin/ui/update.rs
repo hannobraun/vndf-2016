@@ -186,7 +186,7 @@ impl<'a> Update for List {
 			Status::Passive
 		};
 
-		let max_first = max(0, args.length as isize - args.height as isize);
+		let max_first = max(0, args.items.len() as isize - args.height as isize);
 		self.first = min(self.first, max_first as usize);
 
 		Ok(())
