@@ -247,10 +247,10 @@ impl<'a> Render for TabSwitcher {
 
 	fn render(
 		&self,
-		buffer : &mut ScreenBuffer,
-		x      : Pos,
-		y      : Pos,
-		_      : &TabSwitcherArgs,
+		buffer: &mut ScreenBuffer,
+		x     : Pos,
+		y     : Pos,
+		_     : &TabSwitcherArgs,
 	)
 		-> IoResult<()>
 	{
