@@ -19,7 +19,6 @@ use super::base::{
 };
 use super::state::{
 	BroadcastForm,
-	Button,
 	CommTab,
 	InfoSection,
 	List,
@@ -28,7 +27,17 @@ use super::state::{
 	TabSwitcher,
 	TextField,
 };
-use super::update::ButtonArgs;
+
+
+pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
+	let (foreground_color, background_color) = status.colors();
+
+	buffer
+		.writer(x, y)
+		.foreground_color(foreground_color)
+		.background_color(background_color)
+		.write_str(text)
+}
 
 
 impl Render for BroadcastForm {
@@ -56,29 +65,6 @@ impl Render for BroadcastForm {
 		));
 
 		Ok(())
-	}
-}
-
-
-impl<'a> Render for Button {
-	type Args = ButtonArgs<'a>;
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		args  : &ButtonArgs,
-	)
-		-> IoResult<()>
-	{
-		let (foreground_color, background_color) = args.status.colors();
-
-		buffer
-			.writer(x, y)
-			.foreground_color(foreground_color)
-			.background_color(background_color)
-			.write_str(args.text)
 	}
 }
 

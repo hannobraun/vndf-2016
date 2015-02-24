@@ -11,9 +11,9 @@ use render::{
 
 use super::base::{
 	Status,
-	Render,
 	Update,
 };
+use super::render;
 use super::state::{
 	BroadcastForm,
 	Button,
@@ -99,7 +99,7 @@ impl<'a> Update for Button {
 	type Args = ButtonArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ButtonArgs) -> IoResult<()> {
-		self.render(buffer, x, y, args)
+		render::button(buffer, x, y, args.status, args.text)
 	}
 }
 
