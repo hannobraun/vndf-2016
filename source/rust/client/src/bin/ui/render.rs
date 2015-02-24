@@ -18,7 +18,6 @@ use super::base::{
 	Status,
 };
 use super::state::{
-	BroadcastForm,
 	CommTab,
 	InfoSection,
 	List,
@@ -38,23 +37,6 @@ pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &
 		.foreground_color(foreground_color)
 		.background_color(background_color)
 		.write_str(text)
-}
-
-
-impl Render for BroadcastForm {
-	type Args = ();
-
-	fn render(
-		&self,
-		_: &mut ScreenBuffer,
-		_: Pos,
-		_: Pos,
-		_: &(),
-	)
-		-> IoResult<()>
-	{
-		Ok(())
-	}
 }
 
 
@@ -90,12 +72,6 @@ impl<'a> Render for CommTab {
 		try!(write!(
 			&mut buffer.writer(x, y + 3),
 			"SENDING",
-		));
-
-		try!(self.broadcast_form.render(
-			buffer,
-			x + 4, y + 4,
-			&(),
 		));
 
 		try!(write!(
