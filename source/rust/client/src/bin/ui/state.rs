@@ -15,9 +15,8 @@ pub struct BroadcastForm {
 impl BroadcastForm {
 	pub fn new() -> BroadcastForm {
 		BroadcastForm {
-			text_field: TextField::new(),
-			button    : Button::new(),
-
+			text_field       : TextField::new(),
+			button           : Button::new(),
 			text_field_status: Status::Passive,
 		}
 	}
