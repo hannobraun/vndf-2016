@@ -53,7 +53,7 @@ impl Update for BroadcastForm {
 				Status::Passive
 			};
 
-		self.button_status =
+		let button_status =
 			if args.is_selected {
 				Status::Active
 			}
@@ -93,7 +93,7 @@ impl Update for BroadcastForm {
 			x + text_field_width + 2, y,
 			&ButtonArgs {
 				text  : self.button_text,
-				status: self.button_status,
+				status: button_status,
 			},
 		)
 	}
