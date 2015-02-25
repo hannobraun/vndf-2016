@@ -192,7 +192,7 @@ impl<'a> Render for MainSection {
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		args  : &MainSectionArgs,
+		_     : &MainSectionArgs,
 	)
 		-> IoResult<()>
 	{
@@ -202,14 +202,6 @@ impl<'a> Render for MainSection {
 			self.width,
 			self.height,
 		));
-
-		let mut broadcasts: Vec<String> = args.broadcasts
-			.iter()
-			.map(|broadcast|
-				format!("{}: {}", broadcast.sender, broadcast.message)
-			)
-			.collect();
-		broadcasts.sort();
 
 		Ok(())
 	}
