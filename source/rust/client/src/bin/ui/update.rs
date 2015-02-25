@@ -222,9 +222,9 @@ pub struct MainArgs<'a> {
 impl<'a> Update for MainSection {
 	type Args = MainArgs<'a>;
 
-	fn update(&mut self, b: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
 		self.tab_switcher.update(
-			b,
+			buffer,
 			x + 1, y + 1,
 			&TabSwitcherArgs {
 				is_sending: args.is_sending,
