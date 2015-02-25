@@ -16,7 +16,6 @@ use render::Screen;
 
 use self::base::{
 	ProcessInput,
-	Render,
 	Update,
 };
 use self::base::InputEvent::{
@@ -63,7 +62,6 @@ impl Ui {
 	{
 		self.process_input(chars);
 		try!(self.generate_events(frame));
-		try!(self.render(frame));
 
 		Ok(self.events.drain())
 	}
@@ -128,6 +126,8 @@ impl Ui {
 			.collect();
 		broadcasts.sort();
 
+		self.screen.cursor(None);
+
 		try!(self.main.update(
 			self.screen.buffer(),
 			0, 0,
@@ -138,6 +138,8 @@ impl Ui {
 			}
 		));
 		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &frame.status));
+
+		try!(self.screen.submit());
 
 		if self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated {
 			self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
@@ -151,14 +153,6 @@ impl Ui {
 				self.events.push(InputEvent::StartBroadcast(message));
 			}
 		}
-
-		Ok(())
-	}
-
-	fn render(&mut self, _: &Frame) -> IoResult<()> {
-		self.screen.cursor(None);
-
-		try!(self.screen.submit());
 
 		Ok(())
 	}
