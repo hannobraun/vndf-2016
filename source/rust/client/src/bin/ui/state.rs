@@ -12,7 +12,6 @@ pub struct BroadcastForm {
 	pub text_field_status: Status,
 
 	// Transient state
-	pub button_text  : &'static str,
 	pub button_width : Pos,
 }
 
@@ -23,7 +22,6 @@ impl BroadcastForm {
 			button    : Button::new(),
 
 			text_field_status: Status::Passive,
-			button_text      : "",
 			button_width     : 1,
 		}
 	}

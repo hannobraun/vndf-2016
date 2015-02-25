@@ -61,7 +61,7 @@ impl Update for BroadcastForm {
 				Status::Passive
 			};
 
-		self.button_text =
+		let button_text =
 			if args.is_sending {
 				STOP_BROADCAST
 			}
@@ -92,7 +92,7 @@ impl Update for BroadcastForm {
 			buffer,
 			x + text_field_width + 2, y,
 			&ButtonArgs {
-				text  : self.button_text,
+				text  : button_text,
 				status: button_status,
 			},
 		)
