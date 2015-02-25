@@ -263,14 +263,10 @@ impl<'a> Update for TabSwitcher {
 		// TODO: Set currently selected TabHeader to active.
 
 		{
-			let mut headers = [
-				("Comm", &mut self.comm_header),
-				("Nav" , &mut self.nav_header ),
-			];
-			let numer_of_headers = headers.len();
+			let headers = ["Comm", "Nav"];
 			let mut header_x = x;
-			for (i, &mut (label, ref mut header)) in headers.iter_mut().enumerate() {
-				try!(header.update(
+			for (i, label) in headers.iter().enumerate() {
+				try!(TabHeader.update(
 					buffer,
 					header_x,
 					y,
@@ -280,7 +276,7 @@ impl<'a> Update for TabSwitcher {
 				));
 				header_x += label.chars().count() as Pos;
 
-				if i + 1 < numer_of_headers {
+				if i + 1 < headers.len() {
 					try!(
 						buffer
 							.writer(header_x, y)
