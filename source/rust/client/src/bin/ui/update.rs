@@ -69,7 +69,7 @@ impl Update for BroadcastForm {
 				START_BROADCAST
 			};
 
-		self.button_width =
+		let button_width =
 			max(
 				START_BROADCAST.chars().count(),
 				STOP_BROADCAST.chars().count()
@@ -77,7 +77,7 @@ impl Update for BroadcastForm {
 			as Pos;
 
 		let total_width      = buffer.width() - x;
-		let text_field_width = total_width - 2 - self.button_width - 2;
+		let text_field_width = total_width - 2 - button_width - 2;
 
 		try!(self.text_field.update(
 			buffer,
