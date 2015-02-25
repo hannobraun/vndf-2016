@@ -173,8 +173,6 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 }
 
 
-
-
 pub struct MainSectionArgs<'a> {
 	pub broadcasts: &'a [Broadcast],
 }
