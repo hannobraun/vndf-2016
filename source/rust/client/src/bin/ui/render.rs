@@ -12,11 +12,7 @@ use render::Color::{
 	Red,
 };
 
-use super::base::{
-	Render,
-	Status,
-};
-use super::state::MainSection;
+use super::base::Status;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -124,6 +120,14 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 	Ok(())
 }
 
+pub fn main_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos) -> IoResult<()> {
+	draw_border(
+		buffer,
+		x, y,
+		width, height,
+	)
+}
+
 pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, label: &str) -> IoResult<()> {
 	let (foreground_color, background_color) = status.colors();
 
@@ -176,28 +180,4 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 	};
 
 	Ok(())
-}
-
-
-impl Render for MainSection {
-	type Args = ();
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		_     : &(),
-	)
-		-> IoResult<()>
-	{
-		try!(draw_border(
-			buffer,
-			x, y,
-			self.width,
-			self.height,
-		));
-
-		Ok(())
-	}
 }
