@@ -245,7 +245,7 @@ impl<'a> Update for TabHeader {
 	type Args = TabHeaderArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> IoResult<()> {
-		render::tab_header(buffer, x, y, self.status, args.label)
+		render::tab_header(buffer, x, y, Status::Passive, args.label)
 	}
 }
 
