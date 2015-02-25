@@ -17,6 +17,7 @@ pub trait ProcessInput {
 	fn process_event(&mut self, event: InputEvent);
 }
 
+#[derive(Copy)]
 pub enum InputEvent {
 	Char(char),
 
