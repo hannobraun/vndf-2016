@@ -7,14 +7,14 @@ use super::base::{
 
 
 pub struct BroadcastForm {
-	pub text_field: TextField,
-	pub button    : Button,
+	pub text_field       : TextField,
+	pub button           : Button,
+	pub text_field_status: Status,
 
 	// Transient state
-	pub text_field_status: Status,
-	pub button_status    : Status,
-	pub button_text      : &'static str,
-	pub button_width     : Pos,
+	pub button_status: Status,
+	pub button_text  : &'static str,
+	pub button_width : Pos,
 }
 
 impl BroadcastForm {
