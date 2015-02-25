@@ -28,7 +28,6 @@ use self::base::InputEvent::{
 	CursorUp,
 	Enter,
 };
-use self::render::MainSectionArgs;
 use self::state::{
 	InfoSection,
 	MainSection,
@@ -156,15 +155,13 @@ impl Ui {
 		Ok(())
 	}
 
-	fn render(&mut self, frame: &Frame) -> IoResult<()> {
+	fn render(&mut self, _: &Frame) -> IoResult<()> {
 		self.screen.cursor(None);
 
 		try!(self.main.render(
 			self.screen.buffer(),
 			0, 0,
-			&MainSectionArgs {
-				broadcasts: frame.broadcasts.as_slice(),
-			}
+			&(),
 		));
 
 		try!(self.screen.submit());

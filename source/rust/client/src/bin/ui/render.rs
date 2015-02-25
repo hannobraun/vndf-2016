@@ -1,7 +1,6 @@
 use std::old_io::IoResult;
 
 use client::platform::Message;
-use common::game::Broadcast;
 use render::{
 	draw_border,
 	Pos,
@@ -180,19 +179,15 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 }
 
 
-pub struct MainSectionArgs<'a> {
-	pub broadcasts: &'a [Broadcast],
-}
-
-impl<'a> Render for MainSection {
-	type Args = MainSectionArgs<'a>;
+impl Render for MainSection {
+	type Args = ();
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		_     : &MainSectionArgs,
+		_     : &(),
 	)
 		-> IoResult<()>
 	{
