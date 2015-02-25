@@ -4,6 +4,7 @@ use std::cmp::{
 };
 use std::old_io::IoResult;
 
+use client::platform::Message;
 use render::{
 	Pos,
 	ScreenBuffer,
@@ -173,9 +174,9 @@ impl<'a> Update for CommTab {
 
 
 impl Update for InfoSection {
-	type Args = ();
+	type Args = Message;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &Message) -> IoResult<()> {
 		Ok(())
 	}
 }

@@ -138,7 +138,7 @@ impl Ui {
 				broadcasts: broadcasts.as_slice(),
 			}
 		));
-		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &()));
+		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &frame.status));
 
 		if self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated {
 			self.main.tab_switcher.comm_tab.broadcast_form.button.was_activated = false;
