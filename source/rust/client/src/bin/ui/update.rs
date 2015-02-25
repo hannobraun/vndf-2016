@@ -11,6 +11,7 @@ use render::{
 };
 
 use super::base::{
+	Render,
 	Status,
 	Update,
 };
@@ -223,6 +224,7 @@ impl<'a> Update for MainSection {
 	type Args = MainArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
+		try!(self.render(buffer, x, y, &()));
 		self.tab_switcher.update(
 			buffer,
 			x + 1, y + 1,

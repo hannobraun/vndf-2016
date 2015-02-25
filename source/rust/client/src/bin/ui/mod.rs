@@ -158,12 +158,6 @@ impl Ui {
 	fn render(&mut self, _: &Frame) -> IoResult<()> {
 		self.screen.cursor(None);
 
-		try!(self.main.render(
-			self.screen.buffer(),
-			0, 0,
-			&(),
-		));
-
 		try!(self.screen.submit());
 
 		Ok(())
