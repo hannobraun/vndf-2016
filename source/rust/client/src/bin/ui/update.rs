@@ -11,7 +11,6 @@ use render::{
 };
 
 use super::base::{
-	Render,
 	Status,
 	Update,
 };
@@ -178,7 +177,7 @@ impl Update for InfoSection {
 	type Args = Message;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, message: &Message) -> IoResult<()> {
-		self.render(buffer, x, y, message)
+		render::info_section(buffer, x, y, self.width, self.height, message)
 	}
 }
 

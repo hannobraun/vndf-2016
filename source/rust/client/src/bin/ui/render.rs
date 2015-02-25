@@ -18,7 +18,6 @@ use super::base::{
 	Status,
 };
 use super::state::{
-	InfoSection,
 	MainSection,
 	TabSwitcher,
 };
@@ -32,6 +31,35 @@ pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &
 		.foreground_color(foreground_color)
 		.background_color(background_color)
 		.write_str(text)
+}
+
+pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos, message: &Message) -> IoResult<()> {
+	try!(draw_border(
+		buffer,
+		x, y,
+		width, height,
+	));
+
+	{
+		let status_writer = buffer.writer(x + 1, y + 1);
+
+		let (mut status_writer, status) = match *message {
+			Message::Notice(ref s) =>
+				(status_writer.foreground_color(Green), s.as_slice()),
+			Message::Error(ref s) =>
+				(status_writer.foreground_color(Red  ), s.as_slice()),
+			Message::None =>
+				(status_writer, ""),
+		};
+
+		try!(write!(
+			&mut status_writer,
+			"{}",
+			status
+		));
+	}
+
+	Ok(())
 }
 
 pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, height: Pos, first: usize, items: &[String]) -> IoResult<()> {
@@ -145,47 +173,6 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 }
 
 
-impl Render for InfoSection {
-	type Args = Message;
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		status: &Message,
-	)
-		-> IoResult<()>
-	{
-		try!(draw_border(
-			buffer,
-			x, y,
-			self.width,
-			self.height
-		));
-
-		{
-			let status_writer = buffer.writer(x + 1, y + 1);
-
-			let (mut status_writer, status) = match *status {
-				Message::Notice(ref s) =>
-					(status_writer.foreground_color(Green), s.as_slice()),
-				Message::Error(ref s) =>
-					(status_writer.foreground_color(Red  ), s.as_slice()),
-				Message::None =>
-					(status_writer, ""),
-			};
-
-			try!(write!(
-				&mut status_writer,
-				"{}",
-				status
-			));
-		}
-
-		Ok(())
-	}
-}
 
 
 pub struct MainSectionArgs<'a> {
