@@ -204,8 +204,6 @@ impl<'a> Render for MainSection {
 			.collect();
 		broadcasts.sort();
 
-		try!(self.tab_switcher.render(buffer, x + 1, y + 1, &()));
-
 		Ok(())
 	}
 }
