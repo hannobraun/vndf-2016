@@ -17,10 +17,7 @@ use super::base::{
 	Render,
 	Status,
 };
-use super::state::{
-	MainSection,
-	TabSwitcher,
-};
+use super::state::MainSection;
 
 
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
@@ -138,6 +135,16 @@ pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, lab
 		.write_str(label)
 }
 
+pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> IoResult<()> {
+	let mut c = C::new();
+	c.c = '─';
+	for x in range(x, buffer.width()) {
+		try!(buffer.set(x, y + 1, c));
+	}
+
+	Ok(())
+}
+
 pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> IoResult<()> {
 	let limit = x + width;
 
@@ -203,29 +210,6 @@ impl<'a> Render for MainSection {
 			)
 			.collect();
 		broadcasts.sort();
-
-		Ok(())
-	}
-}
-
-
-impl<'a> Render for TabSwitcher {
-	type Args = ();
-
-	fn render(
-		&self,
-		buffer: &mut ScreenBuffer,
-		x     : Pos,
-		y     : Pos,
-		_     : &(),
-	)
-		-> IoResult<()>
-	{
-		let mut c = C::new();
-		c.c = '─';
-		for x in range(x, buffer.width()) {
-			try!(buffer.set(x, y + 1, c));
-		}
 
 		Ok(())
 	}

@@ -11,7 +11,6 @@ use render::{
 };
 
 use super::base::{
-	Render,
 	Status,
 	Update,
 };
@@ -291,7 +290,7 @@ impl<'a> Update for TabSwitcher {
 			}
 		}
 
-		try!(self.render(buffer, x, y, &()));
+		try!(render::tab_switcher(buffer, x, y));
 
 		self.comm_tab.update(
 			buffer,
