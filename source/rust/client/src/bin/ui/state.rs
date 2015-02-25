@@ -87,9 +87,6 @@ impl InfoSection {
 pub struct List {
 	pub activated: bool,
 	pub first    : usize,
-
-	// Transient state
-	pub status: Status,
 }
 
 impl List {
@@ -97,8 +94,6 @@ impl List {
 		List {
 			activated: false,
 			first    : 0,
-
-			status: Status::Passive,
 		}
 	}
 }

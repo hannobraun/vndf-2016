@@ -193,7 +193,7 @@ impl<'a> Update for List {
 	type Args = ListArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ListArgs) -> IoResult<()> {
-		self.status = if args.is_selected {
+		let status = if args.is_selected {
 			if self.activated {
 				Status::Active
 			}
@@ -208,7 +208,7 @@ impl<'a> Update for List {
 		let max_first = max(0, args.items.len() as isize - args.height as isize);
 		self.first = min(self.first, max_first as usize);
 
-		render::list(buffer, x, y, self.status, args.width, args.height, self.first, args.items)
+		render::list(buffer, x, y, status, args.width, args.height, self.first, args.items)
 	}
 }
 
