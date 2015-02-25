@@ -29,7 +29,7 @@ use client::network::Network;
 use client::platform::{
 	Frame,
 	InputEvent,
-	Status,
+	Message,
 };
 use common::protocol::{
 	ClientEvent,
@@ -83,12 +83,12 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 			match event {
 				InputEvent::StartBroadcast(message) =>
 					if message.len() == 0 {
-						frame.status = Status::Error(
+						frame.status = Message::Error(
 							"Broadcasts can not be empty".to_string()
 						);
 					}
 					else if message.len() > 256 {
-						frame.status = Status::Error(
+						frame.status = Message::Error(
 							"Broadcast message too long".to_string()
 						);
 					}
@@ -97,14 +97,14 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 							ClientEvent::StartBroadcast(message.clone())
 						);
 
-						frame.status = Status::Notice(
+						frame.status = Message::Notice(
 							"Sending broadcast".to_string()
 						);
 					},
 				InputEvent::StopBroadcast => {
 					network.send(ClientEvent::StopBroadcast);
 
-					frame.status = Status::Notice(
+					frame.status = Message::Notice(
 						"Stopped sending broadcast".to_string()
 					);
 				},
@@ -132,7 +132,7 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 		}
 
 		if precise_time_s() - last_server_activity > args.net_timeout_s {
-			frame.status = Status::Error(
+			frame.status = Message::Error(
 				"Lost connection to server".to_string()
 			);
 		}

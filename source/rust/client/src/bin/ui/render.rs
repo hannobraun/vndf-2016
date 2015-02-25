@@ -1,6 +1,6 @@
 use std::old_io::IoResult;
 
-use client::platform::Status as InfoStatus;
+use client::platform::Message;
 use common::game::Broadcast;
 use render::{
 	draw_border,
@@ -146,14 +146,14 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 
 
 impl Render for InfoSection {
-	type Args = InfoStatus;
+	type Args = Message;
 
 	fn render(
 		&self,
 		buffer: &mut ScreenBuffer,
 		x     : Pos,
 		y     : Pos,
-		status: &InfoStatus,
+		status: &Message,
 	)
 		-> IoResult<()>
 	{
@@ -168,11 +168,11 @@ impl Render for InfoSection {
 			let status_writer = buffer.writer(x + 1, y + 1);
 
 			let (mut status_writer, status) = match *status {
-				InfoStatus::Notice(ref s) =>
+				Message::Notice(ref s) =>
 					(status_writer.foreground_color(Green), s.as_slice()),
-				InfoStatus::Error(ref s) =>
+				Message::Error(ref s) =>
 					(status_writer.foreground_color(Red  ), s.as_slice()),
-				InfoStatus::None =>
+				Message::None =>
 					(status_writer, ""),
 			};
 
