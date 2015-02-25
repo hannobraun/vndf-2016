@@ -120,12 +120,6 @@ impl MainSection {
 
 pub struct TabHeader;
 
-impl TabHeader {
-	pub fn new() -> TabHeader {
-		TabHeader
-	}
-}
-
 
 pub struct TabSwitcher {
 	pub comm_tab: CommTab,
