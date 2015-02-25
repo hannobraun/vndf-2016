@@ -166,11 +166,6 @@ impl Ui {
 				broadcasts: frame.broadcasts.as_slice(),
 			}
 		));
-		try!(self.info.render(
-			self.screen.buffer(),
-			0, self.main.height,
-			&frame.status,
-		));
 
 		try!(self.screen.submit());
 

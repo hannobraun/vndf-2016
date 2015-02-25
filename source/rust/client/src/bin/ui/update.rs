@@ -11,6 +11,7 @@ use render::{
 };
 
 use super::base::{
+	Render,
 	Status,
 	Update,
 };
@@ -176,8 +177,8 @@ impl<'a> Update for CommTab {
 impl Update for InfoSection {
 	type Args = Message;
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &Message) -> IoResult<()> {
-		Ok(())
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, message: &Message) -> IoResult<()> {
+		self.render(buffer, x, y, message)
 	}
 }
 
