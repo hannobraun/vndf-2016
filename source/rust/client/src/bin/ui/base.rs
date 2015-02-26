@@ -14,7 +14,7 @@ use render::Color::{
 
 
 pub trait ProcessInput {
-	fn process_event(&mut self, events: &[InputEvent]);
+	fn process_events(&mut self, events: &[InputEvent]);
 }
 
 #[derive(Copy)]

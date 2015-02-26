@@ -74,13 +74,13 @@ impl Ui {
 						self.mode = TextInputMode::Escape;
 					}
 					else if c == '\x7f' { // Backspace
-						self.main.process_event(Some(Backspace).as_slice());
+						self.main.process_events(Some(Backspace).as_slice());
 					}
 					else if c == '\n' {
-						self.main.process_event(Some(Enter).as_slice());
+						self.main.process_events(Some(Enter).as_slice());
 					}
 					else {
-						self.main.process_event(Some(Char(c)).as_slice());
+						self.main.process_events(Some(Char(c)).as_slice());
 					}
 				},
 				TextInputMode::Escape => {
@@ -102,7 +102,7 @@ impl Ui {
 					};
 
 					if let Some(event) = event {
-						self.main.process_event(Some(event).as_slice());
+						self.main.process_events(Some(event).as_slice());
 					}
 
 					self.mode = TextInputMode::Regular;

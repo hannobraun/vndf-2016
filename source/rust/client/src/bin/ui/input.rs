@@ -22,7 +22,7 @@ use super::state::{
 
 
 impl ProcessInput for BroadcastForm {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
 				Enter => {
@@ -30,9 +30,9 @@ impl ProcessInput for BroadcastForm {
 						self.text_field.text.clear();
 					}
 
-					self.button.process_event(Some(event).as_slice())
+					self.button.process_events(Some(event).as_slice())
 				},
-				_ => self.text_field.process_event(Some(event).as_slice()),
+				_ => self.text_field.process_events(Some(event).as_slice()),
 			}
 		}
 	}
@@ -40,7 +40,7 @@ impl ProcessInput for BroadcastForm {
 
 
 impl ProcessInput for Button {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
 				Enter => self.was_activated = true,
@@ -52,7 +52,7 @@ impl ProcessInput for Button {
 
 
 impl ProcessInput for CommTab {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
 				CursorUp   if !self.broadcast_list.activated =>
@@ -60,7 +60,7 @@ impl ProcessInput for CommTab {
 				CursorDown if !self.broadcast_list.activated =>
 					self.selected_index += 1,
 
-				_ => self.selected_element_mut().process_event(Some(event).as_slice()),
+				_ => self.selected_element_mut().process_events(Some(event).as_slice()),
 			}
 		}
 	}
@@ -68,7 +68,7 @@ impl ProcessInput for CommTab {
 
 
 impl ProcessInput for List {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
 				Enter      => self.activated = !self.activated,
@@ -82,23 +82,23 @@ impl ProcessInput for List {
 
 
 impl ProcessInput for MainSection {
-	fn process_event(&mut self, events: &[InputEvent]) {
-		self.tab_switcher.process_event(events)
+	fn process_events(&mut self, events: &[InputEvent]) {
+		self.tab_switcher.process_events(events)
 	}
 }
 
 
 impl ProcessInput for TabSwitcher {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		// TODO: If the left or right cursor keys are pressed, update the
 		//       currently selected tab.
-		self.comm_tab.process_event(events)
+		self.comm_tab.process_events(events)
 	}
 }
 
 
 impl ProcessInput for TextField {
-	fn process_event(&mut self, events: &[InputEvent]) {
+	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
 				// TODO(87369840): Take cursor position into account.
