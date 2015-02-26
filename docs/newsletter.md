@@ -73,7 +73,7 @@ Topic ideas:
   - Factorio
 
 News for March:
-- ...
+- http://www.reddit.com/r/space/comments/2x5ret/i_made_a_quick_image_timeline_of_ceres_images_so/
 
 News for any month:
 - https://kheckeroth.com/solarSystem/
