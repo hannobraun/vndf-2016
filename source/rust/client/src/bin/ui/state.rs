@@ -148,6 +148,10 @@ impl TabSwitcher {
 			_ => panic!("This should never happen"),
 		}
 	}
+
+	pub fn comm_tab_is_active(&self) -> bool {
+		self.active_index % 2 == 0
+	}
 }
 
 

@@ -299,15 +299,20 @@ impl<'a> Update for TabSwitcher {
 
 		try!(render::tab_switcher(buffer, x, y));
 
-		self.comm_tab.update(
-			buffer,
-			x, y + 2,
-			&CommTabArgs {
-				is_sending: args.is_sending,
-				self_id   : args.self_id,
-				broadcasts: args.broadcasts,
-			},
-		)
+		if self.comm_tab_is_active() {
+			self.comm_tab.update(
+				buffer,
+				x, y + 2,
+				&CommTabArgs {
+					is_sending: args.is_sending,
+					self_id   : args.self_id,
+					broadcasts: args.broadcasts,
+				},
+			)
+		}
+		else {
+			Ok(())
+		}
 	}
 }
 
