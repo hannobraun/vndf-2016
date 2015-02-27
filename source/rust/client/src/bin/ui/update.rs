@@ -238,14 +238,15 @@ impl<'a> Update for MainSection {
 
 
 pub struct TabHeaderArgs<'a> {
-	pub label: &'a str,
+	pub label : &'a str,
+	pub status: Status,
 }
 
 impl<'a> Update for TabHeader {
 	type Args = TabHeaderArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> IoResult<()> {
-		render::tab_header(buffer, x, y, Status::Passive, args.label)
+		render::tab_header(buffer, x, y, args.status, args.label)
 	}
 }
 
@@ -271,7 +272,8 @@ impl<'a> Update for TabSwitcher {
 					header_x,
 					y,
 					&TabHeaderArgs {
-						label: label,
+						label : label,
+						status: Status::Passive,
 					},
 				));
 				header_x += label.chars().count() as Pos;
