@@ -240,19 +240,24 @@ impl<'a> Update for MainSection {
 }
 
 
-impl Update for NavTab {
-	type Args = ();
+pub struct NavTabArgs {
+	pub position: Vec2<f32>,
+	pub velocity: Vec2<f32>,
+}
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, _: &()) -> IoResult<()> {
+impl Update for NavTab {
+	type Args = NavTabArgs;
+
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &NavTabArgs) -> IoResult<()> {
 		try!(write!(
 			&mut buffer.writer(x, y),
 			"Position: {:?}",
-			Vec2::new(0.0, 0.0),
+			args.position,
 		));
 		try!(write!(
 			&mut buffer.writer(x, y + 1),
 			"Velocity: {:?}",
-			Vec2::new(0.0, 0.0),
+			args.velocity,
 		));
 
 		Ok(())
@@ -338,7 +343,10 @@ impl<'a> Update for TabSwitcher {
 			try!(self.nav_tab.update(
 				buffer,
 				x, y + 2,
-				&(),
+				&NavTabArgs {
+					position: Vec2::new(0.0, 0.0),
+					velocity: Vec2::new(0.0, 0.0),
+				},
 			));
 		}
 
