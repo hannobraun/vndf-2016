@@ -251,13 +251,13 @@ impl Update for NavTab {
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &NavTabArgs) -> IoResult<()> {
 		try!(write!(
 			&mut buffer.writer(x, y),
-			"Position: {:?}",
-			args.position,
+			"Position: ({}, {})",
+			args.position.x, args.position.y,
 		));
 		try!(write!(
 			&mut buffer.writer(x, y + 1),
-			"Velocity: {:?}",
-			args.velocity,
+			"Velocity: ({}, {})",
+			args.velocity.x, args.velocity.y,
 		));
 
 		Ok(())
