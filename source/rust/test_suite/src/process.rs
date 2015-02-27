@@ -11,11 +11,12 @@ use std::process::{
 
 
 pub struct Process {
-	process: Child,
-	path   : String,
-	stdout : BufReader<ChildStdout>,
-	stderr : BufReader<ChildStderr>,
-	stdin  : ChildStdin,
+	process   : Child,
+	path      : String,
+	stdout    : BufReader<ChildStdout>,
+	stderr    : BufReader<ChildStderr>,
+	stdin     : ChildStdin,
+	stdout_buf: String,
 }
 
 impl Process {
@@ -37,11 +38,12 @@ impl Process {
 		let stdin  = process.stdin.take();
 
 		Process {
-			process: process,
-			path   : path.to_string(),
-			stdout : to_buffered(stdout),
-			stderr : to_buffered(stderr),
-			stdin  : stdin.expect("Expected stdin"),
+			process   : process,
+			path      : path.to_string(),
+			stdout    : to_buffered(stdout),
+			stderr    : to_buffered(stderr),
+			stdin     : stdin.expect("Expected stdin"),
+			stdout_buf: String::new(),
 		}
 	}
 
@@ -54,7 +56,10 @@ impl Process {
 	pub fn read_stdout_line(&mut self) -> String {
 		let mut line = String::new();
 		match self.stdout.read_line(&mut line) {
-			Ok(())     => line,
+			Ok(()) => {
+				self.stdout_buf.extend(line.chars());
+				line
+			},
 			Err(error) => panic!("Failed to read line from stdout: {}", error)
 		}
 	}
@@ -76,9 +81,8 @@ impl Drop for Process {
 	fn drop(&mut self) {
 		self.kill();
 
-		let mut stdout = String::new();
 		self.stdout
-			.read_to_string(&mut stdout)
+			.read_to_string(&mut self.stdout_buf)
 			.ok()
 			.expect("Error reading from stdout");
 
@@ -89,7 +93,7 @@ impl Drop for Process {
 			.expect("Error reading from stderr");
 
 		print!("Output for process {}\n", self.path);
-		print!("stdout:\n{}\n", stdout);
+		print!("stdout:\n{}\n", self.stdout_buf);
 		print!("stderr:\n{}\n", stderr);
 	}
 }
