@@ -101,7 +101,7 @@ impl ProcessInput for TabSwitcher {
 			match event {
 				CursorLeft  => self.active_index -= 1,
 				CursorRight => self.active_index += 1,
-				_           => self.comm_tab.process_events(Some(event).as_slice()),
+				_           => self.active_tab().process_events(Some(event).as_slice()),
 			}
 		}
 	}
