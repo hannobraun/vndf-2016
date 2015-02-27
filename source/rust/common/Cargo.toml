@@ -6,4 +6,5 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
+nalgebra        = "*"
 rustc-serialize = "*"

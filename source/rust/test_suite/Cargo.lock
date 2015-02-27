@@ -24,6 +24,7 @@ dependencies = [
 name = "common"
 version = "0.0.1"
 dependencies = [
+ "nalgebra 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
