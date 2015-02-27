@@ -4,6 +4,8 @@ use std::cmp::{
 };
 use std::old_io::IoResult;
 
+use nalgebra::Vec2;
+
 use client::platform::Message;
 use render::{
 	Pos,
@@ -245,12 +247,12 @@ impl Update for NavTab {
 		try!(write!(
 			&mut buffer.writer(x, y),
 			"Position: {:?}",
-			(0.0, 0.0),
+			Vec2::new(0.0, 0.0),
 		));
 		try!(write!(
 			&mut buffer.writer(x, y + 1),
 			"Velocity: {:?}",
-			(0.0, 0.0),
+			Vec2::new(0.0, 0.0),
 		));
 
 		Ok(())
