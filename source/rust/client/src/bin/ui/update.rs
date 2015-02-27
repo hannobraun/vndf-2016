@@ -241,7 +241,18 @@ impl<'a> Update for MainSection {
 impl Update for NavTab {
 	type Args = ();
 
-	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, _: &()) -> IoResult<()> {
+		try!(write!(
+			&mut buffer.writer(x, y),
+			"Position: {:?}",
+			(0.0, 0.0),
+		));
+		try!(write!(
+			&mut buffer.writer(x, y + 1),
+			"Velocity: {:?}",
+			(0.0, 0.0),
+		));
+
 		Ok(())
 	}
 }
