@@ -118,6 +118,9 @@ impl MainSection {
 }
 
 
+pub struct NavTab;
+
+
 pub struct TabHeader;
 
 
