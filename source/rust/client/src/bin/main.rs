@@ -23,6 +23,7 @@ use std::env;
 use std::old_io::timer::sleep;
 use std::time::Duration;
 
+use nalgebra::Cast;
 use time::precise_time_s;
 
 use args::Args;
@@ -126,6 +127,10 @@ fn run<P: PlatformIo>(args: Args, mut platform: P) {
 				},
 				ServerEvent::StopBroadcast(sender) => {
 					broadcasts.remove(&sender);
+				},
+				ServerEvent::UpdateEntity(position, velocity) => {
+					frame.position = Cast::from(position);
+					frame.velocity = Cast::from(velocity);
 				},
 			}
 

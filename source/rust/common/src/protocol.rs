@@ -1,3 +1,4 @@
+use nalgebra::Vec2;
 use rustc_serialize::Encodable;
 
 use game::Broadcast;
@@ -18,4 +19,5 @@ pub enum ServerEvent {
 	SelfId(String),
 	StartBroadcast(Broadcast),
 	StopBroadcast(String),
+	UpdateEntity(Vec2<f64>, Vec2<f64>),
 }
