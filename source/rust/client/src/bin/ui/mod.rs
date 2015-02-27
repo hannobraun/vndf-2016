@@ -31,7 +31,7 @@ use self::state::{
 	InfoSection,
 	MainSection,
 };
-use self::update::MainArgs;
+use self::update::MainSectionArgs;
 
 
 pub struct Ui {
@@ -131,7 +131,7 @@ impl Ui {
 		try!(self.main.update(
 			self.screen.buffer(),
 			0, 0,
-			&MainArgs {
+			&MainSectionArgs {
 				is_sending: is_sending,
 				self_id   : frame.self_id.as_slice(),
 				broadcasts: broadcasts.as_slice(),

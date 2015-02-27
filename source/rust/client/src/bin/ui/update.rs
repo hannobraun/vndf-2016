@@ -216,16 +216,16 @@ impl<'a> Update for List {
 }
 
 
-pub struct MainArgs<'a> {
+pub struct MainSectionArgs<'a> {
 	pub is_sending: bool,
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
 }
 
 impl<'a> Update for MainSection {
-	type Args = MainArgs<'a>;
+	type Args = MainSectionArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainSectionArgs) -> IoResult<()> {
 		try!(render::main_section(buffer, x, y, self.width, self.height));
 		self.tab_switcher.update(
 			buffer,
