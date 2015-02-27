@@ -13,9 +13,10 @@ name = "vndf-game-service"
 
 
 [dependencies]
-getopts = "*"
-rand    = "*"
-time    = "*"
+getopts  = "*"
+nalgebra = "*"
+rand     = "*"
+time     = "*"
 
 [dependencies.common]
 path = "../common"

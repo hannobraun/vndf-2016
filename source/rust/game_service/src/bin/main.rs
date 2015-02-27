@@ -5,6 +5,7 @@ mod args;
 
 
 extern crate getopts;
+extern crate nalgebra;
 extern crate rand;
 extern crate time;
 
