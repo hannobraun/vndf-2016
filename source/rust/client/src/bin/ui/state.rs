@@ -122,13 +122,15 @@ pub struct TabHeader;
 
 
 pub struct TabSwitcher {
-	pub comm_tab: CommTab,
+	pub active_index: u8,
+	pub comm_tab    : CommTab,
 }
 
 impl TabSwitcher {
 	pub fn new() -> TabSwitcher {
 		TabSwitcher {
-			comm_tab: CommTab::new(),
+			active_index: 0,
+			comm_tab    : CommTab::new(),
 		}
 	}
 }
