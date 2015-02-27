@@ -3,7 +3,7 @@ use rustc_serialize::Encodable;
 use game::Broadcast;
 
 
-#[derive(Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
+#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
@@ -12,7 +12,7 @@ pub enum ClientEvent {
 }
 
 
-#[derive(Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
+#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum ServerEvent {
 	Heartbeat,
 	SelfId(String),
