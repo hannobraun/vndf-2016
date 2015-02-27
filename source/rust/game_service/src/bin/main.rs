@@ -67,7 +67,7 @@ fn main() {
 							id           : generate_id(),
 							last_active_s: precise_time_s(),
 							position     : Vec2::new(0.0, 0.0),
-							velocity     : Vec2::new(0.0, 0.0),
+							velocity     : Vec2::new(1.0, 0.0),
 						};
 
 						let login = ServerEvent::SelfId(client.id.clone());
