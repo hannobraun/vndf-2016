@@ -261,19 +261,27 @@ impl<'a> Update for TabSwitcher {
 	type Args = TabSwitcherArgs<'a>;
 
 	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
-		// TODO: Set currently selected TabHeader to active.
-
 		{
-			let headers = ["Comm", "Nav"];
+			let headers = [
+				("Comm", self.active_index % 2 == 0),
+				("Nav" , self.active_index % 2 == 1),
+			];
 			let mut header_x = x;
-			for (i, label) in headers.iter().enumerate() {
+			for (i, &(label, is_active)) in headers.iter().enumerate() {
+				let status = if is_active {
+					Status::Active
+				}
+				else {
+					Status::Passive
+				};
+
 				try!(TabHeader.update(
 					buffer,
 					header_x,
 					y,
 					&TabHeaderArgs {
 						label : label,
-						status: Status::Passive,
+						status: status,
 					},
 				));
 				header_x += label.chars().count() as Pos;
