@@ -1,3 +1,4 @@
+use nalgebra::Vec2;
 use rustc_serialize::json::{
 	self,
 	DecodeResult,
@@ -31,6 +32,8 @@ pub struct Frame {
 	pub self_id   : String,
 	pub status    : Message,
 	pub broadcasts: Vec<Broadcast>,
+	pub position  : Vec2<f32>,
+	pub velocity  : Vec2<f32>,
 }
 
 impl Frame {
@@ -39,6 +42,8 @@ impl Frame {
 			self_id   : String::new(),
 			status    : Message::None,
 			broadcasts: Vec::new(),
+			position  : Vec2::new(0.0, 0.0),
+			velocity  : Vec2::new(0.0, 0.0),
 		}
 	}
 
