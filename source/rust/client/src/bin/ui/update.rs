@@ -22,6 +22,7 @@ use super::state::{
 	InfoSection,
 	List,
 	MainSection,
+	NavTab,
 	TabHeader,
 	TabSwitcher,
 	TextField,
@@ -233,6 +234,15 @@ impl<'a> Update for MainSection {
 				broadcasts: args.broadcasts,
 			},
 		)
+	}
+}
+
+
+impl Update for NavTab {
+	type Args = ();
+
+	fn update(&mut self, _: &mut ScreenBuffer, _: Pos, _: Pos, _: &()) -> IoResult<()> {
+		Ok(())
 	}
 }
 
