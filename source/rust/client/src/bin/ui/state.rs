@@ -152,6 +152,10 @@ impl TabSwitcher {
 	pub fn comm_tab_is_active(&self) -> bool {
 		self.active_index % 2 == 0
 	}
+
+	pub fn nav_tab_is_active(&self) -> bool {
+		self.active_index % 2 == 1
+	}
 }
 
 

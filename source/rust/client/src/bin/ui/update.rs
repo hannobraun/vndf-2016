@@ -321,6 +321,14 @@ impl<'a> Update for TabSwitcher {
 			));
 		}
 
+		if self.nav_tab_is_active() {
+			try!(self.nav_tab.update(
+				buffer,
+				x, y + 2,
+				&(),
+			));
+		}
+
 		Ok(())
 	}
 }
