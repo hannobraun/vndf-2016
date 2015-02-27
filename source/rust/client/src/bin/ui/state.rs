@@ -126,14 +126,26 @@ pub struct TabHeader;
 
 pub struct TabSwitcher {
 	pub active_index: u8,
-	pub comm_tab    : CommTab,
+
+	pub comm_tab: CommTab,
+	pub nav_tab : NavTab,
 }
 
 impl TabSwitcher {
 	pub fn new() -> TabSwitcher {
 		TabSwitcher {
 			active_index: 0,
-			comm_tab    : CommTab::new(),
+
+			comm_tab: CommTab::new(),
+			nav_tab : NavTab,
+		}
+	}
+
+	pub fn active_tab(&mut self) -> &mut ProcessInput {
+		match self.active_index % 2 {
+			0 => &mut self.comm_tab,
+			1 => &mut self.nav_tab,
+			_ => panic!("This should never happen"),
 		}
 	}
 }
