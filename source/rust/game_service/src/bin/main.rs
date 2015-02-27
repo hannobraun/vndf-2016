@@ -152,6 +152,11 @@ fn main() {
 			}
 		}
 
+		for (_, client) in &mut clients {
+			// TODO: Take passed time since last iteration into account.
+			client.position = client.position + client.velocity;
+		}
+
 		let recipients = clients
 			.iter()
 			.map(|(&address, _)|
