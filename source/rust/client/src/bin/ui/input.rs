@@ -18,6 +18,7 @@ use super::state::{
 	CommTab,
 	List,
 	MainSection,
+	NavTab,
 	TabSwitcher,
 	TextField,
 };
@@ -87,6 +88,10 @@ impl ProcessInput for MainSection {
 	fn process_events(&mut self, events: &[InputEvent]) {
 		self.tab_switcher.process_events(events)
 	}
+}
+
+impl ProcessInput for NavTab {
+	fn process_events(&mut self, _: &[InputEvent]) {}
 }
 
 
