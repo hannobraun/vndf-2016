@@ -168,6 +168,17 @@ fn main() {
 		network.send(recipients, outgoing_events.as_slice());
 		outgoing_events.clear();
 
+		for (&address, client) in &clients {
+			let event = ServerEvent::UpdateEntity(
+				client.position,
+				client.velocity,
+			);
+			network.send(
+				Some(address).into_iter(),
+				&[event],
+			);
+		}
+
 		// TODO: While physics will generally need to happen on a fixed
 		//       interval, there's not really a reason to delay other kinds of
 		//       logic by sleeping. For example, broadcasts can be handled
