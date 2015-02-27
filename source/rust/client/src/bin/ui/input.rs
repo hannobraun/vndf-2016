@@ -7,6 +7,8 @@ use super::base::InputEvent::{
 	Backspace,
 	Char,
 	CursorDown,
+	CursorLeft,
+	CursorRight,
 	CursorUp,
 	Enter,
 };
@@ -90,9 +92,13 @@ impl ProcessInput for MainSection {
 
 impl ProcessInput for TabSwitcher {
 	fn process_events(&mut self, events: &[InputEvent]) {
-		// TODO: If the left or right cursor keys are pressed, update the
-		//       currently selected tab.
-		self.comm_tab.process_events(events)
+		for &event in events {
+			match event {
+				CursorLeft  => self.active_index -= 1,
+				CursorRight => self.active_index += 1,
+				_           => self.comm_tab.process_events(Some(event).as_slice()),
+			}
+		}
 	}
 }
 
