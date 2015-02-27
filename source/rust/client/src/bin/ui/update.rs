@@ -220,6 +220,8 @@ pub struct MainSectionArgs<'a> {
 	pub is_sending: bool,
 	pub self_id   : &'a str,
 	pub broadcasts: &'a [String],
+	pub position  : Vec2<f32>,
+	pub velocity  : Vec2<f32>,
 }
 
 impl<'a> Update for MainSection {
@@ -234,8 +236,8 @@ impl<'a> Update for MainSection {
 				is_sending: args.is_sending,
 				self_id   : args.self_id,
 				broadcasts: args.broadcasts,
-				position  : Vec2::new(0.0, 0.0),
-				velocity  : Vec2::new(0.0, 0.0),
+				position  : args.position,
+				velocity  : args.velocity,
 			},
 		)
 	}

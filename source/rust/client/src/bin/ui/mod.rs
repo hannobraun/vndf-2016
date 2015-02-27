@@ -8,6 +8,8 @@ pub mod update;
 use std::old_io::IoResult;
 use std::vec::Drain;
 
+use nalgebra::Vec2;
+
 use client::platform::{
 	Frame,
 	InputEvent,
@@ -135,6 +137,8 @@ impl Ui {
 				is_sending: is_sending,
 				self_id   : frame.self_id.as_slice(),
 				broadcasts: broadcasts.as_slice(),
+				position  : Vec2::new(0.0, 0.0),
+				velocity  : Vec2::new(0.0, 0.0),
 			}
 		));
 		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &frame.status));
