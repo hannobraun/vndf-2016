@@ -18,6 +18,7 @@ use std::env;
 use std::old_io::timer::sleep;
 use std::time::Duration;
 
+use nalgebra::Vec2;
 use rand::random;
 use time::precise_time_s;
 
@@ -35,6 +36,8 @@ use game_service::network::Network;
 struct Client {
 	pub id           : String,
 	pub last_active_s: f64,
+	pub position     : Vec2<f64>,
+	pub velocity     : Vec2<f64>,
 }
 
 
@@ -63,6 +66,8 @@ fn main() {
 						let client = Client {
 							id           : generate_id(),
 							last_active_s: precise_time_s(),
+							position     : Vec2::new(0.0, 0.0),
+							velocity     : Vec2::new(0.0, 0.0),
 						};
 
 						let login = ServerEvent::SelfId(client.id.clone());
