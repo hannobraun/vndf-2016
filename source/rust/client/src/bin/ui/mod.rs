@@ -147,7 +147,7 @@ impl Ui {
 				velocity  : frame.velocity,
 			}
 		));
-		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &frame.status));
+		try!(self.info.update(self.screen.buffer(), 0, self.main.height, &frame.message));
 
 		try!(self.screen.submit());
 

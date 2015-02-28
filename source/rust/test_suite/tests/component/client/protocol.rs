@@ -31,5 +31,5 @@ fn it_should_display_an_error_if_connection_to_server_is_lost() {
 
 	game_service.send(address, ServerEvent::Heartbeat);
 
-	client.wait_until(|frame| frame.status.is_error());
+	client.wait_until(|frame| frame.message.is_error());
 }

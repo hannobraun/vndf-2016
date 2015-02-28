@@ -79,12 +79,12 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 			match event {
 				InputEvent::StartBroadcast(message) =>
 					if message.len() == 0 {
-						frame.status = Message::Error(
+						frame.message = Message::Error(
 							"Broadcasts can not be empty".to_string()
 						);
 					}
 					else if message.len() > 256 {
-						frame.status = Message::Error(
+						frame.message = Message::Error(
 							"Broadcast message too long".to_string()
 						);
 					}
@@ -93,14 +93,14 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 							ClientEvent::StartBroadcast(message.clone())
 						);
 
-						frame.status = Message::Notice(
+						frame.message = Message::Notice(
 							"Sending broadcast".to_string()
 						);
 					},
 				InputEvent::StopBroadcast => {
 					network.send(ClientEvent::StopBroadcast);
 
-					frame.status = Message::Notice(
+					frame.message = Message::Notice(
 						"Stopped sending broadcast".to_string()
 					);
 				},
@@ -132,7 +132,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 		}
 
 		if precise_time_s() - last_server_activity > args.net_timeout_s {
-			frame.status = Message::Error(
+			frame.message = Message::Error(
 				"Lost connection to server".to_string()
 			);
 		}

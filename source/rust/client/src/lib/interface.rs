@@ -30,7 +30,7 @@ impl InputEvent {
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Frame {
 	pub self_id   : String,
-	pub status    : Message,
+	pub message   : Message,
 	pub broadcasts: Vec<Broadcast>,
 	pub position  : Vec2<f32>,
 	pub velocity  : Vec2<f32>,
@@ -40,7 +40,7 @@ impl Frame {
 	pub fn new() -> Frame {
 		Frame {
 			self_id   : String::new(),
-			status    : Message::None,
+			message   : Message::None,
 			broadcasts: Vec::new(),
 			position  : Vec2::new(0.0, 0.0),
 			velocity  : Vec2::new(0.0, 0.0),
