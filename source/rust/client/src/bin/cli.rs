@@ -84,6 +84,9 @@ impl Cli {
 					print!("{}: {}\n", broadcast.sender, broadcast.message);
 				}
 			},
+			"start-broadcast" => {
+				self.events.push(InputEvent::StartBroadcast(args.to_string()));
+			},
 
 			_ => print!("Unknown command: {}\n", command),
 		}
