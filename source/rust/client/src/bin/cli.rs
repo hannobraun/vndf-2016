@@ -87,6 +87,9 @@ impl Cli {
 			"start-broadcast" => {
 				self.events.push(InputEvent::StartBroadcast(args.to_string()));
 			},
+			"stop-broadcast" => {
+				self.events.push(InputEvent::StopBroadcast);
+			},
 
 			_ => print!("Unknown command: {}\n", command),
 		}
