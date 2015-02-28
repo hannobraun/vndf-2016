@@ -52,7 +52,9 @@ impl Cli {
 	pub fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
 		loop {
 			match self.lines.try_recv() {
-				Ok(line) => self.handle_line(line.as_slice()),
+				Ok(line) => {
+					self.handle_line(line.trim_right_matches('\n'))
+				},
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
@@ -67,6 +69,6 @@ impl Cli {
 	}
 
 	fn handle_line(&mut self, line: &str) {
-		print!("{}", line)
+		print!("{}\n", line)
 	}
 }
