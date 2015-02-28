@@ -25,17 +25,17 @@ pub trait Interface {
 }
 
 
-pub struct PlayerInterface {
+pub struct Player {
 	input_reader: InputReader,
 	ui          : Ui,
 	chars       : Vec<char>,
 }
 
-impl Interface for PlayerInterface {
-	fn new() -> IoResult<PlayerInterface> {
+impl Interface for Player {
+	fn new() -> IoResult<Player> {
 		let ui = try!(Ui::new());
 
-		Ok(PlayerInterface {
+		Ok(Player {
 			input_reader: InputReader::new(),
 			ui          : ui,
 			chars       : Vec::new(),

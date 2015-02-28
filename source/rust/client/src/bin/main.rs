@@ -40,7 +40,6 @@ use common::protocol::{
 use interface::{
 	HeadlessInterface,
 	Interface,
-	PlayerInterface,
 };
 
 
@@ -51,7 +50,7 @@ fn main() {
 		run(args, init_interface::<HeadlessInterface>())
 	}
 	else {
-		run(args, init_interface::<PlayerInterface>())
+		run(args, init_interface::<interface::Player>())
 	}
 }
 
