@@ -69,6 +69,11 @@ impl Cli {
 	}
 
 	fn handle_line(&mut self, line: &str) {
-		print!("{}\n", line)
+		let mut splits = line.splitn(1, ' ');
+
+		let command = splits.next().unwrap();
+		let args    = splits.next().unwrap_or("");
+
+		print!("{} {}\n", command, args)
 	}
 }
