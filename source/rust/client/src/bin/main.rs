@@ -12,7 +12,7 @@ extern crate common;
 
 mod args;
 mod input;
-mod platform;
+mod interface;
 mod render;
 mod termios;
 mod ui;
@@ -27,17 +27,17 @@ use nalgebra::Cast;
 use time::precise_time_s;
 
 use args::Args;
-use client::network::Network;
 use client::platform::{
 	Frame,
 	InputEvent,
 	Message,
 };
+use client::network::Network;
 use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use platform::{
+use interface::{
 	HeadlessInterface,
 	Interface,
 	PlayerInterface,
