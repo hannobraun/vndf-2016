@@ -50,13 +50,13 @@ impl Interface for Player {
 }
 
 
-pub struct HeadlessInterface {
+pub struct Headless {
 	events  : Vec<InputEvent>,
 	receiver: Receiver<InputEvent>,
 }
 
-impl Interface for HeadlessInterface {
-	fn new() -> IoResult<HeadlessInterface> {
+impl Interface for Headless {
+	fn new() -> IoResult<Headless> {
 		let (sender, receiver) = channel();
 
 		spawn(move || -> () {
@@ -83,7 +83,7 @@ impl Interface for HeadlessInterface {
 			}
 		});
 
-		Ok(HeadlessInterface {
+		Ok(Headless {
 			events  : Vec::new(),
 			receiver: receiver,
 		})

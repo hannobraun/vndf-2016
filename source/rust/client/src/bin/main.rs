@@ -37,17 +37,14 @@ use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use interface::{
-	HeadlessInterface,
-	Interface,
-};
+use interface::Interface;
 
 
 fn main() {
 	let args = Args::parse(env::args());
 
 	if args.headless {
-		run(args, init_interface::<HeadlessInterface>())
+		run(args, init_interface::<interface::Headless>())
 	}
 	else {
 		run(args, init_interface::<interface::Player>())
