@@ -59,6 +59,7 @@ Gaming News Resources
 # Plans
 
 Topic ideas:
+- Stats from the VNDF Git repository
 - Series about different text-based games:
   - Dwarf Fortress (February)
   - NetHack (March)
