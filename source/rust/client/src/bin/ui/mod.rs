@@ -8,7 +8,7 @@ pub mod update;
 use std::old_io::IoResult;
 use std::vec::Drain;
 
-use client::platform::{
+use client::interface::{
 	Frame,
 	InputEvent,
 };

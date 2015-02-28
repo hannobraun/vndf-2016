@@ -6,7 +6,7 @@ use std::old_io::IoResult;
 
 use nalgebra::Vec2;
 
-use client::platform::Message;
+use client::interface::Message;
 use render::{
 	Pos,
 	ScreenBuffer,

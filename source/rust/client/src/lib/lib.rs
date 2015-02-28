@@ -8,5 +8,5 @@ extern crate common;
 
 
 pub mod debug;
+pub mod interface;
 pub mod network;
-pub mod platform;

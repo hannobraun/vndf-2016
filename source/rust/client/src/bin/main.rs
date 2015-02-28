@@ -27,7 +27,7 @@ use nalgebra::Cast;
 use time::precise_time_s;
 
 use args::Args;
-use client::platform::{
+use client::interface::{
 	Frame,
 	InputEvent,
 	Message,

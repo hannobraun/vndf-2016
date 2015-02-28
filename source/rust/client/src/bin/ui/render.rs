@@ -1,6 +1,6 @@
 use std::old_io::IoResult;
 
-use client::platform::Message;
+use client::interface::Message;
 use render::{
 	draw_border,
 	Pos,

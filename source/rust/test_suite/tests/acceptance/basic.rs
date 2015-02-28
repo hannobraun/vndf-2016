@@ -1,4 +1,4 @@
-use client::platform::Frame;
+use client::interface::Frame;
 use common::game::Broadcast;
 use common::util::is_point_on_line;
 use test_suite::rc;

@@ -10,7 +10,7 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
-use client::platform::{
+use client::interface::{
 	Frame,
 	InputEvent,
 };
