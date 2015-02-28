@@ -40,7 +40,7 @@ use common::protocol::{
 use platform::{
 	HeadlessIo,
 	Interface,
-	PlayerIo,
+	PlayerInterface,
 };
 
 
@@ -51,7 +51,7 @@ fn main() {
 		run(args, init_interface::<HeadlessIo>())
 	}
 	else {
-		run(args, init_interface::<PlayerIo>())
+		run(args, init_interface::<PlayerInterface>())
 	}
 }
 
