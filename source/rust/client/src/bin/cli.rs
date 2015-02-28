@@ -50,11 +50,9 @@ impl Cli {
 	}
 
 	pub fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
-		// TODO: Read lines and display information or generate input events as
-		//       appropriate
 		loop {
 			match self.lines.try_recv() {
-				Ok(line) => print!("{}", line),
+				Ok(line) => self.handle_line(line),
 
 				Err(error) => match error {
 					TryRecvError::Empty =>
@@ -64,6 +62,11 @@ impl Cli {
 				}
 			}
 		}
+
 		Ok(self.events.drain())
+	}
+
+	fn handle_line(&mut self, line: String) {
+		print!("{}", line)
 	}
 }
