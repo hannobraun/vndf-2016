@@ -76,7 +76,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 	loop {
 		let input_events = match interface.update(&frame) {
 			Ok(events) => events,
-			Err(error) => panic!("Error updating platform code: {}", error),
+			Err(error) => panic!("Error updating interface: {}", error),
 		};
 
 		for event in input_events {
