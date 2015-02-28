@@ -103,6 +103,13 @@ impl Cli {
 			"stop-broadcast" => {
 				self.events.push(InputEvent::StopBroadcast);
 			},
+			"nav-data" => {
+				print!(
+					"Position: ({}, {}); Velocity: ({}, {})\n",
+					frame.position.x, frame.position.y,
+					frame.velocity.x, frame.velocity.y,
+				);
+			},
 
 			_ => print!("Unknown command: {}\n", command),
 		}
