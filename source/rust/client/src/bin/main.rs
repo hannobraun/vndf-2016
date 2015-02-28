@@ -39,7 +39,7 @@ use common::protocol::{
 };
 use platform::{
 	HeadlessIo,
-	PlatformIo,
+	Interface,
 	PlayerIo,
 };
 
@@ -56,8 +56,8 @@ fn main() {
 }
 
 
-fn init_platform<P: PlatformIo>() -> P {
-	match PlatformIo::new() {
+fn init_platform<P: Interface>() -> P {
+	match Interface::new() {
 		Ok(platform) =>
 			platform,
 		Err(error) =>
@@ -65,7 +65,7 @@ fn init_platform<P: PlatformIo>() -> P {
 	}
 }
 
-fn run<P: PlatformIo>(args: Args, mut platform: P) {
+fn run<P: Interface>(args: Args, mut platform: P) {
 	let mut frame = Frame::new();
 
 	let mut broadcasts = HashMap::new();

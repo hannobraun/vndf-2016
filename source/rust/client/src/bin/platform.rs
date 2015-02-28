@@ -19,7 +19,7 @@ use ui::Ui;
 use super::input::InputReader;
 
 
-pub trait PlatformIo {
+pub trait Interface {
 	fn new() -> IoResult<Self>;
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>>;
 }
@@ -31,7 +31,7 @@ pub struct PlayerIo {
 	chars       : Vec<char>,
 }
 
-impl PlatformIo for PlayerIo {
+impl Interface for PlayerIo {
 	fn new() -> IoResult<PlayerIo> {
 		let ui = try!(Ui::new());
 
@@ -55,7 +55,7 @@ pub struct HeadlessIo {
 	receiver: Receiver<InputEvent>,
 }
 
-impl PlatformIo for HeadlessIo {
+impl Interface for HeadlessIo {
 	fn new() -> IoResult<HeadlessIo> {
 		let (sender, receiver) = channel();
 
