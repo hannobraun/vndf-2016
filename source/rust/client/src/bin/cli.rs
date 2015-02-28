@@ -49,11 +49,11 @@ impl Cli {
 		}
 	}
 
-	pub fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
+	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		loop {
 			match self.lines.try_recv() {
 				Ok(line) => {
-					self.handle_line(line.trim_right_matches('\n'))
+					self.handle_line(line.trim_right_matches('\n'), frame)
 				},
 
 				Err(error) => match error {
@@ -68,12 +68,21 @@ impl Cli {
 		Ok(self.events.drain())
 	}
 
-	fn handle_line(&mut self, line: &str) {
+	fn handle_line(&mut self, line: &str, frame: &Frame) {
 		let mut splits = line.splitn(1, ' ');
 
 		let command = splits.next().unwrap();
 		let args    = splits.next().unwrap_or("");
 
-		print!("{} {}\n", command, args)
+		match command {
+			"list-broadcasts" => {
+				print!("{} broadcasts\n", frame.broadcasts.len());
+				for broadcast in &frame.broadcasts {
+					print!("{}: {}\n", broadcast.sender, broadcast.message);
+				}
+			},
+
+			_ => print!("Unknown command: {}\n", command),
+		}
 	}
 }
