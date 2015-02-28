@@ -48,15 +48,15 @@ fn main() {
 	let args = Args::parse(env::args());
 
 	if args.headless {
-		run(args, init_platform::<HeadlessIo>())
+		run(args, init_interface::<HeadlessIo>())
 	}
 	else {
-		run(args, init_platform::<PlayerIo>())
+		run(args, init_interface::<PlayerIo>())
 	}
 }
 
 
-fn init_platform<I: Interface>() -> I {
+fn init_interface<I: Interface>() -> I {
 	match Interface::new() {
 		Ok(platform) =>
 			platform,
