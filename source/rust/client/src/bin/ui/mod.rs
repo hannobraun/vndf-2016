@@ -73,10 +73,9 @@ impl Ui {
 	}
 
 	fn process_input(&mut self) {
-		self.chars.clear();
 		self.reader.input(&mut self.chars);
 
-		for &c in self.chars.iter() {
+		for c in self.chars.drain() {
 			match self.mode {
 				TextInputMode::Regular => {
 					if c == '\x1b' { // Escape
