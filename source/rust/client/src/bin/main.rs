@@ -58,8 +58,8 @@ fn main() {
 
 fn init_interface<I: Interface>() -> I {
 	match Interface::new() {
-		Ok(platform) =>
-			platform,
+		Ok(interface) =>
+			interface,
 		Err(error) =>
 			panic!("Error initializing interface: {}", error),
 	}
