@@ -13,12 +13,14 @@ use std::vec::Drain;
 use client::interface::{
 	Frame,
 	InputEvent,
+	Message,
 };
 
 
 pub struct Cli {
-	events: Vec<InputEvent>,
-	lines : Receiver<String>,
+	events      : Vec<InputEvent>,
+	lines       : Receiver<String>,
+	last_message: Message,
 }
 
 impl Cli {
@@ -47,12 +49,23 @@ impl Cli {
 		});
 
 		Cli {
-			events: Vec::new(),
-			lines : receiver,
+			events      : Vec::new(),
+			lines       : receiver,
+			last_message: Message::None,
 		}
 	}
 
 	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+		if frame.message != self.last_message {
+			match frame.message {
+				Message::Notice(ref message) => print!("Notice: {}\n", message),
+				Message::Error(ref message)  => print!("Error: {}\n", message),
+				Message::None            => (),
+			}
+
+			self.last_message = frame.message.clone();
+		}
+
 		loop {
 			match self.lines.try_recv() {
 				Ok(line) => {
