@@ -61,7 +61,7 @@ fn init_interface<I: Interface>() -> I {
 		Ok(platform) =>
 			platform,
 		Err(error) =>
-			panic!("Error initializing platform I/O: {}", error),
+			panic!("Error initializing interface: {}", error),
 	}
 }
 
