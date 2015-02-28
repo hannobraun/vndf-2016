@@ -10,6 +10,7 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
+use cli::Cli;
 use client::interface::{
 	Frame,
 	InputEvent,
@@ -43,20 +44,18 @@ impl Interface for Player {
 
 
 pub struct CommandLine {
-	events: Vec<InputEvent>,
+	cli: Cli
 }
 
 impl Interface for CommandLine {
 	fn new() -> IoResult<CommandLine> {
-		// TODO: Implement
 		Ok(CommandLine {
-			events: Vec::new(),
+			cli: Cli::new(),
 		})
 	}
 
-	fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
-		// TODO: Implement
-		Ok(self.events.drain())
+	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+		self.cli.update(frame)
 	}
 }
 
