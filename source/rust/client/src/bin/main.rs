@@ -38,7 +38,7 @@ use common::protocol::{
 	ServerEvent,
 };
 use platform::{
-	HeadlessIo,
+	HeadlessInterface,
 	Interface,
 	PlayerInterface,
 };
@@ -48,7 +48,7 @@ fn main() {
 	let args = Args::parse(env::args());
 
 	if args.headless {
-		run(args, init_interface::<HeadlessIo>())
+		run(args, init_interface::<HeadlessInterface>())
 	}
 	else {
 		run(args, init_interface::<PlayerInterface>())
