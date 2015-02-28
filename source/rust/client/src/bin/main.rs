@@ -56,7 +56,7 @@ fn main() {
 }
 
 
-fn init_platform<P: Interface>() -> P {
+fn init_platform<I: Interface>() -> I {
 	match Interface::new() {
 		Ok(platform) =>
 			platform,
