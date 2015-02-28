@@ -65,7 +65,7 @@ fn init_interface<I: Interface>() -> I {
 	}
 }
 
-fn run<I: Interface>(args: Args, mut platform: I) {
+fn run<I: Interface>(args: Args, mut interface: I) {
 	let mut frame = Frame::new();
 
 	let mut broadcasts = HashMap::new();
@@ -76,7 +76,7 @@ fn run<I: Interface>(args: Args, mut platform: I) {
 	network.send(ClientEvent::Login);
 
 	loop {
-		let input_events = match platform.update(&frame) {
+		let input_events = match interface.update(&frame) {
 			Ok(events) => events,
 			Err(error) => panic!("Error updating platform code: {}", error),
 		};
