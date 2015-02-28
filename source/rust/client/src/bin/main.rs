@@ -65,7 +65,7 @@ fn init_interface<I: Interface>() -> I {
 	}
 }
 
-fn run<P: Interface>(args: Args, mut platform: P) {
+fn run<I: Interface>(args: Args, mut platform: I) {
 	let mut frame = Frame::new();
 
 	let mut broadcasts = HashMap::new();
