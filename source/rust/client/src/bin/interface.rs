@@ -42,6 +42,25 @@ impl Interface for Player {
 }
 
 
+pub struct CommandLine {
+	events: Vec<InputEvent>,
+}
+
+impl Interface for CommandLine {
+	fn new() -> IoResult<CommandLine> {
+		// TODO: Implement
+		Ok(CommandLine {
+			events: Vec::new(),
+		})
+	}
+
+	fn update(&mut self, _: &Frame) -> IoResult<Drain<InputEvent>> {
+		// TODO: Implement
+		Ok(self.events.drain())
+	}
+}
+
+
 pub struct Headless {
 	events  : Vec<InputEvent>,
 	receiver: Receiver<InputEvent>,
