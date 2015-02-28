@@ -1,5 +1,6 @@
 pub mod base;
 pub mod input;
+pub mod reader;
 pub mod render;
 pub mod state;
 pub mod update;

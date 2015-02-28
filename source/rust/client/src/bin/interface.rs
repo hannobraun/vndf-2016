@@ -16,7 +16,7 @@ use client::interface::{
 };
 use ui::Ui;
 
-use super::input::InputReader;
+use ui::reader::InputReader;
 
 
 pub trait Interface {
