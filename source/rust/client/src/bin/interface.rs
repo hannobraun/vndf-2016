@@ -16,8 +16,6 @@ use client::interface::{
 };
 use ui::Ui;
 
-use ui::reader::InputReader;
-
 
 pub trait Interface {
 	fn new() -> IoResult<Self>;
@@ -26,9 +24,7 @@ pub trait Interface {
 
 
 pub struct Player {
-	input_reader: InputReader,
-	ui          : Ui,
-	chars       : Vec<char>,
+	ui: Ui,
 }
 
 impl Interface for Player {
@@ -36,16 +32,12 @@ impl Interface for Player {
 		let ui = try!(Ui::new());
 
 		Ok(Player {
-			input_reader: InputReader::new(),
-			ui          : ui,
-			chars       : Vec::new(),
+			ui: ui,
 		})
 	}
 
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
-		self.chars.clear();
-		self.input_reader.input(&mut self.chars);
-		self.ui.update(frame, self.chars.as_slice())
+		self.ui.update(frame)
 	}
 }
 

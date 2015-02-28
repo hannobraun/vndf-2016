@@ -28,6 +28,7 @@ use self::base::InputEvent::{
 	CursorUp,
 	Enter,
 };
+use self::reader::InputReader;
 use self::state::{
 	InfoSection,
 	MainSection,
@@ -37,6 +38,8 @@ use self::update::MainSectionArgs;
 
 pub struct Ui {
 	screen: Screen,
+	reader: InputReader,
+	chars : Vec<char>,
 	main  : MainSection,
 	info  : InfoSection,
 	mode  : TextInputMode,
@@ -51,6 +54,8 @@ impl Ui {
 
 		Ok(Ui {
 			screen: screen,
+			reader: InputReader::new(),
+			chars : Vec::new(),
 			main  : MainSection::new(width, 18),
 			info  : InfoSection::new(width,  6),
 			mode  : TextInputMode::Regular,
@@ -58,17 +63,20 @@ impl Ui {
 		})
 	}
 
-	pub fn update(&mut self, frame: &Frame, chars: &[char])
+	pub fn update(&mut self, frame: &Frame)
 		-> IoResult<Drain<InputEvent>>
 	{
-		self.process_input(chars);
+		self.process_input();
 		try!(self.generate_events(frame));
 
 		Ok(self.events.drain())
 	}
 
-	fn process_input(&mut self, chars: &[char]) {
-		for &c in chars.iter() {
+	fn process_input(&mut self) {
+		self.chars.clear();
+		self.reader.input(&mut self.chars);
+
+		for &c in self.chars.iter() {
 			match self.mode {
 				TextInputMode::Regular => {
 					if c == '\x1b' { // Escape
