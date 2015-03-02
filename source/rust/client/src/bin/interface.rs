@@ -49,8 +49,10 @@ pub struct CommandLine {
 
 impl Interface for CommandLine {
 	fn new() -> IoResult<CommandLine> {
+		let cli = try!(Cli::new());
+
 		Ok(CommandLine {
-			cli: Cli::new(),
+			cli: cli,
 		})
 	}
 

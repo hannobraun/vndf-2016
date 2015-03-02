@@ -24,7 +24,7 @@ pub struct Cli {
 }
 
 impl Cli {
-	pub fn new() -> Cli {
+	pub fn new() -> IoResult<Cli> {
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
@@ -48,11 +48,11 @@ impl Cli {
 		print!("VNDF Ship Control System\n");
 		print!("Enter command\n");
 
-		Cli {
+		Ok(Cli {
 			events      : Vec::new(),
 			lines       : receiver,
 			last_message: Message::None,
-		}
+		})
 	}
 
 	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
