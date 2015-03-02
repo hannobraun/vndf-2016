@@ -20,7 +20,8 @@ use render::Screen;
 
 pub struct Cli {
 	events      : Vec<InputEvent>,
-	input       : Receiver<String>,
+	input       : Receiver<char>,
+	input_buffer: String,
 	last_message: Message,
 	text        : Vec<String>,
 	screen      : Screen,
@@ -35,9 +36,9 @@ impl Cli {
 			let mut stdin = stdin();
 
 			loop {
-				match stdin.read_line() {
-					Ok(line) =>
-						match sender.send(line) {
+				match stdin.read_char() {
+					Ok(c) =>
+						match sender.send(c) {
 							Ok(()) =>
 								(),
 							Err(error) =>
@@ -61,6 +62,7 @@ impl Cli {
 		Ok(Cli {
 			events      : Vec::new(),
 			input       : receiver,
+			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
 			screen      : screen,
@@ -83,8 +85,19 @@ impl Cli {
 
 		loop {
 			match self.input.try_recv() {
-				Ok(line) => {
-					try!(self.handle_line(line.trim_right_matches('\n'), frame))
+				Ok(c) => {
+					if c == '\n' {
+						let command = self.input_buffer.clone();
+						self.input_buffer.clear();
+
+						try!(self.handle_line(
+							command.as_slice(),
+							frame,
+						));
+					}
+					else {
+						self.input_buffer.push(c)
+					}
 				},
 
 				Err(error) => match error {
