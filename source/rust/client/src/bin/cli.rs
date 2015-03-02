@@ -121,6 +121,13 @@ impl Cli {
 			);
 		}
 
+		try!(
+			self.screen
+				.buffer()
+				.writer(0, self.height - 1)
+				.write_str(self.input_buffer.as_slice())
+		);
+
 		try!(self.screen.submit());
 
 		Ok(self.events.drain())
