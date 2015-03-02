@@ -15,12 +15,16 @@ use client::interface::{
 	InputEvent,
 	Message,
 };
+use render::Screen;
 
 
 pub struct Cli {
 	events      : Vec<InputEvent>,
 	lines       : Receiver<String>,
 	last_message: Message,
+	text        : Vec<String>,
+	screen      : Screen,
+	height      : u16,
 }
 
 impl Cli {
@@ -45,21 +49,32 @@ impl Cli {
 			}
 		});
 
-		print!("VNDF Ship Control System\n");
-		print!("Enter command\n");
+		let mut text = Vec::new();
+		text.push(format!("VNDF Ship Control System"));
+		text.push(format!("Enter command"));
+
+		let width  = 80;
+		let height = 24;
+
+		let screen = try!(Screen::new(width, height));
 
 		Ok(Cli {
 			events      : Vec::new(),
 			lines       : receiver,
 			last_message: Message::None,
+			text        : text,
+			screen      : screen,
+			height      : height,
 		})
 	}
 
 	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+		self.screen.cursor(None);
+
 		if frame.message != self.last_message {
 			match frame.message {
-				Message::Notice(ref message) => print!("Notice: {}\n", message),
-				Message::Error(ref message)  => print!("Error: {}\n", message),
+				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
+				Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
 				Message::None            => (),
 			}
 
@@ -81,6 +96,20 @@ impl Cli {
 			}
 		}
 
+		while self.text.len() > (self.height - 2) as usize {
+			self.text.remove(0);
+		}
+
+		for (y, line) in self.text.iter().enumerate() {
+			try!(self.screen
+				.buffer()
+				.writer(0, y as u16)
+				.write_str(line.as_slice())
+			);
+		}
+
+		try!(self.screen.submit());
+
 		Ok(self.events.drain())
 	}
 
@@ -92,9 +121,9 @@ impl Cli {
 
 		match command {
 			"list-broadcasts" => {
-				print!("{} broadcasts\n", frame.broadcasts.len());
+				self.text.push(format!("{} broadcasts", frame.broadcasts.len()));
 				for broadcast in &frame.broadcasts {
-					print!("{}: {}\n", broadcast.sender, broadcast.message);
+					self.text.push(format!("{}: {}", broadcast.sender, broadcast.message));
 				}
 			},
 			"start-broadcast" => {
@@ -104,14 +133,14 @@ impl Cli {
 				self.events.push(InputEvent::StopBroadcast);
 			},
 			"nav-data" => {
-				print!(
+				self.text.push(format!(
 					"Position: ({}, {}); Velocity: ({}, {})\n",
 					frame.position.x, frame.position.y,
 					frame.velocity.x, frame.velocity.y,
-				);
+				));
 			},
 
-			_ => print!("Unknown command: {}\n", command),
+			_ => self.text.push(format!("Unknown command: {}\n", command)),
 		}
 
 		Ok(())
