@@ -25,9 +25,6 @@ pub struct Cli {
 
 impl Cli {
 	pub fn new() -> Cli {
-		print!("VNDF Ship Control System\n");
-		print!("Enter command\n");
-
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
@@ -47,6 +44,9 @@ impl Cli {
 				}
 			}
 		});
+
+		print!("VNDF Ship Control System\n");
+		print!("Enter command\n");
 
 		Cli {
 			events      : Vec::new(),
