@@ -69,7 +69,7 @@ impl Cli {
 		loop {
 			match self.lines.try_recv() {
 				Ok(line) => {
-					self.handle_line(line.trim_right_matches('\n'), frame)
+					try!(self.handle_line(line.trim_right_matches('\n'), frame))
 				},
 
 				Err(error) => match error {
@@ -84,7 +84,7 @@ impl Cli {
 		Ok(self.events.drain())
 	}
 
-	fn handle_line(&mut self, line: &str, frame: &Frame) {
+	fn handle_line(&mut self, line: &str, frame: &Frame) -> IoResult<()> {
 		let mut splits = line.splitn(1, ' ');
 
 		let command = splits.next().unwrap();
@@ -113,5 +113,7 @@ impl Cli {
 
 			_ => print!("Unknown command: {}\n", command),
 		}
+
+		Ok(())
 	}
 }
