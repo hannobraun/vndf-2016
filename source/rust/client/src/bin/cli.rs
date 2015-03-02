@@ -20,7 +20,7 @@ use render::Screen;
 
 pub struct Cli {
 	events      : Vec<InputEvent>,
-	lines       : Receiver<String>,
+	input       : Receiver<String>,
 	last_message: Message,
 	text        : Vec<String>,
 	screen      : Screen,
@@ -60,7 +60,7 @@ impl Cli {
 
 		Ok(Cli {
 			events      : Vec::new(),
-			lines       : receiver,
+			input       : receiver,
 			last_message: Message::None,
 			text        : text,
 			screen      : screen,
@@ -82,7 +82,7 @@ impl Cli {
 		}
 
 		loop {
-			match self.lines.try_recv() {
+			match self.input.try_recv() {
 				Ok(line) => {
 					try!(self.handle_line(line.trim_right_matches('\n'), frame))
 				},
