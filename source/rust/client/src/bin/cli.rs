@@ -114,10 +114,11 @@ impl Cli {
 		}
 
 		for (y, line) in self.text.iter().enumerate() {
-			try!(self.screen
-				.buffer()
-				.writer(0, y as u16)
-				.write_str(line.as_slice())
+			try!(
+				self.screen
+					.buffer()
+					.writer(0, y as u16)
+					.write_str(line.as_slice())
 			);
 		}
 
