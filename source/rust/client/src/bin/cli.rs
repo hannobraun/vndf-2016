@@ -95,6 +95,9 @@ impl Cli {
 							frame,
 						));
 					}
+					else if c == '\x7f' { // Backspace
+						self.input_buffer.pop();
+					}
 					else {
 						self.input_buffer.push(c)
 					}
