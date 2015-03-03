@@ -1,3 +1,5 @@
+use std::marker::PhantomData;
+
 use gfx::{
 	self,
 	DeviceExt,
@@ -6,6 +8,10 @@ use gfx::{
 use gfx_device_gl::{
 	GlDevice,
 	GlResources,
+};
+use nalgebra::{
+	Eye,
+	Mat4,
 };
 
 
@@ -16,13 +22,23 @@ struct Vertex {
 }
 
 
+#[shader_param]
+struct Params<R: gfx::Resources> {
+	transform: [[f32; 4]; 4],
+
+	_marker: PhantomData<R>,
+}
+
+
 static VERTEX_SRC: &'static [u8] = b"
 	#version 120
 
 	attribute vec2 pos;
 
+	uniform mat4 transform;
+
 	void main() {
-		gl_Position = vec4(pos, 0.0, 1.0);
+		gl_Position = transform * vec4(pos, 0.0, 1.0);
 	}
 ";
 
@@ -38,7 +54,7 @@ static FRAGMENT_SRC: &'static [u8] = b"
 pub struct Renderer {
 	graphics: gfx::Graphics<GlDevice>,
 	frame   : gfx::Frame<GlResources>,
-	batch   : gfx::batch::RefBatch<Option<GlResources>>,
+	batch   : gfx::batch::RefBatch<Params<GlResources>>,
 }
 
 impl Renderer {
@@ -86,8 +102,14 @@ impl Renderer {
 			&self.frame,
 		);
 
+		let transform: Mat4<f32> = Eye::new_identity(4);
+		let params = Params {
+			transform: *transform.as_array(),
+			_marker  : PhantomData,
+		};
+
 		self.graphics
-			.draw(&self.batch, &None, &self.frame)
+			.draw(&self.batch, &params, &self.frame)
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 
 		self.graphics.end_frame();
