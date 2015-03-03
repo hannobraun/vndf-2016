@@ -2,6 +2,8 @@
 
 
 extern crate getopts;
+extern crate gfx_device_gl;
+extern crate glutin;
 extern crate libc;
 extern crate nalgebra;
 extern crate time;
@@ -16,6 +18,7 @@ mod interface;
 mod render;
 mod termios;
 mod ui;
+mod window;
 
 
 use std::collections::HashMap;
