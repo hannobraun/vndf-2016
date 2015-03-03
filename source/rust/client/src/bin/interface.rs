@@ -64,6 +64,12 @@ impl Interface for CommandLine {
 
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		try!(self.cli.update(&mut self.events, frame));
+
+		for _ in self.window.poll_events() {}
+		if self.window.is_closed() {
+			self.events.push(InputEvent::Quit);
+		}
+
 		Ok(self.events.drain())
 	}
 }
