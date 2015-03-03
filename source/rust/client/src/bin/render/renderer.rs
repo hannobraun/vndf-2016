@@ -52,9 +52,10 @@ static FRAGMENT_SRC: &'static [u8] = b"
 
 
 pub struct Renderer {
-	graphics: gfx::Graphics<GlDevice>,
-	frame   : gfx::Frame<GlResources>,
-	batch   : gfx::batch::RefBatch<Params<GlResources>>,
+	graphics : gfx::Graphics<GlDevice>,
+	frame    : gfx::Frame<GlResources>,
+	batch    : gfx::batch::RefBatch<Params<GlResources>>,
+	transform: Mat4<f32>,
 }
 
 impl Renderer {
@@ -84,10 +85,13 @@ impl Renderer {
 			)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
+		let transform = Eye::new_identity(4);
+
 		Renderer {
-			graphics: graphics,
-			frame   : frame,
-			batch   : batch,
+			graphics : graphics,
+			frame    : frame,
+			batch    : batch,
+			transform: transform,
 		}
 	}
 
@@ -102,9 +106,8 @@ impl Renderer {
 			&self.frame,
 		);
 
-		let transform: Mat4<f32> = Eye::new_identity(4);
 		let params = Params {
-			transform: *transform.as_array(),
+			transform: *self.transform.as_array(),
 			_marker  : PhantomData,
 		};
 
