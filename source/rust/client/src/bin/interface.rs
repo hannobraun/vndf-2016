@@ -18,6 +18,7 @@ use client::interface::{
 	Frame,
 	InputEvent,
 };
+use render::Renderer;
 use ui::Ui;
 use window::Window;
 
@@ -48,9 +49,10 @@ impl Interface for Player {
 
 
 pub struct CommandLine {
-	events: Vec<InputEvent>,
-	cli   : Cli,
-	window: Window,
+	events  : Vec<InputEvent>,
+	cli     : Cli,
+	window  : Window,
+	renderer: Renderer,
 }
 
 impl Interface for CommandLine {
@@ -58,10 +60,17 @@ impl Interface for CommandLine {
 		let cli    = try!(Cli::new());
 		let window = Window::new();
 
+		let renderer = Renderer::new(
+			window.new_device(),
+			window.width(),
+			window.height(),
+		);
+
 		Ok(CommandLine {
-			events: Vec::new(),
-			cli   : cli,
-			window: window,
+			events  : Vec::new(),
+			cli     : cli,
+			window  : window,
+			renderer: renderer,
 		})
 	}
 
@@ -80,6 +89,9 @@ impl Interface for CommandLine {
 		if self.window.is_closed() {
 			self.events.push(InputEvent::Quit);
 		}
+
+		self.renderer.render();
+		self.window.swap_buffers();
 
 		Ok(self.events.drain())
 	}
