@@ -19,7 +19,7 @@ use nalgebra::{
 #[derive(Copy)]
 struct Vertex {
 	pos      : [f32; 2],
-	tex_coord: [u8; 2],
+	tex_coord: [f32; 2],
 }
 
 
@@ -73,10 +73,10 @@ impl Renderer {
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
 		let mesh = device.create_mesh(&[
-			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0, 1 ] },
-			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0, 0 ] },
-			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1, 1 ] },
-			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1, 0 ] },
+			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 1.0 ] },
+			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 0.0 ] },
+			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 1.0 ] },
+			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 0.0 ] },
 		]);
 
 		let mut graphics = gfx::Graphics::new(device);
