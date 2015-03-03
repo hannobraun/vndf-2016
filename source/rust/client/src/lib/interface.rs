@@ -11,6 +11,7 @@ use common::game::Broadcast;
 pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
+	Quit,
 }
 
 impl InputEvent {

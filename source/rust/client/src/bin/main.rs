@@ -72,7 +72,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 	network.send(ClientEvent::Login);
 
-	loop {
+	'main: loop {
 		let input_events = match interface.update(&frame) {
 			Ok(events) => events,
 			Err(error) => panic!("Error updating interface: {}", error),
@@ -107,6 +107,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						"Stopped sending broadcast".to_string()
 					);
 				},
+				InputEvent::Quit => {
+					break 'main;
+				}
 			}
 		}
 
