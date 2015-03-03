@@ -60,16 +60,14 @@ impl Renderer {
 
 		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
 
-		let batch = graphics.make_batch(
-			&program,
-			&mesh,
-			slice,
-			&gfx::DrawState::new(),
-		);
-		let batch = match batch {
-			Ok(batch)  => batch,
-			Err(error) => panic!("Error making batch: {:?}", error),
-		};
+		let batch =
+			graphics.make_batch(
+				&program,
+				&mesh,
+				slice,
+				&gfx::DrawState::new(),
+			)
+			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
 		Renderer {
 			graphics: graphics,
