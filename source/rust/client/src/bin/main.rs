@@ -2,6 +2,7 @@
 #![plugin(gfx_macros)]
 
 
+extern crate freetype;
 extern crate getopts;
 extern crate gfx;
 extern crate gfx_device_gl;

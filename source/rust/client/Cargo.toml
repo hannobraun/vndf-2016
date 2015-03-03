@@ -18,6 +18,9 @@ glutin          = "*"
 rustc-serialize = "*"
 time            = "*"
 
+[dependencies.freetype-rs]
+git = "https://github.com/PistonDevelopers/freetype-rs.git"
+
 [dependencies.gfx]
 git = "https://github.com/gfx-rs/gfx-rs.git"
 
