@@ -59,8 +59,8 @@ impl Renderer {
 
 		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
 
-		let batch =
-			graphics.make_batch(
+		let batch = graphics
+			.make_batch(
 				&program,
 				&mesh,
 				slice,
