@@ -89,10 +89,9 @@ impl Renderer {
 			&self.frame,
 		);
 
-		match self.graphics.draw(&self.batch, &None, &self.frame) {
-			Ok(())     => (),
-			Err(error) => panic!("Error drawing graphics: {:?}", error),
-		}
+		self.graphics
+			.draw(&self.batch, &None, &self.frame)
+			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 
 		self.graphics.end_frame();
 	}
