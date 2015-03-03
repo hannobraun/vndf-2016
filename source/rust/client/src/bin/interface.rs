@@ -16,6 +16,7 @@ use client::interface::{
 	InputEvent,
 };
 use ui::Ui;
+use window::Window;
 
 
 pub trait Interface {
@@ -44,15 +45,18 @@ impl Interface for Player {
 
 
 pub struct CommandLine {
-	cli: Cli
+	cli   : Cli,
+	window: Window,
 }
 
 impl Interface for CommandLine {
 	fn new() -> IoResult<CommandLine> {
-		let cli = try!(Cli::new());
+		let cli    = try!(Cli::new());
+		let window = Window::new();
 
 		Ok(CommandLine {
-			cli: cli,
+			cli   : cli,
+			window: window,
 		})
 	}
 
