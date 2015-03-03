@@ -94,7 +94,7 @@ impl Renderer {
 		]);
 
 		let texture_info = gfx::tex::TextureInfo {
-			width: 1,
+			width : 1,
 			height: 1,
 			depth : 1,
 			levels: 1,
