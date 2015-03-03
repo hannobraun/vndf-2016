@@ -10,7 +10,6 @@ use gfx_device_gl::{
 	GlResources,
 };
 use nalgebra::{
-	Eye,
 	Mat4,
 	Ortho3,
 };
