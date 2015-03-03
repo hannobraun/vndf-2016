@@ -58,9 +58,10 @@ static FRAGMENT_SRC: &'static [u8] = b"
 
 
 pub struct Renderer {
-	graphics : gfx::Graphics<GlDevice>,
-	frame    : gfx::Frame<GlResources>,
-	batch    : gfx::batch::RefBatch<Params<GlResources>>,
+	graphics: gfx::Graphics<GlDevice>,
+	frame   : gfx::Frame<GlResources>,
+	batch   : gfx::batch::RefBatch<Params<GlResources>>,
+
 	transform: Mat4<f32>,
 }
 
@@ -99,9 +100,10 @@ impl Renderer {
 			.to_mat();
 
 		Renderer {
-			graphics : graphics,
-			frame    : frame,
-			batch    : batch,
+			graphics: graphics,
+			frame   : frame,
+			batch   : batch,
+
 			transform: transform,
 		}
 	}
