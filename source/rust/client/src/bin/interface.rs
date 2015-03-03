@@ -45,6 +45,7 @@ impl Interface for Player {
 
 
 pub struct CommandLine {
+	events: Vec<InputEvent>,
 	cli   : Cli,
 	window: Window,
 }
@@ -55,13 +56,15 @@ impl Interface for CommandLine {
 		let window = Window::new();
 
 		Ok(CommandLine {
+			events: Vec::new(),
 			cli   : cli,
 			window: window,
 		})
 	}
 
 	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
-		self.cli.update(frame)
+		try!(self.cli.update(&mut self.events, frame));
+		Ok(self.events.drain())
 	}
 }
 

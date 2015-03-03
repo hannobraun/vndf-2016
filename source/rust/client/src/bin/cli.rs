@@ -19,7 +19,6 @@ use render::Screen;
 
 
 pub struct Cli {
-	events      : Vec<InputEvent>,
 	input       : Receiver<char>,
 	input_buffer: String,
 	last_message: Message,
@@ -60,7 +59,6 @@ impl Cli {
 		let screen = try!(Screen::new(width, height));
 
 		Ok(Cli {
-			events      : Vec::new(),
 			input       : receiver,
 			input_buffer: String::new(),
 			last_message: Message::None,
@@ -70,7 +68,7 @@ impl Cli {
 		})
 	}
 
-	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame) -> IoResult<()> {
 		self.screen.cursor(None);
 
 		if frame.message != self.last_message {
@@ -91,6 +89,7 @@ impl Cli {
 						self.input_buffer.clear();
 
 						try!(self.handle_line(
+							events,
 							command.as_slice(),
 							frame,
 						));
@@ -143,10 +142,10 @@ impl Cli {
 
 		try!(self.screen.submit());
 
-		Ok(self.events.drain())
+		Ok(())
 	}
 
-	fn handle_line(&mut self, line: &str, frame: &Frame) -> IoResult<()> {
+	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> IoResult<()> {
 		let mut splits = line.splitn(1, ' ');
 
 		let command = splits.next().unwrap();
@@ -160,10 +159,10 @@ impl Cli {
 				}
 			},
 			"start-broadcast" => {
-				self.events.push(InputEvent::StartBroadcast(args.to_string()));
+				events.push(InputEvent::StartBroadcast(args.to_string()));
 			},
 			"stop-broadcast" => {
-				self.events.push(InputEvent::StopBroadcast);
+				events.push(InputEvent::StopBroadcast);
 			},
 			"nav-data" => {
 				self.text.push(format!(
