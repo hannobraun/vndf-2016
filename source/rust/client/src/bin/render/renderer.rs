@@ -2,6 +2,7 @@ use std::marker::PhantomData;
 
 use gfx::{
 	self,
+	Device,
 	DeviceExt,
 	ToSlice,
 };
@@ -30,6 +31,8 @@ struct Params<R: gfx::Resources> {
 	width : f32,
 	height: f32,
 
+	color: gfx::shade::TextureParam<R>,
+
 	_marker: PhantomData<R>,
 }
 
@@ -38,22 +41,30 @@ static VERTEX_SRC: &'static [u8] = b"
 	#version 120
 
 	attribute vec2 pos;
+	attribute vec2 tex_coord;
 
 	uniform mat4 transform;
 
 	uniform float width;
 	uniform float height;
 
+	varying vec2 v_tex_coord;
+
 	void main() {
 		gl_Position = transform * vec4(pos.x * width, pos.y * height, 0.0, 1.0);
+		v_tex_coord = tex_coord;
 	}
 ";
 
 static FRAGMENT_SRC: &'static [u8] = b"
 	#version 120
 
+	varying vec2 v_tex_coord;
+
+	uniform sampler2D color;
+
 	void main() {
-		gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+		gl_FragColor = texture2D(color, v_tex_coord);
 	}
 ";
 
@@ -64,6 +75,9 @@ pub struct Renderer {
 	batch   : gfx::batch::RefBatch<Params<GlResources>>,
 
 	transform: Mat4<f32>,
+
+	texture: gfx::device::Handle<u32, gfx::device::tex::TextureInfo>,
+	sampler: gfx::device::Handle<u32, gfx::device::tex::SamplerInfo>,
 }
 
 impl Renderer {
@@ -78,6 +92,34 @@ impl Renderer {
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 1.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 0.0 ] },
 		]);
+
+		let texture_info = gfx::tex::TextureInfo {
+			width: 1,
+			height: 1,
+			depth : 1,
+			levels: 1,
+			kind  : gfx::tex::TextureKind::Texture2D,
+			format: gfx::tex::RGBA8,
+		};
+		let image_info = texture_info.to_image_info();
+
+		let texture = device
+			.create_texture(texture_info)
+			.unwrap_or_else(|e| panic!("Error creating texture: {:?}", e));
+		device
+			.update_texture(
+				&texture,
+				&image_info,
+				&[0x66u8, 0x00, 0x00, 0xff],
+			)
+			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
+
+		let sampler = device.create_sampler(
+			gfx::tex::SamplerInfo::new(
+				gfx::tex::FilterMethod::Bilinear,
+				gfx::tex::WrapMode::Clamp,
+			),
+		);
 
 		let mut graphics = gfx::Graphics::new(device);
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
@@ -106,6 +148,9 @@ impl Renderer {
 			batch   : batch,
 
 			transform: transform,
+
+			texture: texture,
+			sampler: sampler,
 		}
 	}
 
@@ -125,6 +170,8 @@ impl Renderer {
 
 			width : 20.0,
 			height: 40.0,
+
+			color: (self.texture, Some(self.sampler)),
 
 			_marker: PhantomData,
 		};
