@@ -86,6 +86,7 @@ News for any month:
 - http://www.reddit.com/r/space/comments/2uncnm/manned_reentry_vehicles_everything_to_scale_added/
 - http://vimeo.com/117815404
 - https://www.youtube.com/watch?v=eWQIryll8y8
+- http://www.reddit.com/r/space/comments/2xr26f/how_a_sunset_might_look_like_to_a_human_observer/
 
 News ideas for later:
 - Write about Lisa RPG when it comes out
