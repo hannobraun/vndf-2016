@@ -27,6 +27,9 @@ struct Vertex {
 struct Params<R: gfx::Resources> {
 	transform: [[f32; 4]; 4],
 
+	width : f32,
+	height: f32,
+
 	_marker: PhantomData<R>,
 }
 
@@ -38,8 +41,11 @@ static VERTEX_SRC: &'static [u8] = b"
 
 	uniform mat4 transform;
 
+	uniform float width;
+	uniform float height;
+
 	void main() {
-		gl_Position = transform * vec4(pos, 0.0, 1.0);
+		gl_Position = transform * vec4(pos.x * width, pos.y * height, 0.0, 1.0);
 	}
 ";
 
@@ -114,7 +120,11 @@ impl Renderer {
 
 		let params = Params {
 			transform: *self.transform.as_array(),
-			_marker  : PhantomData,
+
+			width : 20.0,
+			height: 40.0,
+
+			_marker: PhantomData,
 		};
 
 		self.graphics
