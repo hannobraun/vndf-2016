@@ -1,4 +1,5 @@
-#![feature(collections, core, old_io, libc, net, std_misc)]
+#![feature(collections, core, old_io, libc, net, plugin, std_misc)]
+#![plugin(gfx_macros)]
 
 
 extern crate getopts;
