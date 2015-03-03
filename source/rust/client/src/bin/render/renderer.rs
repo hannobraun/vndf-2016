@@ -12,6 +12,7 @@ use gfx_device_gl::{
 use nalgebra::{
 	Eye,
 	Mat4,
+	Ortho3,
 };
 
 
@@ -85,7 +86,12 @@ impl Renderer {
 			)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
-		let transform = Eye::new_identity(4);
+		let transform =
+			Ortho3::new(
+				width as f32, height as f32,
+				-1.0, 1.0,
+			)
+			.to_mat();
 
 		Renderer {
 			graphics : graphics,
