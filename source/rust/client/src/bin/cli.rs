@@ -8,7 +8,6 @@ use std::sync::mpsc::{
 	TryRecvError,
 };
 use std::thread;
-use std::vec::Drain;
 
 use client::interface::{
 	Frame,
