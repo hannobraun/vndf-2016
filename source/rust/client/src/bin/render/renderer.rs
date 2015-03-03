@@ -43,10 +43,9 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
-		let program = match device.link_program(VERTEX_SRC, FRAGMENT_SRC) {
-			Ok(program) => program,
-			Err(error)  => panic!("Error linking program: {:?}", error),
-		};
+		let program = device
+			.link_program(VERTEX_SRC, FRAGMENT_SRC)
+			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
 		let mesh = device.create_mesh(&[
 			Vertex { pos: [ -0.5,  0.5 ] },
