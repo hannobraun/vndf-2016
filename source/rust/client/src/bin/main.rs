@@ -17,6 +17,7 @@ extern crate common;
 
 mod args;
 mod cli;
+mod font;
 mod interface;
 mod render;
 mod termios;
