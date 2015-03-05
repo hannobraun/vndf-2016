@@ -82,9 +82,6 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
-		let     font  = font::load();
-		let ref glyph = font['G'];
-
 		let program = device
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
@@ -95,8 +92,6 @@ impl Renderer {
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
-
-		let texture = Texture::from_glyph(glyph, &mut device);
 
 		let mut graphics = gfx::Graphics::new(device);
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
@@ -118,6 +113,10 @@ impl Renderer {
 				-1.0, 1.0,
 			)
 			.to_mat();
+
+		let     font    = font::load();
+		let ref glyph   = font['G'];
+		let     texture = Texture::from_glyph(glyph, &mut graphics.device);
 
 		Renderer {
 			graphics: graphics,
