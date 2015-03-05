@@ -141,7 +141,7 @@ impl Renderer {
 				&program,
 				&mesh,
 				slice,
-				&gfx::DrawState::new(),
+				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
 			)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
