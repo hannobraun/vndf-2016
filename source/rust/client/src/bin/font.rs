@@ -19,7 +19,9 @@ use freetype::ffi::{
 };
 
 
-pub type Font = HashMap<char, Glyph>;
+pub struct Font {
+	pub map: HashMap<char, Glyph>,
+}
 
 pub struct Glyph {
 	pub data   : Vec<u8>,
@@ -45,7 +47,9 @@ pub fn load() -> Font {
 		font.insert(c, glyph);
 	}
 
-	font
+	Font {
+		map: font,
+	}
 }
 
 fn init_font_face() -> FT_Face {
