@@ -66,7 +66,7 @@ static FRAGMENT_SRC: &'static [u8] = b"
 	uniform sampler2D color;
 
 	void main() {
-		gl_FragColor = texture2D(color, v_tex_coord);
+		gl_FragColor = vec4(1.0, 1.0, 1.0, texture2D(color, v_tex_coord).r);
 	}
 ";
 
