@@ -7,9 +7,13 @@ use gfx_device_gl::GlDevice;
 use font::Glyph;
 
 
+pub type TextureHandle = gfx::device::Handle<u32, gfx::device::tex::TextureInfo>;
+pub type SamplerHandle = gfx::device::Handle<u32, gfx::device::tex::SamplerInfo>;
+
+
 pub struct Texture {
-	pub texture: gfx::device::Handle<u32, gfx::device::tex::TextureInfo>,
-	pub sampler: gfx::device::Handle<u32, gfx::device::tex::SamplerInfo>,
+	pub texture: TextureHandle,
+	pub sampler: SamplerHandle,
 }
 
 impl Texture {
