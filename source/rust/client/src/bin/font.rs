@@ -34,7 +34,7 @@ impl Font {
 		for n in ascii_chars.chain(additional_chars) {
 			let c = char::from_u32(n as u32).unwrap();
 
-			let glyph_slot = load_glyph_slot(font_face, c);
+			let glyph_slot = load_glyph_slot(font_face, c, 16);
 			let glyph      = make_glyph(glyph_slot);
 
 			font.insert(c, glyph);
@@ -76,12 +76,12 @@ fn init_font_face() -> FT_Face {
 	}
 }
 
-fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
+fn load_glyph_slot(font_face: FT_Face, c: char, size: u32) -> FT_GlyphSlot {
 	unsafe {
 		let pixel_error = FT_Set_Pixel_Sizes(
 			font_face,
 			0,
-			16,
+			size,
 		);
 		assert!(pixel_error == 0);
 
