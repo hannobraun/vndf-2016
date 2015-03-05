@@ -82,19 +82,19 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
-		let program = device
+		let mut graphics = gfx::Graphics::new(device);
+		let     frame    = gfx::Frame::new(width as u16, height as u16);
+
+		let program = graphics.device
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
-		let mesh = device.create_mesh(&[
+		let mesh = graphics.device.create_mesh(&[
 			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
 			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
-
-		let mut graphics = gfx::Graphics::new(device);
-		let     frame    = gfx::Frame::new(width as u16, height as u16);
 
 		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
 
