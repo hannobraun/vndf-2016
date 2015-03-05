@@ -15,6 +15,8 @@ use nalgebra::{
 	Ortho3,
 };
 
+use font;
+
 
 #[vertex_format]
 #[derive(Copy)]
@@ -82,6 +84,9 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
+		let     font  = font::load();
+		let ref glyph = font['A'];
+
 		let program = device
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
@@ -93,13 +98,18 @@ impl Renderer {
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 0.0 ] },
 		]);
 
+		let format = gfx::tex::Format::Unsigned(
+			gfx::tex::Components::R,
+			8,
+			gfx::attrib::IntSubType::Normalized,
+		);
 		let texture_info = gfx::tex::TextureInfo {
-			width : 1,
-			height: 1,
+			width : glyph.size.x as u16,
+			height: glyph.size.y as u16,
 			depth : 1,
 			levels: 1,
 			kind  : gfx::tex::TextureKind::Texture2D,
-			format: gfx::tex::RGBA8,
+			format: format,
 		};
 		let image_info = texture_info.to_image_info();
 
@@ -110,7 +120,7 @@ impl Renderer {
 			.update_texture(
 				&texture,
 				&image_info,
-				&[0x66u8, 0x00, 0x00, 0xff],
+				glyph.data.as_slice(),
 			)
 			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
 
