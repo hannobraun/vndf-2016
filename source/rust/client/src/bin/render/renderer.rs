@@ -146,7 +146,7 @@ impl Renderer {
 			width : 20.0,
 			height: 40.0,
 
-			color: (self.texture.texture, Some(self.texture.sampler)),
+			color: self.texture.to_param(),
 
 			_marker: PhantomData,
 		};

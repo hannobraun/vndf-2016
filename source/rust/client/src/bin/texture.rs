@@ -56,4 +56,8 @@ impl Texture {
 			sampler: sampler,
 		}
 	}
+
+	pub fn to_param(&self) -> (TextureHandle, Option<SamplerHandle>) {
+		(self.texture, Some(self.sampler))
+	}
 }
