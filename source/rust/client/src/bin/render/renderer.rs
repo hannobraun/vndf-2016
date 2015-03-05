@@ -85,17 +85,17 @@ pub struct Renderer {
 impl Renderer {
 	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
 		let     font  = font::load();
-		let ref glyph = font['A'];
+		let ref glyph = font['G'];
 
 		let program = device
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
 		let mesh = device.create_mesh(&[
-			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 1.0 ] },
-			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 1.0 ] },
-			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 0.0 ] },
+			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
+			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
+			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
+			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
 
 		let format = gfx::tex::Format::Unsigned(
