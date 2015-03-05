@@ -114,9 +114,9 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let     font    = Font::load();
-		let ref glyph   = font.glyph('G', 400);
-		let     texture = Texture::from_glyph(glyph, &mut graphics.device);
+		let font    = Font::load();
+		let glyph   = font.glyph('G', 400);
+		let texture = Texture::from_glyph(&glyph, &mut graphics.device);
 
 		Renderer {
 			graphics: graphics,
