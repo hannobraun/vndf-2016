@@ -14,7 +14,7 @@ use nalgebra::{
 	Ortho3,
 };
 
-use font;
+use font::Font;
 use texture::Texture;
 
 
@@ -114,8 +114,8 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let     font    = font::load();
-		let ref glyph   = font['G'];
+		let     font    = Font::load();
+		let ref glyph   = font.glyph('G', 400);
 		let     texture = Texture::from_glyph(glyph, &mut graphics.device);
 
 		Renderer {

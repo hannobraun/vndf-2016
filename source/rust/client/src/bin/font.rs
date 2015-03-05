@@ -1,5 +1,3 @@
-use std::char;
-use std::collections::HashMap;
 use std::ffi::CString;
 use std::ptr;
 
@@ -20,29 +18,18 @@ use freetype::ffi::{
 
 
 pub struct Font {
-	pub map: HashMap<char, Glyph>,
+	pub font_face: FT_Face,
 }
 
 impl Font {
 	pub fn load() -> Font {
-		let     font_face  = init_font_face();
-		let mut font       = HashMap::new();
-
-		let ascii_chars      = range(32, 127);
-		let additional_chars = vec!['°' as u32].into_iter();
-
-		for n in ascii_chars.chain(additional_chars) {
-			let c = char::from_u32(n as u32).unwrap();
-
-			let glyph_slot = load_glyph_slot(font_face, c, 16);
-			let glyph      = make_glyph(glyph_slot);
-
-			font.insert(c, glyph);
-		}
-
 		Font {
-			map: font,
+			font_face: init_font_face(),
 		}
+	}
+
+	pub fn glyph(&self, c: char, size: u32) -> Glyph {
+		make_glyph(load_glyph_slot(self.font_face, c, size))
 	}
 }
 
