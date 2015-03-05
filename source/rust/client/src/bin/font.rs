@@ -23,6 +23,30 @@ pub struct Font {
 	pub map: HashMap<char, Glyph>,
 }
 
+impl Font {
+	pub fn load() -> Font {
+		let     font_face  = init_font_face();
+		let mut font       = HashMap::new();
+
+		let ascii_chars      = range(32, 127);
+		let additional_chars = vec!['°' as u32].into_iter();
+
+		for n in ascii_chars.chain(additional_chars) {
+			let c = char::from_u32(n as u32).unwrap();
+
+			let glyph_slot = load_glyph_slot(font_face, c);
+			let glyph      = make_glyph(glyph_slot);
+
+			font.insert(c, glyph);
+		}
+
+		Font {
+			map: font,
+		}
+	}
+}
+
+
 pub struct Glyph {
 	pub data   : Vec<u8>,
 	pub size   : Vec2<f32>,
@@ -30,27 +54,6 @@ pub struct Glyph {
 	pub advance: Vec2<f32>,
 }
 
-
-pub fn load() -> Font {
-	let     font_face  = init_font_face();
-	let mut font       = HashMap::new();
-
-	let ascii_chars      = range(32, 127);
-	let additional_chars = vec!['°' as u32].into_iter();
-
-	for n in ascii_chars.chain(additional_chars) {
-		let c = char::from_u32(n as u32).unwrap();
-
-		let glyph_slot = load_glyph_slot(font_face, c);
-		let glyph      = make_glyph(glyph_slot);
-
-		font.insert(c, glyph);
-	}
-
-	Font {
-		map: font,
-	}
-}
 
 fn init_font_face() -> FT_Face {
 	unsafe {
