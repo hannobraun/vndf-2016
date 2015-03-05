@@ -81,7 +81,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(mut device: GlDevice, width: u32, height: u32) -> Renderer {
+	pub fn new(device: GlDevice, width: u32, height: u32) -> Renderer {
 		let mut graphics = gfx::Graphics::new(device);
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
 
