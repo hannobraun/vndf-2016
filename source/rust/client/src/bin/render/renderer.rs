@@ -2,7 +2,6 @@ use std::marker::PhantomData;
 
 use gfx::{
 	self,
-	Device,
 	DeviceExt,
 	ToSlice,
 };
@@ -16,6 +15,7 @@ use nalgebra::{
 };
 
 use font;
+use texture::Texture;
 
 
 #[vertex_format]
@@ -77,9 +77,7 @@ pub struct Renderer {
 	batch   : gfx::batch::RefBatch<Params<GlResources>>,
 
 	transform: Mat4<f32>,
-
-	texture: gfx::device::Handle<u32, gfx::device::tex::TextureInfo>,
-	sampler: gfx::device::Handle<u32, gfx::device::tex::SamplerInfo>,
+	texture  : Texture,
 }
 
 impl Renderer {
@@ -98,38 +96,7 @@ impl Renderer {
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
 
-		let format = gfx::tex::Format::Unsigned(
-			gfx::tex::Components::R,
-			8,
-			gfx::attrib::IntSubType::Normalized,
-		);
-		let texture_info = gfx::tex::TextureInfo {
-			width : glyph.size.x as u16,
-			height: glyph.size.y as u16,
-			depth : 1,
-			levels: 1,
-			kind  : gfx::tex::TextureKind::Texture2D,
-			format: format,
-		};
-		let image_info = texture_info.to_image_info();
-
-		let texture = device
-			.create_texture(texture_info)
-			.unwrap_or_else(|e| panic!("Error creating texture: {:?}", e));
-		device
-			.update_texture(
-				&texture,
-				&image_info,
-				glyph.data.as_slice(),
-			)
-			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
-
-		let sampler = device.create_sampler(
-			gfx::tex::SamplerInfo::new(
-				gfx::tex::FilterMethod::Bilinear,
-				gfx::tex::WrapMode::Clamp,
-			),
-		);
+		let texture = Texture::from_glyph(glyph, &mut device);
 
 		let mut graphics = gfx::Graphics::new(device);
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
@@ -160,7 +127,6 @@ impl Renderer {
 			transform: transform,
 
 			texture: texture,
-			sampler: sampler,
 		}
 	}
 
@@ -181,7 +147,7 @@ impl Renderer {
 			width : 20.0,
 			height: 40.0,
 
-			color: (self.texture, Some(self.sampler)),
+			color: (self.texture.texture, Some(self.texture.sampler)),
 
 			_marker: PhantomData,
 		};

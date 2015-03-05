@@ -21,6 +21,7 @@ mod font;
 mod interface;
 mod render;
 mod termios;
+mod texture;
 mod ui;
 mod window;
 
