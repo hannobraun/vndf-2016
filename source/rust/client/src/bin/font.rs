@@ -75,7 +75,7 @@ fn init_font_face() -> FT_Face {
 		let pixel_error = FT_Set_Pixel_Sizes(
 			font_face,
 			0,
-			16
+			16,
 		);
 		assert!(pixel_error == 0);
 
