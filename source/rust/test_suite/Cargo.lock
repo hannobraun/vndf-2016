@@ -5,9 +5,14 @@ dependencies = [
  "client 0.0.1",
  "common 0.0.1",
  "game_service 0.0.1",
- "rand 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.19 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
+
+[[package]]
+name = "android_glue"
+version = "0.0.1"
+source = "git+https://github.com/tomaka/android-rs-glue#5a68056599fb498b0cf3715fd359894825e3b856"
 
 [[package]]
 name = "bitflags"
@@ -19,39 +24,72 @@ name = "client"
 version = "0.0.1"
 dependencies = [
  "common 0.0.1",
- "freetype-rs 0.0.6 (git+https://github.com/PistonDevelopers/freetype-rs.git)",
+ "freetype-rs 0.0.7 (git+https://github.com/PistonDevelopers/freetype-rs.git)",
  "getopts 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "gfx 0.2.1 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_device_gl 0.2.0 (git+https://github.com/gfx-rs/gfx_device_gl)",
  "gfx_macros 0.1.7 (git+https://github.com/gfx-rs/gfx_macros.git)",
- "glutin 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.2.4 (git+https://github.com/sebcrozet/nalgebra.git)",
- "rustc-serialize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "glutin 0.0.7 (git+https://github.com/tomaka/glutin.git)",
+ "nalgebra 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.19 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "cocoa"
+version = "0.1.1"
+source = "git+https://github.com/servo/rust-cocoa#ca3441a14783aa0683e073f1a1f990ed21900718"
+dependencies = [
+ "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "common"
 version = "0.0.1"
 dependencies = [
- "nalgebra 0.2.4 (git+https://github.com/sebcrozet/nalgebra.git)",
- "rustc-serialize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "core_foundation"
+version = "0.1.0"
+source = "git+https://github.com/servo/rust-core-foundation#c577bd64b0301fe926cf7b757b9852a1ce1d521d"
+dependencies = [
+ "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "core_graphics"
+version = "0.1.0"
+source = "git+https://github.com/servo/rust-core-graphics#e169ad38f71ed003c21fb550a9dfa0e51423ed3a"
+dependencies = [
+ "core_foundation 0.1.0 (git+https://github.com/servo/rust-core-foundation)",
+]
+
+[[package]]
+name = "draw_state"
+version = "0.0.1"
+source = "git+https://github.com/gfx-rs/draw_state#b92422e8671a25f8fe5c8216001b44f5ca849744"
+dependencies = [
+ "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "freetype-rs"
-version = "0.0.6"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#64614fdbbc78b9433446f99f50d3fab58d75427e"
+version = "0.0.7"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#0fadf838ab9b74f31be011db83d885a78acb1135"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "freetype-sys 0.0.3 (git+https://github.com/PistonDevelopers/freetype-sys)",
+ "freetype-sys 0.0.4 (git+https://github.com/PistonDevelopers/freetype-sys)",
  "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "freetype-sys"
-version = "0.0.3"
-source = "git+https://github.com/PistonDevelopers/freetype-sys#45615f83607a4e9e0cd1fe69996b39692b76931c"
+version = "0.0.4"
+source = "git+https://github.com/PistonDevelopers/freetype-sys#cbf20043f8e6b8ab654eb247a1cc4b3444a8a714"
 dependencies = [
  "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "libz-sys 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -64,8 +102,8 @@ version = "0.0.1"
 dependencies = [
  "common 0.0.1",
  "getopts 0.2.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.2.4 (git+https://github.com/sebcrozet/nalgebra.git)",
- "rand 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.19 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -93,16 +131,17 @@ dependencies = [
 [[package]]
 name = "gfx"
 version = "0.2.1"
-source = "git+https://github.com/gfx-rs/gfx-rs.git#42834728d1f0ab3e4b8ee3ae76046c7b92e2b2c3"
+source = "git+https://github.com/gfx-rs/gfx-rs.git#7656ee4e624707560689fe4eece14126ca6d2924"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "draw_state 0.0.1 (git+https://github.com/gfx-rs/draw_state)",
  "log 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx_device_gl"
 version = "0.2.0"
-source = "git+https://github.com/gfx-rs/gfx_device_gl#3abcbb77cdf12818546440cd552d22fc69abeaeb"
+source = "git+https://github.com/gfx-rs/gfx_device_gl#c2f989240302a177e74f3761b70f6997494ab836"
 dependencies = [
  "gfx 0.2.1 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_gl 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -124,7 +163,7 @@ dependencies = [
 [[package]]
 name = "gfx_macros"
 version = "0.1.7"
-source = "git+https://github.com/gfx-rs/gfx_macros.git#4e47129ce43c95b00fea748d3e46033a1e55bf62"
+source = "git+https://github.com/gfx-rs/gfx_macros.git#b4b1e348528827ba453b757c6303b62f39c18f60"
 
 [[package]]
 name = "gl_common"
@@ -146,9 +185,13 @@ dependencies = [
 
 [[package]]
 name = "glutin"
-version = "0.0.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.7"
+source = "git+https://github.com/tomaka/glutin.git#277b66a70852661f7eb645e3e216c927eb94dffb"
 dependencies = [
+ "android_glue 0.0.1 (git+https://github.com/tomaka/android-rs-glue)",
+ "cocoa 0.1.1 (git+https://github.com/servo/rust-cocoa)",
+ "core_foundation 0.1.0 (git+https://github.com/servo/rust-core-foundation)",
+ "core_graphics 0.1.0 (git+https://github.com/servo/rust-core-graphics)",
  "gdi32-sys 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "gl_common 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "gl_generator 0.0.19 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -192,11 +235,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "nalgebra"
-version = "0.2.4"
-source = "git+https://github.com/sebcrozet/nalgebra.git#fa8682df53dc3aa18976e1c4e705d34fe9a8449c"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "rand 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -206,7 +249,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "rand"
-version = "0.1.3"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "rand"
+version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -215,7 +267,7 @@ dependencies = [
 
 [[package]]
 name = "rustc-serialize"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]

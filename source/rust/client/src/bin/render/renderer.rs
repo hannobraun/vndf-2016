@@ -1,10 +1,7 @@
 use std::marker::PhantomData;
 
-use gfx::{
-	self,
-	DeviceExt,
-	ToSlice,
-};
+use gfx;
+use gfx::traits::*;
 use gfx_device_gl::{
 	GlDevice,
 	GlResources,
@@ -74,7 +71,8 @@ static FRAGMENT_SRC: &'static [u8] = b"
 pub struct Renderer {
 	graphics: gfx::Graphics<GlDevice>,
 	frame   : gfx::Frame<GlResources>,
-	batch   : gfx::batch::RefBatch<Params<GlResources>>,
+	program : gfx::ProgramHandle<GlResources>,
+	mesh    : gfx::Mesh<GlResources>,
 
 	transform: Mat4<f32>,
 	texture  : Texture,
@@ -82,7 +80,7 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(device: GlDevice, width: u32, height: u32) -> Renderer {
-		let mut graphics = gfx::Graphics::new(device);
+		let mut graphics = device.into_graphics();
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
 
 		let program = graphics.device
@@ -95,17 +93,6 @@ impl Renderer {
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
-
-		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
-
-		let batch = graphics
-			.make_batch(
-				&program,
-				&mesh,
-				slice,
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
 		let transform =
 			Ortho3::new(
@@ -121,7 +108,8 @@ impl Renderer {
 		Renderer {
 			graphics: graphics,
 			frame   : frame,
-			batch   : batch,
+			program : program,
+			mesh    : mesh,
 
 			transform: transform,
 
@@ -151,8 +139,18 @@ impl Renderer {
 			_marker: PhantomData,
 		};
 
+		let batch = self.graphics
+			.make_batch(
+				&self.program,
+				params,
+				&self.mesh,
+				self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
+				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
+			)
+			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
+
 		self.graphics
-			.draw(&self.batch, &params, &self.frame)
+			.draw(&batch, &self.frame)
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 
 		self.graphics.end_frame();

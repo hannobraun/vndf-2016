@@ -6,7 +6,5 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
+nalgebra        = "*"
 rustc-serialize = "*"
-
-[dependencies.nalgebra]
-git = "https://github.com/sebcrozet/nalgebra.git"

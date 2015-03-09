@@ -14,11 +14,9 @@ name = "vndf-game-service"
 
 [dependencies]
 getopts  = "*"
+nalgebra = "*"
 rand     = "*"
 time     = "*"
-
-[dependencies.nalgebra]
-git = "https://github.com/sebcrozet/nalgebra.git"
 
 [dependencies.common]
 path = "../common"

@@ -1,14 +1,15 @@
-use gfx::{
-	self,
-	Device,
+use gfx;
+use gfx::traits::*;
+use gfx_device_gl::{
+	GlDevice,
+	GlResources,
 };
-use gfx_device_gl::GlDevice;
 
 use font::Glyph;
 
 
-pub type TextureHandle = gfx::device::Handle<u32, gfx::device::tex::TextureInfo>;
-pub type SamplerHandle = gfx::device::Handle<u32, gfx::device::tex::SamplerInfo>;
+pub type TextureHandle = gfx::TextureHandle<GlResources>;
+pub type SamplerHandle = gfx::SamplerHandle<GlResources>;
 
 
 pub struct Texture {
