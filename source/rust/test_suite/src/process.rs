@@ -23,9 +23,9 @@ impl Process {
 	pub fn start(path: &str, args: &[&str]) -> Process {
 		let command = Command::new(path)
 			.args(args)
-			.stdin(Stdio::capture())
-			.stdout(Stdio::capture())
-			.stderr(Stdio::capture())
+			.stdin(Stdio::piped())
+			.stdout(Stdio::piped())
+			.stderr(Stdio::piped())
 			.spawn();
 
 		let mut process = match command {
