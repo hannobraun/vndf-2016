@@ -152,7 +152,7 @@ impl Renderer {
 
 		for c in text.chars() {
 			if c == ' ' {
-				position = position + Vec2::new(15.0, 0.0);
+				position = position + Vec2::new(20.0, 0.0);
 				continue;
 			}
 
