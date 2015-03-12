@@ -112,12 +112,12 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let font  = Font::load();
+		let font  = Font::load(HEIGHT as u32 * 2);
 
 		let mut textures = HashMap::new();
 		for i in range(33, 127) {
 			let c       = ::std::char::from_u32(i).unwrap();
-			let glyph   = font.glyph(c, HEIGHT as u32 * 2);
+			let glyph   = font.glyph(c);
 			let texture = Texture::from_glyph(&glyph, &mut graphics.device);
 
 			textures.insert(c, (glyph, texture));

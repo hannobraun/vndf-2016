@@ -19,17 +19,19 @@ use freetype::ffi::{
 
 pub struct Font {
 	pub font_face: FT_Face,
+	pub size     : u32,
 }
 
 impl Font {
-	pub fn load() -> Font {
+	pub fn load(size: u32) -> Font {
 		Font {
 			font_face: init_font_face(),
+			size     : size,
 		}
 	}
 
-	pub fn glyph(&self, c: char, size: u32) -> Glyph {
-		make_glyph(load_glyph_slot(self.font_face, c, size))
+	pub fn glyph(&self, c: char) -> Glyph {
+		make_glyph(load_glyph_slot(self.font_face, c, self.size))
 	}
 }
 
