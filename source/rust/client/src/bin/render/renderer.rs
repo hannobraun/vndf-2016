@@ -170,7 +170,7 @@ impl Renderer {
 				transform: *(self.transform * translation.to_homogeneous()).as_array(),
 
 				width : glyph.size.x,
-				height: glyph.size.x,
+				height: glyph.size.y,
 
 				color: texture.to_param(),
 
