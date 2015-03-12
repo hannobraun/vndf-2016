@@ -19,18 +19,24 @@ pub struct Texture {
 
 impl Texture {
 	pub fn from_glyph(glyph: &Glyph, device: &mut GlDevice) -> Texture {
-		let format = gfx::tex::Format::Unsigned(
-			gfx::tex::Components::R,
-			8,
-			gfx::attrib::IntSubType::Normalized,
-		);
+		let data: Vec<u8> = (0..glyph.data.len() * 4)
+			.map(|i|
+				if (i + 1) % 4 == 0 {
+					glyph.data[i / 4]
+				}
+				else {
+					255
+				}
+			)
+			.collect();
+
 		let texture_info = gfx::tex::TextureInfo {
 			width : glyph.size.x as u16,
 			height: glyph.size.y as u16,
 			depth : 1,
 			levels: 1,
 			kind  : gfx::tex::TextureKind::Texture2D,
-			format: format,
+			format: gfx::tex::RGBA8,
 		};
 		let image_info = texture_info.to_image_info();
 
@@ -41,7 +47,7 @@ impl Texture {
 			.update_texture(
 				&texture,
 				&image_info,
-				glyph.data.as_slice(),
+				data.as_slice(),
 			)
 			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
 
