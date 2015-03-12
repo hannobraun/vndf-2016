@@ -19,19 +19,17 @@ use freetype::ffi::{
 
 pub struct Font {
 	pub font_face: FT_Face,
-	pub size     : u32,
 }
 
 impl Font {
 	pub fn load(size: u32) -> Font {
 		Font {
-			font_face: init_font_face(),
-			size     : size,
+			font_face: init_font_face(size),
 		}
 	}
 
 	pub fn glyph(&self, c: char) -> Glyph {
-		make_glyph(load_glyph_slot(self.font_face, c, self.size))
+		make_glyph(load_glyph_slot(self.font_face, c))
 	}
 }
 
@@ -44,7 +42,7 @@ pub struct Glyph {
 }
 
 
-fn init_font_face() -> FT_Face {
+fn init_font_face(size: u32) -> FT_Face {
 	unsafe {
 		let mut freetype: FT_Library = ptr::null_mut();
 		let init_error = FT_Init_FreeType(&mut freetype);
@@ -61,12 +59,6 @@ fn init_font_face() -> FT_Face {
 		);
 		assert!(face_error == 0);
 
-		font_face
-	}
-}
-
-fn load_glyph_slot(font_face: FT_Face, c: char, size: u32) -> FT_GlyphSlot {
-	unsafe {
 		let pixel_error = FT_Set_Pixel_Sizes(
 			font_face,
 			0,
@@ -74,6 +66,12 @@ fn load_glyph_slot(font_face: FT_Face, c: char, size: u32) -> FT_GlyphSlot {
 		);
 		assert!(pixel_error == 0);
 
+		font_face
+	}
+}
+
+fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
+	unsafe {
 		let glyph_index = FT_Get_Char_Index(font_face, c as u64);
 
 		let glyph_error = FT_Load_Glyph(
