@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::marker::PhantomData;
 
 use gfx;
@@ -7,12 +8,22 @@ use gfx_device_gl::{
 	GlResources,
 };
 use nalgebra::{
+	Iso3,
 	Mat4,
 	Ortho3,
+	ToHomogeneous,
+	Vec2,
+	Vec3,
 };
 
-use font::Font;
+use font::{
+	Font,
+	Glyph,
+};
 use texture::Texture;
+
+
+const HEIGHT: f32 = 20.0;
 
 
 #[vertex_format]
@@ -75,7 +86,7 @@ pub struct Renderer {
 	mesh    : gfx::Mesh<GlResources>,
 
 	transform: Mat4<f32>,
-	texture  : Texture,
+	textures : HashMap<char, (Glyph, Texture)>,
 }
 
 impl Renderer {
@@ -101,9 +112,16 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let font    = Font::load();
-		let glyph   = font.glyph('G', 400);
-		let texture = Texture::from_glyph(&glyph, &mut graphics.device);
+		let font  = Font::load();
+
+		let mut textures = HashMap::new();
+		for i in range(33, 127) {
+			let c       = ::std::char::from_u32(i).unwrap();
+			let glyph   = font.glyph(c, HEIGHT as u32 * 2);
+			let texture = Texture::from_glyph(&glyph, &mut graphics.device);
+
+			textures.insert(c, (glyph, texture));
+		}
 
 		Renderer {
 			graphics: graphics,
@@ -113,7 +131,7 @@ impl Renderer {
 
 			transform: transform,
 
-			texture: texture,
+			textures: textures,
 		}
 	}
 
@@ -128,30 +146,51 @@ impl Renderer {
 			&self.frame,
 		);
 
-		let params = Params {
-			transform: *self.transform.as_array(),
+		let mut position = Vec2::new(-490.0, 300.0);
 
-			width : 20.0,
-			height: 40.0,
+		let text = "This is Von Neumann Defense Force.";
 
-			color: self.texture.to_param(),
+		for c in text.chars() {
+			if c == ' ' {
+				position = position + Vec2::new(15.0, 0.0);
+				continue;
+			}
 
-			_marker: PhantomData,
-		};
+			let (ref glyph, ref texture) = self.textures[c];
 
-		let batch = self.graphics
-			.make_batch(
-				&self.program,
-				params,
-				&self.mesh,
-				self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
+			let glyph_position = position + (glyph.size * 0.5) + glyph.offset;
+			let translation = Iso3::new(
+				Vec3::new(glyph_position.x, glyph_position.y, 0.0),
+				Vec3::new(0.0, 0.0, 0.0),
+			);
 
-		self.graphics
-			.draw(&batch, &self.frame)
-			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
+			position = position + glyph.advance;
+
+			let params = Params {
+				transform: *(self.transform * translation.to_homogeneous()).as_array(),
+
+				width : glyph.size.x,
+				height: glyph.size.x,
+
+				color: texture.to_param(),
+
+				_marker: PhantomData,
+			};
+
+			let batch = self.graphics
+				.make_batch(
+					&self.program,
+					params,
+					&self.mesh,
+					self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
+					&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
+				)
+				.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
+
+			self.graphics
+				.draw(&batch, &self.frame)
+				.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
+		}
 
 		self.graphics.end_frame();
 	}
