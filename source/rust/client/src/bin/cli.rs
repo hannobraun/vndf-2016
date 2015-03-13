@@ -152,9 +152,8 @@ impl Cli {
 			Some(((self.input_buffer.len() + 2) as u16, self.height -1))
 		);
 
+		self.renderer.render(self.screen.buffer());
 		try!(self.screen.submit());
-
-		self.renderer.render();
 
 		Ok(())
 	}

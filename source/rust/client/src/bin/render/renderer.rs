@@ -20,6 +20,7 @@ use font::{
 	Font,
 	Glyph,
 };
+use render::ScreenBuffer;
 use texture::Texture;
 
 
@@ -135,7 +136,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self) {
+	pub fn render(&mut self, buffer: &ScreenBuffer) {
 		self.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.25, 1.0],
@@ -146,25 +147,30 @@ impl Renderer {
 			&self.frame,
 		);
 
-		let mut position = Vec2::new(-490.0, 300.0);
+		let offset = Vec2::new(-490.0, 300.0);
 
-		let text = "This is Von Neumann Defense Force.";
-
-		for c in text.chars() {
-			if c == ' ' {
-				position = position + Vec2::new(20.0, 0.0);
+		for (x, y, c) in buffer.iter() {
+			if c.c == ' ' {
 				continue;
 			}
 
-			let (ref glyph, ref texture) = self.textures[c];
+			write!(&mut ::std::old_io::stderr(), "{} {} {}\n", x, y, c.c);
 
-			let glyph_position = position + (glyph.size * 0.5) + glyph.offset;
+			let &(ref glyph, ref texture) = self.textures
+				.get(&c.c)
+				.unwrap_or_else(||
+					panic!("Could not find texture for '{}'", c.c)
+				);
+
+			let position =
+				offset +
+				(glyph.size * 0.5) +
+				glyph.offset +
+				Vec2::new(20.0 * x as f32, 40.0 * -(y as f32));
 			let translation = Iso3::new(
-				Vec3::new(glyph_position.x, glyph_position.y, 0.0),
+				Vec3::new(position.x, position.y, 0.0),
 				Vec3::new(0.0, 0.0, 0.0),
 			);
-
-			position = position + glyph.advance;
 
 			let params = Params {
 				transform: *(self.transform * translation.to_homogeneous()).as_array(),
