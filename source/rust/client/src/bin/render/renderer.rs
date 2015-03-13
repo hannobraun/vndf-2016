@@ -151,8 +151,6 @@ impl Renderer {
 				continue;
 			}
 
-			write!(&mut ::std::old_io::stderr(), "{} {} {}\n", x, y, c.c);
-
 			let &(ref glyph, ref texture) = self.textures
 				.get(&c.c)
 				.unwrap_or_else(||
