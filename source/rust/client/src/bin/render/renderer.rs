@@ -110,7 +110,7 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let font  = Font::load(20 * 2);
+		let font  = Font::load(18);
 
 		let mut textures = HashMap::new();
 		for i in range(33, 127) {
@@ -163,7 +163,7 @@ impl Renderer {
 				offset +
 				(glyph.size * 0.5) +
 				glyph.offset +
-				Vec2::new(20.0 * x as f32, 40.0 * -(y as f32));
+				Vec2::new(9.0 * x as f32, 18.0 * -(y as f32));
 			let translation = Iso3::new(
 				Vec3::new(position.x, position.y, 0.0),
 				Vec3::new(0.0, 0.0, 0.0),
