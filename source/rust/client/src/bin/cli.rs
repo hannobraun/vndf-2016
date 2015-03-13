@@ -14,7 +14,10 @@ use client::interface::{
 	InputEvent,
 	Message,
 };
-use render::Screen;
+use render::{
+	Renderer,
+	Screen,
+};
 
 
 pub struct Cli {
@@ -24,10 +27,12 @@ pub struct Cli {
 	text        : Vec<String>,
 	screen      : Screen,
 	height      : u16,
+
+	pub renderer: Renderer,
 }
 
 impl Cli {
-	pub fn new() -> IoResult<Cli> {
+	pub fn new(renderer: Renderer) -> IoResult<Cli> {
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
@@ -64,6 +69,7 @@ impl Cli {
 			text        : text,
 			screen      : screen,
 			height      : height,
+			renderer    : renderer,
 		})
 	}
 

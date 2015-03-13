@@ -49,15 +49,13 @@ impl Interface for Player {
 
 
 pub struct CommandLine {
-	events  : Vec<InputEvent>,
-	cli     : Cli,
-	window  : Window,
-	renderer: Renderer,
+	events: Vec<InputEvent>,
+	cli   : Cli,
+	window: Window,
 }
 
 impl Interface for CommandLine {
 	fn new() -> IoResult<CommandLine> {
-		let cli    = try!(Cli::new());
 		let window = Window::new();
 
 		let renderer = Renderer::new(
@@ -66,11 +64,12 @@ impl Interface for CommandLine {
 			window.height(),
 		);
 
+		let cli    = try!(Cli::new(renderer));
+
 		Ok(CommandLine {
-			events  : Vec::new(),
-			cli     : cli,
-			window  : window,
-			renderer: renderer,
+			events: Vec::new(),
+			cli   : cli,
+			window: window,
 		})
 	}
 
@@ -90,7 +89,7 @@ impl Interface for CommandLine {
 			self.events.push(InputEvent::Quit);
 		}
 
-		self.renderer.render();
+		self.cli.renderer.render();
 		self.window.swap_buffers();
 
 		Ok(self.events.drain())
