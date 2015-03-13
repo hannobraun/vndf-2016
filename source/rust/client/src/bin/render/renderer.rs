@@ -144,7 +144,7 @@ impl Renderer {
 			&self.frame,
 		);
 
-		let offset = Vec2::new(-490.0, 300.0);
+		let offset = Vec2::new(-500.0, 330.0);
 
 		for (x, y, c) in buffer.iter() {
 			if c.c == ' ' {
