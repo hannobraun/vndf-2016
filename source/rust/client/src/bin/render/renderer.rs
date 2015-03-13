@@ -147,15 +147,10 @@ impl Renderer {
 		let offset = Vec2::new(-500.0, 330.0);
 
 		for (x, y, c) in buffer.iter() {
-			if c.c == ' ' {
-				continue;
-			}
-
-			let &(ref glyph, ref texture) = self.textures
-				.get(&c.c)
-				.unwrap_or_else(||
-					panic!("Could not find texture for '{}'", c.c)
-				);
+			let &(ref glyph, ref texture) = match self.textures.get(&c.c) {
+				Some(result) => result,
+				None         => continue,
+			};
 
 			let position =
 				offset +
