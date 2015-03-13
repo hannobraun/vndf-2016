@@ -24,9 +24,6 @@ use render::ScreenBuffer;
 use texture::Texture;
 
 
-const HEIGHT: f32 = 20.0;
-
-
 #[vertex_format]
 #[derive(Copy)]
 struct Vertex {
@@ -113,7 +110,7 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let font  = Font::load(HEIGHT as u32 * 2);
+		let font  = Font::load(20 * 2);
 
 		let mut textures = HashMap::new();
 		for i in range(33, 127) {
