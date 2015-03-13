@@ -18,6 +18,7 @@ use render::{
 	Renderer,
 	Screen,
 };
+use window::Window;
 
 
 pub struct Cli {
@@ -32,7 +33,7 @@ pub struct Cli {
 }
 
 impl Cli {
-	pub fn new(renderer: Renderer) -> IoResult<Cli> {
+	pub fn new(window: &Window) -> IoResult<Cli> {
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
@@ -61,6 +62,12 @@ impl Cli {
 		let height = 24;
 
 		let screen = try!(Screen::new(width, height));
+
+		let renderer = Renderer::new(
+			window.new_device(),
+			window.width(),
+			window.height(),
+		);
 
 		Ok(Cli {
 			input       : receiver,

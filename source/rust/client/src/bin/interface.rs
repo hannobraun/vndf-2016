@@ -18,7 +18,6 @@ use client::interface::{
 	Frame,
 	InputEvent,
 };
-use render::Renderer;
 use ui::Ui;
 use window::Window;
 
@@ -57,14 +56,7 @@ pub struct CommandLine {
 impl Interface for CommandLine {
 	fn new() -> IoResult<CommandLine> {
 		let window = Window::new();
-
-		let renderer = Renderer::new(
-			window.new_device(),
-			window.width(),
-			window.height(),
-		);
-
-		let cli    = try!(Cli::new(renderer));
+		let cli    = try!(Cli::new(&window));
 
 		Ok(CommandLine {
 			events: Vec::new(),
