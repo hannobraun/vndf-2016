@@ -147,6 +147,8 @@ impl Cli {
 
 		try!(self.screen.submit());
 
+		self.renderer.render();
+
 		Ok(())
 	}
 

@@ -89,7 +89,6 @@ impl Interface for CommandLine {
 			self.events.push(InputEvent::Quit);
 		}
 
-		self.cli.renderer.render();
 		self.window.swap_buffers();
 
 		Ok(self.events.drain())
