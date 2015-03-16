@@ -105,17 +105,156 @@
 					<a name="update"></a>
 					<h1>Development Update</h1>
 
-					<p>
-						...
-					</p>
+					<section>
+						<h1>Flying Through Space</h1>
 
-					<a
-						class="image"
-						href="/news/newsletter-february-2015/screenshot-old.png"
-						target="_blank">
-						<img src="/news/newsletter-february-2015/screenshot-old.png" />
-						<p>(click to enlarge)</p>
-					</a>
+						<p>
+							<a
+								href="/news/newsletter-february-2015/#update"
+								target="_blank">
+								Last month</a>,
+							I announced I was going to work on adding more
+							features to the game, and so I did. After a rather
+							large amount of work on the user interface and a
+							comparatively tiny amount on the actual feature,
+							ships have a position again.
+						</p>
+
+						<a
+							class="image"
+							href="/news/newsletter-march-2015/screenshot-position.png"
+							target="_blank">
+							<img src="/news/newsletter-march-2015/screenshot-position.png" />
+							<p>(click to enlarge)</p>
+						</a>
+
+						<p>
+							So far, this is very simplistic. Each ship has a
+							position and a velocity. The position is updated
+							regularly and sent to the ship's owner (the player).
+							That's it, there's no way to influence the position
+							or see the position of other player's ships as of
+							yet. I originally had planned to do much more, but
+							then I got distracted by...
+						</p>
+					</section>
+
+					<section>
+						<h1>Another Secret Project</h1>
+
+						<p>
+							Yes, again. This time I had an idea about how I can
+							make <em>VNDF</em>'s user interface more attractive
+							without necessarily increasing the amount of work
+							required to implement it. All I'm going to say about
+							it now is that it's some kind of fusion between the
+							old graphics-based concept and the new text-based
+							user interface.
+						</p>
+
+						<p>
+							I've already been working on this for a few weeks,
+							and I'll keep doing so. By the time the next
+							newsletter rolls around, I should have something to
+							show for my efforts. You'll hear all about it then!
+						</p>
+					</section>
+
+					<section>
+						<h1>Server Maintenance</h1>
+
+						<p>
+							A word of advice for those not interested in server
+							administration: Skip this section, it won't be very
+							interesting to you.
+						</p>
+
+						<p>
+							<em>Von Neumann Defense Force</em>, both the
+							<a href="http://vndf.de">website</a> and the game
+							prototype (the one <a href="/newsletter">newsletter
+							subscribers</a> have access to) are hosted on the
+							same server, together with a few of my other
+							websites. I'd been unhappy for a while about how all
+							of this was set up.
+						</p>
+
+						<p>
+							I'm running all of this on the cheapest virtual
+							server available from
+							<a
+								href="http://hetzner.de"
+								target="_blank">
+								Hetzner</a>,
+							and since today's cheapest server is slightly
+							cheaper and much more powerful than the one from
+							last year (when I ordered my server), I decided it
+							was time to replace the server with a new one and,
+							while I'm at it, set that one up in a way that's
+							more to my liking.
+						</p>
+
+						<p>
+							The old server was running
+							<a
+								href="http://ubuntu.com"
+								target="_blank">
+								Ubuntu</a>
+							and used
+							<a
+								href="http://docker.io"
+								target="_blank">
+								Docker</a>
+							to provide some degree of isolation between the
+							different services running on the machine. I kind of
+							like the concept behind Docker, but not so much the
+							implementation. It had been causing me some trouble
+							from time to time, and I had wanted to replace it
+							with something more light-weight for a while.
+						</p>
+
+						<p>
+							The good thing is, Docker isn't made out of magic.
+							It just exposes some features that the underlying
+							Linux kernel has anyway. As it turns out, I can use
+							those features more directly via
+							<a
+								href="http://freedesktop.org/wiki/Software/systemd/"
+								target="_blank">
+								systemd</a>,
+							and since it, or something comparable to it, is
+							running on my system anyway, why not make use of it?
+						</p>
+
+						<p>
+							Ubuntu is in the process of switching to systemd,
+							but hasn't finished doing so yet. Since I assume
+							it'll be quite a while before systemd is supported
+							in a stable manner, I decided to another operating
+							system for my server. The choice fell on
+							<a
+								href="https://www.archlinux.org/"
+								target="_blank">
+								Arch Linux</a>,
+							which has been shipping with systemd for quite a
+							while.
+						</p>
+
+						<p>
+							So that's what I used. I'm very pleased with how
+							this has turned out, and so far the new server has
+							been running without any problems. That said, Arch
+							Linux isn't a very traditional choice for a server.
+							I hope I won't regret that decision.
+						</p>
+
+						<p>
+							And yes, I remember that I said I needed to work on
+							the website. That's still and issue, but I decided
+							to work on the server first, to provide a more solid
+							base for those changes.
+						</p>
+					</section>
 				</section>
 
 				<section>
