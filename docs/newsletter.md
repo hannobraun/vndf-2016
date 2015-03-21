@@ -74,7 +74,7 @@ Topic ideas:
   - Factorio
 
 News for April:
-- ...
+- http://www.planetary.org/blogs/guest-blogs/2015/0320-mapping-of-pluto-begins-today.html
 
 News for any month:
 - https://kheckeroth.com/solarSystem/
