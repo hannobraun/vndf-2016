@@ -2,6 +2,8 @@ use std::cmp::{
 	max,
 	min,
 };
+use std::io;
+use std::io::prelude::*;
 use std::old_io::IoResult;
 
 use nalgebra::Vec2;
@@ -42,7 +44,7 @@ pub struct BroadcastFormArgs {
 impl Update for BroadcastForm {
 	type Args = BroadcastFormArgs;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &BroadcastFormArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &BroadcastFormArgs) -> io::Result<()> {
 		self.text_field_status =
 			if args.is_selected {
 				if args.is_sending {
@@ -111,7 +113,7 @@ pub struct ButtonArgs<'a> {
 impl<'a> Update for Button {
 	type Args = ButtonArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ButtonArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ButtonArgs) -> io::Result<()> {
 		render::button(buffer, x, y, args.status, args.text)
 	}
 }
@@ -126,7 +128,7 @@ pub struct CommTabArgs<'a> {
 impl<'a> Update for CommTab {
 	type Args = CommTabArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &CommTabArgs) -> io::Result<()> {
 		try!(write!(
 			&mut buffer.writer(x, y),
 			"YOUR ID",
@@ -179,7 +181,7 @@ impl<'a> Update for CommTab {
 impl Update for InfoSection {
 	type Args = Message;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, message: &Message) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, message: &Message) -> io::Result<()> {
 		render::info_section(buffer, x, y, self.width, self.height, message)
 	}
 }
@@ -195,7 +197,7 @@ pub struct ListArgs<'a> {
 impl<'a> Update for List {
 	type Args = ListArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ListArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &ListArgs) -> io::Result<()> {
 		let status = if args.is_selected {
 			if self.activated {
 				Status::Active
@@ -227,7 +229,7 @@ pub struct MainSectionArgs<'a> {
 impl<'a> Update for MainSection {
 	type Args = MainSectionArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainSectionArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &MainSectionArgs) -> io::Result<()> {
 		try!(render::main_section(buffer, x, y, self.width, self.height));
 		self.tab_switcher.update(
 			buffer,
@@ -252,7 +254,7 @@ pub struct NavTabArgs {
 impl Update for NavTab {
 	type Args = NavTabArgs;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &NavTabArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &NavTabArgs) -> io::Result<()> {
 		try!(write!(
 			&mut buffer.writer(x, y),
 			"Position: ({}, {})",
@@ -277,7 +279,7 @@ pub struct TabHeaderArgs<'a> {
 impl<'a> Update for TabHeader {
 	type Args = TabHeaderArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabHeaderArgs) -> io::Result<()> {
 		render::tab_header(buffer, x, y, args.status, args.label)
 	}
 }
@@ -294,7 +296,7 @@ pub struct TabSwitcherArgs<'a> {
 impl<'a> Update for TabSwitcher {
 	type Args = TabSwitcherArgs<'a>;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TabSwitcherArgs) -> io::Result<()> {
 		{
 			let headers = [
 				("Comm", self.active_index % 2 == 0),
@@ -368,7 +370,7 @@ pub struct TextFieldArgs {
 impl Update for TextField {
 	type Args = TextFieldArgs;
 
-	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TextFieldArgs) -> IoResult<()> {
+	fn update(&mut self, buffer: &mut ScreenBuffer, x: Pos, y: Pos, args: &TextFieldArgs) -> io::Result<()> {
 		render::text_field(buffer, x, y, args.status, args.width, self.text.as_slice())
 	}
 }

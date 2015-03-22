@@ -1,3 +1,4 @@
+use std::io;
 use std::old_io::{
 	stdin,
 	IoResult,
@@ -23,8 +24,8 @@ use window::Window;
 
 
 pub trait Interface {
-	fn new() -> IoResult<Self>;
-	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>>;
+	fn new() -> io::Result<Self>;
+	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
 }
 
 
@@ -33,7 +34,7 @@ pub struct Player {
 }
 
 impl Interface for Player {
-	fn new() -> IoResult<Player> {
+	fn new() -> io::Result<Player> {
 		let ui = try!(Ui::new());
 
 		Ok(Player {
@@ -41,7 +42,7 @@ impl Interface for Player {
 		})
 	}
 
-	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
 		self.ui.update(frame)
 	}
 }
@@ -54,7 +55,7 @@ pub struct CommandLine {
 }
 
 impl Interface for CommandLine {
-	fn new() -> IoResult<CommandLine> {
+	fn new() -> io::Result<CommandLine> {
 		let window = Window::new();
 		let cli    = try!(Cli::new(&window));
 
@@ -65,7 +66,7 @@ impl Interface for CommandLine {
 		})
 	}
 
-	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
 		try!(self.cli.update(&mut self.events, frame));
 
 		for event in self.window.poll_events() {
@@ -94,7 +95,7 @@ pub struct Headless {
 }
 
 impl Interface for Headless {
-	fn new() -> IoResult<Headless> {
+	fn new() -> io::Result<Headless> {
 		let (sender, receiver) = channel();
 
 		spawn(move || -> () {
@@ -127,7 +128,7 @@ impl Interface for Headless {
 		})
 	}
 
-	fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
 		loop {
 			match self.receiver.try_recv() {
 				Ok(event) =>

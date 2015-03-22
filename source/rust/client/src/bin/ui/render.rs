@@ -1,3 +1,5 @@
+use std::io;
+use std::io::prelude::*;
 use std::old_io::IoResult;
 
 use client::interface::Message;
@@ -15,7 +17,7 @@ use render::Color::{
 use super::base::Status;
 
 
-pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
+pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> io::Result<()> {
 	let (foreground_color, background_color) = status.colors();
 
 	write!(
@@ -28,7 +30,7 @@ pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &
 	)
 }
 
-pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos, message: &Message) -> IoResult<()> {
+pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos, message: &Message) -> io::Result<()> {
 	try!(draw_border(
 		buffer,
 		x, y,
@@ -57,7 +59,7 @@ pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, heigh
 	Ok(())
 }
 
-pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, height: Pos, first: usize, items: &[String]) -> IoResult<()> {
+pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, height: Pos, first: usize, items: &[String]) -> io::Result<()> {
 	let limit = x + width;
 
 	let (foreground_color, background_color) = status.colors();
@@ -124,7 +126,7 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 	Ok(())
 }
 
-pub fn main_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos) -> IoResult<()> {
+pub fn main_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos) -> io::Result<()> {
 	draw_border(
 		buffer,
 		x, y,
@@ -132,7 +134,7 @@ pub fn main_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, heigh
 	)
 }
 
-pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, label: &str) -> IoResult<()> {
+pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, label: &str) -> io::Result<()> {
 	let (foreground_color, background_color) = status.colors();
 
 	write!(
@@ -145,7 +147,7 @@ pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, lab
 	)
 }
 
-pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> IoResult<()> {
+pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> io::Result<()> {
 	let mut c = C::new();
 	c.c = '─';
 	for x in range(x, buffer.width()) {
@@ -155,7 +157,7 @@ pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> IoResult<()> {
 	Ok(())
 }
 
-pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> IoResult<()> {
+pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Pos, text: &str) -> io::Result<()> {
 	let limit = x + width;
 
 	let (foreground_color, background_color) = status.colors();

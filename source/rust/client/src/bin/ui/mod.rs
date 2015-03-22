@@ -6,6 +6,7 @@ pub mod state;
 pub mod update;
 
 
+use std::io;
 use std::old_io::IoResult;
 use std::vec::Drain;
 
@@ -47,7 +48,7 @@ pub struct Ui {
 }
 
 impl Ui {
-	pub fn new() -> IoResult<Ui> {
+	pub fn new() -> io::Result<Ui> {
 		let width = 80;
 
 		let screen = try!(Screen::new(width, 24));
@@ -63,7 +64,7 @@ impl Ui {
 		})
 	}
 
-	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
+	pub fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
 		self.process_input();
 		try!(self.generate_events(frame));
 
@@ -117,7 +118,7 @@ impl Ui {
 		}
 	}
 
-	fn generate_events(&mut self, frame: &Frame) -> IoResult<()> {
+	fn generate_events(&mut self, frame: &Frame) -> io::Result<()> {
 		let is_sending = frame.broadcasts
 			.iter()
 			.any(|broadcast|

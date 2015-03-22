@@ -1,3 +1,5 @@
+use std::io;
+use std::io::prelude::*;
 use std::old_io::{
 	stdin,
 	IoResult,
@@ -33,7 +35,7 @@ pub struct Cli {
 }
 
 impl Cli {
-	pub fn new(window: &Window) -> IoResult<Cli> {
+	pub fn new(window: &Window) -> io::Result<Cli> {
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
@@ -80,7 +82,7 @@ impl Cli {
 		})
 	}
 
-	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame) -> IoResult<()> {
+	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame) -> io::Result<()> {
 		self.screen.cursor(None);
 
 		if frame.message != self.last_message {
@@ -155,7 +157,7 @@ impl Cli {
 		Ok(())
 	}
 
-	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> IoResult<()> {
+	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> io::Result<()> {
 		let mut splits = line.splitn(1, ' ');
 
 		let command = splits.next().unwrap();

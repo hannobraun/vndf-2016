@@ -1,3 +1,4 @@
+use std::io;
 use std::old_io::IoResult;
 
 use render::{
@@ -41,7 +42,7 @@ pub trait Update {
 		y   : Pos,
 		args: &Self::Args
 	)
-	-> IoResult<()>;
+	-> io::Result<()>;
 }
 
 

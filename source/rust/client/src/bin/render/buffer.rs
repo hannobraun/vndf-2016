@@ -1,3 +1,5 @@
+use std::io;
+use std::io::prelude::*;
 use std::old_io::{
 	IoError,
 	IoErrorKind,
@@ -85,16 +87,16 @@ impl ScreenBuffer {
 		}
 	}
 
-	pub fn set(&mut self, x: Pos, y: Pos, c: C) -> IoResult<()> {
+	pub fn set(&mut self, x: Pos, y: Pos, c: C) -> io::Result<()> {
 		let x = x as usize;
 		let y = y as usize;
 
 		if y > self.buffer.len() || x > self.buffer[0].len() {
-			return Err(IoError {
-				kind  : IoErrorKind::OtherIoError,
-				desc  : "Out of bounds",
-				detail: None,
-			})
+			return Err(io::Error::new(
+				io::ErrorKind::Other,
+				"Out of bounds",
+				None,
+			))
 		}
 
 		self.buffer[y][x] = c;
@@ -153,30 +155,30 @@ impl<'r> BufferWriter<'r> {
 	}
 }
 
-impl<'r> Writer for BufferWriter<'r> {
-	fn write_all(&mut self, buf: &[u8]) -> IoResult<()> {
+impl<'r> Write for BufferWriter<'r> {
+	fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
 		if self.y >= self.buffer.height() {
 			let detail = format!(
 				"x: {}, y: {}, width: {}, height: {}",
 				self.x, self.y, self.buffer.width(), self.buffer.height(),
 			);
 
-			return Err(IoError {
-				kind  : IoErrorKind::OtherIoError,
-				desc  : "y coordinate is out of bounds",
-				detail: Some(detail),
-			})
+			return Err(io::Error::new(
+				io::ErrorKind::Other,
+				"y coordinate is out of bounds",
+				Some(detail),
+			))
 		}
 
 		let s = match from_utf8(buf) {
 			Ok(s) =>
 				s,
 			Err(_) =>
-				return Err(IoError {
-					kind  : IoErrorKind::OtherIoError,
-					desc  : "Tried to write invalid UTF-8",
-					detail: None,
-				})
+				return Err(io::Error::new(
+					io::ErrorKind::Other,
+					"Tried to write invalid UTF-8",
+					None,
+				))
 
 		};
 
@@ -199,6 +201,10 @@ impl<'r> Writer for BufferWriter<'r> {
 			self.x += 1;
 		}
 
+		Ok(buf.len())
+	}
+
+	fn flush(&mut self) -> io::Result<()> {
 		Ok(())
 	}
 }

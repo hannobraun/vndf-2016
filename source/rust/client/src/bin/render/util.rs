@@ -1,3 +1,4 @@
+use std::io;
 use std::old_io::IoResult;
 
 use super::Pos;
@@ -13,7 +14,7 @@ pub fn draw_border(
 	y     : Pos,
 	width : Pos,
 	height: Pos
-) -> IoResult<()> {
+) -> io::Result<()> {
 	let mut c = C::new();
 
 	c.c = '┏';

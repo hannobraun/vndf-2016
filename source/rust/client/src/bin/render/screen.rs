@@ -1,7 +1,12 @@
 use libc;
 use std::cmp::min;
-use std::old_io::{
+use std::io::{
+	self,
 	stdout,
+	Stdout,
+};
+use std::io::prelude::*;
+use std::old_io::{
 	IoResult,
 	LineBufferedWriter,
 };
@@ -17,14 +22,14 @@ use super::{
 
 
 pub struct Screen {
-	stdout  : LineBufferedWriter<StdWriter>,
+	stdout  : Stdout,
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
 	cursor  : Option<(Pos, Pos)>,
 }
 
 impl Screen {
-	pub fn new(width: Pos, height: Pos) -> IoResult<Screen> {
+	pub fn new(width: Pos, height: Pos) -> io::Result<Screen> {
 		let mut termios = Termios::get(libc::STDIN_FILENO);
 		termios.echo(false);
 		termios.canonical_input(false);
@@ -52,7 +57,7 @@ impl Screen {
 		self.cursor = pos;
 	}
 
-	pub fn submit(&mut self) -> IoResult<()> {
+	pub fn submit(&mut self) -> io::Result<()> {
 		{
 			let iter = self.buffer_a.iter().zip(self.buffer_b.iter());
 			for ((x, y, c_a), (_, _, c_b)) in iter {
