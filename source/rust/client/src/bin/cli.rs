@@ -139,12 +139,11 @@ impl Cli {
 			&mut self.screen.buffer().writer(0, self.height - 1),
 			"> ",
 		));
-		try!(
-			self.screen
-				.buffer()
-				.writer(2, self.height - 1)
-				.write_str(self.input_buffer.as_slice())
-		);
+		try!(write!(
+			&mut self.screen.buffer().writer(2, self.height - 1),
+			"{}",
+			self.input_buffer.as_slice(),
+		));
 		self.screen.cursor(
 			Some(((self.input_buffer.len() + 2) as u16, self.height -1))
 		);
