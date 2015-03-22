@@ -150,7 +150,7 @@ pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, lab
 pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> io::Result<()> {
 	let mut c = C::new();
 	c.c = '─';
-	for x in range(x, buffer.width()) {
+	for x in (x .. buffer.width()) {
 		try!(buffer.set(x, y + 1, c));
 	}
 
