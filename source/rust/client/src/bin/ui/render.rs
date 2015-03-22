@@ -79,14 +79,15 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 	for i in range(0, height) {
 		let item_length = match iter.next() {
 			Some(item) => {
-				try!(
-					buffer
+				try!(write!(
+					&mut buffer
 						.writer(x, y + i as Pos)
 						.limit(limit)
 						.foreground_color(foreground_color)
-						.background_color(background_color)
-						.write_str(item.as_slice())
-				);
+						.background_color(background_color),
+					"{}",
+					item,
+				));
 
 				item.chars().count()
 			},
