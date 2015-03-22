@@ -215,11 +215,11 @@ fn generate_id() -> String {
 
 	let mut id = String::new();
 
-	for _ in range(0u8, 3) {
+	for _ in (0u8 .. 3) {
 		id.push(random_letter());
 	}
 	id.push('-');
-	for _ in range(0u8, 5) {
+	for _ in (0u8 .. 5) {
 		id.push(random_letter_or_number());
 	}
 
