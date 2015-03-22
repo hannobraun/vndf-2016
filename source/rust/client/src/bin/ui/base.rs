@@ -1,5 +1,4 @@
 use std::io;
-use std::old_io::IoResult;
 
 use render::{
 	Pos,
