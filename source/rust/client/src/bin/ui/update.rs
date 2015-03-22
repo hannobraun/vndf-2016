@@ -321,11 +321,10 @@ impl<'a> Update for TabSwitcher {
 				header_x += label.chars().count() as Pos;
 
 				if i + 1 < headers.len() {
-					try!(
-						buffer
-							.writer(header_x, y)
-							.write_str(" | ")
-					);
+					try!(write!(
+						&mut buffer.writer(header_x, y),
+						" | ",
+					));
 					header_x += 3;
 				}
 			}
