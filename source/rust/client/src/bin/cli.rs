@@ -10,6 +10,8 @@ use std::sync::mpsc::{
 };
 use std::thread;
 
+use glutin::Event;
+
 use client::interface::{
 	Frame,
 	InputEvent,
@@ -81,7 +83,7 @@ impl Cli {
 		})
 	}
 
-	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame) -> io::Result<()> {
+	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
 		self.screen.cursor(None);
 
 		if frame.message != self.last_message {
@@ -121,6 +123,14 @@ impl Cli {
 					TryRecvError::Disconnected =>
 						panic!("Channel disconnected"),
 				}
+			}
+		}
+		for event in window.poll_events() {
+			match event {
+				Event::ReceivedCharacter(c) =>
+					self.input_buffer.push(c),
+
+				_ => (), // ignore other events
 			}
 		}
 

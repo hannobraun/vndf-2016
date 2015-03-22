@@ -66,7 +66,7 @@ impl Interface for CommandLine {
 	}
 
 	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-		try!(self.cli.update(&mut self.events, frame));
+		try!(self.cli.update(&mut self.events, frame, &self.window));
 
 		for event in self.window.poll_events() {
 			match event {
