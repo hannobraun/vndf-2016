@@ -1,8 +1,5 @@
 use std::io;
-use std::old_io::{
-	stdin,
-	IoResult,
-};
+use std::old_io::stdin;
 use std::sync::mpsc::{
 	channel,
 	Receiver,
