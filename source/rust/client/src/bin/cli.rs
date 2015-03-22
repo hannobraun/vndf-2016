@@ -1,6 +1,8 @@
-use std::io;
+use std::io::{
+	self,
+	stdin,
+};
 use std::io::prelude::*;
-use std::old_io::stdin;
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -36,10 +38,10 @@ impl Cli {
 		let (sender, receiver) = channel();
 
 		thread::spawn(move || {
-			let mut stdin = stdin();
+			let stdin = stdin().chars();
 
-			loop {
-				match stdin.read_char() {
+			for c in stdin {
+				match c {
 					Ok(c) =>
 						match sender.send(c) {
 							Ok(()) =>
