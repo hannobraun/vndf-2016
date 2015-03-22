@@ -1,4 +1,5 @@
-use std::old_io::stdin;
+use std::io::stdin;
+use std::io::prelude::*;
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -16,12 +17,12 @@ impl InputReader {
 		let (sender, receiver) = channel();
 
 		spawn(move || -> () {
-			let mut stdin = stdin();
+			let stdin = stdin().chars();
 
-			loop {
+			for c in stdin {
 				// TODO(83541252): This operation should time out to ensure
 				//                 panic propagation between tasks.
-				match stdin.read_char() {
+				match c {
 					Ok(c) =>
 						match sender.send(c) {
 							Ok(()) =>
