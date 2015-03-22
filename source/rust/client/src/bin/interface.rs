@@ -1,5 +1,7 @@
-use std::io;
-use std::old_io::stdin;
+use std::io::{
+	self,
+	stdin,
+};
 use std::sync::mpsc::{
 	channel,
 	Receiver,
@@ -101,8 +103,9 @@ impl Interface for Headless {
 			loop {
 				// TODO(83541252): This operation should time out to ensure
 				//                 panic propagation between tasks.
-				match stdin.read_line() {
-					Ok(line) => match InputEvent::from_json(line.as_slice()) {
+				let mut line = String::new();
+				match stdin.read_line(&mut line) {
+					Ok(_) => match InputEvent::from_json(line.as_slice()) {
 						Ok(event) =>
 							match sender.send(event) {
 								Ok(()) =>
