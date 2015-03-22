@@ -10,7 +10,10 @@ use std::sync::mpsc::{
 };
 use std::thread;
 
-use glutin::Event;
+use glutin::{
+	Event,
+	VirtualKeyCode,
+};
 
 use client::interface::{
 	Frame,
@@ -128,6 +131,10 @@ impl Cli {
 			match event {
 				Event::ReceivedCharacter(c) =>
 					self.input_buffer.push(c),
+
+				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Back)) => {
+					self.input_buffer.pop();
+				},
 
 				_ => (), // ignore other events
 			}
