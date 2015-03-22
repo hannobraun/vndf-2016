@@ -130,7 +130,9 @@ impl Cli {
 		for event in window.poll_events() {
 			match event {
 				Event::ReceivedCharacter(c) =>
-					self.input_buffer.push(c),
+					if !c.is_control() {
+						self.input_buffer.push(c)
+					},
 
 				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
