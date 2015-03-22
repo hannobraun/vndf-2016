@@ -96,14 +96,14 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 		};
 
 		for x in range(x + item_length as Pos, limit - 1) {
-			try!(
-				buffer
+			try!(write!(
+				&mut buffer
 					.writer(x, y + i as Pos)
 					.limit(limit)
 					.foreground_color(foreground_color)
-					.background_color(background_color)
-					.write_char(' ')
-			);
+					.background_color(background_color),
+				" ",
+			));
 		}
 	}
 
