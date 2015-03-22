@@ -6,11 +6,6 @@ use std::io::{
 	Stdout,
 };
 use std::io::prelude::*;
-use std::old_io::{
-	IoResult,
-	LineBufferedWriter,
-};
-use std::old_io::stdio::StdWriter;
 use std::mem::swap;
 
 use termios::Termios;
