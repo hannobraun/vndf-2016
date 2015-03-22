@@ -135,11 +135,14 @@ pub fn main_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, heigh
 pub fn tab_header(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, label: &str) -> IoResult<()> {
 	let (foreground_color, background_color) = status.colors();
 
-	buffer
-		.writer(x, y)
-		.foreground_color(foreground_color)
-		.background_color(background_color)
-		.write_str(label)
+	write!(
+		&mut buffer
+			.writer(x, y)
+			.foreground_color(foreground_color)
+			.background_color(background_color),
+		"{}",
+		label,
+	)
 }
 
 pub fn tab_switcher(buffer: &mut ScreenBuffer, x: Pos, y: Pos) -> IoResult<()> {
