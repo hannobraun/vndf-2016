@@ -170,14 +170,14 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 		text,
 	));
 	for x in range(x + text.chars().count() as Pos, limit) {
-		try!(
-			buffer
+		try!(write!(
+			&mut buffer
 				.writer(x, y)
 				.limit(limit)
 				.foreground_color(foreground_color)
-				.background_color(background_color)
-				.write_str(" ")
-		);
+				.background_color(background_color),
+			" ",
+		));
 	}
 
 	buffer.cursor = if status == Status::Active {
