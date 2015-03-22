@@ -29,7 +29,7 @@ mod window;
 
 use std::collections::HashMap;
 use std::env;
-use std::old_io::timer::sleep;
+use std::thread::sleep;
 use std::time::Duration;
 
 use nalgebra::Cast;
