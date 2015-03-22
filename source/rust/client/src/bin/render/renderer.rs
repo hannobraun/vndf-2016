@@ -113,7 +113,7 @@ impl Renderer {
 		let font  = Font::load(18);
 
 		let mut textures = HashMap::new();
-		for i in range(33, 127) {
+		for i in (33 .. 127) {
 			let c       = ::std::char::from_u32(i).unwrap();
 			let glyph   = font.glyph(c);
 			let texture = Texture::from_glyph(&glyph, &mut graphics.device);
