@@ -1,4 +1,4 @@
-#![feature(collections, core, old_io, std_misc)]
+#![feature(collections, core, old_io, std_misc, thread_sleep)]
 
 
 mod args;
@@ -15,7 +15,7 @@ extern crate game_service;
 
 use std::collections::HashMap;
 use std::env;
-use std::old_io::timer::sleep;
+use std::thread::sleep;
 use std::time::Duration;
 
 use nalgebra::Vec2;
