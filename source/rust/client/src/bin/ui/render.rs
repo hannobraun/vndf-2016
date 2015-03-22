@@ -160,14 +160,15 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 
 	let (foreground_color, background_color) = status.colors();
 
-	try!(
-		buffer
+	try!(write!(
+		&mut buffer
 			.writer(x, y)
 			.limit(limit)
 			.foreground_color(foreground_color)
-			.background_color(background_color)
-			.write_str(text)
-	);
+			.background_color(background_color),
+		"{}",
+		text,
+	));
 	for x in range(x + text.chars().count() as Pos, limit) {
 		try!(
 			buffer
