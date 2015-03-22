@@ -31,8 +31,7 @@ pub struct Cli {
 	text        : Vec<String>,
 	screen      : Screen,
 	height      : u16,
-
-	pub renderer: Renderer,
+	renderer    : Renderer,
 }
 
 impl Cli {
