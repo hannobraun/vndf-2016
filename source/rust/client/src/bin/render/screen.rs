@@ -80,7 +80,7 @@ impl Screen {
 							color.background_code(),
 						));
 					}
-					try!(self.stdout.write_char(c_a.c));
+					try!(write!(&mut self.stdout, "{}", c_a.c));
 					if c_a.bold {
 						try!(write!(
 							&mut self.stdout,
