@@ -140,7 +140,7 @@ impl Cli {
 				.buffer()
 				.writer(0, self.height - 1)
 				.write_str("> ")
-			);
+		);
 		try!(
 			self.screen
 				.buffer()
