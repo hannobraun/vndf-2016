@@ -26,7 +26,7 @@ pub fn draw_border(
 	try!(buffer.set(x + width - 1, y + height - 1, c));
 
 	c.c = '━';
-	for rel_x in range(1, width - 1) {
+	for rel_x in (1 .. width - 1) {
 		for &rel_y in [0, height - 1].iter() {
 			try!(buffer.set(x + rel_x, y + rel_y, c));
 		}
