@@ -34,7 +34,7 @@ pub fn draw_border(
 
 	c.c = '┃';
 	for &rel_x in [0, width - 1].iter() {
-		for rel_y in range(1, height - 1) {
+		for rel_y in (1 .. height - 1) {
 			try!(buffer.set(x + rel_x, y + rel_y, c));
 		}
 	}
