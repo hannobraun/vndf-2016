@@ -63,9 +63,7 @@ impl Ui {
 		})
 	}
 
-	pub fn update(&mut self, frame: &Frame)
-		-> IoResult<Drain<InputEvent>>
-	{
+	pub fn update(&mut self, frame: &Frame) -> IoResult<Drain<InputEvent>> {
 		self.process_input();
 		try!(self.generate_events(frame));
 
