@@ -18,11 +18,14 @@ use super::base::Status;
 pub fn button(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, text: &str) -> IoResult<()> {
 	let (foreground_color, background_color) = status.colors();
 
-	buffer
-		.writer(x, y)
-		.foreground_color(foreground_color)
-		.background_color(background_color)
-		.write_str(text)
+	write!(
+		&mut buffer
+			.writer(x, y)
+			.foreground_color(foreground_color)
+			.background_color(background_color),
+		"{}",
+		text,
+	)
 }
 
 pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, height: Pos, message: &Message) -> IoResult<()> {
