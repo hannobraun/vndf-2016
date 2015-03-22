@@ -4,7 +4,6 @@ use std::cmp::{
 };
 use std::io;
 use std::io::prelude::*;
-use std::old_io::IoResult;
 
 use nalgebra::Vec2;
 

@@ -7,7 +7,6 @@ pub mod update;
 
 
 use std::io;
-use std::old_io::IoResult;
 use std::vec::Drain;
 
 use client::interface::{
