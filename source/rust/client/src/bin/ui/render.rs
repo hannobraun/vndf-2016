@@ -171,7 +171,7 @@ pub fn text_field(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, wid
 		"{}",
 		text,
 	));
-	for x in range(x + text.chars().count() as Pos, limit) {
+	for x in (x + text.chars().count() as Pos .. limit) {
 		try!(write!(
 			&mut buffer
 				.writer(x, y)
