@@ -78,7 +78,7 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 		.iter()
 		.skip(first);
 
-	for i in range(0, height) {
+	for i in (0 .. height) {
 		let item_length = match iter.next() {
 			Some(item) => {
 				try!(write!(
