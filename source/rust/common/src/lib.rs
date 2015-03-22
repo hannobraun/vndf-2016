@@ -1,4 +1,4 @@
-#![feature(core, collections, io, net)]
+#![feature(core, collections)]
 
 
 extern crate nalgebra;
