@@ -97,7 +97,7 @@ pub fn list(buffer: &mut ScreenBuffer, x: Pos, y: Pos, status: Status, width: Po
 				0,
 		};
 
-		for x in range(x + item_length as Pos, limit - 1) {
+		for x in (x + item_length as Pos .. limit - 1) {
 			try!(write!(
 				&mut buffer
 					.writer(x, y + i as Pos)
