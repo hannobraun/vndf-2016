@@ -135,12 +135,10 @@ impl Cli {
 			));
 		}
 
-		try!(
-			self.screen
-				.buffer()
-				.writer(0, self.height - 1)
-				.write_str("> ")
-		);
+		try!(write!(
+			&mut self.screen.buffer().writer(0, self.height - 1),
+			"> ",
+		));
 		try!(
 			self.screen
 				.buffer()
