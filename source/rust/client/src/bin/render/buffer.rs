@@ -1,10 +1,5 @@
 use std::io;
 use std::io::prelude::*;
-use std::old_io::{
-	IoError,
-	IoErrorKind,
-	IoResult,
-};
 use std::iter::repeat;
 use std::str::from_utf8;
 
