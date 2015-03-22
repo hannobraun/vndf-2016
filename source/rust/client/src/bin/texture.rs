@@ -65,6 +65,6 @@ impl Texture {
 	}
 
 	pub fn to_param(&self) -> (TextureHandle, Option<SamplerHandle>) {
-		(self.texture, Some(self.sampler))
+		(self.texture.clone(), Some(self.sampler.clone()))
 	}
 }

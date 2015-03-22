@@ -56,7 +56,7 @@ impl Process {
 	pub fn read_stdout_line(&mut self) -> String {
 		let mut line = String::new();
 		match self.stdout.read_line(&mut line) {
-			Ok(()) => {
+			Ok(_) => {
 				self.stdout_buf.extend(line.chars());
 				line
 			},
