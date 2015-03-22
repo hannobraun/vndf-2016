@@ -137,6 +137,16 @@ impl Cli {
 				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
 				},
+				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Return)) => {
+					let command = self.input_buffer.clone();
+					self.input_buffer.clear();
+
+					try!(self.handle_line(
+						events,
+						command.as_slice(),
+						frame,
+					));
+				},
 
 				_ => (), // ignore other events
 			}
