@@ -20,7 +20,10 @@ use font::{
 	Font,
 	Glyph,
 };
-use render::ScreenBuffer;
+use render::{
+	C,
+	ScreenBuffer,
+};
 use texture::Texture;
 
 
@@ -144,50 +147,54 @@ impl Renderer {
 			&self.frame,
 		);
 
-		let offset = Vec2::new(-500.0, 330.0);
-
 		for (x, y, c) in buffer.iter() {
-			let &(ref glyph, ref texture) = match self.textures.get(&c.c) {
-				Some(result) => result,
-				None         => continue,
-			};
-
-			let position =
-				offset +
-				(glyph.size * 0.5) +
-				glyph.offset +
-				Vec2::new(9.0 * x as f32, 18.0 * -(y as f32));
-			let translation = Iso3::new(
-				Vec3::new(position.x, position.y, 0.0),
-				Vec3::new(0.0, 0.0, 0.0),
-			);
-
-			let params = Params {
-				transform: *(self.transform * translation.to_homogeneous()).as_array(),
-
-				width : glyph.size.x,
-				height: glyph.size.y,
-
-				color: texture.to_param(),
-
-				_marker: PhantomData,
-			};
-
-			let batch = self.graphics
-				.make_batch(
-					&self.program,
-					params,
-					&self.mesh,
-					self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
-					&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-				)
-				.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
-
-			self.graphics
-				.draw(&batch, &self.frame)
-				.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
+			self.draw(x, y, c);
 		}
 
 		self.graphics.end_frame();
+	}
+
+	fn draw(&mut self, x: u16, y: u16, c: C) {
+		let offset = Vec2::new(-500.0, 330.0);
+
+		let &(ref glyph, ref texture) = match self.textures.get(&c.c) {
+			Some(result) => result,
+			None         => return,
+		};
+
+		let position =
+			offset +
+			(glyph.size * 0.5) +
+			glyph.offset +
+			Vec2::new(9.0 * x as f32, 18.0 * -(y as f32));
+		let translation = Iso3::new(
+			Vec3::new(position.x, position.y, 0.0),
+			Vec3::new(0.0, 0.0, 0.0),
+		);
+
+		let params = Params {
+			transform: *(self.transform * translation.to_homogeneous()).as_array(),
+
+			width : glyph.size.x,
+			height: glyph.size.y,
+
+			color: texture.to_param(),
+
+			_marker: PhantomData,
+		};
+
+		let batch = self.graphics
+			.make_batch(
+				&self.program,
+				params,
+				&self.mesh,
+				self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
+				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
+			)
+			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
+
+		self.graphics
+			.draw(&batch, &self.frame)
+			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}
 }
