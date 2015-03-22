@@ -43,7 +43,7 @@ impl ScreenBuffer {
 		let height = height as usize;
 
 		let buffer =
-			range(0, height)
+			(0 .. height)
 				.map(|_|
 					repeat(C::new())
 						.take(width)
