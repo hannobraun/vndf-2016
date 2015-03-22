@@ -1,4 +1,4 @@
-#![feature(collections, core, io, old_io, libc, plugin, std_misc, thread_sleep)]
+#![feature(collections, core, io, libc, plugin, std_misc, thread_sleep)]
 #![feature(custom_attribute)]
 #![plugin(gfx_macros)]
 
