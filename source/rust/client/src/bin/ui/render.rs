@@ -1,6 +1,5 @@
 use std::io;
 use std::io::prelude::*;
-use std::old_io::IoResult;
 
 use client::interface::Message;
 use render::{
