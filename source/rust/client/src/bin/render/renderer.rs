@@ -160,6 +160,13 @@ impl Renderer {
 			self.draw(x, y, c);
 		}
 
+		let mut c = C::new();
+		c.c = '_';
+		match buffer.cursor {
+			Some((x, y)) => self.draw(x, y, c),
+			None         => (),
+		}
+
 		self.graphics.end_frame();
 	}
 
