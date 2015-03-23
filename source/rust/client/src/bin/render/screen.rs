@@ -20,7 +20,6 @@ pub struct Screen {
 	stdout  : Stdout,
 	buffer_a: ScreenBuffer,
 	buffer_b: ScreenBuffer,
-	cursor  : Option<(Pos, Pos)>,
 }
 
 impl Screen {
@@ -40,16 +39,11 @@ impl Screen {
 			stdout  : stdout,
 			buffer_a: buffer_a,
 			buffer_b: buffer_b,
-			cursor  : None,
 		})
 	}
 
 	pub fn buffer(&mut self) -> &mut ScreenBuffer {
 		&mut self.buffer_a
-	}
-
-	pub fn cursor(&mut self, pos: Option<(Pos, Pos)>) {
-		self.cursor = pos;
 	}
 
 	pub fn submit(&mut self) -> io::Result<()> {
