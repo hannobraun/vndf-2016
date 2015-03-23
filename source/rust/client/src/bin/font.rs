@@ -28,8 +28,8 @@ impl Font {
 		}
 	}
 
-	pub fn glyph(&self, c: char) -> Glyph {
-		make_glyph(load_glyph_slot(self.font_face, c))
+	pub fn glyph(&self, c: char) -> Option<Glyph> {
+		Some(make_glyph(load_glyph_slot(self.font_face, c)))
 	}
 }
 
