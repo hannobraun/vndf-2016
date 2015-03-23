@@ -29,7 +29,10 @@ impl Font {
 	}
 
 	pub fn glyph(&self, c: char) -> Option<Glyph> {
-		let glyph_slot = load_glyph_slot(self.font_face, c);
+		let glyph_slot = match load_glyph_slot(self.font_face, c) {
+			Some(glyph_slot) => glyph_slot,
+			None             => return None,
+		};
 
 		Some(make_glyph(glyph_slot))
 	}
@@ -72,7 +75,7 @@ fn init_font_face(size: u32) -> FT_Face {
 	}
 }
 
-fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
+fn load_glyph_slot(font_face: FT_Face, c: char) -> Option<FT_GlyphSlot> {
 	unsafe {
 		let glyph_index = FT_Get_Char_Index(font_face, c as u64);
 		assert!(glyph_index != 0);
@@ -90,7 +93,7 @@ fn load_glyph_slot(font_face: FT_Face, c: char) -> FT_GlyphSlot {
 		);
 		assert!(render_error == 0);
 
-		(*font_face).glyph as FT_GlyphSlot
+		Some((*font_face).glyph as FT_GlyphSlot)
 	}
 }
 
