@@ -126,7 +126,6 @@ impl Renderer {
 				Some(glyph) => glyph,
 				None        => continue,
 			};
-
 			match Texture::from_glyph(&glyph, &mut graphics.device) {
 				Some(texture) => { textures.insert(c, (glyph, texture)); },
 				None          => continue,
