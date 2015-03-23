@@ -170,7 +170,10 @@ impl Cli {
 			self.input_buffer.as_slice(),
 		));
 		self.screen.cursor(
-			Some(((self.input_buffer.len() + 2) as u16, self.height -1))
+			Some((
+				(self.input_buffer.chars().count() + 2) as u16,
+				self.height -1,
+			))
 		);
 
 		self.renderer.render(self.screen.buffer());
