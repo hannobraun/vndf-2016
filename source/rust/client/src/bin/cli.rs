@@ -164,14 +164,9 @@ impl Cli {
 			));
 		}
 
-		// TODO: Consolidate the following two write calls into one.
 		try!(write!(
 			&mut self.screen.buffer().writer(0, self.height - 1),
-			"> ",
-		));
-		try!(write!(
-			&mut self.screen.buffer().writer(2, self.height - 1),
-			"{}",
+			"> {}",
 			self.input_buffer.as_slice(),
 		));
 		self.screen.cursor(
