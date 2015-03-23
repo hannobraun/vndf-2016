@@ -119,7 +119,7 @@ impl Renderer {
 		let mut textures = HashMap::new();
 		for i in (33 .. 127) {
 			let c = char::from_u32(i).unwrap_or_else(||
-				panic!("Failed to convert u32 to char: {}", i)
+				panic!("Failed to convert u32 to char: {:x}", i)
 			);
 
 			let glyph = match font.glyph(c) {
