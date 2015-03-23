@@ -91,9 +91,6 @@ impl Screen {
 			}
 		}
 
-		swap(&mut self.buffer_a, &mut self.buffer_b);
-		self.buffer_a.clear();
-
 		match self.cursor {
 			Some((x, y)) => {
 				let x = min(x, self.buffer_a.width()  - 1);
@@ -116,6 +113,9 @@ impl Screen {
 				));
 			},
 		}
+
+		swap(&mut self.buffer_a, &mut self.buffer_b);
+		self.buffer_a.clear();
 
 		try!(self.stdout.flush());
 		Ok(())
