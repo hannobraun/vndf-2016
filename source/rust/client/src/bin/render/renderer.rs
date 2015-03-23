@@ -113,7 +113,7 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let font  = Font::load(18);
+		let font = Font::load(18);
 
 		let mut textures = HashMap::new();
 		for i in (33 .. 127) {
