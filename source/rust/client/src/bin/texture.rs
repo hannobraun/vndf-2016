@@ -22,6 +22,10 @@ impl Texture {
 		let width  = glyph.size.x as u16;
 		let height = glyph.size.y as u16;
 
+		if width == 0 || height == 0 {
+			return None;
+		}
+
 		let data: Vec<u8> = (0..glyph.data.len() * 4)
 			.map(|i|
 				if (i + 1) % 4 == 0 {
