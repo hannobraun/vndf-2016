@@ -18,7 +18,7 @@ pub struct Texture {
 }
 
 impl Texture {
-	pub fn from_glyph(glyph: &Glyph, device: &mut GlDevice) -> Texture {
+	pub fn from_glyph(glyph: &Glyph, device: &mut GlDevice) -> Option<Texture> {
 		let data: Vec<u8> = (0..glyph.data.len() * 4)
 			.map(|i|
 				if (i + 1) % 4 == 0 {
@@ -58,10 +58,10 @@ impl Texture {
 			),
 		);
 
-		Texture {
+		Some(Texture {
 			texture: texture,
 			sampler: sampler,
-		}
+		})
 	}
 
 	pub fn to_param(&self) -> (TextureHandle, Option<SamplerHandle>) {

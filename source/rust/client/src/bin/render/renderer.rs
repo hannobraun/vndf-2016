@@ -119,9 +119,11 @@ impl Renderer {
 		for i in (33 .. 127) {
 			let c       = ::std::char::from_u32(i).unwrap();
 			let glyph   = font.glyph(c);
-			let texture = Texture::from_glyph(&glyph, &mut graphics.device);
 
-			textures.insert(c, (glyph, texture));
+			match Texture::from_glyph(&glyph, &mut graphics.device) {
+				Some(texture) => { textures.insert(c, (glyph, texture)); },
+				None          => (),
+			}
 		}
 
 		Renderer {
