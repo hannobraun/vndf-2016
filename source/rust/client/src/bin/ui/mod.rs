@@ -132,7 +132,7 @@ impl Ui {
 			.collect();
 		broadcasts.sort();
 
-		self.screen.cursor(None);
+		self.screen.buffer().cursor = None;
 
 		try!(self.main.update(
 			self.screen.buffer(),
