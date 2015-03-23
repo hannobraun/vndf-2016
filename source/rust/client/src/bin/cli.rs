@@ -86,7 +86,7 @@ impl Cli {
 	}
 
 	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
-		self.screen.cursor(None);
+		self.screen.buffer().cursor = None;
 
 		if frame.message != self.last_message {
 			match frame.message {
@@ -169,12 +169,11 @@ impl Cli {
 			"> {}",
 			self.input_buffer.as_slice(),
 		));
-		self.screen.cursor(
+		self.screen.buffer().cursor =
 			Some((
 				(self.input_buffer.chars().count() + 2) as u16,
 				self.height -1,
-			))
-		);
+			));
 
 		self.renderer.render(self.screen.buffer());
 		try!(self.screen.submit());
