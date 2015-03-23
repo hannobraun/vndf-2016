@@ -91,7 +91,7 @@ impl Screen {
 			}
 		}
 
-		match self.cursor {
+		match self.buffer_a.cursor {
 			Some((x, y)) => {
 				let x = min(x, self.buffer_a.width()  - 1);
 				let y = min(y, self.buffer_a.height() - 1);
