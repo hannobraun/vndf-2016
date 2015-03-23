@@ -29,7 +29,9 @@ impl Font {
 	}
 
 	pub fn glyph(&self, c: char) -> Option<Glyph> {
-		Some(make_glyph(load_glyph_slot(self.font_face, c)))
+		let glyph_slot = load_glyph_slot(self.font_face, c);
+
+		Some(make_glyph(glyph_slot))
 	}
 }
 
