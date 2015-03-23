@@ -1,3 +1,4 @@
+use std::char;
 use std::collections::HashMap;
 use std::marker::PhantomData;
 
@@ -117,7 +118,7 @@ impl Renderer {
 
 		let mut textures = HashMap::new();
 		for i in (33 .. 127) {
-			let c = ::std::char::from_u32(i).unwrap();
+			let c = char::from_u32(i).unwrap();
 
 			let glyph = match font.glyph(c) {
 				Some(glyph) => glyph,
