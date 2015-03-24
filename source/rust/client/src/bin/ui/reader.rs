@@ -20,8 +20,6 @@ impl InputReader {
 			let stdin = stdin().chars();
 
 			for c in stdin {
-				// TODO(83541252): This operation should time out to ensure
-				//                 panic propagation between tasks.
 				match c {
 					Ok(c) =>
 						match sender.send(c) {

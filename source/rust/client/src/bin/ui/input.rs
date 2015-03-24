@@ -112,14 +112,10 @@ impl ProcessInput for TextField {
 	fn process_events(&mut self, events: &[InputEvent]) {
 		for &event in events {
 			match event {
-				// TODO(87369840): Take cursor position into account.
 				Backspace => { self.text.pop(); },
 				Char(c)   => self.text.push(c),
 				_         => (),
 			}
-
-			// TODO(87369840): Add support cursor movement
-			// TODO(87369840): Add support for delete key (requires cursor movement)
 		}
 	}
 }
