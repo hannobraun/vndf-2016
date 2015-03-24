@@ -11,6 +11,7 @@ use std::net::{
 use std::sync::mpsc::{
 	channel,
 	Receiver,
+	Sender,
 };
 use std::sync::mpsc::TryRecvError::{
 	Disconnected,
@@ -30,6 +31,7 @@ pub struct Connection<R> {
 	events  : Vec<R>,
 	stream  : TcpStream,
 	messages: Receiver<R>,
+	errors  : Sender<()>,
 }
 
 impl<R> Connection<R> where R: Decodable + Send + 'static {
@@ -48,6 +50,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 
 	pub fn from_stream(stream: TcpStream) -> Connection<R> {
 		let (messages_sender, messages_receiver) = channel();
+		let (error_sender   , error_receiver   ) = channel();
 
 		let stream_2 = match stream.try_clone() {
 			Ok(stream) => stream,
@@ -108,6 +111,16 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 					// connection is no longer needed. Time to quietly die.
 					break;
 				}
+
+				match error_receiver.try_recv() {
+					Ok(()) =>
+						// An error has occured while sending. Time to die.
+						break,
+					Err(error) => match error {
+						Empty        => continue,
+						Disconnected => break,
+					},
+				}
 			}
 		});
 
@@ -115,6 +128,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 			events  : Vec::new(),
 			stream  : stream_2,
 			messages: messages_receiver,
+			errors  : error_sender,
 		}
 	}
 
@@ -129,12 +143,19 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 				Err(error) => panic!("Encoding error: {}", error),
 			};
 
-			// TODO(WNVegmhs): When an error occurs, tell the reading thread
-			//                 about it. At least do that when we know the
-			//                 connection has been closed (broken pipe). Sending
-			//                 a notification to the receiving thread could
-			//                 replace the error-counting hack in there.
-			try!(write!(&mut self.stream, "{}\n", event));
+			match write!(&mut self.stream, "{}\n", event) {
+				Ok(()) =>
+					(),
+				Err(error) => {
+					if let Err(_) = self.errors.send(()) {
+						// Nothing to do. We're telling the receive thread to
+						// die, but this error can only mean that it is already
+						// dead.
+					}
+
+					return Err(error);
+				},
+			}
 		}
 
 		Ok(())
