@@ -29,7 +29,7 @@ use rustc_serialize::{
 pub struct Connection<R> {
 	events  : Vec<R>,
 	stream  : TcpStream,
-	receiver: Receiver<R>,
+	messages: Receiver<R>,
 }
 
 impl<R> Connection<R> where R: Decodable + Send + 'static {
@@ -57,7 +57,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		let connection = Connection {
 			events  : Vec::new(),
 			stream  : stream_2,
-			receiver: receiver,
+			messages: receiver,
 		};
 
 		spawn(move || {
@@ -142,7 +142,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 
 	pub fn receive(&mut self) -> Result<Drain<R>, ()> {
 		loop {
-			match self.receiver.try_recv() {
+			match self.messages.try_recv() {
 				Ok(event) =>
 					self.events.push(event),
 				Err(error) => match error {
