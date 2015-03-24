@@ -104,7 +104,9 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 				};
 
 				if let Err(_) = messages_sender.send(event) {
-					panic!("Connection channel disconnected");
+					// The receiver has been dropped, which means this
+					// connection is no longer needed. Time to quietly die.
+					break;
 				}
 			}
 		});
