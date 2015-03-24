@@ -3,4 +3,4 @@
 source project.conf
 
 ./scripts/tasks/build-client &&
-$CLIENT_BINARY
+$CLIENT_BINARY $@
