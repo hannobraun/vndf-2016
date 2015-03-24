@@ -24,7 +24,7 @@ impl Client {
 		self.network.send(event);
 	}
 
-	// TODO(85118666): Make generic and move into a trait called Mock.
+	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
 	pub fn expect_event(&mut self) -> Option<ServerEvent> {
 		let start_s = precise_time_s();
 
@@ -40,7 +40,7 @@ impl Client {
 		}
 	}
 
-	// TODO(85118666): Make generic and move into a trait called Mock.
+	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
 	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<ServerEvent>
 		where F: FnMut(&Option<ServerEvent>) -> bool
 	{

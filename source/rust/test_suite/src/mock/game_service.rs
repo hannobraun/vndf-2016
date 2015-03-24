@@ -36,7 +36,7 @@ impl GameService {
 		self.network.send(Some(address).into_iter(), &[event]);
 	}
 
-	// TODO(85118666): Make generic and move into a trait called Mock.
+	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
 	pub fn expect_event(&mut self) -> Option<(SocketAddr, ClientEvent)> {
 		let start_s = precise_time_s();
 
@@ -54,7 +54,7 @@ impl GameService {
 		}
 	}
 
-	// TODO(85118666): Make generic and move into a trait called Mock.
+	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
 	pub fn wait_until<F>(&mut self, condition: F)
 		-> Option<(SocketAddr, ClientEvent)>
 		where
