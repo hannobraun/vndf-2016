@@ -1,14 +1,5 @@
-use std::io::{
-	self,
-	stdin,
-};
+use std::io;
 use std::io::prelude::*;
-use std::sync::mpsc::{
-	channel,
-	Receiver,
-	TryRecvError,
-};
-use std::thread;
 
 use glutin::{
 	Event,
@@ -28,7 +19,6 @@ use window::Window;
 
 
 pub struct Cli {
-	input       : Receiver<char>,
 	input_buffer: String,
 	last_message: Message,
 	text        : Vec<String>,
@@ -39,26 +29,6 @@ pub struct Cli {
 
 impl Cli {
 	pub fn new(window: &Window) -> io::Result<Cli> {
-		let (sender, receiver) = channel();
-
-		thread::spawn(move || {
-			let stdin = stdin().chars();
-
-			for c in stdin {
-				match c {
-					Ok(c) =>
-						match sender.send(c) {
-							Ok(()) =>
-								(),
-							Err(error) =>
-								panic!("Error sending line: {:?}", error),
-						},
-					Err(error) =>
-						panic!("Error reading line: {:?}", error),
-				}
-			}
-		});
-
 		let mut text = Vec::new();
 		text.push(format!("VNDF Ship Control System"));
 		text.push(format!("Enter command"));
@@ -75,7 +45,6 @@ impl Cli {
 		);
 
 		Ok(Cli {
-			input       : receiver,
 			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
@@ -98,35 +67,6 @@ impl Cli {
 			self.last_message = frame.message.clone();
 		}
 
-		loop {
-			match self.input.try_recv() {
-				Ok(c) => {
-					if c == '\n' {
-						let command = self.input_buffer.clone();
-						self.input_buffer.clear();
-
-						try!(self.handle_line(
-							events,
-							command.as_slice(),
-							frame,
-						));
-					}
-					else if c == '\x7f' { // Backspace
-						self.input_buffer.pop();
-					}
-					else {
-						self.input_buffer.push(c)
-					}
-				},
-
-				Err(error) => match error {
-					TryRecvError::Empty =>
-						break,
-					TryRecvError::Disconnected =>
-						panic!("Channel disconnected"),
-				}
-			}
-		}
 		for event in window.poll_events() {
 			match event {
 				Event::ReceivedCharacter(c) =>
