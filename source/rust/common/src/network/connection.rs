@@ -47,7 +47,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 	}
 
 	pub fn from_stream(stream: TcpStream) -> Connection<R> {
-		let (sender, receiver) = channel();
+		let (messages_sender, messages_receiver) = channel();
 
 		let stream_2 = match stream.try_clone() {
 			Ok(stream) => stream,
@@ -57,7 +57,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		let connection = Connection {
 			events  : Vec::new(),
 			stream  : stream_2,
-			messages: receiver,
+			messages: messages_receiver,
 		};
 
 		spawn(move || {
@@ -109,7 +109,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 					},
 				};
 
-				if let Err(_) = sender.send(event) {
+				if let Err(_) = messages_sender.send(event) {
 					panic!("Connection channel disconnected");
 				}
 			}
