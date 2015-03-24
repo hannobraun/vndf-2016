@@ -129,10 +129,11 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 				Err(error) => panic!("Encoding error: {}", error),
 			};
 
-			// TODO: When an error occurs, tell the reading thread about it. At
-			//       least do that when we know the connection has been closed
-			//       (broken pipe). Sending a notification to the receiving
-			//       thread could replace the error-counting hack in there.
+			// TODO(WNVegmhs): When an error occurs, tell the reading thread
+			//                 about it. At least do that when we know the
+			//                 connection has been closed (broken pipe). Sending
+			//                 a notification to the receiving thread could
+			//                 replace the error-counting hack in there.
 			try!(write!(&mut self.stream, "{}\n", event));
 		}
 
