@@ -143,8 +143,8 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 	pub fn receive(&mut self) -> Result<Drain<R>, ()> {
 		loop {
 			match self.messages.try_recv() {
-				Ok(event) =>
-					self.events.push(event),
+				Ok(message) =>
+					self.events.push(message),
 				Err(error) => match error {
 					Empty        => break,
 					Disconnected => return Err(()),
