@@ -13,7 +13,7 @@ use client::interface::{
 };
 use render::{
 	Renderer,
-	Screen,
+	ScreenBuffer,
 };
 use window::Window;
 
@@ -22,7 +22,7 @@ pub struct Cli {
 	input_buffer: String,
 	last_message: Message,
 	text        : Vec<String>,
-	screen      : Screen,
+	buffer      : ScreenBuffer,
 	height      : u16,
 	renderer    : Renderer,
 }
@@ -36,7 +36,7 @@ impl Cli {
 		let width  = 80;
 		let height = 24;
 
-		let screen = try!(Screen::new(width, height));
+		let buffer = ScreenBuffer::new(width, height);
 
 		let renderer = Renderer::new(
 			window.new_device(),
@@ -48,14 +48,14 @@ impl Cli {
 			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
-			screen      : screen,
+			buffer      : buffer,
 			height      : height,
 			renderer    : renderer,
 		})
 	}
 
 	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
-		self.screen.buffer().cursor = None;
+		self.buffer.cursor = None;
 
 		if frame.message != self.last_message {
 			match frame.message {
@@ -98,25 +98,25 @@ impl Cli {
 
 		for (y, line) in self.text.iter().enumerate() {
 			try!(write!(
-				&mut self.screen.buffer().writer(0, y as u16),
+				&mut self.buffer.writer(0, y as u16),
 				"{}",
 				line,
 			));
 		}
 
 		try!(write!(
-			&mut self.screen.buffer().writer(0, self.height - 1),
+			&mut self.buffer.writer(0, self.height - 1),
 			"> {}",
 			self.input_buffer.as_slice(),
 		));
-		self.screen.buffer().cursor =
+		self.buffer.cursor =
 			Some((
 				(self.input_buffer.chars().count() + 2) as u16,
 				self.height -1,
 			));
 
-		self.renderer.render(self.screen.buffer());
-		try!(self.screen.submit());
+		self.renderer.render(&self.buffer);
+		self.buffer.clear();
 
 		Ok(())
 	}
