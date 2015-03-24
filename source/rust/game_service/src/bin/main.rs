@@ -153,7 +153,8 @@ fn main() {
 		}
 
 		for (_, client) in &mut clients {
-			// TODO: Take passed time since last iteration into account.
+			// TODO(E7GyYwQy): Take passed time since last iteration into
+			//                 account.
 			client.position = client.position + client.velocity;
 		}
 
