@@ -101,8 +101,6 @@ impl Interface for Headless {
 			let mut stdin = stdin();
 
 			loop {
-				// TODO(83541252): This operation should time out to ensure
-				//                 panic propagation between tasks.
 				let mut line = String::new();
 				match stdin.read_line(&mut line) {
 					Ok(_) => match InputEvent::from_json(line.as_slice()) {
