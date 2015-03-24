@@ -58,9 +58,8 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		};
 
 		spawn(move || {
-			let mut reader     = BufReader::new(stream);
-			let mut line       = String::new();
-			let mut zero_reads = 0;
+			let mut reader = BufReader::new(stream);
+			let mut line   = String::new();
 
 			loop {
 				line.clear();
@@ -69,47 +68,20 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 					break;
 				}
 
-				// A read of length zero can mean one of two things:
-				// - No data available for now. I don't know why it still
-				//   returns (shouldn't it block?), but that's what it does, so
-				//   we need to handle it.
-				// - Connection is closed. I don't know how we would find out
-				//   reliably that this is the case, but simply counting the
-				//   number of zero-length reads seems to work well.
-				//
-				// Please note that this solution doesn't need to be perfect.
-				// Eventually, we'll use UDP and there will be no connection to
-				// take care of, nor a per-connection thread that could go into
-				// an endless loop.
-				if line.len() == 0 {
-					if zero_reads < 128 {
-						// Nothing received for now, start loop from the top to
-						// try again.
-						zero_reads += 1;
-						continue;
-					}
-					else {
-						print!(
-							"Too many zero-length reads. Closing connection.\n"
-						);
+				if line.len() > 0 {
+					let event = match json::decode(line.as_slice()) {
+						Ok(event)  => event,
+						Err(error) => {
+							print!("Error decoding \"{}\": {}\n", line, error);
+							continue;
+						},
+					};
+
+					if let Err(_) = messages_sender.send(event) {
+						// The receiver has been dropped, which means this
+						// connection is no longer needed. Time to quietly die.
 						break;
 					}
-				}
-
-				zero_reads = 0;
-
-				let event = match json::decode(line.as_slice()) {
-					Ok(event)  => event,
-					Err(error) => {
-						print!("Error decoding \"{}\": {}\n", line, error);
-						continue;
-					},
-				};
-
-				if let Err(_) = messages_sender.send(event) {
-					// The receiver has been dropped, which means this
-					// connection is no longer needed. Time to quietly die.
-					break;
 				}
 
 				match error_receiver.try_recv() {
