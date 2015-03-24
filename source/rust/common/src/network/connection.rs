@@ -54,12 +54,6 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 			Err(error) => panic!("Failed to clone stream: {}", error),
 		};
 
-		let connection = Connection {
-			events  : Vec::new(),
-			stream  : stream_2,
-			messages: messages_receiver,
-		};
-
 		spawn(move || {
 			let mut reader     = BufReader::new(stream);
 			let mut line       = String::new();
@@ -115,7 +109,11 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 			}
 		});
 
-		connection
+		Connection {
+			events  : Vec::new(),
+			stream  : stream_2,
+			messages: messages_receiver,
+		}
 	}
 
 	pub fn send<Events, Event>(&mut self, events: Events) -> io::Result<()>
