@@ -55,6 +55,9 @@ fn main() {
 	if args.headless {
 		run(args, init_interface::<interface::Headless>())
 	}
+	else if args.cli {
+		run(args, init_interface::<interface::CommandLine>())
+	}
 	else {
 		run(args, init_interface::<interface::Player>())
 	}

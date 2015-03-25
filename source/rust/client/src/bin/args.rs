@@ -9,6 +9,7 @@ use getopts::Options;
 
 pub struct Args {
 	pub headless     : bool,
+	pub cli          : bool,
 	pub server       : SocketAddr,
 	pub net_timeout_s: f64,
 }
@@ -24,6 +25,11 @@ impl Args {
 			"",
 			"headless",
 			"enable headless mode",
+		);
+		options.optflag(
+			"",
+			"cli",
+			"enable CLI mode",
 		);
 		options.optopt(
 			"",
@@ -79,6 +85,7 @@ impl Args {
 
 		Args {
 			headless     : matches.opt_present("headless"),
+			cli          : matches.opt_present("cli"),
 			server       : server_address,
 			net_timeout_s: net_timeout_s,
 		}
