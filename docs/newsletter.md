@@ -75,6 +75,7 @@ Topic ideas:
 
 News for April:
 - http://www.planetary.org/blogs/guest-blogs/2015/0320-mapping-of-pluto-begins-today.html
+- http://www.nasa.gov/press/2015/march/nasas-opportunity-mars-rover-finishes-marathon-clocks-in-at-just-over-11-years/
 
 News for any month:
 - https://kheckeroth.com/solarSystem/
