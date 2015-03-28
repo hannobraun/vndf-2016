@@ -69,7 +69,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 				}
 
 				if line.len() > 0 {
-					let event = match json::decode(line.as_slice()) {
+					let event = match json::decode(line.as_ref()) {
 						Ok(event)  => event,
 						Err(error) => {
 							print!("Error decoding \"{}\": {}\n", line, error);
