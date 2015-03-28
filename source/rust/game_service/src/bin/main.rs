@@ -189,7 +189,7 @@ fn main() {
 		//                 fixed interval, there's not really a reason to delay
 		//                 other kinds of logic by sleeping. For example,
 		//                 broadcasts can be handled immediately.
-		sleep(Duration::milliseconds(20));
+		sleep(Duration::milliseconds(500));
 	}
 }
 
