@@ -14,7 +14,9 @@ rm -rf $DIST_DIR
 
 mkdir -p $DIST_DIR
 mkdir -p $DIST_BIN_DIR
+mkdir -p $DIST_DIR/source
 
 echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
 chmod a+x $START_SCRIPT &&
-cp $CLIENT_BINARY $DIST_BIN_DIR
+cp $CLIENT_BINARY $DIST_BIN_DIR &&
+cp -r source/assets $DIST_DIR/source
