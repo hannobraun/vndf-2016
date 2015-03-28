@@ -107,7 +107,7 @@ impl Cli {
 		try!(write!(
 			&mut self.buffer.writer(0, self.height - 1),
 			"> {}",
-			self.input_buffer.as_slice(),
+			self.input_buffer,
 		));
 		self.buffer.cursor =
 			Some((
