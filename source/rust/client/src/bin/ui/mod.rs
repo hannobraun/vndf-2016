@@ -139,8 +139,8 @@ impl Ui {
 			0, 0,
 			&MainSectionArgs {
 				is_sending: is_sending,
-				self_id   : frame.self_id.as_slice(),
-				broadcasts: broadcasts.as_slice(),
+				self_id   : frame.self_id.as_ref(),
+				broadcasts: broadcasts.as_ref(),
 				position  : frame.position,
 				velocity  : frame.velocity,
 			}

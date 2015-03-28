@@ -83,7 +83,7 @@ impl Cli {
 
 					try!(self.handle_line(
 						events,
-						command.as_slice(),
+						command.as_ref(),
 						frame,
 					));
 				},

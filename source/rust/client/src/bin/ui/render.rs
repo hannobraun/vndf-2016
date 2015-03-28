@@ -41,9 +41,9 @@ pub fn info_section(buffer: &mut ScreenBuffer, x: Pos, y: Pos, width: Pos, heigh
 
 		let (mut status_writer, status) = match *message {
 			Message::Notice(ref s) =>
-				(status_writer.foreground_color(Green), s.as_slice()),
+				(status_writer.foreground_color(Green), s.as_ref()),
 			Message::Error(ref s) =>
-				(status_writer.foreground_color(Red  ), s.as_slice()),
+				(status_writer.foreground_color(Red  ), s.as_ref()),
 			Message::None =>
 				(status_writer, ""),
 		};

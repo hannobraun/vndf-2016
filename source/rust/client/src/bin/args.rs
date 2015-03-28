@@ -68,7 +68,7 @@ impl Args {
 			None            => 5.0,
 		};
 
-		let server_address = (host.as_slice(), port);
+		let server_address = (host.as_ref(), port);
 		let server_address = match server_address.to_socket_addrs() {
 			Ok(mut addresses) => match addresses.next() {
 				Some(address) =>

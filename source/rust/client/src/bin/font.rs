@@ -56,7 +56,7 @@ fn init_font_face(size: u32) -> FT_Face {
 		let mut font_face: FT_Face = ptr::null_mut();
 		let face_error = FT_New_Face(
 				freetype,
-				CString::new(b"source/assets/UbuntuMono-B.ttf".as_slice())
+				CString::new(b"source/assets/UbuntuMono-B.ttf".as_ref())
 					.unwrap_or_else(|e| panic!("Error creating CString: {}", e))
 					.as_ptr(),
 				0,

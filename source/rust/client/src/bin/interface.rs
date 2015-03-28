@@ -103,7 +103,7 @@ impl Interface for Headless {
 			loop {
 				let mut line = String::new();
 				match stdin.read_line(&mut line) {
-					Ok(_) => match InputEvent::from_json(line.as_slice()) {
+					Ok(_) => match InputEvent::from_json(line.as_ref()) {
 						Ok(event) =>
 							match sender.send(event) {
 								Ok(()) =>
