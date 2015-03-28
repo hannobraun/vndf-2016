@@ -85,7 +85,7 @@ fn load_glyph_slot(font_face: FT_Face, c: char) -> Option<FT_GlyphSlot> {
 		let glyph_error = FT_Load_Glyph(
 			font_face,
 			glyph_index,
-			FT_LOAD_DEFAULT as i32
+			FT_LOAD_DEFAULT as i32,
 		);
 		assert!(glyph_error == 0);
 
