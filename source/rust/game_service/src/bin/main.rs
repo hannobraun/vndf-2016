@@ -1,4 +1,4 @@
-#![feature(collections, core, std_misc, thread_sleep)]
+#![feature(collections, convert, core, std_misc, thread_sleep)]
 
 
 mod args;
@@ -171,7 +171,7 @@ fn main() {
 		}
 		outgoing_events.push(ServerEvent::Heartbeat);
 
-		network.send(recipients, outgoing_events.as_slice());
+		network.send(recipients, outgoing_events.as_ref());
 		outgoing_events.clear();
 
 		for (&address, client) in &clients {

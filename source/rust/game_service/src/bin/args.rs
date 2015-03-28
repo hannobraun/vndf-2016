@@ -24,13 +24,13 @@ impl Args {
 			"",
 			"port",
 			"port to listen on",
-			args.port.to_string().as_slice(),
+			args.port.to_string().as_ref(),
 		);
 		options.optopt(
 			"",
 			"client-timeout",
 			"timeout after which a client is considered inactive (in seconds)",
-			args.client_timeout_s.to_string().as_slice()
+			args.client_timeout_s.to_string().as_ref()
 		);
 
 		let matches = match options.parse(cli_args) {
