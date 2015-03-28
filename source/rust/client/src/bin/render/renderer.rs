@@ -184,9 +184,10 @@ impl Renderer {
 			Vec3::new(position.x, position.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
+		let transform = self.transform * translation.to_homogeneous();
 
 		let params = Params {
-			transform: *(self.transform * translation.to_homogeneous()).as_array(),
+			transform: *transform.as_array(),
 
 			width : glyph.size.x,
 			height: glyph.size.y,
