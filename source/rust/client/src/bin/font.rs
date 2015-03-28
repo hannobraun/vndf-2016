@@ -85,17 +85,17 @@ fn load_glyph_slot(font_face: FT_Face, c: char) -> Option<FT_GlyphSlot> {
 		let glyph_error = FT_Load_Glyph(
 			font_face,
 			glyph_index,
-			FT_LOAD_DEFAULT as i32,
+			FT_LOAD_DEFAULT,
 		);
 		assert!(glyph_error == 0);
 
 		let render_error = FT_Render_Glyph(
-			(*font_face).glyph as FT_GlyphSlot,
+			(*font_face).glyph,
 			FT_RENDER_MODE_NORMAL
 		);
 		assert!(render_error == 0);
 
-		Some((*font_face).glyph as FT_GlyphSlot)
+		Some((*font_face).glyph)
 	}
 }
 
