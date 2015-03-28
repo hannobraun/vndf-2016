@@ -1,6 +1,5 @@
 use std::char;
 use std::collections::HashMap;
-use std::marker::PhantomData;
 
 use gfx;
 use gfx::traits::*;
@@ -44,8 +43,6 @@ struct Params<R: gfx::Resources> {
 	height: f32,
 
 	color: gfx::shade::TextureParam<R>,
-
-	_marker: PhantomData<R>,
 }
 
 
@@ -195,8 +192,6 @@ impl Renderer {
 			height: glyph.size.y,
 
 			color: texture.to_param(),
-
-			_marker: PhantomData,
 		};
 
 		let batch = self.graphics
