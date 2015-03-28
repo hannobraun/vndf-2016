@@ -18,7 +18,7 @@ use rustc_serialize::Decodable;
 use super::Connection;
 
 
-pub struct Acceptor<R> {
+pub struct Acceptor<R: Send> {
 	receiver   : Receiver<(SocketAddr, Connection<R>)>,
 	connections: Vec<(SocketAddr, Connection<R>)>,
 }

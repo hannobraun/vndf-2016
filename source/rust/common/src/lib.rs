@@ -2,7 +2,7 @@
 
 
 extern crate nalgebra;
-extern crate "rustc-serialize" as rustc_serialize;
+extern crate rustc_serialize;
 
 
 pub mod game;

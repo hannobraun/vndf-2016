@@ -27,7 +27,7 @@ use rustc_serialize::{
 };
 
 
-pub struct Connection<R> {
+pub struct Connection<R: Send> {
 	events  : Vec<R>,
 	stream  : TcpStream,
 	messages: Receiver<R>,
