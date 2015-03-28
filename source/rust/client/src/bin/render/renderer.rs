@@ -81,8 +81,8 @@ static FRAGMENT_SRC: &'static [u8] = b"
 pub struct Renderer {
 	graphics: gfx::Graphics<GlDevice>,
 	frame   : gfx::Frame<GlResources>,
-	mesh    : gfx::Mesh<GlResources>,
 	batch   : gfx::batch::CoreBatch<Params<GlResources>>,
+	slice   : gfx::Slice<GlResources>,
 
 	transform: Mat4<f32>,
 	textures : HashMap<char, (Glyph, Texture)>,
@@ -111,6 +111,8 @@ impl Renderer {
 				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
 			)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
+
+		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
 
 		let transform =
 			Ortho3::new(
@@ -141,8 +143,8 @@ impl Renderer {
 		Renderer {
 			graphics: graphics,
 			frame   : frame,
-			mesh    : mesh,
 			batch   : batch,
+			slice   : slice,
 
 			transform: transform,
 
@@ -206,7 +208,7 @@ impl Renderer {
 		self.graphics
 			.draw_core(
 				&self.batch,
-				&self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
+				&self.slice,
 				&params,
 				&self.frame,
 			)
