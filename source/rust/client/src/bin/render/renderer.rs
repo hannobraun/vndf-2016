@@ -81,8 +81,8 @@ static FRAGMENT_SRC: &'static [u8] = b"
 pub struct Renderer {
 	graphics: gfx::Graphics<GlDevice>,
 	frame   : gfx::Frame<GlResources>,
-	program : gfx::ProgramHandle<GlResources>,
 	mesh    : gfx::Mesh<GlResources>,
+	batch   : gfx::batch::CoreBatch<Params<GlResources>>,
 
 	transform: Mat4<f32>,
 	textures : HashMap<char, (Glyph, Texture)>,
@@ -103,6 +103,14 @@ impl Renderer {
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
+
+		let batch = graphics
+			.make_core(
+				&program,
+				&mesh,
+				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
+			)
+			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
 		let transform =
 			Ortho3::new(
@@ -133,8 +141,8 @@ impl Renderer {
 		Renderer {
 			graphics: graphics,
 			frame   : frame,
-			program : program,
 			mesh    : mesh,
+			batch   : batch,
 
 			transform: transform,
 
@@ -195,17 +203,9 @@ impl Renderer {
 			color: texture.to_param(),
 		};
 
-		let batch = self.graphics
-			.make_core(
-				&self.program,
-				&self.mesh,
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
-
 		self.graphics
 			.draw_core(
-				&batch,
+				&self.batch,
 				&self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
 				&params,
 				&self.frame,
