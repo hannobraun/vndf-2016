@@ -1,4 +1,4 @@
-#![feature(as_slice, collections, convert, core, io, libc, plugin, std_misc, thread_sleep)]
+#![feature(as_slice, collections, convert, io, libc, plugin, std_misc, thread_sleep)]
 #![feature(custom_attribute)]
 #![plugin(gfx_macros)]
 
