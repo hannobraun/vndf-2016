@@ -11,11 +11,11 @@ pub struct Window {
 
 impl Window {
 	pub fn new() -> Window {
-		let window = match glutin::Window::new() {
-			Ok(window) => window,
-			Err(error) => panic!("Error creating window: {}", error),
-		};
-		window.set_title("Hello, World!");
+		let window = glutin::WindowBuilder::new()
+			.with_title("Hello, World!".to_string())
+			.build_strict()
+			.unwrap_or_else(|e| panic!("Error creating window: {}", e));
+
 		unsafe { window.make_current() };
 
 		let (width, height) = match window.get_inner_size() {
