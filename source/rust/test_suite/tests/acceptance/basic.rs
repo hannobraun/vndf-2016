@@ -21,8 +21,8 @@ fn it_should_send_broadcasts_to_all_clients() {
 
 	let message_1 = "This is a broadcast by client 1.".to_string();
 	let message_2 = "This is a broadcast by client 2.".to_string();
-	client_1.start_broadcast(message_1.as_slice());
-	client_2.start_broadcast(message_2.as_slice());
+	client_1.start_broadcast(message_1.as_ref());
+	client_2.start_broadcast(message_2.as_ref());
 
 	let frame_1 = client_1.wait_until(|frame| frame.broadcasts.len() == 2);
 	let frame_2 = client_2.wait_until(|frame| frame.broadcasts.len() == 2);

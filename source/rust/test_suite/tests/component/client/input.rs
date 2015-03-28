@@ -17,11 +17,11 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	let valid_broadcast = "This is a broadcast.".to_string();
 
 	// It should show an error, if the broadcast is invalid.
-	client.start_broadcast(invalid_broadcast.as_slice());
+	client.start_broadcast(invalid_broadcast.as_ref());
 	client.wait_until(|frame| frame.message.is_error());
 
 	// And it should still work afterwards.
-	client.start_broadcast(valid_broadcast.as_slice());
+	client.start_broadcast(valid_broadcast.as_ref());
 	game_service.wait_until(|event| {
 		if let &mut Some((_, ref event)) = event {
 			event == &ClientEvent::StartBroadcast(valid_broadcast.clone())
