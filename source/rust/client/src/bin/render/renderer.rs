@@ -178,7 +178,7 @@ impl Renderer {
 	}
 
 	fn draw(&mut self, x: u16, y: u16, c: C) {
-		let offset = Vec2::new(-500.0, 330.0);
+		let offset = Vec2::new(-390.0, 270.0);
 
 		let &(ref glyph, ref texture) = match self.textures.get(&c.c) {
 			Some(result) => result,
