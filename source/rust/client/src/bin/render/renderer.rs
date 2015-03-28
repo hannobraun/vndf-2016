@@ -196,17 +196,20 @@ impl Renderer {
 		};
 
 		let batch = self.graphics
-			.make_batch(
+			.make_core(
 				&self.program,
-				params,
 				&self.mesh,
-				self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
 				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
 			)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
 		self.graphics
-			.draw(&batch, &self.frame)
+			.draw_core(
+				&batch,
+				&self.mesh.to_slice(gfx::PrimitiveType::TriangleStrip),
+				&params,
+				&self.frame,
+			)
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}
 }
