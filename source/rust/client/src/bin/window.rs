@@ -13,6 +13,7 @@ impl Window {
 	pub fn new() -> Window {
 		let window = glutin::WindowBuilder::new()
 			.with_title("Von Neumann Defense Force - PREVIEW VERSION".to_string())
+			.with_vsync()
 			.build_strict()
 			.unwrap_or_else(|e| panic!("Error creating window: {}", e));
 
