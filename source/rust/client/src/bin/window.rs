@@ -11,18 +11,17 @@ pub struct Window {
 
 impl Window {
 	pub fn new() -> Window {
+		let width  = 800;
+		let height = 600;
+
 		let window = glutin::WindowBuilder::new()
 			.with_title("Von Neumann Defense Force - PREVIEW VERSION".to_string())
+			.with_dimensions(width, height)
 			.with_vsync()
 			.build_strict()
 			.unwrap_or_else(|e| panic!("Error creating window: {}", e));
 
 		unsafe { window.make_current() };
-
-		let (width, height) = match window.get_inner_size() {
-			Some(size) => size,
-			None       => panic!("Failed to determine window size"),
-		};
 
 		Window {
 			inner: window,
