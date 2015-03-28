@@ -18,8 +18,8 @@ impl Client {
 			&[
 				"--headless",
 				"--server-host=localhost",
-				format!("--server-port={}", port).as_slice(),
-				format!("--network-timeout={}", 0.05).as_slice(),
+				format!("--server-port={}", port).as_ref(),
+				format!("--network-timeout={}", 0.05).as_ref(),
 			]
 		);
 
@@ -33,7 +33,7 @@ impl Client {
 	}
 
 	pub fn input(&mut self, event: InputEvent) {
-		self.process.write_stdin_line(event.to_json().as_slice());
+		self.process.write_stdin_line(event.to_json().as_ref());
 	}
 
 	pub fn start_broadcast(&mut self, broadcast: &str) {
@@ -46,7 +46,7 @@ impl Client {
 
 	pub fn frame(&mut self) -> Frame {
 		let line = self.process.read_stdout_line();
-		match Frame::from_json(line.as_slice()) {
+		match Frame::from_json(line.as_ref()) {
 			Ok(frame)  => frame,
 			Err(error) => panic!(
 				"Error decoding frame. Error: {:?}; Frame: {}",

@@ -14,8 +14,8 @@ impl GameService {
 		let mut process = Process::start(
 			"vndf-game-service",
 			&[
-				format!("--port={}", port).as_slice(),
-				format!("--client-timeout={}", 0.05).as_slice(),
+				format!("--port={}", port).as_ref(),
+				format!("--client-timeout={}", 0.05).as_ref(),
 			]
 		);
 		process.read_stdout_line(); // Make sure it's ready
