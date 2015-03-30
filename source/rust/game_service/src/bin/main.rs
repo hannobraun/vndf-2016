@@ -80,7 +80,10 @@ fn main() {
 					}
 				},
 				ClientEvent::Heartbeat => {
-					print!("Heartbeat: {}\n", address);
+					print!(
+						"Heartbeat: {} (time: {})\n",
+						address, precise_time_s(),
+					);
 
 					// Nothing to do here, really, as the the last active time
 					// is updated below, no matter which event was received.
