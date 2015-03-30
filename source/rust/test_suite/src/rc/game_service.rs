@@ -16,6 +16,7 @@ impl GameService {
 			&[
 				format!("--port={}", port).as_ref(),
 				format!("--client-timeout={}", 0.05).as_ref(),
+				format!("--sleep-duration={}", 5).as_ref(),
 			]
 		);
 		process.read_stdout_line(); // Make sure it's ready
