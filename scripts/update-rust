@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-RUSTUP=/tmp/rustup.sh
-
-wget -O $RUSTUP https://static.rust-lang.org/rustup.sh &&
-chmod a+x $RUSTUP &&
-sudo $RUSTUP --save $@
