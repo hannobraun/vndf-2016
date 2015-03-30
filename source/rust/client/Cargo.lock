@@ -4,13 +4,13 @@ version = "0.0.1"
 dependencies = [
  "common 0.0.1",
  "freetype-rs 0.0.7 (git+https://github.com/PistonDevelopers/freetype-rs.git)",
- "getopts 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "getopts 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "gfx 0.2.4 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_device_gl 0.2.2 (git+https://github.com/gfx-rs/gfx_device_gl)",
  "gfx_macros 0.1.10 (git+https://github.com/gfx-rs/gfx_macros.git)",
- "glutin 0.0.15 (git+https://github.com/tomaka/glutin.git)",
- "nalgebra 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "glutin 0.0.16 (git+https://github.com/tomaka/glutin.git)",
+ "nalgebra 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.22 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -28,8 +28,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "common"
 version = "0.0.1"
 dependencies = [
- "nalgebra 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -43,11 +43,11 @@ dependencies = [
 [[package]]
 name = "freetype-rs"
 version = "0.0.7"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#42726202382a20a6b9ede83fff3b630690150f93"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#f15813572beb544ec7937160dd0cea82ee9aebc1"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "freetype-sys 0.0.4 (git+https://github.com/PistonDevelopers/freetype-sys)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -55,7 +55,7 @@ name = "freetype-sys"
 version = "0.0.4"
 source = "git+https://github.com/PistonDevelopers/freetype-sys#5c0e76b33265dcecdf3ea5d695c9ca0f15a67821"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "libz-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -67,39 +67,39 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "gdi32-sys"
-version = "0.0.4"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "winapi 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "getopts"
-version = "0.2.5"
+version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "log 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx"
 version = "0.2.4"
-source = "git+https://github.com/gfx-rs/gfx-rs.git#0894022f7c02fdbf86ed7d3a3ce43760395e0f3f"
+source = "git+https://github.com/gfx-rs/gfx-rs.git#d22b4c830a2e588b750374565f6c71781268cf66"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "draw_state 0.0.2 (git+https://github.com/gfx-rs/draw_state)",
- "log 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx_device_gl"
 version = "0.2.2"
-source = "git+https://github.com/gfx-rs/gfx_device_gl#dcd2ecc94a46ca8ecb3f3f5652cc8f85b2ba1e7e"
+source = "git+https://github.com/gfx-rs/gfx_device_gl#ad5057b355cc79754be4bec537320ae4bfb1f7c1"
 dependencies = [
  "gfx 0.2.4 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_gl 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -110,20 +110,20 @@ dependencies = [
  "gl_common 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "gl_generator 0.0.22 (registry+https://github.com/rust-lang/crates.io-index)",
  "khronos_api 0.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx_macros"
 version = "0.1.10"
-source = "git+https://github.com/gfx-rs/gfx_macros.git#29f7bcf813caf01a07b6f89b76ffcb83648780ca"
+source = "git+https://github.com/gfx-rs/gfx_macros.git#fda2ff261e79f101dcb47cdf09321422fa8c668b"
 
 [[package]]
 name = "gl_common"
 version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -132,28 +132,28 @@ version = "0.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "khronos_api 0.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "xml-rs 0.1.22 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "glutin"
-version = "0.0.15"
-source = "git+https://github.com/tomaka/glutin.git#d7c44b95b04fa3ea25a5e5943148583c862ab025"
+version = "0.0.16"
+source = "git+https://github.com/tomaka/glutin.git#c3470abc8e818c3ba1247df243055f5d1f854f2c"
 dependencies = [
  "android_glue 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "gdi32-sys 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gdi32-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gl_common 0.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "gl_generator 0.0.22 (registry+https://github.com/rust-lang/crates.io-index)",
  "glutin_cocoa 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "glutin_core_foundation 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "glutin_core_graphics 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "kernel32-sys 0.0.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "kernel32-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "khronos_api 0.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "objc 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "user32-sys 0.0.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "winapi 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "user32-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -162,7 +162,7 @@ version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "objc 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -171,7 +171,7 @@ name = "glutin_core_foundation"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -180,15 +180,15 @@ version = "0.1.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "glutin_core_foundation 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "kernel32-sys"
-version = "0.0.12"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "winapi 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -198,7 +198,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libc"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -211,15 +211,10 @@ dependencies = [
 
 [[package]]
 name = "log"
-version = "0.2.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "log"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -227,16 +222,16 @@ name = "malloc_buf"
 version = "0.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "nalgebra"
-version = "0.2.8"
+version = "0.2.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "rand 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -244,7 +239,7 @@ name = "objc"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "malloc_buf 0.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -258,13 +253,13 @@ name = "rand"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "log 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "rustc-serialize"
-version = "0.3.7"
+version = "0.3.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -273,23 +268,23 @@ version = "0.1.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gcc 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "user32-sys"
-version = "0.0.11"
+version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "winapi 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "winapi"
-version = "0.1.15"
+version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "libc 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
