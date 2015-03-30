@@ -1,4 +1,5 @@
 use std::ffi::AsOsStr;
+use std::time::Duration;
 
 use getopts::Options;
 
@@ -6,6 +7,7 @@ use getopts::Options;
 pub struct Args {
 	pub port            : u16,
 	pub client_timeout_s: f64,
+	pub sleep_duration  : Duration,
 }
 
 impl Args {
@@ -17,6 +19,7 @@ impl Args {
 		let mut args = Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
+			sleep_duration  : Duration::milliseconds(500),
 		};
 
 		let mut options = Options::new();
@@ -32,6 +35,12 @@ impl Args {
 			"timeout after which a client is considered inactive (in seconds)",
 			args.client_timeout_s.to_string().as_ref()
 		);
+		options.optopt(
+			"",
+			"sleep-duration",
+			"Length of the sleep in the main loop (in milliseconds)",
+			args.sleep_duration.num_milliseconds().to_string().as_ref(),
+		);
 
 		let matches = match options.parse(cli_args) {
 			Ok(matches) => matches,
@@ -45,6 +54,10 @@ impl Args {
 		args.client_timeout_s = match matches.opt_str("client-timeout") {
 			Some(timeout_s) => timeout_s.parse().unwrap(),
 			None            => args.client_timeout_s,
+		};
+		args.sleep_duration = match matches.opt_str("sleep-duration") {
+			Some(duration) => Duration::milliseconds(duration.parse().unwrap()),
+			None           => args.sleep_duration,
 		};
 
 		args
