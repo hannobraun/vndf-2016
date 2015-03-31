@@ -26,6 +26,7 @@ pub struct Acceptor<R: Send> {
 impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 	pub fn new(port: u16) -> Acceptor<R> {
 		let (sender, receiver) = channel();
+
 		spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
 				Ok(listener) => listener,
