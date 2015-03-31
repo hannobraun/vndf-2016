@@ -25,7 +25,7 @@ pub struct Acceptor<R: Send> {
 
 impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 	pub fn new(port: u16) -> Acceptor<R> {
-		let (sender, receiver) = channel();
+		let (connection_sender, connection_receiver) = channel();
 
 		spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
@@ -43,7 +43,7 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 
 				let connection = Connection::from_stream(stream);
 
-				if let Err(_) = sender.send((address, connection)) {
+				if let Err(_) = connection_sender.send((address, connection)) {
 					panic!("Acceptor channel disconnected");
 				}
 			}
@@ -51,7 +51,7 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 
 		Acceptor {
 			connections: Vec::new(),
-			receiver   : receiver,
+			receiver   : connection_receiver,
 		}
 	}
 
