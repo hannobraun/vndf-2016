@@ -8,7 +8,7 @@ dependencies = [
  "gfx 0.2.4 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_device_gl 0.2.2 (git+https://github.com/gfx-rs/gfx_device_gl)",
  "gfx_macros 0.1.10 (git+https://github.com/gfx-rs/gfx_macros.git)",
- "glutin 0.0.16 (git+https://github.com/tomaka/glutin.git)",
+ "glutin 0.0.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "nalgebra 0.2.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "time 0.1.22 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -139,7 +139,7 @@ dependencies = [
 [[package]]
 name = "glutin"
 version = "0.0.16"
-source = "git+https://github.com/tomaka/glutin.git#a1b504d16c6734dd064aff84059f45c803d97eb3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "android_glue 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "gdi32-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",

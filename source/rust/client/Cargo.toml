@@ -14,6 +14,7 @@ name = "vndf-client"
 
 [dependencies]
 getopts         = "*"
+glutin          = "*"
 nalgebra        = "*"
 rustc-serialize = "*"
 time            = "*"
@@ -29,9 +30,6 @@ git = "https://github.com/gfx-rs/gfx_device_gl"
 
 [dependencies.gfx_macros]
 git = "https://github.com/gfx-rs/gfx_macros.git"
-
-[dependencies.glutin]
-git = "https://github.com/tomaka/glutin.git"
 
 [dependencies.common]
 path = "../common"
