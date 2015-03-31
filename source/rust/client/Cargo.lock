@@ -34,8 +34,8 @@ dependencies = [
 
 [[package]]
 name = "draw_state"
-version = "0.0.2"
-source = "git+https://github.com/gfx-rs/draw_state#f87a9ce8d3a91bfc5004241ea7f4dd26770ea385"
+version = "0.0.3"
+source = "git+https://github.com/gfx-rs/draw_state#6ff944d2327a04fea4edfe2c76e09e9165e8fb3b"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -43,7 +43,7 @@ dependencies = [
 [[package]]
 name = "freetype-rs"
 version = "0.0.7"
-source = "git+https://github.com/PistonDevelopers/freetype-rs.git#f15813572beb544ec7937160dd0cea82ee9aebc1"
+source = "git+https://github.com/PistonDevelopers/freetype-rs.git#06db17f1e8a532a136eb67a27458982ca6f03e6e"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "freetype-sys 0.0.4 (git+https://github.com/PistonDevelopers/freetype-sys)",
@@ -53,7 +53,7 @@ dependencies = [
 [[package]]
 name = "freetype-sys"
 version = "0.0.4"
-source = "git+https://github.com/PistonDevelopers/freetype-sys#5c0e76b33265dcecdf3ea5d695c9ca0f15a67821"
+source = "git+https://github.com/PistonDevelopers/freetype-sys#84fbde8644e3dd20619d73d38a3071981e1a2994"
 dependencies = [
  "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "libz-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -87,14 +87,14 @@ version = "0.2.4"
 source = "git+https://github.com/gfx-rs/gfx-rs.git#d22b4c830a2e588b750374565f6c71781268cf66"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "draw_state 0.0.2 (git+https://github.com/gfx-rs/draw_state)",
+ "draw_state 0.0.3 (git+https://github.com/gfx-rs/draw_state)",
  "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx_device_gl"
 version = "0.2.2"
-source = "git+https://github.com/gfx-rs/gfx_device_gl#ad5057b355cc79754be4bec537320ae4bfb1f7c1"
+source = "git+https://github.com/gfx-rs/gfx_device_gl#b2c4d504bd60c0b2d71e36ae707fc5ed419bd04d"
 dependencies = [
  "gfx 0.2.4 (git+https://github.com/gfx-rs/gfx-rs.git)",
  "gfx_gl 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -139,7 +139,7 @@ dependencies = [
 [[package]]
 name = "glutin"
 version = "0.0.16"
-source = "git+https://github.com/tomaka/glutin.git#c3470abc8e818c3ba1247df243055f5d1f854f2c"
+source = "git+https://github.com/tomaka/glutin.git#a1b504d16c6734dd064aff84059f45c803d97eb3"
 dependencies = [
  "android_glue 0.0.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "gdi32-sys 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
