@@ -26,12 +26,18 @@ pub struct Acceptor<R: Send> {
 impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 	pub fn new(port: u16) -> Acceptor<R> {
 		let (connection_sender, connection_receiver) = channel();
+		let (init_sender      , init_receiver      ) = channel();
 
 		spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
 				Ok(listener) => listener,
 				Err(error)   => panic!("Error binding listener: {}", error),
 			};
+
+			// Notify the constructing thread that we're not listening.
+			if let Err(_) = init_sender.send(()) {
+				panic!("Init notifaction channel disconnected");
+			}
 
 			print!("Listening on port {}\n", port);
 
@@ -48,6 +54,11 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 				}
 			}
 		});
+
+		// Don't return until the listener thread is listening.
+		if let Err(_) = init_receiver.recv() {
+			panic!("Init notification channel disconnected")
+		}
 
 		Acceptor {
 			connections: Vec::new(),
