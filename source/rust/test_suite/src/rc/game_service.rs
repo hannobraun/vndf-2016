@@ -15,7 +15,7 @@ impl GameService {
 			"vndf-game-service",
 			&[
 				format!("--port={}", port).as_ref(),
-				format!("--client-timeout={}", 0.05).as_ref(),
+				format!("--client-timeout={}", 0.1).as_ref(),
 				format!("--sleep-duration={}", 5).as_ref(),
 			]
 		);
