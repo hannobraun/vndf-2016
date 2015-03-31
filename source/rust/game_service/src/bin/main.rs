@@ -47,6 +47,8 @@ fn main() {
 	let mut clients    = HashMap::new();
 	let mut network    = Network::new(args.port);
 
+	print!("Listening on port {}\n", args.port);
+
 	let mut incoming_events = Vec::new();
 	let mut outgoing_events = Vec::new();
 

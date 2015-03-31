@@ -39,8 +39,6 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 				panic!("Init notifaction channel disconnected");
 			}
 
-			print!("Listening on port {}\n", port);
-
 			loop {
 				let (stream, address) = match listener.accept() {
 					Ok(result) => result,
