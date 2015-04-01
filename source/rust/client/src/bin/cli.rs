@@ -1,5 +1,4 @@
 use std::io;
-use std::io::prelude::*;
 
 use glutin::{
 	Event,
@@ -96,29 +95,7 @@ impl Cli {
 			self.text.remove(0);
 		}
 
-		for (y, line) in self.text.iter().enumerate() {
-			try!(write!(
-				&mut self.buffer.writer(0, y as u16),
-				"{}",
-				line,
-			));
-		}
-
-		let mut output    = Vec::new();
-		let mut line      = String::new();
-		let mut current_y = 0;
-
-		for (_, y, c) in self.buffer.iter() {
-			if y != current_y {
-				current_y = y;
-				output.push(line);
-				line = String::new();
-			}
-
-			line.push(c.c);
-		}
-
-		self.renderer.render(output.as_ref(), self.input_buffer.as_ref());
+		self.renderer.render(self.text.as_ref(), self.input_buffer.as_ref());
 		self.buffer.clear();
 
 		Ok(())
