@@ -172,7 +172,7 @@ impl Renderer {
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 		for (x, c) in command_line.chars().enumerate() {
-			self.draw(x as u16, output.len() as u16 - 1, c);
+			self.draw(x as u16, 23, c);
 		}
 
 		self.graphics.end_frame();
