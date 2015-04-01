@@ -1,4 +1,3 @@
-use std::fmt::Write as FmtWrite;
 use std::io;
 use std::io::prelude::*;
 
@@ -119,11 +118,7 @@ impl Cli {
 			line.push(c.c);
 		}
 
-		let mut command = String::new();
-		write!(&mut command, "> {}", self.input_buffer)
-			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
-
-		self.renderer.render(output.as_ref(), command.as_ref());
+		self.renderer.render(output.as_ref(), self.input_buffer.as_ref());
 		self.buffer.clear();
 
 		Ok(())

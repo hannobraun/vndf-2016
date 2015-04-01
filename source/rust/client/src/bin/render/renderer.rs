@@ -1,5 +1,6 @@
 use std::char;
 use std::collections::HashMap;
+use std::fmt::Write;
 
 use gfx;
 use gfx::traits::*;
@@ -165,10 +166,12 @@ impl Renderer {
 			}
 		}
 
-		let mut command = command.to_string();
-		command.push('_');
+		let mut command_line = String::new();
 
-		for (x, c) in command.chars().enumerate() {
+		write!(&mut command_line, "> {}_", command)
+			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
+
+		for (x, c) in command_line.chars().enumerate() {
 			self.draw(x as u16, output.len() as u16 - 1, c);
 		}
 
