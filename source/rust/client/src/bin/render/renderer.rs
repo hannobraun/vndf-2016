@@ -20,10 +20,7 @@ use font::{
 	Font,
 	Glyph,
 };
-use render::{
-	C,
-	ScreenBuffer,
-};
+use render::ScreenBuffer;
 use texture::Texture;
 
 
@@ -164,23 +161,21 @@ impl Renderer {
 		);
 
 		for (x, y, c) in buffer.iter() {
-			self.draw(x, y, c);
+			self.draw(x, y, c.c);
 		}
 
-		let mut c = C::new();
-		c.c = '_';
 		match buffer.cursor {
-			Some((x, y)) => self.draw(x, y, c),
+			Some((x, y)) => self.draw(x, y, '_'),
 			None         => (),
 		}
 
 		self.graphics.end_frame();
 	}
 
-	fn draw(&mut self, x: u16, y: u16, c: C) {
+	fn draw(&mut self, x: u16, y: u16, c: char) {
 		let offset = Vec2::new(-390.0, 270.0);
 
-		let &(ref glyph, ref texture) = match self.textures.get(&c.c) {
+		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
 		};
