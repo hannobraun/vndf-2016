@@ -20,7 +20,6 @@ use font::{
 	Font,
 	Glyph,
 };
-use render::ScreenBuffer;
 use texture::Texture;
 
 
@@ -149,7 +148,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self, buffer: &ScreenBuffer) {
+	pub fn render(&mut self, output: &[String], cursor: Option<(u16, u16)>) {
 		self.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.25, 1.0],
@@ -160,11 +159,13 @@ impl Renderer {
 			&self.frame,
 		);
 
-		for (x, y, c) in buffer.iter() {
-			self.draw(x, y, c.c);
+		for (y, line) in output.iter().enumerate() {
+			for (x, c) in line.chars().enumerate() {
+				self.draw(x as u16, y as u16, c);
+			}
 		}
 
-		match buffer.cursor {
+		match cursor {
 			Some((x, y)) => self.draw(x, y, '_'),
 			None         => (),
 		}

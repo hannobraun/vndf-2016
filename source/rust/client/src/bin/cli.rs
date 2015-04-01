@@ -115,7 +115,22 @@ impl Cli {
 				self.height -1,
 			));
 
-		self.renderer.render(&self.buffer);
+		let mut output    = Vec::new();
+		let mut line      = String::new();
+		let mut current_y = 0;
+
+		for (_, y, c) in self.buffer.iter() {
+			if y != current_y {
+				current_y = y;
+				output.push(line);
+				line = String::new();
+			}
+
+			line.push(c.c);
+		}
+		output.push(line);
+
+		self.renderer.render(output.as_ref(), self.buffer.cursor);
 		self.buffer.clear();
 
 		Ok(())
