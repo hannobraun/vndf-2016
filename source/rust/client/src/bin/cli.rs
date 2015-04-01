@@ -1,3 +1,4 @@
+use std::fmt::Write as FmtWrite;
 use std::io;
 use std::io::prelude::*;
 
@@ -104,17 +105,6 @@ impl Cli {
 			));
 		}
 
-		try!(write!(
-			&mut self.buffer.writer(0, self.height - 1),
-			"> {}",
-			self.input_buffer,
-		));
-		self.buffer.cursor =
-			Some((
-				(self.input_buffer.chars().count() + 2) as u16,
-				self.height -1,
-			));
-
 		let mut output    = Vec::new();
 		let mut line      = String::new();
 		let mut current_y = 0;
@@ -128,9 +118,12 @@ impl Cli {
 
 			line.push(c.c);
 		}
-		output.push(line);
 
-		self.renderer.render(output.as_ref(), self.buffer.cursor);
+		let mut command = String::new();
+		write!(&mut command, "> {}", self.input_buffer)
+			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
+
+		self.renderer.render(output.as_ref(), command.as_ref());
 		self.buffer.clear();
 
 		Ok(())

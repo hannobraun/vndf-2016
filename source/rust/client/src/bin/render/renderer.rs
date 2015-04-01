@@ -148,7 +148,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self, output: &[String], cursor: Option<(u16, u16)>) {
+	pub fn render(&mut self, output: &[String], command: &str) {
 		self.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.25, 1.0],
@@ -165,9 +165,11 @@ impl Renderer {
 			}
 		}
 
-		match cursor {
-			Some((x, y)) => self.draw(x, y, '_'),
-			None         => (),
+		let mut command = command.to_string();
+		command.push('_');
+
+		for (x, c) in command.chars().enumerate() {
+			self.draw(x as u16, output.len() as u16 - 1, c);
 		}
 
 		self.graphics.end_frame();
