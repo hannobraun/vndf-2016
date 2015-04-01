@@ -10,10 +10,7 @@ use client::interface::{
 	InputEvent,
 	Message,
 };
-use render::{
-	Renderer,
-	ScreenBuffer,
-};
+use render::Renderer;
 use window::Window;
 
 
@@ -21,7 +18,6 @@ pub struct Cli {
 	input_buffer: String,
 	last_message: Message,
 	text        : Vec<String>,
-	buffer      : ScreenBuffer,
 	height      : u16,
 	renderer    : Renderer,
 }
@@ -32,10 +28,7 @@ impl Cli {
 		text.push(format!("VNDF Ship Control System"));
 		text.push(format!("Enter command"));
 
-		let width  = 80;
 		let height = 24;
-
-		let buffer = ScreenBuffer::new(width, height);
 
 		let renderer = Renderer::new(
 			window.new_device(),
@@ -47,15 +40,12 @@ impl Cli {
 			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
-			buffer      : buffer,
 			height      : height,
 			renderer    : renderer,
 		})
 	}
 
 	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
-		self.buffer.cursor = None;
-
 		if frame.message != self.last_message {
 			match frame.message {
 				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
@@ -96,7 +86,6 @@ impl Cli {
 		}
 
 		self.renderer.render(self.text.as_ref(), self.input_buffer.as_ref());
-		self.buffer.clear();
 
 		Ok(())
 	}
