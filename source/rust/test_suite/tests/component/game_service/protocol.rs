@@ -47,17 +47,17 @@ fn it_should_ignore_duplicate_logins() {
 	let mut client       = mock::Client::start(game_service.port());
 
 	client.send(ClientEvent::Login);
-	// TODO(2pO0dr3J): The following call constitutes a race condition. Replace
-	//                 with wait_until.
-	let event = client.expect_event().unwrap();
 
-	let self_id =
-		if let ServerEvent::SelfId(self_id) = event {
-			self_id
+	let mut self_id = String::new();
+	client.wait_until(|event| {
+		if let &Some(ServerEvent::SelfId(ref id)) = event {
+			self_id = id.clone();
+			true
 		}
 		else {
-			panic!("Expected self id");
-		};
+			false
+		}
+	});
 
 	client.send(ClientEvent::Login);
 	client.send(
