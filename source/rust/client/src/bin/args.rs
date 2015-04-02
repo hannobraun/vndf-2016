@@ -1,4 +1,4 @@
-use std::ffi::AsOsStr;
+use std::env;
 use std::net::{
 	SocketAddr,
 	ToSocketAddrs,
@@ -17,11 +17,7 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse<I>(args: I) -> Args
-		where
-			I: Iterator,
-			<I as Iterator>::Item: AsOsStr,
-	{
+	pub fn parse(args: env::Args) -> Args {
 		let mut options = Options::new();
 		options.optflag(
 			"",
