@@ -10,9 +10,6 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
-use glutin::Event::KeyboardInput;
-use glutin::VirtualKeyCode::Escape;
-
 use cli::Cli;
 use client::interface::{
 	Frame,
@@ -67,15 +64,6 @@ impl Interface for CommandLine {
 
 	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
 		try!(self.cli.update(&mut self.events, frame, &self.window));
-
-		for event in self.window.poll_events() {
-			match event {
-				KeyboardInput(_, _, Some(Escape)) =>
-					self.events.push(InputEvent::Quit),
-
-				_ => (),
-			}
-		}
 
 		if self.window.is_closed() {
 			self.events.push(InputEvent::Quit);

@@ -77,6 +77,9 @@ impl Cli {
 					));
 				},
 
+				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Escape)) =>
+					events.push(InputEvent::Quit),
+
 				_ => (), // ignore other events
 			}
 		}
