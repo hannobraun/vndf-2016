@@ -1,4 +1,4 @@
-use std::ffi::AsOsStr;
+use std::env;
 use std::time::Duration;
 
 use getopts::Options;
@@ -11,11 +11,7 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse<I>(cli_args: I) -> Args
-		where
-			I: Iterator,
-			<I as Iterator>::Item: AsOsStr,
-	{
+	pub fn parse(cli_args: env::Args) -> Args {
 		let mut args = Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
