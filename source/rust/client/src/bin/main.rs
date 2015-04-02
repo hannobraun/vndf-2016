@@ -117,7 +117,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 				},
 				InputEvent::Quit => {
 					break 'main;
-				}
+				},
 			}
 		}
 
