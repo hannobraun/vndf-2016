@@ -1,5 +1,4 @@
 use std::env;
-use std::time::Duration;
 
 use getopts::Options;
 
@@ -7,7 +6,7 @@ use getopts::Options;
 pub struct Args {
 	pub port            : u16,
 	pub client_timeout_s: f64,
-	pub sleep_duration  : Duration,
+	pub sleep_ms        : u32,
 }
 
 impl Args {
@@ -15,7 +14,7 @@ impl Args {
 		let mut args = Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
-			sleep_duration  : Duration::milliseconds(500),
+			sleep_ms        : 500,
 		};
 
 		let mut options = Options::new();
@@ -35,7 +34,7 @@ impl Args {
 			"",
 			"sleep-duration",
 			"Length of the sleep in the main loop (in milliseconds)",
-			args.sleep_duration.num_milliseconds().to_string().as_ref(),
+			args.sleep_ms.to_string().as_ref(),
 		);
 
 		let matches = match options.parse(cli_args) {
@@ -51,9 +50,9 @@ impl Args {
 			Some(timeout_s) => timeout_s.parse().unwrap(),
 			None            => args.client_timeout_s,
 		};
-		args.sleep_duration = match matches.opt_str("sleep-duration") {
-			Some(duration) => Duration::milliseconds(duration.parse().unwrap()),
-			None           => args.sleep_duration,
+		args.sleep_ms = match matches.opt_str("sleep-duration") {
+			Some(duration) => duration.parse().unwrap(),
+			None           => args.sleep_ms,
 		};
 
 		args
