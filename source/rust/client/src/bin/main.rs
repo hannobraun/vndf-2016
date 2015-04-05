@@ -29,7 +29,7 @@ mod window;
 
 use std::collections::HashMap;
 use std::env;
-use std::thread::sleep;
+use std::thread::sleep_ms;
 
 use nalgebra::Cast;
 use time::precise_time_s;
@@ -160,6 +160,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		network.send(ClientEvent::Heartbeat);
 
-		sleep(args.sleep_duration);
+		sleep_ms(args.sleep_duration.num_milliseconds() as u32);
 	}
 }
