@@ -1,5 +1,3 @@
-use std::num::Float;
-
 use nalgebra::Vec2;
 
 
