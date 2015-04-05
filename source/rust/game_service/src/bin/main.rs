@@ -1,4 +1,4 @@
-#![feature(collections, std_misc, thread_sleep)]
+#![feature(collections, std_misc)]
 
 
 mod args;
