@@ -55,6 +55,7 @@ impl Texture {
 				&texture,
 				&image_info,
 				data.as_ref(),
+				None,
 			)
 			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
 

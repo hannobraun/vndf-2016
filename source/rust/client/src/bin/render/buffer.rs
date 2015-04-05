@@ -90,7 +90,6 @@ impl ScreenBuffer {
 			return Err(io::Error::new(
 				io::ErrorKind::Other,
 				"Out of bounds",
-				None,
 			))
 		}
 
@@ -153,15 +152,9 @@ impl<'r> BufferWriter<'r> {
 impl<'r> Write for BufferWriter<'r> {
 	fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
 		if self.y >= self.buffer.height() {
-			let detail = format!(
-				"x: {}, y: {}, width: {}, height: {}",
-				self.x, self.y, self.buffer.width(), self.buffer.height(),
-			);
-
 			return Err(io::Error::new(
 				io::ErrorKind::Other,
 				"y coordinate is out of bounds",
-				Some(detail),
 			))
 		}
 
@@ -172,7 +165,6 @@ impl<'r> Write for BufferWriter<'r> {
 				return Err(io::Error::new(
 					io::ErrorKind::Other,
 					"Tried to write invalid UTF-8",
-					None,
 				))
 
 		};
