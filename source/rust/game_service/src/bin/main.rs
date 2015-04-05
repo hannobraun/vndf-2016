@@ -15,7 +15,7 @@ extern crate game_service;
 
 use std::collections::HashMap;
 use std::env;
-use std::thread::sleep;
+use std::thread::sleep_ms;
 
 use nalgebra::Vec2;
 use rand::random;
@@ -193,7 +193,7 @@ fn main() {
 		//                 fixed interval, there's not really a reason to delay
 		//                 other kinds of logic by sleeping. For example,
 		//                 broadcasts can be handled immediately.
-		sleep(args.sleep_duration);
+		sleep_ms(args.sleep_duration.num_milliseconds() as u32);
 	}
 }
 
