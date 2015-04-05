@@ -1,6 +1,3 @@
-#![feature(convert)]
-
-
 extern crate time;
 extern crate rand;
 
