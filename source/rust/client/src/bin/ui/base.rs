@@ -17,7 +17,7 @@ pub trait ProcessInput {
 	fn process_events(&mut self, events: &[InputEvent]);
 }
 
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 pub enum InputEvent {
 	Char(char),
 
@@ -45,7 +45,7 @@ pub trait Update {
 }
 
 
-#[derive(Copy, Eq, PartialEq)]
+#[derive(Clone, Copy, Eq, PartialEq)]
 pub enum Status {
 	Passive,
 	Selected,

@@ -25,7 +25,7 @@ use texture::Texture;
 
 
 #[vertex_format]
-#[derive(Copy)]
+#[derive(Clone, Copy)]
 struct Vertex {
 	pos      : [f32; 2],
 	tex_coord: [f32; 2],
