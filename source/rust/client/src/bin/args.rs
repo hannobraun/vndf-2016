@@ -3,7 +3,6 @@ use std::net::{
 	SocketAddr,
 	ToSocketAddrs,
 };
-use std::time::Duration;
 
 use getopts::Options;
 
@@ -13,7 +12,7 @@ pub struct Args {
 	pub cli           : bool,
 	pub server        : SocketAddr,
 	pub net_timeout_s : f64,
-	pub sleep_duration: Duration,
+	pub sleep_ms      : u32,
 }
 
 impl Args {
@@ -96,7 +95,7 @@ impl Args {
 			cli           : matches.opt_present("cli"),
 			server        : server_address,
 			net_timeout_s : net_timeout_s,
-			sleep_duration: Duration::milliseconds(sleep_duration_ms),
+			sleep_ms      : sleep_duration_ms,
 		}
 	}
 }

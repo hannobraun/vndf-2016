@@ -160,6 +160,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		network.send(ClientEvent::Heartbeat);
 
-		sleep_ms(args.sleep_duration.num_milliseconds() as u32);
+		sleep_ms(args.sleep_ms);
 	}
 }
