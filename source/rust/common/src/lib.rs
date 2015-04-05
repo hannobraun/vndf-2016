@@ -1,4 +1,4 @@
-#![feature(convert, collections)]
+#![feature(collections)]
 
 
 extern crate nalgebra;
