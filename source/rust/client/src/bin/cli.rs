@@ -1,5 +1,6 @@
 use std::io;
 
+use gfx::traits::DeviceExt;
 use glutin::{
 	Event,
 	VirtualKeyCode,
@@ -31,7 +32,7 @@ impl Cli {
 		let height = 24;
 
 		let renderer = Renderer::new(
-			window.new_device(),
+			window.new_device().into_graphics(),
 			window.width(),
 			window.height(),
 		);

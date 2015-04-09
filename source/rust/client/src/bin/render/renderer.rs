@@ -86,9 +86,8 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(device: (gl::Device, gl::Factory), width: u32, height: u32) -> Renderer {
-		let mut graphics = device.into_graphics();
-		let     frame    = gfx::Frame::new(width as u16, height as u16);
+	pub fn new(mut graphics: Graphics, width: u32, height: u32) -> Renderer {
+		let frame = gfx::Frame::new(width as u16, height as u16);
 
 		let program = graphics.factory
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
