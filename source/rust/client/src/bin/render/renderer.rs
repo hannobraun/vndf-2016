@@ -18,6 +18,7 @@ use font::Font;
 use render::{
 	GlyphDrawer,
 	Graphics,
+	Params,
 	Texture,
 };
 
@@ -27,17 +28,6 @@ use render::{
 struct Vertex {
 	pos      : [f32; 2],
 	tex_coord: [f32; 2],
-}
-
-
-#[shader_param]
-struct Params<R: gfx::Resources> {
-	transform: [[f32; 4]; 4],
-
-	width : f32,
-	height: f32,
-
-	color: gfx::shade::TextureParam<R>,
 }
 
 
