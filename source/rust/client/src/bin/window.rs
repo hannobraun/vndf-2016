@@ -41,7 +41,10 @@ impl Window {
 	}
 
 	pub fn create_graphics(&self) -> Graphics {
-		Graphics::new(|s| self.inner.get_proc_address(s))
+		Graphics::new(
+			|s| self.inner.get_proc_address(s),
+			(self.width as u16, self.height as u16),
+		)
 	}
 
 	pub fn is_closed(&self) -> bool {

@@ -18,14 +18,16 @@ pub struct Params<R: gfx::Resources> {
 
 pub struct Graphics {
 	pub graphics: gfx::Graphics<gl::Device, gl::Factory>,
+	pub frame   : gfx::Frame<gl::Resources>,
 }
 
 impl Graphics {
-	pub fn new<F>(get_proc_address: F) -> Graphics
+	pub fn new<F>(get_proc_address: F, size: (u16, u16)) -> Graphics
 		where F: FnMut(&str) -> *const c_void
 	{
 		Graphics {
 			graphics: gl::create(get_proc_address).into_graphics(),
+			frame   : gfx::Frame::new(size.0, size.1),
 		}
 	}
 }

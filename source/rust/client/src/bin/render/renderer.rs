@@ -65,7 +65,6 @@ static FRAGMENT_SRC: &'static [u8] = b"
 
 pub struct Renderer {
 	graphics: Graphics,
-	frame   : gfx::Frame<gl::Resources>,
 	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
 	slice   : gfx::Slice<gl::Resources>,
 
@@ -76,8 +75,6 @@ pub struct Renderer {
 
 impl Renderer {
 	pub fn new(mut graphics: Graphics, width: u32, height: u32) -> Renderer {
-		let frame = gfx::Frame::new(width as u16, height as u16);
-
 		let program = graphics.graphics.factory
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
@@ -127,7 +124,6 @@ impl Renderer {
 
 		Renderer {
 			graphics: graphics,
-			frame   : frame,
 			batch   : batch,
 			slice   : slice,
 
@@ -145,7 +141,7 @@ impl Renderer {
 				stencil: 0,
 			},
 			gfx::COLOR,
-			&self.frame,
+			&self.graphics.frame,
 		);
 
 		for (y, line) in output.iter().enumerate() {
@@ -199,7 +195,7 @@ impl Renderer {
 				&self.batch,
 				&self.slice,
 				&params,
-				&self.frame,
+				&self.graphics.frame,
 			)
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}
