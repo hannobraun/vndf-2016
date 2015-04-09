@@ -1,5 +1,8 @@
+use gfx::traits::*;
 use gfx_device_gl as gl;
 use glutin;
+
+use render::Graphics;
 
 
 pub struct Window {
@@ -39,8 +42,8 @@ impl Window {
 		self.height
 	}
 
-	pub fn create_graphics(&self) -> (gl::Device, gl::Factory) {
-		gl::create(|s| self.inner.get_proc_address(s))
+	pub fn create_graphics(&self) -> Graphics {
+		gl::create(|s| self.inner.get_proc_address(s)).into_graphics()
 	}
 
 	pub fn is_closed(&self) -> bool {
