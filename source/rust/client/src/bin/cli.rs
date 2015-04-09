@@ -32,7 +32,7 @@ impl Cli {
 		let height = 24;
 
 		let renderer = Renderer::new(
-			window.new_device().into_graphics(),
+			window.create_graphics().into_graphics(),
 			window.width(),
 			window.height(),
 		);

@@ -39,7 +39,7 @@ impl Window {
 		self.height
 	}
 
-	pub fn new_device(&self) -> (gl::Device, gl::Factory) {
+	pub fn create_graphics(&self) -> (gl::Device, gl::Factory) {
 		gl::create(|s| self.inner.get_proc_address(s))
 	}
 
