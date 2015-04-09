@@ -20,6 +20,8 @@ use font::{
 };
 use texture::Texture;
 
+use super::Graphics;
+
 
 #[vertex_format]
 #[derive(Clone, Copy)]
@@ -70,9 +72,6 @@ static FRAGMENT_SRC: &'static [u8] = b"
 		gl_FragColor = texture2D(color, v_tex_coord);
 	}
 ";
-
-
-pub type Graphics = gfx::Graphics<gl::Device, gl::Factory>;
 
 
 pub struct Renderer {
