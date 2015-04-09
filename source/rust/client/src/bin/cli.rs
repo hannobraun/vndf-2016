@@ -94,11 +94,7 @@ impl Cli {
 	}
 
 	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> io::Result<()> {
-		// TODO: There has been an incompatible change that will lead to silent
-		//       breakage. See https://github.com/rust-lang/rust/pull/23951
-		//       I'm not using a nightly yet that has that change, but it will
-		//       come sooner or later.
-		let mut splits = line.splitn(1, ' ');
+		let mut splits = line.splitn(2, ' ');
 
 		let command = splits.next().unwrap();
 		let args    = splits.next().unwrap_or("");
