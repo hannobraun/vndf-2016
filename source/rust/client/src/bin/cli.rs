@@ -32,8 +32,7 @@ impl Cli {
 
 		let renderer = Renderer::new(
 			window.create_graphics(),
-			window.width()  as f32,
-			window.height() as f32,
+			(window.width() as f32, window.height() as f32),
 		);
 
 		Ok(Cli {
