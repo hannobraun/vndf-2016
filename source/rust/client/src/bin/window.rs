@@ -1,5 +1,3 @@
-use gfx::traits::*;
-use gfx_device_gl as gl;
 use glutin;
 
 use render::Graphics;
@@ -43,11 +41,7 @@ impl Window {
 	}
 
 	pub fn create_graphics(&self) -> Graphics {
-		let gfx_graphics =
-			gl::create(|s| self.inner.get_proc_address(s)).into_graphics();
-		Graphics {
-			graphics: gfx_graphics,
-		}
+		Graphics::new(|s| self.inner.get_proc_address(s))
 	}
 
 	pub fn is_closed(&self) -> bool {
