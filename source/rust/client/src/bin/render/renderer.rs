@@ -4,10 +4,7 @@ use std::fmt::Write;
 
 use gfx;
 use gfx::traits::*;
-use gfx_device_gl::{
-	GlDevice,
-	GlResources,
-};
+use gfx_device_gl as gl;
 use nalgebra::{
 	Iso3,
 	Mat4,
@@ -76,25 +73,25 @@ static FRAGMENT_SRC: &'static [u8] = b"
 
 
 pub struct Renderer {
-	graphics: gfx::Graphics<GlDevice>,
-	frame   : gfx::Frame<GlResources>,
-	batch   : gfx::batch::CoreBatch<Params<GlResources>>,
-	slice   : gfx::Slice<GlResources>,
+	graphics: gfx::Graphics<gl::Device, gl::Factory>,
+	frame   : gfx::Frame<gl::Resources>,
+	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
+	slice   : gfx::Slice<gl::Resources>,
 
 	transform: Mat4<f32>,
 	textures : HashMap<char, (Glyph, Texture)>,
 }
 
 impl Renderer {
-	pub fn new(device: GlDevice, width: u32, height: u32) -> Renderer {
+	pub fn new(device: (gl::Device, gl::Factory), width: u32, height: u32) -> Renderer {
 		let mut graphics = device.into_graphics();
 		let     frame    = gfx::Frame::new(width as u16, height as u16);
 
-		let program = graphics.device
+		let program = graphics.factory
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
-		let mesh = graphics.device.create_mesh(&[
+		let mesh = graphics.factory.create_mesh(&[
 			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
 			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
@@ -131,7 +128,7 @@ impl Renderer {
 				Some(glyph) => glyph,
 				None        => continue,
 			};
-			match Texture::from_glyph(&glyph, &mut graphics.device) {
+			match Texture::from_glyph(&glyph, &mut graphics.factory) {
 				Some(texture) => { textures.insert(c, (glyph, texture)); },
 				None          => continue,
 			}

@@ -1,15 +1,12 @@
 use gfx;
 use gfx::traits::*;
-use gfx_device_gl::{
-	GlDevice,
-	GlResources,
-};
+use gfx_device_gl as gl;
 
 use font::Glyph;
 
 
-pub type TextureHandle = gfx::TextureHandle<GlResources>;
-pub type SamplerHandle = gfx::SamplerHandle<GlResources>;
+pub type TextureHandle = gfx::TextureHandle<gl::Resources>;
+pub type SamplerHandle = gfx::SamplerHandle<gl::Resources>;
 
 
 pub struct Texture {
@@ -18,7 +15,7 @@ pub struct Texture {
 }
 
 impl Texture {
-	pub fn from_glyph(glyph: &Glyph, device: &mut GlDevice) -> Option<Texture> {
+	pub fn from_glyph(glyph: &Glyph, factory: &mut gl::Factory) -> Option<Texture> {
 		let width  = glyph.size.x as u16;
 		let height = glyph.size.y as u16;
 
@@ -47,10 +44,10 @@ impl Texture {
 		};
 		let image_info = texture_info.to_image_info();
 
-		let texture = device
+		let texture = factory
 			.create_texture(texture_info)
 			.unwrap_or_else(|e| panic!("Error creating texture: {:?}", e));
-		device
+		factory
 			.update_texture(
 				&texture,
 				&image_info,
@@ -59,7 +56,7 @@ impl Texture {
 			)
 			.unwrap_or_else(|e| panic!("Error updating texture: {:?}", e));
 
-		let sampler = device.create_sampler(
+		let sampler = factory.create_sampler(
 			gfx::tex::SamplerInfo::new(
 				gfx::tex::FilterMethod::Bilinear,
 				gfx::tex::WrapMode::Clamp,

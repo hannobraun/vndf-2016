@@ -1,4 +1,4 @@
-use gfx_device_gl::GlDevice;
+use gfx_device_gl as gl;
 use glutin;
 
 
@@ -39,8 +39,8 @@ impl Window {
 		self.height
 	}
 
-	pub fn new_device(&self) -> GlDevice {
-		GlDevice::new(|s| self.inner.get_proc_address(s))
+	pub fn new_device(&self) -> (gl::Device, gl::Factory) {
+		gl::create(|s| self.inner.get_proc_address(s))
 	}
 
 	pub fn is_closed(&self) -> bool {
