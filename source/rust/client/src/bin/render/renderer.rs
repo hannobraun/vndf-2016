@@ -72,7 +72,7 @@ static FRAGMENT_SRC: &'static [u8] = b"
 ";
 
 
-type Graphics = gfx::Graphics<gl::Device, gl::Factory>;
+pub type Graphics = gfx::Graphics<gl::Device, gl::Factory>;
 
 
 pub struct Renderer {
