@@ -30,4 +30,16 @@ impl Graphics {
 			frame   : gfx::Frame::new(size.0, size.1),
 		}
 	}
+
+	pub fn clear(&mut self) {
+		self.graphics.clear(
+			gfx::ClearData {
+				color  : [0.0, 0.0, 0.25, 1.0],
+				depth  : 1.0,
+				stencil: 0,
+			},
+			gfx::COLOR,
+			&self.frame,
+		);
+	}
 }

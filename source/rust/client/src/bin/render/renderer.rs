@@ -130,15 +130,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, output: &[String], command: &str) {
-		self.graphics.graphics.clear(
-			gfx::ClearData {
-				color  : [0.0, 0.0, 0.25, 1.0],
-				depth  : 1.0,
-				stencil: 0,
-			},
-			gfx::COLOR,
-			&self.graphics.frame,
-		);
+		self.graphics.clear();
 
 		for (y, line) in output.iter().enumerate() {
 			for (x, c) in line.chars().enumerate() {
