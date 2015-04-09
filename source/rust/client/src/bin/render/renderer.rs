@@ -74,7 +74,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(mut graphics: Graphics, width: u32, height: u32) -> Renderer {
+	pub fn new(mut graphics: Graphics, width: f32, height: f32) -> Renderer {
 		let program = graphics.graphics.factory
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
@@ -98,7 +98,7 @@ impl Renderer {
 
 		let transform =
 			Ortho3::new(
-				width as f32, height as f32,
+				width, height,
 				-1.0, 1.0,
 			)
 			.to_mat();
