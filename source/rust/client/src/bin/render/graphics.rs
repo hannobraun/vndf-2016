@@ -24,11 +24,8 @@ impl Graphics {
 	pub fn new<F>(get_proc_address: F) -> Graphics
 		where F: FnMut(&str) -> *const c_void
 	{
-		let gfx_graphics = gl::create(get_proc_address)
-			.into_graphics();
-
 		Graphics {
-			graphics: gfx_graphics,
+			graphics: gl::create(get_proc_address).into_graphics(),
 		}
 	}
 }
