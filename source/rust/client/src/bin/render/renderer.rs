@@ -72,8 +72,11 @@ static FRAGMENT_SRC: &'static [u8] = b"
 ";
 
 
+type Graphics = gfx::Graphics<gl::Device, gl::Factory>;
+
+
 pub struct Renderer {
-	graphics: gfx::Graphics<gl::Device, gl::Factory>,
+	graphics: Graphics,
 	frame   : gfx::Frame<gl::Resources>,
 	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
 	slice   : gfx::Slice<gl::Resources>,
