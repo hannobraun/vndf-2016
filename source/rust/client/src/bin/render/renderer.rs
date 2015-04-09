@@ -15,10 +15,10 @@ use nalgebra::{
 };
 
 use font::Font;
-use texture::Texture;
 use render::{
 	GlyphDrawer,
 	Graphics,
+	Texture,
 };
 
 

@@ -7,6 +7,7 @@ mod color;
 mod glyph_drawer;
 mod renderer;
 mod screen;
+mod texture;
 mod util;
 
 
@@ -16,6 +17,7 @@ pub use self::color::Color;
 pub use self::glyph_drawer::GlyphDrawer;
 pub use self::renderer::Renderer;
 pub use self::screen::Screen;
+pub use self::texture::Texture;
 pub use self::util::draw_border;
 
 
