@@ -60,13 +60,10 @@ impl GlyphDrawer {
 			color: texture.to_param(),
 		};
 
-		graphics.graphics
-			.draw_core(
-				&batch,
-				&slice,
-				&params,
-				&graphics.frame,
-			)
-			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
+		graphics.draw(
+			batch,
+			slice,
+			&params,
+		);
 	}
 }

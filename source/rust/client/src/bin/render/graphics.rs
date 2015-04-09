@@ -42,4 +42,22 @@ impl Graphics {
 			&self.frame,
 		);
 	}
+
+	pub fn draw<P>(
+		&mut self,
+		batch : &gfx::batch::CoreBatch<P>,
+		slice : &gfx::Slice<gl::Resources>,
+		params: &P,
+	)
+		where P: gfx::render::shade::ShaderParam<Resources=gl::Resources>,
+	{
+		self.graphics
+			.draw_core(
+				batch,
+				slice,
+				params,
+				&self.frame,
+			)
+			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
+	}
 }
