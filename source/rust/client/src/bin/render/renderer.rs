@@ -16,8 +16,7 @@ use nalgebra::{
 
 use font::Font;
 use texture::Texture;
-
-use super::{
+use render::{
 	GlyphDrawer,
 	Graphics,
 };
