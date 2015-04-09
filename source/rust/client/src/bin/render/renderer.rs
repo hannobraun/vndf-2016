@@ -14,13 +14,13 @@ use nalgebra::{
 	Vec3,
 };
 
-use font::{
-	Font,
-	Glyph,
-};
+use font::Font;
 use texture::Texture;
 
-use super::Graphics;
+use super::{
+	GlyphDrawer,
+	Graphics,
+};
 
 
 #[vertex_format]
@@ -81,7 +81,8 @@ pub struct Renderer {
 	slice   : gfx::Slice<gl::Resources>,
 
 	transform: Mat4<f32>,
-	textures : HashMap<char, (Glyph, Texture)>,
+
+	glyph_drawer: GlyphDrawer,
 }
 
 impl Renderer {
@@ -143,7 +144,7 @@ impl Renderer {
 
 			transform: transform,
 
-			textures: textures,
+			glyph_drawer: GlyphDrawer { textures: textures },
 		}
 	}
 
@@ -179,7 +180,7 @@ impl Renderer {
 	fn draw(&mut self, x: u16, y: u16, c: char) {
 		let offset = Vec2::new(-390.0, 270.0);
 
-		let &(ref glyph, ref texture) = match self.textures.get(&c) {
+		let &(ref glyph, ref texture) = match self.glyph_drawer.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
 		};
