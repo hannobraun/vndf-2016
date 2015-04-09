@@ -88,18 +88,18 @@ impl Renderer {
 	pub fn new(mut graphics: Graphics, width: u32, height: u32) -> Renderer {
 		let frame = gfx::Frame::new(width as u16, height as u16);
 
-		let program = graphics.factory
+		let program = graphics.graphics.factory
 			.link_program(VERTEX_SRC, FRAGMENT_SRC)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
-		let mesh = graphics.factory.create_mesh(&[
+		let mesh = graphics.graphics.factory.create_mesh(&[
 			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
 			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
 			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
 			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
 		]);
 
-		let batch = graphics
+		let batch = graphics.graphics
 			.make_core(
 				&program,
 				&mesh,
@@ -129,7 +129,7 @@ impl Renderer {
 				Some(glyph) => glyph,
 				None        => continue,
 			};
-			match Texture::from_glyph(&glyph, &mut graphics.factory) {
+			match Texture::from_glyph(&glyph, &mut graphics.graphics.factory) {
 				Some(texture) => { textures.insert(c, (glyph, texture)); },
 				None          => continue,
 			}
@@ -148,7 +148,7 @@ impl Renderer {
 	}
 
 	pub fn render(&mut self, output: &[String], command: &str) {
-		self.graphics.clear(
+		self.graphics.graphics.clear(
 			gfx::ClearData {
 				color  : [0.0, 0.0, 0.25, 1.0],
 				depth  : 1.0,
@@ -173,7 +173,7 @@ impl Renderer {
 			self.draw(x as u16, 23, c);
 		}
 
-		self.graphics.end_frame();
+		self.graphics.graphics.end_frame();
 	}
 
 	fn draw(&mut self, x: u16, y: u16, c: char) {
@@ -204,7 +204,7 @@ impl Renderer {
 			color: texture.to_param(),
 		};
 
-		self.graphics
+		self.graphics.graphics
 			.draw_core(
 				&self.batch,
 				&self.slice,

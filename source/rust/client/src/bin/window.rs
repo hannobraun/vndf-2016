@@ -43,7 +43,11 @@ impl Window {
 	}
 
 	pub fn create_graphics(&self) -> Graphics {
-		gl::create(|s| self.inner.get_proc_address(s)).into_graphics()
+		let gfx_graphics =
+			gl::create(|s| self.inner.get_proc_address(s)).into_graphics();
+		Graphics {
+			graphics: gfx_graphics,
+		}
 	}
 
 	pub fn is_closed(&self) -> bool {
