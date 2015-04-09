@@ -6,12 +6,8 @@ use gfx;
 use gfx::traits::*;
 use gfx_device_gl as gl;
 use nalgebra::{
-	Iso3,
 	Mat4,
 	Ortho3,
-	ToHomogeneous,
-	Vec2,
-	Vec3,
 };
 
 use font::Font;
@@ -146,7 +142,15 @@ impl Renderer {
 
 		for (y, line) in output.iter().enumerate() {
 			for (x, c) in line.chars().enumerate() {
-				self.draw(x as u16, y as u16, c);
+				self.glyph_drawer.draw(
+					x as u16,
+					y as u16,
+					c,
+					&self.transform,
+					&mut self.graphics,
+					&self.batch,
+					&self.slice,
+				);
 			}
 		}
 
@@ -156,47 +160,17 @@ impl Renderer {
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 		for (x, c) in command_line.chars().enumerate() {
-			self.draw(x as u16, 23, c);
+			self.glyph_drawer.draw(
+				x as u16,
+				23,
+				c,
+				&self.transform,
+				&mut self.graphics,
+				&self.batch,
+				&self.slice,
+			);
 		}
 
 		self.graphics.graphics.end_frame();
-	}
-
-	fn draw(&mut self, x: u16, y: u16, c: char) {
-		let offset = Vec2::new(-390.0, 270.0);
-
-		let &(ref glyph, ref texture) = match self.glyph_drawer.textures.get(&c) {
-			Some(result) => result,
-			None         => return,
-		};
-
-		let position =
-			offset +
-			(glyph.size * 0.5) +
-			glyph.offset +
-			Vec2::new(9.0 * x as f32, 18.0 * -(y as f32));
-		let translation = Iso3::new(
-			Vec3::new(position.x, position.y, 0.0),
-			Vec3::new(0.0, 0.0, 0.0),
-		);
-		let transform = self.transform * translation.to_homogeneous();
-
-		let params = Params {
-			transform: *transform.as_array(),
-
-			width : glyph.size.x,
-			height: glyph.size.y,
-
-			color: texture.to_param(),
-		};
-
-		self.graphics.graphics
-			.draw_core(
-				&self.batch,
-				&self.slice,
-				&params,
-				&self.graphics.frame,
-			)
-			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}
 }
