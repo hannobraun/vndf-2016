@@ -2,7 +2,6 @@ use std::char;
 use std::collections::HashMap;
 
 use gfx;
-use gfx::traits::*;
 use gfx_device_gl as gl;
 use nalgebra::{
 	Iso3,
@@ -17,6 +16,7 @@ use font::{
 	Glyph,
 };
 use render::base::{
+	Batch,
 	Graphics,
 	Texture,
 };
@@ -70,32 +70,21 @@ pub struct Params<R: gfx::Resources> {
 
 pub struct GlyphDrawer {
 	textures: HashMap<char, (Glyph, Texture)>,
-	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
-	slice   : gfx::Slice<gl::Resources>,
+	batch   : Batch<Params<gl::Resources>>,
 }
 
 impl GlyphDrawer {
 	pub fn new(graphics: &mut Graphics) -> GlyphDrawer {
-		let program = graphics.graphics.factory
-			.link_program(VERTEX_SRC, FRAGMENT_SRC)
-			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
-
-		let mesh = graphics.graphics.factory.create_mesh(&[
-			Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
-			Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
-			Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
-			Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
-		]);
-
-		let batch = graphics.graphics
-			.make_core(
-				&program,
-				&mesh,
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
-
-		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
+		let batch = Batch::new(
+			graphics,
+			VERTEX_SRC, FRAGMENT_SRC,
+			&[
+				Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
+				Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
+				Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
+				Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
+			]
+		);
 
 		let     font     = Font::load(18);
 		let mut textures = HashMap::new();
@@ -119,7 +108,6 @@ impl GlyphDrawer {
 		GlyphDrawer {
 			textures: textures,
 			batch   : batch,
-			slice   : slice,
 		}
 	}
 
@@ -156,8 +144,8 @@ impl GlyphDrawer {
 		};
 
 		graphics.draw(
-			&self.batch,
-			&self.slice,
+			&self.batch.batch,
+			&self.batch.slice,
 			&params,
 		);
 	}
