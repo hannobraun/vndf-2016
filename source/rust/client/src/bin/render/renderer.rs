@@ -29,10 +29,8 @@ impl Renderer {
 		let glyph_drawer = GlyphDrawer::new(&mut graphics);
 
 		Renderer {
-			graphics: graphics,
-
-			transform: transform,
-
+			graphics    : graphics,
+			transform   : transform,
 			glyph_drawer: glyph_drawer,
 		}
 	}
