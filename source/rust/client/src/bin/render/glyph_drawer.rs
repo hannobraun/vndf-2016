@@ -64,10 +64,8 @@ struct Vertex {
 #[shader_param]
 pub struct Params<R: gfx::Resources> {
 	pub transform: [[f32; 4]; 4],
-
-	pub size: [f32; 2],
-
-	pub color: gfx::shade::TextureParam<R>,
+	pub size     : [f32; 2],
+	pub color    : gfx::shade::TextureParam<R>,
 }
 
 
