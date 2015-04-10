@@ -64,9 +64,9 @@ struct Vertex {
 
 
 pub struct GlyphDrawer {
-	pub textures: HashMap<char, (Glyph, Texture)>,
-	pub batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
-	pub slice   : gfx::Slice<gl::Resources>,
+	textures: HashMap<char, (Glyph, Texture)>,
+	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
+	slice   : gfx::Slice<gl::Resources>,
 }
 
 impl GlyphDrawer {
