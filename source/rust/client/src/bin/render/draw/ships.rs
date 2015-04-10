@@ -1,7 +1,6 @@
 use std::marker::PhantomData;
 
 use gfx;
-use gfx::traits::*;
 use gfx_device_gl as gl;
 
 use nalgebra::Mat4;
@@ -55,31 +54,18 @@ pub struct ShipDrawer {
 
 impl ShipDrawer {
 	pub fn new(graphics: &mut Graphics) -> ShipDrawer {
-		let program = graphics.graphics.factory
-			.link_program(VERTEX_SRC, FRAGMENT_SRC)
-			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
-
-		let mesh = graphics.graphics.factory.create_mesh(&[
-			Vertex { pos: [ -0.5, -0.5 ] },
-			Vertex { pos: [  0.5, -0.5 ] },
-			Vertex { pos: [  0.0,  0.5 ] },
-		]);
-
-		let batch = graphics.graphics
-			.make_core(
-				&program,
-				&mesh,
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
-
-		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
+		let batch = Batch::new(
+			graphics,
+			VERTEX_SRC, FRAGMENT_SRC,
+			&[
+				Vertex { pos: [ -0.5, -0.5 ] },
+				Vertex { pos: [  0.5, -0.5 ] },
+				Vertex { pos: [  0.0,  0.5 ] },
+			]
+		);
 
 		ShipDrawer {
-			batch: Batch {
-				batch: batch,
-				slice: slice,
-			},
+			batch: batch,
 		}
 	}
 
