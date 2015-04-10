@@ -30,13 +30,12 @@ static VERTEX_SRC: &'static [u8] = b"
 
 	uniform mat4 transform;
 
-	uniform float width;
-	uniform float height;
+	uniform vec2 size;
 
 	varying vec2 v_tex_coord;
 
 	void main() {
-		gl_Position = transform * vec4(pos.x * width, pos.y * height, 0.0, 1.0);
+		gl_Position = transform * vec4(pos * size, 0.0, 1.0);
 		v_tex_coord = tex_coord;
 	}
 ";
@@ -66,8 +65,7 @@ struct Vertex {
 pub struct Params<R: gfx::Resources> {
 	pub transform: [[f32; 4]; 4],
 
-	pub width : f32,
-	pub height: f32,
+	pub size: [f32; 2],
 
 	pub color: gfx::shade::TextureParam<R>,
 }
@@ -157,8 +155,7 @@ impl GlyphDrawer {
 		let params = Params {
 			transform: *transform.as_array(),
 
-			width : glyph.size.x,
-			height: glyph.size.y,
+			size: *glyph.size.as_array(),
 
 			color: texture.to_param(),
 		};
