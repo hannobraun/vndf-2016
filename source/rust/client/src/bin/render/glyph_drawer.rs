@@ -29,7 +29,6 @@ static VERTEX_SRC: &'static [u8] = b"
 	attribute vec2 tex_coord;
 
 	uniform mat4 transform;
-
 	uniform vec2 size;
 
 	varying vec2 v_tex_coord;
