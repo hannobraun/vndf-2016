@@ -69,6 +69,8 @@ impl Renderer {
 			);
 		}
 
+		self.ship_drawer.draw(&self.transform, &mut self.graphics);
+
 		self.graphics.graphics.end_frame();
 	}
 }
