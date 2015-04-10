@@ -100,7 +100,7 @@ impl GlyphDrawer {
 		let     font     = Font::load(18);
 		let mut textures = HashMap::new();
 
-		// Iterator over all valid values of char.
+		// Iterate over all valid values of char
 		for i in (0 .. 0xd7ff + 1).chain((0xe000 .. 0x10ffff + 1)) {
 			let c = char::from_u32(i).unwrap_or_else(||
 				panic!("Failed to convert u32 to char: {:x}", i)
