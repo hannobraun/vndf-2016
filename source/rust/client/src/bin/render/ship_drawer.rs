@@ -83,10 +83,8 @@ impl ShipDrawer {
 	pub fn draw(&mut self, transform: &Mat4<f32>, graphics: &mut Graphics) {
 		let params = Params {
 			transform: *transform.as_array(),
-
-			size: [30.0, 30.0],
-
-			_marker: PhantomData,
+			size     : [30.0, 30.0],
+			_marker  : PhantomData,
 		};
 
 		graphics.draw(
