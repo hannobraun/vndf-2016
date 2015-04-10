@@ -16,11 +16,10 @@ static VERTEX_SRC: &'static [u8] = b"
 
 	uniform mat4 transform;
 
-	uniform float width;
-	uniform float height;
+	uniform vec2 size;
 
 	void main() {
-		gl_Position = transform * vec4(pos.x * width, pos.y * height, 0.0, 1.0);
+		gl_Position = transform * vec4(pos * size, 0.0, 1.0);
 	}
 ";
 
@@ -44,8 +43,7 @@ struct Vertex {
 pub struct Params<R: gfx::Resources> {
 	pub transform: [[f32; 4]; 4],
 
-	pub width : f32,
-	pub height: f32,
+	pub size: [f32; 2],
 
 	pub _marker: PhantomData<R>,
 }
@@ -89,8 +87,7 @@ impl ShipDrawer {
 		let params = Params {
 			transform: *transform.as_array(),
 
-			width : 30.0,
-			height: 30.0,
+			size: [30.0, 30.0],
 
 			_marker: PhantomData,
 		};
