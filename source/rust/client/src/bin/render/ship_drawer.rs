@@ -15,7 +15,6 @@ static VERTEX_SRC: &'static [u8] = b"
 	attribute vec2 pos;
 
 	uniform mat4 transform;
-
 	uniform vec2 size;
 
 	void main() {
