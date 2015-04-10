@@ -18,7 +18,6 @@ use font::{
 };
 use render::{
 	Graphics,
-	Params,
 	Texture,
 };
 
@@ -60,6 +59,17 @@ static FRAGMENT_SRC: &'static [u8] = b"
 struct Vertex {
 	pos      : [f32; 2],
 	tex_coord: [f32; 2],
+}
+
+
+#[shader_param]
+pub struct Params<R: gfx::Resources> {
+	pub transform: [[f32; 4]; 4],
+
+	pub width : f32,
+	pub height: f32,
+
+	pub color: gfx::shade::TextureParam<R>,
 }
 
 

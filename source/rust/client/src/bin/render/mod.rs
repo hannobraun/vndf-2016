@@ -13,7 +13,6 @@ pub use self::buffer::ScreenBuffer;
 pub use self::color::Color;
 pub use self::glyph_drawer::GlyphDrawer;
 pub use self::graphics::Graphics;
-pub use self::graphics::Params;
 pub use self::renderer::Renderer;
 pub use self::screen::Screen;
 pub use self::texture::Texture;
