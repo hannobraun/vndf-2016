@@ -20,6 +20,8 @@ use render::{
 
 pub struct GlyphDrawer {
 	pub textures: HashMap<char, (Glyph, Texture)>,
+	pub batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
+	pub slice   : gfx::Slice<gl::Resources>,
 }
 
 impl GlyphDrawer {
@@ -30,8 +32,6 @@ impl GlyphDrawer {
 		c        : char,
 		transform: &Mat4<f32>,
 		graphics : &mut Graphics,
-		batch    : &gfx::batch::CoreBatch<Params<gl::Resources>>,
-		slice    : &gfx::Slice<gl::Resources>,
 	) {
 		let offset = Vec2::new(-390.0, 270.0);
 
@@ -61,8 +61,8 @@ impl GlyphDrawer {
 		};
 
 		graphics.draw(
-			batch,
-			slice,
+			&self.batch,
+			&self.slice,
 			&params,
 		);
 	}

@@ -4,7 +4,6 @@ use std::fmt::Write;
 
 use gfx;
 use gfx::traits::*;
-use gfx_device_gl as gl;
 use nalgebra::{
 	Mat4,
 	Ortho3,
@@ -14,7 +13,6 @@ use font::Font;
 use render::{
 	GlyphDrawer,
 	Graphics,
-	Params,
 	Texture,
 };
 
@@ -61,8 +59,6 @@ static FRAGMENT_SRC: &'static [u8] = b"
 
 pub struct Renderer {
 	graphics: Graphics,
-	batch   : gfx::batch::CoreBatch<Params<gl::Resources>>,
-	slice   : gfx::Slice<gl::Resources>,
 
 	transform: Mat4<f32>,
 
@@ -120,12 +116,14 @@ impl Renderer {
 
 		Renderer {
 			graphics: graphics,
-			batch   : batch,
-			slice   : slice,
 
 			transform: transform,
 
-			glyph_drawer: GlyphDrawer { textures: textures },
+			glyph_drawer: GlyphDrawer {
+				textures: textures,
+				batch   : batch,
+				slice   : slice,
+			},
 		}
 	}
 
@@ -140,8 +138,6 @@ impl Renderer {
 					c,
 					&self.transform,
 					&mut self.graphics,
-					&self.batch,
-					&self.slice,
 				);
 			}
 		}
@@ -158,8 +154,6 @@ impl Renderer {
 				c,
 				&self.transform,
 				&mut self.graphics,
-				&self.batch,
-				&self.slice,
 			);
 		}
 
