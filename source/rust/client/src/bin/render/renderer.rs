@@ -8,6 +8,7 @@ use nalgebra::{
 use render::{
 	GlyphDrawer,
 	Graphics,
+	ShipDrawer,
 };
 
 
@@ -15,6 +16,7 @@ pub struct Renderer {
 	graphics    : Graphics,
 	transform   : Mat4<f32>,
 	glyph_drawer: GlyphDrawer,
+	ship_drawer : ShipDrawer,
 }
 
 impl Renderer {
@@ -27,11 +29,13 @@ impl Renderer {
 			.to_mat();
 
 		let glyph_drawer = GlyphDrawer::new(&mut graphics);
+		let ship_drawer  = ShipDrawer::new(&mut graphics);
 
 		Renderer {
 			graphics    : graphics,
 			transform   : transform,
 			glyph_drawer: glyph_drawer,
+			ship_drawer : ship_drawer,
 		}
 	}
 
