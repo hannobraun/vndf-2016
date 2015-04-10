@@ -77,8 +77,7 @@ impl ShipDrawer {
 		};
 
 		graphics.draw(
-			&self.batch.batch,
-			&self.batch.slice,
+			&self.batch,
 			&params,
 		);
 	}

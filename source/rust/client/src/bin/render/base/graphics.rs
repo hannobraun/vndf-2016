@@ -4,6 +4,8 @@ use gfx;
 use gfx::traits::*;
 use gfx_device_gl as gl;
 
+use render::base::Batch;
+
 
 pub struct Graphics {
 	pub graphics: gfx::Graphics<gl::Device, gl::Factory>,
@@ -34,16 +36,15 @@ impl Graphics {
 
 	pub fn draw<P>(
 		&mut self,
-		batch : &gfx::batch::CoreBatch<P>,
-		slice : &gfx::Slice<gl::Resources>,
+		batch : &Batch<P>,
 		params: &P,
 	)
 		where P: gfx::render::shade::ShaderParam<Resources=gl::Resources>,
 	{
 		self.graphics
 			.draw_core(
-				batch,
-				slice,
+				&batch.batch,
+				&batch.slice,
 				params,
 				&self.frame,
 			)
