@@ -16,7 +16,7 @@ use font::{
 	Font,
 	Glyph,
 };
-use render::{
+use render::base::{
 	Graphics,
 	Texture,
 };

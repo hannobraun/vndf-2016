@@ -6,7 +6,7 @@ use gfx_device_gl as gl;
 
 use nalgebra::Mat4;
 
-use render::Graphics;
+use render::base::Graphics;
 
 
 static VERTEX_SRC: &'static [u8] = b"

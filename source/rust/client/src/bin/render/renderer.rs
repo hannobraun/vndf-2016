@@ -7,9 +7,9 @@ use nalgebra::{
 
 use render::{
 	GlyphDrawer,
-	Graphics,
 	ShipDrawer,
 };
+use render::base::Graphics;
 
 
 pub struct Renderer {
