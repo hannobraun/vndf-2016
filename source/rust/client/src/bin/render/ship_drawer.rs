@@ -47,7 +47,6 @@ pub struct Params<R: gfx::Resources> {
 }
 
 
-
 pub struct ShipDrawer {
 	batch: gfx::batch::CoreBatch<Params<gl::Resources>>,
 	slice: gfx::Slice<gl::Resources>,
