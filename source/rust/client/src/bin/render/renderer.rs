@@ -12,10 +12,8 @@ use render::{
 
 
 pub struct Renderer {
-	graphics: Graphics,
-
-	transform: Mat4<f32>,
-
+	graphics    : Graphics,
+	transform   : Mat4<f32>,
 	glyph_drawer: GlyphDrawer,
 }
 
