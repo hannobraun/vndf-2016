@@ -6,7 +6,10 @@ use gfx_device_gl as gl;
 
 use nalgebra::Mat4;
 
-use render::base::Graphics;
+use render::base::{
+	Batch,
+	Graphics,
+};
 
 
 static VERTEX_SRC: &'static [u8] = b"
@@ -47,8 +50,7 @@ pub struct Params<R: gfx::Resources> {
 
 
 pub struct ShipDrawer {
-	batch: gfx::batch::CoreBatch<Params<gl::Resources>>,
-	slice: gfx::Slice<gl::Resources>,
+	batch: Batch<Params<gl::Resources>>,
 }
 
 impl ShipDrawer {
@@ -74,8 +76,10 @@ impl ShipDrawer {
 		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
 
 		ShipDrawer {
-			batch: batch,
-			slice: slice,
+			batch: Batch {
+				batch: batch,
+				slice: slice,
+			},
 		}
 	}
 
@@ -87,8 +91,8 @@ impl ShipDrawer {
 		};
 
 		graphics.draw(
-			&self.batch,
-			&self.slice,
+			&self.batch.batch,
+			&self.batch.slice,
 			&params,
 		);
 	}
