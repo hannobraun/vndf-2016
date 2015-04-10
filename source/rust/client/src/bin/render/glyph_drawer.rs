@@ -154,10 +154,8 @@ impl GlyphDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-
-			size: *glyph.size.as_array(),
-
-			color: texture.to_param(),
+			size     : *glyph.size.as_array(),
+			color    : texture.to_param(),
 		};
 
 		graphics.draw(
