@@ -12,8 +12,8 @@ use nalgebra::{
 };
 
 use font::{
+	self,
 	Font,
-	Glyph,
 };
 use render::base::{
 	Batch,
@@ -69,7 +69,7 @@ pub struct Params<R: gfx::Resources> {
 
 
 pub struct GlyphDrawer {
-	textures : HashMap<char, (Glyph, Texture)>,
+	textures : HashMap<char, (font::Glyph, Texture)>,
 	batch    : Batch<Params<gl::Resources>>,
 	transform: Mat4<f32>,
 }
