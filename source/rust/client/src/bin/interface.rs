@@ -15,32 +15,12 @@ use client::interface::{
 	Frame,
 	InputEvent,
 };
-use ui::Ui;
 use window::Window;
 
 
 pub trait Interface {
 	fn new() -> io::Result<Self>;
 	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
-}
-
-
-pub struct Player {
-	ui: Ui,
-}
-
-impl Interface for Player {
-	fn new() -> io::Result<Player> {
-		let ui = try!(Ui::new());
-
-		Ok(Player {
-			ui: ui,
-		})
-	}
-
-	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-		self.ui.update(frame)
-	}
 }
 
 

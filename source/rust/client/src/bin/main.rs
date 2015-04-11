@@ -21,8 +21,6 @@ mod cli;
 mod font;
 mod interface;
 mod render;
-mod termios;
-mod ui;
 mod window;
 
 
