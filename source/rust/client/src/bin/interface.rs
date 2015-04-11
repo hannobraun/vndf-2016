@@ -24,18 +24,18 @@ pub trait Interface {
 }
 
 
-pub struct CommandLine {
+pub struct Player {
 	events: Vec<InputEvent>,
 	cli   : Cli,
 	window: Window,
 }
 
-impl Interface for CommandLine {
-	fn new() -> io::Result<CommandLine> {
+impl Interface for Player {
+	fn new() -> io::Result<Player> {
 		let window = Window::new();
 		let cli    = try!(Cli::new(&window));
 
-		Ok(CommandLine {
+		Ok(Player {
 			events: Vec::new(),
 			cli   : cli,
 			window: window,

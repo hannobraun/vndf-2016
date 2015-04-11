@@ -52,7 +52,7 @@ fn main() {
 		run(args, init_interface::<interface::Headless>())
 	}
 	else {
-		run(args, init_interface::<interface::CommandLine>())
+		run(args, init_interface::<interface::Player>())
 	}
 }
 
