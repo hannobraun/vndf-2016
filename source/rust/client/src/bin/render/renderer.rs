@@ -1,9 +1,6 @@
 use std::fmt::Write;
 
-use nalgebra::{
-	Mat4,
-	Ortho3,
-};
+use nalgebra::Ortho3;
 
 use render::draw::{
 	GlyphDrawer,
@@ -14,7 +11,6 @@ use render::base::Graphics;
 
 pub struct Renderer {
 	graphics    : Graphics,
-	transform   : Mat4<f32>,
 	glyph_drawer: GlyphDrawer,
 	ship_drawer : ShipDrawer,
 }
@@ -33,7 +29,6 @@ impl Renderer {
 
 		Renderer {
 			graphics    : graphics,
-			transform   : transform,
 			glyph_drawer: glyph_drawer,
 			ship_drawer : ship_drawer,
 		}
