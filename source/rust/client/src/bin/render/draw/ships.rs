@@ -49,11 +49,12 @@ pub struct Params<R: gfx::Resources> {
 
 
 pub struct ShipDrawer {
-	batch: Batch<Params<gl::Resources>>,
+	batch    : Batch<Params<gl::Resources>>,
+	transform: Mat4<f32>,
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -65,13 +66,14 @@ impl ShipDrawer {
 		);
 
 		ShipDrawer {
-			batch: batch,
+			batch    : batch,
+			transform: transform,
 		}
 	}
 
-	pub fn draw(&mut self, transform: &Mat4<f32>, graphics: &mut Graphics) {
+	pub fn draw(&mut self, graphics: &mut Graphics) {
 		let params = Params {
-			transform: *transform.as_array(),
+			transform: *self.transform.as_array(),
 			size     : [30.0, 30.0],
 			_marker  : PhantomData,
 		};

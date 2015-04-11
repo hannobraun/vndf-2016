@@ -29,7 +29,7 @@ impl Renderer {
 			.to_mat();
 
 		let glyph_drawer = GlyphDrawer::new(&mut graphics);
-		let ship_drawer  = ShipDrawer::new(&mut graphics);
+		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
 
 		Renderer {
 			graphics    : graphics,
@@ -69,7 +69,7 @@ impl Renderer {
 			);
 		}
 
-		self.ship_drawer.draw(&self.transform, &mut self.graphics);
+		self.ship_drawer.draw(&mut self.graphics);
 
 		self.graphics.graphics.end_frame();
 	}
