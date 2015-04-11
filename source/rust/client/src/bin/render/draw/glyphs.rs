@@ -115,10 +115,10 @@ impl GlyphDrawer {
 
 	pub fn draw(
 		&mut self,
-		x        : u16,
-		y        : u16,
-		c        : char,
-		graphics : &mut Graphics,
+		x       : u16,
+		y       : u16,
+		c       : char,
+		graphics: &mut Graphics,
 	) {
 		let offset = Vec2::new(-390.0, 270.0);
 
