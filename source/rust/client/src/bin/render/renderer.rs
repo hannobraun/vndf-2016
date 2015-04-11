@@ -28,7 +28,7 @@ impl Renderer {
 			)
 			.to_mat();
 
-		let glyph_drawer = GlyphDrawer::new(&mut graphics);
+		let glyph_drawer = GlyphDrawer::new(&mut graphics, transform);
 		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
 
 		Renderer {
@@ -48,7 +48,6 @@ impl Renderer {
 					x as u16,
 					y as u16,
 					c,
-					&self.transform,
 					&mut self.graphics,
 				);
 			}
@@ -64,7 +63,6 @@ impl Renderer {
 				x as u16,
 				23,
 				c,
-				&self.transform,
 				&mut self.graphics,
 			);
 		}

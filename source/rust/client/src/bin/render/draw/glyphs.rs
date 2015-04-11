@@ -69,12 +69,13 @@ pub struct Params<R: gfx::Resources> {
 
 
 pub struct GlyphDrawer {
-	textures: HashMap<char, (Glyph, Texture)>,
-	batch   : Batch<Params<gl::Resources>>,
+	textures : HashMap<char, (Glyph, Texture)>,
+	batch    : Batch<Params<gl::Resources>>,
+	transform: Mat4<f32>,
 }
 
 impl GlyphDrawer {
-	pub fn new(graphics: &mut Graphics) -> GlyphDrawer {
+	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> GlyphDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -106,8 +107,9 @@ impl GlyphDrawer {
 		}
 
 		GlyphDrawer {
-			textures: textures,
-			batch   : batch,
+			textures : textures,
+			batch    : batch,
+			transform: transform,
 		}
 	}
 
@@ -116,7 +118,6 @@ impl GlyphDrawer {
 		x        : u16,
 		y        : u16,
 		c        : char,
-		transform: &Mat4<f32>,
 		graphics : &mut Graphics,
 	) {
 		let offset = Vec2::new(-390.0, 270.0);
@@ -135,7 +136,7 @@ impl GlyphDrawer {
 			Vec3::new(position.x, position.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
-		let transform = *transform * translation.to_homogeneous();
+		let transform = self.transform * translation.to_homogeneous();
 
 		let params = Params {
 			transform: *transform.as_array(),
