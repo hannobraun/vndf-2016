@@ -1,10 +1,8 @@
 use std::fmt::Write;
 
-use nalgebra::{
-	Ortho3,
-	Vec2,
-};
+use nalgebra::Ortho3;
 
+use client::interface::Frame;
 use render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
@@ -37,7 +35,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self, output: &[String], command: &str) {
+	pub fn render(&mut self, output: &[String], command: &str, frame: &Frame) {
 		self.graphics.clear();
 
 		for (y, line) in output.iter().enumerate() {
@@ -65,7 +63,7 @@ impl Renderer {
 			);
 		}
 
-		self.ship_drawer.draw(&mut self.graphics, &Vec2::new(0.0, 0.0));
+		self.ship_drawer.draw(&mut self.graphics, &frame.position);
 
 		self.graphics.graphics.end_frame();
 	}

@@ -87,7 +87,11 @@ impl Cli {
 			self.text.remove(0);
 		}
 
-		self.renderer.render(self.text.as_ref(), self.input_buffer.as_ref());
+		self.renderer.render(
+			self.text.as_ref(),
+			self.input_buffer.as_ref(),
+			frame,
+		);
 
 		Ok(())
 	}
