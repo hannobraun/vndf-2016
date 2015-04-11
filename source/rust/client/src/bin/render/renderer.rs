@@ -1,6 +1,9 @@
 use std::fmt::Write;
 
-use nalgebra::Ortho3;
+use nalgebra::{
+	Ortho3,
+	Vec2,
+};
 
 use render::draw::{
 	GlyphDrawer,
@@ -62,7 +65,7 @@ impl Renderer {
 			);
 		}
 
-		self.ship_drawer.draw(&mut self.graphics);
+		self.ship_drawer.draw(&mut self.graphics, &Vec2::new(0.0, 0.0));
 
 		self.graphics.graphics.end_frame();
 	}
