@@ -69,8 +69,213 @@
 					<h1>The Best of Both Worlds</h1>
 
 					<p>
-						...
+						For a single person with limited time and resources, a
+						project like <em>Von Neumann Defense Force</em> is a lot
+						of work. For that reason, I always try to think of ideas
+						that can ease the workload and help me arrive at my
+						eventual goal faster and more efficiently. Once in a
+						while, that thinking leads to a radical shift in the
+						direction of development.
 					</p>
+
+					<p>
+						A few months ago, one of these shifts happened: I
+						decided to do away with the 3D interface I was working
+						on at the time and shift to a mostly text-based
+						interface that would only use graphics sparingly, where
+						they are most needed.
+					</p>
+
+					<p>
+						While I still think this was the right decision at the
+						time, I've had some new insights since then that gave me
+						an idea for a better approach to the user interface.
+						Before I present that new approach to you, let me tell
+						you about my insights.
+					</p>
+
+					<section>
+						<h1>
+							Insight 1: I need to let go of 3D gameplay (for
+							now)
+						</h1>
+
+						<p>
+							Even after switching away from 3D graphics, I still
+							held on to the idea of 3D gameplay. <em>Von Neumann
+							Defense Force</em> is going to be a game based on
+							realistic orbital mechanics. I strongly believe that
+							for this kind of game a third dimension adds a lot
+							of tactical possibilities. Turning this into a 2D
+							game would take away a lot of depth.
+						</p>
+
+						<p>
+							Still, there are more important priorities. Getting
+							out a playable prototype is more important than
+							anything else. Once I have that and can get some
+							momentum going, I can keep improving the game and
+							add all kinds of crazy features.
+						</p>
+
+						<p>
+							In the end, I realized that switching to a far less
+							attractive approach to the user interface while
+							holding on to a feature (3D gameplay) that isn't
+							even making good use of that interface doesn't make
+							any sense. I'm going to have to let it go for now.
+						</p>
+					</section>
+
+					<section>
+						<h1>
+							Insight 2: Rendering simple 2D graphics is
+							relatively easy
+						</h1>
+
+						<p>
+							Once I had realized I was going for 2D gameplay (at
+							least initially), I had another realization: 2D
+							graphics are easy, as long as you keep them simple.
+							What can make them complicated is building a
+							non-trivial user interface on top of them.
+						</p>
+					</section>
+
+					<section>
+						<h1>Putting 1+1 together: A hybrid interface</h1>
+
+						<p>
+							From these two insights came another thought: What
+							if I could somehow make use of simple 2D graphics,
+							while handling complex user interaction in some
+							other way? Then it dawned on me: I could use
+							traditional 2D graphics to render information that
+							lends itself to it, like the positions of player's
+							ships, while using a text-based interface for all
+							other interaction with the user.
+						</p>
+
+						<p>
+							This approach allows me to quickly prototype new
+							features with the text-based interface and migrate
+							features that work out to the graphical interface
+							later. Even more, if the text-based interface
+							becomes more of a trial ground for features that are
+							in development instead of the primary mode of
+							interaction with the user, I can radically simplify
+							it, saving a lot of work on that front.
+						</p>
+
+						<p>
+							So what does that look like, exactly? Well, most of
+							the screen is used for displaying graphical
+							information, like other player's ships. In addition,
+							there's a command-line interface in the corner that
+							enables you to get more information about the game
+							state and give commands to your ship. For example,
+							you could type something like
+							<code>list-broadcasts</code> to see a list of all
+							communications sent by other players.
+						</p>
+
+						<p>
+							Here's a screenshot from the current development
+							version:
+						</p>
+
+						<a
+							class="image"
+							href="/news/newsletter-april-2015/screenshot-new-interface.png"
+							target="_blank">
+							<img
+								src="/news/newsletter-april-2015/screenshot-new-interface.png"
+								alt="Demonstration of the new user interface approach" />
+							<p>(click to enlarge)</p>
+						</a>
+					</section>
+
+					<section>
+						<h1>Conclusion: Project management is hard</h1>
+
+						<p>
+							While I think it's great that I found a new approach
+							that will, in my opinion, both save work and
+							increase the game's visual attractiveness, this also
+							demonstrates a problem: I can't keep changing
+							directions endlessly. Even if every new approach is
+							an improvement long-term, it makes a lot of previous
+							work useless and puts me back significantly
+							short-term. I think this is demonstrated by the fact
+							that I didn't make a lot of forward progress since I
+							started the newsletter last year. In fact, the game
+							made steps backwards and is looking significantly
+							less developed on the surface.
+						</p>
+
+						<p>
+							I think this underlying problem is caused by two
+							main failings on my part. The first is being
+							overoptimistic. When I started this newsletter in
+							July last year, development had been going really
+							well for a while. I thought it would just keep going
+							like this, and that I would make a great deal of
+							progress in no time.
+						</p>
+
+						<p>
+							Of course, that's not how things worked out. I have
+							other things going on in my life, and the time and
+							energy I can invest into <em>Von Neumann Defense
+							Force</em> varies considerably. I really think I
+							have learned my lesson here and will be far more
+							cautious in my decisions the future.
+						</p>
+
+						<p>
+							The second failure was being too sure about my
+							decisions instead of taking them for what they were:
+							Ideas that showed promise but needed to be proven.
+						</p>
+
+						<p>
+							Both when I
+							<a
+								href="/news/newsletter-october-2014"
+								target="_blank">
+								switched to 3D graphics</a>
+							and when I
+							<a
+								href="/news/newsletter-january-2015"
+								target="_blank">
+								scrapped that and introduced a text-based
+								interface</a>,
+							I thought this was it. This was going to be the new
+							direction for the foreseeable future. Both times I
+							went in too deep and did a lot of work that was
+							later thrown away.
+						</p>
+
+						<p>
+							I think these situations could have been handled
+							more efficiently if I could have seen those ideas
+							for what they were: Prototypes that had to be
+							validated or invalidated with the least possible
+							amount of work.
+						</p>
+
+						<p>
+							I think this is a trickier problem to fix, as it can
+							be difficult to step back and take an objective look
+							when you're right in the middle of things. None the
+							less, I'll try and do my best here. And while I
+							certainly hope that this is the last word on the
+							user interface for a while, a lot of new challenges
+							will be coming up in the future, giving me ample
+							opportunity to show what I've learned from my past
+							mistakes.
+						</p>
+					</section>
 				</section>
 
 				<section>
