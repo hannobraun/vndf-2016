@@ -30,8 +30,8 @@ This document only lists the goals of those measures.
 
 ### Webcasts
 
-* Regularly the game with hand-picked testers and record it. The videos can be
-  published on YouTube.
+* Regularly play the game with hand-picked testers and record it. The videos can
+  be published on YouTube.
 * The goal is to further engage active fans and draw more people to the website
   and mailing list.
 * This requires interesting game mechanics, preferably interesting gameplay.
