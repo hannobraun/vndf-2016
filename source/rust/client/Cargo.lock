@@ -118,7 +118,7 @@ dependencies = [
 [[package]]
 name = "gfx_macros"
 version = "0.1.10"
-source = "git+https://github.com/gfx-rs/gfx_macros.git#22981219e9f85114ec81f63393e5165a24d46875"
+source = "git+https://github.com/gfx-rs/gfx_macros.git#aebce705dfa63bfe1868aeda5eb4ca70fae57649"
 
 [[package]]
 name = "gl_common"
