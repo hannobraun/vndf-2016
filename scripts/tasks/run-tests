@@ -6,5 +6,7 @@ export PATH=$RUST_PATH:$PATH
 export RUST_TEST_TASKS=1
 
 ./scripts/tasks/build-vndf &&
-cd $TEST_SUITE_SOURCE
-cargo test
+(
+	export RUST_LOG=vndf_game_service=info
+	cd $TEST_SUITE_SOURCE
+	cargo test)
