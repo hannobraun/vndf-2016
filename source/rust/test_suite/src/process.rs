@@ -64,6 +64,17 @@ impl Process {
 		}
 	}
 
+	pub fn read_stderr_line(&mut self) -> String {
+		let mut line = String::new();
+		match self.stderr.read_line(&mut line) {
+			Ok(_) => {
+				self.stdout_buf.extend(line.chars());
+				line
+			},
+			Err(error) => panic!("Failed to read line from stdout: {}", error)
+		}
+	}
+
 	pub fn write_stdin(&mut self, input: &str) {
 		if let Err(error) = write!(&mut self.stdin, "{}", input) {
 			panic!("Failed to write to stdin: {}", error);

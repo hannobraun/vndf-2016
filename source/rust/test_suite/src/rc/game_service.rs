@@ -19,7 +19,7 @@ impl GameService {
 				format!("--sleep-duration={}", 5).as_ref(),
 			]
 		);
-		process.read_stdout_line(); // Make sure it's ready
+		process.read_stderr_line(); // Make sure it's ready
 
 		GameService {
 			port    : port,
