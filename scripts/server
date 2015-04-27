@@ -4,5 +4,6 @@ source project.conf
 
 ./scripts/tasks/build-server &&
 (
+	export RUST_LOG=trace
 	cd source
 	$GAME_SERVICE_BINARY)
