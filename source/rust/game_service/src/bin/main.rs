@@ -1,10 +1,14 @@
 #![feature(collections)]
+// #![cfg(log_level = "trace")]
 
 
 mod args;
 
 
+extern crate env_logger;
 extern crate getopts;
+#[macro_use]
+extern crate log;
 extern crate nalgebra;
 extern crate rand;
 extern crate time;
@@ -41,13 +45,17 @@ struct Client {
 
 
 fn main() {
+	env_logger::init().unwrap_or_else(|e|
+		panic!("Error initializing logger: {}", e)
+	);
+
 	let args = Args::parse(env::args());
 
 	let mut broadcasts = HashMap::new();
 	let mut clients    = HashMap::new();
 	let mut network    = Network::new(args.port);
 
-	print!("Listening on port {}\n", args.port);
+	info!("Listening on port {}\n", args.port);
 
 	let mut incoming_events = Vec::new();
 	let mut outgoing_events = Vec::new();
@@ -61,7 +69,7 @@ fn main() {
 			match event {
 				ClientEvent::Login => {
 					if clients.contains_key(&address) {
-						print!("Ignoring Login: {}\n", address);
+						debug!("Ignoring Login: {}\n", address);
 					}
 					else {
 						let client = Client {
@@ -77,12 +85,12 @@ fn main() {
 							&[login],
 						);
 
-						print!("Login: {}, {:?}\n", address, client);
+						info!("Login: {}, {:?}\n", address, client);
 						clients.insert(address, client);
 					}
 				},
 				ClientEvent::Heartbeat => {
-					print!(
+					debug!(
 						"Heartbeat: {} (time: {})\n",
 						address, precise_time_s(),
 					);
@@ -99,11 +107,11 @@ fn main() {
 								message: message,
 							};
 
-							print!("Broadcast: {}, {:?}\n", address, broadcast);
+							info!("Broadcast: {}, {:?}\n", address, broadcast);
 							broadcasts.insert(address, broadcast);
 						},
 						None => {
-							print!("Ignoring broadcast: {}\n", address);
+							debug!("Ignoring broadcast: {}\n", address);
 							continue; // invalid, ignore
 						},
 					}
@@ -111,14 +119,14 @@ fn main() {
 				ClientEvent::StopBroadcast => {
 					match clients.get_mut(&address) {
 						Some(client) => {
-							print!("Stop Broadcast: {}\n", address);
+							info!("Stop Broadcast: {}\n", address);
 							broadcasts.remove(&address);
 							outgoing_events.push(
 								ServerEvent::StopBroadcast(client.id.clone())
 							);
 						},
 						None => {
-							print!("Ignoring Stop Broadcast: {}\n", address);
+							debug!("Ignoring Stop Broadcast: {}\n", address);
 							continue; // invalid, ignore
 						},
 					}
@@ -146,7 +154,7 @@ fn main() {
 			}
 		}
 		for (address, last_active_s, now_s) in to_remove.drain() {
-			print!(
+			info!(
 				"Removing {} (last active: {}, time of removal: {})\n",
 				address, last_active_s, now_s,
 			);

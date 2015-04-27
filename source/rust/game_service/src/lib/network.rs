@@ -41,7 +41,7 @@ impl Network {
 
 			if let Err(error) = recipient.send(events.iter()) {
 				self.to_remove.push(address);
-				print!("Error sending event to {}: {}\n", address, error)
+				debug!("Error sending event to {}: {}\n", address, error)
 			}
 		}
 	}
