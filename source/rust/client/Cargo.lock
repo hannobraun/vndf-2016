@@ -29,6 +29,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "common"
 version = "0.0.1"
 dependencies = [
+ "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "nalgebra 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

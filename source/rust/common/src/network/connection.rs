@@ -58,10 +58,16 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		};
 
 		spawn(move || {
+			let address = stream.peer_addr().unwrap_or_else(|e|
+				panic!("Error determining peer address: {}", e)
+			);
+
 			let mut reader = BufReader::new(stream);
 			let mut line   = String::new();
 
 			loop {
+				trace!("Start connection loop iteration: {}", address);
+
 				line.clear();
 				if let Err(error) = reader.read_line(&mut line) {
 					print!("Error reading line: {}\n", error);

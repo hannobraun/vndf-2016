@@ -40,6 +40,8 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 			}
 
 			loop {
+				trace!("Start acceptor loop iteration");
+
 				let (stream, address) = match listener.accept() {
 					Ok(result) => result,
 					Err(error) => panic!("Error accepting stream: {}", error),
