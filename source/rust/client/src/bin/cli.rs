@@ -124,6 +124,9 @@ impl Cli {
 					frame.velocity.x, frame.velocity.y,
 				));
 			},
+			"comm-data" => {
+				self.text.push(format!("Your Comm Id: {}", frame.self_id));
+			},
 
 			_ => self.text.push(format!("Unknown command: {}\n", command)),
 		}
