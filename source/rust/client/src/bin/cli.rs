@@ -80,7 +80,7 @@ impl Cli {
 					));
 				},
 
-				KeyboardInput(_, _, Some(VirtualKeyCode::Escape)) =>
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
 					events.push(InputEvent::Quit),
 
 				_ => (), // ignore other events
