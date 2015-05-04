@@ -4,6 +4,7 @@ use glutin::{
 	Event,
 	VirtualKeyCode,
 };
+use glutin::ElementState::Pressed;
 
 use client::interface::{
 	Frame,
@@ -64,10 +65,10 @@ impl Cli {
 						self.input_buffer.push(c)
 					},
 
-				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Back)) => {
+				Event::KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
 				},
-				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Return)) => {
+				Event::KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
 					self.input_buffer.clear();
 
