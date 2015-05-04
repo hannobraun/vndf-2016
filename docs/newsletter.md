@@ -74,7 +74,10 @@ Topic ideas:
   - Factorio
 
 News for May:
-- ...
+- SpaceX flight?
+- Color images from Pluto
+- https://www.blueorigin.com/news/blog/first-developmental-test-flight-of-new-shepard
+- Messenger crashes into Mercury
 
 News for any month:
 - https://kheckeroth.com/solarSystem/
