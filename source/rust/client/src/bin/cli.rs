@@ -1,10 +1,11 @@
 use std::io;
 
-use glutin::{
-	Event,
-	VirtualKeyCode,
-};
+use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
+use glutin::Event::{
+	KeyboardInput,
+	ReceivedCharacter,
+};
 
 use client::interface::{
 	Frame,
@@ -60,15 +61,15 @@ impl Cli {
 
 		for event in window.poll_events() {
 			match event {
-				Event::ReceivedCharacter(c) =>
+				ReceivedCharacter(c) =>
 					if !c.is_control() {
 						self.input_buffer.push(c)
 					},
 
-				Event::KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
 				},
-				Event::KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
 					self.input_buffer.clear();
 
@@ -79,7 +80,7 @@ impl Cli {
 					));
 				},
 
-				Event::KeyboardInput(_, _, Some(VirtualKeyCode::Escape)) =>
+				KeyboardInput(_, _, Some(VirtualKeyCode::Escape)) =>
 					events.push(InputEvent::Quit),
 
 				_ => (), // ignore other events
