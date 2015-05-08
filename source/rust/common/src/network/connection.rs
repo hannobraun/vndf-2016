@@ -151,6 +151,6 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 			}
 		}
 
-		Ok(self.events.drain())
+		Ok(self.events.drain(..))
 	}
 }

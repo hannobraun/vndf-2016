@@ -1,4 +1,4 @@
-#![feature(collections, plugin)]
+#![feature(collections, collections_drain, plugin)]
 #![feature(custom_attribute)]
 #![plugin(gfx_macros)]
 

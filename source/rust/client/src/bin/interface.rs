@@ -51,7 +51,7 @@ impl Interface for Player {
 
 		self.window.swap_buffers();
 
-		Ok(self.events.drain())
+		Ok(self.events.drain(..))
 	}
 }
 
@@ -108,6 +108,6 @@ impl Interface for Headless {
 
 		print!("{}\n", frame.to_json());
 
-		Ok(self.events.drain())
+		Ok(self.events.drain(..))
 	}
 }

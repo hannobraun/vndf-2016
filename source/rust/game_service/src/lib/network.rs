@@ -49,7 +49,7 @@ impl Network {
 	pub fn receive(&mut self) -> Drain<(SocketAddr, ClientEvent)> {
 		self.connections.extend(self.acceptor.accept());
 
-		for address in self.to_remove.drain() {
+		for address in self.to_remove.drain(..) {
 			self.connections.remove(&address);
 		}
 
@@ -66,6 +66,6 @@ impl Network {
 			self.incoming.extend(events.map(|event| (*address, event)));
 		}
 
-		self.incoming.drain()
+		self.incoming.drain(..)
 	}
 }

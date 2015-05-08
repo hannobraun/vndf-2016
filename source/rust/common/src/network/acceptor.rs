@@ -78,6 +78,6 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 			}
 		}
 
-		self.connections.drain()
+		self.connections.drain(..)
 	}
 }

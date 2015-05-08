@@ -1,4 +1,4 @@
-#![feature(collections)]
+#![feature(collections_drain)]
 // #![cfg(log_level = "trace")]
 
 
@@ -67,7 +67,7 @@ fn main() {
 			incoming_events.push((address, event));
 		}
 
-		for (address, event) in incoming_events.drain() {
+		for (address, event) in incoming_events.drain(..) {
 			match event {
 				ClientEvent::Login => {
 					if clients.contains_key(&address) {
@@ -155,7 +155,7 @@ fn main() {
 				));
 			}
 		}
-		for (address, last_active_s, now_s) in to_remove.drain() {
+		for (address, last_active_s, now_s) in to_remove.drain(..) {
 			info!(
 				"Removing {} (last active: {}, time of removal: {})\n",
 				address, last_active_s, now_s,
