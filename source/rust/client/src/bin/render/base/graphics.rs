@@ -9,16 +9,19 @@ use render::base::Batch;
 
 pub struct Graphics {
 	pub graphics: gfx::Graphics<gl::Device, gl::Factory>,
-	pub frame   : gfx::Frame<gl::Resources>,
+	pub output  : gl::Output,
 }
 
 impl Graphics {
 	pub fn new<F>(get_proc_address: F, size: (u16, u16)) -> Graphics
 		where F: FnMut(&str) -> *const c_void
 	{
+		let graphics = gl::create(get_proc_address).into_graphics();
+		let output   = graphics.factory.make_fake_output(size.0, size.1);
+
 		Graphics {
-			graphics: gl::create(get_proc_address).into_graphics(),
-			frame   : gfx::Frame::new(size.0, size.1),
+			graphics: graphics,
+			output  : output,
 		}
 	}
 
@@ -30,7 +33,7 @@ impl Graphics {
 				stencil: 0,
 			},
 			gfx::COLOR,
-			&self.frame,
+			&self.output,
 		);
 	}
 
@@ -46,7 +49,7 @@ impl Graphics {
 				&batch.batch,
 				&batch.slice,
 				params,
-				&self.frame,
+				&self.output,
 			)
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}
