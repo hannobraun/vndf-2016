@@ -13,7 +13,7 @@ pub struct Batch<P: ShaderParam> {
 }
 
 impl<P: ShaderParam<Resources=gl::Resources>> Batch<P> {
-	pub fn new<V: Copy + VertexFormat>(
+	pub fn new<V: VertexFormat>(
 		graphics    : &mut Graphics,
 		vertex_src  : &[u8],
 		fragment_src: &[u8],

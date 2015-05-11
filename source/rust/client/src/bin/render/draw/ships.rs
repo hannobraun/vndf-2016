@@ -1,6 +1,5 @@
 use std::marker::PhantomData;
 
-use gfx;
 use gfx_device_gl as gl;
 
 use nalgebra::{
@@ -39,19 +38,15 @@ static FRAGMENT_SRC: &'static [u8] = b"
 ";
 
 
-#[vertex_format]
-#[derive(Clone, Copy)]
-struct Vertex {
-	pos: [f32; 2],
-}
+gfx_vertex!(Vertex {
+	pos@ pos: [f32; 2],
+});
 
 
-#[shader_param]
-pub struct Params<R: gfx::Resources> {
-	pub transform: [[f32; 4]; 4],
-	pub size     : [f32; 2],
-	pub _marker  : PhantomData<R>,
-}
+gfx_parameters!(Params/ParamsLink {
+	transform@ transform: [[f32; 4]; 4],
+	size     @ size     : [f32; 2],
+});
 
 
 pub struct ShipDrawer {
@@ -87,7 +82,7 @@ impl ShipDrawer {
 		let params = Params {
 			transform: *transform.as_array(),
 			size     : [30.0, 30.0],
-			_marker  : PhantomData,
+			_r       : PhantomData,
 		};
 
 		graphics.draw(

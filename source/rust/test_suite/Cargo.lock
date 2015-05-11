@@ -26,9 +26,8 @@ dependencies = [
  "common 0.0.1",
  "freetype-rs 0.0.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "getopts 0.2.10 (registry+https://github.com/rust-lang/crates.io-index)",
- "gfx 0.3.0 (git+https://github.com/gfx-rs/gfx-rs.git)",
- "gfx_device_gl 0.2.4 (git+https://github.com/gfx-rs/gfx_device_gl)",
- "gfx_macros 0.1.10 (git+https://github.com/gfx-rs/gfx_macros.git)",
+ "gfx 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gfx_device_gl 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "glutin 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "nalgebra 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -48,7 +47,7 @@ dependencies = [
 [[package]]
 name = "draw_state"
 version = "0.0.7"
-source = "git+https://github.com/gfx-rs/draw_state#44a0aed11abccbf970fc7efbe84b6482f0548248"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -126,21 +125,21 @@ dependencies = [
 
 [[package]]
 name = "gfx"
-version = "0.3.0"
-source = "git+https://github.com/gfx-rs/gfx-rs.git#11916e9a3b1c019d08a729021d66f42395d8eb7a"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bitflags 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "draw_state 0.0.7 (git+https://github.com/gfx-rs/draw_state)",
+ "draw_state 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.24 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gfx_device_gl"
-version = "0.2.4"
-source = "git+https://github.com/gfx-rs/gfx_device_gl#7677733ae7d0e977354a2c9b48f787a226d481da"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gfx 0.3.0 (git+https://github.com/gfx-rs/gfx-rs.git)",
+ "gfx 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "gfx_gl 0.1.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -156,11 +155,6 @@ dependencies = [
  "khronos_api 0.0.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
-
-[[package]]
-name = "gfx_macros"
-version = "0.1.10"
-source = "git+https://github.com/gfx-rs/gfx_macros.git#aebce705dfa63bfe1868aeda5eb4ca70fae57649"
 
 [[package]]
 name = "gl_common"

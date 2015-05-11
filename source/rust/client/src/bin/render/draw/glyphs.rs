@@ -1,5 +1,6 @@
 use std::char;
 use std::collections::HashMap;
+use std::marker::PhantomData;
 
 use gfx;
 use gfx_device_gl as gl;
@@ -52,20 +53,17 @@ static FRAGMENT_SRC: &'static [u8] = b"
 ";
 
 
-#[vertex_format]
-#[derive(Clone, Copy)]
-struct Vertex {
-	pos      : [f32; 2],
-	tex_coord: [f32; 2],
-}
+gfx_vertex!(Vertex {
+	pos      @ pos      : [f32; 2],
+	tex_coord@ tex_coord: [f32; 2],
+});
 
 
-#[shader_param]
-pub struct Params<R: gfx::Resources> {
-	pub transform: [[f32; 4]; 4],
-	pub size     : [f32; 2],
-	pub color    : gfx::shade::TextureParam<R>,
-}
+gfx_parameters!(Params/ParamsLink {
+	transform@ transform: [[f32; 4]; 4],
+	size     @ size     : [f32; 2],
+	color    @ color    : gfx::shade::TextureParam<R>,
+});
 
 
 pub struct GlyphDrawer {
@@ -142,6 +140,7 @@ impl GlyphDrawer {
 			transform: *transform.as_array(),
 			size     : *glyph.size.as_array(),
 			color    : texture.to_param(),
+			_r       : PhantomData,
 		};
 
 		graphics.draw(

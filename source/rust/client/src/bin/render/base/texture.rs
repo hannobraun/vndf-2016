@@ -5,8 +5,8 @@ use gfx_device_gl as gl;
 use font::Glyph;
 
 
-pub type TextureHandle = gfx::TextureHandle<gl::Resources>;
-pub type SamplerHandle = gfx::SamplerHandle<gl::Resources>;
+pub type TextureHandle = gfx::handle::Texture<gl::Resources>;
+pub type SamplerHandle = gfx::handle::Sampler<gl::Resources>;
 
 
 pub struct Texture {
