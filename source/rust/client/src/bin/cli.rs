@@ -119,6 +119,7 @@ impl Cli {
 			"stop-broadcast" => {
 				events.push(InputEvent::StopBroadcast);
 			},
+
 			"nav-data" => {
 				self.text.push(format!(
 					"Position: ({}, {}); Velocity: ({}, {})\n",
