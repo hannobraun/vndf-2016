@@ -1,5 +1,3 @@
-use std::io;
-
 use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
 use glutin::Event::{
@@ -38,7 +36,7 @@ impl Cli {
 		}
 	}
 
-	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
+	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) {
 		if frame.message != self.last_message {
 			match frame.message {
 				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
@@ -80,8 +78,6 @@ impl Cli {
 		while self.text.len() > (self.height - 2) as usize {
 			self.text.remove(0);
 		}
-
-		Ok(())
 	}
 
 	pub fn text(&self) -> &[String] {
