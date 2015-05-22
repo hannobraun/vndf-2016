@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Von Neumann Defense Force</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link href="/main.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+
+	<body>
+		<main class="newsletter">
+			<header>
+				<h1>Newsletter May 2015</h1>
+				<h2>An Uneventful Month</h2>
+			</header>
+
+			<article>
+				<header>
+					<p>
+						This is the online version of the Von Neumann Defense
+						Force monthly newsletter. Do you want mailings like
+						this, every month, delivered right to your inbox? Then
+						<a href="/newsletter">subscribe to the newsletter</a>
+						and make this wish a reality!
+					</p>
+				</header>
+
+				<section>
+					<h1>Welcome</h1>
+
+					<p>
+						Hello, and welcome to this month's <em>Von Neumann
+						Defense Force</em> newsletter! I'm Hanno, VNDF's lead
+						developer and chief newsletter engineer.
+					</p>
+
+					<p>
+						As the title says, this has been a rather uneventful
+						month. I've recently picked up a new client (I'm a
+						freelancer) and am still adjusting to my new schedule.
+						Still, progress on VNDF hasn't halted fully. Here's
+						what's been going on this month:
+					</p>
+
+					<ul>
+						<li>
+							<a href="#new-format">New Newsletter Format</a>:
+							As part of my ongoing quest to make me finishing
+							this game a realistic prospect, I've decided to cut
+							back the time spent on the newsletter.
+						</li>
+						<li>
+							<a href="#logging">Logging Infrastructure</a>:
+							I've been hunting for a persistent bug that's been
+							eluding me for a while. Better logging should help
+							me out.
+						</li>
+						<li>
+							<a href="#small-fixes">Small Fixes</a>:
+							A few small annoyances have been fixed.
+						</li>
+					</ul>
+
+					<p>
+						Have fun with this month's newsletter and please email
+						any feedback to <a href="mailto:mail@hannobraun.de">
+						mail@hannobraun.de</a>. Do you have any questions about
+						VNDF in general or the contents of this
+						newsletter specifically?
+						<a href="mailto:mail@hannobraun.de">Let me know</a>!
+					</p>
+				</section>
+
+				<section>
+					<a name="new-format"></a>
+					<h1>New Newsletter Format</h1>
+
+					<p>
+						Ensuring a successful outcome for Von Neumann Defense
+						Force, despite the amount of work it requires and the
+						limited time I can spend on it these days, has been an
+						ongoing concern for me. Those last few months, I've been
+						cutting down on work where I can, and now it's time to
+						question how I can reduce the monthly work of getting
+						this newsletter out.
+					</p>
+
+					<p>
+						<a
+							href="http://www.vndf.de/news/newsletter-march-2015/"
+							target="_blank">
+							A few months ago</a>,
+						I already announced that I wasn't going to write a new
+						article for every newsletter any more, since that had
+						been the most difficult and time-consuming thing. From
+						today on, I'm cutting out the articles for good. In
+						addition, the news section at the end is also gone. That
+						only leaves the most important thing: The development
+						update, to let everyone know what's going on month to
+						month.
+					</p>
+
+					<p>
+						Whether you like this change or not, please
+						<a href="mailto:mail@hannobraun.de">let me know what you
+						think</a>!
+					</p>
+				</section>
+
+				<section>
+					<a name="logging"></a>
+					<h1>Logging Infrastructure</h1>
+
+					<p>
+						One thing that's been ongoing for a while now is the
+						hunt for a very persistent bug: From time to time, I was
+						logging into my server to find that the VNDF server
+						process was running completely wild, using 100% CPU.
+						It's only been happening very rarely, and thus has been
+						difficult to diagnose.
+					</p>
+
+					<p>
+						In order to find this bug and other similar ones in the
+						future, I've been introducing a proper logging
+						infrastructure using
+						<a
+							href="https://github.com/rust-lang/log"
+							target="_blank">
+							log</a>.
+						What this means is, the server process will now print
+						out messages for almost everything it does. Since
+						different log levels are used, it's quite easy to filter
+						out everything non-essential or look at all the details,
+						depending on what's required.
+					</p>
+
+					<p>
+						So far it hasn't helped me with my bug yet, but it's
+						good to have around none the less.
+					</p>
+				</section>
+
+				<section>
+					<a name="small-fixes"></a>
+					<h1>Small Fixes</h1>
+
+					<p>
+						With the introduction of the new
+						<a
+							href="/news/newsletter-april-2015"
+							target="_blank">
+							hybrid interface</a>
+						came a few new problems. Among those: Some key presses
+						(Backspace and Return) were registered twice and players
+						no longer had their own comm id displayed to them.
+					</p>
+
+					<p>
+						The first problem was a straight-forward bug fix. The
+						second was solved by introducing a new command: Players
+						can now see their own comm id with the new
+						<code>comm-data</code> command.
+					</p>
+				</section>
+
+				<section>
+					<h1>See You Next Time</h1>
+
+					<p>
+						Do you have any questions about this newsletter or Von
+						Neumann Defense Force in general?
+						<a href="mailto:mail@hannobraun.de">Send them to me</a>!
+						I'd love to do a Q &amp; A in some future newsletter.
+					</p>
+
+					<p>
+						Thanks for reading, and see you again for next month's
+						newsletter!
+					</p>
+				</section>
+
+				<footer>
+					<p>
+						Do you have any comments, be it insult or encouragement?
+						Found any embarrassing typos? Let me know via
+						<a href="mailto:mail@hannobraun.de">
+							mail@hannobraun.de</a>!
+					</p>
+
+					<p>
+						Would you like to receive regular news about Von Neumann
+						Defense Force? You can have that and much more by
+						subscribing to the newsletter!
+					</p>
+					<form
+						class="newsletter"
+						action="https://eu1.cleverreach.com/f/60128-125094/wcs/"
+						method="post"
+						target="_blank">
+
+						<input
+							name="email"
+							placeholder="Enter your Email"
+							type="text" />
+						<input type="submit" value="Subscribe" />
+					</form>
+				</footer>
+			</article>
+		</main>
+
+		<footer>
+			<nav>
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/news">News</a></li>
+					<li><a href="/contact">Contact</a></li>
+				</ul>
+			</nav>
+		</footer>
+	</body>
+</html>
