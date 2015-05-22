@@ -35,7 +35,7 @@ pub struct Player {
 impl Interface for Player {
 	fn new() -> io::Result<Player> {
 		let window = Window::new();
-		let cli    = try!(Cli::new());
+		let cli    = Cli::new();
 
 		let renderer = Renderer::new(
 			window.create_graphics(),

@@ -23,19 +23,19 @@ pub struct Cli {
 }
 
 impl Cli {
-	pub fn new() -> io::Result<Cli> {
+	pub fn new() -> Cli {
 		let mut text = Vec::new();
 		text.push(format!("VNDF Ship Control System"));
 		text.push(format!("Enter command"));
 
 		let height = 24;
 
-		Ok(Cli {
+		Cli {
 			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
 			height      : height,
-		})
+		}
 	}
 
 	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) -> io::Result<()> {
