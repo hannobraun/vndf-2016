@@ -1,7 +1,5 @@
 # Rules
 
-- Emphasize mentions of `<em>Von Neumann Defense Force</em>` and
-  `<em>VNDF</em>`, except in titles.
 - Links should open in a new tab (`target="_blank"`). Exceptions to this are
   links that should consume the user's full attention at this point, like links
   to the newsletter signup form. Another exception are the internal anchor
