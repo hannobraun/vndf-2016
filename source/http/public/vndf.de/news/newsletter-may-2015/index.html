@@ -35,18 +35,18 @@
 
 					<p>
 						As the title says, this has been a rather uneventful
-						month. I've recently picked up a new client (I'm a
-						freelancer) and am still adjusting to my new schedule.
-						Still, progress on VNDF hasn't halted fully. Here's
-						what's been going on this month:
+						month. I've recently picked up a new client (I'm working
+						as a freelancer) and am still adjusting to my new
+						schedule. Still, I made some progress. Here's what's
+						been going on this month:
 					</p>
 
 					<ul>
 						<li>
 							<a href="#new-format">New Newsletter Format</a>:
-							As part of my ongoing quest to make me finishing
-							this game a realistic prospect, I've decided to cut
-							back the time spent on the newsletter.
+							As part of my ongoing quest to make the success of
+							this project a realistic prospect, I've decided to
+							cut back the time I spend on the newsletter.
 						</li>
 						<li>
 							<a href="#logging">Logging Infrastructure</a>:
@@ -75,13 +75,10 @@
 					<h1>New Newsletter Format</h1>
 
 					<p>
-						Ensuring a successful outcome for Von Neumann Defense
-						Force, despite the amount of work it requires and the
-						limited time I can spend on it these days, has been an
-						ongoing concern for me. Those last few months, I've been
-						cutting down on work where I can, and now it's time to
-						question how I can reduce the monthly work of getting
-						this newsletter out.
+						Von Neumann Defense Force requires a lot of work, and
+						the time I can spend on it is finite. Cutting back the
+						project's scope to make it more manageable has been an
+						ongoing concern for a while now.
 					</p>
 
 					<p>
@@ -89,18 +86,19 @@
 							href="http://www.vndf.de/news/newsletter-march-2015/"
 							target="_blank">
 							A few months ago</a>,
-						I already announced that I wasn't going to write a new
-						article for every newsletter any more, since that had
-						been the most difficult and time-consuming thing. From
-						today on, I'm cutting out the articles for good. In
-						addition, the news section at the end is also gone. That
-						only leaves the most important thing: The development
-						update, to let everyone know what's going on month to
-						month.
+						I announced that I wasn't going to write a new article
+						for every single newsletter any more, since that had
+						been the most difficult and time-consuming part of it.
+						From this month on, I'm cutting out the articles for
+						good. In addition, the news section at the end is also
+						gone.
 					</p>
 
 					<p>
-						Whether you like this change or not, please
+						This reduces the newsletter to its core: The development
+						update that let's you, the readers, know what's going on
+						month to month. I hope you're okay with this change, but
+						whether you like it or not, please
 						<a href="mailto:mail@hannobraun.de">let me know what you
 						think</a>!
 					</p>
@@ -113,30 +111,29 @@
 					<p>
 						One thing that's been ongoing for a while now is the
 						hunt for a very persistent bug: From time to time, I was
-						logging into my server to find that the VNDF server
-						process was running completely wild, using 100% CPU.
-						It's only been happening very rarely, and thus has been
-						difficult to diagnose.
+						logging into my server to find that VNDF going wild,
+						using 100% of the CPU. This has only been happening very
+						rarely, and thus has been difficult to diagnose.
 					</p>
 
 					<p>
-						In order to find this bug and other similar ones in the
-						future, I've been introducing a proper logging
+						In order to help find this bug, and other similar ones
+						in the future, I've been adding a proper logging
 						infrastructure using
 						<a
 							href="https://github.com/rust-lang/log"
 							target="_blank">
 							log</a>.
-						What this means is, the server process will now print
-						out messages for almost everything it does. Since
-						different log levels are used, it's quite easy to filter
-						out everything non-essential or look at all the details,
-						depending on what's required.
+						This means that the server process will now print out
+						messages for almost everything it does. Different log
+						levels are used to make it quite easy to see exactly the
+						information that is needed to diagnose a problem and
+						filter out the rest.
 					</p>
 
 					<p>
-						So far it hasn't helped me with my bug yet, but it's
-						good to have around none the less.
+						So far I haven't found my bug yet, but it's good to have
+						this around none the less.
 					</p>
 				</section>
 
@@ -145,14 +142,15 @@
 					<h1>Small Fixes</h1>
 
 					<p>
-						With the introduction of the new
+						The introduction of the new
 						<a
 							href="/news/newsletter-april-2015"
 							target="_blank">
 							hybrid interface</a>
-						came a few new problems. Among those: Some key presses
-						(Backspace and Return) were registered twice and players
-						no longer had their own comm id displayed to them.
+						also brought a few new problems. Among those: Some key
+						presses (Backspace and Return) were registered twice and
+						players no longer had their own comm id displayed to
+						them.
 					</p>
 
 					<p>
