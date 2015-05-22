@@ -63,11 +63,11 @@ impl Cli {
 					let command = self.input_buffer.clone();
 					self.input_buffer.clear();
 
-					try!(self.handle_line(
+					self.handle_line(
 						events,
 						command.as_ref(),
 						frame,
-					));
+					);
 				},
 
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
@@ -92,7 +92,7 @@ impl Cli {
 		self.input_buffer.as_ref()
 	}
 
-	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> io::Result<()> {
+	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) {
 		self.text.push(format!("> {}", line));
 
 		let mut splits = line.splitn(2, ' ');
@@ -126,7 +126,5 @@ impl Cli {
 
 			_ => self.text.push(format!("Unknown command: {}\n", command)),
 		}
-
-		Ok(())
 	}
 }
