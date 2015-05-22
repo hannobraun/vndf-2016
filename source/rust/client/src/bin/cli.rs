@@ -101,6 +101,8 @@ impl Cli {
 	}
 
 	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> io::Result<()> {
+		self.text.push(format!("> {}", line));
+
 		let mut splits = line.splitn(2, ' ');
 
 		let command = splits.next().unwrap();
