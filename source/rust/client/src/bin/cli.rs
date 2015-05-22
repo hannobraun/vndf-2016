@@ -16,8 +16,8 @@ use render::Renderer;
 use window::Window;
 
 
-// TODO: The name doesn't fit. Either it needs to be renamed, or the call to
-//       Renderer needs to be moved somewhere else.
+// TODO(IyfxewcR): The name doesn't fit. Either it needs to be renamed, or the
+//                 call to Renderer needs to be moved somewhere else.
 pub struct Cli {
 	input_buffer: String,
 	last_message: Message,
