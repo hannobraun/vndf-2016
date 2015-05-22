@@ -16,4 +16,5 @@ mod component {
 }
 mod acceptance {
 	mod basic;
+	mod navigation;
 }

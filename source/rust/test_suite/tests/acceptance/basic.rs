@@ -1,6 +1,5 @@
 use client::interface::Frame;
 use common::game::Broadcast;
-use common::util::is_point_on_line;
 use test_suite::rc;
 
 
@@ -55,24 +54,4 @@ fn it_should_remove_clients_that_disconnected() {
 
 	client_b.stop();
 	client_a.wait_until(|frame| frame.broadcasts.len() == 1);
-}
-
-#[test]
-fn it_should_send_navigation_data() {
-	let     game_service = rc::GameService::start();
-	let mut client       = rc::Client::start(game_service.port());
-
-	let frame_1 = client.frame();
-
-	let frame_1 = client.wait_until(|frame|
-		frame.position != frame_1.position
-	);
-	let frame_2 = client.wait_until(|frame|
-		frame.position != frame_1.position
-	);
-
-	assert!(is_point_on_line(
-		frame_2.position,
-		frame_1.position, frame_1.velocity,
-	));
 }
