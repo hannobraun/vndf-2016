@@ -36,7 +36,12 @@ impl Cli {
 		}
 	}
 
-	pub fn update(&mut self, events: &mut Vec<InputEvent>, frame: &Frame, window: &Window) {
+	pub fn update(
+		&mut self,
+		events: &mut Vec<InputEvent>,
+		frame : &Frame,
+		window: &Window
+	) {
 		if frame.message != self.last_message {
 			match frame.message {
 				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
