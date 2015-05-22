@@ -12,39 +12,29 @@ use client::interface::{
 	InputEvent,
 	Message,
 };
-use render::Renderer;
 use window::Window;
 
 
-// TODO(IyfxewcR): The name doesn't fit. Either it needs to be renamed, or the
-//                 call to Renderer needs to be moved somewhere else.
 pub struct Cli {
 	input_buffer: String,
 	last_message: Message,
 	text        : Vec<String>,
 	height      : u16,
-	renderer    : Renderer,
 }
 
 impl Cli {
-	pub fn new(window: &Window) -> io::Result<Cli> {
+	pub fn new() -> io::Result<Cli> {
 		let mut text = Vec::new();
 		text.push(format!("VNDF Ship Control System"));
 		text.push(format!("Enter command"));
 
 		let height = 24;
 
-		let renderer = Renderer::new(
-			window.create_graphics(),
-			(window.width() as f32, window.height() as f32),
-		);
-
 		Ok(Cli {
 			input_buffer: String::new(),
 			last_message: Message::None,
 			text        : text,
 			height      : height,
-			renderer    : renderer,
 		})
 	}
 
@@ -91,13 +81,15 @@ impl Cli {
 			self.text.remove(0);
 		}
 
-		self.renderer.render(
-			self.text.as_ref(),
-			self.input_buffer.as_ref(),
-			frame,
-		);
-
 		Ok(())
+	}
+
+	pub fn text(&self) -> &[String] {
+		self.text.as_ref()
+	}
+
+	pub fn input(&self) -> &str {
+		self.input_buffer.as_ref()
 	}
 
 	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) -> io::Result<()> {

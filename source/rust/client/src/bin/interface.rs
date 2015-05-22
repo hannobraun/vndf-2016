@@ -15,6 +15,7 @@ use client::interface::{
 	Frame,
 	InputEvent,
 };
+use render::Renderer;
 use window::Window;
 
 
@@ -25,20 +26,27 @@ pub trait Interface {
 
 
 pub struct Player {
-	events: Vec<InputEvent>,
-	cli   : Cli,
-	window: Window,
+	events  : Vec<InputEvent>,
+	cli     : Cli,
+	window  : Window,
+	renderer: Renderer,
 }
 
 impl Interface for Player {
 	fn new() -> io::Result<Player> {
 		let window = Window::new();
-		let cli    = try!(Cli::new(&window));
+		let cli    = try!(Cli::new());
+
+		let renderer = Renderer::new(
+			window.create_graphics(),
+			(window.width() as f32, window.height() as f32),
+		);
 
 		Ok(Player {
-			events: Vec::new(),
-			cli   : cli,
-			window: window,
+			events  : Vec::new(),
+			cli     : cli,
+			window  : window,
+			renderer: renderer,
 		})
 	}
 
@@ -48,6 +56,12 @@ impl Interface for Player {
 		if self.window.is_closed() {
 			self.events.push(InputEvent::Quit);
 		}
+
+		self.renderer.render(
+			self.cli.text(),
+			self.cli.input(),
+			frame,
+		);
 
 		self.window.swap_buffers();
 
