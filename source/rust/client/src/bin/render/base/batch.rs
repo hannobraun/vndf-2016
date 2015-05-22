@@ -19,13 +19,13 @@ impl<P: ShaderParam<Resources=gl::Resources>> Batch<P> {
 		fragment_src: &[u8],
 		mesh        : &[V],
 	) -> Batch<P> {
-		let program = graphics.graphics.factory
+		let program = graphics.factory
 			.link_program(vertex_src, fragment_src)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
-		let mesh = graphics.graphics.factory.create_mesh(mesh);
+		let mesh = graphics.factory.create_mesh(mesh);
 
-		let batch = graphics.graphics
+		let batch = graphics.context
 			.make_core(
 				&program,
 				&mesh,

@@ -59,7 +59,7 @@ gfx_vertex!(Vertex {
 });
 
 
-gfx_parameters!(Params/ParamsLink {
+gfx_parameters!(Params {
 	transform@ transform: [[f32; 4]; 4],
 	size     @ size     : [f32; 2],
 	color    @ color    : gfx::shade::TextureParam<R>,
@@ -98,7 +98,7 @@ impl GlyphDrawer {
 				Some(glyph) => glyph,
 				None        => continue,
 			};
-			match Texture::from_glyph(&glyph, &mut graphics.graphics.factory) {
+			match Texture::from_glyph(&glyph, &mut graphics.factory) {
 				Some(texture) => { textures.insert(c, (glyph, texture)); },
 				None          => continue,
 			}

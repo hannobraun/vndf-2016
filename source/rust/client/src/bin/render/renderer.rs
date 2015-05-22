@@ -65,6 +65,6 @@ impl Renderer {
 
 		self.ship_drawer.draw(&mut self.graphics, &frame.position);
 
-		self.graphics.graphics.end_frame();
+		self.graphics.flush();
 	}
 }

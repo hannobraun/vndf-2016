@@ -43,7 +43,7 @@ gfx_vertex!(Vertex {
 });
 
 
-gfx_parameters!(Params/ParamsLink {
+gfx_parameters!(Params {
 	transform@ transform: [[f32; 4]; 4],
 	size     @ size     : [f32; 2],
 });
