@@ -92,7 +92,12 @@ impl Cli {
 		self.input_buffer.as_ref()
 	}
 
-	fn handle_line(&mut self, events: &mut Vec<InputEvent>, line: &str, frame: &Frame) {
+	fn handle_line(
+		&mut self,
+		events: &mut Vec<InputEvent>,
+		line  : &str,
+		frame : &Frame
+	) {
 		self.text.push(format!("> {}", line));
 
 		let mut splits = line.splitn(2, ' ');
