@@ -11,6 +11,10 @@ pub struct Client {
 	process: Process,
 }
 
+// TODO(5rKZ3HPd): Maybe it would be smarter to remove the specific input
+//                 methods (start_broadcast, stop_broadcast) in favor of input.
+//                 This would open the door towards factoring out generic test
+//                 infrastructure from this.
 impl Client {
 	pub fn start(port: u16) -> Client {
 		let process = Process::start(
