@@ -3,5 +3,5 @@
 source project.conf
 
 (
-	cd $GAME_SERVICE_SOURCE
+	cd $SERVER_SOURCE
 	cargo build)

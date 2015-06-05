@@ -3,5 +3,5 @@
 source project.conf
 
 (echo "Cleaning client..."; cd $CLIENT_SOURCE; cargo clean)
-(echo "Cleaning game_service..."; cd $GAME_SERVICE_SOURCE; cargo clean)
+(echo "Cleaning game_service..."; cd $SERVER_SOURCE; cargo clean)
 (echo "Cleaning test_suite..."; cd $TEST_SUITE_SOURCE; cargo clean)
