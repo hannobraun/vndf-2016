@@ -44,9 +44,9 @@ fn it_should_not_keep_sending_stopped_broadcasts() {
 
 #[test]
 fn it_should_remove_clients_that_disconnected() {
-	let     game_service = rc::Server::start();
-	let mut client_a     = rc::Client::start(game_service.port());
-	let mut client_b     = rc::Client::start(game_service.port());
+	let     server   = rc::Server::start();
+	let mut client_a = rc::Client::start(server.port());
+	let mut client_b = rc::Client::start(server.port());
 
 	client_a.start_broadcast("Broadcast from A");
 	client_b.start_broadcast("Broadcast from B");
