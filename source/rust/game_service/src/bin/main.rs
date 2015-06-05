@@ -20,7 +20,12 @@ use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
 
-use nalgebra::Vec2;
+use nalgebra::{
+	Rot2,
+	Rotate,
+	Vec1,
+	Vec2,
+};
 use rand::random;
 use time::precise_time_s;
 
@@ -138,8 +143,21 @@ fn main() {
 						},
 					}
 				},
-				ClientEvent::ScheduleManeuver(_) => {
-					// TODO: Change client's velocity
+				ClientEvent::ScheduleManeuver(angle) => {
+					match clients.get_mut(&address) {
+						Some(client) => {
+							info!("Schedule Maneuver: {}\n", address);
+
+							let rotation = Rot2::new(Vec1::new(angle as f64));
+							let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+							client.velocity = new_velocity;
+						},
+						None => {
+							debug!("Ignoring Schedule Maneuver: {}\n", address);
+							continue; // invalid, ignore
+						}
+					}
 				},
 			}
 
