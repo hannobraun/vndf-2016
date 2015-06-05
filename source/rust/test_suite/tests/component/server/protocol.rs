@@ -10,7 +10,7 @@ use test_suite::{
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client_1     = mock::Client::start(game_service.port());
 	let mut client_2     = mock::Client::start(game_service.port());
 
@@ -43,7 +43,7 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 #[test]
 fn it_should_ignore_duplicate_logins() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client       = mock::Client::start(game_service.port());
 
 	client.send(ClientEvent::Login);
@@ -92,7 +92,7 @@ fn it_should_ignore_duplicate_logins() {
 
 #[test]
 fn it_should_send_regular_heartbeats() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client       = mock::Client::start(game_service.port());
 
 	client.send(ClientEvent::Login);

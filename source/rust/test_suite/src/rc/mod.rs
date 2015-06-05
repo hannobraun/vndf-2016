@@ -3,4 +3,4 @@ mod server;
 
 
 pub use self::client::Client;
-pub use self::server::GameService;
+pub use self::server::Server;

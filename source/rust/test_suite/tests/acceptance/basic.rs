@@ -14,7 +14,7 @@ fn it_should_send_broadcasts_to_all_clients() {
 		})
 	}
 
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client_1     = rc::Client::start(game_service.port());
 	let mut client_2     = rc::Client::start(game_service.port());
 
@@ -33,7 +33,7 @@ fn it_should_send_broadcasts_to_all_clients() {
 
 #[test]
 fn it_should_not_keep_sending_stopped_broadcasts() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client       = rc::Client::start(game_service.port());
 
 	client.start_broadcast("This is a broadcast.");
@@ -44,7 +44,7 @@ fn it_should_not_keep_sending_stopped_broadcasts() {
 
 #[test]
 fn it_should_remove_clients_that_disconnected() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client_a     = rc::Client::start(game_service.port());
 	let mut client_b     = rc::Client::start(game_service.port());
 

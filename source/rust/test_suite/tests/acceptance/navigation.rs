@@ -13,7 +13,7 @@ use test_suite::rc;
 
 #[test]
 fn it_should_send_navigation_data() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client       = rc::Client::start(game_service.port());
 
 	let frame_1 = client.frame();
@@ -33,7 +33,7 @@ fn it_should_send_navigation_data() {
 
 #[test]
 fn it_should_schedule_maneuvers() {
-	let     game_service = rc::GameService::start();
+	let     game_service = rc::Server::start();
 	let mut client       = rc::Client::start(game_service.port());
 
 	let frame_1 = client.wait_until(|frame| {

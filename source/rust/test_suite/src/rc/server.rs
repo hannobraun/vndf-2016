@@ -2,13 +2,13 @@ use process::Process;
 use util::random_port;
 
 
-pub struct GameService {
+pub struct Server {
 	port    : u16,
 	_process: Process,
 }
 
-impl GameService {
-	pub fn start() -> GameService {
+impl Server {
+	pub fn start() -> Server {
 		let port = random_port(40000, 50000);
 
 		let mut process = Process::start(
@@ -21,7 +21,7 @@ impl GameService {
 		);
 		process.read_stderr_line(); // Make sure it's ready
 
-		GameService {
+		Server {
 			port    : port,
 			_process: process,
 		}
