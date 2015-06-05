@@ -134,6 +134,26 @@ impl Cli {
 				self.text.push(format!("Your Comm Id: {}", frame.self_id));
 			},
 
+			"schedule-maneuver" => {
+				let direction_deg = scan_fmt!(
+					args,
+					"{}",
+					u16
+				);
+
+				match direction_deg {
+					Some(direction_deg) => {
+						let direction_rad = (direction_deg as f32).to_radians();
+						events.push(
+							InputEvent::ScheduleManeuver(direction_rad)
+						)
+					},
+
+					_ =>
+						self.text.push(format!("Error parsing arguments")),
+				}
+			}
+
 			_ => self.text.push(format!("Unknown command: {}\n", command)),
 		}
 	}

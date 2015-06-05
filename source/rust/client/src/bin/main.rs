@@ -1,4 +1,4 @@
-#![feature(collections, collections_drain, plugin)]
+#![feature(collections, collections_drain, plugin, std_misc)]
 #![feature(custom_attribute)]
 
 
