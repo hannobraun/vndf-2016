@@ -21,6 +21,7 @@ glutin          = "*"
 libc            = "*"
 nalgebra        = "*"
 rustc-serialize = "*"
+scan_fmt        = "*"
 time            = "*"
 
 [dependencies.common]
