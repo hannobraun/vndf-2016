@@ -8,8 +8,11 @@ use game::Broadcast;
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
+
 	StartBroadcast(String),
 	StopBroadcast,
+
+	ScheduleManeuver(f32),
 }
 
 

@@ -132,6 +132,9 @@ fn main() {
 						},
 					}
 				},
+				ClientEvent::ScheduleManeuver(_) => {
+					// TODO: Change client's velocity
+				},
 			}
 
 			match clients.get_mut(&address) {
