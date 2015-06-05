@@ -13,8 +13,8 @@ use test_suite::rc;
 
 #[test]
 fn it_should_send_navigation_data() {
-	let     game_service = rc::Server::start();
-	let mut client       = rc::Client::start(game_service.port());
+	let     server = rc::Server::start();
+	let mut client = rc::Client::start(server.port());
 
 	let frame_1 = client.frame();
 
