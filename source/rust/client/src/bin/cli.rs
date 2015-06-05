@@ -42,9 +42,10 @@ impl Cli {
 		frame : &Frame,
 		window: &Window
 	) {
-		// TODO: The following code demonstrates an impedance mismatch. Frame
-		//       encodes the full status at any point in time, but we're
-		//       converting it into an event stream here.
+		// TODO(uqLeNh9a): The following code demonstrates an impedance
+		//                 mismatch. Frame encodes the full status at any point
+		//                 in time, but we're converting it into an event stream
+		//                 here.
 		if frame.message != self.last_message {
 			match frame.message {
 				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
