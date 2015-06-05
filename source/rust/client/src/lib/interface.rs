@@ -11,6 +11,9 @@ use common::game::Broadcast;
 pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
+
+	ScheduleManeuver(f32),
+
 	Quit,
 }
 

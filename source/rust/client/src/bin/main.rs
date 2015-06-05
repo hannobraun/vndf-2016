@@ -109,6 +109,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						"Stopped sending broadcast".to_string()
 					);
 				},
+				InputEvent::ScheduleManeuver(_) => {
+					// TODO: Send to server
+				},
 				InputEvent::Quit => {
 					break 'main;
 				},
