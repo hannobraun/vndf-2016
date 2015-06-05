@@ -13,7 +13,7 @@ extern crate rand;
 extern crate time;
 
 extern crate common;
-extern crate game_service;
+extern crate server;
 
 
 use std::collections::HashMap;
@@ -36,7 +36,7 @@ use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use game_service::network::Network;
+use server::network::Network;
 
 
 #[derive(Debug)]

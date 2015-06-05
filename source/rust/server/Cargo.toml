@@ -5,7 +5,7 @@ version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 [lib]
-name = "game_service"
+name = "server"
 path = "src/lib/lib.rs"
 
 [[bin]]

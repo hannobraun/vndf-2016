@@ -6,7 +6,7 @@ use common::protocol::{
 	ClientEvent,
 	ServerEvent,
 };
-use game_service::network::Network;
+use server::network::Network;
 use util::random_port;
 
 

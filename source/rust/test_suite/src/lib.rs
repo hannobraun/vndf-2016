@@ -3,7 +3,7 @@ extern crate rand;
 
 extern crate client;
 extern crate common;
-extern crate game_service;
+extern crate server;
 
 
 pub mod mock;
