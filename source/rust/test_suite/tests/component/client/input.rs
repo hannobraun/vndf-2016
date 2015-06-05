@@ -34,8 +34,8 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 
 #[test]
 fn it_should_reject_empty_broadcasts() {
-	let     game_service = mock::Server::start();
-	let mut client       = rc::Client::start(game_service.port());
+	let     server = mock::Server::start();
+	let mut client = rc::Client::start(server.port());
 
 	client.start_broadcast("");
 	client.wait_until(|frame| frame.message.is_error());
