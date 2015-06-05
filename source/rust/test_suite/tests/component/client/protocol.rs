@@ -10,7 +10,7 @@ use test_suite::{
 
 #[test]
 fn it_should_display_an_error_if_connection_to_server_is_lost() {
-	let mut game_service = mock::GameService::start();
+	let mut game_service = mock::Server::start();
 	let mut client       = rc::Client::start(game_service.port());
 
 	let event = game_service.wait_until(|event|

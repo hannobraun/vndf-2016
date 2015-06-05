@@ -10,18 +10,18 @@ use server::network::Network;
 use util::random_port;
 
 
-pub struct GameService {
+pub struct Server {
 	port    : u16,
 	network : Network,
 	incoming: Vec<(SocketAddr, ClientEvent)>,
 }
 
-impl GameService {
-	pub fn start() -> GameService {
+impl Server {
+	pub fn start() -> Server {
 		let port    = random_port(40000, 50000);
 		let network = Network::new(port);
 
-		GameService {
+		Server {
 			port    : port,
 			network : network,
 			incoming: Vec::new(),
