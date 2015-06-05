@@ -92,8 +92,8 @@ fn it_should_ignore_duplicate_logins() {
 
 #[test]
 fn it_should_send_regular_heartbeats() {
-	let     game_service = rc::Server::start();
-	let mut client       = mock::Client::start(game_service.port());
+	let     server = rc::Server::start();
+	let mut client = mock::Client::start(server.port());
 
 	client.send(ClientEvent::Login);
 
