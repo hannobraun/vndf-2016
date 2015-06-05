@@ -8,7 +8,6 @@ use render::base::Batch;
 
 
 pub struct Graphics {
-	pub context: gfx::render::batch::Context<gl::Resources>,
 	pub device : gl::Device,
 	pub factory: gl::Factory,
 	pub stream : gfx::OwnedStream<gl::Device, gl::Output>,
@@ -18,14 +17,12 @@ impl Graphics {
 	pub fn new<F>(get_proc_address: F, size: (u16, u16)) -> Graphics
 		where F: FnMut(&str) -> *const c_void
 	{
-		let     context = gfx::render::batch::Context::new();
-		let     device  = gl::Device::new(get_proc_address);
-		let mut factory = device.spawn_factory();
-		let     output  = factory.make_fake_output(size.0, size.1);
-		let     stream  = factory.create_stream(output);
+		let (device, mut factory) = gl::create(get_proc_address);
+
+		let output  = factory.make_fake_output(size.0, size.1);
+		let stream  = factory.create_stream(output);
 
 		Graphics {
-			context: context,
 			device : device,
 			factory: factory,
 			stream : stream,
@@ -50,11 +47,10 @@ impl Graphics {
 		where P: gfx::render::shade::ShaderParam<Resources=gl::Resources>,
 	{
 		self.stream
-			.draw(&(
-				&batch.batch,
+			.draw(&batch.batch.with(
 				&batch.slice,
 				params,
-				&self.context,
+				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
 			))
 			.unwrap_or_else(|e| panic!("Error drawing graphics: {:?}", e));
 	}

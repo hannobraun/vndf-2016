@@ -8,7 +8,7 @@ use render::base::Graphics;
 
 
 pub struct Batch<P: ShaderParam> {
-	pub batch: gfx::batch::CoreBatch<P>,
+	pub batch: gfx::batch::Core<P>,
 	pub slice: gfx::Slice<gl::Resources>,
 }
 
@@ -23,17 +23,11 @@ impl<P: ShaderParam<Resources=gl::Resources>> Batch<P> {
 			.link_program(vertex_src, fragment_src)
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
-		let mesh = graphics.factory.create_mesh(mesh);
-
-		let batch = graphics.context
-			.make_core(
-				&program,
-				&mesh,
-				&gfx::DrawState::new().blend(gfx::BlendPreset::Alpha),
-			)
-			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
-
+		let mesh  = graphics.factory.create_mesh(mesh);
 		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
+
+		let batch = gfx::batch::Core::new(mesh, program)
+			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
 
 		Batch {
 			batch: batch,

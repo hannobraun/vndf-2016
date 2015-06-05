@@ -39,10 +39,10 @@ impl Texture {
 			height: height,
 			depth : 1,
 			levels: 1,
-			kind  : gfx::tex::TextureKind::Texture2D,
+			kind  : gfx::tex::Kind::D2,
 			format: gfx::tex::RGBA8,
 		};
-		let image_info = texture_info.to_image_info();
+		let image_info = texture_info.into();
 
 		let texture = factory
 			.create_texture(texture_info)
