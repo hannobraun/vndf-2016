@@ -5,8 +5,9 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
-rand = "*"
-time = "*"
+nalgebra = "*"
+rand     = "*"
+time     = "*"
 
 [dependencies.client]
 path = "../client"

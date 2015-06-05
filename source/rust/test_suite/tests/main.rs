@@ -1,3 +1,4 @@
+extern crate nalgebra;
 extern crate time;
 
 extern crate client;
