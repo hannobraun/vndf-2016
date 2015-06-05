@@ -1,6 +1,6 @@
 mod client;
-mod game_service;
+mod server;
 
 
 pub use self::client::Client;
-pub use self::game_service::GameService;
+pub use self::server::GameService;
