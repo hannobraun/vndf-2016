@@ -14,9 +14,9 @@ fn it_should_send_broadcasts_to_all_clients() {
 		})
 	}
 
-	let     game_service = rc::Server::start();
-	let mut client_1     = rc::Client::start(game_service.port());
-	let mut client_2     = rc::Client::start(game_service.port());
+	let     server   = rc::Server::start();
+	let mut client_1 = rc::Client::start(server.port());
+	let mut client_2 = rc::Client::start(server.port());
 
 	let message_1 = "This is a broadcast by client 1.".to_string();
 	let message_2 = "This is a broadcast by client 2.".to_string();
