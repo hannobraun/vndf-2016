@@ -33,8 +33,8 @@ fn it_should_send_navigation_data() {
 
 #[test]
 fn it_should_schedule_maneuvers() {
-	let     game_service = rc::Server::start();
-	let mut client       = rc::Client::start(game_service.port());
+	let     server = rc::Server::start();
+	let mut client = rc::Client::start(server.port());
 
 	let frame_1 = client.wait_until(|frame| {
 		frame.velocity != Vec2::new(0.0, 0.0)
