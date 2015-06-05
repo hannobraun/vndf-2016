@@ -65,7 +65,7 @@ fn main() {
 	let mut outgoing_events = Vec::new();
 
 	loop {
-		trace!("Start game service main loop iteration");
+		trace!("Start server main loop iteration");
 
 		for (address, event) in network.receive() {
 			incoming_events.push((address, event));
