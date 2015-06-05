@@ -109,8 +109,12 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						"Stopped sending broadcast".to_string()
 					);
 				},
-				InputEvent::ScheduleManeuver(_) => {
-					// TODO: Send to server
+				InputEvent::ScheduleManeuver(angle) => {
+					network.send(ClientEvent::ScheduleManeuver(angle));
+
+					frame.message = Message::Notice(
+						"Scheduling maneuver".to_string()
+					);
 				},
 				InputEvent::Quit => {
 					break 'main;
