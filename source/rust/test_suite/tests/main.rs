@@ -11,7 +11,7 @@ mod component {
 		mod input;
 		mod protocol;
 	}
-	mod game_service {
+	mod server {
 		mod protocol;
 	}
 }
