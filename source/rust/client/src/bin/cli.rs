@@ -49,7 +49,7 @@ impl Cli {
 			match frame.message {
 				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
 				Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
-				Message::None            => (),
+				Message::None                => (),
 			}
 
 			self.last_message = frame.message.clone();
