@@ -67,6 +67,12 @@ fn main() {
 		}
 
 		for (address, event) in incoming_events.drain(..) {
+
+			// TODO: All that pattern matching for every event is too unwieldy.
+			//       Whether the client exists and the event should be handled
+			//       should be determined exactly once.
+			// TODO: Move info-level logging to the beginning of the loop.
+
 			match event {
 				ClientEvent::Login => {
 					if clients.contains_key(&address) {
