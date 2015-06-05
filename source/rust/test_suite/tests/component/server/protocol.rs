@@ -10,9 +10,9 @@ use test_suite::{
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
-	let     game_service = rc::Server::start();
-	let mut client_1     = mock::Client::start(game_service.port());
-	let mut client_2     = mock::Client::start(game_service.port());
+	let     server   = rc::Server::start();
+	let mut client_1 = mock::Client::start(server.port());
+	let mut client_2 = mock::Client::start(server.port());
 
 	client_1.send(ClientEvent::StartBroadcast(
 		"I haven't logged in, but am sending this anyway.".to_string(),
