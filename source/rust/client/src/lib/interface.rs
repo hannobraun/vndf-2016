@@ -7,7 +7,7 @@ use rustc_serialize::json::{
 use common::game::Broadcast;
 
 
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable, Eq, PartialEq)]
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
