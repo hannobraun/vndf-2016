@@ -15,5 +15,5 @@ path = "../client"
 [dependencies.common]
 path = "../common"
 
-[dependencies.game_service]
+[dependencies.server]
 path = "../server"
