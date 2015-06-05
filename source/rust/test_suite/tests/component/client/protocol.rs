@@ -10,10 +10,10 @@ use test_suite::{
 
 #[test]
 fn it_should_display_an_error_if_connection_to_server_is_lost() {
-	let mut game_service = mock::Server::start();
-	let mut client       = rc::Client::start(game_service.port());
+	let mut server = mock::Server::start();
+	let mut client = rc::Client::start(server.port());
 
-	let event = game_service.wait_until(|event|
+	let event = server.wait_until(|event|
 		if let &mut Some((_, ref event)) = event {
 			event == &ClientEvent::Login
 		}
@@ -29,7 +29,7 @@ fn it_should_display_an_error_if_connection_to_server_is_lost() {
 		panic!("Expected event");
 	};
 
-	game_service.send(address, ServerEvent::Heartbeat);
+	server.send(address, ServerEvent::Heartbeat);
 
 	client.wait_until(|frame| frame.message.is_error());
 }
