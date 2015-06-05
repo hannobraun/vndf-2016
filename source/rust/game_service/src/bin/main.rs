@@ -1,5 +1,4 @@
 #![feature(collections_drain)]
-// #![cfg(log_level = "trace")]
 
 
 mod args;
