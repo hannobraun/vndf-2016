@@ -9,7 +9,7 @@ name = "server"
 path = "src/lib/lib.rs"
 
 [[bin]]
-name = "vndf-game-service"
+name = "vndf-server"
 
 
 [dependencies]

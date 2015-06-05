@@ -7,6 +7,6 @@ export RUST_TEST_TASKS=1
 
 ./scripts/tasks/build-vndf &&
 (
-	export RUST_LOG=vndf_game_service=info
+	export RUST_LOG=vndf_server=info
 	cd $TEST_SUITE_SOURCE
 	cargo test)
