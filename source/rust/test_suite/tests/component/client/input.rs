@@ -9,8 +9,8 @@ use test_suite::{
 
 #[test]
 fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
-	let mut game_service = mock::Server::start();
-	let mut client       = rc::Client::start(game_service.port());
+	let mut server = mock::Server::start();
+	let mut client = rc::Client::start(server.port());
 
 	let invalid_broadcast: String =
 		repeat('a').take(512 + 1).collect();
@@ -22,7 +22,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 
 	// And it should still work afterwards.
 	client.start_broadcast(valid_broadcast.as_ref());
-	game_service.wait_until(|event| {
+	server.wait_until(|event| {
 		if let &mut Some((_, ref event)) = event {
 			event == &ClientEvent::StartBroadcast(valid_broadcast.clone())
 		}
