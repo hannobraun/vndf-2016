@@ -8,7 +8,6 @@ use nalgebra::{
 	Vec2,
 };
 use rand::random;
-use time::precise_time_s;
 
 use clients::Client;
 use common::game::Broadcast;
@@ -68,7 +67,7 @@ impl EventHandler {
 							else {
 								let client = Client {
 									id           : generate_id(),
-									last_active_s: precise_time_s(),
+									last_active_s: now_s,
 									position     : Vec2::new(0.0, 0.0),
 									velocity     : Vec2::new(1.0, 0.0),
 								};
