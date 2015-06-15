@@ -2,6 +2,7 @@
 
 
 mod args;
+mod clients;
 mod event_handler;
 
 
@@ -32,20 +33,12 @@ use time::precise_time_s;
 
 use args::Args;
 
+use clients::Client;
 use common::game::Broadcast;
 use common::protocol::client;
 use common::protocol::server::Event as ServerEvent;
 use event_handler::EventHandler;
 use server::network::Network;
-
-
-#[derive(Debug)]
-struct Client {
-	pub id           : String,
-	pub last_active_s: f64,
-	pub position     : Vec2<f64>,
-	pub velocity     : Vec2<f64>,
-}
 
 
 fn main() {
