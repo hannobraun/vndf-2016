@@ -5,7 +5,7 @@ use shared::game::Broadcast;
 
 
 pub struct GameState {
-	pub broadcasts: Broadcasts,
+	pub broadcasts: HashMap<SocketAddr, Broadcast>,
 }
 
 impl GameState {
@@ -15,6 +15,3 @@ impl GameState {
 		}
 	}
 }
-
-
-pub type Broadcasts = HashMap<SocketAddr, Broadcast>;
