@@ -46,11 +46,11 @@ impl EventHandler {
 		network   : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
-			let now = precise_time_s();
+			let now_s = precise_time_s();
 
 			let log_message = format!(
 				"Event: {:?} (address: {}; time: {})\n",
-				event, address, now,
+				event, address, now_s,
 			);
 			if event.is_important() {
 				info!("{}", log_message);
@@ -99,7 +99,7 @@ impl EventHandler {
 						},
 					};
 
-					client.last_active_s = now;
+					client.last_active_s = now_s;
 
 					match event {
 						client::event::Privileged::Heartbeat => {
