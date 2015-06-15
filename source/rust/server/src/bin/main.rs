@@ -44,7 +44,7 @@ fn main() {
 	let mut clients    = HashMap::new();
 	let mut network    = Network::new(args.port);
 
-	info!("Listening on port {}\n", args.port);
+	info!("Listening on port {}", args.port);
 
 	let mut incoming_events = IncomingEvents::new();
 	let mut outgoing_events = Vec::new();
@@ -75,7 +75,7 @@ fn main() {
 		}
 		for (address, last_active_s, now_s) in to_remove.drain(..) {
 			info!(
-				"Removing {} (last active: {}, time of removal: {})\n",
+				"Removing {} (last active: {}, time of removal: {})",
 				address, last_active_s, now_s,
 			);
 			game_state.destroy_broadcast(&address);

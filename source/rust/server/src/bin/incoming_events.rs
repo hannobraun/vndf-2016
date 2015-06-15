@@ -76,7 +76,7 @@ fn handle_event(
 	network   : &mut Network,
 ) {
 	let log_message = format!(
-		"Event: {:?} (address: {}; time: {})\n",
+		"Event: {:?} (address: {}; time: {})",
 		event, address, now_s,
 	);
 
@@ -97,7 +97,7 @@ fn handle_event(
 					client,
 				None => {
 					debug!(
-						"Ignoring event: {:?} ({})\n",
+						"Ignoring event: {:?} ({})",
 						event, address,
 					);
 					return;
@@ -126,7 +126,7 @@ fn handle_public_event(
 	match event {
 		client::event::Public::Login => {
 			if clients.contains_key(&address) {
-				debug!("Ignoring Login: {}\n", address);
+				debug!("Ignoring Login: {}", address);
 			}
 			else {
 				let client = Client {
