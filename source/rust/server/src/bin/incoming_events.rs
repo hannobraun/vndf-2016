@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use std::net::SocketAddr;
 
 use nalgebra::{
@@ -18,6 +17,7 @@ use common::protocol::{
 	client,
 	server,
 };
+use game_state::Broadcasts;
 use server::network::Network;
 
 
@@ -44,7 +44,7 @@ impl IncomingEvents {
 		&mut self,
 		now_s     : f64,
 		clients   : &mut Clients,
-		broadcasts: &mut HashMap<SocketAddr, Broadcast>,
+		broadcasts: &mut Broadcasts,
 		outgoing  : &mut Vec<server::Event>,
 		network   : &mut Network,
 	) {
@@ -68,7 +68,7 @@ fn handle_event(
 	address   : SocketAddr,
 	event     : client::Event,
 	clients   : &mut Clients,
-	broadcasts: &mut HashMap<SocketAddr, Broadcast>,
+	broadcasts: &mut Broadcasts,
 	outgoing  : &mut Vec<server::Event>,
 	network   : &mut Network,
 ) {
