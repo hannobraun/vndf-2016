@@ -115,6 +115,8 @@ fn main() {
 						},
 					};
 
+					client.last_active_s = precise_time_s();
+
 					match event {
 						client::event::Privileged::Heartbeat => {
 							debug!(
@@ -152,14 +154,6 @@ fn main() {
 						},
 					}
 				}
-			}
-
-			match clients.get_mut(&address) {
-				Some(client) => {
-					client.last_active_s = precise_time_s();
-				},
-				None =>
-					continue, // invalid, ignore
 			}
 		}
 
