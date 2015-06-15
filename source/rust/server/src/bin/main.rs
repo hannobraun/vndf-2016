@@ -78,7 +78,7 @@ fn main() {
 				"Removing {} (last active: {}, time of removal: {})\n",
 				address, last_active_s, now_s,
 			);
-			game_state.broadcasts.remove(&address);
+			game_state.destroy_broadcast(&address);
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
 			}
