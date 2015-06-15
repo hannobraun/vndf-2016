@@ -11,6 +11,7 @@ use shared::game::{
 };
 
 
+#[derive(Debug)]
 pub struct GameState {
 	broadcasts: HashMap<SocketAddr, Broadcast>,
 	ships     : HashMap<SocketAddr, Ship>,
