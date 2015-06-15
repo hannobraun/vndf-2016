@@ -12,13 +12,13 @@ use clients::{
 	Client,
 	Clients,
 };
-use common::game::Broadcast;
-use common::protocol::{
+use game_state::Broadcasts;
+use server::network::Network;
+use shared::game::Broadcast;
+use shared::protocol::{
 	client,
 	server,
 };
-use game_state::Broadcasts;
-use server::network::Network;
 
 
 pub struct IncomingEvents {

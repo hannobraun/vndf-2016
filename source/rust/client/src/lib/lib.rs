@@ -4,7 +4,7 @@
 extern crate nalgebra;
 extern crate rustc_serialize;
 
-extern crate common;
+extern crate shared;
 
 
 pub mod debug;

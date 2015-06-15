@@ -2,7 +2,7 @@ extern crate nalgebra;
 extern crate time;
 
 extern crate client;
-extern crate common;
+extern crate shared;
 extern crate test_suite;
 
 

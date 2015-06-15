@@ -4,7 +4,7 @@
 #[macro_use]
 extern crate log;
 
-extern crate common;
+extern crate shared;
 
 
 pub mod network;

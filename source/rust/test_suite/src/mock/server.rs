@@ -2,11 +2,11 @@ use std::net::SocketAddr;
 
 use time::precise_time_s;
 
-use common::protocol::{
+use server::network::Network;
+use shared::protocol::{
 	client,
 	server,
 };
-use server::network::Network;
 use util::random_port;
 
 

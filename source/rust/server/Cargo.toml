@@ -20,5 +20,5 @@ nalgebra   = "*"
 rand       = "*"
 time       = "*"
 
-[dependencies.common]
+[dependencies.shared]
 path = "../shared"

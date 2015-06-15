@@ -2,8 +2,8 @@ extern crate time;
 extern crate rand;
 
 extern crate client;
-extern crate common;
 extern crate server;
+extern crate shared;
 
 
 pub mod mock;

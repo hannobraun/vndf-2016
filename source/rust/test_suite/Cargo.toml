@@ -12,8 +12,8 @@ time     = "*"
 [dependencies.client]
 path = "../client"
 
-[dependencies.common]
-path = "../shared"
-
 [dependencies.server]
 path = "../server"
+
+[dependencies.shared]
+path = "../shared"

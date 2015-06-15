@@ -15,7 +15,7 @@ extern crate scan_fmt;
 extern crate time;
 
 extern crate client;
-extern crate common;
+extern crate shared;
 
 
 mod args;
@@ -40,9 +40,9 @@ use client::interface::{
 	Message,
 };
 use client::network::Network;
-use common::protocol::client::Event as ClientEvent;
-use common::protocol::client::event as client_event;
-use common::protocol::server;
+use shared::protocol::client::Event as ClientEvent;
+use shared::protocol::client::event as client_event;
+use shared::protocol::server;
 use interface::Interface;
 
 

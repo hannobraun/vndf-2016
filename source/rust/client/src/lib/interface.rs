@@ -4,7 +4,7 @@ use rustc_serialize::json::{
 	DecodeResult,
 };
 
-use common::game::Broadcast;
+use shared::game::Broadcast;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]

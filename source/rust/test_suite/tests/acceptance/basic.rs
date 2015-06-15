@@ -1,5 +1,5 @@
 use client::interface::Frame;
-use common::game::Broadcast;
+use shared::game::Broadcast;
 use test_suite::rc;
 
 

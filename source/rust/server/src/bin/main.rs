@@ -15,8 +15,8 @@ extern crate nalgebra;
 extern crate rand;
 extern crate time;
 
-extern crate common;
 extern crate server;
+extern crate shared;
 
 
 use std::collections::HashMap;
@@ -27,7 +27,7 @@ use time::precise_time_s;
 
 use args::Args;
 
-use common::protocol::server::Event as ServerEvent;
+use shared::protocol::server::Event as ServerEvent;
 use incoming_events::IncomingEvents;
 use server::network::Network;
 
