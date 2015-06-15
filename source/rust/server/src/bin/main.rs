@@ -96,7 +96,7 @@ fn main() {
 				address
 			);
 
-		for (_, broadcast) in game_state.broadcasts.iter() {
+		for broadcast in game_state.broadcasts() {
 			outgoing_events.push(
 				ServerEvent::StartBroadcast(broadcast.clone())
 			);

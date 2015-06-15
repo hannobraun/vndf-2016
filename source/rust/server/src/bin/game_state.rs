@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::collections::hash_map::Values;
 use std::net::SocketAddr;
 
 use shared::game::Broadcast;
@@ -21,5 +22,9 @@ impl GameState {
 
 	pub fn destroy_broadcast(&mut self, id: &SocketAddr) {
 		self.broadcasts.remove(id);
+	}
+
+	pub fn broadcasts(&mut self) -> Values<SocketAddr, Broadcast> {
+		self.broadcasts.values()
 	}
 }
