@@ -14,7 +14,10 @@ use clients::{
 };
 use game_state::Broadcasts;
 use server::network::Network;
-use shared::game::Broadcast;
+use shared::game::{
+	Broadcast,
+	Ship,
+};
 use shared::protocol::{
 	client,
 	server,
@@ -129,8 +132,10 @@ fn handle_public_event(
 				let client = Client {
 					id           : generate_id(),
 					last_active_s: now_s,
-					position     : Vec2::new(0.0, 0.0),
-					velocity     : Vec2::new(1.0, 0.0),
+					ship         : Ship {
+						position: Vec2::new(0.0, 0.0),
+						velocity: Vec2::new(1.0, 0.0),
+					},
 				};
 
 				// TODO(AMy58bbh): This needs to be an outgoing event.
@@ -184,7 +189,7 @@ fn handle_privileged_event(
 			let rotation = Rot2::new(Vec1::new(angle as f64));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-			client.velocity = new_velocity;
+			client.ship.velocity = new_velocity;
 		},
 	}
 }

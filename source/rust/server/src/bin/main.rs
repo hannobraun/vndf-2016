@@ -86,7 +86,7 @@ fn main() {
 		for (_, client) in &mut clients {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
-			client.position = client.position + client.velocity;
+			client.ship.position = client.ship.position + client.ship.velocity;
 		}
 
 		let recipients = clients
@@ -107,8 +107,8 @@ fn main() {
 
 		for (&address, client) in &clients {
 			let event = ServerEvent::UpdateEntity(
-				client.position,
-				client.velocity,
+				client.ship.position,
+				client.ship.velocity,
 			);
 			network.send(
 				Some(address).into_iter(),
