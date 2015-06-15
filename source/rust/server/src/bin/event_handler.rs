@@ -12,8 +12,10 @@ use time::precise_time_s;
 
 use clients::Client;
 use common::game::Broadcast;
-use common::protocol::client;
-use common::protocol::server::Event as ServerEvent;
+use common::protocol::{
+	client,
+	server,
+};
 use server::network::Network;
 
 
@@ -40,7 +42,7 @@ impl EventHandler {
 		&mut self,
 		clients        : &mut HashMap<SocketAddr, Client>,
 		broadcasts     : &mut HashMap<SocketAddr, Broadcast>,
-		outgoing_events: &mut Vec<ServerEvent>,
+		outgoing_events: &mut Vec<server::Event>,
 		network        : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
@@ -72,7 +74,7 @@ impl EventHandler {
 									velocity     : Vec2::new(1.0, 0.0),
 								};
 
-								let login = ServerEvent::SelfId(client.id.clone());
+								let login = server::Event::SelfId(client.id.clone());
 								network.send(
 									Some(address).into_iter(),
 									&[login],
@@ -117,7 +119,7 @@ impl EventHandler {
 						client::event::Privileged::StopBroadcast => {
 							broadcasts.remove(&address);
 							outgoing_events.push(
-								ServerEvent::StopBroadcast(client.id.clone())
+								server::Event::StopBroadcast(client.id.clone())
 							);
 						},
 						client::event::Privileged::ScheduleManeuver(angle) => {
