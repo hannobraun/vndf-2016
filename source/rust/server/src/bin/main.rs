@@ -79,86 +79,95 @@ fn main() {
 			//                 loop.
 
 			match event {
-				client::Event::Public(client::event::Public::Login) => {
-					if clients.contains_key(&address) {
-						debug!("Ignoring Login: {}\n", address);
-					}
-					else {
-						let client = Client {
-							id           : generate_id(),
-							last_active_s: precise_time_s(),
-							position     : Vec2::new(0.0, 0.0),
-							velocity     : Vec2::new(1.0, 0.0),
-						};
+				client::Event::Public(event) => {
+					match event {
+						client::event::Public::Login => {
+							if clients.contains_key(&address) {
+								debug!("Ignoring Login: {}\n", address);
+							}
+							else {
+								let client = Client {
+									id           : generate_id(),
+									last_active_s: precise_time_s(),
+									position     : Vec2::new(0.0, 0.0),
+									velocity     : Vec2::new(1.0, 0.0),
+								};
 
-						let login = ServerEvent::SelfId(client.id.clone());
-						network.send(
-							Some(address).into_iter(),
-							&[login],
-						);
+								let login = ServerEvent::SelfId(client.id.clone());
+								network.send(
+									Some(address).into_iter(),
+									&[login],
+								);
 
-						info!("Login: {}, {:?}\n", address, client);
-						clients.insert(address, client);
-					}
-				},
-				client::Event::Privileged(client::event::Privileged::Heartbeat) => {
-					debug!(
-						"Heartbeat: {} (time: {})\n",
-						address, precise_time_s(),
-					);
-
-					// Nothing to do here, really, as the the last active time
-					// is updated below, no matter which event was received.
-					()
-				},
-				client::Event::Privileged(client::event::Privileged::StartBroadcast(message)) => {
-					match clients.get_mut(&address) {
-						Some(client) => {
-							let broadcast = Broadcast {
-								sender : client.id.clone(),
-								message: message,
-							};
-
-							info!("Broadcast: {}, {:?}\n", address, broadcast);
-							broadcasts.insert(address, broadcast);
-						},
-						None => {
-							debug!("Ignoring broadcast: {}\n", address);
-							continue; // invalid, ignore
-						},
-					}
-				},
-				client::Event::Privileged(client::event::Privileged::StopBroadcast) => {
-					match clients.get_mut(&address) {
-						Some(client) => {
-							info!("Stop Broadcast: {}\n", address);
-							broadcasts.remove(&address);
-							outgoing_events.push(
-								ServerEvent::StopBroadcast(client.id.clone())
-							);
-						},
-						None => {
-							debug!("Ignoring Stop Broadcast: {}\n", address);
-							continue; // invalid, ignore
-						},
-					}
-				},
-				client::Event::Privileged(client::event::Privileged::ScheduleManeuver(angle)) => {
-					match clients.get_mut(&address) {
-						Some(client) => {
-							info!("Schedule Maneuver: {}\n", address);
-
-							let rotation = Rot2::new(Vec1::new(angle as f64));
-							let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-							client.velocity = new_velocity;
-						},
-						None => {
-							debug!("Ignoring Schedule Maneuver: {}\n", address);
-							continue; // invalid, ignore
+								info!("Login: {}, {:?}\n", address, client);
+								clients.insert(address, client);
+							}
 						}
 					}
 				},
+
+				client::Event::Privileged(event) => {
+					match event {
+						client::event::Privileged::Heartbeat => {
+							debug!(
+								"Heartbeat: {} (time: {})\n",
+								address, precise_time_s(),
+							);
+
+							// Nothing to do here, really, as the the last active time
+							// is updated below, no matter which event was received.
+							()
+						},
+						client::event::Privileged::StartBroadcast(message) => {
+							match clients.get_mut(&address) {
+								Some(client) => {
+									let broadcast = Broadcast {
+										sender : client.id.clone(),
+										message: message,
+									};
+
+									info!("Broadcast: {}, {:?}\n", address, broadcast);
+									broadcasts.insert(address, broadcast);
+								},
+								None => {
+									debug!("Ignoring broadcast: {}\n", address);
+									continue; // invalid, ignore
+								},
+							}
+						},
+						client::event::Privileged::StopBroadcast => {
+							match clients.get_mut(&address) {
+								Some(client) => {
+									info!("Stop Broadcast: {}\n", address);
+									broadcasts.remove(&address);
+									outgoing_events.push(
+										ServerEvent::StopBroadcast(client.id.clone())
+									);
+								},
+								None => {
+									debug!("Ignoring Stop Broadcast: {}\n", address);
+									continue; // invalid, ignore
+								},
+							}
+						},
+						client::event::Privileged::ScheduleManeuver(angle) => {
+							match clients.get_mut(&address) {
+								Some(client) => {
+									info!("Schedule Maneuver: {}\n", address);
+
+									let rotation = Rot2::new(Vec1::new(angle as f64));
+									let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+									client.velocity = new_velocity;
+								},
+								None => {
+									debug!("Ignoring Schedule Maneuver: {}\n", address);
+									continue; // invalid, ignore
+								}
+							}
+						},
+					}
+				}
 			}
 
 			match clients.get_mut(&address) {
