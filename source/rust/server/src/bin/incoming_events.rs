@@ -133,6 +133,10 @@ fn handle_public_event(
 					velocity     : Vec2::new(1.0, 0.0),
 				};
 
+				// TODO(AMy58bbh): This needs to be an outgoing event.
+				//                 Currently, this won't work, as outgoing
+				//                 events are broadcasted to all clients, while
+				//                 this event is only for a specific client.
 				let login = server::Event::SelfId(client.id.clone());
 				network.send(
 					Some(address).into_iter(),
