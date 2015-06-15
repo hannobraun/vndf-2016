@@ -15,7 +15,7 @@ fn it_should_display_an_error_if_connection_to_server_is_lost() {
 
 	let event = server.wait_until(|event|
 		if let &mut Some((_, ref event)) = event {
-			event == &client::Event::Login
+			event == &client::Event::Public(client::event::Public::Login)
 		}
 		else {
 			false

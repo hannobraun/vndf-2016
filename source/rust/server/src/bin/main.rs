@@ -79,7 +79,7 @@ fn main() {
 			//                 loop.
 
 			match event {
-				client::Event::Login => {
+				client::Event::Public(client::event::Public::Login) => {
 					if clients.contains_key(&address) {
 						debug!("Ignoring Login: {}\n", address);
 					}
@@ -101,7 +101,7 @@ fn main() {
 						clients.insert(address, client);
 					}
 				},
-				client::Event::Heartbeat => {
+				client::Event::Privileged(client::event::Privileged::Heartbeat) => {
 					debug!(
 						"Heartbeat: {} (time: {})\n",
 						address, precise_time_s(),
@@ -111,7 +111,7 @@ fn main() {
 					// is updated below, no matter which event was received.
 					()
 				},
-				client::Event::StartBroadcast(message) => {
+				client::Event::Privileged(client::event::Privileged::StartBroadcast(message)) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							let broadcast = Broadcast {
@@ -128,7 +128,7 @@ fn main() {
 						},
 					}
 				},
-				client::Event::StopBroadcast => {
+				client::Event::Privileged(client::event::Privileged::StopBroadcast) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							info!("Stop Broadcast: {}\n", address);
@@ -143,7 +143,7 @@ fn main() {
 						},
 					}
 				},
-				client::Event::ScheduleManeuver(angle) => {
+				client::Event::Privileged(client::event::Privileged::ScheduleManeuver(angle)) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							info!("Schedule Maneuver: {}\n", address);

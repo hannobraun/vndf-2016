@@ -14,13 +14,13 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	let mut client_1 = mock::Client::start(server.port());
 	let mut client_2 = mock::Client::start(server.port());
 
-	client_1.send(client::Event::StartBroadcast(
+	client_1.send(client::Event::Privileged(client::event::Privileged::StartBroadcast(
 		"I haven't logged in, but am sending this anyway.".to_string(),
-	));
+	)));
 
 	let message = "This is a broadcast.".to_string();
-	client_2.send(client::Event::Login);
-	client_2.send(client::Event::StartBroadcast(message.clone()));
+	client_2.send(client::Event::Public(client::event::Public::Login));
+	client_2.send(client::Event::Privileged(client::event::Privileged::StartBroadcast(message.clone())));
 
 	let mut received_message = String::new();
 	client_2.wait_until(|event| {
@@ -46,7 +46,7 @@ fn it_should_ignore_duplicate_logins() {
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
-	client.send(client::Event::Login);
+	client.send(client::Event::Public(client::event::Public::Login));
 
 	let mut self_id = String::new();
 	client.wait_until(|event| {
@@ -59,9 +59,9 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	client.send(client::Event::Login);
+	client.send(client::Event::Public(client::event::Public::Login));
 	client.send(
-		client::Event::StartBroadcast("This is a broadcast.".to_string())
+		client::Event::Privileged(client::event::Privileged::StartBroadcast("This is a broadcast.".to_string()))
 	);
 
 	let mut received_self_id   = None;
@@ -95,7 +95,7 @@ fn it_should_send_regular_heartbeats() {
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
-	client.send(client::Event::Login);
+	client.send(client::Event::Public(client::event::Public::Login));
 
 	client.wait_until(|event| *event == Some(server::Event::Heartbeat));
 }

@@ -41,6 +41,7 @@ use client::interface::{
 };
 use client::network::Network;
 use common::protocol::client::Event as ClientEvent;
+use common::protocol::client::event as client_event;
 use common::protocol::server;
 use interface::Interface;
 
@@ -72,7 +73,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 	let mut last_server_activity = precise_time_s();
 
-	network.send(ClientEvent::Login);
+	network.send(ClientEvent::Public(client_event::Public::Login));
 
 	'main: loop {
 		let input_events = match interface.update(&frame) {
@@ -95,7 +96,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					}
 					else {
 						network.send(
-							ClientEvent::StartBroadcast(message.clone())
+							ClientEvent::Privileged(client_event::Privileged::StartBroadcast(message.clone()))
 						);
 
 						frame.message = Message::Notice(
@@ -103,14 +104,14 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						);
 					},
 				InputEvent::StopBroadcast => {
-					network.send(ClientEvent::StopBroadcast);
+					network.send(ClientEvent::Privileged(client_event::Privileged::StopBroadcast));
 
 					frame.message = Message::Notice(
 						"Stopped sending broadcast".to_string()
 					);
 				},
 				InputEvent::ScheduleManeuver(angle) => {
-					network.send(ClientEvent::ScheduleManeuver(angle));
+					network.send(ClientEvent::Privileged(client_event::Privileged::ScheduleManeuver(angle)));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()
@@ -159,7 +160,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 			)
 			.collect();
 
-		network.send(ClientEvent::Heartbeat);
+		network.send(ClientEvent::Privileged(client_event::Privileged::Heartbeat));
 
 		sleep_ms(args.sleep_ms);
 	}

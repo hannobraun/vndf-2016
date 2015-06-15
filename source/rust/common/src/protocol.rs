@@ -1,15 +1,26 @@
 pub mod client {
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
-	// TODO(720RWYSw): Split events into public and restricted events. This can
-	//                 make the server-side event handling more robust.
 	pub enum Event {
-		Login,
-		Heartbeat,
+		Public(event::Public),
+		Privileged(event::Privileged),
+	}
 
-		StartBroadcast(String),
-		StopBroadcast,
 
-		ScheduleManeuver(f32),
+	pub mod event {
+		#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
+		pub enum Public {
+			Login,
+		}
+
+		#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
+		pub enum Privileged {
+			Heartbeat,
+
+			StartBroadcast(String),
+			StopBroadcast,
+
+			ScheduleManeuver(f32),
+		}
 	}
 }
 
