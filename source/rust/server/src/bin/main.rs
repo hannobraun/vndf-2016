@@ -44,7 +44,7 @@ fn main() {
 
 	info!("Listening on port {}\n", args.port);
 
-	let mut event_handler   = IncomingEvents::new();
+	let mut incoming_events = IncomingEvents::new();
 	let mut outgoing_events = Vec::new();
 
 	loop {
@@ -52,8 +52,8 @@ fn main() {
 
 		let now_s = precise_time_s();
 
-		event_handler.receive(network.receive());
-		event_handler.handle(
+		incoming_events.receive(network.receive());
+		incoming_events.handle(
 			now_s,
 			&mut clients,
 			&mut broadcasts,
