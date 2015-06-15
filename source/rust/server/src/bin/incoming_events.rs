@@ -85,31 +85,8 @@ fn handle_event(
 	}
 
 	match event {
-		client::Event::Public(event) => {
-			match event {
-				client::event::Public::Login => {
-					if clients.contains_key(&address) {
-						debug!("Ignoring Login: {}\n", address);
-					}
-					else {
-						let client = Client {
-							id           : generate_id(),
-							last_active_s: now_s,
-							position     : Vec2::new(0.0, 0.0),
-							velocity     : Vec2::new(1.0, 0.0),
-						};
-
-						let login = server::Event::SelfId(client.id.clone());
-						network.send(
-							Some(address).into_iter(),
-							&[login],
-						);
-
-						clients.insert(address, client);
-					}
-				}
-			}
-		},
+		client::Event::Public(event) =>
+			handle_public_event(now_s, address, event, clients, network),
 
 		client::Event::Privileged(event) => {
 			let client = match clients.get_mut(&address) {
@@ -153,6 +130,38 @@ fn handle_event(
 
 					client.velocity = new_velocity;
 				},
+			}
+		}
+	}
+}
+
+fn handle_public_event(
+	now_s: f64,
+	address: SocketAddr,
+	event  : client::event::Public,
+	clients: &mut Clients,
+	network: &mut Network,
+) {
+	match event {
+		client::event::Public::Login => {
+			if clients.contains_key(&address) {
+				debug!("Ignoring Login: {}\n", address);
+			}
+			else {
+				let client = Client {
+					id           : generate_id(),
+					last_active_s: now_s,
+					position     : Vec2::new(0.0, 0.0),
+					velocity     : Vec2::new(1.0, 0.0),
+				};
+
+				let login = server::Event::SelfId(client.id.clone());
+				network.send(
+					Some(address).into_iter(),
+					&[login],
+				);
+
+				clients.insert(address, client);
 			}
 		}
 	}
