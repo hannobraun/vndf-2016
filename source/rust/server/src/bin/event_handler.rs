@@ -40,14 +40,13 @@ impl EventHandler {
 
 	pub fn handle(
 		&mut self,
+		now_s     : f64,
 		clients   : &mut HashMap<SocketAddr, Client>,
 		broadcasts: &mut HashMap<SocketAddr, Broadcast>,
 		outgoing  : &mut Vec<server::Event>,
 		network   : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
-			let now_s = precise_time_s();
-
 			let log_message = format!(
 				"Event: {:?} (address: {}; time: {})\n",
 				event, address, now_s,

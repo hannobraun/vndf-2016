@@ -50,15 +50,17 @@ fn main() {
 	loop {
 		trace!("Start server main loop iteration");
 
+		let now_s = precise_time_s();
+
 		event_handler.receive(network.receive());
 		event_handler.handle(
+			now_s,
 			&mut clients,
 			&mut broadcasts,
 			&mut outgoing_events,
 			&mut network,
 		);
 
-		let     now_s     = precise_time_s();
 		let mut to_remove = Vec::new();
 		for (&address, client) in clients.iter() {
 			if client.last_active_s + args.client_timeout_s < now_s {
