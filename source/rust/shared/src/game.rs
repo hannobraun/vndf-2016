@@ -8,7 +8,7 @@ pub struct Broadcast {
 }
 
 
-#[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
+#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Ship {
 	pub position: Vec2<f64>,
 	pub velocity: Vec2<f64>,
