@@ -2,6 +2,7 @@
 
 
 mod args;
+mod event_handler;
 
 
 extern crate env_logger;
@@ -34,6 +35,7 @@ use args::Args;
 use common::game::Broadcast;
 use common::protocol::client;
 use common::protocol::server::Event as ServerEvent;
+use event_handler::EventHandler;
 use server::network::Network;
 
 
@@ -59,17 +61,17 @@ fn main() {
 
 	info!("Listening on port {}\n", args.port);
 
-	let mut incoming_events = Vec::new();
+	let mut event_handler   = EventHandler::new();
 	let mut outgoing_events = Vec::new();
 
 	loop {
 		trace!("Start server main loop iteration");
 
 		for (address, event) in network.receive() {
-			incoming_events.push((address, event));
+			event_handler.incoming.push((address, event));
 		}
 
-		for (address, event) in incoming_events.drain(..) {
+		for (address, event) in event_handler.incoming.drain(..) {
 			let now = precise_time_s();
 
 			let log_message = format!(
