@@ -9,7 +9,10 @@ use nalgebra::{
 };
 use rand::random;
 
-use clients::Client;
+use clients::{
+	Client,
+	Clients,
+};
 use common::game::Broadcast;
 use common::protocol::{
 	client,
@@ -40,7 +43,7 @@ impl EventHandler {
 	pub fn handle(
 		&mut self,
 		now_s     : f64,
-		clients   : &mut HashMap<SocketAddr, Client>,
+		clients   : &mut Clients,
 		broadcasts: &mut HashMap<SocketAddr, Broadcast>,
 		outgoing  : &mut Vec<server::Event>,
 		network   : &mut Network,
@@ -64,7 +67,7 @@ fn handle_event(
 	now_s     : f64,
 	address   : SocketAddr,
 	event     : client::Event,
-	clients   : &mut HashMap<SocketAddr, Client>,
+	clients   : &mut Clients,
 	broadcasts: &mut HashMap<SocketAddr, Broadcast>,
 	outgoing  : &mut Vec<server::Event>,
 	network   : &mut Network,

@@ -1,4 +1,10 @@
+use std::collections::HashMap;
+use std::net::SocketAddr;
+
 use nalgebra::Vec2;
+
+
+pub type Clients = HashMap<SocketAddr, Client>;
 
 
 #[derive(Debug)]
