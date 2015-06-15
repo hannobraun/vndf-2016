@@ -25,4 +25,4 @@ scan_fmt        = "*"
 time            = "*"
 
 [dependencies.common]
-path = "../common"
+path = "../shared"

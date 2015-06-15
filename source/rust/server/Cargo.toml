@@ -21,4 +21,4 @@ rand       = "*"
 time       = "*"
 
 [dependencies.common]
-path = "../common"
+path = "../shared"
