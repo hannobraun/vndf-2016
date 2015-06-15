@@ -1,6 +1,3 @@
-use rustc_serialize::Encodable;
-
-
 pub mod client {
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 	// TODO(720RWYSw): Split events into public and restricted events. This can
