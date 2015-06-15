@@ -20,7 +20,7 @@ use server::network::Network;
 
 
 pub struct EventHandler {
-	pub incoming: Vec<(SocketAddr, client::Event)>,
+	incoming: Vec<(SocketAddr, client::Event)>,
 }
 
 impl EventHandler {
