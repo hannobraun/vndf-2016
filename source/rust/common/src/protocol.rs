@@ -5,6 +5,8 @@ use game::Broadcast;
 
 
 #[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
+// TODO: Split events into public and restricted events. This can make the
+//       server-side event handling more robust.
 pub enum ClientEvent {
 	Login,
 	Heartbeat,
