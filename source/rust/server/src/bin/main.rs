@@ -86,11 +86,7 @@ fn main() {
 			// TODO: Ships should be destroyed also
 		}
 
-		for (_, ship) in game_state.ships() {
-			// TODO(E7GyYwQy): Take passed time since last iteration into
-			//                 account.
-			ship.position = ship.position + ship.velocity;
-		}
+		game_state.update();
 
 		let recipients = clients
 			.iter()

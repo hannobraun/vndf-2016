@@ -49,4 +49,12 @@ impl GameState {
 	pub fn ships(&mut self) -> IterMut<SocketAddr, Ship> {
 		self.ships.iter_mut()
 	}
+
+	pub fn update(&mut self) {
+		for (_, ship) in &mut self.ships {
+			// TODO(E7GyYwQy): Take passed time since last iteration into
+			//                 account.
+			ship.position = ship.position + ship.velocity;
+		}
+	}
 }
