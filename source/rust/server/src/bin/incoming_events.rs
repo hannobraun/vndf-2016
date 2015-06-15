@@ -88,8 +88,16 @@ fn handle_event(
 	}
 
 	match event {
-		client::Event::Public(event) =>
-			handle_public_event(now_s, address, event, clients, network),
+		client::Event::Public(event) => {
+			handle_public_event(
+				now_s,
+				address,
+				event,
+				clients,
+				game_state,
+				network,
+			);
+		},
 
 		client::Event::Privileged(event) => {
 			let client = match clients.get_mut(&address) {
@@ -117,11 +125,12 @@ fn handle_event(
 }
 
 fn handle_public_event(
-	now_s: f64,
-	address: SocketAddr,
-	event  : client::event::Public,
-	clients: &mut Clients,
-	network: &mut Network,
+	now_s     : f64,
+	address   : SocketAddr,
+	event     : client::event::Public,
+	clients   : &mut Clients,
+	game_state: &mut GameState,
+	network   : &mut Network,
 ) {
 	match event {
 		client::event::Public::Login => {
@@ -132,11 +141,12 @@ fn handle_public_event(
 				let client = Client {
 					id           : generate_id(),
 					last_active_s: now_s,
-					ship         : Ship {
-						position: Vec2::new(0.0, 0.0),
-						velocity: Vec2::new(1.0, 0.0),
-					},
 				};
+
+				game_state.create_ship(address, Ship {
+					position: Vec2::new(0.0, 0.0),
+					velocity: Vec2::new(1.0, 0.0),
+				});
 
 				// TODO(AMy58bbh): This needs to be an outgoing event.
 				//                 Currently, this won't work, as outgoing
@@ -189,7 +199,7 @@ fn handle_privileged_event(
 			let rotation = Rot2::new(Vec1::new(angle as f64));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-			client.ship.velocity = new_velocity;
+			game_state.ship(&address).velocity = new_velocity;
 		},
 	}
 }

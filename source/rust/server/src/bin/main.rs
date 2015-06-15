@@ -84,10 +84,10 @@ fn main() {
 			}
 		}
 
-		for (_, client) in &mut clients {
+		for (_, ship) in game_state.ships() {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
-			client.ship.position = client.ship.position + client.ship.velocity;
+			ship.position = ship.position + ship.velocity;
 		}
 
 		let recipients = clients
@@ -106,8 +106,8 @@ fn main() {
 		network.send(recipients, outgoing_events.as_ref());
 		outgoing_events.clear();
 
-		for (&address, client) in &clients {
-			let event = ServerEvent::UpdateEntity(client.ship);
+		for (&address, ship) in game_state.ships() {
+			let event = ServerEvent::UpdateEntity(*ship);
 			network.send(
 				Some(address).into_iter(),
 				&[event],
