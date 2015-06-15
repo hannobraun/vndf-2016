@@ -28,6 +28,7 @@ use time::precise_time_s;
 use args::Args;
 
 use shared::protocol::server::Event as ServerEvent;
+use game_state::GameState;
 use incoming_events::IncomingEvents;
 use server::network::Network;
 
@@ -39,7 +40,7 @@ fn main() {
 
 	let args = Args::parse(env::args());
 
-	let mut broadcasts = HashMap::new();
+	let mut game_state = GameState::new();
 	let mut clients    = HashMap::new();
 	let mut network    = Network::new(args.port);
 
@@ -57,7 +58,7 @@ fn main() {
 		incoming_events.handle(
 			now_s,
 			&mut clients,
-			&mut broadcasts,
+			&mut game_state.broadcasts,
 			&mut outgoing_events,
 			&mut network,
 		);
@@ -77,7 +78,7 @@ fn main() {
 				"Removing {} (last active: {}, time of removal: {})\n",
 				address, last_active_s, now_s,
 			);
-			broadcasts.remove(&address);
+			game_state.broadcasts.remove(&address);
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
 			}
@@ -95,7 +96,7 @@ fn main() {
 				address
 			);
 
-		for (_, broadcast) in broadcasts.iter() {
+		for (_, broadcast) in game_state.broadcasts.iter() {
 			outgoing_events.push(
 				ServerEvent::StartBroadcast(broadcast.clone())
 			);
