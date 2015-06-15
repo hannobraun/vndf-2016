@@ -40,10 +40,8 @@ use client::interface::{
 	Message,
 };
 use client::network::Network;
-use common::protocol::{
-	ClientEvent,
-	ServerEvent,
-};
+use common::protocol::client::Event as ClientEvent;
+use common::protocol::ServerEvent;
 use interface::Interface;
 
 

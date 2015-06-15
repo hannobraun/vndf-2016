@@ -33,7 +33,7 @@ use args::Args;
 
 use common::game::Broadcast;
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 use server::network::Network;
@@ -81,7 +81,7 @@ fn main() {
 			//                 loop.
 
 			match event {
-				ClientEvent::Login => {
+				client::Event::Login => {
 					if clients.contains_key(&address) {
 						debug!("Ignoring Login: {}\n", address);
 					}
@@ -103,7 +103,7 @@ fn main() {
 						clients.insert(address, client);
 					}
 				},
-				ClientEvent::Heartbeat => {
+				client::Event::Heartbeat => {
 					debug!(
 						"Heartbeat: {} (time: {})\n",
 						address, precise_time_s(),
@@ -113,7 +113,7 @@ fn main() {
 					// is updated below, no matter which event was received.
 					()
 				},
-				ClientEvent::StartBroadcast(message) => {
+				client::Event::StartBroadcast(message) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							let broadcast = Broadcast {
@@ -130,7 +130,7 @@ fn main() {
 						},
 					}
 				},
-				ClientEvent::StopBroadcast => {
+				client::Event::StopBroadcast => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							info!("Stop Broadcast: {}\n", address);
@@ -145,7 +145,7 @@ fn main() {
 						},
 					}
 				},
-				ClientEvent::ScheduleManeuver(angle) => {
+				client::Event::ScheduleManeuver(angle) => {
 					match clients.get_mut(&address) {
 						Some(client) => {
 							info!("Schedule Maneuver: {}\n", address);

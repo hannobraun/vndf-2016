@@ -3,7 +3,7 @@ use std::net::SocketAddr;
 use time::precise_time_s;
 
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 use server::network::Network;
@@ -13,7 +13,7 @@ use util::random_port;
 pub struct Server {
 	port    : u16,
 	network : Network,
-	incoming: Vec<(SocketAddr, ClientEvent)>,
+	incoming: Vec<(SocketAddr, client::Event)>,
 }
 
 impl Server {
@@ -37,7 +37,7 @@ impl Server {
 	}
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
-	pub fn expect_event(&mut self) -> Option<(SocketAddr, ClientEvent)> {
+	pub fn expect_event(&mut self) -> Option<(SocketAddr, client::Event)> {
 		let start_s = precise_time_s();
 
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.5 {
@@ -56,9 +56,9 @@ impl Server {
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
 	pub fn wait_until<F>(&mut self, condition: F)
-		-> Option<(SocketAddr, ClientEvent)>
+		-> Option<(SocketAddr, client::Event)>
 		where
-			F: Fn(&mut Option<(SocketAddr, ClientEvent)>) -> bool,
+			F: Fn(&mut Option<(SocketAddr, client::Event)>) -> bool,
 	{
 		let start_s = precise_time_s();
 

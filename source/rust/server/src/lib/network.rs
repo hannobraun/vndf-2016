@@ -7,15 +7,15 @@ use common::network::{
 	Connection,
 };
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 
 
 pub struct Network {
-	acceptor   : Acceptor<ClientEvent>,
-	connections: HashMap<SocketAddr, Connection<ClientEvent>>,
-	incoming   : Vec<(SocketAddr, ClientEvent)>,
+	acceptor   : Acceptor<client::Event>,
+	connections: HashMap<SocketAddr, Connection<client::Event>>,
+	incoming   : Vec<(SocketAddr, client::Event)>,
 	to_remove  : Vec<SocketAddr>,
 }
 
@@ -46,7 +46,7 @@ impl Network {
 		}
 	}
 
-	pub fn receive(&mut self) -> Drain<(SocketAddr, ClientEvent)> {
+	pub fn receive(&mut self) -> Drain<(SocketAddr, client::Event)> {
 		self.connections.extend(self.acceptor.accept());
 
 		for address in self.to_remove.drain(..) {

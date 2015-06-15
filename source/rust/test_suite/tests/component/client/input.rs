@@ -1,6 +1,6 @@
 use std::iter::repeat;
 
-use common::protocol::ClientEvent;
+use common::protocol::client;
 use test_suite::{
 	mock,
 	rc,
@@ -24,7 +24,7 @@ fn it_should_reject_broadcasts_that_are_too_large_to_be_sent() {
 	client.start_broadcast(valid_broadcast.as_ref());
 	server.wait_until(|event| {
 		if let &mut Some((_, ref event)) = event {
-			event == &ClientEvent::StartBroadcast(valid_broadcast.clone())
+			event == &client::Event::StartBroadcast(valid_broadcast.clone())
 		}
 		else {
 			false

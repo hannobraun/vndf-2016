@@ -1,5 +1,5 @@
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 use test_suite::{
@@ -15,7 +15,7 @@ fn it_should_display_an_error_if_connection_to_server_is_lost() {
 
 	let event = server.wait_until(|event|
 		if let &mut Some((_, ref event)) = event {
-			event == &ClientEvent::Login
+			event == &client::Event::Login
 		}
 		else {
 			false

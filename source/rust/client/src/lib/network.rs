@@ -3,7 +3,7 @@ use std::vec::Drain;
 
 use common::network::Connection;
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 
@@ -19,7 +19,7 @@ impl Network {
 		}
 	}
 
-	pub fn send(&mut self, event: ClientEvent) {
+	pub fn send(&mut self, event: client::Event) {
 		if let Err(error) = self.connection.send(Some(event).iter()) {
 			panic!("Error sending event to server: {}", error);
 		}

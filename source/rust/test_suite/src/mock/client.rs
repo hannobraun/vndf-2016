@@ -2,7 +2,7 @@ use time::precise_time_s;
 
 use client::network::Network;
 use common::protocol::{
-	ClientEvent,
+	client,
 	ServerEvent,
 };
 
@@ -20,7 +20,7 @@ impl Client {
 		}
 	}
 
-	pub fn send(&mut self, event: ClientEvent) {
+	pub fn send(&mut self, event: client::Event) {
 		self.network.send(event);
 	}
 
