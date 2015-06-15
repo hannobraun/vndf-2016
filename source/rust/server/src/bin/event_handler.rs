@@ -46,93 +46,114 @@ impl EventHandler {
 		network   : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
-			let log_message = format!(
-				"Event: {:?} (address: {}; time: {})\n",
-				event, address, now_s,
+			handle_event(
+				now_s,
+				address,
+				event,
+				clients,
+				broadcasts,
+				outgoing,
+				network,
 			);
-			if event.is_important() {
-				info!("{}", log_message);
-			}
-			else {
-				debug!("{}", log_message);
-			}
-
-			match event {
-				client::Event::Public(event) => {
-					match event {
-						client::event::Public::Login => {
-							if clients.contains_key(&address) {
-								debug!("Ignoring Login: {}\n", address);
-							}
-							else {
-								let client = Client {
-									id           : generate_id(),
-									last_active_s: now_s,
-									position     : Vec2::new(0.0, 0.0),
-									velocity     : Vec2::new(1.0, 0.0),
-								};
-
-								let login = server::Event::SelfId(client.id.clone());
-								network.send(
-									Some(address).into_iter(),
-									&[login],
-								);
-
-								clients.insert(address, client);
-							}
-						}
-					}
-				},
-
-				client::Event::Privileged(event) => {
-					let client = match clients.get_mut(&address) {
-						Some(client) =>
-							client,
-						None => {
-							debug!(
-								"Ignoring event: {:?} ({})\n",
-								event, address,
-							);
-							continue;
-						},
-					};
-
-					client.last_active_s = now_s;
-
-					match event {
-						client::event::Privileged::Heartbeat => {
-							// Nothing to do here, really, as the the time of
-							// last activity for the client has already been
-							// updated.
-						},
-						client::event::Privileged::StartBroadcast(message) => {
-							broadcasts.insert(
-								address,
-								Broadcast {
-									sender : client.id.clone(),
-									message: message,
-								}
-							);
-						},
-						client::event::Privileged::StopBroadcast => {
-							broadcasts.remove(&address);
-							outgoing.push(
-								server::Event::StopBroadcast(client.id.clone())
-							);
-						},
-						client::event::Privileged::ScheduleManeuver(angle) => {
-							let rotation = Rot2::new(Vec1::new(angle as f64));
-							let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-							client.velocity = new_velocity;
-						},
-					}
-				}
-			}
 		}
 	}
 }
 
+
+fn handle_event(
+	now_s     : f64,
+	address   : SocketAddr,
+	event     : client::Event,
+	clients   : &mut HashMap<SocketAddr, Client>,
+	broadcasts: &mut HashMap<SocketAddr, Broadcast>,
+	outgoing  : &mut Vec<server::Event>,
+	network   : &mut Network,
+) {
+	let log_message = format!(
+		"Event: {:?} (address: {}; time: {})\n",
+		event, address, now_s,
+	);
+
+	if event.is_important() {
+		info!("{}", log_message);
+	}
+	else {
+		debug!("{}", log_message);
+	}
+
+	match event {
+		client::Event::Public(event) => {
+			match event {
+				client::event::Public::Login => {
+					if clients.contains_key(&address) {
+						debug!("Ignoring Login: {}\n", address);
+					}
+					else {
+						let client = Client {
+							id           : generate_id(),
+							last_active_s: now_s,
+							position     : Vec2::new(0.0, 0.0),
+							velocity     : Vec2::new(1.0, 0.0),
+						};
+
+						let login = server::Event::SelfId(client.id.clone());
+						network.send(
+							Some(address).into_iter(),
+							&[login],
+						);
+
+						clients.insert(address, client);
+					}
+				}
+			}
+		},
+
+		client::Event::Privileged(event) => {
+			let client = match clients.get_mut(&address) {
+				Some(client) =>
+					client,
+				None => {
+					debug!(
+						"Ignoring event: {:?} ({})\n",
+						event, address,
+					);
+					return;
+				},
+			};
+
+			client.last_active_s = now_s;
+
+			match event {
+				client::event::Privileged::Heartbeat => {
+					// Nothing to do here, really, as the the time of
+					// last activity for the client has already been
+					// updated.
+				},
+				client::event::Privileged::StartBroadcast(message) => {
+					broadcasts.insert(
+						address,
+						Broadcast {
+							sender : client.id.clone(),
+							message: message,
+						}
+					);
+				},
+				client::event::Privileged::StopBroadcast => {
+					broadcasts.remove(&address);
+					outgoing.push(
+						server::Event::StopBroadcast(client.id.clone())
+					);
+				},
+				client::event::Privileged::ScheduleManeuver(angle) => {
+					let rotation = Rot2::new(Vec1::new(angle as f64));
+					let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+					client.velocity = new_velocity;
+				},
+			}
+		}
+	}
+}
 
 fn generate_id() -> String {
 	fn random_char(min: char, max: char) -> char {
