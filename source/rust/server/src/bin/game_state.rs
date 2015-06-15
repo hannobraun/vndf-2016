@@ -14,4 +14,8 @@ impl GameState {
 			broadcasts: HashMap::new(),
 		}
 	}
+
+	pub fn create_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
+		self.broadcasts.insert(id, broadcast);
+	}
 }
