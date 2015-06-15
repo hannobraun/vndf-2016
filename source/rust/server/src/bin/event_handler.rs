@@ -40,10 +40,10 @@ impl EventHandler {
 
 	pub fn handle(
 		&mut self,
-		clients        : &mut HashMap<SocketAddr, Client>,
-		broadcasts     : &mut HashMap<SocketAddr, Broadcast>,
-		outgoing_events: &mut Vec<server::Event>,
-		network        : &mut Network,
+		clients   : &mut HashMap<SocketAddr, Client>,
+		broadcasts: &mut HashMap<SocketAddr, Broadcast>,
+		outgoing  : &mut Vec<server::Event>,
+		network   : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
 			let now = precise_time_s();
@@ -118,7 +118,7 @@ impl EventHandler {
 						},
 						client::event::Privileged::StopBroadcast => {
 							broadcasts.remove(&address);
-							outgoing_events.push(
+							outgoing.push(
 								server::Event::StopBroadcast(client.id.clone())
 							);
 						},
