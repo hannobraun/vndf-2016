@@ -27,7 +27,7 @@ use time::precise_time_s;
 use args::Args;
 
 use common::protocol::server::Event as ServerEvent;
-use event_handler::EventHandler;
+use event_handler::IncomingEvents;
 use server::network::Network;
 
 
@@ -44,7 +44,7 @@ fn main() {
 
 	info!("Listening on port {}\n", args.port);
 
-	let mut event_handler   = EventHandler::new();
+	let mut event_handler   = IncomingEvents::new();
 	let mut outgoing_events = Vec::new();
 
 	loop {

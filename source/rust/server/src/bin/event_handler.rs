@@ -21,13 +21,13 @@ use common::protocol::{
 use server::network::Network;
 
 
-pub struct EventHandler {
+pub struct IncomingEvents {
 	incoming: Vec<(SocketAddr, client::Event)>,
 }
 
-impl EventHandler {
-	pub fn new() -> EventHandler {
-		EventHandler {
+impl IncomingEvents {
+	pub fn new() -> IncomingEvents {
+		IncomingEvents {
 			incoming: Vec::new(),
 		}
 	}
