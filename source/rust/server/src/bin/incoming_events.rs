@@ -101,37 +101,15 @@ fn handle_event(
 				},
 			};
 
-			client.last_active_s = now_s;
-
-			match event {
-				client::event::Privileged::Heartbeat => {
-					// Nothing to do here, really, as the the time of
-					// last activity for the client has already been
-					// updated.
-				},
-				client::event::Privileged::StartBroadcast(message) => {
-					broadcasts.insert(
-						address,
-						Broadcast {
-							sender : client.id.clone(),
-							message: message,
-						}
-					);
-				},
-				client::event::Privileged::StopBroadcast => {
-					broadcasts.remove(&address);
-					outgoing.push(
-						server::Event::StopBroadcast(client.id.clone())
-					);
-				},
-				client::event::Privileged::ScheduleManeuver(angle) => {
-					let rotation = Rot2::new(Vec1::new(angle as f64));
-					let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-					client.velocity = new_velocity;
-				},
-			}
-		}
+			handle_privileged_event(
+				now_s,
+				address,
+				event,
+				client,
+				broadcasts,
+				outgoing,
+			);
+		},
 	}
 }
 
@@ -164,6 +142,46 @@ fn handle_public_event(
 				clients.insert(address, client);
 			}
 		}
+	}
+}
+
+fn handle_privileged_event(
+	now_s     : f64,
+	address   : SocketAddr,
+	event     : client::event::Privileged,
+	client    : &mut Client,
+	broadcasts: &mut Broadcasts,
+	outgoing  : &mut Vec<server::Event>,
+) {
+	client.last_active_s = now_s;
+
+	match event {
+		client::event::Privileged::Heartbeat => {
+			// Nothing to do here, really, as the the time of
+			// last activity for the client has already been
+			// updated.
+		},
+		client::event::Privileged::StartBroadcast(message) => {
+			broadcasts.insert(
+				address,
+				Broadcast {
+					sender : client.id.clone(),
+					message: message,
+				}
+			);
+		},
+		client::event::Privileged::StopBroadcast => {
+			broadcasts.remove(&address);
+			outgoing.push(
+				server::Event::StopBroadcast(client.id.clone())
+			);
+		},
+		client::event::Privileged::ScheduleManeuver(angle) => {
+			let rotation = Rot2::new(Vec1::new(angle as f64));
+			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+			client.velocity = new_velocity;
+		},
 	}
 }
 
