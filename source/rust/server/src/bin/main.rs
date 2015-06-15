@@ -70,9 +70,18 @@ fn main() {
 		}
 
 		for (address, event) in incoming_events.drain(..) {
+			let now = precise_time_s();
 
-			// TODO(720RWYSw): Move info-level logging to the beginning of the
-			//                 loop.
+			let log_message = format!(
+				"Event: {:?} (address: {}; time: {})\n",
+				event, address, now,
+			);
+			if event.is_important() {
+				info!("{}", log_message);
+			}
+			else {
+				debug!("{}", log_message);
+			}
 
 			match event {
 				client::Event::Public(event) => {
@@ -95,7 +104,6 @@ fn main() {
 									&[login],
 								);
 
-								info!("Login: {}, {:?}\n", address, client);
 								clients.insert(address, client);
 							}
 						}
@@ -115,15 +123,10 @@ fn main() {
 						},
 					};
 
-					client.last_active_s = precise_time_s();
+					client.last_active_s = now;
 
 					match event {
 						client::event::Privileged::Heartbeat => {
-							debug!(
-								"Heartbeat: {} (time: {})\n",
-								address, precise_time_s(),
-							);
-
 							// Nothing to do here, really, as the the time of
 							// last activity for the client has already been
 							// updated.
@@ -134,19 +137,15 @@ fn main() {
 								message: message,
 							};
 
-							info!("Broadcast: {}, {:?}\n", address, broadcast);
 							broadcasts.insert(address, broadcast);
 						},
 						client::event::Privileged::StopBroadcast => {
-							info!("Stop Broadcast: {}\n", address);
 							broadcasts.remove(&address);
 							outgoing_events.push(
 								ServerEvent::StopBroadcast(client.id.clone())
 							);
 						},
 						client::event::Privileged::ScheduleManeuver(angle) => {
-							info!("Schedule Maneuver: {}\n", address);
-
 							let rotation = Rot2::new(Vec1::new(angle as f64));
 							let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
