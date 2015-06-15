@@ -41,7 +41,7 @@ use client::interface::{
 };
 use client::network::Network;
 use common::protocol::client::Event as ClientEvent;
-use common::protocol::ServerEvent;
+use common::protocol::server;
 use interface::Interface;
 
 
@@ -124,20 +124,20 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		for event in network.receive() {
 			match event {
-				ServerEvent::Heartbeat => {
+				server::Event::Heartbeat => {
 					// Nothing to do here. The activity time is updated below
 					// for all types of messages.
 				},
-				ServerEvent::SelfId(self_id) => {
+				server::Event::SelfId(self_id) => {
 					frame.self_id = self_id;
 				},
-				ServerEvent::StartBroadcast(broadcast) => {
+				server::Event::StartBroadcast(broadcast) => {
 					broadcasts.insert(broadcast.sender.clone(), broadcast);
 				},
-				ServerEvent::StopBroadcast(sender) => {
+				server::Event::StopBroadcast(sender) => {
 					broadcasts.remove(&sender);
 				},
-				ServerEvent::UpdateEntity(position, velocity) => {
+				server::Event::UpdateEntity(position, velocity) => {
 					frame.position = Cast::from(position);
 					frame.velocity = Cast::from(velocity);
 				},

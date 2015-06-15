@@ -3,13 +3,13 @@ use time::precise_time_s;
 use client::network::Network;
 use common::protocol::{
 	client,
-	ServerEvent,
+	server,
 };
 
 
 pub struct Client {
 	network : Network,
-	incoming: Vec<ServerEvent>,
+	incoming: Vec<server::Event>,
 }
 
 impl Client {
@@ -25,7 +25,7 @@ impl Client {
 	}
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
-	pub fn expect_event(&mut self) -> Option<ServerEvent> {
+	pub fn expect_event(&mut self) -> Option<server::Event> {
 		let start_s = precise_time_s();
 
 		while self.incoming.len() == 0 && precise_time_s() - start_s < 0.1 {
@@ -41,8 +41,8 @@ impl Client {
 	}
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
-	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<ServerEvent>
-		where F: FnMut(&Option<ServerEvent>) -> bool
+	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<server::Event>
+		where F: FnMut(&Option<server::Event>) -> bool
 	{
 		let start_s = precise_time_s();
 

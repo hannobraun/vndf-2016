@@ -32,10 +32,8 @@ use time::precise_time_s;
 use args::Args;
 
 use common::game::Broadcast;
-use common::protocol::{
-	client,
-	ServerEvent,
-};
+use common::protocol::client;
+use common::protocol::server::Event as ServerEvent;
 use server::network::Network;
 
 

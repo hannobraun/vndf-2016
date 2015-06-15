@@ -1,7 +1,4 @@
-use nalgebra::Vec2;
 use rustc_serialize::Encodable;
-
-use game::Broadcast;
 
 
 pub mod client {
@@ -20,11 +17,18 @@ pub mod client {
 }
 
 
-#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
-pub enum ServerEvent {
-	Heartbeat,
-	SelfId(String),
-	StartBroadcast(Broadcast),
-	StopBroadcast(String),
-	UpdateEntity(Vec2<f64>, Vec2<f64>),
+pub mod server {
+	use nalgebra::Vec2;
+
+	use game::Broadcast;
+
+
+	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
+	pub enum Event {
+		Heartbeat,
+		SelfId(String),
+		StartBroadcast(Broadcast),
+		StopBroadcast(String),
+		UpdateEntity(Vec2<f64>, Vec2<f64>),
+	}
 }

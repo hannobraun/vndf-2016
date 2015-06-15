@@ -4,12 +4,12 @@ use std::vec::Drain;
 use common::network::Connection;
 use common::protocol::{
 	client,
-	ServerEvent,
+	server,
 };
 
 
 pub struct Network {
-	connection: Connection<ServerEvent>,
+	connection: Connection<server::Event>,
 }
 
 impl Network {
@@ -25,7 +25,7 @@ impl Network {
 		}
 	}
 
-	pub fn receive(&mut self) -> Drain<ServerEvent> {
+	pub fn receive(&mut self) -> Drain<server::Event> {
 		match self.connection.receive() {
 			Ok(events) => events,
 			Err(())    => panic!("Error receiving from connection"),

@@ -8,7 +8,7 @@ use common::network::{
 };
 use common::protocol::{
 	client,
-	ServerEvent,
+	server,
 };
 
 
@@ -29,7 +29,7 @@ impl Network {
 		}
 	}
 
-	pub fn send<R>(&mut self, recipients: R, events: &[ServerEvent])
+	pub fn send<R>(&mut self, recipients: R, events: &[server::Event])
 		where
 			R: Iterator<Item = SocketAddr>,
 	{

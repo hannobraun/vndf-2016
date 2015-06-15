@@ -1,6 +1,6 @@
 use common::protocol::{
 	client,
-	ServerEvent,
+	server,
 };
 use test_suite::{
 	mock,
@@ -25,7 +25,7 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	let mut received_message = String::new();
 	client_2.wait_until(|event| {
 		if let &Some(ref event) = event {
-			if let &ServerEvent::StartBroadcast(ref broadcast) = event {
+			if let &server::Event::StartBroadcast(ref broadcast) = event {
 				received_message = broadcast.message.clone();
 				true
 			}
@@ -50,7 +50,7 @@ fn it_should_ignore_duplicate_logins() {
 
 	let mut self_id = String::new();
 	client.wait_until(|event| {
-		if let &Some(ServerEvent::SelfId(ref id)) = event {
+		if let &Some(server::Event::SelfId(ref id)) = event {
 			self_id = id.clone();
 			true
 		}
@@ -69,11 +69,11 @@ fn it_should_ignore_duplicate_logins() {
 		match *event {
 			Some(ref event) => {
 				match *event {
-					ServerEvent::SelfId(ref self_id) => {
+					server::Event::SelfId(ref self_id) => {
 						received_self_id = Some(self_id.clone());
 						true
 					},
-					ServerEvent::StartBroadcast(_) => {
+					server::Event::StartBroadcast(_) => {
 						true
 					},
 					_ =>
@@ -97,5 +97,5 @@ fn it_should_send_regular_heartbeats() {
 
 	client.send(client::Event::Login);
 
-	client.wait_until(|event| *event == Some(ServerEvent::Heartbeat));
+	client.wait_until(|event| *event == Some(server::Event::Heartbeat));
 }

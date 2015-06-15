@@ -4,7 +4,7 @@ use time::precise_time_s;
 
 use common::protocol::{
 	client,
-	ServerEvent,
+	server,
 };
 use server::network::Network;
 use util::random_port;
@@ -32,7 +32,7 @@ impl Server {
 		self.port
 	}
 
-	pub fn send(&mut self, address: SocketAddr, event: ServerEvent) {
+	pub fn send(&mut self, address: SocketAddr, event: server::Event) {
 		self.network.send(Some(address).into_iter(), &[event]);
 	}
 
