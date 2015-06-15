@@ -71,10 +71,6 @@ fn main() {
 
 		for (address, event) in incoming_events.drain(..) {
 
-			// TODO(720RWYSw): All that pattern matching for every event is too
-			//                 unwieldy. Whether the client exists and the event
-			//                 should be handled should be determined exactly
-			//                 once.
 			// TODO(720RWYSw): Move info-level logging to the beginning of the
 			//                 loop.
 
@@ -107,6 +103,18 @@ fn main() {
 				},
 
 				client::Event::Privileged(event) => {
+					let client = match clients.get_mut(&address) {
+						Some(client) =>
+							client,
+						None => {
+							debug!(
+								"Ignoring event: {:?} ({})\n",
+								event, address,
+							);
+							continue;
+						},
+					};
+
 					match event {
 						client::event::Privileged::Heartbeat => {
 							debug!(
@@ -119,52 +127,28 @@ fn main() {
 							()
 						},
 						client::event::Privileged::StartBroadcast(message) => {
-							match clients.get_mut(&address) {
-								Some(client) => {
-									let broadcast = Broadcast {
-										sender : client.id.clone(),
-										message: message,
-									};
+							let broadcast = Broadcast {
+								sender : client.id.clone(),
+								message: message,
+							};
 
-									info!("Broadcast: {}, {:?}\n", address, broadcast);
-									broadcasts.insert(address, broadcast);
-								},
-								None => {
-									debug!("Ignoring broadcast: {}\n", address);
-									continue; // invalid, ignore
-								},
-							}
+							info!("Broadcast: {}, {:?}\n", address, broadcast);
+							broadcasts.insert(address, broadcast);
 						},
 						client::event::Privileged::StopBroadcast => {
-							match clients.get_mut(&address) {
-								Some(client) => {
-									info!("Stop Broadcast: {}\n", address);
-									broadcasts.remove(&address);
-									outgoing_events.push(
-										ServerEvent::StopBroadcast(client.id.clone())
-									);
-								},
-								None => {
-									debug!("Ignoring Stop Broadcast: {}\n", address);
-									continue; // invalid, ignore
-								},
-							}
+							info!("Stop Broadcast: {}\n", address);
+							broadcasts.remove(&address);
+							outgoing_events.push(
+								ServerEvent::StopBroadcast(client.id.clone())
+							);
 						},
 						client::event::Privileged::ScheduleManeuver(angle) => {
-							match clients.get_mut(&address) {
-								Some(client) => {
-									info!("Schedule Maneuver: {}\n", address);
+							info!("Schedule Maneuver: {}\n", address);
 
-									let rotation = Rot2::new(Vec1::new(angle as f64));
-									let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+							let rotation = Rot2::new(Vec1::new(angle as f64));
+							let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-									client.velocity = new_velocity;
-								},
-								None => {
-									debug!("Ignoring Schedule Maneuver: {}\n", address);
-									continue; // invalid, ignore
-								}
-							}
+							client.velocity = new_velocity;
 						},
 					}
 				}
