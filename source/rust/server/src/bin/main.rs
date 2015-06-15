@@ -3,7 +3,7 @@
 
 mod args;
 mod clients;
-mod event_handler;
+mod incoming_events;
 
 
 extern crate env_logger;
@@ -27,7 +27,7 @@ use time::precise_time_s;
 use args::Args;
 
 use common::protocol::server::Event as ServerEvent;
-use event_handler::IncomingEvents;
+use incoming_events::IncomingEvents;
 use server::network::Network;
 
 
