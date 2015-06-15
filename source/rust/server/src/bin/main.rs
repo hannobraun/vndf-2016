@@ -27,10 +27,10 @@ use time::precise_time_s;
 
 use args::Args;
 
-use shared::protocol::server::Event as ServerEvent;
 use game_state::GameState;
 use incoming_events::IncomingEvents;
 use server::network::Network;
+use shared::protocol::server::Event as ServerEvent;
 
 
 fn main() {
