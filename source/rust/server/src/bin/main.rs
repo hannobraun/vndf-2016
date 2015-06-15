@@ -127,7 +127,6 @@ fn main() {
 							// Nothing to do here, really, as the the time of
 							// last activity for the client has already been
 							// updated.
-							()
 						},
 						client::event::Privileged::StartBroadcast(message) => {
 							let broadcast = Broadcast {
