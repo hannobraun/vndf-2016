@@ -67,9 +67,7 @@ fn main() {
 	loop {
 		trace!("Start server main loop iteration");
 
-		for (address, event) in network.receive() {
-			event_handler.incoming.push((address, event));
-		}
+		event_handler.receive(network.receive());
 
 		for (address, event) in event_handler.incoming.drain(..) {
 			let now = precise_time_s();

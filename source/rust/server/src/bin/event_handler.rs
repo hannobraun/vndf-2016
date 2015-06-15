@@ -13,4 +13,12 @@ impl EventHandler {
 			incoming: Vec::new(),
 		}
 	}
+
+	pub fn receive<E>(&mut self, events: E)
+		where E: Iterator<Item = (SocketAddr, client::Event)>
+	{
+		for (address, event) in events {
+			self.incoming.push((address, event));
+		}
+	}
 }
