@@ -132,12 +132,13 @@ fn main() {
 							// updated.
 						},
 						client::event::Privileged::StartBroadcast(message) => {
-							let broadcast = Broadcast {
-								sender : client.id.clone(),
-								message: message,
-							};
-
-							broadcasts.insert(address, broadcast);
+							broadcasts.insert(
+								address,
+								Broadcast {
+									sender : client.id.clone(),
+									message: message,
+								}
+							);
 						},
 						client::event::Privileged::StopBroadcast => {
 							broadcasts.remove(&address);
