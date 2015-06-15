@@ -12,7 +12,7 @@ use clients::{
 	Client,
 	Clients,
 };
-use game_state::Broadcasts;
+use game_state::GameState;
 use server::network::Network;
 use shared::game::{
 	Broadcast,
@@ -47,7 +47,7 @@ impl IncomingEvents {
 		&mut self,
 		now_s     : f64,
 		clients   : &mut Clients,
-		broadcasts: &mut Broadcasts,
+		game_state: &mut GameState,
 		outgoing  : &mut Vec<server::Event>,
 		network   : &mut Network,
 	) {
@@ -57,7 +57,7 @@ impl IncomingEvents {
 				address,
 				event,
 				clients,
-				broadcasts,
+				game_state,
 				outgoing,
 				network,
 			);
@@ -71,7 +71,7 @@ fn handle_event(
 	address   : SocketAddr,
 	event     : client::Event,
 	clients   : &mut Clients,
-	broadcasts: &mut Broadcasts,
+	game_state: &mut GameState,
 	outgoing  : &mut Vec<server::Event>,
 	network   : &mut Network,
 ) {
@@ -109,7 +109,7 @@ fn handle_event(
 				address,
 				event,
 				client,
-				broadcasts,
+				game_state,
 				outgoing,
 			);
 		},
@@ -159,7 +159,7 @@ fn handle_privileged_event(
 	address   : SocketAddr,
 	event     : client::event::Privileged,
 	client    : &mut Client,
-	broadcasts: &mut Broadcasts,
+	game_state: &mut GameState,
 	outgoing  : &mut Vec<server::Event>,
 ) {
 	client.last_active_s = now_s;
@@ -171,7 +171,7 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			broadcasts.insert(
+			game_state.broadcasts.insert(
 				address,
 				Broadcast {
 					sender : client.id.clone(),
@@ -180,7 +180,7 @@ fn handle_privileged_event(
 			);
 		},
 		client::event::Privileged::StopBroadcast => {
-			broadcasts.remove(&address);
+			game_state.broadcasts.remove(&address);
 			outgoing.push(
 				server::Event::StopBroadcast(client.id.clone())
 			);

@@ -58,7 +58,7 @@ fn main() {
 		incoming_events.handle(
 			now_s,
 			&mut clients,
-			&mut game_state.broadcasts,
+			&mut game_state,
 			&mut outgoing_events,
 			&mut network,
 		);
