@@ -43,9 +43,10 @@ pub mod client {
 
 
 pub mod server {
-	use nalgebra::Vec2;
-
-	use game::Broadcast;
+	use game::{
+		Broadcast,
+		Ship,
+	};
 
 
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
@@ -54,6 +55,6 @@ pub mod server {
 		SelfId(String),
 		StartBroadcast(Broadcast),
 		StopBroadcast(String),
-		UpdateEntity(Vec2<f64>, Vec2<f64>),
+		UpdateEntity(Ship),
 	}
 }

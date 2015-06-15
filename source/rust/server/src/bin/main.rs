@@ -106,10 +106,7 @@ fn main() {
 		outgoing_events.clear();
 
 		for (&address, client) in &clients {
-			let event = ServerEvent::UpdateEntity(
-				client.ship.position,
-				client.ship.velocity,
-			);
+			let event = ServerEvent::UpdateEntity(client.ship);
 			network.send(
 				Some(address).into_iter(),
 				&[event],
