@@ -33,7 +33,7 @@ impl GameState {
 		self.broadcasts.remove(id);
 	}
 
-	pub fn broadcasts(&mut self) -> Values<SocketAddr, Broadcast> {
+	pub fn broadcasts(&self) -> Values<SocketAddr, Broadcast> {
 		self.broadcasts.values()
 	}
 
