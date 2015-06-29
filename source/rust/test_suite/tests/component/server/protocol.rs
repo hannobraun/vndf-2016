@@ -43,6 +43,9 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 #[test]
 fn it_should_ignore_duplicate_logins() {
+	// TODO: It's quite hard to understand what's going on here. This test
+	//       should be cleaned up and fixed, if necessary.
+
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
