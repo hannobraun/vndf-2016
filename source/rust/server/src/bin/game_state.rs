@@ -11,10 +11,13 @@ use shared::game::{
 };
 
 
+pub type EntityId = SocketAddr;
+
+
 #[derive(Debug)]
 pub struct GameState {
 	broadcasts: HashMap<SocketAddr, Broadcast>,
-	ships     : HashMap<SocketAddr, Ship>,
+	ships     : HashMap<EntityId, Ship>,
 }
 
 impl GameState {
@@ -25,16 +28,16 @@ impl GameState {
 		}
 	}
 
-	pub fn create_ship(&mut self, id: SocketAddr, ship: Ship) {
+	pub fn create_ship(&mut self, id: EntityId, ship: Ship) {
 		self.ships.insert(id, ship);
 	}
 
-	pub fn ship(&mut self, id: &SocketAddr) -> &mut Ship {
+	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
 		self.ships.get_mut(id)
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
 	}
 
-	pub fn ships(&mut self) -> IterMut<SocketAddr, Ship> {
+	pub fn ships(&mut self) -> IterMut<EntityId, Ship> {
 		self.ships.iter_mut()
 	}
 
