@@ -85,8 +85,8 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	if let Some(received_self_id) = received_ship_id {
-		assert_eq!(ship_id, received_self_id);
+	if let Some(received_ship_id) = received_ship_id {
+		assert_eq!(ship_id, received_ship_id);
 	}
 }
 
