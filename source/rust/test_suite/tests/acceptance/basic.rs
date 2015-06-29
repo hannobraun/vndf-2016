@@ -5,15 +5,6 @@ use test_suite::rc;
 
 #[test]
 fn it_should_send_broadcasts_to_all_clients() {
-	fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
-		let (sender, message) = broadcast;
-
-		frame.broadcasts.contains(&Broadcast {
-			sender : sender.clone(),
-			message: message.clone(),
-		})
-	}
-
 	let     server   = rc::Server::start();
 	let mut client_1 = rc::Client::start(server.port());
 	let mut client_2 = rc::Client::start(server.port());
@@ -29,6 +20,16 @@ fn it_should_send_broadcasts_to_all_clients() {
 	assert!(contains(&frame_1, (&frame_2.ship_id, &message_2)));
 	assert!(contains(&frame_2, (&frame_1.ship_id, &message_1)));
 	assert!(contains(&frame_2, (&frame_2.ship_id, &message_2)));
+
+
+	fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
+		let (sender, message) = broadcast;
+
+		frame.broadcasts.contains(&Broadcast {
+			sender : sender.clone(),
+			message: message.clone(),
+		})
+	}
 }
 
 #[test]
