@@ -25,18 +25,6 @@ impl GameState {
 		}
 	}
 
-	pub fn create_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
-		self.broadcasts.insert(id, broadcast);
-	}
-
-	pub fn destroy_broadcast(&mut self, id: &SocketAddr) {
-		self.broadcasts.remove(id);
-	}
-
-	pub fn broadcasts(&self) -> Values<SocketAddr, Broadcast> {
-		self.broadcasts.values()
-	}
-
 	pub fn create_ship(&mut self, id: SocketAddr, ship: Ship) {
 		self.ships.insert(id, ship);
 	}
@@ -48,6 +36,18 @@ impl GameState {
 
 	pub fn ships(&mut self) -> IterMut<SocketAddr, Ship> {
 		self.ships.iter_mut()
+	}
+
+	pub fn create_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
+		self.broadcasts.insert(id, broadcast);
+	}
+
+	pub fn destroy_broadcast(&mut self, id: &SocketAddr) {
+		self.broadcasts.remove(id);
+	}
+
+	pub fn broadcasts(&self) -> Values<SocketAddr, Broadcast> {
+		self.broadcasts.values()
 	}
 
 	pub fn update(&mut self) {
