@@ -69,8 +69,8 @@ fn it_should_ignore_duplicate_logins() {
 		match *event {
 			Some(ref event) => {
 				match *event {
-					server::Event::ShipId(ref self_id) => {
-						received_self_id = Some(self_id.clone());
+					server::Event::ShipId(ref ship_id) => {
+						received_self_id = Some(ship_id.clone());
 						true
 					},
 					server::Event::StartBroadcast(_) => {
