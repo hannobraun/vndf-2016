@@ -130,7 +130,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					// for all types of messages.
 				},
 				server::Event::ShipId(ship_id) => {
-					frame.self_id = ship_id;
+					frame.ship_id = ship_id;
 				},
 				server::Event::StartBroadcast(broadcast) => {
 					broadcasts.insert(broadcast.sender.clone(), broadcast);

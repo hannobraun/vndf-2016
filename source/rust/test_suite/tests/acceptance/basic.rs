@@ -25,10 +25,10 @@ fn it_should_send_broadcasts_to_all_clients() {
 
 	let frame_1 = client_1.wait_until(|frame| frame.broadcasts.len() == 2);
 	let frame_2 = client_2.wait_until(|frame| frame.broadcasts.len() == 2);
-	assert!(contains(&frame_1, (&frame_1.self_id, &message_1)));
-	assert!(contains(&frame_1, (&frame_2.self_id, &message_2)));
-	assert!(contains(&frame_2, (&frame_1.self_id, &message_1)));
-	assert!(contains(&frame_2, (&frame_2.self_id, &message_2)));
+	assert!(contains(&frame_1, (&frame_1.ship_id, &message_1)));
+	assert!(contains(&frame_1, (&frame_2.ship_id, &message_2)));
+	assert!(contains(&frame_2, (&frame_1.ship_id, &message_1)));
+	assert!(contains(&frame_2, (&frame_2.ship_id, &message_2)));
 }
 
 #[test]

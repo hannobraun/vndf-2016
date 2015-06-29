@@ -137,7 +137,7 @@ impl Cli {
 				));
 			},
 			"comm-data" => {
-				self.text.push(format!("Your Comm Id: {}", frame.self_id));
+				self.text.push(format!("Your Comm Id: {}", frame.ship_id));
 			},
 
 			"schedule-maneuver" => {
