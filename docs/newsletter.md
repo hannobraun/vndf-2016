@@ -13,8 +13,6 @@
 
 1. Write and deploy online version of newsletter. Use previous newsletter as
    template.
-1. Update this document. Used news stories need to be removed, as well as
-   stories that will no longer be current for the next newsletter.
 1. Write email version of newsletter. Use previous newsletter as template.
   1. Copy the markup into a new text editor window. It's easier to edit there.
   1. Remove subscription information from header and footer
