@@ -50,7 +50,7 @@ fn it_should_ignore_duplicate_logins() {
 
 	let mut self_id = String::new();
 	client.wait_until(|event| {
-		if let &Some(server::Event::SelfId(ref id)) = event {
+		if let &Some(server::Event::ShipId(ref id)) = event {
 			self_id = id.clone();
 			true
 		}
@@ -69,7 +69,7 @@ fn it_should_ignore_duplicate_logins() {
 		match *event {
 			Some(ref event) => {
 				match *event {
-					server::Event::SelfId(ref self_id) => {
+					server::Event::ShipId(ref self_id) => {
 						received_self_id = Some(self_id.clone());
 						true
 					},

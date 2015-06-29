@@ -152,7 +152,7 @@ fn handle_public_event(
 				//                 Currently, this won't work, as outgoing
 				//                 events are broadcast to all clients, while
 				//                 this event is only for a specific client.
-				let login = server::Event::SelfId(client.id.clone());
+				let login = server::Event::ShipId(client.id.clone());
 				network.send(
 					Some(address).into_iter(),
 					&[login],

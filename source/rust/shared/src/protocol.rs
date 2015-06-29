@@ -52,7 +52,7 @@ pub mod server {
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 	pub enum Event {
 		Heartbeat,
-		SelfId(String),
+		ShipId(String),
 		StartBroadcast(Broadcast),
 		StopBroadcast(String),
 		UpdateEntity(Ship),
