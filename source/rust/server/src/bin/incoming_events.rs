@@ -181,7 +181,7 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.create_broadcast(
+			game_state.add_broadcast(
 				address,
 				Broadcast {
 					sender : client.id.clone(),

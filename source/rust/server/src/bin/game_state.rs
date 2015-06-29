@@ -38,7 +38,7 @@ impl GameState {
 		self.ships.iter_mut()
 	}
 
-	pub fn create_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
+	pub fn add_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
 		self.broadcasts.insert(id, broadcast);
 	}
 
