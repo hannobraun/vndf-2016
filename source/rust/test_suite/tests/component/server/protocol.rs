@@ -53,7 +53,7 @@ fn it_should_ignore_duplicate_logins() {
 
 	let mut ship_id = None;
 	client.wait_until(|event| {
-		if let &Some(server::Event::ShipId(ref id)) = event {
+		if let &Some(server::Event::ShipId(id)) = event {
 			// TODO: Remove clone, when possible
 			ship_id = Some(id.clone());
 			true
@@ -73,7 +73,7 @@ fn it_should_ignore_duplicate_logins() {
 		match *event {
 			Some(ref event) => {
 				match *event {
-					server::Event::ShipId(ref ship_id) => {
+					server::Event::ShipId(ship_id) => {
 						// TODO: Remove clone, when possible
 						received_ship_id = Some(ship_id.clone());
 						true
