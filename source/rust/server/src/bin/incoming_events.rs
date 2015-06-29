@@ -140,6 +140,7 @@ fn handle_public_event(
 			else {
 				let client = Client {
 					id           : generate_id(),
+					ship_id      : address,
 					last_active_s: now_s,
 				};
 
