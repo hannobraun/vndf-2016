@@ -78,8 +78,8 @@ impl Cli {
 					);
 				},
 
-				// TODO: Those aren't really related to the CLI. Feels wrong to
-				//       handle them here.
+				// TODO: Those aren't really related to the CLI. It feels wrong
+				//       to handle them here.
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
 					events.push(InputEvent::Quit),
 				Closed =>
