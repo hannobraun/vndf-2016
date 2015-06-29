@@ -64,7 +64,7 @@ fn it_should_ignore_duplicate_logins() {
 		client::Event::Privileged(client::event::Privileged::StartBroadcast("This is a broadcast.".to_string()))
 	);
 
-	let mut received_self_id   = None;
+	let mut received_self_id = None;
 	client.wait_until(|event| {
 		match *event {
 			Some(ref event) => {
