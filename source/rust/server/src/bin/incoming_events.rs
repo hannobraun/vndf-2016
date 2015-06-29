@@ -138,8 +138,7 @@ fn handle_public_event(
 				debug!("Ignoring Login: {}", address);
 			}
 			else {
-				let ship_id = address;
-				game_state.create_ship(ship_id, Ship {
+				let ship_id = game_state.create_ship(Ship {
 					position: Vec2::new(0.0, 0.0),
 					velocity: Vec2::new(1.0, 0.0),
 				});

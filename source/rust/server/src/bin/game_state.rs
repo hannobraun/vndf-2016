@@ -8,11 +8,13 @@ use shared::game::{
 };
 
 
-pub type EntityId = SocketAddr;
+pub type EntityId = u64;
 
 
 #[derive(Debug)]
 pub struct GameState {
+	next_id: u64,
+
 	broadcasts: HashMap<SocketAddr, Broadcast>,
 	ships     : HashMap<EntityId, Ship>,
 }
@@ -20,13 +22,19 @@ pub struct GameState {
 impl GameState {
 	pub fn new() -> GameState {
 		GameState {
+			next_id   : 0,
 			broadcasts: HashMap::new(),
 			ships     : HashMap::new(),
 		}
 	}
 
-	pub fn create_ship(&mut self, id: EntityId, ship: Ship) {
+	pub fn create_ship(&mut self, ship: Ship) -> EntityId {
+		let id = self.next_id;
+		self.next_id += 1;
+
 		self.ships.insert(id, ship);
+
+		id
 	}
 
 	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
