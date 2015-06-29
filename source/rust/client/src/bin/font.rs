@@ -1,5 +1,6 @@
 use std::ffi::CString;
 use std::ptr;
+use std::slice;
 
 use nalgebra::Vec2;
 use freetype::ffi::{
@@ -104,10 +105,12 @@ fn make_glyph(glyph_slot: FT_GlyphSlot) -> Glyph {
 		let ref bitmap = (*glyph_slot).bitmap;
 
 		Glyph {
-			data: Vec::from_raw_buf(
-				bitmap.buffer as *mut u8,
-				(bitmap.width * bitmap.rows) as usize,
-			),
+			data:
+				slice::from_raw_parts(
+					bitmap.buffer as *mut u8,
+					(bitmap.width * bitmap.rows) as usize,
+				)
+				.to_vec(),
 			size: Vec2::new(
 				bitmap.width as f32,
 				bitmap.rows as f32,
