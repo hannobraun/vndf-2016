@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Von Neumann Defense Force</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<link href="/main.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+
+	<body>
+		<main class="newsletter">
+			<header>
+				<h1>Newsletter June 2015</h1>
+				<h2>Maneuvering Around</h2>
+			</header>
+
+			<article>
+				<header>
+					<p>
+						This is the online version of the Von Neumann Defense
+						Force monthly newsletter. Do you want mailings like
+						this, every month, delivered right to your inbox? Then
+						<a href="/newsletter">subscribe to the newsletter</a>
+						and make this wish a reality!
+					</p>
+				</header>
+
+				<section>
+					<h1>Welcome</h1>
+
+					<p>
+						Hello, and welcome to this month's <em>Von Neumann
+						Defense Force</em> newsletter! I'm Hanno, VNDF's lead
+						developer and chief newsletter engineer.
+					</p>
+
+					<p>
+						If you haven't noticed, this newsletter is the latest
+						yet. Usually, I aim for the 15th, and while a few days
+						delay is quite normal, this time I've missed by a whole
+						two weeks. The good news is that, compared to last
+						month, the pace of development seems to be picking up a
+						bit. If everything goes as planned, that trend will
+						continue through July.
+					</p>
+
+					<p>
+						But enough introduction. Here's what's happened since
+						the last newsletter:
+					</p>
+
+					<ul>
+						<li>
+							<a href="#cli-improvment">CLI Improvement</a>:
+							A small improvement has been made to the
+							command-line interface.
+						</li>
+						<li>
+							<a href="#navigation">Navigating Through Space</a>:
+							Players can now change the course of their ship.
+						</li>
+						<li>
+							<a href="#server-cleanup">Server Cleanup</a>:
+							There has been a big cleanup of the server code.
+						</li>
+						<li>
+							<a href="#comm-ids">Comm Ids Are Gone</a>:
+							I've removed the old communication ids that used to
+							be generated for each client.
+						</li>
+					</ul>
+
+					<p>
+						Have fun with this month's newsletter and please email
+						any feedback to <a href="mailto:mail@hannobraun.de">
+						mail@hannobraun.de</a>. Do you have any questions about
+						VNDF in general or the contents of this
+						newsletter specifically?
+						<a href="mailto:mail@hannobraun.de">Let me know</a>!
+					</p>
+				</section>
+
+				<section>
+					<a name="cli-improvment"></a>
+					<h1>CLI Improvement</h1>
+
+					<p>
+						Previously, it was kind of hard to tell what was going
+						on with the command-line interface, unless you knew
+						exactly what had just been typed in. No more! Now the
+						commands that were executed are shown with the output.
+					</p>
+
+					<a
+						class="image"
+						href="/news/newsletter-june-2015/screenshot-cli.png"
+						target="_blank">
+						<img
+							src="/news/newsletter-june-2015/screenshot-cli.png"
+							alt="The command-line interface shows executed commands" />
+						<p>(click to see full size)</p>
+					</a>
+				</section>
+
+				<section>
+					<a name="navigation"></a>
+					<h1>Navigating Through Space</h1>
+
+					<p>
+						The current focus of work is navigating through space.
+						Previously, the player's ship would just move slowly to
+						the right. I've made the first step towards adding
+						support for navigation.
+					</p>
+
+					<p>
+						With the <code>schedule-maneuver</code> command, the
+						player can change the direction of movement. The syntax
+						is <code>schedule-maneuver &lt;angle&gt;</code>, where
+						<code>&lt;angle&gt;</code> is an angle in degrees, right
+						being 0 degrees.
+					</p>
+
+					<a
+						class="image"
+						href="/news/newsletter-june-2015/screenshot-navigation.png"
+						target="_blank">
+						<img
+							src="/news/newsletter-june-2015/screenshot-navigation.png"
+							alt="A ship moving to the left" />
+						<p>(click to enlarge)</p>
+					</a>
+				</section>
+
+				<section>
+					<a name="server-cleanup"></a>
+					<h1>Server Cleanup</h1>
+
+					<p>
+						The addition of the new navigation feature highlighted
+						some weaknesses in the structure of the server code. The
+						server's architecture had been pretty straight-forward,
+						so far, but it was starting to crumble under its own
+						weight.
+					</p>
+
+					<p>
+						A big focus has been to clean up the mess, splitting the
+						rather large mass of code into small, self-contained
+						modules and rethinking how all of it worked and could be
+						improved.
+					</p>
+
+					<p>
+						I've been doing a lot of this, and it had a very
+						positive effect, making the code more maintainable. I
+						expect this to be an ongoing concern for a while, as the
+						game logic grows more complicated.
+					</p>
+				</section>
+
+				<section>
+					<a name="comm-ids"></a>
+					<h1>Comm Ids Are Gone</h1>
+
+					<p>
+						Up until today, a randomly generated identifier (like
+						AZX-44FK, or KUF-H5HN) was assigned to every player when
+						they logged in. This identifier was displayed with a
+						player's broadcast, to make help identify the sender.
+					</p>
+
+					<p>
+						Unfortunately that feature got in the way of some
+						cleanup work and I decided to remove it. In the long
+						term, it will be obsolete anyway, as broadcasts will be
+						displayed next to the sender's ship (not in a list) and
+						players will be able to choose their own names.
+					</p>
+
+					<p>
+						I'm not sure yet when that glorious future will arrive,
+						but until then, the ship's internal entity id is used as
+						a placeholder.
+					</p>
+
+					<a
+						class="image"
+						href="/news/newsletter-june-2015/screenshot-comm-ids.png"
+						target="_blank">
+						<img
+							src="/news/newsletter-june-2015/screenshot-comm-ids.png"
+							alt="A conversation in space" />
+						<p>(click to enlarge)</p>
+					</a>
+				</section>
+
+				<section>
+					<h1>See You Next Time</h1>
+
+					<p>
+						Do you have any questions about this newsletter or Von
+						Neumann Defense Force in general?
+						<a href="mailto:mail@hannobraun.de">Send them to me</a>!
+						I'd love to do a Q &amp; A in some future newsletter.
+					</p>
+
+					<p>
+						Thanks for reading, and see you again for next month's
+						newsletter!
+					</p>
+				</section>
+
+				<footer>
+					<p>
+						Do you have any comments, be it insult or encouragement?
+						Found any embarrassing typos? Let me know via
+						<a href="mailto:mail@hannobraun.de">
+							mail@hannobraun.de</a>!
+					</p>
+
+					<p>
+						Would you like to receive regular news about Von Neumann
+						Defense Force? You can have that and much more by
+						subscribing to the newsletter!
+					</p>
+					<form
+						class="newsletter"
+						action="https://eu1.cleverreach.com/f/60128-125094/wcs/"
+						method="post"
+						target="_blank">
+
+						<input
+							name="email"
+							placeholder="Enter your Email"
+							type="text" />
+						<input type="submit" value="Subscribe" />
+					</form>
+				</footer>
+			</article>
+		</main>
+
+		<footer>
+			<nav>
+				<ul>
+					<li><a href="/">Home</a></li>
+					<li><a href="/news">News</a></li>
+					<li><a href="/contact">Contact</a></li>
+				</ul>
+			</nav>
+		</footer>
+	</body>
+</html>
