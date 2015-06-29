@@ -51,11 +51,11 @@ fn it_should_ignore_duplicate_logins() {
 
 	client.send(client::Event::Public(client::event::Public::Login));
 
-	let mut ship_id = String::new();
+	let mut ship_id = None;
 	client.wait_until(|event| {
 		if let &Some(server::Event::ShipId(ref id)) = event {
 			// TODO: Remove clone, when possible
-			ship_id = id.clone();
+			ship_id = Some(id.clone());
 			true
 		}
 		else {
@@ -90,7 +90,7 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	if let Some(received_ship_id) = received_ship_id {
+	if let Some(_) = received_ship_id {
 		assert_eq!(ship_id, received_ship_id);
 	}
 }
