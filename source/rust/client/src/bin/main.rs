@@ -129,8 +129,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					// Nothing to do here. The activity time is updated below
 					// for all types of messages.
 				},
-				server::Event::ShipId(self_id) => {
-					frame.self_id = self_id;
+				server::Event::ShipId(ship_id) => {
+					frame.self_id = ship_id;
 				},
 				server::Event::StartBroadcast(broadcast) => {
 					broadcasts.insert(broadcast.sender.clone(), broadcast);
