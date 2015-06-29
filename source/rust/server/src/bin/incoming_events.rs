@@ -114,7 +114,6 @@ fn handle_event(
 
 			handle_privileged_event(
 				now_s,
-				address,
 				event,
 				client,
 				game_state,
@@ -167,7 +166,6 @@ fn handle_public_event(
 
 fn handle_privileged_event(
 	now_s     : f64,
-	address   : SocketAddr,
 	event     : client::event::Privileged,
 	client    : &mut Client,
 	game_state: &mut GameState,
