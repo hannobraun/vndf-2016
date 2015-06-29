@@ -19,17 +19,17 @@ fn it_should_send_broadcasts_to_all_clients() {
 
 	let frame_1 = client_1.wait_until(|frame| frame.broadcasts.len() == 2);
 	let frame_2 = client_2.wait_until(|frame| frame.broadcasts.len() == 2);
-	assert!(contains(&frame_1, (frame_1.ship_id.as_ref().unwrap(), &message_1)));
-	assert!(contains(&frame_1, (frame_2.ship_id.as_ref().unwrap(), &message_2)));
-	assert!(contains(&frame_2, (frame_1.ship_id.as_ref().unwrap(), &message_1)));
-	assert!(contains(&frame_2, (frame_2.ship_id.as_ref().unwrap(), &message_2)));
+	assert!(contains(&frame_1, (frame_1.ship_id.unwrap(), &message_1)));
+	assert!(contains(&frame_1, (frame_2.ship_id.unwrap(), &message_2)));
+	assert!(contains(&frame_2, (frame_1.ship_id.unwrap(), &message_1)));
+	assert!(contains(&frame_2, (frame_2.ship_id.unwrap(), &message_2)));
 
 
-	fn contains(frame: &Frame, broadcast: (&EntityId, &String)) -> bool {
+	fn contains(frame: &Frame, broadcast: (EntityId, &String)) -> bool {
 		let (sender, message) = broadcast;
 
 		frame.broadcasts.contains(&Broadcast {
-			sender : *sender,
+			sender : sender,
 			message: message.clone(),
 		})
 	}
