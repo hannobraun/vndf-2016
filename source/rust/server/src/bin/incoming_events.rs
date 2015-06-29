@@ -190,7 +190,7 @@ fn handle_privileged_event(
 			);
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state.destroy_broadcast(&address);
+			game_state.remove_broadcast(&address);
 			outgoing.push(
 				server::Event::StopBroadcast(client.id.clone())
 			);

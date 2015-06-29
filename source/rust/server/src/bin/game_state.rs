@@ -42,7 +42,7 @@ impl GameState {
 		self.broadcasts.insert(id, broadcast);
 	}
 
-	pub fn destroy_broadcast(&mut self, id: &SocketAddr) {
+	pub fn remove_broadcast(&mut self, id: &SocketAddr) {
 		self.broadcasts.remove(id);
 	}
 
