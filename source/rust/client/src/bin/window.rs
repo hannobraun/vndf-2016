@@ -47,10 +47,6 @@ impl Window {
 		)
 	}
 
-	pub fn is_closed(&self) -> bool {
-		self.inner.is_closed()
-	}
-
 	pub fn poll_events(&self) -> glutin::PollEventsIterator {
 		self.inner.poll_events()
 	}

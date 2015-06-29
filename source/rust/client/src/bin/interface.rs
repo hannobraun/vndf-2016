@@ -51,10 +51,6 @@ impl Interface for Player {
 	}
 
 	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-		if self.window.is_closed() {
-			self.events.push(InputEvent::Quit);
-		}
-
 		self.cli.update(&mut self.events, frame, &self.window);
 		self.renderer.render(
 			self.cli.text(),

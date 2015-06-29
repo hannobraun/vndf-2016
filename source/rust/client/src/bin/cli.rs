@@ -1,6 +1,7 @@
 use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
 use glutin::Event::{
+	Closed,
 	KeyboardInput,
 	ReceivedCharacter,
 };
@@ -78,6 +79,8 @@ impl Cli {
 				},
 
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
+					events.push(InputEvent::Quit),
+				Closed =>
 					events.push(InputEvent::Quit),
 
 				_ => (), // ignore other events
