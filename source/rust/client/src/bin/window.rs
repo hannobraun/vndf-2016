@@ -22,7 +22,8 @@ impl Window {
 			.build_strict()
 			.unwrap_or_else(|e| panic!("Error creating window: {}", e));
 
-		unsafe { window.make_current() };
+		unsafe { window.make_current() }
+			.unwrap_or_else(|e| panic!("Error making window current: {:?}", e));
 
 		Window {
 			inner: window,
