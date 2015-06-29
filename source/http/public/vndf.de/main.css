@@ -76,7 +76,7 @@ div.signature p {
 }
 
 a.image img {
-	width: 100%;
+	max-width: 100%;
 }
 
 a.image p {
