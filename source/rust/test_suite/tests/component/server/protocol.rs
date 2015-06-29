@@ -64,13 +64,13 @@ fn it_should_ignore_duplicate_logins() {
 		client::Event::Privileged(client::event::Privileged::StartBroadcast("This is a broadcast.".to_string()))
 	);
 
-	let mut received_self_id = None;
+	let mut received_ship_id = None;
 	client.wait_until(|event| {
 		match *event {
 			Some(ref event) => {
 				match *event {
 					server::Event::ShipId(ref ship_id) => {
-						received_self_id = Some(ship_id.clone());
+						received_ship_id = Some(ship_id.clone());
 						true
 					},
 					server::Event::StartBroadcast(_) => {
@@ -85,7 +85,7 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	if let Some(received_self_id) = received_self_id {
+	if let Some(received_self_id) = received_ship_id {
 		assert_eq!(ship_id, received_self_id);
 	}
 }
