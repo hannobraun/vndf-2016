@@ -203,6 +203,7 @@ fn handle_privileged_event(
 	}
 }
 
+// TODO: Replace comm IDs with sequential integers
 fn generate_id() -> String {
 	fn random_char(min: char, max: char) -> char {
 		let min = min as u8;
