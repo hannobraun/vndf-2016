@@ -138,16 +138,17 @@ fn handle_public_event(
 				debug!("Ignoring Login: {}", address);
 			}
 			else {
-				let client = Client {
-					id           : generate_id(),
-					ship_id      : address,
-					last_active_s: now_s,
-				};
-
-				game_state.create_ship(address, Ship {
+				let ship_id = address;
+				game_state.create_ship(ship_id, Ship {
 					position: Vec2::new(0.0, 0.0),
 					velocity: Vec2::new(1.0, 0.0),
 				});
+
+				let client = Client {
+					id           : generate_id(),
+					ship_id      : ship_id,
+					last_active_s: now_s,
+				};
 
 				// TODO(AMy58bbh): This needs to be an outgoing event.
 				//                 Currently, this won't work, as outgoing
