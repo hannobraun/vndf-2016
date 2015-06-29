@@ -4,7 +4,10 @@ use rustc_serialize::json::{
 	DecodeResult,
 };
 
-use shared::game::Broadcast;
+use shared::game::{
+	Broadcast,
+	EntityId,
+};
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
@@ -33,7 +36,7 @@ impl InputEvent {
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Frame {
-	pub ship_id   : Option<String>,
+	pub ship_id   : Option<EntityId>,
 	pub message   : Message,
 	pub broadcasts: Vec<Broadcast>,
 	pub position  : Vec2<f32>,

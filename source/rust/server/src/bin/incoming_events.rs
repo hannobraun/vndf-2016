@@ -152,7 +152,7 @@ fn handle_public_event(
 				//                 Currently, this won't work, as outgoing
 				//                 events are broadcast to all clients, while
 				//                 this event is only for a specific client.
-				let login = server::Event::ShipId(client.id.clone());
+				let login = server::Event::ShipId(client.ship_id);
 				network.send(
 					Some(address).into_iter(),
 					&[login],
@@ -183,7 +183,7 @@ fn handle_privileged_event(
 			game_state.add_broadcast(
 				client.ship_id,
 				Broadcast {
-					sender : client.id.clone(),
+					sender : client.ship_id,
 					message: message,
 				}
 			);
@@ -191,7 +191,7 @@ fn handle_privileged_event(
 		client::event::Privileged::StopBroadcast => {
 			game_state.remove_broadcast(&client.ship_id);
 			outgoing.push(
-				server::Event::StopBroadcast(client.id.clone())
+				server::Event::StopBroadcast(client.ship_id)
 			);
 		},
 		client::event::Privileged::ScheduleManeuver(angle) => {

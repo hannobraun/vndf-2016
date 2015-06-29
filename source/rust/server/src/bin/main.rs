@@ -80,7 +80,7 @@ fn main() {
 			);
 
 			if let Some(client) = clients.remove(&address) {
-				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
+				outgoing_events.push(ServerEvent::StopBroadcast(client.ship_id));
 				game_state.remove_broadcast(&client.ship_id);
 			}
 

@@ -45,6 +45,7 @@ pub mod client {
 pub mod server {
 	use game::{
 		Broadcast,
+		EntityId,
 		Ship,
 	};
 
@@ -52,9 +53,9 @@ pub mod server {
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 	pub enum Event {
 		Heartbeat,
-		ShipId(String),
+		ShipId(EntityId),
 		StartBroadcast(Broadcast),
-		StopBroadcast(String),
+		StopBroadcast(EntityId),
 		UpdateShip(Ship),
 	}
 }

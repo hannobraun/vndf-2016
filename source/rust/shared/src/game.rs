@@ -6,7 +6,7 @@ pub type EntityId = u64;
 
 #[derive(Clone, Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Broadcast {
-	pub sender : String,
+	pub sender : EntityId,
 	pub message: String,
 }
 

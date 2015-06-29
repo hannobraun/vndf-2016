@@ -1,5 +1,8 @@
 use client::interface::Frame;
-use shared::game::Broadcast;
+use shared::game::{
+	Broadcast,
+	EntityId,
+};
 use test_suite::rc;
 
 
@@ -22,7 +25,7 @@ fn it_should_send_broadcasts_to_all_clients() {
 	assert!(contains(&frame_2, (&frame_2.ship_id.as_ref().unwrap(), &message_2)));
 
 
-	fn contains(frame: &Frame, broadcast: (&String, &String)) -> bool {
+	fn contains(frame: &Frame, broadcast: (&EntityId, &String)) -> bool {
 		let (sender, message) = broadcast;
 
 		frame.broadcasts.contains(&Broadcast {
