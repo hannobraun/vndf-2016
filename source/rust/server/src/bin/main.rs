@@ -78,9 +78,10 @@ fn main() {
 				"Removing {} (last active: {}, time of removal: {})",
 				address, last_active_s, now_s,
 			);
-			game_state.remove_broadcast(&address);
+
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
+				game_state.remove_broadcast(&address);
 			}
 
 			// TODO: Ships should be destroyed also
