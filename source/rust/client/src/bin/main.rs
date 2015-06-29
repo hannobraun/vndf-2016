@@ -133,7 +133,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					frame.ship_id = Some(ship_id);
 				},
 				server::Event::StartBroadcast(broadcast) => {
-					broadcasts.insert(broadcast.sender.clone(), broadcast);
+					broadcasts.insert(broadcast.sender, broadcast);
 				},
 				server::Event::StopBroadcast(sender) => {
 					broadcasts.remove(&sender);

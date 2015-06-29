@@ -29,7 +29,7 @@ fn it_should_send_broadcasts_to_all_clients() {
 		let (sender, message) = broadcast;
 
 		frame.broadcasts.contains(&Broadcast {
-			sender : sender.clone(),
+			sender : *sender,
 			message: message.clone(),
 		})
 	}
