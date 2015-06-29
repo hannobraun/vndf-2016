@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::collections::hash_map::Values;
-use std::net::SocketAddr;
 
 use shared::game::{
 	Broadcast,
@@ -15,7 +14,7 @@ pub type EntityId = u64;
 pub struct GameState {
 	next_id: u64,
 
-	broadcasts: HashMap<SocketAddr, Broadcast>,
+	broadcasts: HashMap<EntityId, Broadcast>,
 	ships     : HashMap<EntityId, Ship>,
 }
 
@@ -42,15 +41,15 @@ impl GameState {
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
 	}
 
-	pub fn add_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
+	pub fn add_broadcast(&mut self, id: EntityId, broadcast: Broadcast) {
 		self.broadcasts.insert(id, broadcast);
 	}
 
-	pub fn remove_broadcast(&mut self, id: &SocketAddr) {
+	pub fn remove_broadcast(&mut self, id: &EntityId) {
 		self.broadcasts.remove(id);
 	}
 
-	pub fn broadcasts(&self) -> Values<SocketAddr, Broadcast> {
+	pub fn broadcasts(&self) -> Values<EntityId, Broadcast> {
 		self.broadcasts.values()
 	}
 

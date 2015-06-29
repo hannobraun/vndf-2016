@@ -81,7 +81,7 @@ fn main() {
 
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::StopBroadcast(client.id));
-				game_state.remove_broadcast(&address);
+				game_state.remove_broadcast(&client.ship_id);
 			}
 
 			// TODO: Ships should be destroyed also

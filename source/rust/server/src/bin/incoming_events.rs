@@ -183,7 +183,7 @@ fn handle_privileged_event(
 		},
 		client::event::Privileged::StartBroadcast(message) => {
 			game_state.add_broadcast(
-				address,
+				client.ship_id,
 				Broadcast {
 					sender : client.id.clone(),
 					message: message,
@@ -191,7 +191,7 @@ fn handle_privileged_event(
 			);
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state.remove_broadcast(&address);
+			game_state.remove_broadcast(&client.ship_id);
 			outgoing.push(
 				server::Event::StopBroadcast(client.id.clone())
 			);
