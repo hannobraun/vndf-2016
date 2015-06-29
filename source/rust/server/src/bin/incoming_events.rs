@@ -6,7 +6,6 @@ use nalgebra::{
 	Vec1,
 	Vec2,
 };
-use rand::random;
 
 use clients::{
 	Client,
@@ -143,7 +142,6 @@ fn handle_public_event(
 				});
 
 				let client = Client {
-					id           : generate_id(),
 					ship_id      : ship_id,
 					last_active_s: now_s,
 				};
@@ -201,37 +199,4 @@ fn handle_privileged_event(
 			game_state.ship(&client.ship_id).velocity = new_velocity;
 		},
 	}
-}
-
-// TODO: Replace comm IDs with sequential integers
-fn generate_id() -> String {
-	fn random_char(min: char, max: char) -> char {
-		let min = min as u8;
-		let max = max as u8;
-
-		((random::<u8>() % (max + 1 - min)) + min) as char
-	}
-	fn random_letter() -> char {
-		random_char('A', 'Z')
-	}
-	fn random_letter_or_number() -> char {
-		if random() {
-			random_letter()
-		}
-		else {
-			random_char('0', '9')
-		}
-	}
-
-	let mut id = String::new();
-
-	for _ in (0u8 .. 3) {
-		id.push(random_letter());
-	}
-	id.push('-');
-	for _ in (0u8 .. 5) {
-		id.push(random_letter_or_number());
-	}
-
-	id
 }
