@@ -1,8 +1,5 @@
 use std::collections::HashMap;
-use std::collections::hash_map::{
-	IterMut,
-	Values,
-};
+use std::collections::hash_map::Values;
 use std::net::SocketAddr;
 
 use shared::game::{
@@ -35,10 +32,6 @@ impl GameState {
 	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
 		self.ships.get_mut(id)
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
-	}
-
-	pub fn ships(&mut self) -> IterMut<EntityId, Ship> {
-		self.ships.iter_mut()
 	}
 
 	pub fn add_broadcast(&mut self, id: SocketAddr, broadcast: Broadcast) {
