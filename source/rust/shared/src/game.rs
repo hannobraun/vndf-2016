@@ -1,6 +1,9 @@
 use nalgebra::Vec2;
 
 
+pub type EntityId = u64;
+
+
 #[derive(Clone, Debug, Eq, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Broadcast {
 	pub sender : String,

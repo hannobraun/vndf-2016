@@ -3,11 +3,9 @@ use std::collections::hash_map::Values;
 
 use shared::game::{
 	Broadcast,
+	EntityId,
 	Ship,
 };
-
-
-pub type EntityId = u64;
 
 
 #[derive(Debug)]
