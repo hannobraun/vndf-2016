@@ -1,4 +1,4 @@
-#![feature(collections_drain)]
+#![feature(drain)]
 
 
 extern crate nalgebra;

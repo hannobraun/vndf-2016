@@ -1,4 +1,4 @@
-#![feature(collections_drain)]
+#![feature(drain)]
 
 
 #[macro_use]

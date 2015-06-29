@@ -1,4 +1,4 @@
-#![feature(collections, collections_drain, plugin, std_misc)]
+#![feature(collections, drain, float_extras, plugin, std_misc, vec_from_raw_buf)]
 #![feature(custom_attribute)]
 
 
