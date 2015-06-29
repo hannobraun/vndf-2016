@@ -137,7 +137,12 @@ impl Cli {
 				));
 			},
 			"comm-data" => {
-				self.text.push(format!("Your Comm Id: {}", frame.ship_id));
+				let message = match frame.ship_id {
+					Some(ref id) => format!("Your Comm Id: {}", id),
+					None         => format!("Comm Id is currently unknown"),
+				};
+				
+				self.text.push(message);
 			},
 
 			"schedule-maneuver" => {
