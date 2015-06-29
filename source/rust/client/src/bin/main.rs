@@ -1,4 +1,4 @@
-#![feature(drain, float_extras, vec_from_raw_buf)]
+#![feature(drain, float_extras)]
 #![feature(custom_attribute)]
 
 
