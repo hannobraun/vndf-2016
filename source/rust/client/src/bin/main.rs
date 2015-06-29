@@ -138,7 +138,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 				server::Event::StopBroadcast(sender) => {
 					broadcasts.remove(&sender);
 				},
-				server::Event::UpdateEntity(ship) => {
+				server::Event::UpdateShip(ship) => {
 					frame.position = Cast::from(ship.position);
 					frame.velocity = Cast::from(ship.velocity);
 				},
