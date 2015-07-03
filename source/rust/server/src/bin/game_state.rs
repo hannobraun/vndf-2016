@@ -58,6 +58,11 @@ impl GameState {
 		self.broadcasts.values()
 	}
 
+	pub fn destroy_entity(&mut self, id: &EntityId) {
+		self.ships.remove(id);
+		self.broadcasts.remove(id);
+	}
+
 	pub fn update(&mut self) {
 		for (_, ship) in &mut self.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
