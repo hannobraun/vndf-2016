@@ -67,7 +67,7 @@ fn it_should_ignore_duplicate_logins() {
 						true
 					},
 					Heartbeat => {
-						// If we received a heartbeat, that means the server has
+						// If we received a heartbeat, that means the server
 						// ignored our second login and has moved on.
 						true
 					}
