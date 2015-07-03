@@ -17,7 +17,7 @@ fn it_should_send_navigation_data() {
 	let mut client = rc::Client::start(server.port());
 
 	let frame_1 = client.wait_until(|frame|
-		frame.ship_id.is_some()
+		frame.ship_id.is_some() && frame.ships.len() == 1
 	);
 	let ship_id = match frame_1.ship_id {
 		Some(ship_id) => ship_id,
