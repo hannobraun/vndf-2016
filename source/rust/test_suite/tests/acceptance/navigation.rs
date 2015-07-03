@@ -1,4 +1,4 @@
-use std::f32::consts::PI;
+use std::f64::consts::PI;
 
 use nalgebra::{
 	cast,
@@ -43,11 +43,11 @@ fn it_should_schedule_maneuvers() {
 
 	let velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		frame_1.velocity,
+		cast(frame_1.velocity),
 	);
 	let maneuver_direction_rad = velocity_direction_rad + PI;
 
-	client.input(InputEvent::ScheduleManeuver(maneuver_direction_rad as f64));
+	client.input(InputEvent::ScheduleManeuver(maneuver_direction_rad));
 
 	let frame_2 = client.wait_until(|frame| {
 		frame_1.velocity != frame.velocity
@@ -55,13 +55,13 @@ fn it_should_schedule_maneuvers() {
 
 	let new_velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		frame_2.velocity,
+		cast(frame_2.velocity),
 	);
 
 	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);
 }
 
 
-fn angle_between(v1: Vec2<f32>, v2: Vec2<f32>) -> f32 {
+fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
 	(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
 }
