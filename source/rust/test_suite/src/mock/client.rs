@@ -41,6 +41,9 @@ impl Client {
 	}
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.
+	// TODO: Don't return Option<server::Event>. Instead return
+	//       Option<whatever the closure returns>. The return value of the
+	//       closure should be something like (bool, T), or maybe Result<T, ()>.
 	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<server::Event>
 		where F: FnMut(&Option<server::Event>) -> bool
 	{
