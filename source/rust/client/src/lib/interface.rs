@@ -1,4 +1,5 @@
-use nalgebra::Vec2;
+use std::collections::HashMap;
+
 use rustc_serialize::json::{
 	self,
 	DecodeResult,
@@ -40,7 +41,7 @@ pub struct Frame {
 	pub ship_id   : Option<EntityId>,
 	pub message   : Message,
 	pub broadcasts: Vec<Broadcast>,
-	pub ship      : Ship,
+	pub ships     : HashMap<EntityId, Ship>,
 }
 
 impl Frame {
@@ -49,10 +50,7 @@ impl Frame {
 			ship_id   : None,
 			message   : Message::None,
 			broadcasts: Vec::new(),
-			ship      : Ship {
-				position: Vec2::new(0.0, 0.0),
-				velocity: Vec2::new(0.0, 0.0),
-			},
+			ships     : HashMap::new(),
 		}
 	}
 

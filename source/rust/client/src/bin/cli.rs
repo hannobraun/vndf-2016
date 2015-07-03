@@ -130,13 +130,20 @@ impl Cli {
 			},
 
 			"nav-data" => {
-				let ship = frame.ship;
+				match frame.ship_id {
+					Some(ship_id) => {
+						let ship = frame.ships[&ship_id];
 
-				self.text.push(format!(
-					"Position: ({}, {}); Velocity: ({}, {})\n",
-					ship.position.x, ship.position.y,
-					ship.velocity.x, ship.velocity.y,
-				));
+						self.text.push(format!(
+							"Position: ({}, {}); Velocity: ({}, {})\n",
+							ship.position.x, ship.position.y,
+							ship.velocity.x, ship.velocity.y,
+						));
+					},
+					None => {
+						self.text.push(format!("No data available."));
+					},
+				}
 			},
 			"comm-data" => {
 				let message = match frame.ship_id {

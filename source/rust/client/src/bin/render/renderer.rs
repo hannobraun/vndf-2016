@@ -66,7 +66,9 @@ impl Renderer {
 			);
 		}
 
-		self.ship_drawer.draw(&mut self.graphics, &cast(frame.ship.position));
+		for (_, ship) in &frame.ships {
+			self.ship_drawer.draw(&mut self.graphics, &cast(ship.position));
+		}
 
 		self.graphics.flush();
 	}

@@ -16,18 +16,24 @@ fn it_should_send_navigation_data() {
 	let     server = rc::Server::start();
 	let mut client = rc::Client::start(server.port());
 
-	let frame_1 = client.frame();
+	let frame_1 = client.wait_until(|frame|
+		frame.ship_id.is_some()
+	);
+	let ship_id = match frame_1.ship_id {
+		Some(ship_id) => ship_id,
+		None          => panic!("Expected ship id"),
+	};
 
 	let frame_1 = client.wait_until(|frame|
-		frame.ship.position != frame_1.ship.position
+		frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
 	);
 	let frame_2 = client.wait_until(|frame|
-		frame.ship.position != frame_1.ship.position
+		frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
 	);
 
 	assert!(is_point_on_line(
-		frame_2.ship.position,
-		frame_1.ship.position, frame_1.ship.velocity,
+		frame_2.ships[&ship_id].position,
+		frame_1.ships[&ship_id].position, frame_1.ships[&ship_id].velocity,
 	));
 }
 
@@ -37,24 +43,28 @@ fn it_should_schedule_maneuvers() {
 	let mut client = rc::Client::start(server.port());
 
 	let frame_1 = client.wait_until(|frame| {
-		frame.ship.velocity != Vec2::new(0.0, 0.0)
+		frame.ship_id.is_some()
 	});
+	let ship_id = match frame_1.ship_id {
+		Some(ship_id) => ship_id,
+		None          => panic!("Expected ship id"),
+	};
 
 	let velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		frame_1.ship.velocity,
+		frame_1.ships[&ship_id].velocity,
 	);
 	let maneuver_direction_rad = velocity_direction_rad + PI;
 
 	client.input(InputEvent::ScheduleManeuver(maneuver_direction_rad));
 
 	let frame_2 = client.wait_until(|frame| {
-		frame_1.ship.velocity != frame.ship.velocity
+		frame_1.ships[&ship_id].velocity != frame.ships[&ship_id].velocity
 	});
 
 	let new_velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		frame_2.ship.velocity,
+		frame_2.ships[&ship_id].velocity,
 	);
 
 	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);

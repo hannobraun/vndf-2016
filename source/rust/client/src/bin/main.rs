@@ -138,7 +138,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					broadcasts.remove(&sender);
 				},
 				server::Event::UpdateShip(ship) => {
-					frame.ship = ship;
+					if let Some(ship_id) = frame.ship_id {
+						frame.ships.insert(ship_id, ship);
+					}
 				},
 			}
 
