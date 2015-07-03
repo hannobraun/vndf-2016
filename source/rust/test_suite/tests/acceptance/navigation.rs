@@ -1,7 +1,6 @@
 use std::f64::consts::PI;
 
 use nalgebra::{
-	cast,
 	Dot,
 	Norm,
 	Vec2,
@@ -28,7 +27,7 @@ fn it_should_send_navigation_data() {
 
 	assert!(is_point_on_line(
 		frame_2.position,
-		frame_1.position, cast(frame_1.velocity),
+		frame_1.position, frame_1.velocity,
 	));
 }
 
@@ -43,7 +42,7 @@ fn it_should_schedule_maneuvers() {
 
 	let velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		cast(frame_1.velocity),
+		frame_1.velocity,
 	);
 	let maneuver_direction_rad = velocity_direction_rad + PI;
 
@@ -55,7 +54,7 @@ fn it_should_schedule_maneuvers() {
 
 	let new_velocity_direction_rad = angle_between(
 		Vec2::new(1.0, 0.0),
-		cast(frame_2.velocity),
+		frame_2.velocity,
 	);
 
 	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);
