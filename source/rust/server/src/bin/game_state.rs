@@ -63,6 +63,13 @@ impl GameState {
 		self.broadcasts.remove(id);
 	}
 
+	pub fn export_entity(&self, id: &EntityId) -> (Ship, Option<Broadcast>) {
+		(
+			self.ships[id],
+			self.broadcasts.get(id).map(|broadcast| broadcast.clone()),
+		)
+	}
+
 	pub fn update(&mut self) {
 		for (_, ship) in &mut self.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
