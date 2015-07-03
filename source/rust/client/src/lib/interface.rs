@@ -40,7 +40,7 @@ pub struct Frame {
 	pub message   : Message,
 	pub broadcasts: Vec<Broadcast>,
 	pub position  : Vec2<f64>,
-	pub velocity  : Vec2<f32>,
+	pub velocity  : Vec2<f64>,
 }
 
 impl Frame {
