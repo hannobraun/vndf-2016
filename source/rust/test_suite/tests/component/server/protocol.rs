@@ -2,6 +2,10 @@ use shared::protocol::{
 	client,
 	server,
 };
+use shared::protocol::client::{
+	login,
+	start_broadcast,
+};
 use test_suite::{
 	mock,
 	rc,
@@ -14,16 +18,16 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	let mut client_1 = mock::Client::start(server.port());
 	let mut client_2 = mock::Client::start(server.port());
 
-	client_1.send(client::Event::Privileged(client::event::Privileged::StartBroadcast(
+	client_1.send(start_broadcast(
 		"I haven't logged in, but am sending this anyway.".to_string(),
-	)));
+	));
 
 	// The process of sending a broadcast is too complicated to happen by
 	// accident for a client that never has logged in. The server crashing in
 	// that case is more realistic, and that's what this test is about.
 	// Let's make sure it still works by logging in with a second client.
 
-	client_2.send(client::Event::Public(client::event::Public::Login));
+	client_2.send(login());
 	client_2.wait_until(|event| {
 		match event {
 			&Some(server::Event::Heartbeat) => true,
