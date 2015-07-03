@@ -1,7 +1,11 @@
-use shared::protocol::server;
 use shared::protocol::client::{
 	login,
 	start_broadcast,
+};
+use shared::protocol::server::Event::{
+	Heartbeat,
+	ShipId,
+	StartBroadcast,
 };
 use test_suite::{
 	mock,
@@ -27,8 +31,8 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	client_2.send(login());
 	client_2.wait_until(|event| {
 		match event {
-			&Some(server::Event::Heartbeat) => true,
-			_                               => false,
+			&Some(Heartbeat) => true,
+			_                => false,
 		}
 	});
 }
@@ -45,7 +49,7 @@ fn it_should_ignore_duplicate_logins() {
 
 	let mut ship_id = None;
 	client.wait_until(|event| {
-		if let &Some(server::Event::ShipId(id)) = event {
+		if let &Some(ShipId(id)) = event {
 			ship_id = Some(id);
 			true
 		}
@@ -62,11 +66,11 @@ fn it_should_ignore_duplicate_logins() {
 		match *event {
 			Some(ref event) => {
 				match *event {
-					server::Event::ShipId(ship_id) => {
+					ShipId(ship_id) => {
 						received_ship_id = Some(ship_id);
 						true
 					},
-					server::Event::StartBroadcast(_) => {
+					StartBroadcast(_) => {
 						true
 					},
 					_ =>
@@ -90,5 +94,5 @@ fn it_should_send_regular_heartbeats() {
 
 	client.send(login());
 
-	client.wait_until(|event| *event == Some(server::Event::Heartbeat));
+	client.wait_until(|event| *event == Some(Heartbeat));
 }
