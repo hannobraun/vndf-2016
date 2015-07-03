@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::collections::hash_map::Iter;
+use std::vec::Drain;
 
 use shared::game::{
 	Broadcast,
@@ -14,14 +15,17 @@ pub struct GameState {
 
 	broadcasts: HashMap<EntityId, Broadcast>,
 	ships     : HashMap<EntityId, Ship>,
+
+	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
 }
 
 impl GameState {
 	pub fn new() -> GameState {
 		GameState {
-			next_id   : 0,
-			broadcasts: HashMap::new(),
-			ships     : HashMap::new(),
+			next_id      : 0,
+			broadcasts   : HashMap::new(),
+			ships        : HashMap::new(),
+			export_buffer: Vec::new(),
 		}
 	}
 
@@ -56,11 +60,17 @@ impl GameState {
 		self.broadcasts.remove(id);
 	}
 
-	pub fn export_entity(&self, id: &EntityId) -> (Ship, Option<Broadcast>) {
-		(
-			self.ships[id],
-			self.broadcasts.get(id).map(|broadcast| broadcast.clone()),
-		)
+	pub fn export_entities(&mut self)
+		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
+	{
+		for (id, ship) in &self.ships {
+			let broadcast =
+				self.broadcasts.get(id).map(|broadcast| broadcast.clone());
+
+			self.export_buffer.push((*id, (*ship, broadcast)))
+		}
+
+		self.export_buffer.drain(..)
 	}
 
 	pub fn update(&mut self) {
