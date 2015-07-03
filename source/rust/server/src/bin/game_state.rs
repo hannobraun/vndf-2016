@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::collections::hash_map::Iter;
 use std::vec::Drain;
 
 use shared::game::{
@@ -41,10 +40,6 @@ impl GameState {
 	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
 		self.ships.get_mut(id)
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
-	}
-
-	pub fn ships(&self) -> Iter<EntityId, Ship> {
-		self.ships.iter()
 	}
 
 	pub fn add_broadcast(&mut self, id: EntityId, broadcast: Broadcast) {
