@@ -39,7 +39,7 @@ pub struct Frame {
 	pub ship_id   : Option<EntityId>,
 	pub message   : Message,
 	pub broadcasts: Vec<Broadcast>,
-	pub position  : Vec2<f32>,
+	pub position  : Vec2<f64>,
 	pub velocity  : Vec2<f32>,
 }
 

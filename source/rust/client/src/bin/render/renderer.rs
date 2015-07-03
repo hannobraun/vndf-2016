@@ -1,6 +1,9 @@
 use std::fmt::Write;
 
-use nalgebra::Ortho3;
+use nalgebra::{
+	cast,
+	Ortho3,
+};
 
 use client::interface::Frame;
 use render::draw::{
@@ -63,7 +66,7 @@ impl Renderer {
 			);
 		}
 
-		self.ship_drawer.draw(&mut self.graphics, &frame.position);
+		self.ship_drawer.draw(&mut self.graphics, &cast(frame.position));
 
 		self.graphics.flush();
 	}
