@@ -104,7 +104,7 @@ fn handle_event(
 					client,
 				None => {
 					debug!(
-						"Ignoring event: {:?} ({})",
+						"Ignoring event from unknown client: {:?} ({})",
 						event, address,
 					);
 					return;
