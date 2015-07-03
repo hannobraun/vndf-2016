@@ -139,7 +139,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 				server::Event::StopBroadcast(sender) => {
 					broadcasts.remove(&sender);
 				},
-				server::Event::UpdateEntity(id, ship) => {
+				server::Event::UpdateEntity(id, ship, _) => {
 					ships.insert(id, ship);
 				},
 				server::Event::RemoveEntity(id) => {
