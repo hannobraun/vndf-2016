@@ -143,7 +143,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						Some(broadcast) => {
 							broadcasts.insert(id, broadcast);
 						},
-						None => (),
+						None => {
+							broadcasts.remove(&id);
+						}
 					}
 				},
 				server::Event::RemoveEntity(id) => {
