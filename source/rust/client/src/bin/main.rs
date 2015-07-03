@@ -133,7 +133,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 				server::Event::ShipId(ship_id) => {
 					frame.ship_id = Some(ship_id);
 				},
-				server::Event::UpdateEntity(id, ship, broadcast) => {
+				server::Event::UpdateEntity(id, (ship, broadcast)) => {
 					ships.insert(id, ship);
 
 					match broadcast {

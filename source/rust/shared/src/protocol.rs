@@ -63,7 +63,7 @@ pub mod server {
 	pub enum Event {
 		Heartbeat,
 		ShipId(EntityId),
-		UpdateEntity(EntityId, Ship, Option<Broadcast>),
+		UpdateEntity(EntityId, (Ship, Option<Broadcast>)),
 		RemoveEntity(EntityId),
 	}
 }
