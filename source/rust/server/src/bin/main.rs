@@ -106,7 +106,8 @@ fn main() {
 		// TODO(AMy58bbh): Handle this via outgoing_events
 		for (&address, _) in &clients {
 			for (id, ship) in game_state.ships() {
-				let event = ServerEvent::UpdateEntity(*id, *ship, None);
+				let entity = game_state.export_entity(id);
+				let event  = ServerEvent::UpdateEntity(*id, *ship, entity.1);
 
 				network.send(
 					Some(address).into_iter(),
