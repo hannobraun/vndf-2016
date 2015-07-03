@@ -82,6 +82,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 			Err(error) => panic!("Error updating interface: {}", error),
 		};
 
+		frame.message = Message::None;
+
 		for event in input_events {
 			match event {
 				InputEvent::StartBroadcast(message) =>
