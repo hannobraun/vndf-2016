@@ -27,8 +27,8 @@ fn it_should_send_navigation_data() {
 	);
 
 	assert!(is_point_on_line(
-		cast(frame_2.position),
-		cast(frame_1.position), cast(frame_1.velocity),
+		frame_2.position,
+		frame_1.position, cast(frame_1.velocity),
 	));
 }
 
