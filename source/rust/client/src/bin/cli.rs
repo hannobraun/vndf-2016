@@ -158,7 +158,7 @@ impl Cli {
 				let direction_deg = scan_fmt!(
 					args,
 					"{}",
-					u16
+					i16
 				);
 
 				match direction_deg {
