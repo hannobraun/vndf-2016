@@ -30,7 +30,6 @@ use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
 
-use nalgebra::Cast;
 use time::precise_time_s;
 
 use args::Args;
@@ -139,8 +138,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					broadcasts.remove(&sender);
 				},
 				server::Event::UpdateShip(ship) => {
-					frame.position = Cast::from(ship.position);
-					frame.velocity = Cast::from(ship.velocity);
+					frame.ship = ship;
 				},
 			}
 

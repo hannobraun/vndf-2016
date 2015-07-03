@@ -132,8 +132,8 @@ impl Cli {
 			"nav-data" => {
 				self.text.push(format!(
 					"Position: ({}, {}); Velocity: ({}, {})\n",
-					frame.position.x, frame.position.y,
-					frame.velocity.x, frame.velocity.y,
+					frame.ship.position.x, frame.ship.position.y,
+					frame.ship.velocity.x, frame.ship.velocity.y,
 				));
 			},
 			"comm-data" => {
