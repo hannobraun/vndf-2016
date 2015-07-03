@@ -1,6 +1,7 @@
 use std::f32::consts::PI;
 
 use nalgebra::{
+	cast,
 	Dot,
 	Norm,
 	Vec2,
@@ -26,8 +27,8 @@ fn it_should_send_navigation_data() {
 	);
 
 	assert!(is_point_on_line(
-		frame_2.position,
-		frame_1.position, frame_1.velocity,
+		cast(frame_2.position),
+		cast(frame_1.position), cast(frame_1.velocity),
 	));
 }
 
