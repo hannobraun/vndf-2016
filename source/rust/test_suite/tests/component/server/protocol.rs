@@ -1,7 +1,4 @@
-use shared::protocol::{
-	client,
-	server,
-};
+use shared::protocol::server;
 use shared::protocol::client::{
 	login,
 	start_broadcast,
@@ -91,7 +88,7 @@ fn it_should_send_regular_heartbeats() {
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
-	client.send(client::Event::Public(client::event::Public::Login));
+	client.send(login());
 
 	client.wait_until(|event| *event == Some(server::Event::Heartbeat));
 }
