@@ -56,6 +56,6 @@ pub mod server {
 		ShipId(EntityId),
 		StartBroadcast(Broadcast),
 		StopBroadcast(EntityId),
-		UpdateShip(Ship),
+		UpdateShip(EntityId, Ship),
 	}
 }
