@@ -16,7 +16,6 @@ use window::Window;
 
 pub struct Cli {
 	input_buffer: String,
-	last_message: Message,
 	text        : Vec<String>,
 	height      : u16,
 }
@@ -31,7 +30,6 @@ impl Cli {
 
 		Cli {
 			input_buffer: String::new(),
-			last_message: Message::None,
 			text        : text,
 			height      : height,
 		}
@@ -43,18 +41,10 @@ impl Cli {
 		frame : &Frame,
 		window: &Window
 	) {
-		// TODO(uqLeNh9a): The following code demonstrates an impedance
-		//                 mismatch. Frame encodes the full status at any point
-		//                 in time, but we're converting it into an event stream
-		//                 here.
-		if frame.message != self.last_message {
-			match frame.message {
-				Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
-				Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
-				Message::None                => (),
-			}
-
-			self.last_message = frame.message.clone();
+		match frame.message {
+			Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
+			Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
+			Message::None                => (),
 		}
 
 		for event in window.poll_events() {
