@@ -61,13 +61,13 @@ fn it_should_ignore_duplicate_logins() {
 	client.send(login());
 	client.send(start_broadcast("This is a broadcast.".to_string()));
 
-	let mut received_ship_id = None;
+	let mut second_ship_id = None;
 	client.wait_until(|event| {
 		match *event {
 			Some(ref event) => {
 				match *event {
 					ShipId(ship_id) => {
-						received_ship_id = Some(ship_id);
+						second_ship_id = Some(ship_id);
 						true
 					},
 					StartBroadcast(_) => {
@@ -82,8 +82,8 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	if let Some(_) = received_ship_id {
-		assert_eq!(first_ship_id, received_ship_id);
+	if let Some(_) = second_ship_id {
+		assert_eq!(first_ship_id, second_ship_id);
 	}
 }
 
