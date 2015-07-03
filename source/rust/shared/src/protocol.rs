@@ -36,7 +36,7 @@ pub mod client {
 			StartBroadcast(String),
 			StopBroadcast,
 
-			ScheduleManeuver(f32),
+			ScheduleManeuver(f64),
 		}
 	}
 }
