@@ -10,6 +10,10 @@ use test_suite::{
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
+	// TODO: This test seems somewhat dubious. The second client might well
+	//       receive its own broadcast and then stop listening before the first
+	//       client's broadcast arrives.
+
 	let     server   = rc::Server::start();
 	let mut client_1 = mock::Client::start(server.port());
 	let mut client_2 = mock::Client::start(server.port());
