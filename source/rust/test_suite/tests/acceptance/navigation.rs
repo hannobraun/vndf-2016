@@ -54,6 +54,12 @@ fn it_should_display_other_players_ships() {
 	client_b.wait_until(|frame|
 		frame.ships.len() == 2
 	);
+
+	drop(client_b);
+
+	client_a.wait_until(|frame|
+		frame.ships.len() == 1
+	);
 }
 
 #[test]

@@ -80,8 +80,8 @@ fn main() {
 			);
 
 			if let Some(client) = clients.remove(&address) {
-				// TODO: Notify client that ship has been removed
 				outgoing_events.push(ServerEvent::StopBroadcast(client.ship_id));
+				outgoing_events.push(ServerEvent::RemoveEntity(client.ship_id));
 				game_state.destroy_entity(&client.ship_id);
 			}
 		}

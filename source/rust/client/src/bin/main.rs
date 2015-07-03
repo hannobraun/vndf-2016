@@ -142,6 +142,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 				server::Event::UpdateShip(id, ship) => {
 					ships.insert(id, ship);
 				},
+				server::Event::RemoveEntity(id) => {
+					ships.remove(&id);
+				},
 			}
 
 			last_server_activity = precise_time_s();
