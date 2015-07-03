@@ -10,10 +10,6 @@ use test_suite::{
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
-	// TODO: This test seems somewhat dubious. The second client might well
-	//       receive its own broadcast and then stop listening before the first
-	//       client's broadcast arrives.
-
 	let     server   = rc::Server::start();
 	let mut client_1 = mock::Client::start(server.port());
 	let mut client_2 = mock::Client::start(server.port());
@@ -21,6 +17,11 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	client_1.send(client::Event::Privileged(client::event::Privileged::StartBroadcast(
 		"I haven't logged in, but am sending this anyway.".to_string(),
 	)));
+
+	// The process of sending a broadcast is too complicated to happen by
+	// accident for a client that never has logged in. The server crashing in
+	// that case is more realistic, and that's what this test is about.
+	// Let's make sure it still works by logging in with a second client.
 
 	let message = "This is a broadcast.".to_string();
 	client_2.send(client::Event::Public(client::event::Public::Login));
