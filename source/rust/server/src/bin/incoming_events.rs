@@ -193,7 +193,7 @@ fn handle_privileged_event(
 			);
 		},
 		client::event::Privileged::ScheduleManeuver(angle) => {
-			let rotation = Rot2::new(Vec1::new(angle as f64));
+			let rotation = Rot2::new(Vec1::new(angle));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
 			game_state.ship(&client.ship_id).velocity = new_velocity;
