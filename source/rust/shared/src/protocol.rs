@@ -39,6 +39,15 @@ pub mod client {
 			ScheduleManeuver(f64),
 		}
 	}
+
+
+	pub fn login() -> Event {
+		Event::Public(event::Public::Login)
+	}
+
+	pub fn start_broadcast(message: String) -> Event {
+		Event::Privileged(event::Privileged::StartBroadcast(message))
+	}
 }
 
 
