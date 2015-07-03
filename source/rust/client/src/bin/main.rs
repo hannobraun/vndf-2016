@@ -68,7 +68,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 	let mut frame = Frame::new();
 
 	let mut broadcasts = HashMap::new();
-	let mut network    = Network::new(args.server);
+	let mut ships      = HashMap::new();
+
+	let mut network = Network::new(args.server);
 
 	let mut last_server_activity = precise_time_s();
 
@@ -138,7 +140,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					broadcasts.remove(&sender);
 				},
 				server::Event::UpdateShip(id, ship) => {
-					frame.ships.insert(id, ship);
+					ships.insert(id, ship);
 				},
 			}
 
@@ -155,6 +157,12 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 			.iter()
 			.map(|(_, broadcast)|
 				broadcast.clone()
+			)
+			.collect();
+		frame.ships = ships
+			.iter()
+			.map(|(id, ship)|
+				(*id, *ship)
 			)
 			.collect();
 
