@@ -23,27 +23,13 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	// that case is more realistic, and that's what this test is about.
 	// Let's make sure it still works by logging in with a second client.
 
-	let message = "This is a broadcast.".to_string();
 	client_2.send(client::Event::Public(client::event::Public::Login));
-	client_2.send(client::Event::Privileged(client::event::Privileged::StartBroadcast(message.clone())));
-
-	let mut received_message = String::new();
 	client_2.wait_until(|event| {
-		if let &Some(ref event) = event {
-			if let &server::Event::StartBroadcast(ref broadcast) = event {
-				received_message = broadcast.message.clone();
-				true
-			}
-			else {
-				false
-			}
-		}
-		else {
-			false
+		match event {
+			&Some(server::Event::Heartbeat) => true,
+			_                               => false,
 		}
 	});
-
-	assert_eq!(received_message, message)
 }
 
 #[test]
