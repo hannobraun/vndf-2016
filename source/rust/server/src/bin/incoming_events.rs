@@ -47,7 +47,6 @@ impl IncomingEvents {
 		now_s     : f64,
 		clients   : &mut Clients,
 		game_state: &mut GameState,
-		outgoing  : &mut Vec<server::Event>,
 		network   : &mut Network,
 	) {
 		for (address, event) in self.incoming.drain(..) {
@@ -57,7 +56,6 @@ impl IncomingEvents {
 				event,
 				clients,
 				game_state,
-				outgoing,
 				network,
 			);
 		}
@@ -71,7 +69,6 @@ fn handle_event(
 	event     : client::Event,
 	clients   : &mut Clients,
 	game_state: &mut GameState,
-	outgoing  : &mut Vec<server::Event>,
 	network   : &mut Network,
 ) {
 	let log_message = format!(
@@ -116,7 +113,6 @@ fn handle_event(
 				event,
 				client,
 				game_state,
-				outgoing,
 			);
 		},
 	}
@@ -167,7 +163,6 @@ fn handle_privileged_event(
 	event     : client::event::Privileged,
 	client    : &mut Client,
 	game_state: &mut GameState,
-	outgoing  : &mut Vec<server::Event>,
 ) {
 	client.last_active_s = now_s;
 
@@ -188,9 +183,6 @@ fn handle_privileged_event(
 		},
 		client::event::Privileged::StopBroadcast => {
 			game_state.remove_broadcast(&client.ship_id);
-			outgoing.push(
-				server::Event::StopBroadcast(client.ship_id)
-			);
 		},
 		client::event::Privileged::ScheduleManeuver(angle) => {
 			let rotation = Rot2::new(Vec1::new(angle));

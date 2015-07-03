@@ -59,7 +59,6 @@ fn main() {
 			now_s,
 			&mut clients,
 			&mut game_state,
-			&mut outgoing_events,
 			&mut network,
 		);
 
