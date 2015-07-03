@@ -44,7 +44,7 @@ fn it_should_ignore_duplicate_logins() {
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
-	client.send(client::Event::Public(client::event::Public::Login));
+	client.send(login());
 
 	let mut ship_id = None;
 	client.wait_until(|event| {
@@ -57,10 +57,8 @@ fn it_should_ignore_duplicate_logins() {
 		}
 	});
 
-	client.send(client::Event::Public(client::event::Public::Login));
-	client.send(
-		client::Event::Privileged(client::event::Privileged::StartBroadcast("This is a broadcast.".to_string()))
-	);
+	client.send(login());
+	client.send(start_broadcast("This is a broadcast.".to_string()));
 
 	let mut received_ship_id = None;
 	client.wait_until(|event| {
