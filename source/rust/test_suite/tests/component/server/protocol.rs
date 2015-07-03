@@ -47,10 +47,10 @@ fn it_should_ignore_duplicate_logins() {
 
 	client.send(login());
 
-	let mut ship_id = None;
+	let mut first_ship_id = None;
 	client.wait_until(|event| {
 		if let &Some(ShipId(id)) = event {
-			ship_id = Some(id);
+			first_ship_id = Some(id);
 			true
 		}
 		else {
@@ -83,7 +83,7 @@ fn it_should_ignore_duplicate_logins() {
 	});
 
 	if let Some(_) = received_ship_id {
-		assert_eq!(ship_id, received_ship_id);
+		assert_eq!(first_ship_id, received_ship_id);
 	}
 }
 
