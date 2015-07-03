@@ -1,4 +1,4 @@
-#![feature(drain, float_extras)]
+#![feature(drain)]
 #![feature(custom_attribute)]
 
 
@@ -111,7 +111,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					);
 				},
 				InputEvent::ScheduleManeuver(angle) => {
-					network.send(ClientEvent::Privileged(client_event::Privileged::ScheduleManeuver(angle)));
+					network.send(ClientEvent::Privileged(client_event::Privileged::ScheduleManeuver(angle as f32)));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()

@@ -154,7 +154,7 @@ impl Cli {
 
 				match direction_deg {
 					Some(direction_deg) => {
-						let direction_rad = (direction_deg as f32).to_radians();
+						let direction_rad = (direction_deg as f64).to_radians();
 						events.push(
 							InputEvent::ScheduleManeuver(direction_rad)
 						)

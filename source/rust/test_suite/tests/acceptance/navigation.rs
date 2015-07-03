@@ -47,7 +47,7 @@ fn it_should_schedule_maneuvers() {
 	);
 	let maneuver_direction_rad = velocity_direction_rad + PI;
 
-	client.input(InputEvent::ScheduleManeuver(maneuver_direction_rad));
+	client.input(InputEvent::ScheduleManeuver(maneuver_direction_rad as f64));
 
 	let frame_2 = client.wait_until(|frame| {
 		frame_1.velocity != frame.velocity

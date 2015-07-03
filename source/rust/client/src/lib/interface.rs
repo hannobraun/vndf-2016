@@ -15,7 +15,7 @@ pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
 
-	ScheduleManeuver(f32),
+	ScheduleManeuver(f64),
 
 	Quit,
 }
