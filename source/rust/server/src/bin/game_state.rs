@@ -1,8 +1,5 @@
 use std::collections::HashMap;
-use std::collections::hash_map::{
-	Iter,
-	Values,
-};
+use std::collections::hash_map::Iter;
 
 use shared::game::{
 	Broadcast,
@@ -52,10 +49,6 @@ impl GameState {
 
 	pub fn remove_broadcast(&mut self, id: &EntityId) {
 		self.broadcasts.remove(id);
-	}
-
-	pub fn broadcasts(&self) -> Values<EntityId, Broadcast> {
-		self.broadcasts.values()
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
