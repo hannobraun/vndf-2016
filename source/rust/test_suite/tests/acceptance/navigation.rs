@@ -38,6 +38,25 @@ fn it_should_send_navigation_data() {
 }
 
 #[test]
+fn it_should_display_other_players_ships() {
+	let     server   = rc::Server::start();
+	let mut client_a = rc::Client::start(server.port());
+
+	client_a.wait_until(|frame|
+		frame.ships.len() == 1
+	);
+
+	let mut client_b = rc::Client::start(server.port());
+
+	client_a.wait_until(|frame|
+		frame.ships.len() == 2
+	);
+	client_b.wait_until(|frame|
+		frame.ships.len() == 2
+	);
+}
+
+#[test]
 fn it_should_schedule_maneuvers() {
 	let     server = rc::Server::start();
 	let mut client = rc::Client::start(server.port());

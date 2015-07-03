@@ -106,14 +106,15 @@ fn main() {
 		outgoing_events.clear();
 
 		// TODO(AMy58bbh): Handle this via outgoing_events
-		for (&address, client) in &clients {
-			let ship  = game_state.ship(&client.ship_id);
-			let event = ServerEvent::UpdateShip(client.ship_id, *ship);
+		for (&address, _) in &clients {
+			for (id, ship) in game_state.ships() {
+				let event = ServerEvent::UpdateShip(*id, *ship);
 
-			network.send(
-				Some(address).into_iter(),
-				&[event],
-			);
+				network.send(
+					Some(address).into_iter(),
+					&[event],
+				);
+			}
 		}
 
 		// TODO(1oL33ljB): While physics will generally need to happen on a
