@@ -5,7 +5,6 @@ use shared::protocol::client::{
 use shared::protocol::server::Event::{
 	Heartbeat,
 	ShipId,
-	StartBroadcast,
 };
 use test_suite::{
 	mock,
@@ -67,9 +66,9 @@ fn it_should_ignore_duplicate_logins() {
 						second_ship_id = Some(ship_id);
 						true
 					},
-					StartBroadcast(_) => {
+					Heartbeat => {
 						true
-					},
+					}
 					_ =>
 						false,
 				}
