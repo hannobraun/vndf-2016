@@ -45,6 +45,8 @@ impl Client {
 	//                 Option<whatever the closure returns>. The return value
 	//                 of the closure should be something like (bool, T), or
 	//                 maybe Result<T, ()>.
+	// TODO(5rKZ3HPd): Passing an Option to the closure doesn't seem to make any
+	//                 sense. Why call it at all, if expect_event returns None?
 	pub fn wait_until<F>(&mut self, mut condition: F) -> Option<server::Event>
 		where F: FnMut(&Option<server::Event>) -> bool
 	{
