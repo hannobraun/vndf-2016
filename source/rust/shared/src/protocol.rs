@@ -63,7 +63,6 @@ pub mod server {
 	pub enum Event {
 		Heartbeat,
 		ShipId(EntityId),
-		StartBroadcast(Broadcast),
 		StopBroadcast(EntityId),
 		UpdateEntity(EntityId, Ship, Option<Broadcast>),
 		RemoveEntity(EntityId),
