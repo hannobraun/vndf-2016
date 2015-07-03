@@ -133,7 +133,7 @@ fn handle_public_event(
 	match event {
 		client::event::Public::Login => {
 			if clients.contains_key(&address) {
-				debug!("Ignoring Login: {}", address);
+				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
 				let ship_id = game_state.create_ship(Ship {
