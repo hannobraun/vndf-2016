@@ -31,7 +31,11 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 		spawn(move || {
 			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
 				Ok(listener) => listener,
-				Err(error)   => panic!("Error binding listener: {}", error),
+				Err(error)   =>
+					panic!(
+						"Error binding listener to port {}: {}",
+						port, error,
+					),
 			};
 
 			// Notify the constructing thread that we're not listening.
