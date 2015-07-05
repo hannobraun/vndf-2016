@@ -39,6 +39,7 @@ use client::interface::{
 	Message,
 };
 use client::network::Network;
+use shared::protocol::client::schedule_maneuver;
 use shared::protocol::client::Event as ClientEvent;
 use shared::protocol::client::event as client_event;
 use shared::protocol::server;
@@ -114,7 +115,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					);
 				},
 				InputEvent::ScheduleManeuver(_, angle) => {
-					network.send(ClientEvent::Privileged(client_event::Privileged::ScheduleManeuver(angle)));
+					network.send(schedule_maneuver(angle));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()
