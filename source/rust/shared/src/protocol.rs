@@ -13,11 +13,11 @@ pub mod client {
 			use self::event::Privileged::*;
 
 			match *self {
-				Event::Public(Login)                   => true,
-				Event::Privileged(Heartbeat)           => false,
-				Event::Privileged(StartBroadcast(_))   => true,
-				Event::Privileged(StopBroadcast)       => true,
-				Event::Privileged(ScheduleManeuver(_)) => true,
+				Event::Public(Login)                      => true,
+				Event::Privileged(Heartbeat)              => false,
+				Event::Privileged(StartBroadcast(_))      => true,
+				Event::Privileged(StopBroadcast)          => true,
+				Event::Privileged(ScheduleManeuver(_, _)) => true,
 			}
 		}
 	}
@@ -36,7 +36,7 @@ pub mod client {
 			StartBroadcast(String),
 			StopBroadcast,
 
-			ScheduleManeuver(f64),
+			ScheduleManeuver(f64, f64),
 		}
 	}
 
@@ -49,8 +49,8 @@ pub mod client {
 		Event::Privileged(event::Privileged::StartBroadcast(message))
 	}
 
-	pub fn schedule_maneuver(angle: f64) -> Event {
-		Event::Privileged(event::Privileged::ScheduleManeuver(angle))
+	pub fn schedule_maneuver(delay: f64, angle: f64) -> Event {
+		Event::Privileged(event::Privileged::ScheduleManeuver(delay, angle))
 	}
 }
 

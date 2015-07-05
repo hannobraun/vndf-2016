@@ -184,7 +184,7 @@ fn handle_privileged_event(
 		client::event::Privileged::StopBroadcast => {
 			game_state.remove_broadcast(&client.ship_id);
 		},
-		client::event::Privileged::ScheduleManeuver(angle) => {
+		client::event::Privileged::ScheduleManeuver(_, angle) => {
 			let rotation = Rot2::new(Vec1::new(angle));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
