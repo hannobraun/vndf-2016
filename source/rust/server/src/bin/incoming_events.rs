@@ -11,7 +11,7 @@ use clients::{
 	Client,
 	Clients,
 };
-use game_state::GameState;
+use game::state::GameState;
 use server::network::Network;
 use shared::game::{
 	Broadcast,
