@@ -113,7 +113,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						"Stopped sending broadcast".to_string()
 					);
 				},
-				InputEvent::ScheduleManeuver(angle) => {
+				InputEvent::ScheduleManeuver(_, angle) => {
 					network.send(ClientEvent::Privileged(client_event::Privileged::ScheduleManeuver(angle)));
 
 					frame.message = Message::Notice(
