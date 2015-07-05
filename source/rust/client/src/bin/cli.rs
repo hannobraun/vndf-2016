@@ -162,6 +162,22 @@ impl Cli {
 					_ =>
 						self.text.push(format!("Error parsing arguments")),
 				}
+			},
+
+			"help" => {
+				let help = [
+					"list-broadcasts - Lists all received broadcasts",
+					"start-broadcast <text> - Start sending a broadcast",
+					"stop-broadcast - Stop sending the current broadcast",
+					"nav-data - Print navigation data",
+					"comm-data - Print communication data",
+					"schedule-maneuver <degrees> - Schedule a maneuver",
+				];
+
+				self.text.push(format!("Available commands:"));
+				for line in &help {
+					self.text.push(format!("{}", line))
+				}
 			}
 
 			_ => self.text.push(format!("Unknown command: {}\n", command)),
