@@ -24,7 +24,7 @@ impl Cli {
 	pub fn new() -> Cli {
 		let mut text = Vec::new();
 		text.push(format!("VNDF Ship Control System"));
-		text.push(format!("Enter command"));
+		text.push(format!("Type \"help\" to list available commands"));
 
 		let height = 24;
 
