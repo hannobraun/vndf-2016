@@ -172,7 +172,7 @@ impl Cli {
 					"stop-broadcast - Stop sending the current broadcast",
 					"nav-data - Print navigation data",
 					"comm-data - Print communication data",
-					"schedule-maneuver <degrees> - Schedule a maneuver",
+					"schedule-maneuver <seconds> <degrees> - Schedule a maneuver",
 				];
 
 				self.text.push(format!("Available commands:"));
