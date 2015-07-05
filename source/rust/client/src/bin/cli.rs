@@ -145,14 +145,14 @@ impl Cli {
 			},
 
 			"schedule-maneuver" => {
-				let direction_deg = scan_fmt!(
+				let result = scan_fmt!(
 					args,
-					"{}",
-					i16
+					"{} {}",
+					f64, i16
 				);
 
-				match direction_deg {
-					Some(direction_deg) => {
+				match result {
+					(Some(_), Some(direction_deg)) => {
 						let direction_rad = (direction_deg as f64).to_radians();
 						events.push(
 							InputEvent::ScheduleManeuver(direction_rad)
