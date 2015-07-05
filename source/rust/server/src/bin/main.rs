@@ -80,11 +80,11 @@ fn main() {
 
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::RemoveEntity(client.ship_id));
-				game_state.destroy_entity(&client.ship_id);
+				game_state.entities.destroy_entity(&client.ship_id);
 			}
 		}
 
-		game_state.update();
+		game_state.entities.update();
 
 		let recipients = clients
 			.iter()
@@ -99,7 +99,7 @@ fn main() {
 
 		// TODO(AMy58bbh): Handle this via outgoing_events
 		for (&address, _) in &clients {
-			for (id, entity) in game_state.export_entities() {
+			for (id, entity) in game_state.entities.export_entities() {
 				let event = ServerEvent::UpdateEntity(id, entity);
 
 				network.send(

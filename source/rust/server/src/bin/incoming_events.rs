@@ -132,7 +132,7 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.create_ship(Ship {
+				let ship_id = game_state.entities.create_ship(Ship {
 					position: Vec2::new(0.0, 0.0),
 					velocity: Vec2::new(1.0, 0.0),
 				});
@@ -173,7 +173,7 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.add_broadcast(
+			game_state.entities.add_broadcast(
 				client.ship_id,
 				Broadcast {
 					sender : client.ship_id,
@@ -182,13 +182,13 @@ fn handle_privileged_event(
 			);
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state.remove_broadcast(&client.ship_id);
+			game_state.entities.remove_broadcast(&client.ship_id);
 		},
 		client::event::Privileged::ScheduleManeuver(_, angle) => {
 			let rotation = Rot2::new(Vec1::new(angle));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-			game_state.ship(&client.ship_id).velocity = new_velocity;
+			game_state.entities.ship(&client.ship_id).velocity = new_velocity;
 		},
 	}
 }
