@@ -55,6 +55,7 @@ impl Entities {
 		self.broadcasts.remove(id);
 	}
 
+	// TODO: Move to GameState
 	pub fn export_entities(&mut self)
 		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
 	{
@@ -68,6 +69,7 @@ impl Entities {
 		self.export_buffer.drain(..)
 	}
 
+	// TODO: Move to GameState
 	pub fn update(&mut self) {
 		for (_, ship) in &mut self.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into

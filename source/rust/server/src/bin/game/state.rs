@@ -3,6 +3,7 @@ use game::entities::Entities;
 
 #[derive(Debug)]
 pub struct GameState {
+	// TODO: Make entities private
 	pub entities: Entities,
 }
 
