@@ -48,6 +48,10 @@ pub mod client {
 	pub fn start_broadcast(message: String) -> Event {
 		Event::Privileged(event::Privileged::StartBroadcast(message))
 	}
+
+	pub fn schedule_maneuver(angle: f64) -> Event {
+		Event::Privileged(event::Privileged::ScheduleManeuver(angle))
+	}
 }
 
 
