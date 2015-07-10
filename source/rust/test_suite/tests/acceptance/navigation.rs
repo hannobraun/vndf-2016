@@ -83,14 +83,9 @@ fn it_should_schedule_maneuvers() {
 
 	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
 
-	let frame_2 = client.wait_until(|frame| {
-		frame_1.ships[&ship_id].velocity != frame.ships[&ship_id].velocity
+	client.wait_until(|frame| {
+		maneuver_direction_rad == direction(frame.ships[&ship_id].velocity)
 	});
-
-	let new_velocity_direction_rad =
-		direction(frame_2.ships[&ship_id].velocity);
-
-	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);
 
 
 	fn direction(v: Vec2<f64>) -> f64 {
