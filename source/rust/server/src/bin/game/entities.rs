@@ -70,10 +70,6 @@ impl Entities {
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
 	}
 
-	pub fn remove_broadcast(&mut self, id: &EntityId) {
-		self.broadcasts.remove(id);
-	}
-
 	// TODO: Move to GameState
 	pub fn export_entities(&mut self)
 		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
