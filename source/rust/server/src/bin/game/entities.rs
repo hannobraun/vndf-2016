@@ -28,6 +28,20 @@ impl Entities {
 		}
 	}
 
+	pub fn add_entity(&mut self, entity: Entity) -> EntityId {
+		let id = self.next_id;
+		self.next_id += 1;
+
+		if let Some(broadcast) = entity.broadcast {
+			self.broadcasts.insert(id, broadcast);
+		}
+		if let Some(ship) = entity.ship {
+			self.ships.insert(id, ship);
+		}
+
+		id
+	}
+
 	pub fn create_ship(&mut self, ship: Ship) -> EntityId {
 		let id = self.next_id;
 		self.next_id += 1;
@@ -77,4 +91,27 @@ impl Entities {
 			ship.position = ship.position + ship.velocity;
 		}
 	}
+}
+
+
+pub struct Entity {
+	broadcast: Option<Broadcast>,
+	ship     : Option<Ship>,
+}
+
+impl Entity {
+	pub fn new() -> Entity {
+		Entity {
+			broadcast: None,
+			ship     : None,
+		}
+	}
+
+	pub fn with_ship(mut self, ship: Ship) -> Entity {
+		self.ship = Some(ship);
+		self
+	}
+
+	// TODO: This should have an equivalent `with_broadcast` method, but it's
+	//       not required right now.
 }
