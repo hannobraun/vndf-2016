@@ -44,11 +44,19 @@ impl Entities {
 	{
 		let handle = f(Entity::new());
 
-		if let Component::Add(broadcast) = handle.broadcast {
-			self.broadcasts.insert(id, broadcast);
+		match handle.broadcast {
+			Component::Add(broadcast) => {
+				self.broadcasts.insert(id, broadcast);
+			},
+			Component::Remove => {
+				self.broadcasts.remove(&id);
+			},
+			Component::NoChange => (),
 		}
-		if let Component::Add(ship) = handle.ship {
-			self.ships.insert(id, ship);
+		match handle.ship {
+			Component::Add(ship) => { self.ships.insert(id, ship); },
+			Component::Remove    => { self.ships.remove(&id); },
+			Component::NoChange  => (),
 		}
 	}
 
