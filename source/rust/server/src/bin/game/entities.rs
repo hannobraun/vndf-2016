@@ -121,6 +121,11 @@ impl Entity {
 		self.broadcast = Component::Add(broadcast);
 		self
 	}
+
+	pub fn remove_broadcast(mut self) -> Entity {
+		self.broadcast = Component::Remove;
+		self
+	}
 }
 
 
