@@ -56,6 +56,6 @@ fn it_should_remove_clients_that_disconnected() {
 	client_b.start_broadcast("Broadcast from B");
 	client_a.wait_until(|frame| frame.broadcasts.len() == 2);
 
-	client_b.stop();
+	drop(client_b);
 	client_a.wait_until(|frame| frame.broadcasts.len() == 1);
 }
