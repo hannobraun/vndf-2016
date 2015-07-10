@@ -62,10 +62,6 @@ impl Entities {
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
 	}
 
-	pub fn add_broadcast(&mut self, id: EntityId, broadcast: Broadcast) {
-		self.broadcasts.insert(id, broadcast);
-	}
-
 	pub fn remove_broadcast(&mut self, id: &EntityId) {
 		self.broadcasts.remove(id);
 	}
