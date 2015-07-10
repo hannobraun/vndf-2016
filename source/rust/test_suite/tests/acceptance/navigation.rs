@@ -87,13 +87,15 @@ fn it_should_schedule_maneuvers() {
 		frame_1.ships[&ship_id].velocity != frame.ships[&ship_id].velocity
 	});
 
-	let new_velocity_direction_rad = angle_between(
-		Vec2::new(1.0, 0.0),
-		frame_2.ships[&ship_id].velocity,
-	);
+	let new_velocity_direction_rad =
+		direction(frame_2.ships[&ship_id].velocity);
 
 	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);
 
+
+	fn direction(v: Vec2<f64>) -> f64 {
+		angle_between(Vec2::new(1.0, 0.0), v)
+	}
 
 	fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
 		(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
