@@ -47,15 +47,6 @@ impl Entities {
 		self.broadcasts.remove(id);
 	}
 
-	pub fn create_ship(&mut self, ship: Ship) -> EntityId {
-		let id = self.next_id;
-		self.next_id += 1;
-
-		self.ships.insert(id, ship);
-
-		id
-	}
-
 	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
 		self.ships.get_mut(id)
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
