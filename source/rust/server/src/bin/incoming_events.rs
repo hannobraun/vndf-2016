@@ -11,7 +11,6 @@ use clients::{
 	Client,
 	Clients,
 };
-use game::entities::Entity;
 use game::state::GameState;
 use server::network::Network;
 use shared::game::{
@@ -133,12 +132,11 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.entities.add_entity(
-					Entity::new()
-						.with_ship(Ship {
-							position: Vec2::new(0.0, 0.0),
-							velocity: Vec2::new(1.0, 0.0),
-						})
+				let ship_id = game_state.entities.new_entity(|entity|
+					entity.with_ship(Ship {
+						position: Vec2::new(0.0, 0.0),
+						velocity: Vec2::new(1.0, 0.0),
+					})
 				);
 
 				let client = Client {
