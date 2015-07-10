@@ -95,7 +95,7 @@ pub struct Entity {
 }
 
 impl Entity {
-	pub fn new() -> Entity {
+	fn new() -> Entity {
 		Entity {
 			broadcast: None,
 			ship     : None,
