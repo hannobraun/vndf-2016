@@ -33,10 +33,6 @@ impl Client {
 		}
 	}
 
-	pub fn stop(&mut self) {
-		self.process.kill()
-	}
-
 	pub fn input(&mut self, event: InputEvent) {
 		self.process.write_stdin_line(event.to_json().as_ref());
 	}
