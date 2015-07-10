@@ -36,10 +36,10 @@ impl Entities {
 
 		let handle = constructor(Entity::new());
 
-		if let Some(broadcast) = handle.broadcast {
+		if let Component::Add(broadcast) = handle.broadcast {
 			self.broadcasts.insert(id, broadcast);
 		}
-		if let Some(ship) = handle.ship {
+		if let Component::Add(ship) = handle.ship {
 			self.ships.insert(id, ship);
 		}
 
@@ -90,23 +90,30 @@ impl Entities {
 
 
 pub struct Entity {
-	broadcast: Option<Broadcast>,
-	ship     : Option<Ship>,
+	broadcast: Component<Broadcast>,
+	ship     : Component<Ship>,
 }
 
 impl Entity {
 	fn new() -> Entity {
 		Entity {
-			broadcast: None,
-			ship     : None,
+			broadcast: Component::NoChange,
+			ship     : Component::NoChange,
 		}
 	}
 
 	pub fn add_ship(mut self, ship: Ship) -> Entity {
-		self.ship = Some(ship);
+		self.ship = Component::Add(ship);
 		self
 	}
 
 	// TODO: This should have an equivalent `with_broadcast` method, but it's
 	//       not required right now.
+}
+
+
+enum Component<T> {
+	Add(T),
+	Remove(T),
+	NoChange,
 }
