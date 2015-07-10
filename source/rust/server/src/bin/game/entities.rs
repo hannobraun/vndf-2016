@@ -42,6 +42,11 @@ impl Entities {
 		id
 	}
 
+	pub fn destroy_entity(&mut self, id: &EntityId) {
+		self.ships.remove(id);
+		self.broadcasts.remove(id);
+	}
+
 	pub fn create_ship(&mut self, ship: Ship) -> EntityId {
 		let id = self.next_id;
 		self.next_id += 1;
@@ -61,11 +66,6 @@ impl Entities {
 	}
 
 	pub fn remove_broadcast(&mut self, id: &EntityId) {
-		self.broadcasts.remove(id);
-	}
-
-	pub fn destroy_entity(&mut self, id: &EntityId) {
-		self.ships.remove(id);
 		self.broadcasts.remove(id);
 	}
 
