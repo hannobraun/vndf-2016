@@ -102,7 +102,7 @@ impl Entity {
 		}
 	}
 
-	pub fn with_ship(mut self, ship: Ship) -> Entity {
+	pub fn add_ship(mut self, ship: Ship) -> Entity {
 		self.ship = Some(ship);
 		self
 	}

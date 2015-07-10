@@ -133,7 +133,7 @@ fn handle_public_event(
 			}
 			else {
 				let ship_id = game_state.entities.new_entity(|entity|
-					entity.with_ship(Ship {
+					entity.add_ship(Ship {
 						position: Vec2::new(0.0, 0.0),
 						velocity: Vec2::new(1.0, 0.0),
 					})
