@@ -93,9 +93,9 @@ fn it_should_schedule_maneuvers() {
 	);
 
 	assert_eq!(maneuver_direction_rad, new_velocity_direction_rad);
-}
 
 
-fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
-	(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
+	fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
+		(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
+	}
 }
