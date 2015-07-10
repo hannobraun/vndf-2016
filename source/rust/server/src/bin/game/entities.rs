@@ -113,8 +113,10 @@ impl Entity {
 		self
 	}
 
-	// TODO: This should have an equivalent `with_broadcast` method, but it's
-	//       not required right now.
+	pub fn add_broadcast(mut self, broadcast: Broadcast) -> Entity {
+		self.broadcast = Component::Add(broadcast);
+		self
+	}
 }
 
 
