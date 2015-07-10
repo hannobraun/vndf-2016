@@ -28,6 +28,24 @@ impl Entities {
 		}
 	}
 
+	pub fn new_entity<C>(&mut self, constructor: C) -> EntityId
+		where C: FnOnce(Entity) -> Entity
+	{
+		let id = self.next_id;
+		self.next_id += 1;
+
+		let handle = constructor(Entity::new());
+
+		if let Some(broadcast) = handle.broadcast {
+			self.broadcasts.insert(id, broadcast);
+		}
+		if let Some(ship) = handle.ship {
+			self.ships.insert(id, ship);
+		}
+
+		id
+	}
+
 	pub fn add_entity(&mut self, entity: Entity) -> EntityId {
 		let id = self.next_id;
 		self.next_id += 1;
