@@ -44,20 +44,22 @@ impl Entities {
 	{
 		let handle = f(Entity::new());
 
-		match handle.broadcast {
-			Component::Add(broadcast) => {
-				self.broadcasts.insert(id, broadcast);
-			},
-			Component::Remove => {
-				self.broadcasts.remove(&id);
-			},
-			Component::NoChange => (),
+		macro_rules! handle_component {
+			($component:ident, $components:expr) => {
+				match handle.$component {
+					Component::Add(component) => {
+						$components.insert(id, component);
+					},
+					Component::Remove => {
+						$components.remove(&id);
+					},
+					Component::NoChange => (),
+				}
+			}
 		}
-		match handle.ship {
-			Component::Add(ship) => { self.ships.insert(id, ship); },
-			Component::Remove    => { self.ships.remove(&id); },
-			Component::NoChange  => (),
-		}
+
+		handle_component!(broadcast, self.broadcasts);
+		handle_component!(ship     , self.ships     );
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
