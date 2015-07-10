@@ -67,6 +67,7 @@ impl Entities {
 		self.broadcasts.remove(id);
 	}
 
+	// TODO: Remove as soon as possible
 	pub fn ship(&mut self, id: &EntityId) -> &mut Ship {
 		self.ships.get_mut(id)
 			.unwrap_or_else(|| panic!("Ship not found: {}", id))
