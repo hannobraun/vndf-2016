@@ -118,6 +118,6 @@ impl Entity {
 
 enum Component<T> {
 	Add(T),
-	Remove(T),
+	Remove,
 	NoChange,
 }
