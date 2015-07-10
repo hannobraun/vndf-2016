@@ -46,20 +46,6 @@ impl Entities {
 		id
 	}
 
-	pub fn add_entity(&mut self, entity: Entity) -> EntityId {
-		let id = self.next_id;
-		self.next_id += 1;
-
-		if let Some(broadcast) = entity.broadcast {
-			self.broadcasts.insert(id, broadcast);
-		}
-		if let Some(ship) = entity.ship {
-			self.ships.insert(id, ship);
-		}
-
-		id
-	}
-
 	pub fn destroy_entity(&mut self, id: &EntityId) {
 		self.ships.remove(id);
 		self.broadcasts.remove(id);
