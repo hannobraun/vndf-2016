@@ -34,7 +34,15 @@ impl Entities {
 		let id = self.next_id;
 		self.next_id += 1;
 
-		let handle = constructor(Entity::new());
+		self.get_entity(id, constructor);
+
+		id
+	}
+
+	pub fn get_entity<F>(&mut self, id: EntityId, f: F)
+		where F: FnOnce(Entity) -> Entity
+	{
+		let handle = f(Entity::new());
 
 		if let Component::Add(broadcast) = handle.broadcast {
 			self.broadcasts.insert(id, broadcast);
@@ -42,8 +50,6 @@ impl Entities {
 		if let Component::Add(ship) = handle.ship {
 			self.ships.insert(id, ship);
 		}
-
-		id
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
