@@ -75,10 +75,7 @@ fn it_should_schedule_maneuvers() {
 		None          => panic!("Expected ship id"),
 	};
 
-	let velocity_direction_rad = angle_between(
-		Vec2::new(1.0, 0.0),
-		frame_1.ships[&ship_id].velocity,
-	);
+	let velocity_direction_rad = direction(frame_1.ships[&ship_id].velocity);
 	let maneuver_direction_rad = velocity_direction_rad + PI;
 
 	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
