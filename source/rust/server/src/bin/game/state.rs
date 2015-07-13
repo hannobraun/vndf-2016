@@ -1,5 +1,7 @@
 use std::vec::Drain;
 
+use nalgebra::Vec2;
+
 use game::entities::Entities;
 use shared::game::{
 	Broadcast,
@@ -22,6 +24,15 @@ impl GameState {
 			entities     : Entities::new(),
 			export_buffer: Vec::new(),
 		}
+	}
+
+	pub fn on_enter(&mut self) -> EntityId {
+		self.entities.create_entity()
+			.with_ship(Ship {
+				position: Vec2::new(0.0, 0.0),
+				velocity: Vec2::new(1.0, 0.0),
+			})
+			.return_id()
 	}
 
 	pub fn on_leave(&mut self, ship_id: &EntityId) {
