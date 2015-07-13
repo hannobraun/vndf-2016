@@ -59,6 +59,7 @@ impl GameState {
 		ship_id: EntityId,
 		_      : f64,
 		angle  : f64,
+		now_s  : f64,
 	) {
 		let rotation = Rot2::new(Vec1::new(angle));
 		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
