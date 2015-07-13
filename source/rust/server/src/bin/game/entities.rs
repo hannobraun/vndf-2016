@@ -15,8 +15,8 @@ pub type Components<T> = HashMap<EntityId, T>;
 pub struct Entities {
 	next_id: u64,
 
-	broadcasts: Components<Broadcast>,
-	ships     : Components<Ship>,
+	pub broadcasts: Components<Broadcast>,
+	pub ships     : Components<Ship>,
 
 	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
 }
