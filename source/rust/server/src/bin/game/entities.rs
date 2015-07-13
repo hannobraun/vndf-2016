@@ -101,6 +101,8 @@ impl Entities {
 }
 
 
+// TODO: Remove #[allow(unused)], once this is moved to a library.
+#[allow(unused)]
 pub struct EntityBuilder<'c> {
 	id: EntityId,
 
@@ -108,6 +110,8 @@ pub struct EntityBuilder<'c> {
 	ships     : &'c mut Components<Ship>,
 }
 
+// TODO: Remove #[allow(unused)], once this is moved to a library.
+#[allow(unused)]
 impl<'c> EntityBuilder<'c> {
 	fn new(
 		id        : EntityId,
