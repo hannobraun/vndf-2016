@@ -13,7 +13,6 @@ use clients::{
 };
 use game::state::GameState;
 use server::network::Network;
-use shared::game::Broadcast;
 use shared::protocol::{
 	client,
 	server,
@@ -167,11 +166,7 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.entities.update_entity(client.ship_id)
-				.add_broadcast(Broadcast {
-					sender : client.ship_id,
-					message: message,
-				});
+			game_state.on_start_broadcast(client.ship_id, message);
 		},
 		client::event::Privileged::StopBroadcast => {
 			game_state.entities.update_entity(client.ship_id)

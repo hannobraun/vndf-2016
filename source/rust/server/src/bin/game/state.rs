@@ -39,6 +39,14 @@ impl GameState {
 		self.entities.destroy_entity(ship_id);
 	}
 
+	pub fn on_start_broadcast(&mut self, ship_id: EntityId, message: String) {
+		self.entities.update_entity(ship_id)
+			.add_broadcast(Broadcast {
+				sender : ship_id,
+				message: message,
+			});
+	}
+
 	pub fn on_update(&mut self) {
 		for (_, ship) in &mut self.entities.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
