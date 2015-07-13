@@ -21,9 +21,9 @@ pub struct Entities {
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
-			next_id      : 0,
-			broadcasts   : HashMap::new(),
-			ships        : HashMap::new(),
+			next_id   : 0,
+			broadcasts: HashMap::new(),
+			ships     : HashMap::new(),
 		}
 	}
 
