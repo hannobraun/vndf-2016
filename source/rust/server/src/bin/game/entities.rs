@@ -42,17 +42,6 @@ impl Entities {
 		)
 	}
 
-	pub fn new_entity<C>(&mut self, constructor: C) -> EntityId
-		where C: FnOnce(Entity) -> Entity
-	{
-		let id = self.next_id;
-		self.next_id += 1;
-
-		self.get_entity(id, constructor);
-
-		id
-	}
-
 	pub fn get_entity<F>(&mut self, id: EntityId, f: F)
 		where F: FnOnce(Entity) -> Entity
 	{
@@ -162,11 +151,6 @@ impl Entity {
 			broadcast: Component::NoChange,
 			ship     : Component::NoChange,
 		}
-	}
-
-	pub fn add_ship(mut self, ship: Ship) -> Entity {
-		self.ship = Component::Add(ship);
-		self
 	}
 
 	pub fn add_broadcast(mut self, broadcast: Broadcast) -> Entity {
