@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::vec::Drain;
 
 use shared::game::{
 	Broadcast,
@@ -17,8 +16,6 @@ pub struct Entities {
 
 	pub broadcasts: Components<Broadcast>,
 	pub ships     : Components<Ship>,
-
-	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
 }
 
 impl Entities {
@@ -27,7 +24,6 @@ impl Entities {
 			next_id      : 0,
 			broadcasts   : HashMap::new(),
 			ships        : HashMap::new(),
-			export_buffer: Vec::new(),
 		}
 	}
 
@@ -55,20 +51,6 @@ impl Entities {
 	pub fn destroy_entity(&mut self, id: &EntityId) {
 		self.ships.remove(id);
 		self.broadcasts.remove(id);
-	}
-
-	// TODO: Move to GameState
-	pub fn export_entities(&mut self)
-		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
-	{
-		for (id, ship) in &self.ships {
-			let broadcast =
-				self.broadcasts.get(id).map(|broadcast| broadcast.clone());
-
-			self.export_buffer.push((*id, (*ship, broadcast)))
-		}
-
-		self.export_buffer.drain(..)
 	}
 
 	// TODO: Move to GameState
