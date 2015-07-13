@@ -132,12 +132,12 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.entities.new_entity(|entity|
-					entity.add_ship(Ship {
+				let ship_id = game_state.entities.create_entity()
+					.with_ship(Ship {
 						position: Vec2::new(0.0, 0.0),
 						velocity: Vec2::new(1.0, 0.0),
 					})
-				);
+					.return_id();
 
 				let client = Client {
 					ship_id      : ship_id,
