@@ -31,6 +31,17 @@ impl Entities {
 		}
 	}
 
+	pub fn create_entity(&mut self) -> EntityBuilder {
+		let id = self.next_id;
+		self.next_id += 1;
+
+		EntityBuilder::new(
+			id,
+			&mut self.broadcasts,
+			&mut self.ships,
+		)
+	}
+
 	pub fn new_entity<C>(&mut self, constructor: C) -> EntityId
 		where C: FnOnce(Entity) -> Entity
 	{
@@ -97,6 +108,45 @@ impl Entities {
 			//                 account.
 			ship.position = ship.position + ship.velocity;
 		}
+	}
+}
+
+
+pub struct EntityBuilder<'c> {
+	id: EntityId,
+
+	broadcasts: &'c mut Components<Broadcast>,
+	ships     : &'c mut Components<Ship>,
+}
+
+impl<'c> EntityBuilder<'c> {
+	fn new(
+		id        : EntityId,
+		broadcasts: &'c mut Components<Broadcast>,
+		ships     : &'c mut Components<Ship>
+	)
+		-> EntityBuilder<'c>
+	{
+		EntityBuilder {
+			id: id,
+
+			broadcasts: broadcasts,
+			ships     : ships,
+		}
+	}
+
+	pub fn with_ship(mut self, ship: Ship) -> EntityBuilder<'c> {
+		self.ships.insert(self.id, ship);
+		self
+	}
+
+	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
+		self.broadcasts.insert(self.id, broadcast);
+		self
+	}
+
+	pub fn return_id(self) -> EntityId {
+		self.id
 	}
 }
 
