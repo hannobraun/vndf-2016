@@ -80,7 +80,7 @@ fn main() {
 
 			if let Some(client) = clients.remove(&address) {
 				outgoing_events.push(ServerEvent::RemoveEntity(client.ship_id));
-				game_state.entities.destroy_entity(&client.ship_id);
+				game_state.on_leave(&client.ship_id);
 			}
 		}
 

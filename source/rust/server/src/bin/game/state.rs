@@ -24,6 +24,10 @@ impl GameState {
 		}
 	}
 
+	pub fn on_leave(&mut self, ship_id: &EntityId) {
+		self.entities.destroy_entity(ship_id);
+	}
+
 	pub fn on_update(&mut self) {
 		for (_, ship) in &mut self.entities.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
