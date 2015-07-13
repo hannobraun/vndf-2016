@@ -8,12 +8,15 @@ use shared::game::{
 };
 
 
+pub type Components<T> = HashMap<EntityId, T>;
+
+
 #[derive(Debug)]
 pub struct Entities {
 	next_id: u64,
 
-	broadcasts: HashMap<EntityId, Broadcast>,
-	ships     : HashMap<EntityId, Ship>,
+	broadcasts: Components<Broadcast>,
+	ships     : Components<Ship>,
 
 	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
 }
