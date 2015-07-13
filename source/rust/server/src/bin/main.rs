@@ -84,7 +84,7 @@ fn main() {
 			}
 		}
 
-		game_state.entities.update();
+		game_state.update();
 
 		let recipients = clients
 			.iter()

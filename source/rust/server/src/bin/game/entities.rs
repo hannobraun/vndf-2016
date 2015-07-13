@@ -52,15 +52,6 @@ impl Entities {
 		self.ships.remove(id);
 		self.broadcasts.remove(id);
 	}
-
-	// TODO: Move to GameState
-	pub fn update(&mut self) {
-		for (_, ship) in &mut self.ships {
-			// TODO(E7GyYwQy): Take passed time since last iteration into
-			//                 account.
-			ship.position = ship.position + ship.velocity;
-		}
-	}
 }
 
 

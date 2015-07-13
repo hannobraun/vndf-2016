@@ -24,6 +24,14 @@ impl GameState {
 		}
 	}
 
+	pub fn update(&mut self) {
+		for (_, ship) in &mut self.entities.ships {
+			// TODO(E7GyYwQy): Take passed time since last iteration into
+			//                 account.
+			ship.position = ship.position + ship.velocity;
+		}
+	}
+
 	pub fn export_entities(&mut self)
 		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
 	{
