@@ -73,7 +73,7 @@ impl GameState {
 		}
 	}
 
-	pub fn on_update(&mut self) {
+	pub fn on_update(&mut self, now_s: f64) {
 		for (_, ship) in &mut self.entities.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
