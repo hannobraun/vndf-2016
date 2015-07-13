@@ -114,13 +114,13 @@ impl<'c> EntityBuilder<'c> {
 		}
 	}
 
-	pub fn with_ship(mut self, ship: Ship) -> EntityBuilder<'c> {
-		self.ships.insert(self.id, ship);
+	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
+		self.broadcasts.insert(self.id, broadcast);
 		self
 	}
 
-	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
-		self.broadcasts.insert(self.id, broadcast);
+	pub fn with_ship(mut self, ship: Ship) -> EntityBuilder<'c> {
+		self.ships.insert(self.id, ship);
 		self
 	}
 
