@@ -189,7 +189,10 @@ fn handle_privileged_event(
 			let rotation = Rot2::new(Vec1::new(angle));
 			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-			game_state.entities.ship(&client.ship_id).velocity = new_velocity;
+			let ship = game_state.entities.ships
+				.get_mut(&client.ship_id)
+				.unwrap_or_else(|| panic!("Expected ship: {}", client.ship_id));
+			ship.velocity = new_velocity;
 		},
 	}
 }
