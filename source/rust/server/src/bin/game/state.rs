@@ -68,18 +68,6 @@ impl GameState {
 				start_s: now_s + delay_s,
 				angle  : angle,
 			});
-
-		let rotation = Rot2::new(Vec1::new(angle));
-		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-		match self.entities.ships.get_mut(&ship_id) {
-			Some(ship) => ship.velocity = new_velocity,
-
-			// The ship might not exist due to timing issues (it could have been
-			// destroyed while the message was in flight). If this happens too
-			// often, it might also be the symptom of a bug.
-			None => debug!("Ship not found: {}", ship_id),
-		}
 	}
 
 	pub fn on_update(&mut self, now_s: f64) {
@@ -87,6 +75,31 @@ impl GameState {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
 			ship.position = ship.position + ship.velocity;
+		}
+
+
+		let mut to_destroy = Vec::new();
+		for (&id, maneuver) in &mut self.entities.maneuvers {
+			if now_s >= maneuver.start_s {
+				to_destroy.push(id);
+
+				let rotation = Rot2::new(Vec1::new(maneuver.angle));
+				let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+				match self.entities.ships.get_mut(&maneuver.ship_id) {
+					Some(ship) => ship.velocity = new_velocity,
+
+					// The ship might not exist due to timing issues (it could
+					// have been destroyed while the message was in flight). If
+					// this happens too often, it might also be the symptom of a
+					// bug.
+					None => debug!("Ship not found: {}", maneuver.ship_id),
+				}
+			}
+		}
+
+		for id in to_destroy {
+			self.entities.destroy_entity(&id);
 		}
 	}
 

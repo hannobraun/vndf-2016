@@ -75,13 +75,18 @@ fn it_should_schedule_maneuvers() {
 		None          => panic!("Expected ship id"),
 	};
 
-	let velocity_direction_rad = direction(frame_1.ships[&ship_id].velocity);
-	let maneuver_direction_rad = velocity_direction_rad + PI;
+	let velocity_direction_rad   = direction(frame_1.ships[&ship_id].velocity);
+	let maneuver_1_direction_rad = velocity_direction_rad + PI / 2.0;
+	let maneuver_2_direction_rad = velocity_direction_rad + PI;
 
-	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
+	client.input(InputEvent::ScheduleManeuver(0.01, maneuver_1_direction_rad));
+	client.input(InputEvent::ScheduleManeuver(0.02, maneuver_2_direction_rad));
 
 	client.wait_until(|frame| {
-		maneuver_direction_rad == direction(frame.ships[&ship_id].velocity)
+		maneuver_1_direction_rad == direction(frame.ships[&ship_id].velocity)
+	});
+	client.wait_until(|frame| {
+		maneuver_2_direction_rad == direction(frame.ships[&ship_id].velocity)
 	});
 
 
