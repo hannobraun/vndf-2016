@@ -175,12 +175,11 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.entities.get_entity(client.ship_id, |entity|
-				entity.add_broadcast(Broadcast {
+			game_state.entities.update_entity(client.ship_id)
+				.add_broadcast(Broadcast {
 					sender : client.ship_id,
 					message: message,
-				})
-			);
+				});
 		},
 		client::event::Privileged::StopBroadcast => {
 			game_state.entities.get_entity(client.ship_id, |entity|
