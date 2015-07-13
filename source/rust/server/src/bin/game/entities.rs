@@ -49,8 +49,8 @@ impl Entities {
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
-		self.ships.remove(id);
 		self.broadcasts.remove(id);
+		self.ships.remove(id);
 	}
 }
 
