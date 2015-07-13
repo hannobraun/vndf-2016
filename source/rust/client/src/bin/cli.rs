@@ -148,7 +148,7 @@ impl Cli {
 				let result = scan_fmt!(
 					args,
 					"{} {}",
-					f64, i16
+					f64, f64
 				);
 
 				match result {
