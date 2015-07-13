@@ -35,11 +35,12 @@ impl Entities {
 		let id = self.next_id;
 		self.next_id += 1;
 
-		EntityBuilder::new(
-			id,
-			&mut self.broadcasts,
-			&mut self.ships,
-		)
+		EntityBuilder {
+			id: id,
+
+			broadcasts: &mut self.broadcasts,
+			ships     : &mut self.ships,
+		}
 	}
 
 	pub fn update_entity(&mut self, id: EntityId) -> EntityUpdater {
@@ -99,21 +100,6 @@ pub struct EntityBuilder<'c> {
 // TODO: Remove #[allow(unused)], once this is moved to a library.
 #[allow(unused)]
 impl<'c> EntityBuilder<'c> {
-	fn new(
-		id        : EntityId,
-		broadcasts: &'c mut Components<Broadcast>,
-		ships     : &'c mut Components<Ship>
-	)
-		-> EntityBuilder<'c>
-	{
-		EntityBuilder {
-			id: id,
-
-			broadcasts: broadcasts,
-			ships     : ships,
-		}
-	}
-
 	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
 		self.broadcasts.insert(self.id, broadcast);
 		self
