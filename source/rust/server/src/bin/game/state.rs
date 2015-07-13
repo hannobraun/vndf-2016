@@ -60,10 +60,14 @@ impl GameState {
 		let rotation = Rot2::new(Vec1::new(angle));
 		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-		let ship = self.entities.ships
-			.get_mut(&ship_id)
-			.unwrap_or_else(|| panic!("Expected ship: {}", ship_id));
-		ship.velocity = new_velocity;
+		match self.entities.ships.get_mut(&ship_id) {
+			Some(ship) => ship.velocity = new_velocity,
+
+			// The ship might not exist due to timing issues (it could have been
+			// destroyed while the message was in flight). If this happens too
+			// often, it might also be the symptom of a bug.
+			None => debug!("Ship not found: {}", ship_id),
+		}
 	}
 
 	pub fn on_update(&mut self) {
