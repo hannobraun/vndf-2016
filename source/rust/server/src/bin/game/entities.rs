@@ -42,6 +42,15 @@ impl Entities {
 		)
 	}
 
+	pub fn update_entity(&mut self, id: EntityId) -> EntityUpdater {
+		EntityUpdater {
+			id: id,
+
+			broadcasts: &mut self.broadcasts,
+			ships     : &mut self.ships,
+		}
+	}
+
 	pub fn get_entity<F>(&mut self, id: EntityId, f: F)
 		where F: FnOnce(Entity) -> Entity
 	{
@@ -140,6 +149,36 @@ impl<'c> EntityBuilder<'c> {
 
 	pub fn return_id(self) -> EntityId {
 		self.id
+	}
+}
+
+
+pub struct EntityUpdater<'c> {
+	id: EntityId,
+
+	broadcasts: &'c mut Components<Broadcast>,
+	ships     : &'c mut Components<Ship>,
+}
+
+impl<'c> EntityUpdater<'c> {
+	pub fn add_broadcast(mut self, broadcast: Broadcast) -> EntityUpdater<'c> {
+		self.broadcasts.insert(self.id, broadcast);
+		self
+	}
+
+	pub fn add_ship(mut self, ship: Ship) -> EntityUpdater<'c> {
+		self.ships.insert(self.id, ship);
+		self
+	}
+
+	pub fn remove_broadcast(mut self) -> EntityUpdater<'c> {
+		self.broadcasts.remove(&self.id);
+		self
+	}
+
+	pub fn remove_ship(mut self) -> EntityUpdater<'c> {
+		self.ships.remove(&self.id);
+		self
 	}
 }
 
