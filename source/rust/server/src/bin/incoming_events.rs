@@ -182,9 +182,8 @@ fn handle_privileged_event(
 				});
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state.entities.get_entity(client.ship_id, |entity|
-				entity.remove_broadcast()
-			);
+			game_state.entities.update_entity(client.ship_id)
+				.remove_broadcast();
 		},
 		client::event::Privileged::ScheduleManeuver(_, angle) => {
 			let rotation = Rot2::new(Vec1::new(angle));
