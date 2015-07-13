@@ -51,29 +51,6 @@ impl Entities {
 		}
 	}
 
-	pub fn get_entity<F>(&mut self, id: EntityId, f: F)
-		where F: FnOnce(Entity) -> Entity
-	{
-		let handle = f(Entity::new());
-
-		macro_rules! handle_component {
-			($component:ident, $components:expr) => {
-				match handle.$component {
-					Component::Add(component) => {
-						$components.insert(id, component);
-					},
-					Component::Remove => {
-						$components.remove(&id);
-					},
-					Component::NoChange => (),
-				}
-			}
-		}
-
-		handle_component!(broadcast, self.broadcasts);
-		handle_component!(ship     , self.ships     );
-	}
-
 	pub fn destroy_entity(&mut self, id: &EntityId) {
 		self.ships.remove(id);
 		self.broadcasts.remove(id);
@@ -180,36 +157,4 @@ impl<'c> EntityUpdater<'c> {
 		self.ships.remove(&self.id);
 		self
 	}
-}
-
-
-pub struct Entity {
-	broadcast: Component<Broadcast>,
-	ship     : Component<Ship>,
-}
-
-impl Entity {
-	fn new() -> Entity {
-		Entity {
-			broadcast: Component::NoChange,
-			ship     : Component::NoChange,
-		}
-	}
-
-	pub fn add_broadcast(mut self, broadcast: Broadcast) -> Entity {
-		self.broadcast = Component::Add(broadcast);
-		self
-	}
-
-	pub fn remove_broadcast(mut self) -> Entity {
-		self.broadcast = Component::Remove;
-		self
-	}
-}
-
-
-enum Component<T> {
-	Add(T),
-	Remove,
-	NoChange,
 }
