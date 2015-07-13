@@ -1,6 +1,11 @@
 use std::vec::Drain;
 
-use nalgebra::Vec2;
+use nalgebra::{
+	Rot2,
+	Rotate,
+	Vec1,
+	Vec2,
+};
 
 use game::entities::Entities;
 use shared::game::{
@@ -49,6 +54,16 @@ impl GameState {
 
 	pub fn on_stop_broadcast(&mut self, ship_id: EntityId) {
 		self.entities.update_entity(ship_id).remove_broadcast();
+	}
+
+	pub fn on_schedule_maneuver(&mut self, ship_id: EntityId, angle: f64) {
+		let rotation = Rot2::new(Vec1::new(angle));
+		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+		let ship = self.entities.ships
+			.get_mut(&ship_id)
+			.unwrap_or_else(|| panic!("Expected ship: {}", ship_id));
+		ship.velocity = new_velocity;
 	}
 
 	pub fn on_update(&mut self) {

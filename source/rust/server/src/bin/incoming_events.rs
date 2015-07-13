@@ -1,12 +1,5 @@
 use std::net::SocketAddr;
 
-use nalgebra::{
-	Rot2,
-	Rotate,
-	Vec1,
-	Vec2,
-};
-
 use clients::{
 	Client,
 	Clients,
@@ -172,13 +165,7 @@ fn handle_privileged_event(
 			game_state.on_stop_broadcast(client.ship_id);
 		},
 		client::event::Privileged::ScheduleManeuver(_, angle) => {
-			let rotation = Rot2::new(Vec1::new(angle));
-			let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-			let ship = game_state.entities.ships
-				.get_mut(&client.ship_id)
-				.unwrap_or_else(|| panic!("Expected ship: {}", client.ship_id));
-			ship.velocity = new_velocity;
+			game_state.on_schedule_maneuver(client.ship_id, angle);
 		},
 	}
 }
