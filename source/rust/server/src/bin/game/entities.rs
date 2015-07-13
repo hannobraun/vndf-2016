@@ -130,6 +130,8 @@ impl<'c> EntityBuilder<'c> {
 }
 
 
+// TODO: Remove #[allow(unused)], once this is moved to a library.
+#[allow(unused)]
 pub struct EntityUpdater<'c> {
 	id: EntityId,
 
@@ -137,6 +139,8 @@ pub struct EntityUpdater<'c> {
 	ships     : &'c mut Components<Ship>,
 }
 
+// TODO: Remove #[allow(unused)], once this is moved to a library.
+#[allow(unused)]
 impl<'c> EntityUpdater<'c> {
 	pub fn add_broadcast(mut self, broadcast: Broadcast) -> EntityUpdater<'c> {
 		self.broadcasts.insert(self.id, broadcast);
