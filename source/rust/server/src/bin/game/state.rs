@@ -17,9 +17,7 @@ use shared::game::{
 
 #[derive(Debug)]
 pub struct GameState {
-	// TODO: Make entities private
-	pub entities: Entities,
-
+	entities     : Entities,
 	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
 }
 
