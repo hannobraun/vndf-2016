@@ -7,6 +7,7 @@ use nalgebra::{
 	Vec2,
 };
 
+use game::Maneuver;
 use game::entities::Entities;
 use shared::game::{
 	Broadcast,
@@ -57,10 +58,16 @@ impl GameState {
 	pub fn on_schedule_maneuver(
 		&mut self,
 		ship_id: EntityId,
-		_      : f64,
+		delay_s: f64,
 		angle  : f64,
 		now_s  : f64,
 	) {
+		self.entities.create_entity()
+			.with_maneuver(Maneuver {
+				ship_id: ship_id,
+				start_s: now_s + delay_s,
+			});
+
 		let rotation = Rot2::new(Vec1::new(angle));
 		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
