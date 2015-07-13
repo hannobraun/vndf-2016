@@ -47,6 +47,10 @@ impl GameState {
 			});
 	}
 
+	pub fn on_stop_broadcast(&mut self, ship_id: EntityId) {
+		self.entities.update_entity(ship_id).remove_broadcast();
+	}
+
 	pub fn on_update(&mut self) {
 		for (_, ship) in &mut self.entities.ships {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
