@@ -84,7 +84,7 @@ fn main() {
 			}
 		}
 
-		game_state.update();
+		game_state.on_update();
 
 		let recipients = clients
 			.iter()
