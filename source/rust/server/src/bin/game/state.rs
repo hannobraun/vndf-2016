@@ -66,6 +66,7 @@ impl GameState {
 			.with_maneuver(Maneuver {
 				ship_id: ship_id,
 				start_s: now_s + delay_s,
+				angle  : angle,
 			});
 
 		let rotation = Rot2::new(Vec1::new(angle));
