@@ -54,7 +54,12 @@ impl GameState {
 		self.entities.update_entity(ship_id).remove_broadcast();
 	}
 
-	pub fn on_schedule_maneuver(&mut self, ship_id: EntityId, angle: f64) {
+	pub fn on_schedule_maneuver(
+		&mut self,
+		ship_id: EntityId,
+		_      : f64,
+		angle  : f64)
+	{
 		let rotation = Rot2::new(Vec1::new(angle));
 		let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
