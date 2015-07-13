@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 
+use game::Maneuver;
 use shared::game::{
 	Broadcast,
 	EntityId,
@@ -15,6 +16,7 @@ pub struct Entities {
 	next_id: u64,
 
 	pub broadcasts: Components<Broadcast>,
+	pub maneuvers : Components<Maneuver>,
 	pub ships     : Components<Ship>,
 }
 
@@ -23,6 +25,7 @@ impl Entities {
 		Entities {
 			next_id   : 0,
 			broadcasts: HashMap::new(),
+			maneuvers : HashMap::new(),
 			ships     : HashMap::new(),
 		}
 	}
@@ -35,6 +38,7 @@ impl Entities {
 			id: id,
 
 			broadcasts: &mut self.broadcasts,
+			maneuvers : &mut self.maneuvers,
 			ships     : &mut self.ships,
 		}
 	}
@@ -44,12 +48,14 @@ impl Entities {
 			id: id,
 
 			broadcasts: &mut self.broadcasts,
+			maneuvers : &mut self.maneuvers,
 			ships     : &mut self.ships,
 		}
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
 		self.broadcasts.remove(id);
+		self.maneuvers.remove(id);
 		self.ships.remove(id);
 	}
 }
@@ -61,6 +67,7 @@ pub struct EntityBuilder<'c> {
 	id: EntityId,
 
 	broadcasts: &'c mut Components<Broadcast>,
+	maneuvers : &'c mut Components<Maneuver>,
 	ships     : &'c mut Components<Ship>,
 }
 
@@ -69,6 +76,11 @@ pub struct EntityBuilder<'c> {
 impl<'c> EntityBuilder<'c> {
 	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
 		self.broadcasts.insert(self.id, broadcast);
+		self
+	}
+
+	pub fn with_maneuver(mut self, maneuver: Maneuver) -> EntityBuilder<'c> {
+		self.maneuvers.insert(self.id, maneuver);
 		self
 	}
 
@@ -89,6 +101,7 @@ pub struct EntityUpdater<'c> {
 	id: EntityId,
 
 	broadcasts: &'c mut Components<Broadcast>,
+	maneuvers : &'c mut Components<Maneuver>,
 	ships     : &'c mut Components<Ship>,
 }
 
@@ -100,6 +113,11 @@ impl<'c> EntityUpdater<'c> {
 		self
 	}
 
+	pub fn add_maneuver(mut self, maneuver: Maneuver) -> EntityUpdater<'c> {
+		self.maneuvers.insert(self.id, maneuver);
+		self
+	}
+
 	pub fn add_ship(mut self, ship: Ship) -> EntityUpdater<'c> {
 		self.ships.insert(self.id, ship);
 		self
@@ -107,6 +125,11 @@ impl<'c> EntityUpdater<'c> {
 
 	pub fn remove_broadcast(mut self) -> EntityUpdater<'c> {
 		self.broadcasts.remove(&self.id);
+		self
+	}
+
+	pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
+		self.maneuvers.remove(&self.id);
 		self
 	}
 
