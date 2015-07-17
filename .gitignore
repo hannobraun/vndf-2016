@@ -1,6 +1,5 @@
 /*.sublime-workspace
 
-/source/rust/**/target
 /source/rust/**/Cargo.lock
 !/source/rust/client/Cargo.lock
 !/source/rust/server/Cargo.lock
