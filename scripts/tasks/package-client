@@ -2,7 +2,7 @@
 
 source project.conf
 
-ARCHIVE=$(pwd)/$CLIENT_ARCHIVE
+ARCHIVE=$CLIENT_ARCHIVE
 
 cd $(dirname $DIST_DIR)
 tar -chzf $ARCHIVE $(basename $DIST_DIR)
