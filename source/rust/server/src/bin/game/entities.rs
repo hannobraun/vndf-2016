@@ -108,6 +108,11 @@ pub struct EntityUpdater<'c> {
 // TODO: Remove #[allow(unused)], once this is moved to a library.
 #[allow(unused)]
 impl<'c> EntityUpdater<'c> {
+	pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
+		self.bodies.insert(self.id, component);
+		self
+	}
+
 	pub fn add_broadcast(mut self, component: Broadcast) -> EntityUpdater<'c> {
 		self.broadcasts.insert(self.id, component);
 		self
@@ -115,11 +120,6 @@ impl<'c> EntityUpdater<'c> {
 
 	pub fn add_maneuver(mut self, component: Maneuver) -> EntityUpdater<'c> {
 		self.maneuvers.insert(self.id, component);
-		self
-	}
-
-	pub fn add_ship(mut self, component: Body) -> EntityUpdater<'c> {
-		self.bodies.insert(self.id, component);
 		self
 	}
 
