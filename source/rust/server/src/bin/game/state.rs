@@ -87,7 +87,7 @@ impl GameState {
 				let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
 				match self.entities.bodies.get_mut(&maneuver.ship_id) {
-					Some(ship) => ship.velocity = new_velocity,
+					Some(body) => body.velocity = new_velocity,
 
 					// The ship might not exist due to timing issues (it could
 					// have been destroyed while the message was in flight). If
