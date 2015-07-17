@@ -123,6 +123,11 @@ impl<'c> EntityUpdater<'c> {
 		self
 	}
 
+	pub fn remove_body(mut self) -> EntityUpdater<'c> {
+		self.bodies.remove(&self.id);
+		self
+	}
+
 	pub fn remove_broadcast(mut self) -> EntityUpdater<'c> {
 		self.broadcasts.remove(&self.id);
 		self
@@ -130,11 +135,6 @@ impl<'c> EntityUpdater<'c> {
 
 	pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
 		self.maneuvers.remove(&self.id);
-		self
-	}
-
-	pub fn remove_ship(mut self) -> EntityUpdater<'c> {
-		self.bodies.remove(&self.id);
 		self
 	}
 }
