@@ -71,10 +71,10 @@ impl GameState {
 	}
 
 	pub fn on_update(&mut self, now_s: f64) {
-		for (_, ship) in &mut self.entities.bodies {
+		for (_, body) in &mut self.entities.bodies {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
-			ship.position = ship.position + ship.velocity;
+			body.position = body.position + body.velocity;
 		}
 
 
