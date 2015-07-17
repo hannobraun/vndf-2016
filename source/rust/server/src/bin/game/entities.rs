@@ -74,18 +74,18 @@ pub struct EntityBuilder<'c> {
 // TODO: Remove #[allow(unused)], once this is moved to a library.
 #[allow(unused)]
 impl<'c> EntityBuilder<'c> {
-	pub fn with_broadcast(mut self, broadcast: Broadcast) -> EntityBuilder<'c> {
-		self.broadcasts.insert(self.id, broadcast);
+	pub fn with_broadcast(mut self, component: Broadcast) -> EntityBuilder<'c> {
+		self.broadcasts.insert(self.id, component);
 		self
 	}
 
-	pub fn with_maneuver(mut self, maneuver: Maneuver) -> EntityBuilder<'c> {
-		self.maneuvers.insert(self.id, maneuver);
+	pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
+		self.maneuvers.insert(self.id, component);
 		self
 	}
 
-	pub fn with_ship(mut self, ship: Body) -> EntityBuilder<'c> {
-		self.ships.insert(self.id, ship);
+	pub fn with_ship(mut self, component: Body) -> EntityBuilder<'c> {
+		self.ships.insert(self.id, component);
 		self
 	}
 
@@ -108,18 +108,18 @@ pub struct EntityUpdater<'c> {
 // TODO: Remove #[allow(unused)], once this is moved to a library.
 #[allow(unused)]
 impl<'c> EntityUpdater<'c> {
-	pub fn add_broadcast(mut self, broadcast: Broadcast) -> EntityUpdater<'c> {
-		self.broadcasts.insert(self.id, broadcast);
+	pub fn add_broadcast(mut self, component: Broadcast) -> EntityUpdater<'c> {
+		self.broadcasts.insert(self.id, component);
 		self
 	}
 
-	pub fn add_maneuver(mut self, maneuver: Maneuver) -> EntityUpdater<'c> {
-		self.maneuvers.insert(self.id, maneuver);
+	pub fn add_maneuver(mut self, component: Maneuver) -> EntityUpdater<'c> {
+		self.maneuvers.insert(self.id, component);
 		self
 	}
 
-	pub fn add_ship(mut self, ship: Body) -> EntityUpdater<'c> {
-		self.ships.insert(self.id, ship);
+	pub fn add_ship(mut self, component: Body) -> EntityUpdater<'c> {
+		self.ships.insert(self.id, component);
 		self
 	}
 
