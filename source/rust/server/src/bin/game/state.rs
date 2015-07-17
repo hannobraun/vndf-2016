@@ -7,7 +7,7 @@ use nalgebra::{
 	Vec2,
 };
 
-use game::Maneuver;
+use game::data::Maneuver;
 use game::entities::Entities;
 use shared::game::{
 	Body,

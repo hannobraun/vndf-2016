@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use game::Maneuver;
+use game::data::Maneuver;
 use shared::game::{
 	Body,
 	Broadcast,
