@@ -2,9 +2,9 @@ use std::collections::HashMap;
 
 use game::Maneuver;
 use shared::game::{
+	Body,
 	Broadcast,
 	EntityId,
-	Ship,
 };
 
 
@@ -17,7 +17,7 @@ pub struct Entities {
 
 	pub broadcasts: Components<Broadcast>,
 	pub maneuvers : Components<Maneuver>,
-	pub ships     : Components<Ship>,
+	pub ships     : Components<Body>,
 }
 
 impl Entities {
@@ -68,7 +68,7 @@ pub struct EntityBuilder<'c> {
 
 	broadcasts: &'c mut Components<Broadcast>,
 	maneuvers : &'c mut Components<Maneuver>,
-	ships     : &'c mut Components<Ship>,
+	ships     : &'c mut Components<Body>,
 }
 
 // TODO: Remove #[allow(unused)], once this is moved to a library.
@@ -84,7 +84,7 @@ impl<'c> EntityBuilder<'c> {
 		self
 	}
 
-	pub fn with_ship(mut self, ship: Ship) -> EntityBuilder<'c> {
+	pub fn with_ship(mut self, ship: Body) -> EntityBuilder<'c> {
 		self.ships.insert(self.id, ship);
 		self
 	}
@@ -102,7 +102,7 @@ pub struct EntityUpdater<'c> {
 
 	broadcasts: &'c mut Components<Broadcast>,
 	maneuvers : &'c mut Components<Maneuver>,
-	ships     : &'c mut Components<Ship>,
+	ships     : &'c mut Components<Body>,
 }
 
 // TODO: Remove #[allow(unused)], once this is moved to a library.
@@ -118,7 +118,7 @@ impl<'c> EntityUpdater<'c> {
 		self
 	}
 
-	pub fn add_ship(mut self, ship: Ship) -> EntityUpdater<'c> {
+	pub fn add_ship(mut self, ship: Body) -> EntityUpdater<'c> {
 		self.ships.insert(self.id, ship);
 		self
 	}

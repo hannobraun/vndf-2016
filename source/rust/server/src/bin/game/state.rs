@@ -10,16 +10,16 @@ use nalgebra::{
 use game::Maneuver;
 use game::entities::Entities;
 use shared::game::{
+	Body,
 	Broadcast,
 	EntityId,
-	Ship,
 };
 
 
 #[derive(Debug)]
 pub struct GameState {
 	entities     : Entities,
-	export_buffer: Vec<(EntityId, (Ship, Option<Broadcast>))>,
+	export_buffer: Vec<(EntityId, (Body, Option<Broadcast>))>,
 }
 
 impl GameState {
@@ -32,7 +32,7 @@ impl GameState {
 
 	pub fn on_enter(&mut self) -> EntityId {
 		self.entities.create_entity()
-			.with_ship(Ship {
+			.with_ship(Body {
 				position: Vec2::new(0.0, 0.0),
 				velocity: Vec2::new(1.0, 0.0),
 			})
@@ -104,7 +104,7 @@ impl GameState {
 	}
 
 	pub fn export_entities(&mut self)
-		-> Drain<(EntityId, (Ship, Option<Broadcast>))>
+		-> Drain<(EntityId, (Body, Option<Broadcast>))>
 	{
 		for (id, ship) in &self.entities.ships {
 			let broadcast = self.entities.broadcasts

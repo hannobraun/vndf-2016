@@ -57,9 +57,9 @@ pub mod client {
 
 pub mod server {
 	use game::{
+		Body,
 		Broadcast,
 		EntityId,
-		Ship,
 	};
 
 
@@ -67,7 +67,7 @@ pub mod server {
 	pub enum Event {
 		Heartbeat,
 		ShipId(EntityId),
-		UpdateEntity(EntityId, (Ship, Option<Broadcast>)),
+		UpdateEntity(EntityId, (Body, Option<Broadcast>)),
 		RemoveEntity(EntityId),
 	}
 }
