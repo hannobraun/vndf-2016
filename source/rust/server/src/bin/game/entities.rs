@@ -74,6 +74,11 @@ pub struct EntityBuilder<'c> {
 // TODO: Remove #[allow(unused)], once this is moved to a library.
 #[allow(unused)]
 impl<'c> EntityBuilder<'c> {
+	pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
+		self.bodies.insert(self.id, component);
+		self
+	}
+
 	pub fn with_broadcast(mut self, component: Broadcast) -> EntityBuilder<'c> {
 		self.broadcasts.insert(self.id, component);
 		self
@@ -81,11 +86,6 @@ impl<'c> EntityBuilder<'c> {
 
 	pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
 		self.maneuvers.insert(self.id, component);
-		self
-	}
-
-	pub fn with_ship(mut self, component: Body) -> EntityBuilder<'c> {
-		self.bodies.insert(self.id, component);
 		self
 	}
 

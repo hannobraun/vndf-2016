@@ -32,7 +32,7 @@ impl GameState {
 
 	pub fn on_enter(&mut self) -> EntityId {
 		self.entities.create_entity()
-			.with_ship(Body {
+			.with_body(Body {
 				position: Vec2::new(0.0, 0.0),
 				velocity: Vec2::new(1.0, 0.0),
 			})
