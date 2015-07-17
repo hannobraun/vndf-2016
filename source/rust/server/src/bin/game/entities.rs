@@ -47,9 +47,9 @@ impl Entities {
 		EntityUpdater {
 			id: id,
 
+			bodies    : &mut self.bodies,
 			broadcasts: &mut self.broadcasts,
 			maneuvers : &mut self.maneuvers,
-			ships     : &mut self.bodies,
 		}
 	}
 
@@ -100,9 +100,9 @@ impl<'c> EntityBuilder<'c> {
 pub struct EntityUpdater<'c> {
 	id: EntityId,
 
+	bodies    : &'c mut Components<Body>,
 	broadcasts: &'c mut Components<Broadcast>,
 	maneuvers : &'c mut Components<Maneuver>,
-	ships     : &'c mut Components<Body>,
 }
 
 // TODO: Remove #[allow(unused)], once this is moved to a library.
@@ -119,7 +119,7 @@ impl<'c> EntityUpdater<'c> {
 	}
 
 	pub fn add_ship(mut self, component: Body) -> EntityUpdater<'c> {
-		self.ships.insert(self.id, component);
+		self.bodies.insert(self.id, component);
 		self
 	}
 
@@ -134,7 +134,7 @@ impl<'c> EntityUpdater<'c> {
 	}
 
 	pub fn remove_ship(mut self) -> EntityUpdater<'c> {
-		self.ships.remove(&self.id);
+		self.bodies.remove(&self.id);
 		self
 	}
 }
