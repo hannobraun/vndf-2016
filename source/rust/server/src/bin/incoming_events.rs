@@ -4,7 +4,7 @@ use clients::{
 	Client,
 	Clients,
 };
-use game::state::GameState;
+use server::game::state::GameState;
 use server::network::Network;
 use shared::protocol::{
 	client,

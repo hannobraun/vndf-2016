@@ -3,7 +3,6 @@
 
 mod args;
 mod clients;
-mod game;
 mod incoming_events;
 
 
@@ -27,8 +26,8 @@ use time::precise_time_s;
 
 use args::Args;
 
-use game::state::GameState;
 use incoming_events::IncomingEvents;
+use server::game::state::GameState;
 use server::network::Network;
 use shared::protocol::server::Event as ServerEvent;
 
