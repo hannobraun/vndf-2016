@@ -58,6 +58,11 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		};
 
 		spawn(move || {
+			// TODO: I've seen the following error here once:
+			//       "Error determining peer address: Transport endpoint is not
+			//       connected (os error 107)".
+			//       This looks like a legitimate error that could be handled
+			//       better than by panicking.
 			let address = stream.peer_addr().unwrap_or_else(|e|
 				panic!("Error determining peer address: {}", e)
 			);
