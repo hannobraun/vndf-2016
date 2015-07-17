@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-./scripts/tasks/prepare-deployment &&
-docker build -t vndf-image $CONTAINER_DIR &&
-(
-	docker rm -f vndf
-	docker run -d --name vndf -p 8080:80 -p 34481:34481 vndf-image)

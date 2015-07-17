@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-source project.conf
-
-IMAGE=$(docker commit vndf) &&
-docker run -i -t $IMAGE bash
