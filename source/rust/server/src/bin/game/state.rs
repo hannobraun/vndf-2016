@@ -71,7 +71,7 @@ impl GameState {
 	}
 
 	pub fn on_update(&mut self, now_s: f64) {
-		for (_, ship) in &mut self.entities.ships {
+		for (_, ship) in &mut self.entities.bodies {
 			// TODO(E7GyYwQy): Take passed time since last iteration into
 			//                 account.
 			ship.position = ship.position + ship.velocity;
@@ -86,7 +86,7 @@ impl GameState {
 				let rotation = Rot2::new(Vec1::new(maneuver.angle));
 				let new_velocity = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-				match self.entities.ships.get_mut(&maneuver.ship_id) {
+				match self.entities.bodies.get_mut(&maneuver.ship_id) {
 					Some(ship) => ship.velocity = new_velocity,
 
 					// The ship might not exist due to timing issues (it could
@@ -106,7 +106,7 @@ impl GameState {
 	pub fn export_entities(&mut self)
 		-> Drain<(EntityId, (Body, Option<Broadcast>))>
 	{
-		for (id, ship) in &self.entities.ships {
+		for (id, ship) in &self.entities.bodies {
 			let broadcast = self.entities.broadcasts
 				.get(id)
 				.map(|broadcast|

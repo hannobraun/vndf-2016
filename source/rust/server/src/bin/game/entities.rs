@@ -15,18 +15,18 @@ pub type Components<T> = HashMap<EntityId, T>;
 pub struct Entities {
 	next_id: u64,
 
+	pub bodies    : Components<Body>,
 	pub broadcasts: Components<Broadcast>,
 	pub maneuvers : Components<Maneuver>,
-	pub ships     : Components<Body>,
 }
 
 impl Entities {
 	pub fn new() -> Entities {
 		Entities {
 			next_id   : 0,
+			bodies    : HashMap::new(),
 			broadcasts: HashMap::new(),
 			maneuvers : HashMap::new(),
-			ships     : HashMap::new(),
 		}
 	}
 
@@ -39,7 +39,7 @@ impl Entities {
 
 			broadcasts: &mut self.broadcasts,
 			maneuvers : &mut self.maneuvers,
-			ships     : &mut self.ships,
+			ships     : &mut self.bodies,
 		}
 	}
 
@@ -49,14 +49,14 @@ impl Entities {
 
 			broadcasts: &mut self.broadcasts,
 			maneuvers : &mut self.maneuvers,
-			ships     : &mut self.ships,
+			ships     : &mut self.bodies,
 		}
 	}
 
 	pub fn destroy_entity(&mut self, id: &EntityId) {
+		self.bodies.remove(id);
 		self.broadcasts.remove(id);
 		self.maneuvers.remove(id);
-		self.ships.remove(id);
 	}
 }
 
