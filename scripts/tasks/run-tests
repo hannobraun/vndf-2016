@@ -2,7 +2,7 @@
 
 source project.conf
 
-export PATH=$RUST_PATH:$PATH
+export PATH=$BINARY_DIR:$PATH
 
 ./scripts/tasks/build-vndf &&
 (
