@@ -3,7 +3,7 @@ use shared::game::{
 	Broadcast,
 	EntityId,
 };
-use test_suite::rc;
+use tests::rc;
 
 
 #[test]

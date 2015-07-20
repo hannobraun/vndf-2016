@@ -1,7 +1,7 @@
 use std::iter::repeat;
 
 use shared::protocol::client;
-use test_suite::{
+use tests::{
 	mock,
 	rc,
 };

@@ -2,7 +2,7 @@ use shared::protocol::{
 	client,
 	server,
 };
-use test_suite::{
+use tests::{
 	rc,
 	mock,
 };

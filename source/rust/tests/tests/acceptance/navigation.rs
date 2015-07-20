@@ -8,7 +8,7 @@ use nalgebra::{
 
 use client::interface::InputEvent;
 use shared::util::is_point_on_line;
-use test_suite::rc;
+use tests::rc;
 
 
 #[test]

@@ -3,7 +3,7 @@ extern crate time;
 
 extern crate client;
 extern crate shared;
-extern crate test_suite;
+extern crate tests;
 
 
 mod component {
