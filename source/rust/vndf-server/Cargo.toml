@@ -1,21 +1,16 @@
 [package]
-
-name = "server"
+name = "vndf-server"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
-
-[lib]
-name = "server"
-path = "src/lib/lib.rs"
 
 
 [dependencies]
 env_logger = "*"
-getopts    = "*"
 log        = "*"
-nalgebra   = "*"
-rand       = "*"
 time       = "*"
+
+[dependencies.server]
+path = "../server"
 
 [dependencies.shared]
 path = "../shared"
