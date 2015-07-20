@@ -5,7 +5,7 @@ use rustc_serialize::json::{
 	DecodeResult,
 };
 
-use shared::game::{
+use shared::shared::game::{
 	Body,
 	Broadcast,
 	EntityId,

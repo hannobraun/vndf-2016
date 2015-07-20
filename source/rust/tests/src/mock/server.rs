@@ -3,7 +3,7 @@ use std::net::SocketAddr;
 use time::precise_time_s;
 
 use server::network::Network;
-use shared::protocol::{
+use shared::shared::protocol::{
 	client,
 	server,
 };

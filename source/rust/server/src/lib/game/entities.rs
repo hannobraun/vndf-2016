@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use game::data::Maneuver;
-use shared::game::{
+use shared::shared::game::{
 	Body,
 	Broadcast,
 	EntityId,

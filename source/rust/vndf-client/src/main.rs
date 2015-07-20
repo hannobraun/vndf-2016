@@ -9,10 +9,10 @@ use std::env;
 use std::thread::sleep_ms;
 use time::precise_time_s;
 
-use shared::protocol::client::schedule_maneuver;
-use shared::protocol::client::Event as ClientEvent;
-use shared::protocol::client::event as client_event;
-use shared::protocol::server;
+use shared::shared::protocol::client::schedule_maneuver;
+use shared::shared::protocol::client::Event as ClientEvent;
+use shared::shared::protocol::client::event as client_event;
+use shared::shared::protocol::server;
 
 use client::args::Args;
 use client::interface::{

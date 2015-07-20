@@ -15,7 +15,7 @@ use std::env;
 use std::thread::sleep_ms;
 use time::precise_time_s;
 
-use shared::protocol::server::Event as ServerEvent;
+use shared::shared::protocol::server::Event as ServerEvent;
 
 use server::args::Args;
 use server::game::state::GameState;

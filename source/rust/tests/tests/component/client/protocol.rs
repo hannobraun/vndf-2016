@@ -1,4 +1,4 @@
-use shared::protocol::{
+use shared::shared::protocol::{
 	client,
 	server,
 };

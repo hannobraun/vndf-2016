@@ -1,7 +1,7 @@
 use std::f64::consts::PI;
 
 use client::interface::InputEvent;
-use shared::util::{
+use shared::shared::util::{
 	direction,
 	is_point_on_line,
 };

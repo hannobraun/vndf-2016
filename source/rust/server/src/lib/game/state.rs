@@ -9,7 +9,7 @@ use nalgebra::{
 
 use game::data::Maneuver;
 use game::entities::Entities;
-use shared::game::{
+use shared::shared::game::{
 	Body,
 	Broadcast,
 	EntityId,

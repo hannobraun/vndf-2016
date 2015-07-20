@@ -1,8 +1,8 @@
-use shared::protocol::client::{
+use shared::shared::protocol::client::{
 	login,
 	start_broadcast,
 };
-use shared::protocol::server::Event::{
+use shared::shared::protocol::server::Event::{
 	Heartbeat,
 	ShipId,
 };

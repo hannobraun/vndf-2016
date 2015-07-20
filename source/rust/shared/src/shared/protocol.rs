@@ -56,7 +56,7 @@ pub mod client {
 
 
 pub mod server {
-	use game::{
+	use shared::game::{
 		Body,
 		Broadcast,
 		EntityId,
