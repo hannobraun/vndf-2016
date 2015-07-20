@@ -2,6 +2,5 @@
 
 source project.conf
 
-(echo "Cleaning client..."; cd $CLIENT_SOURCE; cargo clean)
-(echo "Cleaning server..."; cd $SERVER_SOURCE; cargo clean)
-(echo "Cleaning tests..."; cd $TESTS_SOURCE; cargo clean)
+cd $RUST_SOURCE
+cargo update
