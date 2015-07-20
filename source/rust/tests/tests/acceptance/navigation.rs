@@ -64,6 +64,10 @@ fn it_should_display_other_players_ships() {
 
 #[test]
 fn it_should_schedule_maneuvers() {
+	// TODO: This test should be more basic. The multi-maneuver thing should be
+	//       moved to an integration test. I believe that this is fragile, and
+	//       could pass, even if the maneuvers aren't really executed both.
+
 	let     server = rc::Server::start();
 	let mut client = rc::Client::start(server.port());
 
