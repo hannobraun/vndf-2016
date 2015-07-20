@@ -10,14 +10,13 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
+use client::cli::Cli;
 use client::interface::{
 	Frame,
 	InputEvent,
 };
 use client::render::Renderer;
 use client::window::Window;
-
-use cli::Cli;
 
 
 pub trait Interface {

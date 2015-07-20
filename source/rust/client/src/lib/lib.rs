@@ -10,11 +10,15 @@ extern crate getopts;
 extern crate libc;
 extern crate nalgebra;
 extern crate rustc_serialize;
+#[macro_use]
+extern crate scan_fmt;
+
 
 extern crate shared;
 
 
 pub mod args;
+pub mod cli;
 pub mod debug;
 pub mod font;
 pub mod interface;

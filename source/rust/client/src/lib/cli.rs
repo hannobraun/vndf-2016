@@ -6,12 +6,12 @@ use glutin::Event::{
 	ReceivedCharacter,
 };
 
-use client::interface::{
+use interface::{
 	Frame,
 	InputEvent,
 	Message,
 };
-use client::window::Window;
+use window::Window;
 
 
 pub struct Cli {

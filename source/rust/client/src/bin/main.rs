@@ -4,15 +4,12 @@
 
 extern crate glutin;
 extern crate nalgebra;
-#[macro_use]
-extern crate scan_fmt;
 extern crate time;
 
 extern crate client;
 extern crate shared;
 
 
-mod cli;
 mod interface;
 
 
