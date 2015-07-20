@@ -3,10 +3,8 @@
 source project.conf
 
 export PATH=$BINARY_DIR:$PATH
+export RUST_LOG=vndf_server=info
+export RUST_BACKTRACE=1
 
-# ./scripts/tasks/build-vndf &&
-(
-	export RUST_LOG=vndf_server=info
-	export RUST_BACKTRACE=1
-	cd $RUST_SOURCE
-	cargo test)
+cd $RUST_SOURCE
+cargo test
