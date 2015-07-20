@@ -1,3 +1,10 @@
 #!/usr/bin/env bash
 
-./scripts/tasks/run-tests
+source project.conf
+
+export PATH=$BINARY_DIR:$PATH
+export RUST_LOG=vndf_server=info
+export RUST_BACKTRACE=1
+
+cd $RUST_SOURCE
+cargo test
