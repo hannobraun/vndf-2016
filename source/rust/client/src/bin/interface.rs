@@ -15,9 +15,9 @@ use client::interface::{
 	InputEvent,
 };
 use client::render::Renderer;
+use client::window::Window;
 
 use cli::Cli;
-use window::Window;
 
 
 pub trait Interface {

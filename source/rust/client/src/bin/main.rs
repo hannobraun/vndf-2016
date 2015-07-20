@@ -14,7 +14,6 @@ extern crate shared;
 
 mod cli;
 mod interface;
-mod window;
 
 
 use std::collections::HashMap;

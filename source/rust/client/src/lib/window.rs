@@ -1,6 +1,6 @@
 use glutin;
 
-use client::render::base::Graphics;
+use render::base::Graphics;
 
 
 pub struct Window {

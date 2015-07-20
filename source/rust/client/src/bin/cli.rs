@@ -11,7 +11,7 @@ use client::interface::{
 	InputEvent,
 	Message,
 };
-use window::Window;
+use client::window::Window;
 
 
 pub struct Cli {
