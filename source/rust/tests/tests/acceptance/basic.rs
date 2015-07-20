@@ -1,4 +1,4 @@
-use client::interface::Frame;
+use shared::client::interface::Frame;
 use shared::shared::game::{
 	Broadcast,
 	EntityId,

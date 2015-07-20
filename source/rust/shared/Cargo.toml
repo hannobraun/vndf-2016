@@ -6,7 +6,13 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
+freetype-rs     = "*"
 getopts         = "*"
+gfx             = "*"
+gfx_device_gl   = "*"
+glutin          = "*"
+libc            = "*"
 log             = "*"
 nalgebra        = "*"
 rustc-serialize = "*"
+scan_fmt        = "*"

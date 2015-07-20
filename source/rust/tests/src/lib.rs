@@ -1,7 +1,6 @@
 extern crate time;
 extern crate rand;
 
-extern crate client;
 extern crate shared;
 
 

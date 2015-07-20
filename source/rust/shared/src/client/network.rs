@@ -1,8 +1,8 @@
 use std::net::ToSocketAddrs;
 use std::vec::Drain;
 
-use shared::shared::network::Connection;
-use shared::shared::protocol::{
+use shared::network::Connection;
+use shared::protocol::{
 	client,
 	server,
 };

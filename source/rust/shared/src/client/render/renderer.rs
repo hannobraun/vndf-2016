@@ -5,9 +5,9 @@ use nalgebra::{
 	Ortho3,
 };
 
-use interface::Frame;
-use render::base::Graphics;
-use render::draw::{
+use client::interface::Frame;
+use client::render::base::Graphics;
+use client::render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
 };

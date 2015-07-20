@@ -2,7 +2,7 @@ use gfx;
 use gfx::traits::*;
 use gfx_device_gl as gl;
 
-use font::Glyph;
+use client::font::Glyph;
 
 
 pub type TextureHandle = gfx::handle::Texture<gl::Resources>;

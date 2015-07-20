@@ -1,6 +1,6 @@
 use time::precise_time_s;
 
-use client::interface::{
+use shared::client::interface::{
 	Frame,
 	InputEvent,
 };

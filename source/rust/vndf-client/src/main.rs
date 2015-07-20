@@ -1,6 +1,5 @@
 extern crate time;
 
-extern crate client;
 extern crate shared;
 
 
@@ -9,20 +8,19 @@ use std::env;
 use std::thread::sleep_ms;
 use time::precise_time_s;
 
-use shared::shared::protocol::client::schedule_maneuver;
-use shared::shared::protocol::client::Event as ClientEvent;
-use shared::shared::protocol::client::event as client_event;
-use shared::shared::protocol::server;
-
-use client::args::Args;
-use client::interface::{
+use shared::client::args::Args;
+use shared::client::interface::{
 	self,
 	Frame,
 	InputEvent,
 	Interface,
 	Message,
 };
-use client::network::Network;
+use shared::client::network::Network;
+use shared::shared::protocol::client::schedule_maneuver;
+use shared::shared::protocol::client::Event as ClientEvent;
+use shared::shared::protocol::client::event as client_event;
+use shared::shared::protocol::server;
 
 
 fn main() {

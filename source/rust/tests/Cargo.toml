@@ -9,8 +9,5 @@ nalgebra = "*"
 rand     = "*"
 time     = "*"
 
-[dependencies.client]
-path = "../client"
-
 [dependencies.shared]
 path = "../shared"

@@ -10,7 +10,7 @@ use nalgebra::{
 	Vec3,
 };
 
-use render::base::{
+use client::render::base::{
 	Batch,
 	Graphics,
 };

@@ -4,7 +4,7 @@ use gfx::render::shade::ShaderParam;
 use gfx::traits::*;
 use gfx_device_gl as gl;
 
-use render::base::Graphics;
+use client::render::base::Graphics;
 
 
 pub struct Batch<P: ShaderParam> {
