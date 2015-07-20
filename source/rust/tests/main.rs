@@ -1,7 +1,7 @@
 extern crate nalgebra;
 extern crate time;
 
-extern crate shared;
+extern crate vndf;
 
 
 mod component {

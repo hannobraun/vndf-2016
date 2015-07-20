@@ -1,9 +1,9 @@
-use shared::client::interface::Frame;
-use shared::shared::game::{
+use vndf::client::interface::Frame;
+use vndf::shared::game::{
 	Broadcast,
 	EntityId,
 };
-use shared::testing::rc;
+use vndf::testing::rc;
 
 
 #[test]

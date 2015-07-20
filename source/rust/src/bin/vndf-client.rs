@@ -3,7 +3,7 @@
 
 extern crate time;
 
-extern crate shared;
+extern crate vndf;
 
 
 use std::collections::HashMap;
@@ -11,19 +11,19 @@ use std::env;
 use std::thread::sleep_ms;
 use time::precise_time_s;
 
-use shared::client::args::Args;
-use shared::client::interface::{
+use vndf::client::args::Args;
+use vndf::client::interface::{
 	self,
 	Frame,
 	InputEvent,
 	Interface,
 	Message,
 };
-use shared::client::network::Network;
-use shared::shared::protocol::client::schedule_maneuver;
-use shared::shared::protocol::client::Event as ClientEvent;
-use shared::shared::protocol::client::event as client_event;
-use shared::shared::protocol::server;
+use vndf::client::network::Network;
+use vndf::shared::protocol::client::schedule_maneuver;
+use vndf::shared::protocol::client::Event as ClientEvent;
+use vndf::shared::protocol::client::event as client_event;
+use vndf::shared::protocol::server;
 
 
 fn main() {

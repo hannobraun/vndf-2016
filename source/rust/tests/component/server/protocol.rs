@@ -1,12 +1,12 @@
-use shared::shared::protocol::client::{
+use vndf::shared::protocol::client::{
 	login,
 	start_broadcast,
 };
-use shared::shared::protocol::server::Event::{
+use vndf::shared::protocol::server::Event::{
 	Heartbeat,
 	ShipId,
 };
-use shared::testing::{
+use vndf::testing::{
 	mock,
 	rc,
 };

@@ -1,8 +1,8 @@
-use shared::shared::protocol::{
+use vndf::shared::protocol::{
 	client,
 	server,
 };
-use shared::testing::{
+use vndf::testing::{
 	rc,
 	mock,
 };

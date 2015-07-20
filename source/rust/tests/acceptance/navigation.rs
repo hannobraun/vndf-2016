@@ -1,11 +1,11 @@
 use std::f64::consts::PI;
 
-use shared::client::interface::InputEvent;
-use shared::shared::util::{
+use vndf::client::interface::InputEvent;
+use vndf::shared::util::{
 	direction,
 	is_point_on_line,
 };
-use shared::testing::rc;
+use vndf::testing::rc;
 
 
 #[test]

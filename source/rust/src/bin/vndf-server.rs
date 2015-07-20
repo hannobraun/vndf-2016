@@ -7,7 +7,7 @@ extern crate env_logger;
 extern crate log;
 extern crate time;
 
-extern crate shared;
+extern crate vndf;
 
 
 use std::collections::HashMap;
@@ -16,11 +16,11 @@ use std::thread::sleep_ms;
 
 use time::precise_time_s;
 
-use shared::server::args::Args;
-use shared::server::game::state::GameState;
-use shared::server::incoming_events::IncomingEvents;
-use shared::server::network::Network;
-use shared::shared::protocol::server::Event as ServerEvent;
+use vndf::server::args::Args;
+use vndf::server::game::state::GameState;
+use vndf::server::incoming_events::IncomingEvents;
+use vndf::server::network::Network;
+use vndf::shared::protocol::server::Event as ServerEvent;
 
 
 fn main() {

@@ -1,7 +1,7 @@
 use std::iter::repeat;
 
-use shared::shared::protocol::client;
-use shared::testing::{
+use vndf::shared::protocol::client;
+use vndf::testing::{
 	mock,
 	rc,
 };
