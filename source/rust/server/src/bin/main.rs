@@ -14,15 +14,14 @@ extern crate shared;
 use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
-
 use time::precise_time_s;
 
+use shared::protocol::server::Event as ServerEvent;
 
 use server::args::Args;
 use server::game::state::GameState;
 use server::incoming_events::IncomingEvents;
 use server::network::Network;
-use shared::protocol::server::Event as ServerEvent;
 
 
 fn main() {
