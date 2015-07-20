@@ -2,8 +2,6 @@
 #![feature(custom_attribute)]
 
 
-extern crate glutin;
-extern crate nalgebra;
 extern crate time;
 
 extern crate client;
