@@ -3,7 +3,6 @@
 
 
 extern crate freetype;
-extern crate getopts;
 #[macro_use]
 extern crate gfx;
 extern crate gfx_device_gl;
@@ -18,7 +17,6 @@ extern crate client;
 extern crate shared;
 
 
-mod args;
 mod cli;
 mod font;
 mod interface;
@@ -32,7 +30,7 @@ use std::thread::sleep_ms;
 
 use time::precise_time_s;
 
-use args::Args;
+use client::args::Args;
 use client::interface::{
 	Frame,
 	InputEvent,
