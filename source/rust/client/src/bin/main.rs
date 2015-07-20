@@ -8,9 +8,6 @@ extern crate client;
 extern crate shared;
 
 
-mod interface;
-
-
 use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
@@ -23,12 +20,13 @@ use shared::protocol::server;
 
 use client::args::Args;
 use client::interface::{
+	self,
 	Frame,
 	InputEvent,
+	Interface,
 	Message,
 };
 use client::network::Network;
-use interface::Interface;
 
 
 fn main() {

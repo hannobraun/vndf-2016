@@ -1,5 +1,6 @@
 mod frame;
 mod input;
+mod interface;
 
 
 pub use self::frame::{
@@ -7,3 +8,8 @@ pub use self::frame::{
 	Message,
 };
 pub use self::input::InputEvent;
+pub use self::interface::{
+	Headless,
+	Interface,
+	Player,
+};
