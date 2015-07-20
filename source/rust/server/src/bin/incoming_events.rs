@@ -1,6 +1,6 @@
 use std::net::SocketAddr;
 
-use clients::{
+use server::clients::{
 	Client,
 	Clients,
 };

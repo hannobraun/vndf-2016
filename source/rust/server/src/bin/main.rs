@@ -1,7 +1,6 @@
 #![feature(drain)]
 
 
-mod clients;
 mod incoming_events;
 
 

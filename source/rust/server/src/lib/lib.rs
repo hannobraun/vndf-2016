@@ -10,5 +10,6 @@ extern crate shared;
 
 
 pub mod args;
+pub mod clients;
 pub mod game;
 pub mod network;
