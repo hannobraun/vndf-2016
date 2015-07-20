@@ -1,9 +1,6 @@
 #![feature(drain)]
 
 
-mod incoming_events;
-
-
 extern crate env_logger;
 #[macro_use]
 extern crate log;
@@ -21,9 +18,9 @@ use std::thread::sleep_ms;
 use time::precise_time_s;
 
 
-use incoming_events::IncomingEvents;
 use server::args::Args;
 use server::game::state::GameState;
+use server::incoming_events::IncomingEvents;
 use server::network::Network;
 use shared::protocol::server::Event as ServerEvent;
 

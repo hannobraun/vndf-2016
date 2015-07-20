@@ -1,11 +1,11 @@
 use std::net::SocketAddr;
 
-use server::clients::{
+use clients::{
 	Client,
 	Clients,
 };
-use server::game::state::GameState;
-use server::network::Network;
+use game::state::GameState;
+use network::Network;
 use shared::protocol::{
 	client,
 	server,
