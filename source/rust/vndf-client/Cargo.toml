@@ -1,0 +1,15 @@
+[package]
+name = "vndf-client"
+version = "0.0.1"
+authors = ["Hanno Braun <mail@hannobraun.de>"]
+
+
+[dependencies]
+time = "*"
+
+
+[dependencies.client]
+path = "../client"
+
+[dependencies.shared]
+path = "../shared"

@@ -8,10 +8,6 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 name = "client"
 path = "src/lib/lib.rs"
 
-[[bin]]
-name = "vndf-client"
-
-
 [dependencies]
 freetype-rs     = "*"
 getopts         = "*"
