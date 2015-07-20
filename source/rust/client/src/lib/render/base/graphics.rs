@@ -1,8 +1,7 @@
-use libc::c_void;
-
 use gfx;
 use gfx::traits::*;
 use gfx_device_gl as gl;
+use libc::c_void;
 
 use render::base::Batch;
 
