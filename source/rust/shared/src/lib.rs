@@ -11,11 +11,14 @@ extern crate libc;
 #[macro_use]
 extern crate log;
 extern crate nalgebra;
+extern crate rand;
 extern crate rustc_serialize;
 #[macro_use]
 extern crate scan_fmt;
+extern crate time;
 
 
 pub mod client;
 pub mod server;
 pub mod shared;
+pub mod testing;

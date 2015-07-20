@@ -1,7 +1,7 @@
 use time::precise_time_s;
 
-use shared::client::network::Network;
-use shared::shared::protocol::{
+use client::network::Network;
+use shared::protocol::{
 	client,
 	server,
 };

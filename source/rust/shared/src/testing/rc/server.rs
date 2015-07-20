@@ -1,5 +1,5 @@
-use process::Process;
-use util::random_port;
+use testing::process::Process;
+use testing::util::random_port;
 
 
 pub struct Server {

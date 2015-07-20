@@ -6,7 +6,7 @@ use shared::shared::protocol::server::Event::{
 	Heartbeat,
 	ShipId,
 };
-use tests::{
+use shared::testing::{
 	mock,
 	rc,
 };

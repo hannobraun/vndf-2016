@@ -2,12 +2,12 @@ use std::net::SocketAddr;
 
 use time::precise_time_s;
 
-use shared::server::network::Network;
-use shared::shared::protocol::{
+use server::network::Network;
+use shared::protocol::{
 	client,
 	server,
 };
-use util::random_port;
+use testing::util::random_port;
 
 
 pub struct Server {

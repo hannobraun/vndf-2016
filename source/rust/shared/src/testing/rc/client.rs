@@ -1,10 +1,10 @@
 use time::precise_time_s;
 
-use shared::client::interface::{
+use client::interface::{
 	Frame,
 	InputEvent,
 };
-use process::Process;
+use testing::process::Process;
 
 
 pub struct Client {

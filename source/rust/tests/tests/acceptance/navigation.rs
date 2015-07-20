@@ -5,7 +5,7 @@ use shared::shared::util::{
 	direction,
 	is_point_on_line,
 };
-use tests::rc;
+use shared::testing::rc;
 
 
 #[test]
