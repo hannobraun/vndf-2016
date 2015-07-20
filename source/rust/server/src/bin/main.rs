@@ -1,13 +1,11 @@
 #![feature(drain)]
 
 
-mod args;
 mod clients;
 mod incoming_events;
 
 
 extern crate env_logger;
-extern crate getopts;
 #[macro_use]
 extern crate log;
 extern crate rand;
@@ -23,9 +21,9 @@ use std::thread::sleep_ms;
 
 use time::precise_time_s;
 
-use args::Args;
 
 use incoming_events::IncomingEvents;
+use server::args::Args;
 use server::game::state::GameState;
 use server::network::Network;
 use shared::protocol::server::Event as ServerEvent;
