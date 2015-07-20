@@ -4,7 +4,6 @@
 extern crate env_logger;
 #[macro_use]
 extern crate log;
-extern crate rand;
 extern crate time;
 
 extern crate server;
