@@ -1,15 +1,16 @@
 use std::net::SocketAddr;
 
+use shared::protocol::{
+	client,
+	server,
+};
+
 use clients::{
 	Client,
 	Clients,
 };
 use game::state::GameState;
 use network::Network;
-use shared::protocol::{
-	client,
-	server,
-};
 
 
 pub struct IncomingEvents {
