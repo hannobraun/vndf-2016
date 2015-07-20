@@ -6,11 +6,11 @@ use nalgebra::{
 };
 
 use interface::Frame;
+use render::base::Graphics;
 use render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
 };
-use render::base::Graphics;
 
 
 pub struct Renderer {
