@@ -6,6 +6,7 @@ authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
 [dependencies]
+env_logger      = "*"
 freetype-rs     = "*"
 getopts         = "*"
 gfx             = "*"
