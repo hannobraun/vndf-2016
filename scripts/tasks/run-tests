@@ -4,9 +4,9 @@ source project.conf
 
 export PATH=$BINARY_DIR:$PATH
 
-./scripts/tasks/build-vndf &&
+# ./scripts/tasks/build-vndf &&
 (
 	export RUST_LOG=vndf_server=info
 	export RUST_BACKTRACE=1
-	cd $RUST_SOURCE/shared
+	cd $RUST_SOURCE
 	cargo test)
