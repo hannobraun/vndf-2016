@@ -8,5 +8,5 @@ export PATH=$BINARY_DIR:$PATH
 (
 	export RUST_LOG=vndf_server=info
 	export RUST_BACKTRACE=1
-	cd $TEST_SUITE_SOURCE
+	cd $TESTS_SOURCE
 	cargo test)
