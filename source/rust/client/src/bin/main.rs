@@ -27,8 +27,12 @@ mod window;
 use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
-
 use time::precise_time_s;
+
+use shared::protocol::client::schedule_maneuver;
+use shared::protocol::client::Event as ClientEvent;
+use shared::protocol::client::event as client_event;
+use shared::protocol::server;
 
 use client::args::Args;
 use client::interface::{
@@ -37,10 +41,6 @@ use client::interface::{
 	Message,
 };
 use client::network::Network;
-use shared::protocol::client::schedule_maneuver;
-use shared::protocol::client::Event as ClientEvent;
-use shared::protocol::client::event as client_event;
-use shared::protocol::server;
 use interface::Interface;
 
 
