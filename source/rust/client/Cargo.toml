@@ -4,10 +4,6 @@ name = "client"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
-[lib]
-name = "client"
-path = "src/lib/lib.rs"
-
 [dependencies]
 freetype-rs     = "*"
 getopts         = "*"
