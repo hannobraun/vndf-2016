@@ -3,5 +3,5 @@
 source project.conf
 
 (
-	cd $CLIENT_SOURCE
-	cargo build)
+	cd $RUST_SOURCE/shared
+	cargo build --bin vndf-client)
