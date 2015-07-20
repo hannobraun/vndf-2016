@@ -1,7 +1,3 @@
-#![feature(drain)]
-#![feature(custom_attribute)]
-
-
 extern crate time;
 
 extern crate client;
