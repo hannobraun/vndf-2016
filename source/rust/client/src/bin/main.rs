@@ -2,7 +2,6 @@
 #![feature(custom_attribute)]
 
 
-extern crate freetype;
 #[macro_use]
 extern crate gfx;
 extern crate gfx_device_gl;
@@ -18,7 +17,6 @@ extern crate shared;
 
 
 mod cli;
-mod font;
 mod interface;
 mod render;
 mod window;

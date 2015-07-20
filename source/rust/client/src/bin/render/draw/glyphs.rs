@@ -12,10 +12,11 @@ use nalgebra::{
 	ToHomogeneous,
 };
 
-use font::{
+use client::font::{
 	self,
 	Font,
 };
+
 use render::base::{
 	Batch,
 	Graphics,
