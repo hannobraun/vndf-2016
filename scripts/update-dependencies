@@ -2,6 +2,5 @@
 
 source project.conf
 
-(echo "Updating client..."; cd $CLIENT_SOURCE; cargo update)
-(echo "Updating server..."; cd $SERVER_SOURCE; cargo update)
-(echo "Updating tests..."; cd $TESTS_SOURCE; cargo update)
+cd $RUST_SOURCE
+cargo update
