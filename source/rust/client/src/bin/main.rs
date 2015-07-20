@@ -2,11 +2,7 @@
 #![feature(custom_attribute)]
 
 
-#[macro_use]
-extern crate gfx;
-extern crate gfx_device_gl;
 extern crate glutin;
-extern crate libc;
 extern crate nalgebra;
 #[macro_use]
 extern crate scan_fmt;
@@ -18,7 +14,6 @@ extern crate shared;
 
 mod cli;
 mod interface;
-mod render;
 mod window;
 
 

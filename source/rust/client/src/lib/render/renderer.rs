@@ -5,7 +5,7 @@ use nalgebra::{
 	Ortho3,
 };
 
-use client::interface::Frame;
+use interface::Frame;
 use render::draw::{
 	GlyphDrawer,
 	ShipDrawer,

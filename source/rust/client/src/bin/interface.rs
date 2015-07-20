@@ -15,7 +15,7 @@ use client::interface::{
 	Frame,
 	InputEvent,
 };
-use render::Renderer;
+use client::render::Renderer;
 use window::Window;
 
 
