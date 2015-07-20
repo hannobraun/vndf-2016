@@ -1,4 +1,8 @@
-use nalgebra::Vec2;
+use nalgebra::{
+	Dot,
+	Norm,
+	Vec2,
+};
 
 
 pub fn is_point_on_line(p: Vec2<f64>, l1: Vec2<f64>, l2: Vec2<f64>) -> bool {
@@ -8,4 +12,12 @@ pub fn is_point_on_line(p: Vec2<f64>, l1: Vec2<f64>, l2: Vec2<f64>) -> bool {
 		/ ((l2.y - l1.y).powi(2) + (l2.x - l1.y).powi(2)).sqrt();
 
 	distance_from_line < 0.001
+}
+
+pub fn direction(v: Vec2<f64>) -> f64 {
+	angle_between(Vec2::new(1.0, 0.0), v)
+}
+
+pub fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
+	(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
 }

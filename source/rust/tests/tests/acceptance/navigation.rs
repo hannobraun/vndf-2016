@@ -1,13 +1,10 @@
 use std::f64::consts::PI;
 
-use nalgebra::{
-	Dot,
-	Norm,
-	Vec2,
-};
-
 use client::interface::InputEvent;
-use shared::util::is_point_on_line;
+use shared::util::{
+	direction,
+	is_point_on_line,
+};
 use tests::rc;
 
 
@@ -92,13 +89,4 @@ fn it_should_schedule_maneuvers() {
 	client.wait_until(|frame| {
 		maneuver_2_direction_rad == direction(frame.ships[&ship_id].velocity)
 	});
-
-
-	fn direction(v: Vec2<f64>) -> f64 {
-		angle_between(Vec2::new(1.0, 0.0), v)
-	}
-
-	fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
-		(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
-	}
 }
