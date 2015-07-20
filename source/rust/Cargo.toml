@@ -5,6 +5,18 @@ version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
 
 
+[lib]
+test = false
+
+[[bin]]
+name = "vndf-server"
+test = false
+
+[[bin]]
+name = "vndf-client"
+test = false
+
+
 [dependencies]
 env_logger      = "*"
 freetype-rs     = "*"
