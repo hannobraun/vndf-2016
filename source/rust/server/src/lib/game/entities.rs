@@ -61,8 +61,6 @@ impl Entities {
 }
 
 
-// TODO: Remove #[allow(unused)], once this is moved to a library.
-#[allow(unused)]
 pub struct EntityBuilder<'c> {
 	id: EntityId,
 
@@ -71,8 +69,6 @@ pub struct EntityBuilder<'c> {
 	maneuvers : &'c mut Components<Maneuver>,
 }
 
-// TODO: Remove #[allow(unused)], once this is moved to a library.
-#[allow(unused)]
 impl<'c> EntityBuilder<'c> {
 	pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
 		self.bodies.insert(self.id, component);
@@ -95,8 +91,6 @@ impl<'c> EntityBuilder<'c> {
 }
 
 
-// TODO: Remove #[allow(unused)], once this is moved to a library.
-#[allow(unused)]
 pub struct EntityUpdater<'c> {
 	id: EntityId,
 
@@ -105,8 +99,6 @@ pub struct EntityUpdater<'c> {
 	maneuvers : &'c mut Components<Maneuver>,
 }
 
-// TODO: Remove #[allow(unused)], once this is moved to a library.
-#[allow(unused)]
 impl<'c> EntityUpdater<'c> {
 	pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
 		self.bodies.insert(self.id, component);
