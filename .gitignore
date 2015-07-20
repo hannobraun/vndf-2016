@@ -1,8 +1,2 @@
 /*.sublime-workspace
-
-/source/rust/**/Cargo.lock
-!/source/rust/client/Cargo.lock
-!/source/rust/server/Cargo.lock
-!/source/rust/test_suite/Cargo.lock
-
 /output
