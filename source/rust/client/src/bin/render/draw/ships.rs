@@ -93,4 +93,4 @@ impl ShipDrawer {
 }
 
 
-type Ship = Vec2<f32>;
+pub type Ship = Vec2<f32>;
