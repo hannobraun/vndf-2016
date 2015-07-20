@@ -7,9 +7,9 @@ use nalgebra::{
 	Vec2,
 };
 
-use game::data::Maneuver;
-use game::entities::Entities;
-use shared::shared::game::{
+use server::game::data::Maneuver;
+use server::game::entities::Entities;
+use shared::game::{
 	Body,
 	Broadcast,
 	EntityId,

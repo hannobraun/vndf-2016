@@ -6,21 +6,20 @@ extern crate env_logger;
 extern crate log;
 extern crate time;
 
-extern crate server;
 extern crate shared;
 
 
 use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
+
 use time::precise_time_s;
 
+use shared::server::args::Args;
+use shared::server::game::state::GameState;
+use shared::server::incoming_events::IncomingEvents;
+use shared::server::network::Network;
 use shared::shared::protocol::server::Event as ServerEvent;
-
-use server::args::Args;
-use server::game::state::GameState;
-use server::incoming_events::IncomingEvents;
-use server::network::Network;
 
 
 fn main() {

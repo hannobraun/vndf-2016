@@ -1,4 +1,4 @@
-use shared::shared::game::EntityId;
+use shared::game::EntityId;
 
 
 #[derive(Debug)]

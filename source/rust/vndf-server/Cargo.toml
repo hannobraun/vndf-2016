@@ -9,8 +9,5 @@ env_logger = "*"
 log        = "*"
 time       = "*"
 
-[dependencies.server]
-path = "../server"
-
 [dependencies.shared]
 path = "../shared"

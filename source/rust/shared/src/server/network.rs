@@ -2,11 +2,11 @@ use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::vec::Drain;
 
-use shared::shared::network::{
+use shared::network::{
 	Acceptor,
 	Connection,
 };
-use shared::shared::protocol::{
+use shared::protocol::{
 	client,
 	server,
 };

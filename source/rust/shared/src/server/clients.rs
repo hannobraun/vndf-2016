@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
 
-use shared::shared::game::EntityId;
+use shared::game::EntityId;
 
 
 pub type Clients = HashMap<SocketAddr, Client>;
