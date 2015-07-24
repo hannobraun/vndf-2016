@@ -3,4 +3,4 @@
 source project.conf
 
 cd $RUST_SOURCE
-cargo update
+cargo clean
