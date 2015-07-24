@@ -21,3 +21,7 @@ pub fn angle_from(v: Vec2<f64>) -> f64 {
 pub fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
 	(v1.dot(&v2) / (v1.norm() * v2.norm())).acos()
 }
+
+pub fn roughly_equal(a: f64, b: f64, epsilon: f64) -> bool {
+	(a - b).abs() < epsilon
+}
