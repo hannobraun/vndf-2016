@@ -10,7 +10,7 @@ mod unit {
 	}
 }
 
-mod component {
+mod integration {
 	mod client {
 		mod input;
 		mod protocol;
