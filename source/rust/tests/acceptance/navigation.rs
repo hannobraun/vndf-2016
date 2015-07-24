@@ -61,10 +61,6 @@ fn it_should_display_other_players_ships() {
 
 #[test]
 fn it_should_schedule_maneuvers() {
-	// TODO: This test should be more basic. The multi-maneuver thing should be
-	//       moved to an integration test. I believe that this is fragile, and
-	//       could pass, even if the maneuvers aren't really executed both.
-
 	let     server = rc::Server::start();
 	let mut client = rc::Client::start(server.port());
 
@@ -76,17 +72,12 @@ fn it_should_schedule_maneuvers() {
 		None          => panic!("Expected ship id"),
 	};
 
-	let velocity_direction_rad   = angle_from(frame.ships[&ship_id].velocity);
-	let maneuver_1_direction_rad = velocity_direction_rad + PI / 2.0;
-	let maneuver_2_direction_rad = velocity_direction_rad + PI;
+	let velocity_direction_rad = angle_from(frame.ships[&ship_id].velocity);
+	let maneuver_direction_rad = velocity_direction_rad + PI / 2.0;
 
-	client.input(InputEvent::ScheduleManeuver(0.01, maneuver_1_direction_rad));
-	client.input(InputEvent::ScheduleManeuver(0.02, maneuver_2_direction_rad));
+	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
 
 	client.wait_until(|frame| {
-		maneuver_1_direction_rad == angle_from(frame.ships[&ship_id].velocity)
-	});
-	client.wait_until(|frame| {
-		maneuver_2_direction_rad == angle_from(frame.ships[&ship_id].velocity)
+		maneuver_direction_rad == angle_from(frame.ships[&ship_id].velocity)
 	});
 }
