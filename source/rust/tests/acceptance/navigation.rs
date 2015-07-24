@@ -68,15 +68,15 @@ fn it_should_schedule_maneuvers() {
 	let     server = rc::Server::start();
 	let mut client = rc::Client::start(server.port());
 
-	let frame_1 = client.wait_until(|frame| {
+	let frame = client.wait_until(|frame| {
 		frame.ship_id.is_some() && frame.ships.len() == 1
 	});
-	let ship_id = match frame_1.ship_id {
+	let ship_id = match frame.ship_id {
 		Some(ship_id) => ship_id,
 		None          => panic!("Expected ship id"),
 	};
 
-	let velocity_direction_rad   = angle_from(frame_1.ships[&ship_id].velocity);
+	let velocity_direction_rad   = angle_from(frame.ships[&ship_id].velocity);
 	let maneuver_1_direction_rad = velocity_direction_rad + PI / 2.0;
 	let maneuver_2_direction_rad = velocity_direction_rad + PI;
 
