@@ -58,7 +58,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 		};
 
 		spawn(move || {
-			// TODO: I've seen the following error here once:
+			// TODO: I've seen the following error here a few times:
 			//       "Error determining peer address: Transport endpoint is not
 			//       connected (os error 107)".
 			//       This looks like a legitimate error that could be handled
