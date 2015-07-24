@@ -4,6 +4,12 @@ extern crate time;
 extern crate vndf;
 
 
+mod unit {
+	mod server {
+		mod game;
+	}
+}
+
 mod component {
 	mod client {
 		mod input;
