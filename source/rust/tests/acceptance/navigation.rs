@@ -2,7 +2,7 @@ use std::f64::consts::PI;
 
 use vndf::client::interface::InputEvent;
 use vndf::shared::util::{
-	angle_from,
+	angle_of,
 	is_point_on_line,
 };
 use vndf::testing::rc;
@@ -72,12 +72,12 @@ fn it_should_schedule_maneuvers() {
 		None          => panic!("Expected ship id"),
 	};
 
-	let velocity_direction_rad = angle_from(frame.ships[&ship_id].velocity);
+	let velocity_direction_rad = angle_of(frame.ships[&ship_id].velocity);
 	let maneuver_direction_rad = velocity_direction_rad + PI / 2.0;
 
 	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
 
 	client.wait_until(|frame| {
-		maneuver_direction_rad == angle_from(frame.ships[&ship_id].velocity)
+		maneuver_direction_rad == angle_of(frame.ships[&ship_id].velocity)
 	});
 }

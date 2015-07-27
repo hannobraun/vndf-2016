@@ -1,7 +1,7 @@
 use vndf::server::game::state::GameState;
 use vndf::shared::game::EntityId;
 use vndf::shared::util::{
-	angle_from,
+	angle_of,
 	roughly_equal,
 };
 
@@ -34,9 +34,9 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 		game_state: &mut GameState,
 	) -> bool {
 		for (id, (body, _)) in game_state.export_entities() {
-			print!("{} == {}", angle_from(body.velocity), direction);
+			print!("{} == {}", angle_of(body.velocity), direction);
 			let direction_matches = roughly_equal(
-				angle_from(body.velocity),
+				angle_of(body.velocity),
 				direction,
 				0.001,
 			);

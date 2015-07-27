@@ -14,7 +14,7 @@ pub fn is_point_on_line(p: Vec2<f64>, l1: Vec2<f64>, l2: Vec2<f64>) -> bool {
 	distance_from_line < 0.001
 }
 
-pub fn angle_from(v: Vec2<f64>) -> f64 {
+pub fn angle_of(v: Vec2<f64>) -> f64 {
 	angle_between(Vec2::new(1.0, 0.0), v)
 }
 
