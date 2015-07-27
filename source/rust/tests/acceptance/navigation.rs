@@ -78,6 +78,17 @@ fn it_should_schedule_maneuvers() {
 	client.input(InputEvent::ScheduleManeuver(0.0, maneuver_direction_rad));
 
 	client.wait_until(|frame| {
-		maneuver_direction_rad == angle_of(frame.ships[&ship_id].velocity)
+		let new_velocity_direction_rad =
+			angle_of(frame.ships[&ship_id].velocity);
+
+		let old_difference =
+			(maneuver_direction_rad - velocity_direction_rad).abs();
+		let new_difference =
+			(maneuver_direction_rad - new_velocity_direction_rad).abs();
+
+		// This test is too high-level to really test any of the details, so we
+		// just check whether the maneuver moved the velocity vector in the
+		// right direction.
+		new_difference < old_difference
 	});
 }
