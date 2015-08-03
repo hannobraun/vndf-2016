@@ -32,26 +32,26 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(direction_b, before, after));
+}
 
 
-	fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
-		for (id, (body, _)) in game_state.export_entities() {
-			if id == body_id {
-				return body;
-			}
+fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
+	for (id, (body, _)) in game_state.export_entities() {
+		if id == body_id {
+			return body;
 		}
-
-		unreachable!();
 	}
 
-	fn angle_has_decreased(
-		direction: f64,
-		before   : Body,
-		after    : Body,
-	) -> bool {
-		let old_difference = (direction - angle_of(before.velocity)).abs();
-		let new_difference = (direction - angle_of(after.velocity )).abs();
+	unreachable!();
+}
 
-		new_difference < old_difference
-	}
+fn angle_has_decreased(
+	direction: f64,
+	before   : Body,
+	after    : Body,
+) -> bool {
+	let old_difference = (direction - angle_of(before.velocity)).abs();
+	let new_difference = (direction - angle_of(after.velocity )).abs();
+
+	new_difference < old_difference
 }
