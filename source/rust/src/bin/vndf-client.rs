@@ -108,7 +108,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						angle     : angle,
 					};
 
-					network.send(schedule_maneuver(delay, data));
+					network.send(schedule_maneuver(data));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()

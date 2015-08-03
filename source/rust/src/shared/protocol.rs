@@ -55,7 +55,7 @@ pub mod client {
 		Event::Privileged(event::Privileged::StartBroadcast(message))
 	}
 
-	pub fn schedule_maneuver(delay: f64, data: ManeuverData) -> Event {
+	pub fn schedule_maneuver(data: ManeuverData) -> Event {
 		Event::Privileged(event::Privileged::ScheduleManeuver(data))
 	}
 }
