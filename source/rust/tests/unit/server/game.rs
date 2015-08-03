@@ -2,6 +2,7 @@ use vndf::server::game::state::GameState;
 use vndf::shared::game::{
 	Body,
 	EntityId,
+	ManeuverData,
 };
 use vndf::shared::util::angle_of;
 
@@ -12,26 +13,31 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 
 	let ship_id = game_state.on_enter();
 
-	let delay_a = 0.5;
-	let delay_b = 1.0;
+	let maneuver_a = ManeuverData {
+		start_s   : 0.5,
+		duration_s: 0.05,
+		angle     : 1.0,
+	};
+	let maneuver_b = ManeuverData {
+		start_s   : 1.0,
+		duration_s: 0.05,
+		angle     : -1.0,
+	};
 
-	let direction_a =  1.0;
-	let direction_b = -1.0;
-
-	game_state.on_schedule_maneuver(ship_id, delay_a, 0.05, direction_a);
-	game_state.on_schedule_maneuver(ship_id, delay_b, 0.05, direction_b);
+	game_state.on_schedule_maneuver(ship_id, maneuver_a);
+	game_state.on_schedule_maneuver(ship_id, maneuver_b);
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(delay_a + 0.1);
+	game_state.on_update(maneuver_a.start_s + 0.1);
 	let after = get_body(ship_id, &mut game_state);
 
-	assert!(angle_has_decreased(direction_a, before, after));
+	assert!(angle_has_decreased(maneuver_a.angle, before, after));
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(delay_b + 0.1);
+	game_state.on_update(maneuver_b.start_s + 0.1);
 	let after = get_body(ship_id, &mut game_state);
 
-	assert!(angle_has_decreased(direction_b, before, after));
+	assert!(angle_has_decreased(maneuver_b.angle, before, after));
 }
 
 #[test]
@@ -40,23 +46,25 @@ fn maneuvers_should_apply_thrust_over_time() {
 
 	let ship_id = game_state.on_enter();
 
-	let delay     = 0.5;
-	let duration  = 0.2;
-	let direction = 1.0;
+	let maneuver = ManeuverData {
+		start_s   : 0.5,
+		duration_s: 0.2,
+		angle     : 1.0,
+	};
 
-	game_state.on_schedule_maneuver(ship_id, delay, duration, direction);
-
-	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(delay + duration / 2.0);
-	let after = get_body(ship_id, &mut game_state);
-
-	assert!(angle_has_decreased(direction, before, after));
+	game_state.on_schedule_maneuver(ship_id, maneuver);
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(delay + duration);
+	game_state.on_update(maneuver.start_s + maneuver.duration_s / 2.0);
 	let after = get_body(ship_id, &mut game_state);
 
-	assert!(angle_has_decreased(direction, before, after));
+	assert!(angle_has_decreased(maneuver.angle, before, after));
+
+	let before = get_body(ship_id, &mut game_state);
+	game_state.on_update(maneuver.start_s + maneuver.duration_s);
+	let after = get_body(ship_id, &mut game_state);
+
+	assert!(angle_has_decreased(maneuver.angle, before, after));
 }
 
 

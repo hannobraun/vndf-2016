@@ -165,12 +165,7 @@ fn handle_privileged_event(
 			game_state.on_stop_broadcast(client.ship_id)
 		},
 		client::event::Privileged::ScheduleManeuver(_, data) => {
-			game_state.on_schedule_maneuver(
-				client.ship_id,
-				data.start_s,
-				data.duration_s,
-				data.angle,
-			)
+			game_state.on_schedule_maneuver(client.ship_id, data)
 		},
 	}
 }
