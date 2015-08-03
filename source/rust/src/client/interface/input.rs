@@ -3,13 +3,15 @@ use rustc_serialize::json::{
 	DecodeResult,
 };
 
+use shared::game::ManeuverData;
+
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub enum InputEvent {
 	StartBroadcast(String),
 	StopBroadcast,
 
-	ScheduleManeuver(f64, f64),
+	ScheduleManeuver(ManeuverData),
 
 	Quit,
 }

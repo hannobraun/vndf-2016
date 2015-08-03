@@ -5,6 +5,7 @@ use glutin::Event::{
 	KeyboardInput,
 	ReceivedCharacter,
 };
+use time::precise_time_s;
 
 use client::interface::{
 	Frame,
@@ -12,6 +13,7 @@ use client::interface::{
 	Message,
 };
 use client::window::Window;
+use shared::game::ManeuverData;
 
 
 pub struct Cli {
@@ -155,8 +157,20 @@ impl Cli {
 					(Some(delay_s), Some(direction_deg)) => {
 						let direction_rad = (direction_deg as f64).to_radians();
 
+						// TODO: This is highly error-prone, as the local time
+						//       might be different from the server time. What
+						//       we should use here is a kind of game time that
+						//       the server provides us.
+						let start_s = precise_time_s() + delay_s;
+
+						let data = ManeuverData {
+							start_s   : start_s,
+							duration_s: 1.0, // TODO: Set to actual duration
+							angle     : direction_rad,
+						};
+
 						events.push(
-							InputEvent::ScheduleManeuver(delay_s, direction_rad)
+							InputEvent::ScheduleManeuver(data)
 						)
 					},
 
