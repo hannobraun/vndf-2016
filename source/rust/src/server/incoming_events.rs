@@ -158,17 +158,20 @@ fn handle_privileged_event(
 			// last activity for the client has already been
 			// updated.
 		},
-		client::event::Privileged::StartBroadcast(message) =>
-			game_state.on_start_broadcast(client.ship_id, message),
-		client::event::Privileged::StopBroadcast =>
-			game_state.on_stop_broadcast(client.ship_id),
-		client::event::Privileged::ScheduleManeuver(delay, angle) =>
+		client::event::Privileged::StartBroadcast(message) => {
+			game_state.on_start_broadcast(client.ship_id, message)
+		},
+		client::event::Privileged::StopBroadcast => {
+			game_state.on_stop_broadcast(client.ship_id)
+		},
+		client::event::Privileged::ScheduleManeuver(delay, angle) => {
 			game_state.on_schedule_maneuver(
 				client.ship_id,
 				delay,
 				1.0, // TODO: Pass duration
 				angle,
 				now_s,
-			),
+			)
+		},
 	}
 }
