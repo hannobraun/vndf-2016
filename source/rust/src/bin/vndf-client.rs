@@ -20,6 +20,7 @@ use vndf::client::interface::{
 	Message,
 };
 use vndf::client::network::Network;
+use vndf::shared::game::ManeuverData;
 use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
@@ -95,7 +96,13 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					);
 				},
 				InputEvent::ScheduleManeuver(delay, angle) => {
-					network.send(schedule_maneuver(delay, angle));
+					let data = ManeuverData {
+						start_s   : 0.0, // TODO: Set to actual start time
+						duration_s: 1.0, // TODO: Set to actual duration
+						angle     : angle,
+					};
+
+					network.send(schedule_maneuver(delay, data));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()

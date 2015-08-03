@@ -55,13 +55,7 @@ pub mod client {
 		Event::Privileged(event::Privileged::StartBroadcast(message))
 	}
 
-	pub fn schedule_maneuver(delay: f64, angle: f64) -> Event {
-		let data = ManeuverData {
-			start_s   : 0.0, // TODO: Set to actual start time
-			duration_s: 1.0, // TODO: Set to actual duration
-			angle     : angle,
-		};
-
+	pub fn schedule_maneuver(delay: f64, data: ManeuverData) -> Event {
 		Event::Privileged(event::Privileged::ScheduleManeuver(delay, data))
 	}
 }
