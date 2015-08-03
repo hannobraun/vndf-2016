@@ -8,6 +8,17 @@ use shared::game::{
 };
 
 
+/// This module contains prototype code for an entity-component system (ECS).
+/// I've experimented with entity systems in the past, and come to the
+/// conclusion that the best approach to implement one in Rust is to use code
+/// generation to generated game-specific code.
+///
+/// So far, I haven't found a good API approach that I really like, however. In
+/// this module, I'd like to prototype approaches until we hit on something that
+/// works well. Once we're reasonably sure we'd like to keep it, we should write
+/// a code generator.
+
+
 pub type Components<T> = HashMap<EntityId, T>;
 
 
