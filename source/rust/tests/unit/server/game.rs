@@ -45,11 +45,7 @@ fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	unreachable!();
 }
 
-fn angle_has_decreased(
-	direction: f64,
-	before   : Body,
-	after    : Body,
-) -> bool {
+fn angle_has_decreased(direction: f64, before: Body, after: Body, ) -> bool {
 	let old_difference = (direction - angle_of(before.velocity)).abs();
 	let new_difference = (direction - angle_of(after.velocity )).abs();
 
