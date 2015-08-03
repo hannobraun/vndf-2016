@@ -1,4 +1,7 @@
 pub mod client {
+	use shared::game::ManeuverData;
+
+
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 	pub enum Event {
 		Public(event::Public),
@@ -24,6 +27,9 @@ pub mod client {
 
 
 	pub mod event {
+		use shared::game::ManeuverData;
+
+
 		#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 		pub enum Public {
 			Login,
@@ -36,7 +42,7 @@ pub mod client {
 			StartBroadcast(String),
 			StopBroadcast,
 
-			ScheduleManeuver(f64, f64),
+			ScheduleManeuver(f64, ManeuverData),
 		}
 	}
 
@@ -50,7 +56,13 @@ pub mod client {
 	}
 
 	pub fn schedule_maneuver(delay: f64, angle: f64) -> Event {
-		Event::Privileged(event::Privileged::ScheduleManeuver(delay, angle))
+		let data = ManeuverData {
+			start_s   : 0.0, // TODO: Set to actual start time
+			duration_s: 1.0, // TODO: Set to actual duration
+			angle     : angle,
+		};
+
+		Event::Privileged(event::Privileged::ScheduleManeuver(delay, data))
 	}
 }
 
