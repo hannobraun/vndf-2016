@@ -34,6 +34,31 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 	assert!(angle_has_decreased(direction_b, before, after));
 }
 
+#[test]
+fn maneuvers_should_apply_thrust_over_time() {
+	let mut game_state = GameState::new();
+
+	let ship_id = game_state.on_enter();
+
+	let delay     = 0.5;
+	let duration  = 0.2;
+	let direction = 1.0;
+
+	game_state.on_schedule_maneuver(ship_id, delay, duration, direction, 0.0);
+
+	let before = get_body(ship_id, &mut game_state);
+	game_state.on_update(delay + duration / 2.0);
+	let after = get_body(ship_id, &mut game_state);
+
+	assert!(angle_has_decreased(direction, before, after));
+
+	let before = get_body(ship_id, &mut game_state);
+	game_state.on_update(delay + duration);
+	let after = get_body(ship_id, &mut game_state);
+
+	assert!(angle_has_decreased(direction, before, after));
+}
+
 
 fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	for (id, (body, _)) in game_state.export_entities() {
