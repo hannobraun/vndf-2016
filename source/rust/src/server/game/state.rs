@@ -13,6 +13,7 @@ use shared::game::{
 	Body,
 	Broadcast,
 	EntityId,
+	ManeuverData,
 };
 
 
@@ -65,10 +66,12 @@ impl GameState {
 	) {
 		self.entities.create_entity()
 			.with_maneuver(Maneuver {
-				ship_id   : ship_id,
-				start_s   : now_s + delay_s,
-				duration_s: duration_s,
-				angle     : angle,
+				ship_id: ship_id,
+				data: ManeuverData {
+					start_s   : now_s + delay_s,
+					duration_s: duration_s,
+					angle     : angle,
+				},
 			});
 	}
 
@@ -82,8 +85,8 @@ impl GameState {
 
 		let mut to_destroy = Vec::new();
 		for (&id, maneuver) in &mut self.entities.maneuvers {
-			if now_s >= maneuver.start_s {
-				let rotation     = Rot2::new(Vec1::new(maneuver.angle));
+			if now_s >= maneuver.data.start_s {
+				let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
 				let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
 
 				match self.entities.bodies.get_mut(&maneuver.ship_id) {
@@ -100,7 +103,7 @@ impl GameState {
 				}
 			}
 
-			if now_s >= maneuver.start_s + maneuver.duration_s {
+			if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
 				to_destroy.push(id);
 			}
 		}

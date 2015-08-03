@@ -15,3 +15,10 @@ pub struct Broadcast {
 	pub sender : EntityId,
 	pub message: String,
 }
+
+#[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
+pub struct ManeuverData {
+	pub start_s   : f64,
+	pub duration_s: f64,
+	pub angle     : f64,
+}
