@@ -15,7 +15,7 @@ pub fn is_point_on_line(p: Vec2<f64>, l1: Vec2<f64>, l2: Vec2<f64>) -> bool {
 }
 
 pub fn angle_of(v: Vec2<f64>) -> f64 {
-	angle_between(Vec2::new(1.0, 0.0), v)
+	v.y.atan2(v.x)
 }
 
 pub fn angle_between(v1: Vec2<f64>, v2: Vec2<f64>) -> f64 {
