@@ -149,12 +149,12 @@ impl Cli {
 			"schedule-maneuver" => {
 				let result = scan_fmt!(
 					args,
-					"{} {}",
-					f64, f64
+					"{} {} {}",
+					f64, f64, f64
 				);
 
 				match result {
-					(Some(delay_s), Some(direction_deg)) => {
+					(Some(delay_s), Some(duration_s), Some(direction_deg)) => {
 						let direction_rad = (direction_deg as f64).to_radians();
 
 						// TODO: This is highly error-prone, as the local time
@@ -165,7 +165,7 @@ impl Cli {
 
 						let data = ManeuverData {
 							start_s   : start_s,
-							duration_s: 1.0, // TODO: Set to actual duration
+							duration_s: duration_s,
 							angle     : direction_rad,
 						};
 
