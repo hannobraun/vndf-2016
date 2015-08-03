@@ -165,12 +165,13 @@ fn handle_privileged_event(
 			game_state.on_stop_broadcast(client.ship_id)
 		},
 		client::event::Privileged::ScheduleManeuver(delay, angle) => {
+			let start_s = now_s + delay;
+
 			game_state.on_schedule_maneuver(
 				client.ship_id,
-				delay,
+				start_s,
 				1.0, // TODO: Pass duration
 				angle,
-				now_s,
 			)
 		},
 	}

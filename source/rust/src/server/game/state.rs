@@ -59,16 +59,15 @@ impl GameState {
 	pub fn on_schedule_maneuver(
 		&mut self,
 		ship_id   : EntityId,
-		delay_s   : f64,
+		start_s   : f64,
 		duration_s: f64,
 		angle     : f64,
-		now_s     : f64,
 	) {
 		self.entities.create_entity()
 			.with_maneuver(Maneuver {
 				ship_id: ship_id,
 				data: ManeuverData {
-					start_s   : now_s + delay_s,
+					start_s   : start_s,
 					duration_s: duration_s,
 					angle     : angle,
 				},

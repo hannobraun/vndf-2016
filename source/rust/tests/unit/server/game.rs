@@ -18,8 +18,8 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 	let direction_a =  1.0;
 	let direction_b = -1.0;
 
-	game_state.on_schedule_maneuver(ship_id, delay_a, 0.05, direction_a, 0.0);
-	game_state.on_schedule_maneuver(ship_id, delay_b, 0.05, direction_b, 0.0);
+	game_state.on_schedule_maneuver(ship_id, delay_a, 0.05, direction_a);
+	game_state.on_schedule_maneuver(ship_id, delay_b, 0.05, direction_b);
 
 	let before = get_body(ship_id, &mut game_state);
 	game_state.on_update(delay_a + 0.1);
@@ -44,7 +44,7 @@ fn maneuvers_should_apply_thrust_over_time() {
 	let duration  = 0.2;
 	let direction = 1.0;
 
-	game_state.on_schedule_maneuver(ship_id, delay, duration, direction, 0.0);
+	game_state.on_schedule_maneuver(ship_id, delay, duration, direction);
 
 	let before = get_body(ship_id, &mut game_state);
 	game_state.on_update(delay + duration / 2.0);
