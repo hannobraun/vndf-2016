@@ -96,8 +96,14 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 					);
 				},
 				InputEvent::ScheduleManeuver(delay, angle) => {
+					// TODO: This is highly error-prone, as the local time might
+					//       be different from the server time. What we should
+					//       use here is a kind of game time that the server
+					//       gives us.
+					let start_s = precise_time_s() + delay;
+
 					let data = ManeuverData {
-						start_s   : 0.0, // TODO: Set to actual start time
+						start_s   : start_s,
 						duration_s: 1.0, // TODO: Set to actual duration
 						angle     : angle,
 					};
