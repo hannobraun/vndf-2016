@@ -1,9 +1,9 @@
 use vndf::server::game::state::GameState;
-use vndf::shared::game::EntityId;
-use vndf::shared::util::{
-	angle_of,
-	roughly_equal,
+use vndf::shared::game::{
+	Body,
+	EntityId,
 };
+use vndf::shared::util::angle_of;
 
 
 #[test]
@@ -15,37 +15,43 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 	let delay_a = 0.5;
 	let delay_b = 1.0;
 
-	let direction_a = 1.0;
-	let direction_b = 2.0;
+	let direction_a =  1.0;
+	let direction_b = -1.0;
 
 	game_state.on_schedule_maneuver(ship_id, delay_a, direction_a, 0.0);
 	game_state.on_schedule_maneuver(ship_id, delay_b, direction_b, 0.0);
 
+	let before = get_body(ship_id, &mut game_state);
 	game_state.on_update(delay_a + 0.1);
-	assert!(ship_has_direction(ship_id, direction_a, &mut game_state));
+	let after = get_body(ship_id, &mut game_state);
 
+	assert!(angle_has_decreased(direction_a, before, after));
+
+	let before = get_body(ship_id, &mut game_state);
 	game_state.on_update(delay_b + 0.1);
-	assert!(ship_has_direction(ship_id, direction_b, &mut game_state));
+	let after = get_body(ship_id, &mut game_state);
+
+	assert!(angle_has_decreased(direction_b, before, after));
 
 
-	fn ship_has_direction(
-		ship_id  : EntityId,
-		direction: f64,
-		game_state: &mut GameState,
-	) -> bool {
+	fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 		for (id, (body, _)) in game_state.export_entities() {
-			print!("{} == {}", angle_of(body.velocity), direction);
-			let direction_matches = roughly_equal(
-				angle_of(body.velocity),
-				direction,
-				0.001,
-			);
-
-			if id == ship_id && direction_matches {
-				return true;
+			if id == body_id {
+				return body;
 			}
 		}
 
-		false
+		unreachable!();
+	}
+
+	fn angle_has_decreased(
+		direction: f64,
+		before   : Body,
+		after    : Body,
+	) -> bool {
+		let old_difference = (direction - angle_of(before.velocity)).abs();
+		let new_difference = (direction - angle_of(after.velocity )).abs();
+
+		new_difference < old_difference
 	}
 }
