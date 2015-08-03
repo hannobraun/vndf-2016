@@ -16,7 +16,7 @@ pub struct Broadcast {
 	pub message: String,
 }
 
-#[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
+#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct ManeuverData {
 	pub start_s   : f64,
 	pub duration_s: f64,
