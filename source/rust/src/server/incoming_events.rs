@@ -166,7 +166,7 @@ fn handle_privileged_event(
 			game_state.on_schedule_maneuver(
 				client.ship_id,
 				delay,
-				0.0, // TODO: Pass duration
+				1.0, // TODO: Pass duration
 				angle,
 				now_s,
 			),
