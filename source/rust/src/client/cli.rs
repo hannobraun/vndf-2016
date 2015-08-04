@@ -20,6 +20,11 @@ pub struct Cli {
 	input_buffer: String,
 	text        : Vec<String>,
 	height      : u16,
+    
+	// commands are pushed to past_cmd, unless navigating the cmd history
+    	// in which case they are shuffled between the two stacks
+	past_cmd: Vec<String>, //buffered commands for cmd history
+	fut_cmd: Vec<String>, //forward buffer for cmd history
 }
 
 impl Cli {
@@ -33,7 +38,9 @@ impl Cli {
 		Cli {
 			input_buffer: String::new(),
 			text        : text,
-			height      : height,
+		    	height      : height,
+                    	past_cmd: vec!(),
+                    	fut_cmd: vec!(),
 		}
 	}
 
@@ -48,7 +55,7 @@ impl Cli {
 			Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
 			Message::None                => (),
 		}
-
+            
 		for event in window.poll_events() {
 			match event {
 				ReceivedCharacter(c) =>
@@ -60,16 +67,38 @@ impl Cli {
 					self.input_buffer.pop();
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
-					let command = self.input_buffer.clone();
+				    let command = self.input_buffer.clone();
+                                    if command != "" {
+                                        self.past_cmd.push(self.input_buffer.clone());
+
+                                        //shift commands back to the past
+                                        for n in self.fut_cmd.drain(..) {
+                                            self.past_cmd.push(n);
+                                        }
+                                        
 					self.input_buffer.clear();
 
 					self.handle_line(
-						events,
-						command.as_ref(),
-						frame,
-					);
+					    events,
+					    command.as_ref(),
+					    frame,
+					    );
+                                    }
 				},
-
+                            	KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
+                                    self.input_buffer.clear();
+                                    if let Some(cmd) = self.past_cmd.pop() {
+                                        self.fut_cmd.push(cmd.clone());
+                                        self.input_buffer.push_str(&cmd);
+                                    }
+                                },
+                                KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
+                                    self.input_buffer.clear();
+                                    if let Some(cmd) = self.fut_cmd.pop() {
+                                        self.past_cmd.push(cmd.clone());
+                                        self.input_buffer.push_str(&cmd);
+                                    }
+                                },
 				// Those events aren't really related to the CLI. It feels wrong
 				// to handle them here.
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
@@ -81,7 +110,7 @@ impl Cli {
 			}
 		}
 
-		while self.text.len() > (self.height - 2) as usize {
+	    while self.text.len() > (self.height - 2) as usize {
 			self.text.remove(0);
 		}
 	}
