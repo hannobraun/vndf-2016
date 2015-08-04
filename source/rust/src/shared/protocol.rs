@@ -1,4 +1,7 @@
 pub mod client {
+	use shared::game::ManeuverData;
+
+
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 	pub enum Event {
 		Public(event::Public),
@@ -13,17 +16,20 @@ pub mod client {
 			use self::event::Privileged::*;
 
 			match *self {
-				Event::Public(Login)                      => true,
-				Event::Privileged(Heartbeat)              => false,
-				Event::Privileged(StartBroadcast(_))      => true,
-				Event::Privileged(StopBroadcast)          => true,
-				Event::Privileged(ScheduleManeuver(_, _)) => true,
+				Event::Public(Login)                   => true,
+				Event::Privileged(Heartbeat)           => false,
+				Event::Privileged(StartBroadcast(_))   => true,
+				Event::Privileged(StopBroadcast)       => true,
+				Event::Privileged(ScheduleManeuver(_)) => true,
 			}
 		}
 	}
 
 
 	pub mod event {
+		use shared::game::ManeuverData;
+
+
 		#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 		pub enum Public {
 			Login,
@@ -36,7 +42,7 @@ pub mod client {
 			StartBroadcast(String),
 			StopBroadcast,
 
-			ScheduleManeuver(f64, f64),
+			ScheduleManeuver(ManeuverData),
 		}
 	}
 
@@ -49,8 +55,8 @@ pub mod client {
 		Event::Privileged(event::Privileged::StartBroadcast(message))
 	}
 
-	pub fn schedule_maneuver(delay: f64, angle: f64) -> Event {
-		Event::Privileged(event::Privileged::ScheduleManeuver(delay, angle))
+	pub fn schedule_maneuver(data: ManeuverData) -> Event {
+		Event::Privileged(event::Privileged::ScheduleManeuver(data))
 	}
 }
 

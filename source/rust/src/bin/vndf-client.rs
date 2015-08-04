@@ -94,8 +94,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 						"Stopped sending broadcast".to_string()
 					);
 				},
-				InputEvent::ScheduleManeuver(delay, angle) => {
-					network.send(schedule_maneuver(delay, angle));
+				InputEvent::ScheduleManeuver(data) => {
+					network.send(schedule_maneuver(data));
 
 					frame.message = Message::Notice(
 						"Scheduling maneuver".to_string()

@@ -74,7 +74,7 @@ impl Interface for Headless {
 		let (sender, receiver) = channel();
 
 		spawn(move || -> () {
-			let mut stdin = stdin();
+			let stdin = stdin();
 
 			loop {
 				let mut line = String::new();
