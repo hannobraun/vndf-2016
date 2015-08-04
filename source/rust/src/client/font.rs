@@ -78,7 +78,7 @@ fn init_font_face(size: u32) -> FT_Face {
 
 fn load_glyph_slot(font_face: FT_Face, c: char) -> Option<FT_GlyphSlot> {
 	unsafe {
-		let glyph_index = match FT_Get_Char_Index(font_face, c as u64) {
+		let glyph_index = match FT_Get_Char_Index(font_face, c as u32) {
 			0     => return None, // undefined character code
 			index => index,
 		};
