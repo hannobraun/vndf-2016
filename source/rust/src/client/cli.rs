@@ -115,6 +115,8 @@ impl Cli {
 	}
 
 	fn get_history (&mut self, rev: bool) -> String {
+		if self.cmd_history.len() == 0 { return "".to_string() }
+		
 		//shift cursor based on direction
 		if self.is_cmd_history {
 			if rev { if self.cmd_idx < (self.cmd_history.len()-1) { self.cmd_idx += 1; }}
