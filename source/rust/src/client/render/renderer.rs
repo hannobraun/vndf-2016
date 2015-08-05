@@ -66,8 +66,22 @@ impl Renderer {
 			);
 		}
 
-		for (_, ship) in &frame.ships {
+		for (ship_id, ship) in &frame.ships {
 			self.ship_drawer.draw(&mut self.graphics, &cast(ship.position));
+
+			// draw ship id
+			let vsid: Vec<char> = ship_id.to_string().chars().collect();
+			let glyph_offset = 9;
+			let pos_offset = ((glyph_offset * vsid.len())
+							  as f64 / 2.0); //centers ship id
+			for (x, c) in vsid.iter().enumerate() {
+				self.glyph_drawer.draw_at(
+					(ship.position[0] - pos_offset + ((x * glyph_offset) as f64)),
+					(ship.position[1]+20.0),
+					*c,
+					&mut self.graphics,
+				);
+			}
 		}
 
 		self.graphics.flush();

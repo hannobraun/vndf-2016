@@ -148,4 +148,43 @@ impl GlyphDrawer {
 			&params,
 		);
 	}
+
+	pub fn draw_at(
+		&mut self,
+		x       : f64,
+		y       : f64,
+		c       : char,
+		graphics: &mut Graphics,
+	) {
+		let offset = Vec2::new(0.0,0.0);
+
+		let &(ref glyph, ref texture) = match self.textures.get(&c) {
+			Some(result) => result,
+			None         => return,
+		};
+
+		let position =
+			offset +
+			(glyph.size * 0.5) +
+			glyph.offset +
+			Vec2::new(x as f32, y as f32);
+
+		let translation = Iso3::new(
+			Vec3::new(position.x, position.y, 0.0),
+			Vec3::new(0.0, 0.0, 0.0),
+		);
+		let transform = self.transform * translation.to_homogeneous();
+
+		let params = Params {
+			transform: *transform.as_array(),
+			size     : *glyph.size.as_array(),
+			color    : texture.to_param(),
+			_r       : PhantomData,
+		};
+
+		graphics.draw(
+			&self.batch,
+			&params,
+		);
+	}
 }
