@@ -20,12 +20,12 @@ pub struct Cli {
 	input_buffer: String,
 	text        : Vec<String>,
 	height      : u16,
-    
+
 	// commands are pushed to past_cmd, unless navigating the cmd history
-    	// in which case they are shuffled between the two stacks
+	// in which case they are shuffled between the two stacks
 	past_cmd: Vec<String>, //buffered commands for cmd history
-        fut_cmd: Vec<String>, //forward buffer for cmd history
-        is_history_cmd: bool, //removes duplicate history entries
+	fut_cmd: Vec<String>, //forward buffer for cmd history
+	is_history_cmd: bool, //removes duplicate history entries
 }
 
 impl Cli {
@@ -39,10 +39,10 @@ impl Cli {
 		Cli {
 			input_buffer: String::new(),
 			text        : text,
-		    	height      : height,
-                    	past_cmd: vec!(),
-                        fut_cmd: vec!(),
-                        is_history_cmd: false,
+			height      : height,
+			past_cmd: vec!(),
+			fut_cmd: vec!(),
+			is_history_cmd: false,
 		}
 	}
 
@@ -57,57 +57,57 @@ impl Cli {
 			Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
 			Message::None                => (),
 		}
-            
+
 		for event in window.poll_events() {
 			match event {
 				ReceivedCharacter(c) =>
 					if !c.is_control() {
-					    self.input_buffer.push(c);
-                                            self.is_history_cmd = false;
+						self.input_buffer.push(c);
+						self.is_history_cmd = false;
 					},
 
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
-				    self.input_buffer.pop();
-                                    self.is_history_cmd = false;
+					self.input_buffer.pop();
+					self.is_history_cmd = false;
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
-				    let command = self.input_buffer.clone();
-                                    if command != "" {
-                                        if !self.is_history_cmd {
-                                            self.past_cmd.push(self.input_buffer.clone());
-                                        }
+					let command = self.input_buffer.clone();
+					if command != "" {
+						if !self.is_history_cmd {
+							self.past_cmd.push(self.input_buffer.clone());
+						}
 
-                                        //shift commands back to the past
-                                        for n in self.fut_cmd.drain(..) {
-                                            self.past_cmd.push(n);
-                                        }
-                                        
-					self.input_buffer.clear();
-                                        self.is_history_cmd = false;
+						//shift commands back to the past
+						for n in self.fut_cmd.drain(..) {
+							self.past_cmd.push(n);
+						}
 
-					self.handle_line(
-					    events,
-					    command.as_ref(),
-					    frame,
-					    );
-                                    }
+						self.input_buffer.clear();
+						self.is_history_cmd = false;
+
+						self.handle_line(
+							events,
+							command.as_ref(),
+							frame,
+						);
+					}
 				},
-                            	KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
-                                    self.input_buffer.clear();
-                                    if let Some(cmd) = self.past_cmd.pop() {
-                                        self.fut_cmd.push(cmd.clone());
-                                        self.input_buffer.push_str(&cmd);
-                                        self.is_history_cmd = true;
-                                    }
-                                },
-                                KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
-                                    self.input_buffer.clear();
-                                    if let Some(cmd) = self.fut_cmd.pop() {
-                                        self.past_cmd.push(cmd.clone());
-                                        self.input_buffer.push_str(&cmd);
-                                        self.is_history_cmd = true;
-                                    }
-                                },
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
+					self.input_buffer.clear();
+					if let Some(cmd) = self.past_cmd.pop() {
+						self.fut_cmd.push(cmd.clone());
+						self.input_buffer.push_str(&cmd);
+						self.is_history_cmd = true;
+					}
+				},
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
+					self.input_buffer.clear();
+					if let Some(cmd) = self.fut_cmd.pop() {
+						self.past_cmd.push(cmd.clone());
+						self.input_buffer.push_str(&cmd);
+						self.is_history_cmd = true;
+					}
+				},
 				// Those events aren't really related to the CLI. It feels wrong
 				// to handle them here.
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
@@ -119,7 +119,7 @@ impl Cli {
 			}
 		}
 
-	    while self.text.len() > (self.height - 2) as usize {
+		while self.text.len() > (self.height - 2) as usize {
 			self.text.remove(0);
 		}
 	}
