@@ -1,2 +1,7 @@
 /*.sublime-workspace
 /output
+*~
+#*
+.#*
+*.bu
+*#*#
