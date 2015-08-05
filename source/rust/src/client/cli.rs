@@ -89,10 +89,14 @@ impl Cli {
 					}
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
-					self.history(true);
+					let cmd = self.get_history(true);
+					self.input_buffer.clear();
+					self.input_buffer.push_str(&cmd);
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
-					self.history(false);
+					let cmd = self.get_history(false);
+					self.input_buffer.clear();
+					self.input_buffer.push_str(&cmd);
 				},
 				// Those events aren't really related to the CLI. It feels wrong
 				// to handle them here.
@@ -110,20 +114,15 @@ impl Cli {
 		}
 	}
 
-	fn history (&mut self, rev: bool) {
-		
-		
-		//shift cursor base on direction
+	fn get_history (&mut self, rev: bool) -> String {
+		//shift cursor based on direction
 		if self.is_cmd_history {
 			if rev { if self.cmd_idx < (self.cmd_history.len()-1) { self.cmd_idx += 1; }}
 			else { if self.cmd_idx > 0 { self.cmd_idx -= 1; }}
 		}
 		else { self.is_cmd_history = true; }
 		
-		let cmd = self.cmd_history[self.cmd_idx].clone();
-		
-		self.input_buffer.clear();
-		self.input_buffer.push_str(&cmd);
+		self.cmd_history[self.cmd_idx].clone()
 	}
 
 	pub fn text(&self) -> &[String] {
