@@ -21,11 +21,9 @@ pub struct Cli {
 	text        : Vec<String>,
 	height      : u16,
 
-	// commands are pushed to past_cmd, unless navigating the cmd history
-	// in which case they are shuffled between the two stacks
-	past_cmd: Vec<String>, //buffered commands for cmd history
-	fut_cmd: Vec<String>, //forward buffer for cmd history
-	is_history_cmd: bool, //removes duplicate history entries
+	cmd_history: Vec<String>,
+	cmd_idx: usize, //history index/cursor
+	is_cmd_history: bool,
 }
 
 impl Cli {
@@ -40,9 +38,9 @@ impl Cli {
 			input_buffer: String::new(),
 			text        : text,
 			height      : height,
-			past_cmd: vec!(),
-			fut_cmd: vec!(),
-			is_history_cmd: false,
+			cmd_history: vec!(),
+			cmd_idx: 0,
+			is_cmd_history: false,
 		}
 	}
 
@@ -63,27 +61,25 @@ impl Cli {
 				ReceivedCharacter(c) =>
 					if !c.is_control() {
 						self.input_buffer.push(c);
-						self.is_history_cmd = false;
+						self.is_cmd_history = false;
 					},
 
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
-					self.is_history_cmd = false;
+					self.is_cmd_history = false;
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
 					if command != "" {
-						if !self.is_history_cmd {
-							self.past_cmd.push(self.input_buffer.clone());
-						}
-
-						//shift commands back to the past
-						for n in self.fut_cmd.drain(..) {
-							self.past_cmd.push(n);
+						if !self.is_cmd_history {
+							if !self.cmd_history.contains(&command) {
+								self.cmd_history.insert(0,command.clone());
+							}
 						}
 
 						self.input_buffer.clear();
-						self.is_history_cmd = false;
+						self.is_cmd_history = false;
+						self.cmd_idx = 0; //optionally reset idx
 
 						self.handle_line(
 							events,
@@ -93,20 +89,10 @@ impl Cli {
 					}
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
-					self.input_buffer.clear();
-					if let Some(cmd) = self.past_cmd.pop() {
-						self.fut_cmd.push(cmd.clone());
-						self.input_buffer.push_str(&cmd);
-						self.is_history_cmd = true;
-					}
+					self.history(true);
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
-					self.input_buffer.clear();
-					if let Some(cmd) = self.fut_cmd.pop() {
-						self.past_cmd.push(cmd.clone());
-						self.input_buffer.push_str(&cmd);
-						self.is_history_cmd = true;
-					}
+					self.history(false);
 				},
 				// Those events aren't really related to the CLI. It feels wrong
 				// to handle them here.
@@ -122,6 +108,22 @@ impl Cli {
 		while self.text.len() > (self.height - 2) as usize {
 			self.text.remove(0);
 		}
+	}
+
+	fn history (&mut self, rev: bool) {
+		
+		
+		//shift cursor base on direction
+		if self.is_cmd_history {
+			if rev { if self.cmd_idx < (self.cmd_history.len()-1) { self.cmd_idx += 1; }}
+			else { if self.cmd_idx > 0 { self.cmd_idx -= 1; }}
+		}
+		else { self.is_cmd_history = true; }
+		
+		let cmd = self.cmd_history[self.cmd_idx].clone();
+		
+		self.input_buffer.clear();
+		self.input_buffer.push_str(&cmd);
 	}
 
 	pub fn text(&self) -> &[String] {
