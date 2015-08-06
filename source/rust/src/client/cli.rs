@@ -71,12 +71,15 @@ impl Cli {
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
 					if command != "" {
-						if !self.is_cmd_history {
-							if !self.cmd_history.contains(&command) {
-								self.cmd_history.insert(0,command.clone());
-							}
+						let mut found = (false,0);
+						for (i,_cmd) in self.cmd_history.iter().enumerate() {
+							if *_cmd == command { found = (true,i); }
 						}
 
+						if found.0 { self.cmd_history.swap_remove(found.1); }
+						
+						self.cmd_history.insert(0,command.clone());
+						
 						self.input_buffer.clear();
 						self.is_cmd_history = false;
 						self.cmd_idx = 0; //optionally reset idx
