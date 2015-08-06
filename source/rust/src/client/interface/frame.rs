@@ -7,7 +7,6 @@ use rustc_serialize::json::{
 
 use shared::game::{
 	Body,
-	Broadcast,
 	EntityId,
 };
 
@@ -16,7 +15,7 @@ use shared::game::{
 pub struct Frame {
 	pub ship_id   : Option<EntityId>,
 	pub message   : Message,
-	pub broadcasts: Vec<Broadcast>,
+	pub broadcasts: HashMap<EntityId,String>,
 	pub ships     : HashMap<EntityId, Body>,
 }
 
@@ -25,7 +24,7 @@ impl Frame {
 		Frame {
 			ship_id   : None,
 			message   : Message::None,
-			broadcasts: Vec::new(),
+			broadcasts: HashMap::new(),
 			ships     : HashMap::new(),
 		}
 	}

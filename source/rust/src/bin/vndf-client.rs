@@ -121,7 +121,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 					match broadcast {
 						Some(broadcast) => {
-							broadcasts.insert(id, broadcast);
+							broadcasts.insert(id, broadcast.message);
 						},
 						None => {
 							broadcasts.remove(&id);
@@ -143,12 +143,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 			);
 		}
 
-		frame.broadcasts = broadcasts
-			.iter()
-			.map(|(_, broadcast)|
-				broadcast.clone()
-			)
-			.collect();
+		frame.broadcasts = broadcasts.clone();
 		frame.ships = ships
 			.iter()
 			.map(|(id, ship)|

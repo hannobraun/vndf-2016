@@ -82,6 +82,21 @@ impl Renderer {
 					&mut self.graphics,
 				);
 			}
+
+			// draw ship broadcast
+			if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
+				let glyph_offset = 9;
+				let pos_offset = ((glyph_offset * ship_comm.len())
+								  as f64 / 2.0); //centers ship id
+				for (x, c) in ship_comm.chars().enumerate() {
+					self.glyph_drawer.draw_at(
+						(ship.position[0] - pos_offset + ((x * glyph_offset) as f64)),
+						(ship.position[1]-40.0),
+						c,
+						&mut self.graphics,
+						);
+				}
+			}
 		}
 
 		self.graphics.flush();

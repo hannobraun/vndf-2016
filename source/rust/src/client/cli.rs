@@ -151,8 +151,8 @@ impl Cli {
 		match command {
 			"list-broadcasts" => {
 				self.text.push(format!("{} broadcasts", frame.broadcasts.len()));
-				for broadcast in &frame.broadcasts {
-					self.text.push(format!("{}: {}", broadcast.sender, broadcast.message));
+				for (eid,msg) in &frame.broadcasts {
+					self.text.push(format!("{}: {}", eid, msg));
 				}
 			},
 			"start-broadcast" => {
