@@ -88,11 +88,31 @@ fn it_should_ignore_duplicate_logins() {
 }
 
 #[test]
-fn it_should_send_regular_heartbeats() {
+fn it_should_send_regular_heartbeats_with_current_game_time() {
 	let     server = rc::Server::start();
 	let mut client = mock::Client::start(server.port());
 
 	client.send(login());
 
-	client.wait_until(|event| *event == Some(Heartbeat(0.0)));
+	let game_time_1_s = receive_heartbeat(&mut client);
+	let game_time_2_s = receive_heartbeat(&mut client);
+
+	assert!(game_time_1_s < game_time_2_s);
+
+
+	fn receive_heartbeat(client: &mut mock::Client) -> f64 {
+		let mut game_time_s = None;
+
+		client.wait_until(|event|
+			if let &Some(Heartbeat(time_s)) = event {
+				game_time_s = Some(time_s);
+				true
+			}
+			else {
+				false
+			}
+		);
+
+		game_time_s.unwrap()
+	}
 }
