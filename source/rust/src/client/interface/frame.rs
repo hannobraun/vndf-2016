@@ -15,7 +15,7 @@ use shared::game::{
 pub struct Frame {
 	pub ship_id   : Option<EntityId>,
 	pub message   : Message,
-	pub broadcasts: HashMap<EntityId,String>,
+	pub broadcasts: HashMap<EntityId, String>,
 	pub ships     : HashMap<EntityId, Body>,
 }
 
