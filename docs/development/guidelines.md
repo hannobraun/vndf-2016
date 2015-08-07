@@ -78,3 +78,108 @@ When modifying existing code, always make sure to leave it better than you found
 * Is the style inconsistent? Clean it up!
 
 Leaving code better than you found it guarantees that the code will improve in the long run, instead of becoming harder and harder to work with over time.
+
+
+## Use comments sparsely
+
+A lot of people advocate to thoroughly comment code. I believe the opposite:
+Code should be commented as sparsely as possible. Add enough comments, so that
+it still makes sense, but no more.
+
+Reasons:
+* Comments age and get out of date. They often get ignored when the code around
+  them is updated, making them plain wrong. Code with misleading comments is
+  harder to understand than code without any comments at all.
+* If you only have few comments, the comments you have will stand out. If you
+  comment everything, nobody can tell what can be ignored and what is actually
+  important.
+* Code should be clear and speak for itself. Clear code with few comments is
+  easier to understand than unclear code with a lot of comments.
+
+### Writing cleaner code
+
+Whole books have been written about this (for example Clean Code, which I
+recommend). Here's a simple example on how to remove comments while actually
+making the code clearer.
+
+Commented code:
+```
+// Do A
+this;
+is;
+all;
+gibberish;
+
+// Do B
+more;
+gibberish;
+let x = something;
+
+// Do C
+if x {
+	more;
+	stuff;
+	nobody;
+	understands;
+}
+```
+
+Cleaner code:
+
+```
+do_a();
+let x = do_b();
+if x {
+	do_c();
+}
+
+
+fn do_a() {
+	this;
+	is;
+	all;
+	gibberish;
+}
+
+fn do_b() -> bool {
+	more;
+	gibberish;
+
+	something
+}
+
+fn do_c() {
+	more;
+	stuff;
+	nobody;
+	understands;
+}
+```
+
+This is much better. The cleaned up code with the function calls gives you a
+good overview over what happens, as the function names carry just as much
+information as the comments did. Plus, function names don't get out-of-date as
+easily as comments do.
+
+The hard-to-understand code is isolated into short functions which, by their
+name, clearly tell what they do. You could clean this up further by splitting
+the hard-to-understand code further up, into even smaller functions.
+
+### When comments are appropriate
+
+Add a comment whenever the code does something that is not obvious by looking at
+it, and you can't make that thing obvious by changing the code.
+
+An example:
+```
+if something_is_the_case {
+	do_whatever();
+}
+else {
+	// We don't need to do anything in this case, because of that other thing
+	// that this comment explains fully.
+}
+```
+
+Why nothing needs to be done in the `else` case might not be obvious to a
+reader, so an empty `else` case with a clarifying comment can help a lot.
