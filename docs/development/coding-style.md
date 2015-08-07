@@ -21,6 +21,8 @@ Following this format makes sure the commit messages are well-formatted when vie
 
 Your explanation should not only explain what has changed in as much detail as is sensible, but also your motivations for making this change. If any external (to the version control repository) resources are relevant to the change, mention those too.
 
+If the commit is very small (as commits ideally should be) it is often clear from the diff what actually happened, and an explanation can be redundant. In that case, a one-word commit message like "Refactor" can be appropriate.
+
 * Issues on GitHub can be referenced by adding the issue number (e.g. #4) to the commit message. This will add a reference to the commit to the issue automatically.
 * Issues can be closed with a commit message like this: Close #5.
 * Any other external resources should be linked using a normal URL.
