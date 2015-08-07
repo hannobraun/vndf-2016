@@ -33,58 +33,13 @@
 1. Create and schedule feature and release stories on Pivotal Tracker
 
 
-## Research
-
-- Collect interesting space and gaming stories.
-- Sort stories into time-sensitive (needs to go out with next newsletter) and
-time-independent (can be used as filler for any newsletter).
-
-Space News Resources
-- General:
-  - http://www.reddit.com/r/space/
-  - http://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q
-- Rosetta: http://blogs.esa.int/rosetta/
-- New Horizons: http://pluto.jhuapl.edu/index.php
-- Dawn: http://dawn.jpl.nasa.gov/
-- Cassini: http://saturn.jpl.nasa.gov/
-
-Gaming News Resources
-- ...
-
-
 # Plans
 
-Topic ideas:
+Currently, the newsletter doesn't include an article about a topic each month,
+like it used to. If we ever want to do this again, here are a few ideas:
+
 - Stats from the VNDF Git repository
-- Series about different text-based games:
-  - Dwarf Fortress (February)
-  - NetHack (March)
-  - Choice of Games (April)
-  - An interactive fiction game (May)
-- Two Years of Von Neumann Defense Force (June, no need to interrupt the series)
-- The VNDF tech blog (July)
-- Looking back on my marketing efforts: How it started
 - Recycle short story
 - Second inspirations series:
   - Homeworld
   - Factorio
-
-News for May:
-- SpaceX flight?
-- Color images from Pluto
-- https://www.blueorigin.com/news/blog/first-developmental-test-flight-of-new-shepard
-- Messenger crashes into Mercury
-
-News for any month:
-- https://kheckeroth.com/solarSystem/
-- http://www.reddit.com/r/space/comments/2k0slk/this_earth_universe_size_comparison_still_blows/
-- http://solarsystem.nasa.gov/europa/multimediaimagedetails.cfm?Subsite_IM_ID=8421&SiteID=4
-- http://www.reddit.com/r/space/comments/2niljz/human_spaceflight_everything_is_to_scale/
-- http://www.reddit.com/r/space/comments/2r0em5/a_pictorial_of_just_how_massive_space_is/
-- https://www.youtube.com/watch?v=82p-DYgGFjI
-- http://vimeo.com/117815404
-- https://www.youtube.com/watch?v=eWQIryll8y8
-- http://www.reddit.com/r/space/comments/2xr26f/how_a_sunset_might_look_like_to_a_human_observer/
-
-News ideas for later:
-- Write about Lisa RPG when it comes out
