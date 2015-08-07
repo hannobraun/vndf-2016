@@ -1,7 +1,5 @@
 use std::f64::consts::PI;
 
-use time::precise_time_s;
-
 use vndf::client::interface::InputEvent;
 use vndf::shared::game::ManeuverData;
 use vndf::shared::util::{
@@ -78,13 +76,8 @@ fn it_should_schedule_maneuvers() {
 	let velocity_direction_rad = angle_of(frame.ships[&ship_id].velocity);
 	let maneuver_direction_rad = velocity_direction_rad + PI / 2.0;
 
-	// TODO: This is highly error-prone, as the local time might be different
-	//       from the server time. What we should use here is a kind of game
-	//       time that the server provides us.
-	let start_s = precise_time_s();
-
 	let data = ManeuverData {
-		start_s   : start_s,
+		start_s   : frame.game_time_s.unwrap(),
 		duration_s: 1.0,
 		angle     : maneuver_direction_rad,
 	};

@@ -13,19 +13,21 @@ use shared::game::{
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Frame {
-	pub ship_id   : Option<EntityId>,
-	pub message   : Message,
-	pub broadcasts: HashMap<EntityId, String>,
-	pub ships     : HashMap<EntityId, Body>,
+	pub ship_id    : Option<EntityId>,
+	pub game_time_s: Option<f64>,
+	pub message    : Message,
+	pub broadcasts : HashMap<EntityId, String>,
+	pub ships      : HashMap<EntityId, Body>,
 }
 
 impl Frame {
 	pub fn new() -> Frame {
 		Frame {
-			ship_id   : None,
-			message   : Message::None,
-			broadcasts: HashMap::new(),
-			ships     : HashMap::new(),
+			ship_id    : None,
+			game_time_s: None,
+			message    : Message::None,
+			broadcasts : HashMap::new(),
+			ships      : HashMap::new(),
 		}
 	}
 

@@ -109,9 +109,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		for event in network.receive() {
 			match event {
-				server::Event::Heartbeat(_) => {
-					// Nothing to do here. The activity time is updated below
-					// for all types of messages.
+				server::Event::Heartbeat(game_time_s) => {
+					frame.game_time_s = Some(game_time_s);
 				},
 				server::Event::ShipId(ship_id) => {
 					frame.ship_id = Some(ship_id);
