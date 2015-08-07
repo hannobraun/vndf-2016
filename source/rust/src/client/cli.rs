@@ -121,19 +121,15 @@ impl Cli {
 
 	fn get_history (&mut self, rev: bool) -> String {
 		if self.cmd_history.len() == 0 { return "".to_string() }
-
-		if (self.cmd_idx < 1) && rev && !self.is_cmd_history {
-			self.tmp_cmd_buffer = self.input_buffer.clone();
-		}
 		
 		//shift cursor based on direction
-		if self.is_cmd_history {
+		if self.is_cmd_history { //shifting within cmd history already?
 			if rev {
 				if self.cmd_idx < (self.cmd_history.len()-1) {
 					self.cmd_idx += 1;
 				}
 			}
-			else {
+			else { //head to more recent cmds
 				if self.cmd_idx > 0 {
 					self.cmd_idx -= 1;
 				}
@@ -145,7 +141,15 @@ impl Cli {
 				}
 			}
 		}
-		else { self.is_cmd_history = true; }
+		else {
+			self.is_cmd_history = true;
+			if rev  {
+				self.tmp_cmd_buffer = self.input_buffer.clone();
+			}
+			else {
+				return self.tmp_cmd_buffer.clone()
+			}
+		}
 		
 		self.cmd_history[self.cmd_idx].clone()
 	}
