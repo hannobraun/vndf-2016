@@ -23,6 +23,7 @@ pub struct Cli {
 	cmd_history: Vec<String>,
 	cmd_idx: usize, //history index/cursor
 	is_cmd_history: bool,
+	tmp_cmd_buffer: String, //used to temporarily store typed characters
 }
 
 impl Cli {
@@ -40,6 +41,7 @@ impl Cli {
 			cmd_history: vec!(),
 			cmd_idx: 0,
 			is_cmd_history: false,
+			tmp_cmd_buffer: String::new(),
 		}
 	}
 
@@ -80,6 +82,7 @@ impl Cli {
 						self.cmd_history.insert(0,command.clone());
 						
 						self.input_buffer.clear();
+						self.tmp_cmd_buffer.clear();
 						self.is_cmd_history = false;
 						self.cmd_idx = 0; //optionally reset idx
 
@@ -118,11 +121,29 @@ impl Cli {
 
 	fn get_history (&mut self, rev: bool) -> String {
 		if self.cmd_history.len() == 0 { return "".to_string() }
+
+		if (self.cmd_idx < 1) && rev && !self.is_cmd_history {
+			self.tmp_cmd_buffer = self.input_buffer.clone();
+		}
 		
 		//shift cursor based on direction
 		if self.is_cmd_history {
-			if rev { if self.cmd_idx < (self.cmd_history.len()-1) { self.cmd_idx += 1; }}
-			else { if self.cmd_idx > 0 { self.cmd_idx -= 1; }}
+			if rev {
+				if self.cmd_idx < (self.cmd_history.len()-1) {
+					self.cmd_idx += 1;
+				}
+			}
+			else {
+				if self.cmd_idx > 0 {
+					self.cmd_idx -= 1;
+				}
+				else {
+					self.is_cmd_history = false;
+					let _tmp = self.tmp_cmd_buffer.clone();
+					self.tmp_cmd_buffer.clear();
+					return _tmp
+				}
+			}
 		}
 		else { self.is_cmd_history = true; }
 		
