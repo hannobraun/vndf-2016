@@ -75,7 +75,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 
 				line.clear();
 				if let Err(error) = reader.read_line(&mut line) {
-					print!("Error reading line: {}\n", error);
+					debug!("Error reading line: {}", error);
 					break;
 				}
 
@@ -87,7 +87,7 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 							// logging it). We just need to make sure that it
 							// doesn't harm us. If it's a persistent problem,
 							// Connection's user will notice via a timeout.
-							print!("Error decoding \"{}\": {}\n", line, error);
+							debug!("Error decoding \"{}\": {}", line, error);
 							continue;
 						},
 					};
