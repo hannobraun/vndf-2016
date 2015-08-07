@@ -2,9 +2,11 @@
 
 ## Prerequisites
 
-The game is currently developed on Ubuntu 14.04 exclusively. Other Linux systems
-will probably work, but other operating systems are not supported and it might
-be significant work to get the dev environment working on them.
+To work on VNDF you need two things:
+- Bash, to run the scripts in the `scripts/` directory. On Windows,
+  [Cygwin](https://www.cygwin.com/) should work.
+- An up-to-date installation of [Rust](https://www.rust-lang.org/). I recommend
+  [multirust](https://github.com/brson/multirust) to manage your installation.
 
 
 ## Resources
@@ -12,57 +14,38 @@ be significant work to get the dev environment working on them.
 The source repository for this project is hosted on GitHub:
 https://github.com/hannobraun/vndf
 
-We also use GitHub's issue tracking and wikie:
-* Issues: https://github.com/hannobraun/vndf/issues
-* Wiki: https://github.com/hannobraun/vndf/wiki
+Documentation is available in the
+`[docs](https://github.com/hannobraun/vndf/tree/master/docs)/` directory.
+
+Project management is done on
+[Trello](https://trello.com/b/WdwuT2Fx/von-neumann-defense-force).
 
 
-## Initialize the Repository
-
-After cloning the repository, you need to initialize it:
-
-> ./scripts/init
-
-This should take care of the rough stuff, however, it's likely that some things
-you need to actually run the scripts in the repository will not be installed.
-Feel free to amend the script accordingly or file issues on the tracker.
-
-
-## Start the Continous Testing Loop
+## Run all tests
 
 > ./scripts/test
 
-This will start a continuous testing loop that will re-compile the project and
-re-run the tests on every change.
-
-As I'm writing this, there are still some minor problems with the script, but
-it's being worked on. If you run into issues, just hit CTRL-C and restart it.
+This will compile the project and run all tests. Please do this regularly,
+especially before pushing code to GitHub.
 
 
-## Start the Server-side Components
+## Start the server
 
 > ./scripts/server
 
-This will compile and start the server-side components. It will also re-compile
-and re-start them, if you make changes to the source.
-
-At the time of writing, this is in a state of disrepair. In time, this will be
-fixed with the help of Zwobot, but for now, you can start the game service
-manually like this:
-
-> output/bin/vndf-game-service
-
-If that file doesn't exist, create it by running scripts/test.
+This will compile the project and run a server process.
 
 
-## Start the Client
+## Start the client
 
 > ./scripts/client
 
-This requires a server to run (see above).
+This will start the client. You need to run a server first, for the client to
+connect to (see above).
 
 
 ## Deploy to the production environment
 
-At the time of writing, this function has moved into the utility-server
-repository.
+This function has moved to another repository, because VNDF shares a server with
+other projects. Once VNDF gets a dedicated server, we'll move the deployment
+infrastructure back here.
