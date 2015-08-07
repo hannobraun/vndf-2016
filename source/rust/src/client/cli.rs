@@ -123,34 +123,33 @@ impl Cli {
 		if self.cmd_history.len() == 0 { return "".to_string() }
 		
 		//shift cursor based on direction
-		if self.is_cmd_history { //shifting within cmd history already?
-			if rev {
-				if self.cmd_idx < (self.cmd_history.len()-1) {
-					self.cmd_idx += 1;
-				}
+		if rev { //heading to past commands
+			if !self.is_cmd_history  { //first time pulling up history?
+				self.tmp_cmd_buffer = self.input_buffer.clone();
 			}
-			else { //head to more recent cmds
-				if self.cmd_idx > 0 {
-					self.cmd_idx -= 1;
-				}
-				else {
-					self.is_cmd_history = false;
-					let _tmp = self.tmp_cmd_buffer.clone();
-					self.tmp_cmd_buffer.clear();
-					return _tmp
-				}
+			else if self.cmd_idx < (self.cmd_history.len()-1) {
+				self.cmd_idx += 1;
 			}
 		}
 		else {
-			self.is_cmd_history = true;
-			if rev  {
-				self.tmp_cmd_buffer = self.input_buffer.clone();
+			if self.is_cmd_history { //shifting within cmd history already?
+				//head to more recent cmds
+				if self.cmd_idx > 0 {
+					self.cmd_idx -= 1;
+				}
+				else { //already at most recent history-command in buffer
+					self.is_cmd_history = false;
+					let _tmp = self.tmp_cmd_buffer.clone();
+					//self.tmp_cmd_buffer.clear();
+					return _tmp
+				}
 			}
 			else {
 				return self.tmp_cmd_buffer.clone()
 			}
 		}
-		
+
+		self.is_cmd_history = true;
 		self.cmd_history[self.cmd_idx].clone()
 	}
 
