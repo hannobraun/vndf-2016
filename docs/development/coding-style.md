@@ -103,6 +103,20 @@ To find all TODOs, search for "TODO", e.g.
 > rgrep TODO source/rust
 
 
+### Imports
+
+Imports (`use` statements in Rust) should be organized in such a way that makes them easy to understand when taking a quick look at them.
+
+The following guidelines help with this:
+* Group `use` statement into several blocks, each separated by a single space.
+* Within a block, imports should be sorted alphabetically.
+
+The groups:
+1. Imports from libraries that are bundled with Rust (usually only `std`).
+1. Imports from external libraries imported via Cargo.
+1. Imports from the code within our repository.
+
+
 ## Bash
 
 ### Shebang
