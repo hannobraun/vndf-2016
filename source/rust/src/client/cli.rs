@@ -5,7 +5,6 @@ use glutin::Event::{
 	KeyboardInput,
 	ReceivedCharacter,
 };
-use time::precise_time_s;
 
 use client::interface::{
 	Frame,
@@ -201,14 +200,25 @@ impl Cli {
 					(Some(delay_s), Some(duration_s), Some(direction_deg)) => {
 						let direction_rad = (direction_deg as f64).to_radians();
 
-						// TODO: This is highly error-prone, as the local time
-						//       might be different from the server time. What
-						//       we should use here is a kind of game time that
-						//       the server provides us.
-						let start_s = precise_time_s() + delay_s;
+						let game_time_s =
+							if let Some(game_time_s) = frame.game_time_s {
+								game_time_s
+							}
+							else {
+								self.text.push(format!(
+									"{} {}",
+									"Server connection not fully established ",
+									"yet. Please try again in a moment."
+								));
+								return;
+							};
 
+						// This uses the game time from the last frame as the
+						// base time. If this ever turns out to be too
+						// imprecise, we could count the time since the last
+						// frame arrived.
 						let data = ManeuverData {
-							start_s   : start_s,
+							start_s   : game_time_s + delay_s,
 							duration_s: duration_s,
 							angle     : direction_rad,
 						};
