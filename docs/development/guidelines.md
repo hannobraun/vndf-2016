@@ -52,12 +52,27 @@ Every time you repeat a task that is not automated or only partially automated, 
 
 ## Test everything (automatically)
 
-Unless it's absolutely necessary to keep things going, never change any program behaviour without writing a test for that new behaviour first.
+With the single exception of UI code, all behavior should be covered by automated tests. We use three types of tests:
+* acceptance: End-to-end tests, that cover everything except the UI. An acceptance test usually spawns a server and one or more clients, and simulates a scenario by remote-controlling the clients.
+* integration: Thats aren't end-to-end, but still cover more than just Rust code. For example, a test that spawns a server and feeds it network events via a mock client, or a piece of Rust code that talks to a database (which is run as part of the test).
+* unit: Unit tests that cover only Rust code. We are a bit loose in our definition of unit tests, so the unit tested can be as small as a single function, or as big as multiple modules.
 
-* If you're adding a new feature, write an automated test to test that feature.
-* If you're changing an existing feature, there should be an existing test for it. Modify that.
-* Don't optimize code without writing a benchmark to back you up.
-* Code should always be as simple and clear as possible. If you're going to make it more complicated, you need to justify that by showing the benefit with an automated test or benchmark!
+Whenever you
+* add or change a feature;
+* fix a bug;
+you should first write a test that fails, before it is satisfied by the change you planned.
+
+Most test-driven development strategies are based around unit tests, but I found this to be less then optimal:
+* A lot of code just glues multiple modules together. Such glue code is arduous to test and requires a lot of brittle test code that breaks whenever you change anything.
+* Whenever code interfaces with something external, like operating system APIs, it becomes hard and error-prone to test.
+
+I have come to the conclusion that higher-level tests are both more productive (require less maintenances in the event of change) and overall more reliable (cover more code that could break). I recommend the following guidelines when writing an automated test:
+* If possible, write an acceptance test. That way you can cover a lot of ground with a single test.
+* Sometimes a higher-level test is not practical, for example because it would be impossible or difficult to write. For example, acceptance tests tend to work well for "regular" scenarios, but become really hard to manage when testing irregular behavior, like making sure the server can handle a malicious client. In that case, go to a lower level.
+* Sometimes it's a good idea to write lower-level tests that are redundant with higher-level tests. For example, a behavior could already be well-covered by an acceptance test, but you might still want to write unit tests to test-drive a complicated alorgorithm.
+
+In general, a test should be as high-level as possible while still being relatively simple.
+
 
 ## Don't be afraid to make a mess
 
