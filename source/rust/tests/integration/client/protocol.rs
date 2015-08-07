@@ -29,7 +29,7 @@ fn it_should_display_an_error_if_connection_to_server_is_lost() {
 		panic!("Expected event");
 	};
 
-	server.send(address, server::Event::Heartbeat);
+	server.send(address, server::Event::Heartbeat(0.0));
 
 	client.wait_until(|frame| frame.message.is_error());
 }

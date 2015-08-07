@@ -82,7 +82,7 @@ fn main() {
 				address
 			);
 
-		outgoing_events.push(ServerEvent::Heartbeat);
+		outgoing_events.push(ServerEvent::Heartbeat(0.0));
 
 		network.send(recipients, outgoing_events.as_ref());
 		outgoing_events.clear();

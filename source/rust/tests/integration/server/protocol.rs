@@ -30,8 +30,8 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 	client_2.send(login());
 	client_2.wait_until(|event| {
 		match event {
-			&Some(Heartbeat) => true,
-			_                => false,
+			&Some(Heartbeat(_)) => true,
+			_                   => false,
 		}
 	});
 }
@@ -66,7 +66,7 @@ fn it_should_ignore_duplicate_logins() {
 						second_ship_id = Some(ship_id);
 						true
 					},
-					Heartbeat => {
+					Heartbeat(_) => {
 						// If we received a heartbeat, that means the server
 						// ignored our second login and has moved on.
 						true
@@ -94,5 +94,5 @@ fn it_should_send_regular_heartbeats() {
 
 	client.send(login());
 
-	client.wait_until(|event| *event == Some(Heartbeat));
+	client.wait_until(|event| *event == Some(Heartbeat(0.0)));
 }

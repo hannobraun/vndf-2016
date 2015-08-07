@@ -7,7 +7,7 @@ use shared::game::{
 
 #[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum Event {
-	Heartbeat,
+	Heartbeat(f64),
 	ShipId(EntityId),
 	UpdateEntity(EntityId, (Body, Option<Broadcast>)),
 	RemoveEntity(EntityId),

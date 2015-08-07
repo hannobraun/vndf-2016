@@ -109,7 +109,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		for event in network.receive() {
 			match event {
-				server::Event::Heartbeat => {
+				server::Event::Heartbeat(_) => {
 					// Nothing to do here. The activity time is updated below
 					// for all types of messages.
 				},
