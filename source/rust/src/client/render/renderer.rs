@@ -3,7 +3,6 @@ use std::fmt::Write;
 use nalgebra::{
 	cast,
 	Ortho3,
-	Vec2,
 };
 
 use client::interface::Frame;
