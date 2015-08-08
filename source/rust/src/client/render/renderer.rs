@@ -102,16 +102,20 @@ impl Renderer {
 	// NOTE: glyph size offset is currently hardcoded to 9px
 	fn render_text (&mut self, text: &String, pos: [f64;2], center: bool) {
 		let glyph_offset = 9;
-		let mut pos_offset = 0.0f64;
-		
-		if center {
-			pos_offset = (glyph_offset * text.chars().count())
-				as f64 / 2.0;
+
+		let pos_offset = if center {
+			// For reasons I don't fully understand, the text doesn't look sharp
+			// when the offset is fractional. We're preventing this here by
+			// keeping it as an integer up here and only cast below.
+			(glyph_offset * text.chars().count()) / 2
 		}
+		else {
+			0
+		};
 		
 		for (x, c) in text.chars().enumerate() {
 			self.glyph_drawer.draw_at(
-				(pos[0] - pos_offset + ((x * glyph_offset) as f64)),
+				(pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
 				pos[1],
 				c,
 				&mut self.graphics,
