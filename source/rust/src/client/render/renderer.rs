@@ -82,15 +82,15 @@ impl Renderer {
 			}
 
 			// draw ship position
-			let pos: String = "[".to_string() + &ship.position[0].to_string()
-				+ "," + &ship.position[1].to_string() + "]";
+			let pos: String = "(Pos:".to_string() + &ship.position[0].to_string()
+				+ "," + &ship.position[1].to_string() + ")";
 			self.render_text(&pos,
 							 [ship.position[0]+30.0,ship.position[1]+10.0],
 							 false);
 
 			// draw ship velocity
-			let pos: String = "[".to_string() + &ship.velocity[0].to_string()
-				+ "," + &ship.velocity[1].to_string() + "]";
+			let pos: String = "(Vel:".to_string() + &ship.velocity[0].to_string()
+				+ "," + &ship.velocity[1].to_string() + ")";
 			self.render_text(&pos,
 							 [ship.position[0]+30.0,ship.position[1]-10.0],
 							 false);
