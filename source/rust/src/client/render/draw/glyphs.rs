@@ -156,15 +156,13 @@ impl GlyphDrawer {
 		c       : char,
 		graphics: &mut Graphics,
 	) {
-		let offset = Vec2::new(0.0,0.0);
-
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
 		};
 
 		let position =
-			offset +
+			Vec2::new(0.0,0.0) +
 			(glyph.size * 0.5) +
 			glyph.offset +
 			Vec2::new(x as f32, y as f32);
