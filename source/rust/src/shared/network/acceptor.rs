@@ -29,7 +29,7 @@ impl<R> Acceptor<R> where R: Decodable + Send + 'static {
 		let (init_sender      , init_receiver      ) = channel();
 
 		spawn(move || {
-			let listener = match TcpListener::bind(&("0.0.0.0", port)) {
+			let listener = match TcpListener::bind(&("::", port)) {
 				Ok(listener) => listener,
 				Err(error)   =>
 					panic!(
