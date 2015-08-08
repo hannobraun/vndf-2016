@@ -72,8 +72,8 @@ impl Renderer {
 
 			// draw ship id
 			self.render_text(&ship_id.to_string(),
-								 [ship.position[0],ship.position[1]+20.0],
-								 true);
+							 [ship.position[0],ship.position[1]+20.0],
+							 true);
 
 			// draw ship broadcast
 			if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
@@ -81,6 +81,20 @@ impl Renderer {
 								 [ship.position[0],ship.position[1]-40.0],
 								 true);
 			}
+
+			// draw ship position
+			let pos: String = "[".to_string() + &ship.position[0].to_string()
+				+ "," + &ship.position[1].to_string() + "]";
+			self.render_text(&pos,
+							 [ship.position[0]+30.0,ship.position[1]+10.0],
+							 false);
+
+			// draw ship velocity
+			let pos: String = "[".to_string() + &ship.velocity[0].to_string()
+				+ "," + &ship.velocity[1].to_string() + "]";
+			self.render_text(&pos,
+							 [ship.position[0]+30.0,ship.position[1]-10.0],
+							 false);
 		}
 
 		self.graphics.flush();
@@ -89,12 +103,12 @@ impl Renderer {
 	// NOTE: glyph size offset is currently hardcoded to 9px
 	fn render_text (&mut self, text: &String, pos: [f64;2], center: bool) {
 		let glyph_offset = 9;
-		let mut pos_offset: f64;
+		let mut pos_offset = 0.0f64;
+		
 		if center {
 			pos_offset = (glyph_offset * text.len())
 				as f64 / 2.0;
 		}
-		else { pos_offset = 0.0; }
 		
 		for (x, c) in text.chars().enumerate() {
 			self.glyph_drawer.draw_at(
