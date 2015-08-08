@@ -54,10 +54,7 @@ impl Args {
 
 		let host = match matches.opt_str("server-host") {
 			Some(host) => host,
-			// 'localhost' on Windows 8/10 results in ipv6 default-- even if
-			// adapter has this disabled; specify ipv4 until vndf supports ipv6
-			// TODO: Change to localhost, when IPv6 is supported.
-			None       => "127.0.0.1".to_string(),
+			None       => "localhost".to_string(),
 		};
 		let port: u16 = match matches.opt_str("server-port") {
 			Some(port) => port.parse().unwrap(),
