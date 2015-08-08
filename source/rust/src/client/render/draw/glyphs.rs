@@ -118,6 +118,10 @@ impl GlyphDrawer {
 		c       : char,
 		graphics: &mut Graphics,
 	) {
+		// This function is used for the CLI exclusively, and the hardcoded
+		// values are such that the character is drawn at the correct position
+		// in the CLI grid. However, this level of knowledge about the CLI seems
+		// out of place here, and should really live in some other module.
 		self.draw_at(
 			-390.0 + 9.0 * x as f64,
 			270.0 + 18.0 * -(y as f64),
