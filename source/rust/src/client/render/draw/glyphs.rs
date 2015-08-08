@@ -118,34 +118,11 @@ impl GlyphDrawer {
 		c       : char,
 		graphics: &mut Graphics,
 	) {
-		let offset = Vec2::new(-390.0, 270.0);
-
-		let &(ref glyph, ref texture) = match self.textures.get(&c) {
-			Some(result) => result,
-			None         => return,
-		};
-
-		let position =
-			offset +
-			(glyph.size * 0.5) +
-			glyph.offset +
-			Vec2::new(9.0 * x as f32, 18.0 * -(y as f32));
-		let translation = Iso3::new(
-			Vec3::new(position.x, position.y, 0.0),
-			Vec3::new(0.0, 0.0, 0.0),
-		);
-		let transform = self.transform * translation.to_homogeneous();
-
-		let params = Params {
-			transform: *transform.as_array(),
-			size     : *glyph.size.as_array(),
-			color    : texture.to_param(),
-			_r       : PhantomData,
-		};
-
-		graphics.draw(
-			&self.batch,
-			&params,
+		self.draw_at(
+			-390.0 + 9.0 * x as f64,
+			270.0 + 18.0 * -(y as f64),
+			c,
+			graphics
 		);
 	}
 
