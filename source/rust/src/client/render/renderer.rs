@@ -105,7 +105,7 @@ impl Renderer {
 		let mut pos_offset = 0.0f64;
 		
 		if center {
-			pos_offset = (glyph_offset * text.len())
+			pos_offset = (glyph_offset * text.chars().count())
 				as f64 / 2.0;
 		}
 		
