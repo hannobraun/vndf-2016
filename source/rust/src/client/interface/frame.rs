@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap,BTreeMap};
 
 use rustc_serialize::json::{
 	self,
@@ -17,7 +17,7 @@ pub struct Frame {
 	pub game_time_s: Option<f64>,
 	pub message    : Message,
 	pub broadcasts : HashMap<EntityId, String>,
-	pub ships      : HashMap<EntityId, Body>,
+	pub ships      : BTreeMap<EntityId, Body>,
 }
 
 impl Frame {
@@ -27,7 +27,7 @@ impl Frame {
 			game_time_s: None,
 			message    : Message::None,
 			broadcasts : HashMap::new(),
-			ships      : HashMap::new(),
+			ships      : BTreeMap::new(),
 		}
 	}
 
