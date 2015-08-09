@@ -23,17 +23,23 @@ static VERTEX_SRC: &'static [u8] = b"
 
 	uniform mat4 transform;
 	uniform vec2 size;
+	uniform vec3 color;
+
+	varying vec3 v_color;
 
 	void main() {
 		gl_Position = transform * vec4(pos * size, 0.0, 1.0);
+		v_color = color;
 	}
 ";
 
 static FRAGMENT_SRC: &'static [u8] = b"
 	#version 120
 
+	varying vec3 v_color;
+
 	void main() {
-		gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+		gl_FragColor = vec4(v_color, 1.0);
 	}
 ";
 
@@ -46,6 +52,7 @@ gfx_vertex!(Vertex {
 gfx_parameters!(Params {
 	transform@ transform: [[f32; 4]; 4],
 	size     @ size     : [f32; 2],
+	color	 @ color    : [f32; 3],
 });
 
 
@@ -72,7 +79,7 @@ impl ShipDrawer {
 		}
 	}
 
-	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship) {
+	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship, color: [f32;3]) {
 		let translation = Iso3::new(
 			Vec3::new(ship.x, ship.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
@@ -82,6 +89,7 @@ impl ShipDrawer {
 		let params = Params {
 			transform: *transform.as_array(),
 			size     : [30.0, 30.0],
+			color    : color,
 			_r       : PhantomData,
 		};
 

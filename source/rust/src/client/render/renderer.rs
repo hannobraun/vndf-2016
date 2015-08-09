@@ -67,7 +67,13 @@ impl Renderer {
 		}
 
 		for (ship_id, ship) in &frame.ships {
-			self.ship_drawer.draw(&mut self.graphics, &cast(ship.position));
+			let mut color = [0.0,0.0,1.0];
+			if let Some(sid) = frame.ship_id {
+				if *ship_id == sid  { color = [0.0,1.0,0.5]; }
+			}
+			self.ship_drawer.draw(&mut self.graphics,
+								  &cast(ship.position),
+								  color);
 
 			// draw ship id
 			self.render_text(&ship_id.to_string(),
