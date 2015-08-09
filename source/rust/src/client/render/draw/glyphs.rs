@@ -9,6 +9,7 @@ use nalgebra::{
 	Mat4,
 	Vec2,
 	Vec3,
+	Vec4,
 	ToHomogeneous,
 };
 
@@ -46,9 +47,10 @@ static FRAGMENT_SRC: &'static [u8] = b"
 	varying vec2 v_tex_coord;
 
 	uniform sampler2D color;
+	uniform vec4 o_color;
 
 	void main() {
-		gl_FragColor = texture2D(color, v_tex_coord);
+		gl_FragColor = o_color * texture2D(color, v_tex_coord);
 	}
 ";
 
@@ -63,6 +65,7 @@ gfx_parameters!(Params {
 	transform@ transform: [[f32; 4]; 4],
 	size     @ size     : [f32; 2],
 	color    @ color    : gfx::shade::TextureParam<R>,
+	o_color  @ o_color  : [f32;4],
 });
 
 
@@ -126,6 +129,7 @@ impl GlyphDrawer {
 			-390.0 + 9.0 * x as f64,
 			270.0 + 18.0 * -(y as f64),
 			c,
+			[1.0,1.0,1.0],
 			graphics
 		);
 	}
@@ -135,13 +139,13 @@ impl GlyphDrawer {
 		x       : f64,
 		y       : f64,
 		c       : char,
+		color 	: [f32;3],
 		graphics: &mut Graphics,
 	) {
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
 		};
-
 		let position =
 			Vec2::new(0.0,0.0) +
 			(glyph.size * 0.5) +
@@ -158,6 +162,7 @@ impl GlyphDrawer {
 			transform: *transform.as_array(),
 			size     : *glyph.size.as_array(),
 			color    : texture.to_param(),
+			o_color  : *Vec4::new(color[0],color[1],color[2],1.0).as_array(),
 			_r       : PhantomData,
 		};
 

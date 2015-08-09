@@ -122,6 +122,7 @@ impl Renderer {
 				(pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
 				pos[1],
 				c,
+				[1.0,1.0,1.0],
 				&mut self.graphics,
 				);
 		}
