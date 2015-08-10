@@ -60,10 +60,19 @@ gfx_parameters!(Params {
 pub struct ShipDrawer {
 	batch    : Batch<Params<gl::Resources>>,
 	transform: Mat4<f32>,
+	window_size: (u32,u32),
+	ship_size: (f32,f32),
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics, size: (u32,u32)) -> ShipDrawer {
+		let transform =
+			Ortho3::new(
+				size.0 as f32, size.1 as f32,
+				-1.0, 1.0,
+				)
+			.to_mat();
+		
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -77,6 +86,8 @@ impl ShipDrawer {
 		ShipDrawer {
 			batch    : batch,
 			transform: transform,
+			window_size: size,
+			ship_size: (26.66,20.0),
 		}
 	}
 
@@ -87,7 +98,9 @@ impl ShipDrawer {
 				-1.0, 1.0,
 			)
 			.to_mat();
+		
 		self.transform = transform;
+		self.window_size = size;
 	}
 
 	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship, color: [f32;3]) {
@@ -99,7 +112,7 @@ impl ShipDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-			size     : [30.0, 30.0],
+			size     : [(self.window_size.0 as f32 / self.ship_size.0), (self.window_size.1 as f32 / self.ship_size.1)],
 			color    : color,
 			_r       : PhantomData,
 		};

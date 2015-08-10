@@ -2,7 +2,6 @@ use std::fmt::Write;
 
 use nalgebra::{
 	cast,
-	Ortho3,
 };
 
 use client::interface::Frame;
@@ -25,23 +24,16 @@ impl Renderer {
 	pub fn new(window: &Window) -> Renderer {
 		let mut graphics = window.create_graphics();
 		
-		let (width,height) = window.get_size();
-		
-		let transform =
-			Ortho3::new(
-				width as f32, height as f32,
-				-1.0, 1.0,
-			)
-			.to_mat();
+		let size = window.get_size();
 
-		let glyph_drawer = GlyphDrawer::new(&mut graphics, transform);
-		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
+		let glyph_drawer = GlyphDrawer::new(&mut graphics, size);
+		let ship_drawer  = ShipDrawer::new(&mut graphics, size);
 
 		Renderer {
 			graphics    : graphics,
 			glyph_drawer: glyph_drawer,
 			ship_drawer : ship_drawer,
-			window_size: (width,height),
+			window_size: size,
 		}
 	}
 

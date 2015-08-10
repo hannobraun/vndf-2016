@@ -74,10 +74,18 @@ pub struct GlyphDrawer {
 	textures : HashMap<char, (font::Glyph, Texture)>,
 	batch    : Batch<Params<gl::Resources>>,
 	transform: Mat4<f32>,
+	window_size: (u32,u32),
 }
 
 impl GlyphDrawer {
-	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> GlyphDrawer {
+	pub fn new(graphics: &mut Graphics, size: (u32,u32)) -> GlyphDrawer {
+		let transform =
+			Ortho3::new(
+				size.0 as f32, size.1 as f32,
+				-1.0, 1.0,
+			)
+			.to_mat();
+		
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -112,6 +120,7 @@ impl GlyphDrawer {
 			textures : textures,
 			batch    : batch,
 			transform: transform,
+			window_size: size,
 		}
 	}
 
@@ -123,26 +132,7 @@ impl GlyphDrawer {
 			)
 			.to_mat();
 		self.transform = transform;
-	}
-
-	pub fn draw(
-		&mut self,
-		x       : u16,
-		y       : u16,
-		c       : char,
-		graphics: &mut Graphics,
-	) {
-		// This function is used for the CLI exclusively, and the hardcoded
-		// values are such that the character is drawn at the correct position
-		// in the CLI grid. However, this level of knowledge about the CLI seems
-		// out of place here, and should really live in some other module.
-		self.draw_at(
-			-390.0 + 9.0 * x as f64,
-			270.0 + 18.0 * -(y as f64),
-			c,
-			[1.0,1.0,1.0],
-			graphics
-		);
+		self.window_size = size;
 	}
 
 	pub fn draw_at(
@@ -152,7 +142,7 @@ impl GlyphDrawer {
 		c       : char,
 		color 	: [f32;3],
 		graphics: &mut Graphics,
-	) {
+		) {
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
