@@ -82,6 +82,14 @@ impl Cli {
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::End)) => {
 					self.prompt_idx = self.input_buffer.chars().count();
 				},
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Delete)) => {
+					let byte_index = self.input_buffer
+						.char_indices()
+						.nth(self.prompt_idx);
+					if let Some((byte_index, _)) = byte_index {
+						self.input_buffer.remove(byte_index);
+					}
+				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					if self.prompt_idx > 0 {
 						self.prompt_idx -= 1;
