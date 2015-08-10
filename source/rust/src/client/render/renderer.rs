@@ -156,6 +156,6 @@ impl Renderer {
 		let offset_y = 18.0;
 
 		[(-1.0 * ((width as f64/2.0) - pad_x)) + offset_x * x as f64,
-		 ((height as f64/2.0) - pad_y) + offset_y * -(y as f64),]
+		 ((height as f64/2.0) - pad_y) + offset_y * (y as f64 * -1.0),]
 	}
 }

@@ -74,7 +74,6 @@ pub struct GlyphDrawer {
 	textures : HashMap<char, (font::Glyph, Texture)>,
 	batch    : Batch<Params<gl::Resources>>,
 	transform: Mat4<f32>,
-	window_size: (u32,u32),
 }
 
 impl GlyphDrawer {
@@ -120,7 +119,6 @@ impl GlyphDrawer {
 			textures : textures,
 			batch    : batch,
 			transform: transform,
-			window_size: size,
 		}
 	}
 
@@ -132,7 +130,6 @@ impl GlyphDrawer {
 			)
 			.to_mat();
 		self.transform = transform;
-		self.window_size = size;
 	}
 
 	pub fn draw_at(
