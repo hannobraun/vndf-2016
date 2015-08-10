@@ -38,7 +38,7 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self, output: &[String], command: &str, frame: &Frame) {
+	pub fn render(&mut self, output: &[String], command: (&str,usize), frame: &Frame) {
 		self.graphics.clear();
 
 		for (y, line) in output.iter().enumerate() {
@@ -53,18 +53,28 @@ impl Renderer {
 		}
 
 		let mut command_line = String::new();
-
-		write!(&mut command_line, "> {}_", command)
+		let prompt_ypos = 23; //NOTE: this hardcoded until window-resizing
+		
+		write!(&mut command_line, "> {}", command.0)
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 		for (x, c) in command_line.chars().enumerate() {
 			self.glyph_drawer.draw(
 				x as u16,
-				23,
+				prompt_ypos,
 				c,
 				&mut self.graphics,
 			);
 		}
+
+		//draw cursor position in prompt
+		self.glyph_drawer.draw(
+				command.1 as u16 + 2,
+				prompt_ypos,
+				'_',
+				&mut self.graphics,
+			);
+		
 
 		for (ship_id, ship) in &frame.ships {
 			let mut color = [0.0,0.0,1.0];

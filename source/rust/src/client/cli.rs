@@ -21,9 +21,11 @@ pub struct Cli {
 	height      : u16,
 
 	cmd_history: Vec<String>,
-	cmd_idx: usize, //history index/cursor
+	cmd_history_idx: usize, //history index/cursor
 	is_cmd_history: bool,
 	tmp_cmd_buffer: String, //used to temporarily store typed characters
+
+	prompt_idx: usize, // cursor for the current active prompt
 }
 
 impl Cli {
@@ -39,9 +41,10 @@ impl Cli {
 			text        : text,
 			height      : height,
 			cmd_history: vec!(),
-			cmd_idx: 0,
+			cmd_history_idx: 0,
 			is_cmd_history: false,
 			tmp_cmd_buffer: String::new(),
+			prompt_idx: 0,
 		}
 	}
 
@@ -61,16 +64,32 @@ impl Cli {
 			match event {
 				ReceivedCharacter(c) =>
 					if !c.is_control() {
-						self.input_buffer.push(c);
+						self.input_buffer.insert(self.prompt_idx,c);
 						self.is_cmd_history = false;
+						self.prompt_idx +=1;
 					},
-
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Left)) => {
+					if self.prompt_idx > 0 { self.prompt_idx -= 1; }
+				},
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Right)) => {
+					if self.prompt_idx < self.input_buffer.chars().count()  {
+						self.prompt_idx += 1;
+					}
+				},
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Home)) => {
+					self.prompt_idx = 0;
+				},
+				KeyboardInput(Pressed, _, Some(VirtualKeyCode::End)) => {
+					self.prompt_idx = self.input_buffer.chars().count();
+				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
 					self.is_cmd_history = false;
+					//TODO: track prompt idx
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
+					
 					if command != "" {
 						let mut found = (false,0);
 						for (i,_cmd) in self.cmd_history.iter().enumerate() {
@@ -84,7 +103,8 @@ impl Cli {
 						self.input_buffer.clear();
 						self.tmp_cmd_buffer.clear();
 						self.is_cmd_history = false;
-						self.cmd_idx = 0; //optionally reset idx
+						self.cmd_history_idx = 0; //optionally reset idx
+						self.prompt_idx = 0;
 
 						self.handle_line(
 							events,
@@ -127,20 +147,19 @@ impl Cli {
 			if !self.is_cmd_history  { //first time pulling up history?
 				self.tmp_cmd_buffer = self.input_buffer.clone();
 			}
-			else if self.cmd_idx < (self.cmd_history.len()-1) {
-				self.cmd_idx += 1;
+			else if self.cmd_history_idx < (self.cmd_history.len()-1) {
+				self.cmd_history_idx += 1;
 			}
 		}
 		else {
 			if self.is_cmd_history { //shifting within cmd history already?
 				//head to more recent cmds
-				if self.cmd_idx > 0 {
-					self.cmd_idx -= 1;
+				if self.cmd_history_idx > 0 {
+					self.cmd_history_idx -= 1;
 				}
 				else { //already at most recent history-command in buffer
 					self.is_cmd_history = false;
 					let _tmp = self.tmp_cmd_buffer.clone();
-					//self.tmp_cmd_buffer.clear();
 					return _tmp
 				}
 			}
@@ -150,9 +169,13 @@ impl Cli {
 		}
 
 		self.is_cmd_history = true;
-		self.cmd_history[self.cmd_idx].clone()
+		self.cmd_history[self.cmd_history_idx].clone()
 	}
 
+	pub fn get_prompt_idx(&self) -> usize {
+		self.prompt_idx
+	}
+	
 	pub fn text(&self) -> &[String] {
 		self.text.as_ref()
 	}

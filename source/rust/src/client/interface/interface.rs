@@ -54,7 +54,7 @@ impl Interface for Player {
 		self.cli.update(&mut self.events, frame, &self.window);
 		self.renderer.render(
 			self.cli.text(),
-			self.cli.input(),
+			(self.cli.input(),self.cli.get_prompt_idx()),
 			frame,
 		);
 		self.window.swap_buffers();
