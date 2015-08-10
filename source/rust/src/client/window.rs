@@ -19,6 +19,7 @@ impl Window {
 			.with_title("Von Neumann Defense Force - PREVIEW VERSION".to_string())
 			.with_dimensions(width, height)
 			.with_vsync()
+			.with_multisampling(8)
 			.build_strict()
 			.unwrap_or_else(|e| panic!("Error creating window: {}", e));
 
