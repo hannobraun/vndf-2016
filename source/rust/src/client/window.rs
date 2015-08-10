@@ -2,15 +2,13 @@ use glutin;
 
 use client::render::base::Graphics;
 
-
+// TODO: consider as a trait instead of an inner object?
 pub struct Window {
 	inner: glutin::Window,
-
-	width : u32,
-	height: u32,
 }
 
 impl Window {
+	// TODO: window size args and make window resizable
 	pub fn new() -> Window {
 		let width  = 800;
 		let height = 600;
@@ -28,24 +26,25 @@ impl Window {
 
 		Window {
 			inner: window,
-
-			width : width,
-			height: height,
 		}
 	}
 
-	pub fn width(&self) -> u32 {
-		self.width
-	}
-
-	pub fn height(&self) -> u32 {
-		self.height
+	pub fn get_size (&self) -> (u32,u32) {
+		let mut width = 0;
+		let mut height = 0;
+		if let Some((_w,_h)) = self.inner.get_inner_size_pixels() {
+			width = _w;
+			height = _h;
+		}
+		
+		(width,height)
 	}
 
 	pub fn create_graphics(&self) -> Graphics {
+		let (width,height) = self.get_size();
 		Graphics::new(
 			|s| self.inner.get_proc_address(s),
-			(self.width as u16, self.height as u16),
+			(width as u16, height as u16),
 		)
 	}
 

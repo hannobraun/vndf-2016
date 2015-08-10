@@ -37,10 +37,7 @@ impl Interface for Player {
 		let cli    = Cli::new();
 		let window = Window::new();
 
-		let renderer = Renderer::new(
-			window.create_graphics(),
-			(window.width() as f32, window.height() as f32),
-		);
+		let renderer = Renderer::new(&window);
 
 		Ok(Player {
 			events  : Vec::new(),
@@ -56,6 +53,7 @@ impl Interface for Player {
 			self.cli.text(),
 			(self.cli.input(),self.cli.get_prompt_idx()),
 			frame,
+			&self.window,
 		);
 		self.window.swap_buffers();
 

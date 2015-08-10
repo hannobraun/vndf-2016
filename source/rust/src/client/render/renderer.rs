@@ -7,6 +7,7 @@ use nalgebra::{
 
 use client::interface::Frame;
 use client::render::base::Graphics;
+use client::window::Window;
 use client::render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
@@ -20,10 +21,13 @@ pub struct Renderer {
 }
 
 impl Renderer {
-	pub fn new(mut graphics: Graphics, size: (f32, f32)) -> Renderer {
+	pub fn new(window: &Window) -> Renderer {
+		let mut graphics = window.create_graphics();
+		let (width,height) = window.get_size();
+		
 		let transform =
 			Ortho3::new(
-				size.0, size.1,
+				width as f32, height as f32,
 				-1.0, 1.0,
 			)
 			.to_mat();
@@ -38,42 +42,37 @@ impl Renderer {
 		}
 	}
 
-	pub fn render(&mut self, output: &[String], command: (&str,usize), frame: &Frame) {
+	pub fn render(&mut self,
+				  output: &[String],
+				  command: (&str,usize),
+				  frame: &Frame,
+				  window: &Window) {
 		self.graphics.clear();
 
 		for (y, line) in output.iter().enumerate() {
-			for (x, c) in line.chars().enumerate() {
-				self.glyph_drawer.draw(
-					x as u16,
-					y as u16,
-					c,
-					&mut self.graphics,
-				);
-			}
+			let _pos = self.position_cli(0, y, window);
+			self.render_text(&line,
+							 _pos,
+							 false);
 		}
-
+		
 		let mut command_line = String::new();
-		let prompt_ypos = 23; //NOTE: this hardcoded until window-resizing
+		let prompt_ypos = 23;
 		
 		write!(&mut command_line, "> {}", command.0)
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
-		for (x, c) in command_line.chars().enumerate() {
-			self.glyph_drawer.draw(
-				x as u16,
-				prompt_ypos,
-				c,
-				&mut self.graphics,
-			);
-		}
+		
+		let _pos = self.position_cli(0, prompt_ypos, window);
+		self.render_text(&command_line,
+						 _pos,
+						 false);
 
 		//draw cursor position in prompt
-		self.glyph_drawer.draw(
-				command.1 as u16 + 2,
-				prompt_ypos,
-				'_',
-				&mut self.graphics,
-			);
+		let _pos = self.position_cli(command.1 + 2,prompt_ypos, window);
+		self.render_text(&"_".to_string(),
+						 _pos,
+						 false);
 		
 
 		for (ship_id, ship) in &frame.ships {
@@ -136,5 +135,19 @@ impl Renderer {
 				&mut self.graphics,
 				);
 		}
+	}
+
+	/// This is used to position CLI text
+	/// It takes in to account the window sizing
+	fn position_cli (&self, x: usize, y: usize, window: &Window) -> [f64;2] {
+		let (width,height) = window.get_size();
+		
+		let pad_x = 10.0f64;
+		let pad_y = 30.0f64;
+		let offset_x = 9.0;
+		let offset_y = 18.0;
+
+		[(-1.0 * ((width as f64/2.0) - pad_x)) + offset_x * x as f64,
+		 ((height as f64/2.0) - pad_y) + offset_y * -(y as f64),]
 	}
 }
