@@ -83,9 +83,18 @@ impl Cli {
 					self.prompt_idx = self.input_buffer.chars().count();
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
-					self.input_buffer.pop();
+					if self.prompt_idx > 0 {
+						self.prompt_idx -= 1;
+
+						let byte_index = self.input_buffer
+							.char_indices()
+							.nth(self.prompt_idx);
+						if let Some((byte_index, _)) = byte_index {
+							self.input_buffer.remove(byte_index);
+						}
+					}
+
 					self.is_cmd_history = false;
-					if self.prompt_idx > 0 { self.prompt_idx -= 1; }
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
