@@ -23,7 +23,7 @@ impl Window {
 
 		unsafe { window.make_current() }
 			.unwrap_or_else(|e| panic!("Error making window current: {:?}", e));
-
+		
 		Window {
 			inner: window,
 		}
