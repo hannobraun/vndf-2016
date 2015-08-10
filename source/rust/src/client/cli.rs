@@ -85,7 +85,7 @@ impl Cli {
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
 					self.input_buffer.pop();
 					self.is_cmd_history = false;
-					//TODO: track prompt idx
+					if self.prompt_idx > 0 { self.prompt_idx -= 1; }
 				},
 				KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
 					let command = self.input_buffer.clone();
