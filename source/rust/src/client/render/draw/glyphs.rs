@@ -22,6 +22,7 @@ use client::render::base::{
 	Batch,
 	Graphics,
 	Texture,
+	ui,
 };
 
 
@@ -137,7 +138,7 @@ impl GlyphDrawer {
 		x       : f64,
 		y       : f64,
 		c       : char,
-		color 	: [f32;3],
+		color 	: ui::Color,
 		graphics: &mut Graphics,
 		) {
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {

@@ -7,10 +7,12 @@ use nalgebra::{
 use client::interface::Frame;
 use client::render::base::Graphics;
 use client::window::Window;
+use client::render::base::ui;
 use client::render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
 };
+
 
 pub struct Renderer {
 	graphics    : Graphics,
@@ -84,9 +86,9 @@ impl Renderer {
 		
 
 		for (ship_id, ship) in &frame.ships {
-			let mut color = [0.0,0.0,1.0];
+			let mut color = ui::Colors::blue();
 			if let Some(sid) = frame.ship_id {
-				if *ship_id == sid  { color = [0.0,1.0,0.5]; }
+				if *ship_id == sid  { color = ui::Colors::green_spring(); }
 			}
 			self.ship_drawer.draw(&mut self.graphics,
 								  &cast(ship.position),
@@ -139,7 +141,7 @@ impl Renderer {
 				(pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
 				pos[1],
 				c,
-				[1.0,1.0,1.0],
+				ui::Colors::white(),
 				&mut self.graphics,
 				);
 		}

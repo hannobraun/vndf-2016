@@ -1,7 +1,7 @@
-use vndf::client::render::base::ui::{Color,Colorable};
+use vndf::client::render::base::ui::{Color, Colorable, Colors};
 
 #[test]
-fn test_basic() {
+fn conversion() {
 	let hex_col = "452945";
 	let byte_col = vec![69u8,41,69];
 	
@@ -18,4 +18,25 @@ fn test_basic() {
 fn smoke() {
 	let hex_col = "F5F5F5";
 	Color::from_hex(hex_col).unwrap();
+}
+
+#[test]
+fn adding() {
+	let c =	Colors::red().add(Colors::green());
+	assert_eq!(c,Colors::yellow());
+
+	assert_eq!(c.add(Colors::blue()),Colors::white());
+}
+
+#[test]
+// NOTE: do to float precision, this can fail (try cyan)
+fn greyscale_ntsc() {
+	let c =	Color::from_bytes(&vec![158,85,54]);
+	assert_eq!(c.greyscale_ntsc().to_hex(),
+			   Color::from_bytes(&vec![103,103,103]).to_hex());
+}
+fn greyscale_atsc() {
+	let c =	Color::from_bytes(&vec![158,85,54]);
+	assert_eq!(c.greyscale_atsc().to_hex(),
+			   Color::from_bytes(&vec![103,103,103]).to_hex());
 }

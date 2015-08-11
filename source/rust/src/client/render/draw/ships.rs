@@ -14,6 +14,7 @@ use nalgebra::{
 use client::render::base::{
 	Batch,
 	Graphics,
+	ui,
 };
 
 
@@ -100,7 +101,7 @@ impl ShipDrawer {
 		self.transform = transform;
 	}
 
-	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship, color: [f32;3]) {
+	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship, color: ui::Color) {
 		let translation = Iso3::new(
 			Vec3::new(ship.x, ship.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
