@@ -1,4 +1,4 @@
-use vndf::client::render::base::ui::{Color, Colorable, Colors};
+use vndf::client::render::base::color::{Color, Colorable, Colors};
 
 #[test]
 fn conversion() {
@@ -26,17 +26,4 @@ fn adding() {
 	assert_eq!(c,Colors::yellow());
 
 	assert_eq!(c.add(Colors::blue()),Colors::white());
-}
-
-#[test]
-// NOTE: do to float precision, this can fail (try cyan)
-fn greyscale_ntsc() {
-	let c =	Color::from_bytes(&vec![158,85,54]);
-	assert_eq!(c.greyscale_ntsc().to_hex(),
-			   Color::from_bytes(&vec![103,103,103]).to_hex());
-}
-fn greyscale_atsc() {
-	let c =	Color::from_bytes(&vec![158,85,54]);
-	assert_eq!(c.greyscale_atsc().to_hex(),
-			   Color::from_bytes(&vec![103,103,103]).to_hex());
 }
