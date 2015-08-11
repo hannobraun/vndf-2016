@@ -8,6 +8,9 @@ mod unit {
 	mod server {
 		mod game;
 	}
+	mod client {
+		mod color;
+	}
 }
 
 mod integration {
