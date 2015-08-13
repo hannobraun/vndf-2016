@@ -2,6 +2,8 @@ use std::fmt::Write;
 
 use nalgebra::{
 	cast,
+	Mat4,
+	Ortho3,
 };
 
 use client::interface::Frame;
@@ -27,9 +29,10 @@ impl Renderer {
 		let mut graphics = window.create_graphics();
 		
 		let size = window.get_size();
-
-		let glyph_drawer = GlyphDrawer::new(&mut graphics, size);
-		let ship_drawer  = ShipDrawer::new(&mut graphics, size);
+		let transform = Renderer::get_transform(size);
+		
+		let glyph_drawer = GlyphDrawer::new(&mut graphics, transform);
+		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
 
 		Renderer {
 			graphics    : graphics,
@@ -39,6 +42,15 @@ impl Renderer {
 		}
 	}
 
+	/// get new ortho transform matrix based on window size specified
+	fn get_transform(size: (u32,u32)) -> Mat4<f32> {
+		Ortho3::new(
+			size.0 as f32, size.1 as f32,
+			-1.0, 1.0,
+			)
+			.to_mat()
+	}
+	
 	pub fn render(&mut self,
 				  output: &[String],
 				  command: (&str,usize),
@@ -54,8 +66,9 @@ impl Renderer {
 
 			// update transforms
 			if _size.0 > 1 && _size.1 > 1 {
-				self.glyph_drawer.update(_size);
-				self.ship_drawer.update(_size);
+				let transform = Renderer::get_transform(_size);
+				self.glyph_drawer.set_transform(transform);
+				self.ship_drawer.set_transform(transform);
 			}
 		}
 

@@ -8,7 +8,6 @@ use nalgebra::{
 	ToHomogeneous,
 	Vec2,
 	Vec3,
-	Ortho3,
 };
 
 use client::render::base::{
@@ -65,14 +64,7 @@ pub struct ShipDrawer {
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, size: (u32,u32)) -> ShipDrawer {
-		let transform =
-			Ortho3::new(
-				size.0 as f32, size.1 as f32,
-				-1.0, 1.0,
-				)
-			.to_mat();
-		
+	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -90,14 +82,7 @@ impl ShipDrawer {
 		}
 	}
 
-	pub fn update(&mut self, size: (u32,u32)) {
-		let transform =
-			Ortho3::new(
-				size.0 as f32, size.1 as f32,
-				-1.0, 1.0,
-			)
-			.to_mat();
-		
+	pub fn set_transform(&mut self, transform: Mat4<f32>) {
 		self.transform = transform;
 	}
 
