@@ -5,7 +5,6 @@ use server::clients::{
 	Clients,
 };
 use server::game::state::GameState;
-use server::network::Network;
 use server::outgoing_events::{
 	OutgoingEvents,
 	Recipients,
@@ -40,7 +39,6 @@ impl IncomingEvents {
 		now_s          : f64,
 		clients        : &mut Clients,
 		game_state     : &mut GameState,
-		network        : &mut Network,
 		outgoing_events: &mut OutgoingEvents,
 	) {
 		for (address, event) in self.incoming.drain(..) {
@@ -50,7 +48,6 @@ impl IncomingEvents {
 				event,
 				clients,
 				game_state,
-				network,
 				outgoing_events,
 			);
 		}
@@ -64,7 +61,6 @@ fn handle_event(
 	event          : client::Event,
 	clients        : &mut Clients,
 	game_state     : &mut GameState,
-	network        : &mut Network,
 	outgoing_events: &mut OutgoingEvents,
 ) {
 	let log_message = format!(
@@ -87,7 +83,6 @@ fn handle_event(
 				event,
 				clients,
 				game_state,
-				network,
 				outgoing_events,
 			);
 		},
@@ -121,7 +116,6 @@ fn handle_public_event(
 	event          : client::event::Public,
 	clients        : &mut Clients,
 	game_state     : &mut GameState,
-	network        : &mut Network,
 	outgoing_events: &mut OutgoingEvents,
 ) {
 	match event {
