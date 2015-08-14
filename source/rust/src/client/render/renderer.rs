@@ -58,19 +58,11 @@ impl Renderer {
 				  window: &Window) {
 		self.graphics.clear();
 
-		// NOTE: this is probably tmp fix
-		// need glutin resize to work properly
-		let _size = window.get_size();
-		if self.window_size != _size {
-			self.window_size = _size;
+		let size      = window.get_size();
+		let transform = Renderer::get_transform(size);
 
-			// update transforms
-			if _size.0 > 1 && _size.1 > 1 {
-				let transform = Renderer::get_transform(_size);
-				self.glyph_drawer.set_transform(transform);
-				self.ship_drawer.set_transform(transform);
-			}
-		}
+		self.glyph_drawer.set_transform(transform);
+		self.ship_drawer.set_transform(transform);
 
 		for (y, line) in output.iter().enumerate() {
 			let _pos = self.position_cli(0, y);
