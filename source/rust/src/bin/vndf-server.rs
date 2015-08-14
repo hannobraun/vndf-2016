@@ -77,20 +77,12 @@ fn main() {
 
 		game_state.on_update(now_s);
 
+		for (id, entity) in game_state.export_entities() {
+			outgoing_events.push(ServerEvent::UpdateEntity(id, entity))
+		}
+
 		outgoing_events.push(ServerEvent::Heartbeat(now_s));
 		outgoing_events.send(&mut clients, &mut network);
-
-		// TODO(AMy58bbh): Handle this via outgoing_events
-		for (&address, _) in &clients {
-			for (id, entity) in game_state.export_entities() {
-				let event = ServerEvent::UpdateEntity(id, entity);
-
-				network.send(
-					Some(address).into_iter(),
-					&[event],
-				);
-			}
-		}
 
 		// TODO(1oL33ljB): While physics will generally need to happen on a
 		//                 fixed interval, there's not really a reason to delay
