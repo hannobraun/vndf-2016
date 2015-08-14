@@ -30,14 +30,10 @@ impl Window {
 	}
 
 	pub fn get_size (&self) -> (u32,u32) {
-		let mut width = 0;
-		let mut height = 0;
-		if let Some((_w,_h)) = self.inner.get_inner_size_pixels() {
-			width = _w;
-			height = _h;
+		match self.inner.get_inner_size_pixels() {
+			Some(size) => size,
+			None       => panic!("Failed to get window size"),
 		}
-		
-		(width,height)
 	}
 
 	pub fn create_graphics(&self) -> Graphics {
