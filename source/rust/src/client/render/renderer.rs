@@ -53,11 +53,11 @@ impl Renderer {
 				  window: &Window) {
 		self.graphics.clear();
 
-		let size      = window.get_size();
-		let transform = Renderer::get_transform(size);
+		let window_size = window.get_size();
+		let transform   = Renderer::get_transform(window_size);
 
 		for (y, line) in output.iter().enumerate() {
-			let _pos = position_cli(0, y, size);
+			let _pos = position_cli(0, y, window_size);
 			self.render_text(
 				&line,
 				_pos,
@@ -73,7 +73,7 @@ impl Renderer {
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 		
-		let _pos = position_cli(0, prompt_ypos, size);
+		let _pos = position_cli(0, prompt_ypos, window_size);
 		self.render_text(
 			&command_line,
 			_pos,
@@ -82,7 +82,7 @@ impl Renderer {
 		);
 
 		//draw cursor position in prompt
-		let _pos = position_cli(command.1 + 2,prompt_ypos, size);
+		let _pos = position_cli(command.1 + 2,prompt_ypos, window_size);
 		self.render_text(
 			&"_".to_string(),
 			_pos,
