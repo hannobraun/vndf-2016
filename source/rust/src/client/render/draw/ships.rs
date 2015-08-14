@@ -86,7 +86,12 @@ impl ShipDrawer {
 		self.transform = transform;
 	}
 
-	pub fn draw(&mut self, graphics: &mut Graphics, ship: &Ship, color: color::Color) {
+	pub fn draw(
+		&mut self,
+		graphics: &mut Graphics,
+		ship    : &Ship,
+		color   : color::Color,
+	) {
 		let translation = Iso3::new(
 			Vec3::new(ship.x, ship.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
