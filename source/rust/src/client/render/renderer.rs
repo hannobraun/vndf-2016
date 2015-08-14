@@ -31,7 +31,7 @@ impl Renderer {
 		let size = window.get_size();
 		let transform = Renderer::get_transform(size);
 		
-		let glyph_drawer = GlyphDrawer::new(&mut graphics, transform);
+		let glyph_drawer = GlyphDrawer::new(&mut graphics);
 		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
 
 		Renderer {
@@ -61,7 +61,6 @@ impl Renderer {
 		let size      = window.get_size();
 		let transform = Renderer::get_transform(size);
 
-		self.glyph_drawer.set_transform(transform);
 		self.ship_drawer.set_transform(transform);
 
 		for (y, line) in output.iter().enumerate() {

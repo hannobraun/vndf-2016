@@ -73,11 +73,10 @@ gfx_parameters!(Params {
 pub struct GlyphDrawer {
 	textures : HashMap<char, (font::Glyph, Texture)>,
 	batch    : Batch<Params<gl::Resources>>,
-	transform: Mat4<f32>,
 }
 
 impl GlyphDrawer {
-	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> GlyphDrawer {
+	pub fn new(graphics: &mut Graphics) -> GlyphDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -111,12 +110,7 @@ impl GlyphDrawer {
 		GlyphDrawer {
 			textures : textures,
 			batch    : batch,
-			transform: transform,
 		}
-	}
-
-	pub fn set_transform(&mut self, transform: Mat4<f32>) {
-		self.transform = transform;
 	}
 
 	pub fn draw_at(
