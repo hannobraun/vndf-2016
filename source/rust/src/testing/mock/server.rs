@@ -33,7 +33,7 @@ impl Server {
 	}
 
 	pub fn send(&mut self, address: SocketAddr, event: server::Event) {
-		self.network.send(Some(address).into_iter(), &[event]);
+		self.network.send(Some(address).into_iter(), Some(event).into_iter());
 	}
 
 	// TODO(5rKZ3HPd): Make generic and move into a trait called Mock.

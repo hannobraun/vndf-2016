@@ -29,17 +29,24 @@ impl Network {
 		}
 	}
 
-	pub fn send<R>(&mut self, recipients: R, events: &[server::Event])
+	pub fn send<R, E>(&mut self, recipients: R, events: E)
 		where
 			R: Iterator<Item = SocketAddr>,
+			E: Iterator<Item = server::Event>,
 	{
+		// I don't like all the heap allocation that goes on in this method, but
+		// I believe it's okay for now. It's only a crutch that's required until
+		// we switch to a non-blocking network API. If we had only one thread,
+		// we wouldn't need to move all this stuff around.
+		let events: Vec<_> = events.collect();
+
 		for address in recipients {
 			let mut recipient = match self.connections.get_mut(&address) {
 				Some(connection) => connection,
 				None             => continue,
 			};
 
-			if let Err(error) = recipient.send(events.iter()) {
+			if let Err(error) = recipient.send(events.clone().into_iter()) {
 				self.to_remove.push(address);
 				debug!("Error sending event to {}: {}", address, error)
 			}

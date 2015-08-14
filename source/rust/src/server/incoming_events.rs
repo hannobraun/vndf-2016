@@ -135,7 +135,7 @@ fn handle_public_event(
 				let login = server::Event::ShipId(client.ship_id);
 				network.send(
 					Some(address).into_iter(),
-					&[login],
+					Some(login).into_iter(),
 				);
 
 				clients.insert(address, client);

@@ -25,7 +25,6 @@ impl OutgoingEvents {
 				address
 			);
 
-		network.send(recipients, self.events.as_ref());
-		self.events.clear();
+		network.send(recipients, self.events.drain(..));
 	}
 }
