@@ -156,7 +156,7 @@ impl Renderer {
 				c,
 				color::Colors::white(),
 				&mut self.graphics,
-				);
+			);
 		}
 	}
 
