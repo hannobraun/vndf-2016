@@ -1,5 +1,4 @@
 #![cfg_attr(test, allow(dead_code))]
-#![feature(drain)]
 
 
 extern crate env_logger;
@@ -56,30 +55,13 @@ fn main() {
 			&mut outgoing_events,
 		);
 
-		let mut to_remove = Vec::new();
-		for (&address, client) in clients.clients.iter() {
-			if client.last_active_s + args.client_timeout_s < now_s {
-				to_remove.push((
-					address,
-					client.last_active_s,
-					now_s,
-				));
-			}
-		}
-		for (address, last_active_s, now_s) in to_remove.drain(..) {
-			info!(
-				"Removing {} (last active: {}, time of removal: {})",
-				address, last_active_s, now_s,
+		clients.remove_inactive(now_s, args.client_timeout_s, |client| {
+			outgoing_events.push(
+				ServerEvent::RemoveEntity(client.ship_id),
+				Recipients::All,
 			);
-
-			if let Some(client) = clients.clients.remove(&address) {
-				outgoing_events.push(
-					ServerEvent::RemoveEntity(client.ship_id),
-					Recipients::All,
-				);
-				game_state.on_leave(&client.ship_id);
-			}
-		}
+			game_state.on_leave(&client.ship_id);
+		});
 
 		game_state.on_update(now_s);
 
