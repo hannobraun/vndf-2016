@@ -59,12 +59,11 @@ gfx_parameters!(Params {
 
 pub struct ShipDrawer {
 	batch    : Batch<Params<gl::Resources>>,
-	transform: Mat4<f32>,
 	ship_size: [f32;2],
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, transform: Mat4<f32>) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -77,13 +76,8 @@ impl ShipDrawer {
 
 		ShipDrawer {
 			batch    : batch,
-			transform: transform,
 			ship_size: [30.0,30.0],
 		}
-	}
-
-	pub fn set_transform(&mut self, transform: Mat4<f32>) {
-		self.transform = transform;
 	}
 
 	pub fn draw(

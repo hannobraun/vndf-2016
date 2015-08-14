@@ -29,10 +29,9 @@ impl Renderer {
 		let mut graphics = window.create_graphics();
 		
 		let size = window.get_size();
-		let transform = Renderer::get_transform(size);
 		
 		let glyph_drawer = GlyphDrawer::new(&mut graphics);
-		let ship_drawer  = ShipDrawer::new(&mut graphics, transform);
+		let ship_drawer  = ShipDrawer::new(&mut graphics);
 
 		Renderer {
 			graphics    : graphics,
@@ -60,8 +59,6 @@ impl Renderer {
 
 		let size      = window.get_size();
 		let transform = Renderer::get_transform(size);
-
-		self.ship_drawer.set_transform(transform);
 
 		for (y, line) in output.iter().enumerate() {
 			let _pos = self.position_cli(0, y);
