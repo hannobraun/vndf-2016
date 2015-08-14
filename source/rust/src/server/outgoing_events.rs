@@ -4,8 +4,7 @@ use shared::protocol::server::Event;
 
 
 pub struct OutgoingEvents {
-	// TODO: Make private
-	pub events: Vec<Event>,
+	events: Vec<Event>,
 }
 
 impl OutgoingEvents {
