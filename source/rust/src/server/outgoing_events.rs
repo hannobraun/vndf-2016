@@ -4,7 +4,7 @@ use shared::protocol::server::Event;
 
 
 pub struct OutgoingEvents {
-	events: Vec<Event>,
+	events: Vec<(Recipients, Event)>,
 }
 
 impl OutgoingEvents {
@@ -14,8 +14,8 @@ impl OutgoingEvents {
 		}
 	}
 
-	pub fn push(&mut self, event: Event) {
-		self.events.push(event);
+	pub fn push(&mut self, event: Event, recipients: Recipients) {
+		self.events.push((recipients, event));
 	}
 
 	pub fn send(&mut self, clients: &mut Clients, network: &mut Network) {
@@ -25,6 +25,15 @@ impl OutgoingEvents {
 				address
 			);
 
-		network.send(recipients, self.events.drain(..));
+		let events = self.events
+			.drain(..)
+			.map(|(_, event)| event);
+
+		network.send(recipients, events);
 	}
+}
+
+
+pub enum Recipients {
+	All,
 }

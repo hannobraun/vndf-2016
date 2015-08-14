@@ -20,7 +20,10 @@ use vndf::server::args::Args;
 use vndf::server::game::state::GameState;
 use vndf::server::incoming_events::IncomingEvents;
 use vndf::server::network::Network;
-use vndf::server::outgoing_events::OutgoingEvents;
+use vndf::server::outgoing_events::{
+	OutgoingEvents,
+	Recipients,
+};
 use vndf::shared::protocol::server::Event as ServerEvent;
 
 
@@ -70,7 +73,10 @@ fn main() {
 			);
 
 			if let Some(client) = clients.remove(&address) {
-				outgoing_events.push(ServerEvent::RemoveEntity(client.ship_id));
+				outgoing_events.push(
+					ServerEvent::RemoveEntity(client.ship_id),
+					Recipients::All,
+				);
 				game_state.on_leave(&client.ship_id);
 			}
 		}
@@ -78,10 +84,13 @@ fn main() {
 		game_state.on_update(now_s);
 
 		for (id, entity) in game_state.export_entities() {
-			outgoing_events.push(ServerEvent::UpdateEntity(id, entity))
+			outgoing_events.push(
+				ServerEvent::UpdateEntity(id, entity),
+				Recipients::All,
+			)
 		}
 
-		outgoing_events.push(ServerEvent::Heartbeat(now_s));
+		outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);
 		outgoing_events.send(&mut clients, &mut network);
 
 		// TODO(1oL33ljB): While physics will generally need to happen on a
