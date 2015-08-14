@@ -122,6 +122,11 @@ impl GlyphDrawer {
 		transform: Mat4<f32>,
 		graphics : &mut Graphics,
 	) {
+		// This function receives both a transformation matrix and a position.
+		// If we ever need this drawer to be more flexible, we can just
+		// calculate the final transform outside of this method and pass it in
+		// directly.
+
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
