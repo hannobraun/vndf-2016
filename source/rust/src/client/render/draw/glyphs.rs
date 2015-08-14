@@ -126,7 +126,7 @@ impl GlyphDrawer {
 		c       : char,
 		color 	: color::Color,
 		graphics: &mut Graphics,
-		) {
+	) {
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
 			None         => return,
