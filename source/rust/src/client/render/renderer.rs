@@ -168,7 +168,7 @@ impl Renderer {
 		};
 		
 		for (x, c) in text.chars().enumerate() {
-			self.glyph_drawer.draw_at(
+			self.glyph_drawer.draw(
 				(pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
 				pos[1],
 				c,

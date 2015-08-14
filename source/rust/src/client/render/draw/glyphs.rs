@@ -113,7 +113,7 @@ impl GlyphDrawer {
 		}
 	}
 
-	pub fn draw_at(
+	pub fn draw(
 		&mut self,
 		x        : f64,
 		y        : f64,
