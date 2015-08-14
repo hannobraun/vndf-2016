@@ -17,7 +17,6 @@ use client::render::draw::{
 
 
 pub struct Renderer {
-	graphics    : Graphics,
 	glyph_drawer: GlyphDrawer,
 	ship_drawer : ShipDrawer,
 
@@ -31,7 +30,6 @@ impl Renderer {
 		let ship_drawer  = ShipDrawer::new(&mut graphics);
 
 		Renderer {
-			graphics    : graphics,
 			glyph_drawer: glyph_drawer,
 			ship_drawer : ship_drawer,
 		}
@@ -51,10 +49,11 @@ impl Renderer {
 				  command: (&str,usize),
 				  frame: &Frame,
 				  window: &Window) {
-		self.graphics.clear();
+		let     window_size = window.get_size();
+		let     transform   = Renderer::get_transform(window_size);
+		let mut graphics    = window.create_graphics();
 
-		let window_size = window.get_size();
-		let transform   = Renderer::get_transform(window_size);
+		graphics.clear();
 
 		for (y, line) in output.iter().enumerate() {
 			self.render_text(
@@ -62,6 +61,7 @@ impl Renderer {
 				position_cli(0, y, window_size),
 				false,
 				transform,
+				&mut graphics,
 			);
 		}
 		
@@ -77,6 +77,7 @@ impl Renderer {
 			position_cli(0, prompt_ypos, window_size),
 			false,
 			transform,
+			&mut graphics,
 		);
 
 		//draw cursor position in prompt
@@ -85,6 +86,7 @@ impl Renderer {
 			position_cli(command.1 + 2, prompt_ypos, window_size),
 			false,
 			transform,
+			&mut graphics,
 		);
 		
 
@@ -97,7 +99,7 @@ impl Renderer {
 				&cast(ship.position),
 				color,
 				transform,
-				&mut self.graphics,
+				&mut graphics,
 			);
 
 			// draw ship id
@@ -106,6 +108,7 @@ impl Renderer {
 				[ship.position[0],ship.position[1]+20.0],
 				true,
 				transform,
+				&mut graphics,
 			);
 
 			// draw ship broadcast
@@ -115,6 +118,7 @@ impl Renderer {
 					[ship.position[0],ship.position[1]-40.0],
 					true,
 					transform,
+					&mut graphics,
 				);
 			}
 
@@ -125,6 +129,7 @@ impl Renderer {
 				[ship.position[0]+30.0,ship.position[1]+10.0],
 				false,
 				transform,
+				&mut graphics,
 			);
 
 			// draw ship velocity
@@ -134,10 +139,11 @@ impl Renderer {
 				[ship.position[0]+30.0,ship.position[1]-10.0],
 				false,
 				transform,
+				&mut graphics,
 			);
 		}
 
-		self.graphics.flush();
+		graphics.flush();
 	}
 
 	// NOTE: glyph size offset is currently hardcoded to 9px
@@ -147,6 +153,7 @@ impl Renderer {
 		pos      : [f64;2],
 		center   : bool,
 		transform: Mat4<f32>,
+		graphics : &mut Graphics,
 	) {
 		let glyph_offset = 9;
 
@@ -167,7 +174,7 @@ impl Renderer {
 				c,
 				color::Colors::white(),
 				transform,
-				&mut self.graphics,
+				graphics,
 			);
 		}
 	}
