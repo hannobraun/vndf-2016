@@ -20,6 +20,7 @@ use vndf::server::args::Args;
 use vndf::server::game::state::GameState;
 use vndf::server::incoming_events::IncomingEvents;
 use vndf::server::network::Network;
+use vndf::server::outgoing_events::OutgoingEvents;
 use vndf::shared::protocol::server::Event as ServerEvent;
 
 
@@ -37,7 +38,7 @@ fn main() {
 	info!("Listening on port {}", args.port);
 
 	let mut incoming_events = IncomingEvents::new();
-	let mut outgoing_events = Vec::new();
+	let mut outgoing_events = OutgoingEvents::new();
 
 	loop {
 		trace!("Start server main loop iteration");
@@ -84,8 +85,8 @@ fn main() {
 
 		outgoing_events.push(ServerEvent::Heartbeat(now_s));
 
-		network.send(recipients, outgoing_events.as_ref());
-		outgoing_events.clear();
+		network.send(recipients, outgoing_events.events.as_ref());
+		outgoing_events.events.clear();
 
 		// TODO(AMy58bbh): Handle this via outgoing_events
 		for (&address, _) in &clients {
