@@ -66,9 +66,12 @@ impl Renderer {
 
 		for (y, line) in output.iter().enumerate() {
 			let _pos = self.position_cli(0, y);
-			self.render_text(&line,
-							 _pos,
-							 false);
+			self.render_text(
+				&line,
+				_pos,
+				false,
+				transform,
+			);
 		}
 		
 		let mut command_line = String::new();
@@ -79,15 +82,21 @@ impl Renderer {
 
 		
 		let _pos = self.position_cli(0, prompt_ypos);
-		self.render_text(&command_line,
-						 _pos,
-						 false);
+		self.render_text(
+			&command_line,
+			_pos,
+			false,
+			transform,
+		);
 
 		//draw cursor position in prompt
 		let _pos = self.position_cli(command.1 + 2,prompt_ypos);
-		self.render_text(&"_".to_string(),
-						 _pos,
-						 false);
+		self.render_text(
+			&"_".to_string(),
+			_pos,
+			false,
+			transform,
+		);
 		
 
 		for (ship_id, ship) in &frame.ships {
@@ -100,35 +109,53 @@ impl Renderer {
 								  color);
 
 			// draw ship id
-			self.render_text(&ship_id.to_string(),
-							 [ship.position[0],ship.position[1]+20.0],
-							 true);
+			self.render_text(
+				&ship_id.to_string(),
+				[ship.position[0],ship.position[1]+20.0],
+				true,
+				transform,
+			);
 
 			// draw ship broadcast
 			if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
-				self.render_text(ship_comm,
-								 [ship.position[0],ship.position[1]-40.0],
-								 true);
+				self.render_text(
+					ship_comm,
+					[ship.position[0],ship.position[1]-40.0],
+					true,
+					transform,
+				);
 			}
 
 			// draw ship position
 			let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
-			self.render_text(&pos,
-							 [ship.position[0]+30.0,ship.position[1]+10.0],
-							 false);
+			self.render_text(
+				&pos,
+				[ship.position[0]+30.0,ship.position[1]+10.0],
+				false,
+				transform,
+			);
 
 			// draw ship velocity
 			let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
-			self.render_text(&vel,
-							 [ship.position[0]+30.0,ship.position[1]-10.0],
-							 false);
+			self.render_text(
+				&vel,
+				[ship.position[0]+30.0,ship.position[1]-10.0],
+				false,
+				transform,
+			);
 		}
 
 		self.graphics.flush();
 	}
 
 	// NOTE: glyph size offset is currently hardcoded to 9px
-	fn render_text (&mut self, text: &String, pos: [f64;2], center: bool) {
+	fn render_text(
+		&mut self,
+		text     : &String,
+		pos      : [f64;2],
+		center   : bool,
+		transform: Mat4<f32>,
+	) {
 		let glyph_offset = 9;
 
 		let pos_offset = if center {
@@ -147,6 +174,7 @@ impl Renderer {
 				pos[1],
 				c,
 				color::Colors::white(),
+				transform,
 				&mut self.graphics,
 			);
 		}

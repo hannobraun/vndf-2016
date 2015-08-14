@@ -121,11 +121,12 @@ impl GlyphDrawer {
 
 	pub fn draw_at(
 		&mut self,
-		x       : f64,
-		y       : f64,
-		c       : char,
-		color 	: color::Color,
-		graphics: &mut Graphics,
+		x        : f64,
+		y        : f64,
+		c        : char,
+		color 	 : color::Color,
+		transform: Mat4<f32>,
+		graphics : &mut Graphics,
 	) {
 		let &(ref glyph, ref texture) = match self.textures.get(&c) {
 			Some(result) => result,
@@ -141,7 +142,7 @@ impl GlyphDrawer {
 			Vec3::new(position.x, position.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
-		let transform = self.transform * translation.to_homogeneous();
+		let transform = transform * translation.to_homogeneous();
 
 		let params = Params {
 			transform: *transform.as_array(),
