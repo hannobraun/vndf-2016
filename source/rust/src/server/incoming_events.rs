@@ -120,6 +120,7 @@ fn handle_public_event(
 ) {
 	match event {
 		client::event::Public::Login => {
+			// TODO: Move parts of this code into Client, as Client::login.
 			if clients.clients.contains_key(&address) {
 				debug!("Ignoring duplicate login: {}", address);
 			}
