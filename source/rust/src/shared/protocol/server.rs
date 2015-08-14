@@ -5,7 +5,7 @@ use shared::game::{
 };
 
 
-#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
+#[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum Event {
 	Heartbeat(f64),
 	ShipId(EntityId),
