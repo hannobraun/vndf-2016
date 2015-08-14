@@ -106,6 +106,7 @@ impl Renderer {
 			self.ship_drawer.draw(
 				&cast(ship.position),
 				color,
+				transform,
 				&mut self.graphics,
 			);
 

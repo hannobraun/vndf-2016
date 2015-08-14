@@ -88,15 +88,16 @@ impl ShipDrawer {
 
 	pub fn draw(
 		&mut self,
-		ship    : &Ship,
-		color   : color::Color,
-		graphics: &mut Graphics,
+		ship     : &Ship,
+		color    : color::Color,
+		transform: Mat4<f32>,
+		graphics : &mut Graphics,
 	) {
 		let translation = Iso3::new(
 			Vec3::new(ship.x, ship.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
-		let transform = self.transform * translation.to_homogeneous();
+		let transform = transform * translation.to_homogeneous();
 
 		let params = Params {
 			transform: *transform.as_array(),
