@@ -77,16 +77,8 @@ fn main() {
 
 		game_state.on_update(now_s);
 
-		let recipients = clients
-			.iter()
-			.map(|(&address, _)|
-				address
-			);
-
 		outgoing_events.push(ServerEvent::Heartbeat(now_s));
-
-		network.send(recipients, outgoing_events.events.as_ref());
-		outgoing_events.events.clear();
+		outgoing_events.send(&mut clients, &mut network);
 
 		// TODO(AMy58bbh): Handle this via outgoing_events
 		for (&address, _) in &clients {
