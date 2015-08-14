@@ -44,11 +44,13 @@ impl Renderer {
 			.to_mat()
 	}
 	
-	pub fn render(&mut self,
-				  output: &[String],
-				  command: (&str,usize),
-				  frame: &Frame,
-				  window: &Window) {
+	pub fn render(
+		&mut self,
+		output : &[String],
+		command: (&str,usize),
+		frame  : &Frame,
+		window : &Window,
+	) {
 		let     window_size = window.get_size();
 		let     transform   = Renderer::get_transform(window_size);
 		let mut graphics    = window.create_graphics();
