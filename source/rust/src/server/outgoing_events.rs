@@ -24,7 +24,7 @@ impl OutgoingEvents {
 		for (recipients, event) in self.events.drain(..) {
 			match recipients {
 				Recipients::All => {
-					let recipients = clients
+					let recipients = clients.clients
 						.iter()
 						.map(|(&address, _)|
 							address

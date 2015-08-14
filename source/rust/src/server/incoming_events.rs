@@ -88,7 +88,7 @@ fn handle_event(
 		},
 
 		client::Event::Privileged(event) => {
-			let client = match clients.get_mut(&address) {
+			let client = match clients.clients.get_mut(&address) {
 				Some(client) =>
 					client,
 				None => {
@@ -120,7 +120,7 @@ fn handle_public_event(
 ) {
 	match event {
 		client::event::Public::Login => {
-			if clients.contains_key(&address) {
+			if clients.clients.contains_key(&address) {
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
@@ -136,7 +136,7 @@ fn handle_public_event(
 					Recipients::One(address),
 				);
 
-				clients.insert(address, client);
+				clients.clients.insert(address, client);
 			}
 		}
 	}

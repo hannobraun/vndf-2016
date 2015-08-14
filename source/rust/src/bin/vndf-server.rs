@@ -10,13 +10,13 @@ extern crate time;
 extern crate vndf;
 
 
-use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
 
 use time::precise_time_s;
 
 use vndf::server::args::Args;
+use vndf::server::clients::Clients;
 use vndf::server::game::state::GameState;
 use vndf::server::incoming_events::IncomingEvents;
 use vndf::server::network::Network;
@@ -35,7 +35,7 @@ fn main() {
 	let args = Args::parse(env::args());
 
 	let mut game_state = GameState::new();
-	let mut clients    = HashMap::new();
+	let mut clients    = Clients::new();
 	let mut network    = Network::new(args.port);
 
 	info!("Listening on port {}", args.port);
@@ -57,7 +57,7 @@ fn main() {
 		);
 
 		let mut to_remove = Vec::new();
-		for (&address, client) in clients.iter() {
+		for (&address, client) in clients.clients.iter() {
 			if client.last_active_s + args.client_timeout_s < now_s {
 				to_remove.push((
 					address,
@@ -72,7 +72,7 @@ fn main() {
 				address, last_active_s, now_s,
 			);
 
-			if let Some(client) = clients.remove(&address) {
+			if let Some(client) = clients.clients.remove(&address) {
 				outgoing_events.push(
 					ServerEvent::RemoveEntity(client.ship_id),
 					Recipients::All,

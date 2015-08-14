@@ -4,7 +4,17 @@ use std::net::SocketAddr;
 use shared::game::EntityId;
 
 
-pub type Clients = HashMap<SocketAddr, Client>;
+pub struct Clients {
+	pub clients: HashMap<SocketAddr, Client>,
+}
+
+impl Clients {
+	pub fn new() -> Clients {
+		Clients {
+			clients: HashMap::new(),
+		}
+	}
+}
 
 
 #[derive(Debug)]
