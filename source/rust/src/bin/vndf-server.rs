@@ -54,6 +54,7 @@ fn main() {
 			&mut clients,
 			&mut game_state,
 			&mut network,
+			&mut outgoing_events,
 		);
 
 		let mut to_remove = Vec::new();

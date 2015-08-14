@@ -6,6 +6,10 @@ use server::clients::{
 };
 use server::game::state::GameState;
 use server::network::Network;
+use server::outgoing_events::{
+	OutgoingEvents,
+	Recipients,
+};
 use shared::protocol::{
 	client,
 	server,
@@ -33,10 +37,11 @@ impl IncomingEvents {
 
 	pub fn handle(
 		&mut self,
-		now_s     : f64,
-		clients   : &mut Clients,
-		game_state: &mut GameState,
-		network   : &mut Network,
+		now_s          : f64,
+		clients        : &mut Clients,
+		game_state     : &mut GameState,
+		network        : &mut Network,
+		outgoing_events: &mut OutgoingEvents,
 	) {
 		for (address, event) in self.incoming.drain(..) {
 			handle_event(
@@ -46,6 +51,7 @@ impl IncomingEvents {
 				clients,
 				game_state,
 				network,
+				outgoing_events,
 			);
 		}
 	}
@@ -53,12 +59,13 @@ impl IncomingEvents {
 
 
 fn handle_event(
-	now_s     : f64,
-	address   : SocketAddr,
-	event     : client::Event,
-	clients   : &mut Clients,
-	game_state: &mut GameState,
-	network   : &mut Network,
+	now_s          : f64,
+	address        : SocketAddr,
+	event          : client::Event,
+	clients        : &mut Clients,
+	game_state     : &mut GameState,
+	network        : &mut Network,
+	outgoing_events: &mut OutgoingEvents,
 ) {
 	let log_message = format!(
 		"Event: {:?} (address: {}; time: {})",
@@ -81,6 +88,7 @@ fn handle_event(
 				clients,
 				game_state,
 				network,
+				outgoing_events,
 			);
 		},
 
@@ -108,12 +116,13 @@ fn handle_event(
 }
 
 fn handle_public_event(
-	now_s     : f64,
-	address   : SocketAddr,
-	event     : client::event::Public,
-	clients   : &mut Clients,
-	game_state: &mut GameState,
-	network   : &mut Network,
+	now_s          : f64,
+	address        : SocketAddr,
+	event          : client::event::Public,
+	clients        : &mut Clients,
+	game_state     : &mut GameState,
+	network        : &mut Network,
+	outgoing_events: &mut OutgoingEvents,
 ) {
 	match event {
 		client::event::Public::Login => {
@@ -128,14 +137,9 @@ fn handle_public_event(
 					last_active_s: now_s,
 				};
 
-				// TODO(AMy58bbh): This needs to be an outgoing event.
-				//                 Currently, this won't work, as outgoing
-				//                 events are broadcast to all clients, while
-				//                 this event is only for a specific client.
-				let login = server::Event::ShipId(client.ship_id);
-				network.send(
-					Some(address).into_iter(),
-					Some(login).into_iter(),
+				outgoing_events.push(
+					server::Event::ShipId(client.ship_id),
+					Recipients::One(address),
 				);
 
 				clients.insert(address, client);
