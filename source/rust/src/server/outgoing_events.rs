@@ -1,3 +1,5 @@
+use std::net::SocketAddr;
+
 use server::clients::Clients;
 use server::network::Network;
 use shared::protocol::server::Event;
@@ -19,21 +21,34 @@ impl OutgoingEvents {
 	}
 
 	pub fn send(&mut self, clients: &mut Clients, network: &mut Network) {
-		let recipients = clients
-			.iter()
-			.map(|(&address, _)|
-				address
-			);
+		for (recipients, event) in self.events.drain(..) {
+			match recipients {
+				Recipients::All => {
+					let recipients = clients
+						.iter()
+						.map(|(&address, _)|
+							address
+						);
 
-		let events = self.events
-			.drain(..)
-			.map(|(_, event)| event);
+					network.send(
+						recipients,
+						Some(event).into_iter(),
+					);
+				},
 
-		network.send(recipients, events);
+				Recipients::One(address) => {
+					network.send(
+						Some(address).into_iter(),
+						Some(event).into_iter(),
+					);
+				},
+			};
+		}
 	}
 }
 
 
 pub enum Recipients {
 	All,
+	One(SocketAddr),
 }
