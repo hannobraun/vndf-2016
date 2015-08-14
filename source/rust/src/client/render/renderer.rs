@@ -21,14 +21,11 @@ pub struct Renderer {
 	glyph_drawer: GlyphDrawer,
 	ship_drawer : ShipDrawer,
 
-	window_size: (u32,u32),
 }
 
 impl Renderer {
 	pub fn new(window: &Window) -> Renderer {
 		let mut graphics = window.create_graphics();
-		
-		let size = window.get_size();
 		
 		let glyph_drawer = GlyphDrawer::new(&mut graphics);
 		let ship_drawer  = ShipDrawer::new(&mut graphics);
@@ -37,7 +34,6 @@ impl Renderer {
 			graphics    : graphics,
 			glyph_drawer: glyph_drawer,
 			ship_drawer : ship_drawer,
-			window_size: size,
 		}
 	}
 
@@ -61,7 +57,7 @@ impl Renderer {
 		let transform = Renderer::get_transform(size);
 
 		for (y, line) in output.iter().enumerate() {
-			let _pos = self.position_cli(0, y);
+			let _pos = self.position_cli(0, y, size);
 			self.render_text(
 				&line,
 				_pos,
@@ -77,7 +73,7 @@ impl Renderer {
 			.unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 		
-		let _pos = self.position_cli(0, prompt_ypos);
+		let _pos = self.position_cli(0, prompt_ypos, size);
 		self.render_text(
 			&command_line,
 			_pos,
@@ -86,7 +82,7 @@ impl Renderer {
 		);
 
 		//draw cursor position in prompt
-		let _pos = self.position_cli(command.1 + 2,prompt_ypos);
+		let _pos = self.position_cli(command.1 + 2,prompt_ypos, size);
 		self.render_text(
 			&"_".to_string(),
 			_pos,
@@ -181,9 +177,14 @@ impl Renderer {
 
 	/// This is used to position CLI text
 	/// It takes in to account the window sizing
-	fn position_cli (&self, x: usize, y: usize) -> [f64;2] {
-		let (width,height) = self.window_size;
-		
+	fn position_cli (
+		&self,
+		x          : usize,
+		y          : usize,
+		window_size: (u32, u32)
+	) -> [f64;2] {
+		let (width, height) = window_size;
+
 		let pad_x = 10.0f64;
 		let pad_y = 30.0f64;
 		let offset_x = 9.0;
