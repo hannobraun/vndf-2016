@@ -103,9 +103,11 @@ impl Renderer {
 			if let Some(sid) = frame.ship_id {
 				if *ship_id == sid  { color = color::Colors::green_spring(); }
 			}
-			self.ship_drawer.draw(&mut self.graphics,
-								  &cast(ship.position),
-								  color);
+			self.ship_drawer.draw(
+				&cast(ship.position),
+				color,
+				&mut self.graphics,
+			);
 
 			// draw ship id
 			self.render_text(
