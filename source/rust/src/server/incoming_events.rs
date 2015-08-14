@@ -88,7 +88,7 @@ fn handle_event(
 		},
 
 		client::Event::Privileged(event) => {
-			let client = match clients.clients.get_mut(&address) {
+			let client = match clients.get_mut(&address) {
 				Some(client) =>
 					client,
 				None => {

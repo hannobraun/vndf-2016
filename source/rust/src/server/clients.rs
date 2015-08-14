@@ -18,6 +18,10 @@ impl Clients {
 		}
 	}
 
+	pub fn get_mut(&mut self, address: &SocketAddr) -> Option<&mut Client> {
+		self.clients.get_mut(address)
+	}
+
 	pub fn remove_inactive<F>(
 		&mut self,
 		    now_s    : f64,
