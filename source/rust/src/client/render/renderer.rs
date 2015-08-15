@@ -74,7 +74,8 @@ impl Renderer {
 			if let Some(sid) = frame.ship_id {
 				let ref ship = frame.ships.get(&sid).unwrap();
 				// NOTE: neg(x) will keep position, this gets flipped for some reason
-				(-1.0f32 * ship.position.x as f32,ship.position.y as f32)
+				(-1.0f32 * ship.position.x as f32,
+				 -1.0f32 * ship.position.y as f32)
 			}
 			else { (0.0f32,0.0) }
 		};
