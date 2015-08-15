@@ -4,6 +4,9 @@ use nalgebra::{
 	cast,
 	Mat4,
 	Ortho3,
+	Iso3,
+	Vec3,
+	ToHomogeneous,
 };
 
 use client::interface::Frame;
@@ -39,9 +42,18 @@ impl Renderer {
 	fn get_transform(size: (u32,u32)) -> Mat4<f32> {
 		Ortho3::new(
 			size.0 as f32, size.1 as f32,
-			-1.0, 1.0,
-			)
-			.to_mat()
+			-1.0, 1.0
+		).to_mat()
+	}
+
+	/// translates transform, used for camera positioning
+	fn translate(transform: Mat4<f32>, pos: (f32,f32)) -> Mat4<f32> {
+		let translation = Iso3::new(
+			Vec3::new(pos.0, pos.1, 0.0),
+			Vec3::new(0.0, 0.0, 0.0),
+		);
+
+		transform * translation.to_homogeneous()
 	}
 	
 	pub fn render(
@@ -56,6 +68,17 @@ impl Renderer {
 		let mut graphics    = window.create_graphics();
 
 		graphics.clear();
+
+		// for now, let's get main ship's position as the cam position offset
+		let cam_pos = {
+			if let Some(sid) = frame.ship_id {
+				let ref ship = frame.ships.get(&sid).unwrap();
+				// NOTE: neg(x) will keep position, this gets flipped for some reason
+				(-1.0f32 * ship.position.x as f32,ship.position.y as f32)
+			}
+			else { (0.0f32,0.0) }
+		};
+		let world_trans = Renderer::translate(transform,(cam_pos));
 
 		for (y, line) in output.iter().enumerate() {
 			self.render_text(
@@ -100,7 +123,7 @@ impl Renderer {
 			self.ship_drawer.draw(
 				&cast(ship.position),
 				color,
-				transform,
+				world_trans,
 				&mut graphics,
 			);
 
@@ -109,7 +132,7 @@ impl Renderer {
 				&ship_id.to_string(),
 				[ship.position[0],ship.position[1]+20.0],
 				true,
-				transform,
+				world_trans,
 				&mut graphics,
 			);
 
@@ -119,7 +142,7 @@ impl Renderer {
 					ship_comm,
 					[ship.position[0],ship.position[1]-40.0],
 					true,
-					transform,
+					world_trans,
 					&mut graphics,
 				);
 			}
@@ -130,7 +153,7 @@ impl Renderer {
 				&pos,
 				[ship.position[0]+30.0,ship.position[1]+10.0],
 				false,
-				transform,
+				world_trans,
 				&mut graphics,
 			);
 
@@ -140,7 +163,7 @@ impl Renderer {
 				&vel,
 				[ship.position[0]+30.0,ship.position[1]-10.0],
 				false,
-				transform,
+				world_trans,
 				&mut graphics,
 			);
 		}
