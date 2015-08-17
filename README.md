@@ -7,6 +7,10 @@ To work on VNDF you need two things:
   [Cygwin](https://www.cygwin.com/) should work.
 - An up-to-date installation of [Rust](https://www.rust-lang.org/). I recommend
   [multirust](https://github.com/brson/multirust) to manage your installation.
+- [FreeType](http://www.freetype.org/) is required to run and to build the
+  client. On Linux, it should be available via your package manager. If you have
+  installed it, but still get a link error, you might also need to install the
+  matching `-dev` package.
 
 
 ## Resources
