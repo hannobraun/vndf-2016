@@ -19,7 +19,7 @@ use client::render::Renderer;
 use client::window::Window;
 
 
-pub trait Interface {
+pub trait Interface: Sized {
 	fn new() -> io::Result<Self>;
 	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
 }
