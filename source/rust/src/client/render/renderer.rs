@@ -69,7 +69,7 @@ impl Renderer {
 		let mut graphics    = window.create_graphics();
 
 		graphics.clear();
-
+		
 		// for now, let's get main ship's position as the cam position offset
 		let cam_pos = {
 			if let Some(sid) = frame.ship_id {

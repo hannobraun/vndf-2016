@@ -31,14 +31,18 @@ impl Shape {
 						  (hw, 0.0-hh)];
 		Shape { points: points }
 	}
-	//FIXME: needs to have a different algorithm for a filled oval
-	//pub fn oval(w: f32, h: f32, n: u8) -> Shape {
-		/*let t = 2.0 * (PI as f32)  / n as f32;
+	pub fn oval(w: f32, h: f32, n: u8) -> Shape {
+		let t = 2.0 * (PI as f32) / n as f32;
 		let hw = w / 2.0;
 		let hh = h / 2.0;
-		let f = |i: f32| (hw * (t*i).cos(),
-						  hh * (t*i).sin());
-		let points = (0..n-1).map(|i| f(i as f32)).collect();
-		Shape { points: points }*/
-	//}
+		
+		let mut points: Vec<(f32,f32)> = vec!();
+		for i in (0..n+1) {
+			points.push((0.0,0.0));
+			points.push((hw * (t*i as f32).cos(),
+						 hh * (t*i as f32).sin()));
+		}
+		
+		Shape { points: points }
+	}
 }
