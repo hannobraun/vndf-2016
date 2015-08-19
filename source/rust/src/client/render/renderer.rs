@@ -12,10 +12,11 @@ use nalgebra::{
 use client::interface::Frame;
 use client::render::base::Graphics;
 use client::window::Window;
-use client::render::base::color;
+use client::render::base::{color,Shape};
 use client::render::draw::{
 	GlyphDrawer,
 	ShipDrawer,
+	ShapeDrawer,
 };
 
 
