@@ -1,8 +1,12 @@
 use std::f64::consts::PI;
 
+#[derive(Debug)]
 pub struct Shape {
 	points: Vec<(f32,f32)>,
 
+	//TODO: impl shape kind enum
+	//kind: ShapeKind,
+	
 	//possible ideas
 	//weight: f32, 
 	//time: u16,
@@ -12,7 +16,7 @@ impl Shape {
 	pub fn get_points(&self) -> &[(f32,f32)] {
 		&self.points
 	}
-	pub fn poly(points: Vec<(f32, f32)>) -> Shape {
+	pub fn new(points: Vec<(f32, f32)>) -> Shape {
 		Shape { points: points }
 	}
 	pub fn tri(x: f32) -> Shape {
@@ -44,5 +48,22 @@ impl Shape {
 		}
 		
 		Shape { points: points }
+	}
+	//TODO: get slope, determine angle; so line is not skewed
+	pub fn line(s:[f32;2], e: [f32;2], w: f32) -> Shape {
+		let dx = e[0]-s[0];
+		let dy = e[1]-s[1];
+		let length = (dx*dx + dy*dy).sqrt();
+		let px = 1.0 * w * (dy/length);
+		let py = 1.0 * w * (dx/length);
+		
+		Shape::new(vec!(
+			//(-1.0,1.0),(-1.0,-1.0),(1.0,1.0),(1.0,-1.0)
+			
+			(e[0]-px,e[1]+py),
+			(s[0]-px,s[1]+py),
+			(e[0]+px,e[1]-py),				
+			(s[0]+px,s[1]-py),
+			))
 	}
 }
