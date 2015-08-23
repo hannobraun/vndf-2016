@@ -95,6 +95,7 @@ impl Shape {
 
 	/// calculates border for shape, uses lines
 	// TODO: consider using this as a method, with self
+	// FIXME: corners are cut off, needs fusing of outer verts
 	pub fn border(shape: &Shape, w: f32) -> Vec<Shape> {
 		let mut v: Vec<[f32;2]> = vec!();
 		match shape.get_kind() {
@@ -113,15 +114,20 @@ impl Shape {
 				v.push(p[2]);
 				v.push(p[0]);
 			},
+			// FIXME: shows nothing
 			ShapeKind::Oval => {
 				for (i,n) in (*shape.get_points()).iter().enumerate() {
 					if i % 2 == 0 { v.push(*n); }
 				}
 			},
+			// NOTE: this currently ends up with borders around ends
 			ShapeKind::Line => {
-				for n in shape.get_points() {
-					v.push(*n);
-				}
+				let p = shape.get_points();
+				v.push(p[0]);
+				v.push(p[1]);
+				v.push(p[3]);
+				v.push(p[2]);
+				v.push(p[0]);
 			},
 			ShapeKind::Poly => { // tries to build based on trianglefan
 				for (i,n) in (*shape.get_points()).iter().enumerate() {
