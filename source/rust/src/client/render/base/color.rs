@@ -1,3 +1,5 @@
+extern crate rand;
+
 use rustc_serialize::hex::{FromHex, ToHex};
 
 pub type Color = [f32;3];
@@ -13,6 +15,7 @@ pub trait Colorable {
 	fn greyscale_atsc(&self) -> Color;
 }
 
+// TODO: implement rgba alpha, this will change mix functions
 impl Colorable for Color {
 	fn from_bytes(b: &Vec<u8>) -> Color {
 		[b[0] as f32 / 255.0,
@@ -124,7 +127,12 @@ impl Colors {
 	pub fn blue_sky() -> Color {
 		Color::from_bytes(&vec!(135, 206, 235))
 	}
-
+	
+	pub fn random() -> Color {
+		Color::from_bytes(&vec!(rand::random::<u8>(),
+								rand::random::<u8>(),
+								rand::random::<u8>()))
+	}
 }
 
 
