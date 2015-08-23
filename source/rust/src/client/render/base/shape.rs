@@ -3,9 +3,7 @@ use std::f64::consts::PI;
 #[derive(Debug)]
 pub struct Shape {
 	points: Vec<(f32,f32)>,
-
-	//TODO: impl shape kind enum
-	//kind: ShapeKind,
+	kind: ShapeKind,
 	
 	//possible ideas
 	//weight: f32, 
@@ -20,8 +18,9 @@ impl Shape {
 		&mut self.points
 	}
 	
-	pub fn new(points: Vec<(f32, f32)>) -> Shape {
-		Shape { points: points }
+	pub fn new(points: Vec<(f32, f32)>, kind: ShapeKind) -> Shape {
+		Shape { points: points,
+				kind: kind, }
 	}
 	
 	pub fn tri(x: f32) -> Shape {
@@ -29,7 +28,7 @@ impl Shape {
 		let b = (x, 0.0-x);
 		let c = (0.0, x);
 		let points = vec![a,b,c];
-		Shape { points: points }
+		Shape::new(points,ShapeKind::Tri)
 	}
 	pub fn rect(w: f32, h: f32) -> Shape {
 		let hw = w / 2.0;
@@ -38,7 +37,7 @@ impl Shape {
 						  (0.0-hw, 0.0-hh),
 						  (hw, hh),
 						  (hw, 0.0-hh)];
-		Shape { points: points }
+		Shape::new(points,ShapeKind::Rect)
 	}
 	pub fn oval(w: f32, h: f32, n: u8) -> Shape {
 		let t = 2.0 * (PI as f32) / n as f32;
@@ -52,7 +51,7 @@ impl Shape {
 						 hh * (t*i as f32).sin()));
 		}
 		
-		Shape { points: points }
+		Shape::new(points,ShapeKind::Oval)
 	}
 	pub fn line(s:[f32;2], e: [f32;2], w: f32) -> Shape {
 		let dx = e[0]-s[0];
@@ -61,12 +60,11 @@ impl Shape {
 		let px = 1.0 * w * (dy/length);
 		let py = 1.0 * w * (dx/length);
 		
-		Shape::new(vec!(
-			(e[0]-px,e[1]+py),
-			(s[0]-px,s[1]+py),
-			(e[0]+px,e[1]-py),				
-			(s[0]+px,s[1]-py),
-			))
+		Shape::new(vec!((e[0]-px,e[1]+py),
+						(s[0]-px,s[1]+py),
+						(e[0]+px,e[1]-py),				
+						(s[0]+px,s[1]-py)),
+				   ShapeKind::Line)
 	}
 	pub fn lines(v: Vec<([f32;2])>, w: f32, formed: bool) -> Vec<Shape> {
 		let len = v.len();
@@ -88,4 +86,13 @@ impl Shape {
 
 		lines
 	}
+}
+
+#[derive(Debug)]
+pub enum ShapeKind {
+	Tri,
+	Rect,
+	Oval,
+	Line,
+	Poly, //non-standard shape
 }
