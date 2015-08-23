@@ -57,8 +57,6 @@ impl Shape {
 		let py = 1.0 * w * (dx/length);
 		
 		Shape::new(vec!(
-			//(-1.0,1.0),(-1.0,-1.0),(1.0,1.0),(1.0,-1.0)
-			
 			(e[0]-px,e[1]+py),
 			(s[0]-px,s[1]+py),
 			(e[0]+px,e[1]-py),				
