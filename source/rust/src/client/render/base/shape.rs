@@ -16,9 +16,14 @@ impl Shape {
 	pub fn get_points(&self) -> &[(f32,f32)] {
 		&self.points
 	}
+	pub fn get_mut_points(&mut self) -> &mut [(f32,f32)] {
+		&mut self.points
+	}
+	
 	pub fn new(points: Vec<(f32, f32)>) -> Shape {
 		Shape { points: points }
 	}
+	
 	pub fn tri(x: f32) -> Shape {
 		let a = (0.0-x, 0.0-x);
 		let b = (x, 0.0-x);
@@ -62,5 +67,25 @@ impl Shape {
 			(e[0]+px,e[1]-py),				
 			(s[0]+px,s[1]-py),
 			))
+	}
+	pub fn lines(v: Vec<([f32;2])>, w: f32, formed: bool) -> Vec<Shape> {
+		let len = v.len();
+		let mut lines = vec!();
+
+		lines.push(Shape::line(v[0],v[1],w));
+
+		for n in (1..len) {
+			let mut line = Shape::line(v[n-1],v[n],w);
+			
+			if formed {
+				let p = line.get_mut_points();
+				p[1] = lines[n-1].get_points()[2]; // set vertex to match
+				p[3] = lines[n-1].get_points()[0];
+			}
+
+			lines.push(line);
+		}
+
+		lines
 	}
 }
