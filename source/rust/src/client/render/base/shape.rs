@@ -49,7 +49,6 @@ impl Shape {
 		
 		Shape { points: points }
 	}
-	//TODO: get slope, determine angle; so line is not skewed
 	pub fn line(s:[f32;2], e: [f32;2], w: f32) -> Shape {
 		let dx = e[0]-s[0];
 		let dy = e[1]-s[1];
