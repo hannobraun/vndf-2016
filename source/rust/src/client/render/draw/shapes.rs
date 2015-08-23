@@ -105,7 +105,7 @@ impl ShapeDrawer {
 fn get_vertices(shape: &Shape) -> Vec<Vertex> {
 	let mut verts: Vec<Vertex> = vec!();
 	for n in shape.get_points() {
-		verts.push(Vertex { pos: [n.0,n.1] });
+		verts.push(Vertex { pos: [n[0],n[1]] });
 	}
 	verts
 }
