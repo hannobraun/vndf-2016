@@ -36,8 +36,8 @@
 					<p>
 						Those last few weeks have been productive ones, and a
 						lot of visible progress to the game has been made. I
-						can't take all of the credit though: For the first time
-						ever, a second developer has joined the VNDF team!
+						can't take all of the credit though: A second developer
+						has joined the VNDF team!
 					</p>
 
 					<p>
@@ -48,27 +48,35 @@
 					<ul>
 						<li>
 							<a href="#introducing-chris-gill">Introducing Chris Gill</a>:
-							TODO
+							For the first time ever, a second developer has
+							joined the team.
 						</li>
 						<li>
 							<a href="#cli-improvements">Another Round of CLI improvements</a>:
-							TODO
+							It just won't stop: The command-line interface has
+							gotten better yet again.
 						</li>
 						<li>
 							<a href="#ui-improvements">User Interface Improvements</a>:
-							TODO
+							The user interface has been improved, and a lot of
+							information that was previously only available via
+							the CLI has been moved to the graphical interface.
 						</li>
 						<li>
 							<a href="#window-resizing">Window Resizing</a>:
-							TODO
+							The game window can now be resized, and it actually
+							works like you'd expect.
 						</li>
 						<li>
 							<a href="#better-physics">Better Physics</a>:
-							TODO
+							The navigation work that begun two months ago keeps
+							moving forward ever so slowly.
 						</li>
 						<li>
 							<a href="#ipv6-support">IPv6 Support</a>:
-							TODO
+							The VNDF website and the game itself can now be
+							accessed with the new version of the Internet
+							Protocol.
 						</li>
 					</ul>
 
@@ -87,20 +95,31 @@
 					<h1>Introducing Chris Gill</h1>
 
 					<p>
-						TODO
-						- Link to GitHub, Twitter
-						- Mention organizational improvements, documentation
+						I'm excited to introduce a new member of the Von Neumann
+						Development Team: Chris Gill
+						(<a href="https://github.com/viperscape" target="_blank">GitHub</a>,
+						<a href="https://twitter.com/_scape" target="_blank">
+							Twitter</a>)!
 					</p>
 
-					<a
-						class="image"
-						href="/news/newsletter-july-2015/screenshot-multiple-ships.png"
-						target="_blank">
-						<img
-							src="/news/newsletter-july-2015/screenshot-multiple-ships.png"
-							alt="Multiple player ships next to each other" />
-						<p>(click to see full size)</p>
-					</a>
+					<p>
+						Chris has been a reader of the VNDF newsletter for a
+						while, and offered his help after the
+						<a href="/news/newsletter-july-2015/" target="_blank">
+							July newsletter</a>.
+						I'm very happy to have Chris on board, and he already
+						did a lot in his first month, as you'll see throughout
+						the rest of this newsletter.
+					</p>
+
+					<p>
+						Doubling the team size from 1 to 2 has required some
+						adjustments as communication and project management can
+						no longer happen just inside my head, but the transition
+						has been remarkably smooth. I'm looking forward to keep
+						working with Chris, and I'm excited to see what we'll be
+						able to do over the next few months.
+					</p>
 				</section>
 
 				<section>
@@ -108,9 +127,21 @@
 					<h1>Another Round of CLI improvements</h1>
 
 					<p>
-						TODO
-						- History
-						- Line editing
+						The command-line interface has proven very valuable
+						since its introduction. As I hoped, it allowed me to
+						prototype new features with minimal effort on the UI
+						side.
+					</p>
+
+					<p>
+						As one of his first tasks, Chris went to work on adding
+						new useful features to the CLI. By pressing the
+						<code>up</code> and <code>down</code> keys, you can now
+						navigate through the history of previous commands. It
+						has also become possible to edit a command using the
+						usual keys used for text editing (<code>left</code>,
+						<code>right</code>, <code>delete</code> and
+						<code>backspace</code>).
 					</p>
 				</section>
 
@@ -119,13 +150,62 @@
 					<h1>User Interface Improvements</h1>
 
 					<p>
-						TODO
-						- Ships ids
-						- Nav data
-						- Broadcasts
-						- Ship colors
-						- camera
+						Being able to quickly prototype features is very well,
+						but eventually, established features need to be moved to
+						the graphical user interface. This was another area that
+						Chris focused on over the last few weeks, with great
+						success. Among other improvements, a lot of information
+						that was previously only accessible with the
+						command-line interface is now visible in the graphical
+						interface:
 					</p>
+
+					<ul>
+						<li>
+							A ship's id is now displayed above the ship.
+						</li>
+						<li>
+							The navigation data (position and velocity) of each
+							ship is displayed next to it.
+						</li>
+						<li>
+							The ship's current velocity is also displayed as a
+							straight line originating from the ship. Eventually,
+							we hope to extend this into a full-blown course
+							prediction, taking scheduled maneuvers and gravity
+							by celestial objects (which aren't in the game yet)
+							into account.
+						</li>
+						<li>
+							If a ship is sending a broadcast message, it is
+							visibile below the ship.
+						</li>
+						<li>
+							Ships are now color-coded. The player's own ship has
+							a different color from other ships, making it easier
+							to make sense of what's going on.
+						</li>
+						<li>
+							Finally, the camera now follows the player's ship,
+							so you can no longer lose your own ship because it
+							flew out of the screen.
+						</li>
+					</ul>
+
+					<p>
+						Here's a screenshot that shows off all those
+						improvements:
+					</p>
+
+					<a
+						class="image"
+						href="/news/newsletter-august-2015/screenshot-ui-improvements.png"
+						target="_blank">
+						<img
+							src="/news/newsletter-august-2015/screenshot-ui-improvements.png"
+							alt="Two ships, with information about them displayed next to them" />
+						<p>(click to see full size)</p>
+					</a>
 				</section>
 
 				<section>
@@ -133,21 +213,42 @@
 					<h1>Window Resizing</h1>
 
 					<p>
-						TODO
+						It has long been possible to resize the game's window,
+						but now, thanks to Chris, it actually works correctly,
+						and the game will use all the available space to render
+						its graphics.
 					</p>
-				</section>
 
-				<li>
-					<a href="#ipv6-support">IPv6 Support</a>:
-					TODO
-				</li>
+					<a
+						class="image"
+						href="/news/newsletter-august-2015/screenshot-maximised-window-4k.png"
+						target="_blank">
+						<img
+							src="/news/newsletter-august-2015/screenshot-maximised-window-4k.png"
+							alt="The game window running maximised on a 4k monitor" />
+						<p>(click to see full size)</p>
+					</a>
+
+					This is the game with a fully maximised window on the new 4k
+					monitor I have in my office. This actually showcases another
+					problem, as the text and symbols are way too small at this
+					resolution, but one problem at a time.
+				</section>
 
 				<section>
 					<a name="better-physics"></a>
 					<h1>Better Physics</h1>
 
 					<p>
-						TODO
+						Navigating through space has become better yet again:
+						Since
+						<a href="/news/newsletter-july-2015/" target="_blank">
+							last month</a>,
+						it's possible to schedule multiple maneuvers in advance.
+						Now, those maneuvers no longer change the ship's
+						velocity instantly. Instead, they apply a thrust in the
+						direction of the maneuver over time, like, you know, a
+						real space ship would.
 					</p>
 				</section>
 
@@ -156,7 +257,23 @@
 					<h1>IPv6 Support</h1>
 
 					<p>
-						TODO
+						As technically inclined computer users are likely to
+						already know, the currently dominant version of the
+						<a
+							href="https://en.wikipedia.org/wiki/Internet_Protocol"
+							target="_blank">
+							Internet Protocol</a>,
+						IPv4 will no longer provide enough addresses to connect
+						all the devices to the Internet that will require
+						connecting in the future. I've made sure that Von
+						Neumann Defense Force will keep working in the future by
+						adding support to IPv4's successor, IPv6.
+					</p>
+
+					<p>
+						This also solved some problems that occured when players
+						were already connected via IPv6. From now on, both
+						versions of the protocol should work smoothly.
 					</p>
 				</section>
 
