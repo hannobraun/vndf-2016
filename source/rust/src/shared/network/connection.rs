@@ -98,6 +98,9 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 						break;
 					}
 				}
+				else {
+					debug!("Received empty line from client: {}", address);
+				}
 
 				match error_receiver.try_recv() {
 					Ok(()) =>
