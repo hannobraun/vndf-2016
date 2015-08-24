@@ -82,6 +82,7 @@ impl Renderer {
 		};
 		let world_trans = Renderer::translate(transform,(cam_pos));
 
+		// render console output
 		for (y, line) in output.iter().enumerate() {
 			self.render_text(
 				&line,
@@ -118,6 +119,20 @@ impl Renderer {
 		
 
 		for (ship_id, ship) in &frame.ships {
+			// draw ship velocity line
+			let line = Shape::line([0.0,0.0],
+								   [(ship.velocity[0]*30.0) as f32,
+									(ship.velocity[1]*30.0) as f32],
+								   1.0);
+			ShapeDrawer::new(&mut graphics, &line)
+				.draw([ship.position[0] as f32,
+					   ship.position[1] as f32],
+					  [1.0,1.0],
+					  color::Colors::red(),
+					  world_trans,
+					  &mut graphics);
+
+
 			let mut color = color::Colors::blue();
 			if let Some(sid) = frame.ship_id {
 				if *ship_id == sid  { color = color::Colors::green_spring(); }
@@ -168,19 +183,6 @@ impl Renderer {
 				world_trans,
 				&mut graphics,
 			);
-
-			// draw ship velocity line
-			let line = Shape::line([0.0,0.0],
-								   [(ship.velocity[0]*30.0) as f32,
-									(ship.velocity[1]*30.0) as f32],
-								   2.0);
-			ShapeDrawer::new(&mut graphics, &line)
-				.draw([ship.position[0] as f32,
-					   ship.position[1] as f32],
-					  [1.0,1.0],
-					  color::Colors::yellow(),
-					  world_trans,
-					  &mut graphics);
 		}
 
 		graphics.flush();
