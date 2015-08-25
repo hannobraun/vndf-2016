@@ -18,12 +18,13 @@ use client::render::draw::{
 	ShipDrawer,
 	ShapeDrawer,
 };
+use client::render::camera::{CameraTrack,Camera};
 
 
 pub struct Renderer {
 	glyph_drawer: GlyphDrawer,
 	ship_drawer : ShipDrawer,
-
+	camera      : Camera,
 }
 
 impl Renderer {
@@ -36,6 +37,7 @@ impl Renderer {
 		Renderer {
 			glyph_drawer: glyph_drawer,
 			ship_drawer : ship_drawer,
+			camera      : Camera::new(),
 		}
 	}
 
@@ -48,9 +50,9 @@ impl Renderer {
 	}
 
 	/// translates transform, used for camera positioning
-	fn translate(transform: Mat4<f32>, pos: (f32,f32)) -> Mat4<f32> {
+	fn translate(transform: Mat4<f32>, pos: [f32;2]) -> Mat4<f32> {
 		let translation = Iso3::new(
-			Vec3::new(pos.0, pos.1, 0.0),
+			Vec3::new(pos[0], pos[1], 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
 
@@ -71,16 +73,11 @@ impl Renderer {
 		graphics.clear();
 		
 		// for now, let's get main ship's position as the cam position offset
-		let cam_pos = {
-			if let Some(sid) = frame.ship_id {
-				let ref ship = frame.ships.get(&sid).unwrap();
-				// NOTE: neg(x) will keep position, this gets flipped for some reason
-				(-1.0f32 * ship.position.x as f32,
-				 -1.0f32 * ship.position.y as f32)
-			}
-			else { (0.0f32,0.0) }
-		};
-		let world_trans = Renderer::translate(transform,(cam_pos));
+		if let Some(sid) = frame.ship_id {
+			self.camera.set(CameraTrack::Entity(sid));
+		}
+		let cam_pos = self.camera.update(&frame.ships,None);
+		let world_trans = Renderer::translate(transform,cam_pos);
 
 		// render console output
 		for (y, line) in output.iter().enumerate() {
