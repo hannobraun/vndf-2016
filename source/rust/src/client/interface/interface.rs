@@ -1,119 +1,119 @@
 use std::io::{
-	self,
-	stdin,
+    self,
+    stdin,
 };
 use std::sync::mpsc::{
-	channel,
-	Receiver,
-	TryRecvError,
+    channel,
+    Receiver,
+    TryRecvError,
 };
 use std::thread::spawn;
 use std::vec::Drain;
 
 use client::cli::Cli;
 use client::interface::{
-	Frame,
-	InputEvent,
+    Frame,
+    InputEvent,
 };
 use client::render::Renderer;
 use client::window::Window;
 
 
 pub trait Interface: Sized {
-	fn new() -> io::Result<Self>;
-	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
+    fn new() -> io::Result<Self>;
+    fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
 }
 
 
 pub struct Player {
-	events  : Vec<InputEvent>,
-	cli     : Cli,
-	window  : Window,
-	renderer: Renderer,
+    events  : Vec<InputEvent>,
+    cli     : Cli,
+    window  : Window,
+    renderer: Renderer,
 }
 
 impl Interface for Player {
-	fn new() -> io::Result<Player> {
-		let cli    = Cli::new();
-		let window = Window::new();
+    fn new() -> io::Result<Player> {
+        let cli    = Cli::new();
+        let window = Window::new();
 
-		let renderer = Renderer::new(&window);
+        let renderer = Renderer::new(&window);
 
-		Ok(Player {
-			events  : Vec::new(),
-			cli     : cli,
-			window  : window,
-			renderer: renderer,
-		})
-	}
+        Ok(Player {
+            events  : Vec::new(),
+            cli     : cli,
+            window  : window,
+            renderer: renderer,
+        })
+    }
 
-	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-		self.cli.update(&mut self.events, frame, &self.window);
-		self.renderer.render(
-			self.cli.text(),
-			(self.cli.input(),self.cli.get_prompt_idx()),
-			frame,
-			&self.window,
-		);
-		self.window.swap_buffers();
+    fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
+        self.cli.update(&mut self.events, frame, &self.window);
+        self.renderer.render(
+            self.cli.text(),
+            (self.cli.input(),self.cli.get_prompt_idx()),
+            frame,
+            &self.window,
+            );
+        self.window.swap_buffers();
 
-		Ok(self.events.drain(..))
-	}
+        Ok(self.events.drain(..))
+    }
 }
 
 
 pub struct Headless {
-	events  : Vec<InputEvent>,
-	receiver: Receiver<InputEvent>,
+    events  : Vec<InputEvent>,
+    receiver: Receiver<InputEvent>,
 }
 
 impl Interface for Headless {
-	fn new() -> io::Result<Headless> {
-		let (sender, receiver) = channel();
+    fn new() -> io::Result<Headless> {
+        let (sender, receiver) = channel();
 
-		spawn(move || -> () {
-			let stdin = stdin();
+        spawn(move || -> () {
+            let stdin = stdin();
 
-			loop {
-				let mut line = String::new();
-				match stdin.read_line(&mut line) {
-					Ok(_) => match InputEvent::from_json(line.as_ref()) {
-						Ok(event) =>
-							match sender.send(event) {
-								Ok(()) =>
-									(),
-								Err(error) =>
-									panic!("Error sending input: {:?}", error),
-							},
-						Err(error) =>
-							panic!("Error decoding input: {:?}", error),
-					},
-					Err(error) =>
-						panic!("Error reading from stdin: {}", error),
-				}
-			}
-		});
+            loop {
+                let mut line = String::new();
+                match stdin.read_line(&mut line) {
+                    Ok(_) => match InputEvent::from_json(line.as_ref()) {
+                        Ok(event) =>
+                            match sender.send(event) {
+                                Ok(()) =>
+                            (),
+                        Err(error) =>
+                        panic!("Error sending input: {:?}", error),
+                },
+                Err(error) =>
+                panic!("Error decoding input: {:?}", error),
+        },
+              Err(error) =>
+            panic!("Error reading from stdin: {}", error),
+    }
+}
+                });
 
-		Ok(Headless {
-			events  : Vec::new(),
-			receiver: receiver,
-		})
-	}
+                Ok(Headless {
+                        events  : Vec::new(),
+                        receiver: receiver,
+                })
+        }
 
-	fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-		loop {
-			match self.receiver.try_recv() {
-				Ok(event) =>
-					self.events.push(event),
-				Err(error) => match error {
-					TryRecvError::Empty        => break,
-					TryRecvError::Disconnected => panic!("Channel disconnected"),
-				}
-			}
-		}
+        fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
+                loop {
+                        match self.receiver.try_recv() {
+                                Ok(event) =>
+                                        self.events.push(event),
+                                Err(error) => match error {
+                                        TryRecvError::Empty        => break,
+                                        TryRecvError::Disconnected => panic!("Channel disconnected"),
+                                }
+                        }
+                }
 
-		print!("{}\n", frame.to_json());
+                print!("{}\n", frame.to_json());
 
-		Ok(self.events.drain(..))
-	}
+                Ok(self.events.drain(..))
+        }
 }
