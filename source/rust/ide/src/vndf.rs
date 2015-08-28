@@ -22,8 +22,7 @@ fn main() {
 
     match command {
         "client" => build_and_run("vndf-client", args),
-        // TODO: Execute server
-        "server" => print!("server\n"),
+        "server" => build_and_run("vndf-server", args),
         // TODO: Execute tests
         "test"   => print!("test\n"),
 
