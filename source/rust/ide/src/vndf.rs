@@ -1,4 +1,7 @@
-use std::env;
+use std::env::{
+    self,
+    Args,
+};
 use std::process::{
     Command,
     Stdio,
@@ -31,7 +34,7 @@ fn main() {
 }
 
 
-fn build_and_run<I>(binary: &str, args: I) where I: Iterator<Item=String> {
+fn build_and_run(binary: &str, args: Args) {
     run_command(
         Command::new("cargo")
             .args(&["build", "--bin", binary])
