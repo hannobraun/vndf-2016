@@ -33,19 +33,12 @@ fn main() {
 
 
 fn run_client<I>(args: I) where I: Iterator<Item=String> {
-    let status =
+    run_command(
         Command::new("cargo")
             .args(&["build", "--bin", "vndf-client"])
             // TODO: Read path from configuration file
             .current_dir("source/rust/vndf")
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .status()
-            .unwrap_or_else(|e| panic!("Error running client build: {}", e));
-
-    if !status.success() {
-        panic!("Client build exited with status {}", status);
-    }
+    );
 
     // TODO: Read path from configuration file
     let mut command = Command::new("output/cargo/debug/vndf-client");
@@ -53,14 +46,19 @@ fn run_client<I>(args: I) where I: Iterator<Item=String> {
         command.arg(arg);
     }
 
+    run_command(&mut command);
+}
+
+
+fn run_command(command: &mut Command) {
     let status =
         command
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
             .status()
-            .unwrap_or_else(|e| panic!("Error running client: {}", e));
+            .unwrap_or_else(|e| panic!("Error running {:?}: {}", command, e));
 
     if !status.success() {
-        panic!("Client exited with status {}", status);
+        panic!("{:?} exited with status {}", command, status);
     }
 }
