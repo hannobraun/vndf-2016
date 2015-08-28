@@ -47,6 +47,7 @@ fn build_and_run<I>(binary: &str, args: I) where I: Iterator<Item=String> {
     for arg in args {
         command.arg(arg);
     }
+    command.env("RUST_LOG", "trace");
 
     run_command(&mut command);
 }
