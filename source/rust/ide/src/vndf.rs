@@ -21,7 +21,7 @@ fn main() {
     };
 
     match command {
-        "client" => run_client(args),
+        "client" => build_and_run("vndf-client", args),
         // TODO: Execute server
         "server" => print!("server\n"),
         // TODO: Execute tests
@@ -32,23 +32,24 @@ fn main() {
 }
 
 
-fn run_client<I>(args: I) where I: Iterator<Item=String> {
+fn build_and_run<I>(binary: &str, args: I) where I: Iterator<Item=String> {
     run_command(
         Command::new("cargo")
-            .args(&["build", "--bin", "vndf-client"])
+            .args(&["build", "--bin", binary])
             // TODO: Read path from configuration file
             .current_dir("source/rust/vndf")
     );
 
     // TODO: Read path from configuration file
-    let mut command = Command::new("output/cargo/debug/vndf-client");
+    let binary = format!("output/cargo/debug/{}", binary);
+
+    let mut command = Command::new(binary);
     for arg in args {
         command.arg(arg);
     }
 
     run_command(&mut command);
 }
-
 
 fn run_command(command: &mut Command) {
     let status =
