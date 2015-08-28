@@ -8,6 +8,11 @@ use std::process::{
 };
 
 
+// TODO: Those paths are redundantly specified in project.conf
+const BINARY_PATH: &'static str = "output/cargo/debug";
+const RUST_PATH  : &'static str = "source/rust/vndf";
+
+
 fn main() {
     let mut args = env::args();
 
@@ -37,15 +42,13 @@ fn run_tests() {
     let path = format!(
         "{}:{}",
         env::var("PATH").unwrap_or_else(|e| panic!("Environment error: {}", e)),
-        // TODO: Read path from configuration file
-        "output/cargo/debug",
+        BINARY_PATH,
     );
 
     run_command(
         Command::new("cargo")
             .arg("test")
-            // TODO: Read path from configuration file
-            .current_dir("source/rust/vndf")
+            .current_dir(RUST_PATH)
             .env("PATH", path)
             .env("RUST_LOG", "vndf_server=info")
             .env("RUST_BACKTRACE", "1")
@@ -57,12 +60,10 @@ fn build_and_run(binary: &str, args: Args) {
     run_command(
         Command::new("cargo")
             .args(&["build", "--bin", binary])
-            // TODO: Read path from configuration file
-            .current_dir("source/rust/vndf")
+            .current_dir(RUST_PATH)
     );
 
-    // TODO: Read path from configuration file
-    let binary = format!("output/cargo/debug/{}", binary);
+    let binary = format!("{}/{}", BINARY_PATH, binary);
 
     let mut command = Command::new(binary);
     for arg in args {
