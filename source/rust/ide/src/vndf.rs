@@ -63,9 +63,7 @@ fn build_and_run(binary: &str, args: Args) {
             .current_dir(RUST_PATH)
     );
 
-    let binary = format!("{}/{}", BINARY_PATH, binary);
-
-    let mut command = Command::new(binary);
+    let mut command = Command::new(format!("{}/{}", BINARY_PATH, binary));
     for arg in args {
         command.arg(arg);
     }
