@@ -26,11 +26,30 @@ fn main() {
     match command {
         "client" => build_and_run("vndf-client", args),
         "server" => build_and_run("vndf-server", args),
-        // TODO: Execute tests
-        "test"   => print!("test\n"),
+        "test"   => run_tests(),
 
         _ => print!("Unknown command: {}\n", command),
     }
+}
+
+
+fn run_tests() {
+    let path = format!(
+        "{}:{}",
+        env::var("PATH").unwrap_or_else(|e| panic!("Environment error: {}", e)),
+        // TODO: Read path from configuration file
+        "output/cargo/debug",
+    );
+
+    run_command(
+        Command::new("cargo")
+            .arg("test")
+            // TODO: Read path from configuration file
+            .current_dir("source/rust/vndf")
+            .env("PATH", path)
+            .env("RUST_LOG", "vndf_server=info")
+            .env("RUST_BACKTRACE", "1")
+    );
 }
 
 
