@@ -3,5 +3,5 @@
 source project.conf
 
 (
-	cd $RUST_SOURCE
+	cd $VNDF_SOURCE
 	cargo build --bin vndf-server)

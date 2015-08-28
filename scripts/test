@@ -6,5 +6,5 @@ export PATH=$BINARY_DIR:$PATH
 export RUST_LOG=vndf_server=info
 export RUST_BACKTRACE=1
 
-cd $RUST_SOURCE
+cd $VNDF_SOURCE
 cargo test
