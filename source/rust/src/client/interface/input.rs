@@ -1,6 +1,6 @@
 use rustc_serialize::json::{
-	self,
-	DecodeResult,
+    self,
+    DecodeResult,
 };
 
 use shared::game::ManeuverData;
@@ -8,23 +8,23 @@ use shared::game::ManeuverData;
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub enum InputEvent {
-	StartBroadcast(String),
-	StopBroadcast,
+    StartBroadcast(String),
+    StopBroadcast,
 
-	ScheduleManeuver(ManeuverData),
+    ScheduleManeuver(ManeuverData),
 
-	Quit,
+    Quit,
 }
 
 impl InputEvent {
-	pub fn from_json(json: &str) -> DecodeResult<InputEvent> {
-		json::decode(json)
-	}
+    pub fn from_json(json: &str) -> DecodeResult<InputEvent> {
+        json::decode(json)
+    }
 
-	pub fn to_json(&self) -> String {
-		match json::encode(self) {
-			Ok(encoded) => encoded,
-			Err(error)  => panic!("Encoding error: {}", error)
-		}
-	}
+    pub fn to_json(&self) -> String {
+        match json::encode(self) {
+            Ok(encoded) => encoded,
+            Err(error)  => panic!("Encoding error: {}", error)
+        }
+    }
 }
