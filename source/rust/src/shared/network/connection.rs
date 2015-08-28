@@ -79,27 +79,27 @@ impl<R> Connection<R> where R: Decodable + Send + 'static {
 					break;
 				}
 
-				if line.len() > 0 {
-					let event = match json::decode(line.as_ref()) {
-						Ok(event)  => event,
-						Err(error) => {
-							// We don't need to handle the error here (besides
-							// logging it). We just need to make sure that it
-							// doesn't harm us. If it's a persistent problem,
-							// Connection's user will notice via a timeout.
-							debug!("Error decoding \"{}\": {}", line, error);
-							continue;
-						},
-					};
-
-					if let Err(_) = messages_sender.send(event) {
-						// The receiver has been dropped, which means this
-						// connection is no longer needed. Time to quietly die.
-						break;
-					}
-				}
-				else {
+				if line.len() == 0 {
 					debug!("Received empty line from client: {}", address);
+					break;
+				}
+
+				let event = match json::decode(line.as_ref()) {
+					Ok(event)  => event,
+					Err(error) => {
+						// We don't need to handle the error here (besides
+						// logging it). We just need to make sure that it
+						// doesn't harm us. If it's a persistent problem,
+						// Connection's user will notice via a timeout.
+						debug!("Error decoding \"{}\": {}", line, error);
+						continue;
+					},
+				};
+
+				if let Err(_) = messages_sender.send(event) {
+					// The receiver has been dropped, which means this
+					// connection is no longer needed. Time to quietly die.
+					break;
 				}
 
 				match error_receiver.try_recv() {
