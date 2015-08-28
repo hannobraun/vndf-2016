@@ -17,11 +17,12 @@ use client::interface::{
 };
 use client::render::Renderer;
 use client::window::Window;
-
+use client::render::camera::CameraTrack;
 
 pub trait Interface: Sized {
     fn new() -> io::Result<Self>;
-    fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>>;
+    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
+              -> io::Result<Drain<InputEvent>>;
 }
 
 
@@ -47,8 +48,12 @@ impl Interface for Player {
         })
     }
 
-    fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
+    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
+              -> io::Result<Drain<InputEvent>> {
         self.cli.update(&mut self.events, frame, &self.window);
+        
+        if let Some(track) = maybe_track { self.renderer.camera.set(track); }
+        
         self.renderer.render(
             self.cli.text(),
             (self.cli.input(),self.cli.get_prompt_idx()),
@@ -60,7 +65,6 @@ impl Interface for Player {
         Ok(self.events.drain(..))
     }
 }
-
 
 pub struct Headless {
     events  : Vec<InputEvent>,
@@ -81,39 +85,40 @@ impl Interface for Headless {
                         Ok(event) =>
                             match sender.send(event) {
                                 Ok(()) =>
-                            (),
+                                    (),
+                                Err(error) =>
+                                    panic!("Error sending input: {:?}", error),
+                            },
                         Err(error) =>
-                        panic!("Error sending input: {:?}", error),
-                },
-                Err(error) =>
-                panic!("Error decoding input: {:?}", error),
-        },
-              Err(error) =>
-            panic!("Error reading from stdin: {}", error),
-    }
-}
-                });
-
-                Ok(Headless {
-                        events  : Vec::new(),
-                        receiver: receiver,
-                })
-        }
-
-        fn update(&mut self, frame: &Frame) -> io::Result<Drain<InputEvent>> {
-                loop {
-                        match self.receiver.try_recv() {
-                                Ok(event) =>
-                                        self.events.push(event),
-                                Err(error) => match error {
-                                        TryRecvError::Empty        => break,
-                                        TryRecvError::Disconnected => panic!("Channel disconnected"),
-                                }
-                        }
+                            panic!("Error decoding input: {:?}", error),
+                    },
+                    Err(error) =>
+                        panic!("Error reading from stdin: {}", error),
                 }
+            }
+        });
 
-                print!("{}\n", frame.to_json());
+        Ok(Headless {
+            events  : Vec::new(),
+            receiver: receiver,
+        })
+    }
 
-                Ok(self.events.drain(..))
+    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
+              -> io::Result<Drain<InputEvent>> {
+        loop {
+            match self.receiver.try_recv() {
+                Ok(event) =>
+                    self.events.push(event),
+                Err(error) => match error {
+                    TryRecvError::Empty        => break,
+                    TryRecvError::Disconnected => panic!("Channel disconnected"),
+                }
+            }
         }
+
+        print!("{}\n", frame.to_json());
+
+        Ok(self.events.drain(..))
+    }
 }

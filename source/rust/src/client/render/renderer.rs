@@ -18,13 +18,13 @@ use client::render::draw::{
     ShipDrawer,
     ShapeDrawer,
 };
-use client::render::camera::{CameraTrack,Camera};
+use client::render::camera::{Camera};
 
 
 pub struct Renderer {
     glyph_drawer: GlyphDrawer,
     ship_drawer : ShipDrawer,
-    camera      : Camera,
+    pub camera  : Camera,
 }
 
 impl Renderer {
@@ -72,10 +72,6 @@ pub fn render(
 
     graphics.clear();
     
-    // for now, let's get main ship's position as the cam position offset
-    if let Some(sid) = frame.ship_id {
-        self.camera.set(CameraTrack::Entity(sid));
-    }
     let cam_pos = self.camera.update(&frame.ships,None);
     let world_trans = Renderer::translate(transform,cam_pos);
 

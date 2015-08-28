@@ -12,7 +12,7 @@ use client::interface::{
     Message,
 };
 use client::window::Window;
-use shared::game::ManeuverData;
+use shared::game::{ManeuverData,EntityId};
 
 
 pub struct Cli {
@@ -291,29 +291,37 @@ impl Cli {
                             InputEvent::ScheduleManeuver(data)
                                 )
                     },
-
                     _ =>
-                    self.text.push(format!("Error parsing arguments")),
+                        self.text.push(format!("Error parsing arguments")),
+                }
+            },
+            
+            "camera-track" => {
+                if let Some(id) = scan_fmt!(args,"{}", EntityId) {
+                    if frame.ships.get(&id).is_some() {
+                        events.push(InputEvent::CameraTrack(id));
+                    }
+                }
+            },
+
+            "help" => {
+                let help = [
+                    "list-broadcasts - Lists all received broadcasts",
+                    "start-broadcast <text> - Start sending a broadcast",
+                    "stop-broadcast - Stop sending the current broadcast",
+                    "nav-data - Print navigation data",
+                    "comm-data - Print communication data",
+                    "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
+                    "camera-track <ship_id>",
+                    ];
+
+                self.text.push(format!("Available commands:"));
+                for line in &help {
+                    self.text.push(format!("{}", line))
+                }
             }
-        },
 
-        "help" => {
-        let help = [
-            "list-broadcasts - Lists all received broadcasts",
-            "start-broadcast <text> - Start sending a broadcast",
-            "stop-broadcast - Stop sending the current broadcast",
-            "nav-data - Print navigation data",
-            "comm-data - Print communication data",
-            "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
-            ];
-
-        self.text.push(format!("Available commands:"));
-        for line in &help {
-            self.text.push(format!("{}", line))
+            _ => self.text.push(format!("Unknown command: {}\n", command)),
         }
     }
-
-    _ => self.text.push(format!("Unknown command: {}\n", command)),
-                }
-        }
 }

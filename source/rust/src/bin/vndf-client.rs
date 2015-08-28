@@ -24,7 +24,7 @@ use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
-
+use vndf::client::render::camera::{CameraTrack};
 
 fn main() {
     let args = Args::parse(env::args());
@@ -45,20 +45,21 @@ fn init_interface<I: Interface>() -> I {
     }
 }
 
-fn run<I: Interface>(args: Args, mut interface: I) {
+fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
 
     let mut broadcasts = HashMap::new();
     let mut ships      = HashMap::new();
-
+    let mut track_ship = None;
+    
     let mut network = Network::new(args.server);
 
     let mut last_server_activity = precise_time_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
-
+    
     'main: loop {
-        let input_events = match interface.update(&frame) {
+        let input_events = match interface.update(&frame,track_ship) {
             Ok(events) => events,
             Err(error) => panic!("Error updating interface: {}", error),
         };
@@ -100,6 +101,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.message = Message::Notice(
                         "Scheduling maneuver".to_string()
                             );
+                },
+                InputEvent::CameraTrack(id) => {
+                    track_ship = Some(CameraTrack::Entity(id));
                 },
                 InputEvent::Quit => {
                     break 'main;

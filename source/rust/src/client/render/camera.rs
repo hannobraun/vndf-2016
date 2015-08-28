@@ -3,6 +3,7 @@ use shared::game::{EntityId,Body};
 use std::collections::{BTreeMap};
 
 /// Camera tracking types
+#[derive(Clone,Copy)]
 pub enum CameraTrack {
     Entity(EntityId),
     Position,
