@@ -116,7 +116,7 @@ impl GlyphDrawer {
     pub fn draw(
         &mut self,
         position : Vec2<f32>,
-        c        : char,
+        text     : &str,
         color    : color::Color,
         transform: Mat4<f32>,
         graphics : &mut Graphics,
@@ -126,32 +126,38 @@ impl GlyphDrawer {
         // calculate the final transform outside of this method and pass it in
         // directly.
 
-        let &(ref glyph, ref texture) = match self.textures.get(&c) {
-            Some(result) => result,
-            None         => return,
-        };
-        let position =
-            position +
-            (glyph.size * 0.5) +
-            glyph.offset;
+        // TODO: Read from glyph data or compute from size
+        let glyph_offset = 9;
 
-        let translation = Iso3::new(
-            Vec3::new(position.x, position.y, 0.0),
-            Vec3::new(0.0, 0.0, 0.0),
-        );
-        let transform = transform * translation.to_homogeneous();
+        for (i, c) in text.chars().enumerate() {
+            let &(ref glyph, ref texture) = match self.textures.get(&c) {
+                Some(result) => result,
+                None         => continue,
+            };
+            let position =
+                position +
+                Vec2::new((i * glyph_offset) as f32, 0.0) +
+                (glyph.size * 0.5) +
+                glyph.offset;
 
-        let params = Params {
-            transform: *transform.as_array(),
-            size     : *glyph.size.as_array(),
-            color    : texture.to_param(),
-            o_color  : *Vec4::new(color[0],color[1],color[2],1.0).as_array(),
-            _r       : PhantomData,
-        };
+            let translation = Iso3::new(
+                Vec3::new(position.x, position.y, 0.0),
+                Vec3::new(0.0, 0.0, 0.0),
+            );
+            let transform = transform * translation.to_homogeneous();
 
-        graphics.draw(
-            &self.batch,
-            &params,
-        );
+            let params = Params {
+                transform: *transform.as_array(),
+                size     : *glyph.size.as_array(),
+                color    : texture.to_param(),
+                o_color  : *Vec4::new(color[0],color[1],color[2],1.0).as_array(),
+                _r       : PhantomData,
+            };
+
+            graphics.draw(
+                &self.batch,
+                &params,
+            );
+        }
     }
 }
