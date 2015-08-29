@@ -134,7 +134,7 @@ impl GlyphDrawer {
             .0;
         let advance_x = glyph.advance.x;
 
-        let pos_offset = if center {
+        let offset_x = if center {
             // For reasons I don't fully understand, the text doesn't look sharp
             // when the offset is fractional. We're preventing this here by
             // keeping it as an integer up here and only cast below.
@@ -151,7 +151,7 @@ impl GlyphDrawer {
             };
             let position =
                 position +
-                Vec2::new((i as f32 * advance_x) - pos_offset as f32, 0.0) +
+                Vec2::new((i as f32 * advance_x) - offset_x as f32, 0.0) +
                 (glyph.size * 0.5) +
                 glyph.offset;
 
