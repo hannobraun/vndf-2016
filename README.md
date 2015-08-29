@@ -19,7 +19,7 @@ The source repository for this project is hosted on GitHub:
 https://github.com/hannobraun/vndf
 
 Documentation is available in the
-`[docs](https://github.com/hannobraun/vndf/tree/master/docs)/` directory.
+[docs](https://github.com/hannobraun/vndf/tree/master/docs/) directory.
 
 Project management is done on
 [Trello](https://trello.com/b/WdwuT2Fx/von-neumann-defense-force).
