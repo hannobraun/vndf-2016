@@ -12,7 +12,6 @@ use client::interface::{
     InputEvent,
     Message,
 };
-use client::window::Window;
 use shared::game::{ManeuverData,EntityId};
 use client::render::camera::CameraTrack;
 

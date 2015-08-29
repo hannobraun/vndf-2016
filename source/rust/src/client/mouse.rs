@@ -1,9 +1,7 @@
-use glutin::ElementState::Pressed;
 use glutin::Event;
 use glutin::Event::{
     MouseMoved
 };
-use client::window::Window;
 
 pub struct Mouse {
     pos: (i32,i32),

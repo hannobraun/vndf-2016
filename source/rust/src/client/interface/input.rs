@@ -3,7 +3,7 @@ use rustc_serialize::json::{
     DecodeResult,
 };
 
-use shared::game::{ManeuverData,EntityId};
+use shared::game::{ManeuverData};
 use client::render::camera::CameraTrack;
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
