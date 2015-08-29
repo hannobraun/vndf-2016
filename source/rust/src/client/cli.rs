@@ -306,7 +306,7 @@ impl Cli {
             },
 
             "camera-track-group" => {
-                let mut args = args.split(' ');
+                let args = args.split(' ');
                 let mut ents = vec!();
                 
                 for n in args {
