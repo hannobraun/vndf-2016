@@ -199,25 +199,12 @@ impl Renderer {
         transform: Mat4<f32>,
         graphics : &mut Graphics,
         ) {
-        let glyph_offset = 9;
-
-        let pos_offset = if center {
-            // For reasons I don't fully understand, the text doesn't look sharp
-            // when the offset is fractional. We're preventing this here by
-            // keeping it as an integer up here and only cast below.
-            (glyph_offset * text.chars().count()) / 2
-        }
-        else {
-            0
-        };
 
         self.glyph_drawer.draw(
             text,
-            Vec2::new(
-                pos[0] as f32 - pos_offset as f32,
-                pos[1] as f32
-            ),
+            Vec2::new(pos[0] as f32, pos[1] as f32),
             color,
+            center,
             transform,
             graphics,
         );

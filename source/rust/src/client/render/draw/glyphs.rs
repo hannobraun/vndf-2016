@@ -118,6 +118,7 @@ impl GlyphDrawer {
         text     : &str,
         position : Vec2<f32>,
         color    : color::Color,
+        center   : bool,
         transform: Mat4<f32>,
         graphics : &mut Graphics,
     ) {
@@ -129,6 +130,16 @@ impl GlyphDrawer {
         // TODO: Read from glyph data or compute from size
         let glyph_offset = 9;
 
+        let pos_offset = if center {
+            // For reasons I don't fully understand, the text doesn't look sharp
+            // when the offset is fractional. We're preventing this here by
+            // keeping it as an integer up here and only cast below.
+            (glyph_offset * text.chars().count()) / 2
+        }
+        else {
+            0
+        };
+
         for (i, c) in text.chars().enumerate() {
             let &(ref glyph, ref texture) = match self.textures.get(&c) {
                 Some(result) => result,
@@ -136,7 +147,7 @@ impl GlyphDrawer {
             };
             let position =
                 position +
-                Vec2::new((i * glyph_offset) as f32, 0.0) +
+                Vec2::new((i * glyph_offset) as f32 - pos_offset as f32, 0.0) +
                 (glyph.size * 0.5) +
                 glyph.offset;
 
