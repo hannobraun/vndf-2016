@@ -115,6 +115,11 @@ impl Renderer {
 
 
         for (ship_id, ship) in &frame.ships {
+            let ship_size    = self.ship_drawer.ship_size;
+            let pos_offset   = Vec2::new(ship_size.x as f64, 10.0);
+            // TODO: This should be based on font size, not hardcoded
+            let line_advance = Vec2::new(0.0, -20.0);
+
             // draw ship velocity line
             let line = Shape::line([0.0,0.0],
                                    [(ship.velocity[0]*30.0) as f32,
@@ -139,11 +144,6 @@ impl Renderer {
                 world_trans,
                 &mut graphics,
                 );
-
-            let ship_size    = self.ship_drawer.ship_size;
-            let pos_offset   = Vec2::new(ship_size.x as f64, 10.0);
-            // TODO: This should be based on font size, not hardcoded
-            let line_advance = Vec2::new(0.0, -20.0);
 
             // draw ship id
             self.glyph_drawer.draw(
