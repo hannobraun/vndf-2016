@@ -108,8 +108,8 @@ impl GlyphDrawer {
         }
 
         GlyphDrawer {
-            textures : textures,
-            batch    : batch,
+            textures: textures,
+            batch   : batch,
         }
     }
 
