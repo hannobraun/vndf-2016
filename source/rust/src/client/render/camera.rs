@@ -47,7 +47,7 @@ impl Camera {
                 }
             },
             CameraTrack::Group(ref v) => {
-                
+                Camera::get_average_pos(&v,&frame);
             },
             _ => (),
         }
@@ -63,16 +63,19 @@ impl Camera {
 
     /// gets the average position of multiple entities
     // NOTE: This assumes that frame will hold all entities (eg: ships & planets)
-    pub fn get_average_pos (v: Vec<EntityId>, frame: &Frame) {
-        let mut p = vec!();
+    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> [f64;2] {
+        let mut ax = 0.0;
+        let mut ay = 0.0;
+        let total = v.len() as f64;
         
         // for now grab ships
         for n in v {
             if let Some(b) = frame.ships.get(&n) {
-                p.push([b.position[0],b.position[1]]);
+                ax += b.position[0];
+                ay += b.position[1];
             }
         }
 
-        println!("{:?}",p);
+        [ax/total, ay/total]
     }
 }
