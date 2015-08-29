@@ -12,6 +12,7 @@ use std::thread::sleep_ms;
 use time::precise_time_s;
 
 use vndf::client::args::Args;
+use vndf::client::config::Config;
 use vndf::client::interface::{
     self,
     Frame,
@@ -39,7 +40,7 @@ fn main() {
 
 
 fn init_interface<I: Interface>() -> I {
-    match Interface::new() {
+    match Interface::new(Config::load()) {
         Ok(interface) => interface,
         Err(error)    => panic!("Error initializing interface: {}", error),
     }

@@ -11,6 +11,7 @@ use std::thread::spawn;
 use std::vec::Drain;
 
 use client::cli::Cli;
+use client::config::Config;
 use client::interface::{
     Frame,
     InputEvent,
@@ -20,7 +21,7 @@ use client::window::Window;
 use client::render::camera::CameraTrack;
 
 pub trait Interface: Sized {
-    fn new() -> io::Result<Self>;
+    fn new(config: Config) -> io::Result<Self>;
     fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
               -> io::Result<Drain<InputEvent>>;
 }
@@ -34,16 +35,14 @@ pub struct Player {
 }
 
 impl Interface for Player {
-    fn new() -> io::Result<Player> {
-        let scaling_factor = 1.0;
-
+    fn new(config: Config) -> io::Result<Player> {
         let cli    = Cli::new();
         let window = Window::new(
-            (800.0 * scaling_factor) as u32,
-            (600.0 * scaling_factor) as u32,
+            (800.0 * config.scaling_factor) as u32,
+            (600.0 * config.scaling_factor) as u32,
         );
 
-        let renderer = Renderer::new(&window, scaling_factor);
+        let renderer = Renderer::new(&window, config.scaling_factor);
 
         Ok(Player {
             events  : Vec::new(),
@@ -77,7 +76,7 @@ pub struct Headless {
 }
 
 impl Interface for Headless {
-    fn new() -> io::Result<Headless> {
+    fn new(_: Config) -> io::Result<Headless> {
         let (sender, receiver) = channel();
 
         spawn(move || -> () {
