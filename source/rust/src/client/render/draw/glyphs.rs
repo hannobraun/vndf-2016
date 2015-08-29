@@ -115,8 +115,8 @@ impl GlyphDrawer {
 
     pub fn draw(
         &mut self,
-        position : Vec2<f32>,
         text     : &str,
+        position : Vec2<f32>,
         color    : color::Color,
         transform: Mat4<f32>,
         graphics : &mut Graphics,

@@ -204,11 +204,11 @@ impl Renderer {
         };
 
         self.glyph_drawer.draw(
+            text,
             Vec2::new(
                 pos[0] as f32 - pos_offset as f32,
                 pos[1] as f32
             ),
-            text,
             color::Colors::white(),
             transform,
             graphics,
