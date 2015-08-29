@@ -160,7 +160,7 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.glyph_drawer.draw(
                     ship_comm,
-                    ship_position + Vec2::new(0.0, -40.0),
+                    ship_position - Vec2::new(0.0, ship_size.y + 10.0),
                     color::Colors::white(),
                     true,
                     world_trans,
