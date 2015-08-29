@@ -6,3 +6,4 @@
 *.bu
 *#*#
 source/rust/target
+/client-config.toml
