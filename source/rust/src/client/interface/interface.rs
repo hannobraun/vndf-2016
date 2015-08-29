@@ -35,10 +35,15 @@ pub struct Player {
 
 impl Interface for Player {
     fn new() -> io::Result<Player> {
-        let cli    = Cli::new();
-        let window = Window::new(800, 600);
+        let scaling_factor = 1.0;
 
-        let renderer = Renderer::new(&window, 1.0);
+        let cli    = Cli::new();
+        let window = Window::new(
+            (800.0 * scaling_factor) as u32,
+            (600.0 * scaling_factor) as u32,
+        );
+
+        let renderer = Renderer::new(&window, scaling_factor);
 
         Ok(Player {
             events  : Vec::new(),
