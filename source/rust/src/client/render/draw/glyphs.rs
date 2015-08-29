@@ -71,8 +71,8 @@ gfx_parameters!(Params {
 
 
 pub struct GlyphDrawer {
-    textures : HashMap<char, (font::Glyph, Texture)>,
-    batch    : Batch<Params<gl::Resources>>,
+    textures: HashMap<char, (font::Glyph, Texture)>,
+    batch   : Batch<Params<gl::Resources>>,
 }
 
 impl GlyphDrawer {
