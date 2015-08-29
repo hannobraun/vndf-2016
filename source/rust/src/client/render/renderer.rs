@@ -140,6 +140,10 @@ impl Renderer {
                 &mut graphics,
                 );
 
+            let pos_offset   = Vec2::new(30.0, 10.0);
+            // TODO: This should be based on font size, not hardcoded
+            let line_advance = Vec2::new(0.0, -20.0);
+
             // draw ship id
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
@@ -166,7 +170,7 @@ impl Renderer {
             let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
             self.glyph_drawer.draw(
                 &pos,
-                cast(ship.position + Vec2::new(30.0, 10.0)),
+                cast(ship.position + pos_offset),
                 color::Colors::white(),
                 false,
                 world_trans,
@@ -177,7 +181,7 @@ impl Renderer {
             let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
             self.glyph_drawer.draw(
                 &vel,
-                cast(ship.position + Vec2::new(30.0, -10.0)),
+                cast(ship.position + pos_offset + line_advance),
                 color::Colors::white(),
                 false,
                 world_trans,
