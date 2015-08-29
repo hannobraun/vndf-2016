@@ -73,6 +73,8 @@ gfx_parameters!(Params {
 pub struct GlyphDrawer {
     textures: HashMap<char, (font::Glyph, Texture)>,
     batch   : Batch<Params<gl::Resources>>,
+
+    pub advance_x: f32,
 }
 
 impl GlyphDrawer {
@@ -107,9 +109,20 @@ impl GlyphDrawer {
             }
         }
 
+        // This works well, as long as we keep using a monospace font.
+        let advance_x = {
+            let ref glyph = textures
+                .get(&'A')
+                .unwrap_or_else(|| panic!("Expected 'A' to be available"))
+                .0;
+
+            glyph.advance.x
+        };
+
         GlyphDrawer {
-            textures: textures,
-            batch   : batch,
+            textures : textures,
+            batch    : batch,
+            advance_x: advance_x,
         }
     }
 
@@ -127,18 +140,11 @@ impl GlyphDrawer {
         // calculate the final transform outside of this method and pass it in
         // directly.
 
-        // This works well, as long as we keep using a monospace font.
-        let ref glyph = self.textures
-            .get(&'A')
-            .unwrap_or_else(|| panic!("Expected 'A' to be available"))
-            .0;
-        let advance_x = glyph.advance.x;
-
         let offset_x = if center {
             // For reasons I don't fully understand, the text doesn't look sharp
             // when the offset is fractional. We're preventing this here by
             // keeping it as an integer up here and only cast below.
-            (advance_x as usize * text.chars().count()) / 2
+            (self.advance_x as usize * text.chars().count()) / 2
         }
         else {
             0
@@ -151,7 +157,7 @@ impl GlyphDrawer {
             };
             let position =
                 position +
-                Vec2::new((i as f32 * advance_x) - offset_x as f32, 0.0) +
+                Vec2::new((i as f32 * self.advance_x) - offset_x as f32, 0.0) +
                 (glyph.size * 0.5) +
                 glyph.offset;
 
