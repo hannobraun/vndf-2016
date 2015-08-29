@@ -147,7 +147,7 @@ impl Renderer {
             // draw ship id
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
-                cast(ship.position + Vec2::new(0.0, 20.0)),
+                cast(ship.position - line_advance),
                 color::Colors::white(),
                 true,
                 world_trans,
