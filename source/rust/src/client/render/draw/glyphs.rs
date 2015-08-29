@@ -115,8 +115,7 @@ impl GlyphDrawer {
 
     pub fn draw(
         &mut self,
-        x        : f64,
-        y        : f64,
+        position : Vec2<f32>,
         c        : char,
         color    : color::Color,
         transform: Mat4<f32>,
@@ -132,7 +131,7 @@ impl GlyphDrawer {
             None         => return,
         };
         let position =
-            Vec2::new(x as f32, y as f32) +
+            position +
             (glyph.size * 0.5) +
             glyph.offset;
 

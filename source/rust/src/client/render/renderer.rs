@@ -5,6 +5,7 @@ use nalgebra::{
     Mat4,
     Ortho3,
     Iso3,
+    Vec2,
     Vec3,
     ToHomogeneous,
 };
@@ -204,8 +205,10 @@ impl Renderer {
 
         for (x, c) in text.chars().enumerate() {
             self.glyph_drawer.draw(
-                (pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
-                pos[1],
+                Vec2::new(
+                    pos[0] as f32 - pos_offset as f32 + ((x * glyph_offset) as f32),
+                    pos[1] as f32
+                ),
                 c,
                 color::Colors::white(),
                 transform,
