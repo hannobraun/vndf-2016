@@ -1,5 +1,6 @@
 use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
+use glutin::Event;
 use glutin::Event::{
     Closed,
     KeyboardInput,
@@ -52,7 +53,7 @@ impl Cli {
         &mut self,
         events: &mut Vec<InputEvent>,
         frame : &Frame,
-        window: &Window
+        window_events: &Vec<Event>,
             ) {
         match frame.message {
             Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
@@ -60,8 +61,8 @@ impl Cli {
             Message::None                => (),
         }
 
-        for event in window.poll_events() {
-            match event {
+        for event in window_events.iter() {
+            match *event {
                 ReceivedCharacter(c) =>
                     if !c.is_control() {
                         self.input_buffer.insert(self.prompt_idx,c);

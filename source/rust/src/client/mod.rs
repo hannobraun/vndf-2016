@@ -7,3 +7,4 @@ pub mod interface;
 pub mod network;
 pub mod render;
 pub mod window;
+pub mod mouse;

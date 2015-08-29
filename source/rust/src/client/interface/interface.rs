@@ -11,6 +11,7 @@ use std::thread::spawn;
 use std::vec::Drain;
 
 use client::cli::Cli;
+use client::mouse;
 use client::config::Config;
 use client::interface::{
     Frame,
@@ -32,6 +33,13 @@ pub struct Player {
     renderer: Renderer,
 }
 
+fn sort_events (window: &Window) {
+    for e in window.poll_events() {
+       // mouse::mouse(&self.window.clone());
+       // self.cli.update(&mut self.events, frame, &self.window);
+    }
+}
+
 impl Interface for Player {
     fn new(config: Config) -> io::Result<Player> {
         let cli    = Cli::new();
@@ -51,8 +59,9 @@ impl Interface for Player {
     }
 
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
-        self.cli.update(&mut self.events, frame, &self.window);
-        
+        let window_events = self.window.poll_events().collect();
+        mouse::mouse(&window_events);
+        self.cli.update(&mut self.events, frame, &window_events);
         if let Some(track) = frame.camera_track.clone() {
             self.renderer.camera.set(track);
             frame.camera_track = None; //we should clear this out
