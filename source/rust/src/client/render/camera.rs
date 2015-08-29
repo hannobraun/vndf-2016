@@ -2,9 +2,10 @@ use shared::game::EntityId;
 use client::interface::Frame;
 
 /// Camera tracking types
-#[derive(Debug,Clone,Copy,RustcDecodable, RustcEncodable)]
+#[derive(Debug,Clone,RustcDecodable, RustcEncodable)]
 pub enum CameraTrack {
     Entity(EntityId),
+    Group(Vec<EntityId>),
     Position,
     Default,
 }
@@ -45,6 +46,9 @@ impl Camera {
                     self.track = CameraTrack::Entity(id);
                 }
             },
+            CameraTrack::Group(ref v) => {
+                
+            },
             _ => (),
         }
 
@@ -55,5 +59,20 @@ impl Camera {
 
         self.pos = pos;
         pos
+    }
+
+    /// gets the average position of multiple entities
+    // NOTE: This assumes that frame will hold all entities (eg: ships & planets)
+    pub fn get_average_pos (v: Vec<EntityId>, frame: &Frame) {
+        let mut p = vec!();
+        
+        // for now grab ships
+        for n in v {
+            if let Some(b) = frame.ships.get(&n) {
+                p.push([b.position[0],b.position[1]]);
+            }
+        }
+
+        println!("{:?}",p);
     }
 }

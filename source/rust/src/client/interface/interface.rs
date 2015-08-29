@@ -53,7 +53,7 @@ impl Interface for Player {
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         self.cli.update(&mut self.events, frame, &self.window);
         
-        if let Some(track) = frame.camera_track {
+        if let Some(track) = frame.camera_track.clone() {
             self.renderer.camera.set(track);
             frame.camera_track = None; //we should clear this out
         }
