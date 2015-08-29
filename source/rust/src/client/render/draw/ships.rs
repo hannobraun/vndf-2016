@@ -58,8 +58,9 @@ gfx_parameters!(Params {
 
 
 pub struct ShipDrawer {
-	batch    : Batch<Params<gl::Resources>>,
-	ship_size: Vec2<f32>,
+	batch: Batch<Params<gl::Resources>>,
+
+	pub ship_size: Vec2<f32>,
 }
 
 impl ShipDrawer {
