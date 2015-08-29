@@ -9,6 +9,11 @@ use glutin::Event::{
     MouseWheel,
 };
 
+use client::interface::{
+    Frame,
+    InputEvent,
+};
+
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
 const DRAGMIN_TIME: f64 = 75f64; // 75ms time minimum
 
@@ -28,7 +33,10 @@ impl Mouse {
             click: None,
         }
     }
-    pub fn update (&mut self, window_events: &Vec<Event>) {
+    pub fn update (&mut self,
+                   events: &mut Vec<InputEvent>,
+                   frame : &Frame,
+                   window_events: &Vec<Event>) {
         for event in window_events.iter() {
             match *event {
                 MouseMoved(pos) => {
@@ -45,13 +53,14 @@ impl Mouse {
                         (((self.drag.0).unwrap().1 - self.pos.1).abs() >
                         DRAGMIN_PX)
                     {
-                       
                         self.drag.1 = Some(self.pos);
                     }
                     else {
                         self.click = self.drag.0;
                         self.drag.0 = None;
                     }
+
+                    self.handler(events,frame);
                 },
                 MouseWheel(d) => { },
                 _ => { },
@@ -78,5 +87,18 @@ impl Mouse {
         let click = self.click;
         self.click = None;
         click
+    }
+
+    fn handler(&mut self,
+               events: &mut Vec<InputEvent>,
+               frame : &Frame) {
+        if let Some(click) = self.click {
+            //TODO: find entity that was clicked
+            //if no entity, pass on to UI (or viceversa)
+        }
+        else if let Some(drag_end) = self.drag.1 {
+            let drag_start = self.drag.0.unwrap();
+            //TODO: find entities that were selected
+        }
     }
 }
