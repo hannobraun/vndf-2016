@@ -13,6 +13,7 @@ extern crate rand;
 extern crate rustc_serialize;
 #[macro_use] extern crate scan_fmt;
 extern crate time;
+extern crate toml;
 
 
 pub mod client;
