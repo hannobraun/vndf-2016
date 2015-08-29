@@ -104,7 +104,7 @@ impl Interface for Headless {
         })
     }
 
-    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
+    fn update(&mut self, frame: &Frame, _: Option<CameraTrack>)
               -> io::Result<Drain<InputEvent>> {
         loop {
             match self.receiver.try_recv() {
