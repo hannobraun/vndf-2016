@@ -64,7 +64,7 @@ pub struct ShipDrawer {
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics, ship_size: f32) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -77,7 +77,7 @@ impl ShipDrawer {
 
 		ShipDrawer {
 			batch    : batch,
-			ship_size: Vec2::new(30.0, 30.0),
+			ship_size: Vec2::new(ship_size, ship_size),
 		}
 	}
 
