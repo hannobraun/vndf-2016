@@ -47,7 +47,7 @@ impl Camera {
                 }
             },
             CameraTrack::Group(ref v) => {
-                Camera::get_average_pos(&v,&frame);
+                pos = Camera::get_average_pos(&v,&frame);
             },
             _ => (),
         }
