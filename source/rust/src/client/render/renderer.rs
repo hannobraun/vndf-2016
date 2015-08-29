@@ -11,7 +11,6 @@ use nalgebra::{
 };
 
 use client::interface::Frame;
-use client::render::base::Graphics;
 use client::window::Window;
 use client::render::base::{color,Shape};
 use client::render::draw::{
@@ -78,7 +77,7 @@ impl Renderer {
 
         // render console output
         for (y, line) in output.iter().enumerate() {
-            self.render_text(
+            self.glyph_drawer.draw(
                 &line,
                 position_cli(0, y, window_size),
                 color::Colors::white(),
@@ -95,7 +94,7 @@ impl Renderer {
             .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 
-        self.render_text(
+        self.glyph_drawer.draw(
             &command_line,
             position_cli(0, prompt_ypos, window_size),
             color::Colors::white(),
@@ -105,7 +104,7 @@ impl Renderer {
             );
 
         //draw cursor position in prompt
-        self.render_text(
+        self.glyph_drawer.draw(
             &"_".to_string(),
             position_cli(command.1 + 2, prompt_ypos, window_size),
             color::Colors::white(),
@@ -142,7 +141,7 @@ impl Renderer {
                 );
 
             // draw ship id
-            self.render_text(
+            self.glyph_drawer.draw(
                 &ship_id.to_string(),
                 cast(ship.position + Vec2::new(0.0, 20.0)),
                 color::Colors::white(),
@@ -153,7 +152,7 @@ impl Renderer {
 
             // draw ship broadcast
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
-                self.render_text(
+                self.glyph_drawer.draw(
                     ship_comm,
                     cast(ship.position + Vec2::new(0.0, -40.0)),
                     color::Colors::white(),
@@ -165,7 +164,7 @@ impl Renderer {
 
             // draw ship position
             let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
-            self.render_text(
+            self.glyph_drawer.draw(
                 &pos,
                 cast(ship.position + Vec2::new(30.0, 10.0)),
                 color::Colors::white(),
@@ -176,7 +175,7 @@ impl Renderer {
 
             // draw ship velocity
             let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
-            self.render_text(
+            self.glyph_drawer.draw(
                 &vel,
                 cast(ship.position + Vec2::new(30.0, -10.0)),
                 color::Colors::white(),
@@ -187,27 +186,6 @@ impl Renderer {
         }
 
         graphics.flush();
-    }
-
-    // NOTE: glyph size offset is currently hardcoded to 9px
-    fn render_text(
-        &mut self,
-        text     : &str,
-        pos      : Vec2<f32>,
-        color    : color::Color,
-        center   : bool,
-        transform: Mat4<f32>,
-        graphics : &mut Graphics,
-        ) {
-
-        self.glyph_drawer.draw(
-            text,
-            pos,
-            color,
-            center,
-            transform,
-            graphics,
-        );
     }
 }
 
