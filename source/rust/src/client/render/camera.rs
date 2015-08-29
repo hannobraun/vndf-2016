@@ -32,8 +32,7 @@ impl Camera {
                    offset: Option<[f32;2]>)
                    -> [f32;2] {
         let mut pos = [0.0,0.0];
-        let track = self.track.clone();
-        match track {
+        match self.track {
             CameraTrack::Entity(eid) => {
                 if let Some(ref ship) = frame.ships.get(&eid) {
                     // NOTE: neg(x) will keep position, this gets flipped for some reason
