@@ -81,6 +81,7 @@ impl Renderer {
             self.render_text(
                 &line,
                 position_cli(0, y, window_size),
+                color::Colors::white(),
                 false,
                 transform,
                 &mut graphics,
@@ -97,6 +98,7 @@ impl Renderer {
         self.render_text(
             &command_line,
             position_cli(0, prompt_ypos, window_size),
+            color::Colors::white(),
             false,
             transform,
             &mut graphics,
@@ -106,6 +108,7 @@ impl Renderer {
         self.render_text(
             &"_".to_string(),
             position_cli(command.1 + 2, prompt_ypos, window_size),
+            color::Colors::white(),
             false,
             transform,
             &mut graphics,
@@ -142,6 +145,7 @@ impl Renderer {
             self.render_text(
                 &ship_id.to_string(),
                 [ship.position[0],ship.position[1]+20.0],
+                color::Colors::white(),
                 true,
                 world_trans,
                 &mut graphics,
@@ -152,6 +156,7 @@ impl Renderer {
                 self.render_text(
                     ship_comm,
                     [ship.position[0],ship.position[1]-40.0],
+                    color::Colors::white(),
                     true,
                     world_trans,
                     &mut graphics,
@@ -163,6 +168,7 @@ impl Renderer {
             self.render_text(
                 &pos,
                 [ship.position[0]+30.0,ship.position[1]+10.0],
+                color::Colors::white(),
                 false,
                 world_trans,
                 &mut graphics,
@@ -173,6 +179,7 @@ impl Renderer {
             self.render_text(
                 &vel,
                 [ship.position[0]+30.0,ship.position[1]-10.0],
+                color::Colors::white(),
                 false,
                 world_trans,
                 &mut graphics,
@@ -187,6 +194,7 @@ impl Renderer {
         &mut self,
         text     : &str,
         pos      : [f64;2],
+        color    : color::Color,
         center   : bool,
         transform: Mat4<f32>,
         graphics : &mut Graphics,
@@ -209,7 +217,7 @@ impl Renderer {
                 pos[0] as f32 - pos_offset as f32,
                 pos[1] as f32
             ),
-            color::Colors::white(),
+            color,
             transform,
             graphics,
         );
