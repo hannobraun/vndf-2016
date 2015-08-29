@@ -144,7 +144,7 @@ impl Renderer {
             // draw ship id
             self.render_text(
                 &ship_id.to_string(),
-                [ship.position[0],ship.position[1]+20.0],
+                cast(ship.position + Vec2::new(0.0, 20.0)),
                 color::Colors::white(),
                 true,
                 world_trans,
@@ -155,7 +155,7 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.render_text(
                     ship_comm,
-                    [ship.position[0],ship.position[1]-40.0],
+                    cast(ship.position + Vec2::new(0.0, -40.0)),
                     color::Colors::white(),
                     true,
                     world_trans,
@@ -167,7 +167,7 @@ impl Renderer {
             let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
             self.render_text(
                 &pos,
-                [ship.position[0]+30.0,ship.position[1]+10.0],
+                cast(ship.position + Vec2::new(30.0, 10.0)),
                 color::Colors::white(),
                 false,
                 world_trans,
@@ -178,7 +178,7 @@ impl Renderer {
             let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
             self.render_text(
                 &vel,
-                [ship.position[0]+30.0,ship.position[1]-10.0],
+                cast(ship.position + Vec2::new(30.0, -10.0)),
                 color::Colors::white(),
                 false,
                 world_trans,
@@ -193,7 +193,7 @@ impl Renderer {
     fn render_text(
         &mut self,
         text     : &str,
-        pos      : [f64;2],
+        pos      : Vec2<f32>,
         color    : color::Color,
         center   : bool,
         transform: Mat4<f32>,
@@ -202,7 +202,7 @@ impl Renderer {
 
         self.glyph_drawer.draw(
             text,
-            Vec2::new(pos[0] as f32, pos[1] as f32),
+            pos,
             color,
             center,
             transform,
@@ -214,7 +214,7 @@ impl Renderer {
 
 /// This is used to position CLI text
 /// It takes in to account the window sizing
-fn position_cli(x: usize, y: usize, window_size: (u32, u32)) -> [f64;2] {
+fn position_cli(x: usize, y: usize, window_size: (u32, u32)) -> Vec2<f32> {
         let (width, height) = window_size;
 
         let pad_x    = 10.0;
@@ -222,6 +222,8 @@ fn position_cli(x: usize, y: usize, window_size: (u32, u32)) -> [f64;2] {
         let offset_x = 9.0;
         let offset_y = 18.0;
 
-        [(-1.0 * ((width as f64/2.0) - pad_x)) + offset_x * x as f64,
-         ((height as f64/2.0) - pad_y) + offset_y * (y as f64 * -1.0),]
+        Vec2::new(
+            (-1.0 * ((width as f32 / 2.0) - pad_x)) + offset_x * x as f32,
+            ((height as f32 / 2.0) - pad_y) + offset_y * (y as f32 * -1.0),
+        )
 }
