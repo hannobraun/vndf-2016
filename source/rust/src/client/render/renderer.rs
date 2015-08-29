@@ -217,8 +217,8 @@ impl Renderer {
 fn position_cli(x: usize, y: usize, window_size: (u32, u32)) -> [f64;2] {
         let (width, height) = window_size;
 
-        let pad_x = 10.0f64;
-        let pad_y = 30.0f64;
+        let pad_x    = 10.0;
+        let pad_y    = 30.0;
         let offset_x = 9.0;
         let offset_y = 18.0;
 
