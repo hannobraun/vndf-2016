@@ -8,7 +8,6 @@ pub struct Window {
 }
 
 impl Window {
-	// TODO: window size args and make window resizable
 	pub fn new(width: u32, height: u32) -> Window {
 		let window = glutin::WindowBuilder::new()
 			.with_title("Von Neumann Defense Force - PREVIEW VERSION".to_string())
