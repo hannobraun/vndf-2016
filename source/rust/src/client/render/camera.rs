@@ -36,7 +36,7 @@ impl Camera {
         match self.track {
             CameraTrack::Entity(eid) => {
                 if let Some(ref ship) = frame.ships.get(&eid) {
-                    // NOTE: neg(x) will keep position, this gets flipped for some reason
+                    // NOTE: must invert each coordinate to track
                     pos = [-1.0f32 * ship.position.x as f32,
                            -1.0f32 * ship.position.y as f32];
                 }
