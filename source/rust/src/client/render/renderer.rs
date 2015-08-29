@@ -211,13 +211,13 @@ fn position_cli(
     line_height: f32,
     window_size: (u32, u32),
 ) -> Vec2<f32> {
-        let (width, height) = window_size;
+    let (width, height) = window_size;
 
-        let pad_x = 10.0;
-        let pad_y = 30.0;
+    let pad_x = 10.0;
+    let pad_y = 30.0;
 
-        Vec2::new(
-            (-1.0 * ((width as f32 / 2.0) - pad_x)) + advance_x * x as f32,
-            ((height as f32 / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
-        )
+    Vec2::new(
+        (-1.0 * ((width as f32 / 2.0) - pad_x)) + advance_x * x as f32,
+        ((height as f32 / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
+    )
 }
