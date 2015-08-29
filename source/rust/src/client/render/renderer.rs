@@ -51,168 +51,168 @@ impl Renderer {
 
     /// translates transform, used for camera positioning
     fn translate(transform: Mat4<f32>, pos: [f32;2]) -> Mat4<f32> {
-    let translation = Iso3::new(
-        Vec3::new(pos[0], pos[1], 0.0),
-        Vec3::new(0.0, 0.0, 0.0),
-        );
+        let translation = Iso3::new(
+            Vec3::new(pos[0], pos[1], 0.0),
+            Vec3::new(0.0, 0.0, 0.0),
+            );
 
-    transform * translation.to_homogeneous()
-}
+        transform * translation.to_homogeneous()
+    }
 
-pub fn render(
-    &mut self,
-    output : &[String],
-    command: (&str,usize),
-    frame  : &Frame,
-    window : &Window,
-    ) {
-    let     window_size = window.get_size();
-    let     transform   = Renderer::get_transform(window_size);
-    let mut graphics    = window.create_graphics();
+    pub fn render(
+        &mut self,
+        output : &[String],
+        command: (&str,usize),
+        frame  : &Frame,
+        window : &Window,
+        ) {
+        let     window_size = window.get_size();
+        let     transform   = Renderer::get_transform(window_size);
+        let mut graphics    = window.create_graphics();
 
-    graphics.clear();
-    
-    let cam_pos = self.camera.update(&frame.ships,None);
-    let world_trans = Renderer::translate(transform,cam_pos);
+        graphics.clear();
 
-    // render console output
-    for (y, line) in output.iter().enumerate() {
+        let cam_pos = self.camera.update(&frame.ships,None);
+        let world_trans = Renderer::translate(transform,cam_pos);
+
+        // render console output
+        for (y, line) in output.iter().enumerate() {
+            self.render_text(
+                &line,
+                position_cli(0, y, window_size),
+                false,
+                transform,
+                &mut graphics,
+                );
+        }
+
+        let mut command_line = String::new();
+        let prompt_ypos = 23;
+
+        write!(&mut command_line, "> {}", command.0)
+            .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
+
+
         self.render_text(
-            &line,
-            position_cli(0, y, window_size),
+            &command_line,
+            position_cli(0, prompt_ypos, window_size),
             false,
             transform,
             &mut graphics,
             );
-    }
-    
-    let mut command_line = String::new();
-    let prompt_ypos = 23;
-    
-    write!(&mut command_line, "> {}", command.0)
-        .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
-    
-    self.render_text(
-        &command_line,
-        position_cli(0, prompt_ypos, window_size),
-        false,
-        transform,
-        &mut graphics,
-        );
-
-    //draw cursor position in prompt
-    self.render_text(
-        &"_".to_string(),
-        position_cli(command.1 + 2, prompt_ypos, window_size),
-        false,
-        transform,
-        &mut graphics,
-        );
-    
-
-    for (ship_id, ship) in &frame.ships {
-        // draw ship velocity line
-        let line = Shape::line([0.0,0.0],
-                               [(ship.velocity[0]*30.0) as f32,
-                                (ship.velocity[1]*30.0) as f32],
-                               1.0);
-        ShapeDrawer::new(&mut graphics, &line)
-            .draw([ship.position[0] as f32,
-                   ship.position[1] as f32],
-                  [1.0,1.0],
-                  color::Colors::red(),
-                  world_trans,
-                  &mut graphics);
-
-
-        let mut color = color::Colors::blue();
-        if let Some(sid) = frame.ship_id {
-            if *ship_id == sid  { color = color::Colors::green_spring(); }
-        }
-        self.ship_drawer.draw(
-            &cast(ship.position),
-            color,
-            world_trans,
-            &mut graphics,
-            );
-
-        // draw ship id
+        //draw cursor position in prompt
         self.render_text(
-            &ship_id.to_string(),
-            [ship.position[0],ship.position[1]+20.0],
-            true,
-            world_trans,
+            &"_".to_string(),
+            position_cli(command.1 + 2, prompt_ypos, window_size),
+            false,
+            transform,
             &mut graphics,
             );
 
-        // draw ship broadcast
-        if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
+
+        for (ship_id, ship) in &frame.ships {
+            // draw ship velocity line
+            let line = Shape::line([0.0,0.0],
+                                   [(ship.velocity[0]*30.0) as f32,
+                                    (ship.velocity[1]*30.0) as f32],
+                                   1.0);
+            ShapeDrawer::new(&mut graphics, &line)
+                .draw([ship.position[0] as f32,
+                       ship.position[1] as f32],
+                      [1.0,1.0],
+                      color::Colors::red(),
+                      world_trans,
+                      &mut graphics);
+
+
+            let mut color = color::Colors::blue();
+            if let Some(sid) = frame.ship_id {
+                if *ship_id == sid  { color = color::Colors::green_spring(); }
+            }
+            self.ship_drawer.draw(
+                &cast(ship.position),
+                color,
+                world_trans,
+                &mut graphics,
+                );
+
+            // draw ship id
             self.render_text(
-                ship_comm,
-                [ship.position[0],ship.position[1]-40.0],
+                &ship_id.to_string(),
+                [ship.position[0],ship.position[1]+20.0],
                 true,
+                world_trans,
+                &mut graphics,
+                );
+
+            // draw ship broadcast
+            if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
+                self.render_text(
+                    ship_comm,
+                    [ship.position[0],ship.position[1]-40.0],
+                    true,
+                    world_trans,
+                    &mut graphics,
+                    );
+            }
+
+            // draw ship position
+            let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
+            self.render_text(
+                &pos,
+                [ship.position[0]+30.0,ship.position[1]+10.0],
+                false,
+                world_trans,
+                &mut graphics,
+                );
+
+            // draw ship velocity
+            let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
+            self.render_text(
+                &vel,
+                [ship.position[0]+30.0,ship.position[1]-10.0],
+                false,
                 world_trans,
                 &mut graphics,
                 );
         }
 
-        // draw ship position
-        let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
-        self.render_text(
-            &pos,
-            [ship.position[0]+30.0,ship.position[1]+10.0],
-            false,
-            world_trans,
-            &mut graphics,
-            );
-
-        // draw ship velocity
-        let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
-        self.render_text(
-            &vel,
-            [ship.position[0]+30.0,ship.position[1]-10.0],
-            false,
-            world_trans,
-            &mut graphics,
-            );
+        graphics.flush();
     }
 
-    graphics.flush();
-}
+    // NOTE: glyph size offset is currently hardcoded to 9px
+    fn render_text(
+        &mut self,
+        text     : &String,
+        pos      : [f64;2],
+        center   : bool,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
+        ) {
+        let glyph_offset = 9;
 
-// NOTE: glyph size offset is currently hardcoded to 9px
-fn render_text(
-    &mut self,
-    text     : &String,
-    pos      : [f64;2],
-    center   : bool,
-    transform: Mat4<f32>,
-    graphics : &mut Graphics,
-    ) {
-    let glyph_offset = 9;
+        let pos_offset = if center {
+            // For reasons I don't fully understand, the text doesn't look sharp
+            // when the offset is fractional. We're preventing this here by
+            // keeping it as an integer up here and only cast below.
+            (glyph_offset * text.chars().count()) / 2
+        }
+        else {
+            0
+        };
 
-    let pos_offset = if center {
-        // For reasons I don't fully understand, the text doesn't look sharp
-        // when the offset is fractional. We're preventing this here by
-        // keeping it as an integer up here and only cast below.
-        (glyph_offset * text.chars().count()) / 2
+        for (x, c) in text.chars().enumerate() {
+            self.glyph_drawer.draw(
+                (pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
+                pos[1],
+                c,
+                color::Colors::white(),
+                transform,
+                graphics,
+                );
+        }
     }
-    else {
-        0
-    };
-    
-    for (x, c) in text.chars().enumerate() {
-        self.glyph_drawer.draw(
-            (pos[0] - pos_offset as f64 + ((x * glyph_offset) as f64)),
-            pos[1],
-            c,
-            color::Colors::white(),
-            transform,
-            graphics,
-            );
-    }
-}
 }
 
 
