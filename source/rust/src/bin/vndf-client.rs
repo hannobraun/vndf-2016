@@ -104,8 +104,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         "Scheduling maneuver".to_string()
                             );
                 },
-                InputEvent::CameraTrack(id) => {
-                    frame.camera_track = Some(CameraTrack::Entity(id));
+                InputEvent::Track(track) => {
+                    frame.camera_track = Some(track);
                 },
                 InputEvent::Quit => {
                     break 'main;

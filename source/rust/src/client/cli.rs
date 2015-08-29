@@ -13,7 +13,7 @@ use client::interface::{
 };
 use client::window::Window;
 use shared::game::{ManeuverData,EntityId};
-
+use client::render::camera::CameraTrack;
 
 pub struct Cli {
     input_buffer: String,
@@ -295,13 +295,29 @@ impl Cli {
                         self.text.push(format!("Error parsing arguments")),
                 }
             },
-            
+
+            // TODO: consider renaming to select-entity
             "camera-track" => {
                 if let Some(id) = scan_fmt!(args,"{}", EntityId) {
                     if frame.ships.get(&id).is_some() {
-                        events.push(InputEvent::CameraTrack(id));
+                        events.push(InputEvent::Track(CameraTrack::Entity(id)));
                     }
                 }
+            },
+
+            "camera-track-group" => {
+                let mut args = args.split(' ');
+                let mut ents = vec!();
+                
+                for n in args {
+                    if let Some(id) = n.parse::<EntityId>().ok() {
+                        if frame.ships.get(&id).is_some() {
+                            ents.push(id);
+                        }
+                    }
+                }
+
+                events.push(InputEvent::Track(CameraTrack::Group(ents)));
             },
 
             "help" => {
@@ -313,6 +329,7 @@ impl Cli {
                     "comm-data - Print communication data",
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
                     "camera-track <ship_id>",
+                    "camera-track-group <list of ship_id, separate by space>"
                     ];
 
                 self.text.push(format!("Available commands:"));
