@@ -9,25 +9,28 @@ use shared::game::{
     Body,
     EntityId,
 };
+use client::render::camera::CameraTrack;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Frame {
-    pub ship_id    : Option<EntityId>,
-    pub game_time_s: Option<f64>,
-    pub message    : Message,
-    pub broadcasts : HashMap<EntityId, String>,
-    pub ships      : BTreeMap<EntityId, Body>,
+    pub ship_id     : Option<EntityId>,
+    pub game_time_s : Option<f64>,
+    pub message     : Message,
+    pub broadcasts  : HashMap<EntityId, String>,
+    pub ships       : BTreeMap<EntityId, Body>,
+    pub camera_track: Option<CameraTrack>,
 }
 
 impl Frame {
     pub fn new() -> Frame {
         Frame {
-            ship_id    : None,
-            game_time_s: None,
-            message    : Message::None,
-            broadcasts : HashMap::new(),
-            ships      : BTreeMap::new(),
+            ship_id     : None,
+            game_time_s : None,
+            message     : Message::None,
+            broadcasts  : HashMap::new(),
+            ships       : BTreeMap::new(),
+            camera_track:None,
         }
     }
 

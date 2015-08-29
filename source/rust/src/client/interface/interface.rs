@@ -18,12 +18,10 @@ use client::interface::{
 };
 use client::render::Renderer;
 use client::window::Window;
-use client::render::camera::CameraTrack;
 
 pub trait Interface: Sized {
     fn new(config: Config) -> io::Result<Self>;
-    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
-              -> io::Result<Drain<InputEvent>>;
+    fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>>;
 }
 
 
@@ -52,11 +50,13 @@ impl Interface for Player {
         })
     }
 
-    fn update(&mut self, frame: &Frame, maybe_track: Option<CameraTrack>)
-              -> io::Result<Drain<InputEvent>> {
+    fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         self.cli.update(&mut self.events, frame, &self.window);
         
-        if let Some(track) = maybe_track { self.renderer.camera.set(track); }
+        if let Some(track) = frame.camera_track {
+            self.renderer.camera.set(track);
+            frame.camera_track = None; //we should clear this out
+        }
         
         self.renderer.render(
             self.cli.text(),
@@ -108,8 +108,7 @@ impl Interface for Headless {
         })
     }
 
-    fn update(&mut self, frame: &Frame, _: Option<CameraTrack>)
-              -> io::Result<Drain<InputEvent>> {
+    fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         loop {
             match self.receiver.try_recv() {
                 Ok(event) =>

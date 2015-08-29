@@ -78,7 +78,7 @@ impl Renderer {
 
         graphics.clear();
 
-        let cam_pos = self.camera.update(&frame.ships,None);
+        let cam_pos = self.camera.update(&frame,None);
         let world_trans = Renderer::translate(transform,cam_pos);
 
         let advance_x   = self.glyph_drawer.advance_x;

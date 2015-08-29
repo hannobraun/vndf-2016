@@ -48,10 +48,11 @@ fn init_interface<I: Interface>() -> I {
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
-
+    frame.camera_track = Some(CameraTrack::Default);
+    
     let mut broadcasts = HashMap::new();
     let mut ships      = HashMap::new();
-    let mut track_ship = None;
+    
     
     let mut network = Network::new(args.server);
 
@@ -60,7 +61,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
     network.send(ClientEvent::Public(client_event::Public::Login));
     
     'main: loop {
-        let input_events = match interface.update(&frame,track_ship) {
+        let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
             Err(error) => panic!("Error updating interface: {}", error),
         };
@@ -104,7 +105,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                             );
                 },
                 InputEvent::CameraTrack(id) => {
-                    track_ship = Some(CameraTrack::Entity(id));
+                    frame.camera_track = Some(CameraTrack::Entity(id));
                 },
                 InputEvent::Quit => {
                     break 'main;
