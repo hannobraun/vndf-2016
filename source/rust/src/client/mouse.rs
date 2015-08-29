@@ -1,18 +1,25 @@
 use glutin::ElementState::Pressed;
 use glutin::Event;
 use glutin::Event::{
-    Closed,
-    KeyboardInput,
-    ReceivedCharacter,
+    MouseMoved
 };
 use client::window::Window;
 
-pub struct Mouse;
+pub struct Mouse {
+    pos: (i32,i32),
+}
 
-//pub impl Mouse {
-    
-pub fn mouse (window_events: &Vec<Event>) {
-    for event in window_events.iter() {
-        println!("{:?}",event);
+impl Mouse {
+    pub fn new() -> Mouse {
+        Mouse { pos: (0,0) }
     }
+    pub fn update (&mut self, window_events: &Vec<Event>) {
+        for event in window_events.iter() {
+            match *event {
+                MouseMoved(pos) => { self.pos = pos; },
+                _ => { },
+            }
+        }
+    }
+
 }

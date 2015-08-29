@@ -31,6 +31,7 @@ pub struct Player {
     cli     : Cli,
     window  : Window,
     renderer: Renderer,
+    mouse   : Mouse, // NOTE: this might be renamed to selector or controller
 }
 
 impl Interface for Player {
@@ -48,13 +49,16 @@ impl Interface for Player {
             cli     : cli,
             window  : window,
             renderer: renderer,
+            mouse   : Mouse::new(),
         })
     }
 
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         let window_events = self.window.poll_events().collect();
-        mouse::mouse(&window_events);
+        
+        self.mouse.update(&window_events);
         self.cli.update(&mut self.events, frame, &window_events);
+        
         if let Some(track) = frame.camera_track.clone() {
             self.renderer.camera.set(track);
             frame.camera_track = None; //we should clear this out
