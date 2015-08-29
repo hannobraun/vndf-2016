@@ -79,11 +79,14 @@ impl Renderer {
         let cam_pos = self.camera.update(&frame.ships,None);
         let world_trans = Renderer::translate(transform,cam_pos);
 
+        let advance_x   = self.glyph_drawer.advance_x;
+        let line_height = self.line_height;
+
         // render console output
         for (y, line) in output.iter().enumerate() {
             self.glyph_drawer.draw(
                 &line,
-                position_cli(0, y, window_size),
+                position_cli(0, y, advance_x, line_height, window_size),
                 color::Colors::white(),
                 false,
                 transform,
@@ -100,7 +103,7 @@ impl Renderer {
 
         self.glyph_drawer.draw(
             &command_line,
-            position_cli(0, prompt_ypos, window_size),
+            position_cli(0, prompt_ypos, advance_x, line_height, window_size),
             color::Colors::white(),
             false,
             transform,
@@ -110,7 +113,7 @@ impl Renderer {
         //draw cursor position in prompt
         self.glyph_drawer.draw(
             &"_".to_string(),
-            position_cli(command.1 + 2, prompt_ypos, window_size),
+            position_cli(command.1 + 2, prompt_ypos, advance_x, line_height, window_size),
             color::Colors::white(),
             false,
             transform,
@@ -201,16 +204,20 @@ impl Renderer {
 
 /// This is used to position CLI text
 /// It takes in to account the window sizing
-fn position_cli(x: usize, y: usize, window_size: (u32, u32)) -> Vec2<f32> {
+fn position_cli(
+    x          : usize,
+    y          : usize,
+    advance_x  : f32,
+    line_height: f32,
+    window_size: (u32, u32),
+) -> Vec2<f32> {
         let (width, height) = window_size;
 
-        let pad_x    = 10.0;
-        let pad_y    = 30.0;
-        let offset_x = 9.0;
-        let offset_y = 18.0;
+        let pad_x = 10.0;
+        let pad_y = 30.0;
 
         Vec2::new(
-            (-1.0 * ((width as f32 / 2.0) - pad_x)) + offset_x * x as f32,
-            ((height as f32 / 2.0) - pad_y) + offset_y * (y as f32 * -1.0),
+            (-1.0 * ((width as f32 / 2.0) - pad_x)) + advance_x * x as f32,
+            ((height as f32 / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
         )
 }
