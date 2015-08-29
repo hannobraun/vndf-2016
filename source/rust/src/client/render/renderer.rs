@@ -41,7 +41,7 @@ impl Renderer {
             glyph_drawer: glyph_drawer,
             ship_drawer : ship_drawer,
             camera      : Camera::new(),
-            line_height : font_height * 1.1,
+            line_height : font_height,
         }
     }
 
