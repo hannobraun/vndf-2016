@@ -132,8 +132,7 @@ impl Renderer {
             // draw ship velocity line
             let line = Shape::line(
                 [0.0,0.0],
-                [ship_velocity[0]*30.0,
-                ship_velocity[1]*30.0],
+                *(ship_velocity * 30.0).as_array(),
                 1.0,
             );
             ShapeDrawer::new(&mut graphics, &line)
