@@ -25,23 +25,23 @@ pub struct Renderer {
     glyph_drawer: GlyphDrawer,
     ship_drawer : ShipDrawer,
     pub camera  : Camera,
-    font_height : f32,
+    line_height : f32,
 }
 
 impl Renderer {
     pub fn new(window: &Window) -> Renderer {
         let mut graphics = window.create_graphics();
 
-        let font_height = 18;
+        let font_height = 18.0;
         
-        let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height);
+        let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
         let ship_drawer  = ShipDrawer::new(&mut graphics);
 
         Renderer {
             glyph_drawer: glyph_drawer,
             ship_drawer : ship_drawer,
             camera      : Camera::new(),
-            font_height : font_height as f32,
+            line_height : font_height * 1.1,
         }
     }
 
@@ -123,7 +123,7 @@ impl Renderer {
             let ship_size     = self.ship_drawer.ship_size;
             let pos_offset    = Vec2::new(ship_size.x, 10.0);
             // TODO: This should be based on font size, not hardcoded
-            let line_advance  = Vec2::new(0.0, -self.font_height * 1.1);
+            let line_advance  = Vec2::new(0.0, -self.line_height);
 
             // draw ship velocity line
             let line = Shape::line([0.0,0.0],
