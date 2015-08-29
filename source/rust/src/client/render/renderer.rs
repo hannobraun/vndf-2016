@@ -115,10 +115,11 @@ impl Renderer {
 
 
         for (ship_id, ship) in &frame.ships {
-            let ship_size    = self.ship_drawer.ship_size;
-            let pos_offset   = Vec2::new(ship_size.x as f64, 10.0);
+            let ship_position = cast(ship.position);
+            let ship_size     = self.ship_drawer.ship_size;
+            let pos_offset    = Vec2::new(ship_size.x, 10.0);
             // TODO: This should be based on font size, not hardcoded
-            let line_advance = Vec2::new(0.0, -20.0);
+            let line_advance  = Vec2::new(0.0, -20.0);
 
             // draw ship velocity line
             let line = Shape::line([0.0,0.0],
@@ -139,7 +140,7 @@ impl Renderer {
                 if *ship_id == sid  { color = color::Colors::green_spring(); }
             }
             self.ship_drawer.draw(
-                &cast(ship.position),
+                &ship_position,
                 color,
                 world_trans,
                 &mut graphics,
@@ -148,7 +149,7 @@ impl Renderer {
             // draw ship id
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
-                cast(ship.position - line_advance),
+                ship_position - line_advance,
                 color::Colors::white(),
                 true,
                 world_trans,
@@ -159,7 +160,7 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.glyph_drawer.draw(
                     ship_comm,
-                    cast(ship.position + Vec2::new(0.0, -40.0)),
+                    ship_position + Vec2::new(0.0, -40.0),
                     color::Colors::white(),
                     true,
                     world_trans,
@@ -171,7 +172,7 @@ impl Renderer {
             let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
             self.glyph_drawer.draw(
                 &pos,
-                cast(ship.position + pos_offset),
+                ship_position + pos_offset,
                 color::Colors::white(),
                 false,
                 world_trans,
@@ -182,7 +183,7 @@ impl Renderer {
             let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
             self.glyph_drawer.draw(
                 &vel,
-                cast(ship.position + pos_offset + line_advance),
+                ship_position + pos_offset + line_advance,
                 color::Colors::white(),
                 false,
                 world_trans,
