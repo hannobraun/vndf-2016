@@ -140,7 +140,8 @@ impl Renderer {
                 &mut graphics,
                 );
 
-            let pos_offset   = Vec2::new(30.0, 10.0);
+            let ship_size    = self.ship_drawer.ship_size;
+            let pos_offset   = Vec2::new(ship_size.x as f64, 10.0);
             // TODO: This should be based on font size, not hardcoded
             let line_advance = Vec2::new(0.0, -20.0);
 
