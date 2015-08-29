@@ -22,10 +22,11 @@ use client::render::camera::{Camera};
 
 
 pub struct Renderer {
-    glyph_drawer: GlyphDrawer,
-    ship_drawer : ShipDrawer,
-    pub camera  : Camera,
-    line_height : f32,
+    glyph_drawer  : GlyphDrawer,
+    ship_drawer   : ShipDrawer,
+    pub camera    : Camera,
+    line_height   : f32,
+    scaling_factor: f32,
 }
 
 impl Renderer {
@@ -38,10 +39,11 @@ impl Renderer {
         let ship_drawer  = ShipDrawer::new(&mut graphics, 30.0 * scaling_factor);
 
         Renderer {
-            glyph_drawer: glyph_drawer,
-            ship_drawer : ship_drawer,
-            camera      : Camera::new(),
-            line_height : font_height,
+            glyph_drawer  : glyph_drawer,
+            ship_drawer   : ship_drawer,
+            camera        : Camera::new(),
+            line_height   : font_height,
+            scaling_factor: scaling_factor,
         }
     }
 
@@ -132,7 +134,7 @@ impl Renderer {
             // draw ship velocity line
             let line = Shape::line(
                 [0.0,0.0],
-                *(ship_velocity * 30.0).as_array(),
+                *(ship_velocity * 30.0 * self.scaling_factor).as_array(),
                 1.0,
             );
             ShapeDrawer::new(&mut graphics, &line)
