@@ -184,7 +184,7 @@ impl Renderer {
     // NOTE: glyph size offset is currently hardcoded to 9px
     fn render_text(
         &mut self,
-        text     : &String,
+        text     : &str,
         pos      : [f64;2],
         center   : bool,
         transform: Mat4<f32>,
