@@ -31,7 +31,7 @@ impl Renderer {
     pub fn new(window: &Window) -> Renderer {
         let mut graphics = window.create_graphics();
         
-        let glyph_drawer = GlyphDrawer::new(&mut graphics);
+        let glyph_drawer = GlyphDrawer::new(&mut graphics, 18);
         let ship_drawer  = ShipDrawer::new(&mut graphics);
 
         Renderer {

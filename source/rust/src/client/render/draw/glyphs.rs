@@ -76,7 +76,7 @@ pub struct GlyphDrawer {
 }
 
 impl GlyphDrawer {
-    pub fn new(graphics: &mut Graphics) -> GlyphDrawer {
+    pub fn new(graphics: &mut Graphics, font_size: u32) -> GlyphDrawer {
         let batch = Batch::new(
             graphics,
             VERTEX_SRC, FRAGMENT_SRC,
@@ -88,7 +88,7 @@ impl GlyphDrawer {
             ]
         );
 
-        let     font     = Font::load(18);
+        let     font     = Font::load(font_size);
         let mut textures = HashMap::new();
 
         // Iterate over all valid values of char
