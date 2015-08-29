@@ -11,7 +11,7 @@ use std::thread::spawn;
 use std::vec::Drain;
 
 use client::cli::Cli;
-use client::mouse;
+use client::mouse::Mouse;
 use client::config::Config;
 use client::interface::{
     Frame,
@@ -31,13 +31,6 @@ pub struct Player {
     cli     : Cli,
     window  : Window,
     renderer: Renderer,
-}
-
-fn sort_events (window: &Window) {
-    for e in window.poll_events() {
-       // mouse::mouse(&self.window.clone());
-       // self.cli.update(&mut self.events, frame, &self.window);
-    }
 }
 
 impl Interface for Player {
