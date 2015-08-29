@@ -133,8 +133,7 @@ impl Renderer {
                                     (ship.velocity[1]*30.0) as f32],
                                    1.0);
             ShapeDrawer::new(&mut graphics, &line)
-                .draw([ship.position[0] as f32,
-                       ship.position[1] as f32],
+                .draw(ship_position,
                       [1.0,1.0],
                       color::Colors::red(),
                       world_trans,

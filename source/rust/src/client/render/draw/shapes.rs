@@ -6,6 +6,7 @@ use nalgebra::{
 	Iso3,
 	Mat4,
 	ToHomogeneous,
+	Vec2,
 	Vec3,
 };
 
@@ -76,14 +77,14 @@ impl ShapeDrawer {
 	
 	pub fn draw(
 		&mut self,
-		pos      : [f32;2],
+		pos      : Vec2<f32>,
 		size     : [f32;2],
 		color    : color::Color,
 		transform: Mat4<f32>,
 		graphics : &mut Graphics,
 	) {
 		let translation = Iso3::new(
-			Vec3::new(pos[0], pos[1], 0.0),
+			Vec3::new(pos.x, pos.y, 0.0),
 			Vec3::new(0.0, 0.0, 0.0),
 		);
 		let transform = transform * translation.to_homogeneous();
