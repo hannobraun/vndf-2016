@@ -29,13 +29,13 @@ pub struct Renderer {
 }
 
 impl Renderer {
-    pub fn new(window: &Window) -> Renderer {
+    pub fn new(window: &Window, scaling_factor: f32) -> Renderer {
         let mut graphics = window.create_graphics();
 
-        let font_height = 18.0;
+        let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShipDrawer::new(&mut graphics, 30.0);
+        let ship_drawer  = ShipDrawer::new(&mut graphics, 30.0 * scaling_factor);
 
         Renderer {
             glyph_drawer: glyph_drawer,

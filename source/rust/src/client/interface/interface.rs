@@ -38,7 +38,7 @@ impl Interface for Player {
         let cli    = Cli::new();
         let window = Window::new();
 
-        let renderer = Renderer::new(&window);
+        let renderer = Renderer::new(&window, 1.0);
 
         Ok(Player {
             events  : Vec::new(),
