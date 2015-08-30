@@ -3,7 +3,7 @@ use rustc_serialize::json::{
     DecodeResult,
 };
 
-use shared::game::{ManeuverData};
+use shared::game::{ManeuverData,EntityId};
 use client::render::camera::CameraTrack;
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
@@ -14,6 +14,8 @@ pub enum InputEvent {
     ScheduleManeuver(ManeuverData),
 
     Track(CameraTrack), //TODO: rename to Select?
+    Select(Vec<EntityId>),
+    
     Quit,
 }
 

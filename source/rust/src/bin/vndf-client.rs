@@ -107,6 +107,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 InputEvent::Track(track) => {
                     frame.camera_track = Some(track);
                 },
+                InputEvent::Select(id) => {
+
+                },
                 InputEvent::Quit => {
                     break 'main;
                 },

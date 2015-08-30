@@ -13,7 +13,7 @@ use client::interface::{
     Frame,
     InputEvent,
 };
-use client::render::camera::{Camera};
+use client::render::camera::{Camera,CameraTrack};
 use shared::game::EntityId;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
@@ -99,11 +99,15 @@ impl Mouse {
                window_size: (u32,u32),
                camera: &Camera) {
         if let Some(click) = self.click {
-            //TODO: find entity that was clicked
-            //if no entity, pass on to UI (or viceversa)
+            //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
             let select = Mouse::check_selection(coord,frame,camera.get_pos());
-            println!("ship selected {:?}",select);
+            if let Some(id) = select {
+                // TODO: consider conbining these two and handling selection
+                // logic outside of this, in interface perhaps
+                events.push(InputEvent::Select(vec!(id)));
+                events.push(InputEvent::Track(CameraTrack::Entity(id)));
+            }
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
