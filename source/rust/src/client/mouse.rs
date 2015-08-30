@@ -14,6 +14,8 @@ use client::interface::{
     InputEvent,
 };
 
+use shared::game::EntityId;
+
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
 const DRAGMIN_TIME: f64 = 75f64; // 75ms time minimum
 
@@ -98,7 +100,8 @@ impl Mouse {
             //TODO: find entity that was clicked
             //if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
-            println!("{:?}",coord);
+            let select = Mouse::check_selection(coord,frame);
+            println!("{:?}",select);
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
@@ -112,5 +115,24 @@ impl Mouse {
         let y = pos.1 - (window_size.1 as i32) /2;
 
         [x as f32,y as f32]
+    }
+
+    // NOTE: assumes ships are equilateral triangles, & calcs bounding box
+    // NOTE: assumes ships are sized at 30,
+    // we'll need to pass in mesh data eventually 
+    pub fn check_selection(pos: [f32;2], frame: &Frame) -> Option<EntityId> {
+        for ship in frame.ships.iter() {
+            let ship_x = ship.1.position[0] as f32;
+            let ship_y = ship.1.position[1] as f32;
+            if (pos[0] < (ship_x + 15.0)) &
+                (pos[0] > (ship_x - 15.0)) &
+                (pos[0] < (ship_y + 15.0)) &
+                (pos[0] > (ship_y - 15.0))
+            {
+                return Some(ship.0.clone());
+            }
+        }
+
+        None
     }
 }
