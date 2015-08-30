@@ -20,6 +20,7 @@ pub struct Frame {
     pub broadcasts  : HashMap<EntityId, String>,
     pub ships       : BTreeMap<EntityId, Body>,
     pub camera_track: Option<CameraTrack>,
+    pub select_ids  : Vec<EntityId>,
 }
 
 impl Frame {
@@ -31,6 +32,7 @@ impl Frame {
             broadcasts  : HashMap::new(),
             ships       : BTreeMap::new(),
             camera_track:None,
+            select_ids  : Vec::new(),
         }
     }
 
