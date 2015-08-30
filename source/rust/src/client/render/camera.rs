@@ -81,4 +81,8 @@ impl Camera {
 
         [(ax/total) as f32, (ay/total) as f32]
     }
+
+    pub fn get_pos (&self) -> [f32;2] {
+        self.pos
+    }
 }

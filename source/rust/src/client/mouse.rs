@@ -13,7 +13,7 @@ use client::interface::{
     Frame,
     InputEvent,
 };
-
+use client::render::camera::{Camera};
 use shared::game::EntityId;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
@@ -39,7 +39,8 @@ impl Mouse {
                    events: &mut Vec<InputEvent>,
                    frame : &Frame,
                    window_events: &Vec<Event>,
-                   window_size: (u32,u32)) {
+                   window_size: (u32,u32),
+                   camera: &Camera) {
         for event in window_events.iter() {
             match *event {
                 MouseMoved(pos) => {
@@ -63,7 +64,7 @@ impl Mouse {
                         self.drag.0 = None;
                     }
 
-                    self.handler(events,frame,window_size);
+                    self.handler(events,frame,window_size,camera);
                 },
                 MouseWheel(d) => { },
                 _ => { },
@@ -95,13 +96,14 @@ impl Mouse {
     fn handler(&mut self,
                events: &mut Vec<InputEvent>,
                frame : &Frame,
-               window_size: (u32,u32)) {
+               window_size: (u32,u32),
+               camera: &Camera) {
         if let Some(click) = self.click {
             //TODO: find entity that was clicked
             //if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
-            let select = Mouse::check_selection(coord,frame);
-            println!("{:?}",select);
+            let select = Mouse::check_selection(coord,frame,camera.get_pos());
+            println!("ship selected {:?}",select);
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
@@ -120,14 +122,17 @@ impl Mouse {
     // NOTE: assumes ships are equilateral triangles, & calcs bounding box
     // NOTE: assumes ships are sized at 30,
     // we'll need to pass in mesh data eventually 
-    pub fn check_selection(pos: [f32;2], frame: &Frame) -> Option<EntityId> {
+    pub fn check_selection(pos: [f32;2],
+                           frame: &Frame,
+                           cam_pos: [f32;2])
+                           -> Option<EntityId> {
         for ship in frame.ships.iter() {
             let ship_x = ship.1.position[0] as f32;
             let ship_y = ship.1.position[1] as f32;
-            if (pos[0] < (ship_x + 15.0)) &
-                (pos[0] > (ship_x - 15.0)) &
-                (pos[0] < (ship_y + 15.0)) &
-                (pos[0] > (ship_y - 15.0))
+            if ((pos[0] + -(cam_pos[0])) < (ship_x + 15.0)) &
+                ((pos[0] + -(cam_pos[0])) > (ship_x - 15.0)) &
+                ((pos[1] + -(cam_pos[1])) < (ship_y + 15.0)) &
+                ((pos[1] + (cam_pos[1])) > (ship_y - 15.0))
             {
                 return Some(ship.0.clone());
             }
