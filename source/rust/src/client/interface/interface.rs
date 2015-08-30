@@ -55,8 +55,11 @@ impl Interface for Player {
 
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         let window_events = self.window.poll_events().collect();
-        
-        self.mouse.update(&mut self.events, frame, &window_events);
+
+        self.mouse.update(&mut self.events,
+                          frame,
+                          &window_events,
+                          self.window.get_size());
         self.cli.update(&mut self.events, frame, &window_events);
         
         if let Some(track) = frame.camera_track.clone() {

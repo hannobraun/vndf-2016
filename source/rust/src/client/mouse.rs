@@ -36,7 +36,8 @@ impl Mouse {
     pub fn update (&mut self,
                    events: &mut Vec<InputEvent>,
                    frame : &Frame,
-                   window_events: &Vec<Event>) {
+                   window_events: &Vec<Event>,
+                   window_size: (u32,u32)) {
         for event in window_events.iter() {
             match *event {
                 MouseMoved(pos) => {
@@ -60,7 +61,7 @@ impl Mouse {
                         self.drag.0 = None;
                     }
 
-                    self.handler(events,frame);
+                    self.handler(events,frame,window_size);
                 },
                 MouseWheel(d) => { },
                 _ => { },
@@ -91,14 +92,25 @@ impl Mouse {
 
     fn handler(&mut self,
                events: &mut Vec<InputEvent>,
-               frame : &Frame) {
+               frame : &Frame,
+               window_size: (u32,u32)) {
         if let Some(click) = self.click {
             //TODO: find entity that was clicked
             //if no entity, pass on to UI (or viceversa)
+            let coord = Mouse::convert_coord(click,window_size);
+            println!("{:?}",coord);
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
             //TODO: find entities that were selected
         }
+    }
+
+    /// converts mouse coordinate to world position
+    pub fn convert_coord(pos: (i32,i32), window_size: (u32,u32)) -> [f32;2] {
+        let x = pos.0 - (window_size.0 as i32) /2;
+        let y = pos.1 - (window_size.1 as i32) /2;
+
+        [x as f32,y as f32]
     }
 }
