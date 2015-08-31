@@ -160,7 +160,11 @@ impl Mouse {
     }
 
     // NOTE: assumes ships are equilateral triangles, & calcs bounding box
-    // NOTE: assumes ships are sized at 30,
+    // TODO: This is broken with a scale_factor != 1, as it assumes ships are
+    //       sized 30 pixels wide and high. The actual ship size is stored in
+    //       ShipDrawer. Maybe we can move it (together with font size, window
+    //       size and other data) into some struct that can be accessed easily
+    //       in all places that need that data.
     // we'll need to pass in mesh data eventually 
     fn check_selection(pos: [f32;2],
                            frame: &Frame,
