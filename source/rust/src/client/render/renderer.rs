@@ -122,6 +122,19 @@ impl Renderer {
             &mut graphics,
             );
 
+        // draw ship selection, where necessary
+        let ship_size = 30.0; //TODO: get actual ship size
+        for id in frame.select_ids.iter() {
+            if let Some(ship) = frame.ships.get(&id) {
+                let tri = Shape::tri((5.0 + (ship_size/2.0)) * self.scaling_factor);
+                ShapeDrawer::new(&mut graphics, &tri).draw(
+                    cast(ship.position),
+                    [1.0,1.0],
+                    color::Colors::white(),
+                    world_trans,
+                    &mut graphics);
+            }
+        }
 
         for (ship_id, ship) in &frame.ships {
             let ship_position = cast(ship.position);
@@ -200,7 +213,7 @@ impl Renderer {
                 &mut graphics,
                 );
         }
-
+        
         graphics.flush();
     }
 }
