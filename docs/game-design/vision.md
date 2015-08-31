@@ -37,3 +37,7 @@ articles:
 * [Inspirations: Kerbal Space Program](http://www.vndf.de/news/newsletter-october-2014/#topic)
 * [Inspirations: DayZ](http://www.vndf.de/news/newsletter-november-2014/#topic)
 * [Inspirations: FTL](http://www.vndf.de/news/newsletter-december-2014/#topic)
+
+This document is just about high-level vision and goals. Please refer to
+[Mechanics](https://github.com/hannobraun/vndf/blob/master/docs/game-design/mechanics.md)
+for an outline of actual game mechanics.
