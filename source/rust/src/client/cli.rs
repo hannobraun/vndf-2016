@@ -297,17 +297,8 @@ impl Cli {
                         self.text.push(format!("Error parsing arguments")),
                 }
             },
-
-            // TODO: consider renaming to select-entity
-            "camera-track" => {
-                if let Some(id) = scan_fmt!(args,"{}", EntityId) {
-                    if frame.ships.get(&id).is_some() {
-                        events.push(InputEvent::Track(CameraTrack::Entity(vec!(id))));
-                    }
-                }
-            },
-
-            "camera-track-group" => {
+            
+            "select-entity" => {
                 let args = args.split(' ');
                 let mut ents = vec!();
                 
@@ -319,7 +310,9 @@ impl Cli {
                     }
                 }
 
-                events.push(InputEvent::Track(CameraTrack::Entity(ents)));
+                // for now, both select and track entities
+                events.push(InputEvent::Track(CameraTrack::Entity(ents.clone())));
+                events.push(InputEvent::Select(ents));
             },
 
             "help" => {
@@ -330,8 +323,7 @@ impl Cli {
                     "nav-data - Print navigation data",
                     "comm-data - Print communication data",
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
-                    "camera-track <ship_id>",
-                    "camera-track-group <list of ship_id, separate by space>"
+                    "select-entity <list of ship_id, separate by space>"
                     ];
 
                 self.text.push(format!("Available commands:"));
