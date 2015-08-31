@@ -68,7 +68,7 @@ impl Mouse {
 
                     self.handler(events,frame,window_size,camera);
                 },
-                MouseWheel(d) => { },
+                MouseWheel(_) => { },
                 _ => { },
             }
         }
