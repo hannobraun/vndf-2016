@@ -134,11 +134,13 @@ impl Cli {
                     let cmd = self.get_history(true);
                     self.input_buffer.clear();
                     self.input_buffer.push_str(&cmd);
+                    self.prompt_idx = cmd.chars().count();
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
                     let cmd = self.get_history(false);
                     self.input_buffer.clear();
                     self.input_buffer.push_str(&cmd);
+                    self.prompt_idx = cmd.chars().count();
                 },
                 // Those events aren't really related to the CLI. It feels wrong
                 // to handle them here.
