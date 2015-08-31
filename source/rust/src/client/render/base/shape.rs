@@ -117,7 +117,7 @@ impl Shape {
             // FIXME: shows nothing
             ShapeKind::Oval => {
                 for (i,n) in (*shape.get_points()).iter().enumerate() {
-                    if i % 2 == 0 { v.push(*n); }
+                    if i % 2 == 1 { v.push(*n); }
                 }
             },
             // NOTE: this currently ends up with borders around ends
