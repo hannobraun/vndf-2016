@@ -179,7 +179,7 @@ impl Renderer {
             }
 
             // draw ship position
-            let pos = format!("pos: ({}, {})", ship.position[0], ship.position[1]);
+            let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
             self.glyph_drawer.draw(
                 &pos,
                 ship_position + pos_offset,
@@ -190,7 +190,7 @@ impl Renderer {
                 );
 
             // draw ship velocity
-            let vel = format!("vel: ({}, {})", ship.velocity[0], ship.velocity[1]);
+            let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
             self.glyph_drawer.draw(
                 &vel,
                 ship_position + pos_offset + line_advance,
