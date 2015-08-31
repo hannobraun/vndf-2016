@@ -2,6 +2,8 @@
 
 
 extern crate env_logger;
+#[macro_use]
+extern crate log;
 extern crate time;
 
 extern crate vndf;
@@ -65,6 +67,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
     network.send(ClientEvent::Public(client_event::Public::Login));
     
     'main: loop {
+        trace!("Start client main loop iteration");
+
         let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
             Err(error) => panic!("Error updating interface: {}", error),
