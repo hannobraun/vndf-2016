@@ -17,8 +17,9 @@ use client::render::camera::{Camera,CameraTrack};
 use shared::game::EntityId;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
-const DRAGMIN_TIME: f64 = 75f64; // 75ms time minimum
+const DRAGMIN_TIME: f64 = 0.30f64; // 75ms time minimum
 
+#[derive(Debug)]
 pub struct Mouse {
     pos: (i32,i32),
     drag: (Option<(i32,i32)>,Option<(i32,i32)>),
@@ -53,11 +54,12 @@ impl Mouse {
                 MouseInput(ElementState::Released,MouseButton::Left) => {
                     if ((precise_time_s()-self.drag_start) > DRAGMIN_TIME) &
                         (((self.drag.0).unwrap().0 - self.pos.0).abs() >
-                        DRAGMIN_PX) &
+                         DRAGMIN_PX) &
                         (((self.drag.0).unwrap().1 - self.pos.1).abs() >
-                        DRAGMIN_PX)
+                         DRAGMIN_PX)
                     {
                         self.drag.1 = Some(self.pos);
+                        self.click = None;
                     }
                     else {
                         self.click = self.drag.0;
@@ -111,8 +113,42 @@ impl Mouse {
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
-            //TODO: find entities that were selected
+            let start = Mouse::convert_coord(drag_start,window_size);
+            let end = Mouse::convert_coord(drag_end,window_size);
+
+            let mut v = vec!();
+            for ship in frame.ships.iter() {
+                let ship_x = ship.1.position[0] as f32;
+                let ship_y = ship.1.position[1] as f32;
+                let cam_pos = camera.get_pos();
+                let p = [ship_x + -(cam_pos[0]),ship_y + -(cam_pos[1])];
+
+                
+                if Mouse::within_bounds(p[0],start[0],end[0]) {
+                    if Mouse::within_bounds(p[1],start[1],end[1]) {
+                        v.push(ship.0.clone());
+                    }
+                }
+            }
+
+            events.push(InputEvent::Select(v.clone()));
+            events.push(InputEvent::Track(CameraTrack::Group(v))); 
         }
+    }
+
+    /// determines if point is within other points
+    fn within_bounds(p: f32, start: f32, end: f32) -> bool {
+        let mut within = false;
+        if start < end {
+            if (p > start) &
+                (p < end) { within = true; }
+        }
+        else {
+            if (p < start) &
+                (p > end) { within = true; }
+        }
+
+        within
     }
 
     /// converts mouse coordinate to world position
@@ -126,7 +162,7 @@ impl Mouse {
     // NOTE: assumes ships are equilateral triangles, & calcs bounding box
     // NOTE: assumes ships are sized at 30,
     // we'll need to pass in mesh data eventually 
-    pub fn check_selection(pos: [f32;2],
+    fn check_selection(pos: [f32;2],
                            frame: &Frame,
                            cam_pos: [f32;2])
                            -> Option<EntityId> {
@@ -136,7 +172,7 @@ impl Mouse {
             if ((pos[0] + -(cam_pos[0])) < (ship_x + 15.0)) &
                 ((pos[0] + -(cam_pos[0])) > (ship_x - 15.0)) &
                 ((pos[1] + -(cam_pos[1])) < (ship_y + 15.0)) &
-                ((pos[1] + (cam_pos[1])) > (ship_y - 15.0))
+                ((pos[1] + -(cam_pos[1])) > (ship_y - 15.0))
             {
                 return Some(ship.0.clone());
             }
