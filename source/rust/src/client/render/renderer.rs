@@ -128,7 +128,7 @@ impl Renderer {
             if let Some(ship) = frame.ships.get(&id) {
                 let tri = Shape::tri((5.0 + (ship_size/2.0)) * self.scaling_factor);
                 ShapeDrawer::new(&mut graphics, &tri).draw(
-                    cast(ship.position),
+                    cast(ship.position + Vec2::new(0.0,2.0)),
                     [1.0,1.0],
                     color::Colors::white(),
                     world_trans,
