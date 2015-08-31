@@ -1,6 +1,7 @@
 #![cfg_attr(test, allow(dead_code))]
 
 
+extern crate env_logger;
 extern crate time;
 
 extern crate vndf;
@@ -28,6 +29,10 @@ use vndf::shared::protocol::server;
 
 
 fn main() {
+    env_logger::init().unwrap_or_else(|e|
+        panic!("Error initializing logger: {}", e)
+    );
+
     let args = Args::parse(env::args());
 
     if args.headless {
