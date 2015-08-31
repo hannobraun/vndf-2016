@@ -16,15 +16,15 @@ A multiplayer game about freedom, adventure and hard choices.
 
 ## Core Goals
 
-* Mechanics that make player skill the prime condition for success.
-* Players that drive everything that is meaningful about the game.
-* As few arbitrary limitations as possible. Players should only be limited by
-  the physics of the game world.
-* No menial tasks. Rule of thumb: If an activity could be performed by a bot,
-  it should be automatic.
-* A sense of adventure, accompanied by danger. Forward movement, forced upon the
-  player by the constraints of the environment. Think of what FTL does, compared
-  to the typical sandbox game (Minecraft, Starbound).
+1. Mechanics that make player skill the prime condition for success.
+2. Players that drive everything that is meaningful about the game.
+3. As few arbitrary limitations as possible. Players should only be limited by
+   the physics of the game world.
+4. No menial tasks. Rule of thumb: If an activity could be performed by a bot,
+   it should be automatic.
+5. A sense of adventure, accompanied by danger. Forward movement, forced upon the
+   player by the constraints of the environment. Think of what FTL does, compared
+   to the typical sandbox game (Minecraft, Starbound).
 
 
 ## Type of Game
