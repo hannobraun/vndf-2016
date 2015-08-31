@@ -6,4 +6,4 @@ source project.conf
 (
 	export RUST_LOG=trace
 	cd source
-	$SERVER_BINARY)
+	$SERVER_BINARY $@)
