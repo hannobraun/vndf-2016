@@ -31,7 +31,7 @@ impl Frame {
             message     : Message::None,
             broadcasts  : HashMap::new(),
             ships       : BTreeMap::new(),
-            camera_track:None,
+            camera_track: Some(CameraTrack::Default),
             select_ids  : Vec::new(),
         }
     }

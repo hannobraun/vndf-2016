@@ -25,7 +25,7 @@ use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
-use vndf::client::render::camera::{CameraTrack};
+
 
 fn main() {
     let args = Args::parse(env::args());
@@ -48,7 +48,6 @@ fn init_interface<I: Interface>() -> I {
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
-    frame.camera_track = Some(CameraTrack::Default);
     
     let mut broadcasts = HashMap::new();
     let mut ships      = HashMap::new();
