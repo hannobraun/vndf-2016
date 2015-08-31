@@ -67,7 +67,7 @@ drive that allows the player to get home without any fuel left.
 
 ## Further Reading
 
-Hanno expanded upon all the elements within this document in newsletter
+Hanno expanded upon some of the elements within this document in past newsletter
 articles:
 
 * [VNDF's Vision](http://www.vndf.de/news/newsletter-august-2014/#vision)
