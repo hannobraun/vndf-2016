@@ -300,7 +300,7 @@ impl Cli {
             "camera-track" => {
                 if let Some(id) = scan_fmt!(args,"{}", EntityId) {
                     if frame.ships.get(&id).is_some() {
-                        events.push(InputEvent::Track(CameraTrack::Entity(id)));
+                        events.push(InputEvent::Track(CameraTrack::Entity(vec!(id))));
                     }
                 }
             },
@@ -317,7 +317,7 @@ impl Cli {
                     }
                 }
 
-                events.push(InputEvent::Track(CameraTrack::Group(ents)));
+                events.push(InputEvent::Track(CameraTrack::Entity(ents)));
             },
 
             "help" => {

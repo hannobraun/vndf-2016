@@ -4,8 +4,7 @@ use client::interface::Frame;
 /// Camera tracking types
 #[derive(Debug,Clone,RustcDecodable,RustcEncodable,PartialEq)]
 pub enum CameraTrack {
-    Entity(EntityId),
-    Group(Vec<EntityId>),
+    Entity(Vec<EntityId>),
     Position,
     Default,
 }
@@ -34,19 +33,20 @@ impl Camera {
                    -> [f32;2] {
         let mut pos = [0.0,0.0];
         match self.track {
-            CameraTrack::Entity(eid) => {
-                if let Some(ref ship) = frame.ships.get(&eid) {
-                    pos = [ship.position.x as f32,
-                           ship.position.y as f32];
-                }
+            CameraTrack::Entity(ref v) => {
+                /*if v.len() < 2 { // tracking just a single ship
+                    if let Some(ref ship) = frame.ships.get(&eid) {
+                        pos = [ship.position.x as f32,
+                               ship.position.y as f32];
+                    }
+                }*/
+                
+                pos = Camera::get_average_pos(&v,&frame);
             },
             CameraTrack::Default => { 
                 if let Some(id) = frame.ship_id {
-                    self.track = CameraTrack::Entity(id);
+                    self.track = CameraTrack::Entity(vec!(id));
                 }
-            },
-            CameraTrack::Group(ref v) => {
-                pos = Camera::get_average_pos(&v,&frame);
             },
             _ => (),
         }

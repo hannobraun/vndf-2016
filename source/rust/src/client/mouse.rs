@@ -108,7 +108,7 @@ impl Mouse {
                 // TODO: consider conbining these two and handling selection
                 // logic outside of this, in interface perhaps
                 events.push(InputEvent::Select(vec!(id)));
-                events.push(InputEvent::Track(CameraTrack::Entity(id)));
+                events.push(InputEvent::Track(CameraTrack::Entity(vec!(id))));
             }
         }
         else if let Some(drag_end) = self.drag.1 {
@@ -132,7 +132,7 @@ impl Mouse {
             }
 
             events.push(InputEvent::Select(v.clone()));
-            events.push(InputEvent::Track(CameraTrack::Group(v))); 
+            events.push(InputEvent::Track(CameraTrack::Entity(v))); 
         }
     }
 
