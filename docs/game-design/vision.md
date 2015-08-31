@@ -27,6 +27,18 @@ A multiplayer game about freedom, adventure and hard choices.
   to the typical sandbox game (Minecraft, Starbound).
 
 
+## Further Reading
+
+Hanno expanded upon all the elements within this document in newsletter
+articles:
+
+* [VNDF's Vision](http://www.vndf.de/news/newsletter-august-2014/#vision)
+* [Inspirations: EVE Online](http://www.vndf.de/news/newsletter-september-2014/#inspirations)
+* [Inspirations: Kerbal Space Program](http://www.vndf.de/news/newsletter-october-2014/#topic)
+* [Inspirations: DayZ](http://www.vndf.de/news/newsletter-november-2014/#topic)
+* [Inspirations: FTL](http://www.vndf.de/news/newsletter-december-2014/#topic)
+
+
 ## Elements
 
 * Realistic orbital mechanics
