@@ -1,6 +1,9 @@
 #![cfg_attr(test, allow(dead_code))]
 
 
+extern crate env_logger;
+#[macro_use]
+extern crate log;
 extern crate time;
 
 extern crate vndf;
@@ -25,9 +28,13 @@ use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
-use vndf::client::render::camera::{CameraTrack};
+
 
 fn main() {
+    env_logger::init().unwrap_or_else(|e|
+        panic!("Error initializing logger: {}", e)
+    );
+
     let args = Args::parse(env::args());
 
     if args.headless {
@@ -48,7 +55,6 @@ fn init_interface<I: Interface>() -> I {
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
-    frame.camera_track = Some(CameraTrack::Default);
     
     let mut broadcasts = HashMap::new();
     let mut ships      = HashMap::new();
@@ -61,6 +67,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
     network.send(ClientEvent::Public(client_event::Public::Login));
     
     'main: loop {
+        trace!("Start client main loop iteration");
+
         let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
             Err(error) => panic!("Error updating interface: {}", error),
