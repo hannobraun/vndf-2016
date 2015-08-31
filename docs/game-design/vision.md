@@ -78,4 +78,6 @@ articles:
 
 This document is just about high-level vision and goals. Please refer to
 [Mechanics](https://github.com/hannobraun/vndf/blob/master/docs/game-design/mechanics.md)
-for an outline of actual game mechanics.
+for an outline of actual game mechanics and
+[Story](https://github.com/hannobraun/vndf/blob/master/docs/game-design/story.md)
+for the game's back story.
