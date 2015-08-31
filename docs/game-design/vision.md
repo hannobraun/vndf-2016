@@ -37,9 +37,3 @@ articles:
 * [Inspirations: Kerbal Space Program](http://www.vndf.de/news/newsletter-october-2014/#topic)
 * [Inspirations: DayZ](http://www.vndf.de/news/newsletter-november-2014/#topic)
 * [Inspirations: FTL](http://www.vndf.de/news/newsletter-december-2014/#topic)
-
-
-## Elements
-
-* Realistic orbital mechanics
-* Highly customizable spaceships, built out of Lego-like blocks
