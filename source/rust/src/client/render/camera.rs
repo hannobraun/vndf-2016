@@ -1,4 +1,4 @@
-use nalgebra::{Vec2,Absolute};
+use nalgebra::{Vec2,Translation};
 use shared::game::EntityId;
 use client::interface::Frame;
 
@@ -40,7 +40,9 @@ impl Camera {
         
         match self.track {
             CameraTrack::Entity(ref v) => {                
-                pos = Camera::get_average_pos(&v,&frame);
+                let (p,v) = Camera::get_average_pos(&v,&frame);
+                pos = p;
+                vel = v;
             },
             CameraTrack::Default => { 
                 if let Some(id) = frame.ship_id {
@@ -55,54 +57,30 @@ impl Camera {
         }
 
         // NOTE: must invert each coordinate to track
-        pos[0] *= -1.0;
-        pos[1] *= -1.0;
-        
-        //TODO: make pos a Vec2 and figure out Absolute trait
-        let abs_x = (self.pos[0] - pos[0]).abs();
-        let abs_y = (self.pos[1] - pos[1]).abs();
+        pos = pos.inv_translation();
 
-        if abs_x > (self.speed/2.0) {
-            let mut factor_x = self.speed;
-
-            // flip direction for camera
-            if self.pos[0] > pos[0] { factor_x *= -1.0; }
-            self.pos[0] += factor_x;
-        }
-        else {
-            self.pos[0] = pos[0];
-        }
-
-        if abs_y > (self.speed/2.0) {
-            let mut factor_y = self.speed;
-
-            // flip direction for camera
-            if self.pos[1] > pos[1] { factor_y *= -1.0; }
-            self.pos[1] += factor_y;
-        }
-        else {
-            self.pos[1] = pos[1];
-        }
-        
+        self.pos = pos;
         self.pos
     }
 
     /// gets the average position of multiple entities
     // NOTE: This assumes that frame will hold all entities (eg: ships & planets)
-    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> Vec2<f64> {
-        let mut ax = 0.0;
-        let mut ay = 0.0;
-        let total = v.len() as f64;
+    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> (Vec2<f64>,Vec2<f64>) {
+        let mut pos = Vec2::new(0.0,0.0);
+        let mut vel = Vec2::new(0.0,0.0);
+        let total_ships = v.len() as f64;
+        let total = Vec2::new(total_ships,total_ships);
         
         // for now grab ships
         for n in v.iter() {
             if let Some(b) = frame.ships.get(&n) {
-                ax += b.position[0];
-                ay += b.position[1];
+                pos = pos + b.position;
+                vel = vel + b.velocity;
             }
         }
 
-        Vec2::new((ax/total), (ay/total))
+        (pos/total,
+         vel/total)
     }
 
     pub fn get_pos (&self) -> Vec2<f64> {
