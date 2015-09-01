@@ -315,6 +315,10 @@ impl Cli {
                 events.push(InputEvent::Select(ents));
             },
 
+            "clear-selection" => {
+                events.push(InputEvent::Select(vec!()));
+            },
+            
             "help" => {
                 let help = [
                     "list-broadcasts - Lists all received broadcasts",
@@ -323,7 +327,8 @@ impl Cli {
                     "nav-data - Print navigation data",
                     "comm-data - Print communication data",
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
-                    "select-entity <list of ship_id, separate by space>"
+                    "select-entity <list of ship_id, separate by space>",
+                    "clear-selection - Clears currently selected entities",
                     ];
 
                 self.text.push(format!("Available commands:"));
