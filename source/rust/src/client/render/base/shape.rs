@@ -6,6 +6,7 @@ pub struct Shape {
     kind: ShapeKind,
     
     //possible ideas
+    //rotation: f32,
     //weight: f32, 
     //time: u16,
 }
@@ -114,7 +115,6 @@ impl Shape {
                 v.push(p[2]);
                 v.push(p[0]);
             },
-            // FIXME: shows nothing
             ShapeKind::Oval => {
                 for (i,n) in (*shape.get_points()).iter().enumerate() {
                     if i % 2 == 1 { v.push(*n); }
@@ -129,11 +129,8 @@ impl Shape {
                 v.push(p[2]);
                 v.push(p[0]);
             },
-            ShapeKind::Poly => { // tries to build based on trianglefan
-                for (i,n) in (*shape.get_points()).iter().enumerate() {
-                    v.push(*n);
-                    println!("{:?}",i);
-                }
+            ShapeKind::Poly => {
+                println!("warning: non-standard shapes not supported for bordering");
             },
         }
 
