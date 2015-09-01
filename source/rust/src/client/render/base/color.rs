@@ -127,6 +127,21 @@ impl Colors {
     pub fn blue_sky() -> Color {
         Color::from_bytes(&vec!(135, 206, 235))
     }
+    pub fn gold() -> Color {
+        Color::from_bytes(&vec!(255, 215, 0))
+    }
+    pub fn grey_dark() -> Color {
+        Color::from_bytes(&vec!(105,105,105))
+    }
+    pub fn grey_light() -> Color {
+        Color::from_bytes(&vec!(190,190,190))
+    }
+    pub fn white_smoke() -> Color {
+        Color::from_bytes(&vec!(245,245,245))
+    }
+    pub fn white_ghost() -> Color {
+        Color::from_bytes(&vec!(248,248,255))
+    }
     
     pub fn random() -> Color {
         Color::from_bytes(&vec!(rand::random::<u8>(),
