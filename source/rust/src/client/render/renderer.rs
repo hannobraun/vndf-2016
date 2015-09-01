@@ -48,15 +48,15 @@ impl Renderer {
     }
 
     /// get new ortho transform matrix based on window size specified
-    fn get_transform(size: (u32,u32)) -> Mat4<f32> {
+    fn get_transform(size: (u32,u32)) -> Mat4<f64> {
         Ortho3::new(
-            size.0 as f32, size.1 as f32,
+            size.0 as f64, size.1 as f64,
             -1.0, 1.0
                 ).to_mat()
     }
 
     /// translates transform, used for camera positioning
-    fn translate(transform: Mat4<f32>, pos: [f32;2]) -> Mat4<f32> {
+    fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
         let translation = Iso3::new(
             Vec3::new(pos[0], pos[1], 0.0),
             Vec3::new(0.0, 0.0, 0.0),
@@ -80,7 +80,10 @@ impl Renderer {
 
         let cam_pos = self.camera.update(&frame,None);
         let world_trans = Renderer::translate(transform,cam_pos);
-
+        
+        let transform: Mat4<f32> = cast(transform);
+        let world_trans: Mat4<f32> = cast(world_trans);
+        
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 

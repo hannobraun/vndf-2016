@@ -1,4 +1,5 @@
 use time::precise_time_s;
+use nalgebra::{Vec2,cast};
 
 use glutin::Event;
 use glutin::ElementState;
@@ -100,10 +101,12 @@ impl Mouse {
                frame : &Frame,
                window_size: (u32,u32),
                camera: &Camera) {
+        let cam_pos: Vec2<f32> = cast(camera.get_pos());
         if let Some(click) = self.click {
             //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
-            let select = Mouse::check_selection(coord,frame,camera.get_pos());
+            let select = Mouse::check_selection(coord,frame,&[cam_pos[0] as f32,
+                                                              cam_pos[1] as f32]);
             if let Some(id) = select {
                 // TODO: consider conbining these two and handling selection
                 // logic outside of this, in interface perhaps
@@ -120,7 +123,6 @@ impl Mouse {
             for ship in frame.ships.iter() {
                 let ship_x = ship.1.position[0] as f32;
                 let ship_y = ship.1.position[1] as f32;
-                let cam_pos = camera.get_pos();
                 let p = [ship_x + -(cam_pos[0]),ship_y + -(cam_pos[1])];
 
                 
@@ -167,9 +169,9 @@ impl Mouse {
     //       in all places that need that data.
     // we'll need to pass in mesh data eventually 
     fn check_selection(pos: [f32;2],
-                           frame: &Frame,
-                           cam_pos: [f32;2])
-                           -> Option<EntityId> {
+                       frame: &Frame,
+                       cam_pos: &[f32;2])
+                       -> Option<EntityId> {
         for ship in frame.ships.iter() {
             let ship_x = ship.1.position[0] as f32;
             let ship_y = ship.1.position[1] as f32;

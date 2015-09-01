@@ -1,3 +1,4 @@
+use nalgebra::{Vec2,Absolute};
 use shared::game::EntityId;
 use client::interface::Frame;
 
@@ -11,8 +12,8 @@ pub enum CameraTrack {
 
 pub struct Camera {
     track: CameraTrack,
-    pos: [f32;2],
-    speed: f32, // camera transition speed
+    pos: Vec2<f64>,
+    speed: f64, // camera transition speed
     // TODO: consider camera easing
 }
 
@@ -20,7 +21,7 @@ impl Camera {
     pub fn new () -> Camera {
         Camera {
             track: CameraTrack::Position,
-            pos: [0.0,0.0],
+            pos: Vec2::new(0.0,0.0),
             speed: 5.0,
         }
     }
@@ -32,9 +33,11 @@ impl Camera {
     /// must be called to update camera positioning
     pub fn update (&mut self,
                    frame: &Frame,
-                   offset: Option<[f32;2]>)
-                   -> [f32;2] {
-        let mut pos = [0.0,0.0];
+                   offset: Option<Vec2<f64>>)
+                   -> Vec2<f64> {
+        let mut pos = Vec2::new(0.0,0.0);
+        let mut vel = Vec2::new(0.0,0.0);
+        
         match self.track {
             CameraTrack::Entity(ref v) => {                
                 pos = Camera::get_average_pos(&v,&frame);
@@ -48,8 +51,7 @@ impl Camera {
         }
         
         if let Some(offset) = offset {
-            pos[0] += offset[0];
-            pos[1] += offset[1];
+            pos = pos+offset;
         }
 
         // NOTE: must invert each coordinate to track
@@ -87,7 +89,7 @@ impl Camera {
 
     /// gets the average position of multiple entities
     // NOTE: This assumes that frame will hold all entities (eg: ships & planets)
-    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> [f32;2] {
+    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> Vec2<f64> {
         let mut ax = 0.0;
         let mut ay = 0.0;
         let total = v.len() as f64;
@@ -100,10 +102,10 @@ impl Camera {
             }
         }
 
-        [(ax/total) as f32, (ay/total) as f32]
+        Vec2::new((ax/total), (ay/total))
     }
 
-    pub fn get_pos (&self) -> [f32;2] {
+    pub fn get_pos (&self) -> Vec2<f64> {
         self.pos
     }
 }
