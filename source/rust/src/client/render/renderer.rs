@@ -8,6 +8,8 @@ use nalgebra::{
     Vec2,
     Vec3,
     ToHomogeneous,
+    Norm,
+    Translation,
 };
 
 use client::interface::Frame;
@@ -148,9 +150,10 @@ impl Renderer {
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
             // draw ship velocity line
+            let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
             let line = Shape::line(
                 [0.0,0.0],
-                *(ship_velocity * 30.0 * self.scaling_factor).as_array(),
+                *(ship_velocity * mag * 10.0 * self.scaling_factor).as_array(),
                 1.0,
             );
             ShapeDrawer::new(&mut graphics, &line)
