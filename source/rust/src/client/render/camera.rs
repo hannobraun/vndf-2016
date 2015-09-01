@@ -12,6 +12,8 @@ pub enum CameraTrack {
 pub struct Camera {
     track: CameraTrack,
     pos: [f32;2],
+    speed: f32, // camera transition speed
+    // TODO: consider camera easing
 }
 
 impl Camera {
@@ -19,6 +21,7 @@ impl Camera {
         Camera {
             track: CameraTrack::Position,
             pos: [0.0,0.0],
+            speed: 5.0,
         }
     }
 
@@ -53,8 +56,33 @@ impl Camera {
         pos[0] *= -1.0;
         pos[1] *= -1.0;
         
-        self.pos = pos;
-        pos
+        //TODO: make pos a Vec2 and figure out Absolute trait
+        let abs_x = (self.pos[0] - pos[0]).abs();
+        let abs_y = (self.pos[1] - pos[1]).abs();
+
+        if abs_x > (self.speed/2.0) {
+            let mut factor_x = self.speed;
+
+            // flip direction for camera
+            if self.pos[0] > pos[0] { factor_x *= -1.0; }
+            self.pos[0] += factor_x;
+        }
+        else {
+            self.pos[0] = pos[0];
+        }
+
+        if abs_y > (self.speed/2.0) {
+            let mut factor_y = self.speed;
+
+            // flip direction for camera
+            if self.pos[1] > pos[1] { factor_y *= -1.0; }
+            self.pos[1] += factor_y;
+        }
+        else {
+            self.pos[1] = pos[1];
+        }
+        
+        self.pos
     }
 
     /// gets the average position of multiple entities
