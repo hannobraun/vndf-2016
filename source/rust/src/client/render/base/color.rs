@@ -5,9 +5,9 @@ use rustc_serialize::hex::{FromHex, ToHex};
 pub type Color = [f32;3];
 
 pub trait Colorable {
-    fn from_bytes(b: &Vec<u8>) -> Color;
+    fn from_bytes(b: &[u8;3]) -> Color;
     fn from_hex(hex: &str) -> Option<Color>;
-    fn to_bytes(&self) -> Vec<u8>;
+    fn to_bytes(&self) -> [u8;3];
     fn to_hex(&self) -> String;
     fn mix(&self, other: Color) -> Color;
     fn add(&self, other: Color) -> Color;
@@ -17,23 +17,23 @@ pub trait Colorable {
 
 // TODO: implement rgba alpha, this will change mix functions
 impl Colorable for Color {
-    fn from_bytes(b: &Vec<u8>) -> Color {
+    fn from_bytes(b: &[u8;3]) -> Color {
         [b[0] as f32 / 255.0,
          b[1] as f32 / 255.0,
          b[2] as f32 / 255.0]
     }
     fn from_hex(hex: &str) -> Option<Color> {
-        if let Ok(ref _hex) = hex.from_hex() {
-            return Some(Color::from_bytes(_hex))
+        if let Ok(ref hex) = hex.from_hex() {
+            return Some(Color::from_bytes(&[hex[0],hex[1],hex[2]]))
         }
 
         None
     }
 
-    fn to_bytes(&self) -> Vec<u8> {
-        vec![(self[0] * 255.0) as u8,
-             (self[1] * 255.0) as u8,
-             (self[2] * 255.0) as u8]
+    fn to_bytes(&self) -> [u8;3] {
+        [(self[0] * 255.0) as u8,
+         (self[1] * 255.0) as u8,
+         (self[2] * 255.0) as u8]
     }
     fn to_hex(&self) -> String {
         let r = self.to_bytes();
@@ -109,44 +109,44 @@ impl Colors {
     }
 
     pub fn orange() -> Color {
-        Color::from_bytes(&vec!(255, 165, 0))
+        Color::from_bytes(&[255, 165, 0])
     }
     pub fn indigo() -> Color {
-        Color::from_bytes(&vec!(75, 0, 130))
+        Color::from_bytes(&[75, 0, 130])
     }
     pub fn violet() -> Color {
-        Color::from_bytes(&vec!(238, 130, 238))
+        Color::from_bytes(&[238, 130, 238])
     }
 
     pub fn red_brick() -> Color {
-        Color::from_bytes(&vec!(132,31,39))
+        Color::from_bytes(&[132,31,39])
     }
     pub fn green_spring() -> Color {
-        Color::from_bytes(&vec!(0,255,127))
+        Color::from_bytes(&[0,255,127])
     }
     pub fn blue_sky() -> Color {
-        Color::from_bytes(&vec!(135, 206, 235))
+        Color::from_bytes(&[135, 206, 235])
     }
     pub fn gold() -> Color {
-        Color::from_bytes(&vec!(255, 215, 0))
+        Color::from_bytes(&[255, 215, 0])
     }
     pub fn grey_dark() -> Color {
-        Color::from_bytes(&vec!(105,105,105))
+        Color::from_bytes(&[105,105,105])
     }
     pub fn grey_light() -> Color {
-        Color::from_bytes(&vec!(190,190,190))
+        Color::from_bytes(&[190,190,190])
     }
     pub fn white_smoke() -> Color {
-        Color::from_bytes(&vec!(245,245,245))
+        Color::from_bytes(&[245,245,245])
     }
     pub fn white_ghost() -> Color {
-        Color::from_bytes(&vec!(248,248,255))
+        Color::from_bytes(&[248,248,255])
     }
     
     pub fn random() -> Color {
-        Color::from_bytes(&vec!(rand::random::<u8>(),
-                                rand::random::<u8>(),
-                                rand::random::<u8>()))
+        Color::from_bytes(&[rand::random::<u8>(),
+                            rand::random::<u8>(),
+                            rand::random::<u8>()])
     }
 }
 
