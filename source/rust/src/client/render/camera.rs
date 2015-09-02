@@ -1,4 +1,5 @@
-use nalgebra::{Vec2,Translation};
+use time::precise_time_s;
+use nalgebra::{Vec2,Translation,Norm};
 use shared::game::EntityId;
 use client::interface::Frame;
 
@@ -13,7 +14,9 @@ pub enum CameraTrack {
 pub struct Camera {
     track: CameraTrack,
     pos: Vec2<f64>,
+    vel: Vec2<f64>,
     speed: f64, // camera transition speed
+    time: f64,
     // TODO: consider camera easing
 }
 
@@ -22,7 +25,9 @@ impl Camera {
         Camera {
             track: CameraTrack::Position,
             pos: Vec2::new(0.0,0.0),
+            vel: Vec2::new(0.0,0.0),
             speed: 5.0,
+            time: precise_time_s(),
         }
     }
 
@@ -58,8 +63,16 @@ impl Camera {
 
         // NOTE: must invert each coordinate to track
         pos = pos.inv_translation();
+        vel = vel.inv_translation();
 
-        self.pos = pos;
+        let d = pos-self.pos;
+        let mut t = 1.0/d.sqnorm().sqrt(); // get vector magnitude
+        if t > 1.0 { t = 1.0; }
+        if t < 0.5 { t = 0.5; }
+        self.pos = (self.pos*(1.0-t)) + (pos*t);
+        let dt = precise_time_s() - self.time;
+        //self.pos = self.vel * dt;
+        self.time = dt;
         self.pos
     }
 
