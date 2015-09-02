@@ -52,10 +52,21 @@ impl Renderer {
     fn get_transform(size: (u32,u32)) -> Mat4<f64> {
         Ortho3::new(
             size.0 as f64, size.1 as f64,
-            -1000.0, 1000.0
+            -1.0, 1.0
                 ).to_mat()
     }
 
+    /// transforms camera z-positioning
+    /// specify zoom-out level
+    fn get_transform_camera(size: (u32,u32), z: f64) -> Mat4<f64> {
+        let mut z = z.abs();
+        if z < 1.0 { z = 1.0; }
+        let mat = Ortho3::new(size.0 as f64 * z, size.1 as f64 * z,
+                              -1.0,1.0
+                              ).to_mat();
+        mat
+    }
+    
     /// translates transform, used for camera positioning
     fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
         let translation = Iso3::new(
@@ -74,13 +85,14 @@ impl Renderer {
         window : &Window,
         ) {
         let     window_size = window.get_size();
-        let     transform   = Renderer::get_transform(window_size);
         let mut graphics    = window.create_graphics();
 
         graphics.clear();
 
+        let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
-        let world_trans = Renderer::translate(transform,cam_pos);
+        let cam_trans = Renderer::get_transform_camera(window_size, 21.0);
+        let world_trans = Renderer::translate(cam_trans,cam_pos);
         
         let transform: Mat4<f32> = cast(transform);
         let world_trans: Mat4<f32> = cast(world_trans);
