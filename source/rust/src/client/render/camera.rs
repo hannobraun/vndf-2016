@@ -1,4 +1,4 @@
-use time::precise_time_s;
+//use time::precise_time_s;
 use nalgebra::{Vec2,Translation,Norm};
 use shared::game::EntityId;
 use client::interface::Frame;
@@ -16,8 +16,7 @@ pub struct Camera {
     pos: Vec2<f64>,
     vel: Vec2<f64>,
     speed: f64, // camera transition speed
-    time: f64,
-    // TODO: consider camera easing
+    //time: f64,
 }
 
 impl Camera {
@@ -26,13 +25,24 @@ impl Camera {
             track: CameraTrack::Position,
             pos: Vec2::new(0.0,0.0),
             vel: Vec2::new(0.0,0.0),
-            speed: 5.0,
-            time: precise_time_s(),
+            speed: 0.3,
+            //time: precise_time_s(),
         }
     }
 
-    pub fn set (&mut self, tracking: CameraTrack) {
+    pub fn set_track (&mut self, tracking: CameraTrack) {
         self.track = tracking;
+    }
+
+    /// speed for camera easing, must be within 0.1 and 1.0
+    pub fn set_speed (&mut self, speed: f64) {
+        let mut t = speed;
+        
+        // clamp speed
+        if t > 1.0 { t = 1.0; }
+        if t < 0.1 { t = 0.1; }
+        
+        self.speed = t;
     }
     
     /// must be called to update camera positioning
@@ -64,19 +74,23 @@ impl Camera {
         // NOTE: must invert each coordinate to track
         pos = pos.inv_translation();
         vel = vel.inv_translation();
-        self.vel = vel;
+        self.vel = vel; //track velocity
         
-        if (pos-(self.pos+self.vel)).sqnorm() > 50.0 { //removes jittering
+        if (pos-(self.pos+self.vel)).sqnorm() > 10.0 { //removes jittering
             let d = pos-self.pos;
             let mut t = 1.0/d.sqnorm().sqrt(); // get vector magnitude
+            t += self.speed;
+            
+            // clamp speed
             if t > 1.0 { t = 1.0; }
-            if t < 0.5 { t = 0.5; }
-            self.pos = (self.pos*(1.0-t)) + (pos*t);
+            if t < 0.1 { t = 0.1; }
+            
+            self.pos = (self.pos*(1.0-t)) + (pos*t); // ease out
         }
         else { self.pos = pos; } //removes jittering
 
-        let dt = precise_time_s() - self.time;
-        self.time = dt;
+        //let dt = precise_time_s() - self.time;
+        //self.time = dt;
         self.pos
     }
 

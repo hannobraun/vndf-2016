@@ -64,7 +64,7 @@ impl Interface for Player {
         self.cli.update(&mut self.events, frame, &window_events);
         
         if let Some(track) = frame.camera_track.clone() {
-            self.renderer.camera.set(track);
+            self.renderer.camera.set_track(track);
             frame.camera_track = None; //we should clear this out
         }
         
