@@ -9,7 +9,6 @@ use nalgebra::{
     Vec3,
     ToHomogeneous,
     Norm,
-    Translation,
 };
 
 use client::interface::Frame;
