@@ -52,7 +52,7 @@ impl Renderer {
     fn get_transform(size: (u32,u32)) -> Mat4<f64> {
         Ortho3::new(
             size.0 as f64, size.1 as f64,
-            -1.0, 1.0
+            -1000.0, 1000.0
                 ).to_mat()
     }
 
