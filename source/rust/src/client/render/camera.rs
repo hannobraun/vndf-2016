@@ -16,6 +16,7 @@ pub struct Camera {
     pos: Vec2<f64>,
     vel: Vec2<f64>,
     speed: f64, // camera transition speed
+    pub zoom: f32,
     //time: f64,
 }
 
@@ -26,6 +27,7 @@ impl Camera {
             pos: Vec2::new(0.0,0.0),
             vel: Vec2::new(0.0,0.0),
             speed: 0.3,
+            zoom: 1.0,
             //time: precise_time_s(),
         }
     }

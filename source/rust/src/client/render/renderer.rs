@@ -91,7 +91,7 @@ impl Renderer {
 
         let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
-        let cam_trans = Renderer::get_transform_camera(window_size, 21.0);
+        let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
         let world_trans = Renderer::translate(cam_trans,cam_pos);
         
         let transform: Mat4<f32> = cast(transform);
