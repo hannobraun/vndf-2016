@@ -309,6 +309,7 @@ impl Cli {
 
             "clear-selection" => {
                 events.push(InputEvent::Select(vec!()));
+                events.push(InputEvent::Track(CameraTrack::Default));
             },
             
             "help" => {
