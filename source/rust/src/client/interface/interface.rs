@@ -77,6 +77,12 @@ impl Interface for Player {
             self.renderer.camera.set_track(track);
             frame.camera_track = None; //we should clear this out
         }
+
+        // interpolate ship position
+        for (_,ship) in frame.ships.iter_mut() {
+            let pos = ship.position+(ship.velocity*frame.deltatime*1.99);
+            ship.position = pos;
+        }
         
         self.renderer.render(
             self.cli.text(),
