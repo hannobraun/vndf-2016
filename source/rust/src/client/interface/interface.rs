@@ -60,7 +60,8 @@ impl Interface for Player {
         let window_events = self.window.poll_events().collect();
         self.keyboard.update(&mut self.events,
                              frame,
-                             &window_events,);
+                             &window_events,
+                             &mut self.renderer.camera);
         
         self.mouse.update(&mut self.events,
                           frame,

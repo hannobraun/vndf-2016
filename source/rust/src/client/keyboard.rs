@@ -1,28 +1,30 @@
 use glutin::Event;
 use glutin::Event::{KeyboardInput,Closed};
 use glutin::VirtualKeyCode;
-use glutin::ElementState::Pressed;
+use glutin::ElementState::{Pressed,Released};
 
 use client::interface::{
     Frame,
     InputEvent,
 };
+use client::render::camera::Camera;
 
 /// Keyboard Input Controller
-pub struct Keyboard;// {
-    //held_keys: [u8;u8], //keys currently being pressed
-//}
+pub struct Keyboard {
+    held_keys: [bool;256], //keys currently being pressed
+}
 
 impl Keyboard {
     pub fn new () -> Keyboard {
-        Keyboard //{ held_keys: , }
+        Keyboard { held_keys: [false;256] }
     }
 
     pub fn update(
         &mut self,
         events: &mut Vec<InputEvent>,
         frame : &Frame,
-        window_events: &Vec<Event>,)
+        window_events: &Vec<Event>,
+        camera: &mut Camera)
     {
         for event in window_events.iter() {
             match *event {
@@ -30,13 +32,23 @@ impl Keyboard {
                     events.push(InputEvent::Quit);
                 },
                 KeyboardInput(Pressed, _, Some(key)) => {
-                    println!("{:?}",key as usize);
+                    self.held_keys[key as usize] = true;
+                },
+                KeyboardInput(Released, _, Some(key)) => {
+                    let nkey = key as usize;
+                    self.held_keys[nkey] = false;
+
+                    //special case for caps lock
+                    if key == VirtualKeyCode::Capital {
+                        self.held_keys[nkey] != self.held_keys[nkey];
+                    }
                 },
                 // NOTE: this should probably be in Interface's update
                 Closed => events.push(InputEvent::Quit), 
                 _ => {},
             }
         }
+
     }
     
 }
