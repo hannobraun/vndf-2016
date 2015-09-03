@@ -16,9 +16,11 @@ pub struct Camera {
     pos: Vec2<f64>,
     vel: Vec2<f64>,
     speed: f64, // camera transition speed
-    pub zoom: f32,
+    pub zoom: f64,
     //time: f64,
 }
+
+const MAX_ZOOM: f64 = 1000.0;
 
 impl Camera {
     pub fn new () -> Camera {
@@ -45,6 +47,16 @@ impl Camera {
         if t < 0.1 { t = 0.1; }
         
         self.speed = t;
+    }
+
+    pub fn zoom (&mut self, z: f64) {
+        self.zoom += z;
+        if self.zoom > MAX_ZOOM {
+            self.zoom = MAX_ZOOM;
+        }
+        if self.zoom < 1.0 {
+            self.zoom = 1.0;
+        }
     }
     
     /// must be called to update camera positioning

@@ -60,7 +60,7 @@ impl Interface for Player {
                           frame,
                           &window_events,
                           self.window.get_size(),
-                          &self.renderer.camera);
+                          &mut self.renderer.camera);
         self.cli.update(&mut self.events, frame, &window_events);
         
         if let Some(track) = frame.camera_track.clone() {

@@ -4,6 +4,7 @@ use nalgebra::{Vec2,cast};
 use glutin::Event;
 use glutin::ElementState;
 use glutin::MouseButton;
+use glutin::MouseScrollDelta;
 use glutin::Event::{
     MouseMoved,
     MouseInput,
@@ -42,7 +43,7 @@ impl Mouse {
                    frame : &Frame,
                    window_events: &Vec<Event>,
                    window_size: (u32,u32),
-                   camera: &Camera) {
+                   camera: &mut Camera) {
         for event in window_events.iter() {
             match *event {
                 MouseMoved(pos) => {
@@ -69,7 +70,16 @@ impl Mouse {
 
                     self.handler(events,frame,window_size,camera);
                 },
-                MouseWheel(_) => { },
+                MouseWheel(d) => {
+                    match d {
+                        MouseScrollDelta::LineDelta(_,y) => {
+                            camera.zoom(y as f64/2.0);
+                        },
+                        MouseScrollDelta::PixelDelta(_,_) => {
+                            println!("Warning: Touchpad not supported");
+                        },
+                    }
+                },
                 _ => { },
             }
         }
