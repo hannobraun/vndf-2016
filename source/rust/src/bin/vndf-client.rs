@@ -29,6 +29,7 @@ use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
 
+const MIN_TIME: f64 = 0.015; // 15ms minimum frame time
 
 fn main() {
     env_logger::init().unwrap_or_else(|e|
@@ -65,6 +66,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
     let mut last_server_activity = precise_time_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
+
+    let mut frame_time = precise_time_s();
     
     'main: loop {
         trace!("Start client main loop iteration");
@@ -169,6 +172,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
         network.send(ClientEvent::Privileged(client_event::Privileged::Heartbeat));
 
-        sleep_ms(args.sleep_ms);
+        let dt = precise_time_s() - frame_time;
+        if dt < MIN_TIME {
+            sleep_ms(((MIN_TIME - dt)*1000.0) as u32);
+        }
+        frame_time = precise_time_s();
     }
 }
