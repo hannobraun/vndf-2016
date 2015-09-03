@@ -3,7 +3,7 @@ use vndf::client::render::base::color::{Color, Colorable, Colors};
 #[test]
 fn conversion() {
 	let hex_col = "452945";
-	let byte_col = vec![69u8,41,69];
+	let byte_col = [69u8,41,69];
 	
 	let c = Color::from_bytes(&byte_col);
 	assert_eq!(c.to_bytes().clone(),byte_col);
