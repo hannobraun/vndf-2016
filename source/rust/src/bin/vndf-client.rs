@@ -8,8 +8,6 @@ extern crate time;
 
 extern crate vndf;
 
-
-use std::collections::HashMap;
 use std::env;
 use std::thread::sleep_ms;
 use time::precise_time_s;
@@ -56,18 +54,11 @@ fn init_interface<I: Interface>() -> I {
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
-    
-    let mut broadcasts = HashMap::new();
-    let mut ships      = HashMap::new();
-    
-    
     let mut network = Network::new(args.server);
-
     let mut last_server_activity = precise_time_s();
+    let mut frame_time = precise_time_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
-
-    let mut frame_time = precise_time_s();
     
     'main: loop {
         trace!("Start client main loop iteration");
@@ -136,20 +127,20 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.ship_id = Some(ship_id);
                 },
                 server::Event::UpdateEntity(id, (ship, broadcast)) => {
-                    ships.insert(id, ship);
+                    frame.ships.insert(id, ship);
 
                     match broadcast {
                         Some(broadcast) => {
-                            broadcasts.insert(id, broadcast.message);
+                            frame.broadcasts.insert(id, broadcast.message);
                         },
                         None => {
-                            broadcasts.remove(&id);
+                            frame.broadcasts.remove(&id);
                         }
                     }
                 },
                 server::Event::RemoveEntity(id) => {
-                    broadcasts.remove(&id);
-                    ships.remove(&id);
+                    frame.broadcasts.remove(&id);
+                    frame.ships.remove(&id);
                 },
             }
 
@@ -161,14 +152,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 "Lost connection to server".to_string()
                     );
         }
-
-        frame.broadcasts = broadcasts.clone();
-        frame.ships = ships
-            .iter()
-            .map(|(id, ship)|
-                 (*id, *ship)
-                 )
-            .collect();
 
         network.send(ClientEvent::Privileged(client_event::Privileged::Heartbeat));
 
