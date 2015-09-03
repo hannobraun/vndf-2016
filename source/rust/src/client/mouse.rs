@@ -73,7 +73,7 @@ impl Mouse {
                 MouseWheel(d) => {
                     match d {
                         MouseScrollDelta::LineDelta(_,y) => {
-                            camera.zoom(y as f64/2.0);
+                            camera.zoom(y as f64/3.5);
                         },
                         MouseScrollDelta::PixelDelta(_,_) => {
                             println!("Warning: Touchpad not supported");
