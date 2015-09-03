@@ -49,6 +49,14 @@ impl Keyboard {
             }
         }
 
+        if self.held_keys[VirtualKeyCode::Tab as usize] {
+            if self.held_keys[VirtualKeyCode::PageUp as usize] {
+                camera.zoom(0.25);
+            }
+            else if self.held_keys[VirtualKeyCode::PageDown as usize] {
+                camera.zoom(-0.25);
+            }
+        }
     }
     
 }
