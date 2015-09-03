@@ -2,7 +2,6 @@ use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
 use glutin::Event;
 use glutin::Event::{
-    Closed,
     KeyboardInput,
     ReceivedCharacter,
 };
