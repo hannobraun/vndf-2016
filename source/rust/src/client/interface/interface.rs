@@ -21,6 +21,8 @@ use client::interface::{
 use client::render::Renderer;
 use client::window::Window;
 
+const MAX_FRAME_TIME: f64 = 0.020; // 15ms minimum frame time
+
 pub trait Interface: Sized {
     fn new(config: Config) -> io::Result<Self>;
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>>;
@@ -56,7 +58,8 @@ impl Interface for Player {
         })
     }
 
-    fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
+    fn update(&mut self, frame: &mut Frame)
+              -> io::Result<Drain<InputEvent>> {
         let window_events = self.window.poll_events().collect();
         self.keyboard.update(&mut self.events,
                              frame,
@@ -83,6 +86,12 @@ impl Interface for Player {
             );
         self.window.swap_buffers();
 
+        // frame delay notifier
+        if frame.deltatime > MAX_FRAME_TIME {
+            // notify of frame delays
+            // TODO: add event type to push (FrameDelay(dt:f64))
+        }
+        
         Ok(self.events.drain(..))
     }
 }

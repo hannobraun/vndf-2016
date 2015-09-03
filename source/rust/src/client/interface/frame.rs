@@ -21,6 +21,7 @@ pub struct Frame {
     pub ships       : BTreeMap<EntityId, Body>,
     pub camera_track: Option<CameraTrack>,
     pub select_ids  : Vec<EntityId>,
+    pub deltatime   : f64, // time between last frame and this frame
 }
 
 impl Frame {
@@ -33,6 +34,7 @@ impl Frame {
             ships       : BTreeMap::new(),
             camera_track: Some(CameraTrack::Default),
             select_ids  : Vec::new(),
+            deltatime   : 0.0,
         }
     }
 
