@@ -32,7 +32,8 @@ impl Keyboard {
                 KeyboardInput(Pressed, _, Some(key)) => {
                     println!("{:?}",key as usize);
                 },
-                Closed => events.push(InputEvent::Quit),
+                // NOTE: this should probably be in Interface's update
+                Closed => events.push(InputEvent::Quit), 
                 _ => {},
             }
         }
