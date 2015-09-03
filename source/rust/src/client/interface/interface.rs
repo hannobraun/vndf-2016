@@ -12,6 +12,7 @@ use std::vec::Drain;
 
 use client::cli::Cli;
 use client::mouse::Mouse;
+use client::keyboard::Keyboard;
 use client::config::Config;
 use client::interface::{
     Frame,
@@ -32,6 +33,7 @@ pub struct Player {
     window  : Window,
     renderer: Renderer,
     mouse   : Mouse, // NOTE: this might be renamed to selector or controller
+    keyboard: Keyboard,
 }
 
 impl Interface for Player {
@@ -50,12 +52,16 @@ impl Interface for Player {
             window  : window,
             renderer: renderer,
             mouse   : Mouse::new(),
+            keyboard: Keyboard::new(),
         })
     }
 
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>> {
         let window_events = self.window.poll_events().collect();
-
+        self.keyboard.update(&mut self.events,
+                             frame,
+                             &window_events,);
+        
         self.mouse.update(&mut self.events,
                           frame,
                           &window_events,

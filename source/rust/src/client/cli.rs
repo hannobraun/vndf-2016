@@ -142,16 +142,6 @@ impl Cli {
                     self.input_buffer.push_str(&cmd);
                     self.prompt_idx = cmd.chars().count();
                 },
-
-                // TODO: move keyboard action commands to somewhere else!
-                // Those events aren't really related to the CLI. It feels wrong
-                // to handle them here.
-                KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) =>
-                    events.push(InputEvent::Quit),
-                Closed =>
-                    events.push(InputEvent::Quit),
-
-                
                 _ => (), // ignore other events
             }
         }
