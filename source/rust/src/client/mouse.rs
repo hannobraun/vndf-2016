@@ -127,23 +127,23 @@ impl Mouse {
             let drag_start = self.drag.0.unwrap();
             let start = Mouse::convert_coord(drag_start,window_size);
             let end = Mouse::convert_coord(drag_end,window_size);
-
+            let start = *Vec2::from_array_ref(&start) + (cam_pos * -1.0);
+            let end = *Vec2::from_array_ref(&end) + (cam_pos * -1.0);
+            
             let mut v = vec!();
-            for ship in frame.ships.iter() {
-                let ship_x = ship.1.position[0] as f32;
-                let ship_y = ship.1.position[1] as f32;
-                let p = [ship_x + -(cam_pos[0]),ship_y + -(cam_pos[1])];
-
-                
-                if Mouse::within_bounds(p[0],start[0],end[0]) {
-                    if Mouse::within_bounds(p[1],start[1],end[1]) {
-                        v.push(ship.0.clone());
+            for (id,ship) in frame.ships.iter() {
+                let ship_pos: Vec2<f32> = cast(ship.position);
+                if Mouse::within_bounds(ship_pos[0],start[0],end[0]) {
+                    if Mouse::within_bounds(ship_pos[1],start[1],end[1]) {
+                        v.push(id.clone());
                     }
                 }
             }
 
-            events.push(InputEvent::Select(v.clone()));
-            events.push(InputEvent::Track(CameraTrack::Entity(v))); 
+            if v.len() > 0 { //don't select nothing in a drag-select
+                events.push(InputEvent::Select(v.clone()));
+                events.push(InputEvent::Track(CameraTrack::Entity(v)));
+            }
         }
     }
 
