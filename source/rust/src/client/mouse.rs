@@ -115,8 +115,7 @@ impl Mouse {
         if let Some(click) = self.click {
             //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
-            let select = Mouse::check_selection(coord,frame,&[cam_pos[0] as f32,
-                                                              cam_pos[1] as f32]);
+            let select = Mouse::check_selection(coord,frame,cam_pos);
             if let Some(id) = select {
                 // TODO: consider conbining these two and handling selection
                 // logic outside of this, in interface perhaps
@@ -168,7 +167,7 @@ impl Mouse {
         let x = pos.0 - (window_size.0 as i32) /2;
         let y = pos.1 - (window_size.1 as i32) /2;
 
-        [x as f32,y as f32]
+        [x as f32,-1.0*y as f32]
     }
 
     // NOTE: assumes ships are equilateral triangles, & calcs bounding box
@@ -180,17 +179,16 @@ impl Mouse {
     // we'll need to pass in mesh data eventually 
     fn check_selection(pos: [f32;2],
                        frame: &Frame,
-                       cam_pos: &[f32;2])
+                       cam_pos: Vec2<f32>)
                        -> Option<EntityId> {
-        for ship in frame.ships.iter() {
-            let ship_x = ship.1.position[0] as f32;
-            let ship_y = ship.1.position[1] as f32;
-            if ((pos[0] + -(cam_pos[0])) < (ship_x + 15.0)) &
-                ((pos[0] + -(cam_pos[0])) > (ship_x - 15.0)) &
-                ((pos[1] + -(cam_pos[1])) < (ship_y + 15.0)) &
-                ((pos[1] + -(cam_pos[1])) > (ship_y - 15.0))
-            {
-                return Some(ship.0.clone());
+        let ship_size = 30.0;
+        let pos = Vec2::new(pos[0],pos[1]);
+        let adj_pos: Vec2<f64> = cast(pos + (cam_pos * -1.0));
+        for (id,ship) in frame.ships.iter() {
+            let d = adj_pos - ship.position;
+            if (d[0].abs() < (ship_size/2.0)) &
+                (d[1].abs() < (ship_size/2.0)) {
+                return Some(id.clone());
             }
         }
 
