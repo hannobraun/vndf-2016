@@ -104,6 +104,8 @@ impl Renderer {
         let vec2_scaled = Vec2::new(1.0,1.0) *
             self.scaling_factor *
             (self.camera.zoom as f32);
+        let vec2_text_scaled = Vec2::new(1.0,1.0) *
+            (self.camera.zoom as f32);
 
         self.ship_drawer.ship_size = vec2_scaled * SHIP_SIZE; //resize when necessary
         
@@ -112,6 +114,8 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &line,
                 position_cli(0, y, advance_x, line_height, window_size),
+                Vec2::new(1.0,1.0),
+                1.0,
                 color::Colors::white(),
                 false,
                 transform,
@@ -129,6 +133,8 @@ impl Renderer {
         self.glyph_drawer.draw(
             &command_line,
             position_cli(0, prompt_ypos, advance_x, line_height, window_size),
+            Vec2::new(1.0,1.0),
+            1.0,
             color::Colors::white(),
             false,
             transform,
@@ -139,6 +145,8 @@ impl Renderer {
         self.glyph_drawer.draw(
             &"_".to_string(),
             position_cli(command.1 + 2, prompt_ypos, advance_x, line_height, window_size),
+            Vec2::new(1.0,1.0),
+            1.0,
             color::Colors::white(),
             false,
             transform,
@@ -161,20 +169,18 @@ impl Renderer {
         for (ship_id, ship) in &frame.ships {
             let ship_position = cast(ship.position);
             let ship_size     = self.ship_drawer.ship_size;
-            let pos_offset    = Vec2::new(ship_size.x, 10.0);
+            let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
 
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
             // draw ship velocity line
             let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
-            let max_line_scale = {if self.camera.zoom as f32 > 1.5 { 1.5 }
-                                  else { self.camera.zoom as f32 }}; // this needs work
             
             let line = Shape::line(
                 [0.0,0.0],
-                *(ship_velocity * mag * 20.0 * max_line_scale).as_array(),
-                (1.0 * self.scaling_factor * max_line_scale),
+                *(ship_velocity * mag * 20.0).as_array(),
+                (1.0 * self.scaling_factor),
             );
             ShapeDrawer::new(&mut graphics, &line)
                 .draw(ship_position,
@@ -199,6 +205,8 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
                 ship_position - line_advance + Vec2::new(0.0,5.0),
+                vec2_text_scaled,
+                self.camera.zoom,
                 color::Colors::white(),
                 true,
                 world_trans,
@@ -210,6 +218,8 @@ impl Renderer {
                 self.glyph_drawer.draw(
                     ship_comm,
                     ship_position + line_advance - Vec2::new(0.0, ship_size.y),
+                    vec2_text_scaled,
+                    self.camera.zoom,
                     color::Colors::white(),
                     true,
                     world_trans,
@@ -222,6 +232,8 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &pos,
                 ship_position + pos_offset,
+                vec2_text_scaled,
+                self.camera.zoom,
                 color::Colors::white(),
                 false,
                 world_trans,
@@ -233,6 +245,8 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &vel,
                 ship_position + pos_offset + line_advance,
+                vec2_text_scaled,
+                self.camera.zoom,
                 color::Colors::white(),
                 false,
                 world_trans,
