@@ -78,7 +78,7 @@ impl ShapeDrawer {
 	pub fn draw(
 		&mut self,
 		position : Vec2<f32>,
-		size     : [f32;2],
+		size     : Vec2<f32>,
 		color    : color::Color,
 		transform: Mat4<f32>,
 		graphics : &mut Graphics,
@@ -91,7 +91,7 @@ impl ShapeDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-			size     : size,
+			size     : *size.as_array(),
 			color    : color,
 			_r       : PhantomData,
 		};

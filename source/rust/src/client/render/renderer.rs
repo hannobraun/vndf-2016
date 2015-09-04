@@ -100,6 +100,10 @@ impl Renderer {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 
+        let vec2_scaled = Vec2::new(1.0,1.0) *
+            self.scaling_factor *
+            (self.camera.zoom as f32);
+        
         // render console output
         for (y, line) in output.iter().enumerate() {
             self.glyph_drawer.draw(
@@ -142,10 +146,10 @@ impl Renderer {
         let ship_size = 30.0; //TODO: get actual ship size
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let tri = Shape::tri((5.0 + (ship_size/2.0)) * self.scaling_factor);
+                let tri = Shape::tri((5.0 + (ship_size/2.0)));
                 ShapeDrawer::new(&mut graphics, &tri).draw(
                     cast(ship.position + Vec2::new(0.0,2.0)),
-                    [1.0,1.0],
+                    vec2_scaled,
                     color::Colors::white(),
                     world_trans,
                     &mut graphics);
@@ -162,14 +166,17 @@ impl Renderer {
 
             // draw ship velocity line
             let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
+            let max_line_scale = {if self.camera.zoom as f32 > 2.0 { 2.0 }
+                             else { self.camera.zoom as f32 }}; // this needs work
+            
             let line = Shape::line(
                 [0.0,0.0],
-                *(ship_velocity * mag * 20.0 * self.scaling_factor).as_array(),
-                1.0,
+                *(ship_velocity * mag * 20.0 * max_line_scale).as_array(),
+                (1.0 * self.scaling_factor * max_line_scale),
             );
             ShapeDrawer::new(&mut graphics, &line)
                 .draw(ship_position,
-                      [1.0,1.0],
+                      vec2_scaled,
                       color::Colors::red(),
                       world_trans,
                       &mut graphics);
