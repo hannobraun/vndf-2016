@@ -65,6 +65,32 @@ single mistake, so it's okay for the escape capsule to have some kind of magic
 drive that allows the player to get home without any fuel left.
 
 
+## NPCs
+
+A lot of games present non-player characters as being peers to the player. This
+is often done to further the story by using NPCs to tell parts of it. I think we
+shouldn't follow that approach in VNDF:
+
+- VNDF aims to be a sandbox game that is driven by players. NPCs doing stuff
+  that somehow drives the game forward should be kept to a minimum.
+- If not done well, such NPCs can make the world unbelievable. An example of
+  this is EVE Online: Many missions depict the player as interacting with other
+  characters that also captain space ships, but behave nothing like other
+  players would (Actually that's only one of the many problems that EVE missions
+  have from a storytelling perspective. Missions in EVE are basically a parallel
+  world that have nothing to do with how the game functions otherwise.)
+
+We can sidestep this whole problem completely by not adding any other "human"
+characters. I think we can't really forgo NPCs completely, especially as long as
+the game is not popular, and we can't rely on there always being enough players
+to provide entertainment for each other.
+
+That's actually one reason I chose the von Neumann probe scenario: They are
+artificial intelligences and can be presented as being ant-like, relying on
+simple, emergent behaviors and power in numbers, not high-level strategic
+decision. I actually see them as part of the environment, not other characters.
+
+
 ## Further Reading
 
 Hanno expanded upon some of the elements within this document in past newsletter
