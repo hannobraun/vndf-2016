@@ -150,7 +150,7 @@ impl Renderer {
             if let Some(ship) = frame.ships.get(&id) {
                 let tri = Shape::tri((5.0 + (SHIP_SIZE/2.0)));
                 ShapeDrawer::new(&mut graphics, &tri).draw(
-                    cast(ship.position + Vec2::new(0.0,2.0)),
+                    cast(ship.position + Vec2::new(0.0,2.0*self.camera.zoom)),
                     vec2_scaled,
                     color::Colors::white(),
                     world_trans,
