@@ -168,7 +168,7 @@ impl Renderer {
 
             // draw ship velocity line
             let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
-            let max_line_scale = {if self.camera.zoom as f32 > 2.0 { 2.0 }
+            let max_line_scale = {if self.camera.zoom as f32 > 1.5 { 1.5 }
                                   else { self.camera.zoom as f32 }}; // this needs work
             
             let line = Shape::line(
