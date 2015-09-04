@@ -1,8 +1,10 @@
+use rand::{random,thread_rng, sample};
+
 use glutin::Event;
 use glutin::Event::{KeyboardInput,Closed};
 use glutin::VirtualKeyCode;
 use glutin::ElementState::{Pressed,Released};
-
+use shared::game::{ManeuverData};
 use client::interface::{
     Frame,
     InputEvent,
@@ -22,7 +24,7 @@ impl Keyboard {
     pub fn update(
         &mut self,
         events: &mut Vec<InputEvent>,
-        _     : &Frame,
+        frame: &Frame,
         window_events: &Vec<Event>,
         camera: &mut Camera)
     {
@@ -41,6 +43,29 @@ impl Keyboard {
                     //special case for caps lock
                     if key == VirtualKeyCode::Capital {
                         self.held_keys[nkey] != self.held_keys[nkey];
+                    }
+
+                    // debug key to send a random maneuver
+                    if self.held_keys[VirtualKeyCode::Tab as usize] {
+                        if key == VirtualKeyCode::F9 {
+                            let mut rng = thread_rng();
+                            let a = sample(&mut rng, 1..359, 1);
+                            
+                            let direction_rad = (a[0] as f64).to_radians();
+
+                            let game_time_s = {
+                                if let Some(game_time_s) = frame.game_time_s {
+                                    game_time_s
+                                }
+                                else {return} };
+                            let data = ManeuverData {
+                                start_s   : game_time_s + 0.0,
+                                duration_s: random::<u8>() as f64,
+                                angle     : direction_rad,
+                            };
+
+                            events.push(InputEvent::ScheduleManeuver(data));
+                        }
                     }
                 },
                 // NOTE: this should probably be in Interface's update
