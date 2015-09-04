@@ -5,18 +5,14 @@ The point of this document is to show the higher-level concepts introduced in
 the other documents in action and describe the game in a concrete way that is
 really hard to do by presenting high-level concepts.
 
-TODO: Think about the following paragraph, maybe remove it.
-
 A few notes before I start:
 
 - All of this is very preliminary. I'm very sure that no scenario will make it
   into the game just as I describe it here. Lots will change, as we gather
   experience.
 - Scenarios are partially speculative, so I can paint a fuller picture. For
-  example, I don't know whether a new player should start in open space or in
-  orbit around an asteroid.
-- TODO: Meant to be read in order (details from earlier scenarios are left our
-        in later scenarios).
+  example, I don't really know what the tutorial will look like, but I have to
+  start somewhere to describe the game.
 
 
 ## New Player Experience
