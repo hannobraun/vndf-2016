@@ -7,3 +7,5 @@ Neumann Defense Force. I suggest reading them in the following order:
    Back story.
 1. [Mechanics](https://github.com/hannobraun/vndf/blob/master/docs/game-design/mechanics.md):
    Description of actual game mechanics.
+1. [Scenarios](https://github.com/hannobraun/vndf/blob/master/docs/game-design/scenarios.md):
+   Description of scenarios that a player might experience.
