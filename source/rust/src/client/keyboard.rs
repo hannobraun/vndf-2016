@@ -22,7 +22,7 @@ impl Keyboard {
     pub fn update(
         &mut self,
         events: &mut Vec<InputEvent>,
-        frame : &Frame,
+        _     : &Frame,
         window_events: &Vec<Event>,
         camera: &mut Camera)
     {
