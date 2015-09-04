@@ -21,6 +21,7 @@ use client::render::draw::{
 };
 use client::render::camera::{Camera};
 
+const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
@@ -37,7 +38,7 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShipDrawer::new(&mut graphics, 30.0 * scaling_factor);
+        let ship_drawer  = ShipDrawer::new(&mut graphics, SHIP_SIZE);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
@@ -103,6 +104,8 @@ impl Renderer {
         let vec2_scaled = Vec2::new(1.0,1.0) *
             self.scaling_factor *
             (self.camera.zoom as f32);
+
+        self.ship_drawer.ship_size = vec2_scaled * SHIP_SIZE; //resize when necessary
         
         // render console output
         for (y, line) in output.iter().enumerate() {
@@ -143,10 +146,9 @@ impl Renderer {
             );
 
         // draw ship selection, where necessary
-        let ship_size = 30.0; //TODO: get actual ship size
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let tri = Shape::tri((5.0 + (ship_size/2.0)));
+                let tri = Shape::tri((5.0 + (SHIP_SIZE/2.0)));
                 ShapeDrawer::new(&mut graphics, &tri).draw(
                     cast(ship.position + Vec2::new(0.0,2.0)),
                     vec2_scaled,
@@ -167,7 +169,7 @@ impl Renderer {
             // draw ship velocity line
             let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
             let max_line_scale = {if self.camera.zoom as f32 > 2.0 { 2.0 }
-                             else { self.camera.zoom as f32 }}; // this needs work
+                                  else { self.camera.zoom as f32 }}; // this needs work
             
             let line = Shape::line(
                 [0.0,0.0],
