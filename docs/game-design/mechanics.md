@@ -220,3 +220,68 @@ Combat in general:
 - Defensive missiles are overall more flexible than shields would be. Not only
   can you weigh between offense and defense, you could also decide to use your
   defensive capability for another nearby ship (make sure the loot gets away).
+
+
+## Sensors
+
+Ships are equipped with sensors that enable the players to sense their
+surrounding area. I think these sensors should be introduced into the game in
+the following steps:
+
+1. Right now, there is no concept of not sensing stuff. The server just sends
+   all ships to all client.
+1. The next step would be to restrict sensing based on distance. Each player
+   only sees ships in the surrounding area.
+1. Eventually, more advanced sensing should be introduced into the game. Sensors
+   become something that can be equipped to ships. What a player sees and
+   doesn't see depends solely on which sensors are equipped and active.
+
+The details of sensors and sensing will very much depend at what kind of
+gameplay (especially in the context of combat) we want to support, and I expect
+this to change many times, as we get experience with playing the game.
+Consequently, please see the following more as a collection of ideas as opposed
+to a worked out concept.
+
+### Design Goals
+
+- Protect new players by making small, low-key operations hard to be seen.
+- Increase the risk for players, as they scale up their operation.
+- Add depth to combat by making it more strategic. Add stealth as another option
+  beyond firepower.
+
+### What can and can't be sensed
+
+I think this is an area where some amount of realism can make the game
+interesting and approachable, but we shouldn't go overboard. For example, I once
+read that the engines of the Space Shuttles could be sensed from as far out as
+Pluto. I don't think it would be very interesting if every player could see
+every other player. It also probably wouldn't be good for the game (think about
+new players being harrassed from the first moment).
+
+I suggest the following categories of sensors:
+
+- Optical: Looking out of the window/through the telescope. Big things (planets)
+  can be seen easily. Small things (ships) can be seen from quite far away, if
+  you know where to look.
+- Heat/Energy: If you run your engines on full power, you'll be seen easily. If
+  you shut down all systems and coast along, you can get quite close to surprise
+  someone. We can later work out how this could work in terms of real-life
+  physics (e.g. infrared camera or whatever) to add some colour to the game, but
+  I don't think it's too important in the concept stage.
+- Radar: You can actively send out radar signals to see ships you couldn't
+  easily find optically. But anyone else in range with a radar can see your
+  signal and locate you instantly.
+
+
+### Sensor Modes
+
+By default, sensors would look into all directions. This means, you see anything
+that comes at you, but you might see it late. The telescope can only look in one
+direction at a time, so another ship might come close before you notice it. I
+don't know if we'd want to model this with probability or a fixed threshold
+(size vs distance).
+
+You could also set your sensors to look into one specific direction, which would
+increase the likelyhood/threshold of what you can sense from that direction.
+This could be used offensively (scout a specific target) or defensively (we
+suspect the enemy will come from that direction).
