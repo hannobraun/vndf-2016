@@ -156,13 +156,13 @@ impl Renderer {
         // draw ship selection, where necessary
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let tri = Shape::tri((5.0 + (SHIP_SIZE/2.0)));
-                ShapeDrawer::new(&mut graphics, &tri).draw(
-                    cast(ship.position + Vec2::new(0.0,2.0*self.camera.zoom)),
-                    vec2_scaled,
+                self.triangle.draw(
+                    &cast(ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom)),
+                    vec2_scaled.x * SHIP_SIZE * 1.25,
                     color::Colors::white(),
                     world_trans,
-                    &mut graphics);
+                    &mut graphics,
+                );
             }
         }
 
