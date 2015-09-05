@@ -77,21 +77,20 @@ impl Renderer {
         //                 window.
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
-        let camera_to_screen = ortho(frame_state.window_size);
         let world_to_camera  = ortho(frame_state.window_size * self.camera.zoom) * camera_translation;
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
         frame_state.graphics.clear();
         
-        self.render_console(console, camera_to_screen, &mut frame_state);
+        self.render_console(console, &mut frame_state);
         self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state);
         self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state);
 
         frame_state.graphics.flush();
     }
 
-    fn render_console(&mut self, console: &Console, transform: Mat4<f32>, frame_state: &mut FrameState) {
+    fn render_console(&mut self, console: &Console, frame_state: &mut FrameState) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 
@@ -101,7 +100,7 @@ impl Renderer {
                 position_cli(0, y, advance_x, line_height, frame_state.window_size),
                 color::Colors::white(),
                 false,
-                transform,
+                frame_state.camera_to_screen,
                 &mut frame_state.graphics,
             );
         }
@@ -118,7 +117,7 @@ impl Renderer {
             position_cli(0, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
-            transform,
+            frame_state.camera_to_screen,
             &mut frame_state.graphics,
         );
 
@@ -128,7 +127,7 @@ impl Renderer {
             position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
-            transform,
+            frame_state.camera_to_screen,
             &mut frame_state.graphics,
         );
     }
@@ -247,6 +246,8 @@ impl Renderer {
 struct FrameState {
     graphics   : Graphics,
     window_size: Vec2<f32>,
+
+    camera_to_screen: Mat4<f32>,
 }
 
 impl FrameState {
@@ -256,9 +257,23 @@ impl FrameState {
             Vec2::new(size.0 as f32, size.1 as f32)
         };
 
+        // The following transformation matrices are named based on the
+        // following nomenclature:
+        // - screen space: The representation used by OpenGL. After the shaders
+        //                 are done with it, point will be transformed to that
+        //                 space.
+        // - camera space: The coordinates from the view of the camera.
+        //                 Corresponds to the pixel coordinates relative to the
+        //                 window.
+        // - world space:  The only space relevant, as far as the game logic is
+        //                 concerned.
+        let camera_to_screen = ortho(window_size);
+
         FrameState {
             graphics   : window.create_graphics(),
             window_size: window_size,
+
+            camera_to_screen: camera_to_screen,
         }
     }
 }
