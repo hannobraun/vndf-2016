@@ -111,26 +111,7 @@ impl Renderer {
             (self.camera.zoom as f32);
         
         self.render_console(output, command, window_size, transform, &mut graphics);
-
-        // draw ship selection, where necessary
-        for id in frame.select_ids.iter() {
-            if let Some(ship) = frame.ships.get(&id) {
-                let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom);
-
-                let translation = Iso3::new(
-                    Vec3::new(position.x as f32, position.y as f32, 0.0),
-                    Vec3::new(0.0, 0.0, 0.0),
-                );
-                let transform = world_trans * translation.to_homogeneous();
-
-                self.triangle.draw(
-                    scale_factor * SHIP_SIZE * 1.25,
-                    color::Colors::white(),
-                    transform,
-                    &mut graphics,
-                );
-            }
-        }
+        self.render_selections(frame, world_trans, scale_factor, &mut graphics);
 
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
@@ -275,6 +256,27 @@ impl Renderer {
             transform,
             graphics,
         );
+    }
+
+    fn render_selections(&mut self, frame: &Frame, world_trans: Mat4<f32>, scale_factor: f32, graphics: &mut Graphics) {
+        for id in frame.select_ids.iter() {
+            if let Some(ship) = frame.ships.get(&id) {
+                let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom);
+
+                let translation = Iso3::new(
+                    Vec3::new(position.x as f32, position.y as f32, 0.0),
+                    Vec3::new(0.0, 0.0, 0.0),
+                );
+                let transform = world_trans * translation.to_homogeneous();
+
+                self.triangle.draw(
+                    scale_factor * SHIP_SIZE * 1.25,
+                    color::Colors::white(),
+                    transform,
+                    graphics,
+                );
+            }
+        }
     }
 }
 
