@@ -241,6 +241,26 @@ impl Renderer {
 }
 
 
+/// get new ortho transform matrix based on window size specified
+fn ortho(size: Vec2<f32>) -> Mat4<f32> {
+    let ortho = Ortho3::new(
+        size.x, size.y,
+        -1.0, 1.0
+    );
+
+    ortho.to_mat()
+}
+
+/// translates transform, used for camera positioning
+fn translate(transform: Mat4<f32>, pos: Vec2<f32>) -> Mat4<f32> {
+    let translation = Iso3::new(
+        Vec3::new(pos[0], pos[1], 0.0),
+        Vec3::new(0.0, 0.0, 0.0),
+        );
+
+    transform * translation.to_homogeneous()
+}
+
 /// This is used to position CLI text
 /// It takes in to account the window sizing
 fn position_cli(
@@ -257,24 +277,4 @@ fn position_cli(
         (-1.0 * ((window_size.x / 2.0) - pad_x)) + advance_x * x as f32,
         ((window_size.y / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
     )
-}
-
-/// translates transform, used for camera positioning
-fn translate(transform: Mat4<f32>, pos: Vec2<f32>) -> Mat4<f32> {
-    let translation = Iso3::new(
-        Vec3::new(pos[0], pos[1], 0.0),
-        Vec3::new(0.0, 0.0, 0.0),
-        );
-
-    transform * translation.to_homogeneous()
-}
-
-/// get new ortho transform matrix based on window size specified
-fn ortho(size: Vec2<f32>) -> Mat4<f32> {
-    let ortho = Ortho3::new(
-        size.x, size.y,
-        -1.0, 1.0
-    );
-
-    ortho.to_mat()
 }
