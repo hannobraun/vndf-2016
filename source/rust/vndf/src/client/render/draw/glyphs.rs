@@ -131,7 +131,6 @@ impl GlyphDrawer {
         &mut self,
         text     : &str,
         position : Vec2<f32>,
-        size     : Vec2<f32>,
         color    : color::Color,
         center   : bool,
         transform: Mat4<f32>,

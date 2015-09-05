@@ -98,7 +98,6 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &line,
                 position_cli(0, y, advance_x, line_height, window_size),
-                Vec2::new(1.0,1.0),
                 color::Colors::white(),
                 false,
                 transform,
@@ -116,7 +115,6 @@ impl Renderer {
         self.glyph_drawer.draw(
             &command_line,
             position_cli(0, prompt_ypos, advance_x, line_height, window_size),
-            Vec2::new(1.0,1.0),
             color::Colors::white(),
             false,
             transform,
@@ -127,7 +125,6 @@ impl Renderer {
         self.glyph_drawer.draw(
             &"_".to_string(),
             position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, window_size),
-            Vec2::new(1.0,1.0),
             color::Colors::white(),
             false,
             transform,
@@ -157,8 +154,6 @@ impl Renderer {
     }
 
     fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, screen_trans: Mat4<f32>, graphics: &mut Graphics) {
-        let vec2_text_scaled = Vec2::new(1.0,1.0) * self.camera.zoom;
-
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
@@ -204,7 +199,6 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
                 ship_position - line_advance + Vec2::new(0.0,5.0),
-                vec2_text_scaled,
                 color::Colors::white(),
                 true,
                 screen_trans,
@@ -216,7 +210,6 @@ impl Renderer {
                 self.glyph_drawer.draw(
                     ship_comm,
                     ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
-                    vec2_text_scaled,
                     color::Colors::white(),
                     true,
                     screen_trans,
@@ -229,7 +222,6 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &pos,
                 ship_position + pos_offset,
-                vec2_text_scaled,
                 color::Colors::white(),
                 false,
                 screen_trans,
@@ -241,7 +233,6 @@ impl Renderer {
             self.glyph_drawer.draw(
                 &vel,
                 ship_position + pos_offset + line_advance,
-                vec2_text_scaled,
                 color::Colors::white(),
                 false,
                 screen_trans,
