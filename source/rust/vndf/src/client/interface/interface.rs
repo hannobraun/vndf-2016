@@ -65,12 +65,15 @@ impl Interface for Player {
                              frame,
                              &window_events,
                              &mut self.renderer.camera);
-        
+
+        if let Some(size) = self.window.get_size().ok() {
         self.mouse.update(&mut self.events,
                           frame,
                           &window_events,
-                          self.window.get_size(),
+                          size,
                           &mut self.renderer.camera);
+        }
+        
         self.cli.update(&mut self.events, frame, &window_events);
         
         if let Some(track) = frame.camera_track.clone() {

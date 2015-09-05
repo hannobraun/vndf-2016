@@ -88,11 +88,17 @@ impl Renderer {
         frame  : &Frame,
         window : &Window,
         ) {
-        let     window_size = window.get_size();
+        let     window_size = {
+            if let Some(size) = window.get_size().ok() { size }
+            else { return }
+        };
+        
         let mut graphics    = window.create_graphics();
 
         graphics.clear();
 
+        
+        
         let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);

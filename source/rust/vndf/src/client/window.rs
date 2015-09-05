@@ -25,20 +25,26 @@ impl Window {
 		}
 	}
 
-	pub fn get_size (&self) -> (u32,u32) {
+        // TODO: Consider just returning the Option
+	pub fn get_size (&self) -> Result<(u32,u32),&'static str> {
 		match self.inner.get_inner_size_pixels() {
-			Some(size) => size,
-			None       => panic!("Failed to get window size"),
+			Some(size) => Ok(size),
+			None       => Err("Failed to get window size"),
 		}
 	}
 
-	pub fn create_graphics(&self) -> Graphics {
-		let (width,height) = self.get_size();
-		Graphics::new(
+    pub fn create_graphics(&self) -> Graphics {
+        match self.get_size() {
+            Ok(size) => {
+		let (width,height) = size;
+	        Graphics::new(
 			|s| self.inner.get_proc_address(s),
 			(width as u16, height as u16),
-		)
-	}
+		    )
+            },
+            Err(err) => { panic!(err) }
+        }
+    }
 
 	pub fn poll_events(&self) -> glutin::PollEventsIterator {
 		self.inner.poll_events()
