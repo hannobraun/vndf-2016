@@ -24,8 +24,6 @@ pub struct Controller {
     cmd_history_idx: usize, //history index/cursor
     is_cmd_history: bool,
     tmp_cmd_buffer: String, //used to temporarily store typed characters
-
-    prompt_idx: usize, // cursor for the current active prompt
 }
 
 impl Controller {
@@ -44,7 +42,6 @@ impl Controller {
             cmd_history_idx: 0,
             is_cmd_history: false,
             tmp_cmd_buffer: String::new(),
-            prompt_idx: 0,
         }
     }
 
@@ -64,39 +61,39 @@ impl Controller {
             match *event {
                 ReceivedCharacter(c) =>
                     if !c.is_control() {
-                        self.console.input.insert(self.prompt_idx,c);
+                        self.console.input.insert(self.console.prompt_index,c);
                         self.is_cmd_history = false;
-                        self.prompt_idx +=1;
+                        self.console.prompt_index +=1;
                     },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Left)) => {
-                    if self.prompt_idx > 0 { self.prompt_idx -= 1; }
+                    if self.console.prompt_index > 0 { self.console.prompt_index -= 1; }
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Right)) => {
-                    if self.prompt_idx < self.console.input.chars().count()  {
-                        self.prompt_idx += 1;
+                    if self.console.prompt_index < self.console.input.chars().count()  {
+                        self.console.prompt_index += 1;
                     }
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Home)) => {
-                    self.prompt_idx = 0;
+                    self.console.prompt_index = 0;
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::End)) => {
-                    self.prompt_idx = self.console.input.chars().count();
+                    self.console.prompt_index = self.console.input.chars().count();
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Delete)) => {
                     let byte_index = self.console.input
                         .char_indices()
-                        .nth(self.prompt_idx);
+                        .nth(self.console.prompt_index);
                     if let Some((byte_index, _)) = byte_index {
                         self.console.input.remove(byte_index);
                     }
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
-                    if self.prompt_idx > 0 {
-                        self.prompt_idx -= 1;
+                    if self.console.prompt_index > 0 {
+                        self.console.prompt_index -= 1;
 
                         let byte_index = self.console.input
                             .char_indices()
-                            .nth(self.prompt_idx);
+                            .nth(self.console.prompt_index);
                         if let Some((byte_index, _)) = byte_index {
                             self.console.input.remove(byte_index);
                         }
@@ -121,7 +118,7 @@ impl Controller {
                         self.tmp_cmd_buffer.clear();
                         self.is_cmd_history = false;
                         self.cmd_history_idx = 0; //optionally reset idx
-                        self.prompt_idx = 0;
+                        self.console.prompt_index = 0;
 
                         self.handle_line(
                             events,
@@ -134,13 +131,13 @@ impl Controller {
                     let cmd = self.get_history(true);
                     self.console.input.clear();
                     self.console.input.push_str(&cmd);
-                    self.prompt_idx = cmd.chars().count();
+                    self.console.prompt_index = cmd.chars().count();
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
                     let cmd = self.get_history(false);
                     self.console.input.clear();
                     self.console.input.push_str(&cmd);
-                    self.prompt_idx = cmd.chars().count();
+                    self.console.prompt_index = cmd.chars().count();
                 },
                 _ => (), // ignore other events
             }
@@ -185,7 +182,7 @@ impl Controller {
     }
 
     pub fn get_prompt_idx(&self) -> usize {
-        self.prompt_idx
+        self.console.prompt_index
     }
     
     pub fn text(&self) -> &[String] {
