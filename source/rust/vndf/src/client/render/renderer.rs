@@ -75,8 +75,7 @@ impl Renderer {
         let camera_to_screen = ortho(window_size);
         let world_to_pixel   = camera_to_screen * camera_translation;
 
-        let cam_trans = ortho(window_size * self.camera.zoom);
-        let world_to_camera = cam_trans * camera_translation;
+        let world_to_camera = ortho(window_size * self.camera.zoom) * camera_translation;
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
