@@ -89,6 +89,8 @@ impl Renderer {
         let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
 
         graphics.clear();
+
+        let window_size = Vec2::new(window_size.0 as f32, window_size.1 as f32);
         
         self.render_console(console, window_size, cast(pixel_to_screen), &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
@@ -97,10 +99,9 @@ impl Renderer {
         graphics.flush();
     }
 
-    fn render_console(&mut self, console: &Console, window_size: (u32, u32), transform: Mat4<f32>, graphics: &mut Graphics) {
+    fn render_console(&mut self, console: &Console, window_size: Vec2<f32>, transform: Mat4<f32>, graphics: &mut Graphics) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
-        let window_size = Vec2::new(window_size.0 as f32, window_size.1 as f32);
 
         for (y, line) in console.output.iter().enumerate() {
             self.glyph_drawer.draw(
