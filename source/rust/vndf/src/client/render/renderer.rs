@@ -91,7 +91,7 @@ impl Renderer {
         
         self.render_console(console, window_size, camera_to_screen, &mut frame_state);
         self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state);
-        self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state.graphics);
+        self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state);
 
         frame_state.graphics.flush();
     }
@@ -159,7 +159,7 @@ impl Renderer {
         }
     }
 
-    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, graphics: &mut Graphics) {
+    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
@@ -180,7 +180,7 @@ impl Renderer {
                 scale_factor * ship_velocity.norm() * 50.0,
                 color::Colors::red(),
                 world_trans * transform.to_homogeneous(),
-                graphics,
+                &mut frame_state.graphics,
             );
 
             let mut color = color::Colors::blue();
@@ -198,7 +198,7 @@ impl Renderer {
                 scale_factor * SHIP_SIZE,
                 color,
                 transform,
-                graphics,
+                &mut frame_state.graphics,
             );
 
             // draw ship id
@@ -208,7 +208,7 @@ impl Renderer {
                 color::Colors::white(),
                 true,
                 world_trans,
-                graphics,
+                &mut frame_state.graphics,
             );
 
             // draw ship broadcast
@@ -219,7 +219,7 @@ impl Renderer {
                     color::Colors::white(),
                     true,
                     world_trans,
-                    graphics,
+                    &mut frame_state.graphics,
                 );
             }
 
@@ -231,7 +231,7 @@ impl Renderer {
                 color::Colors::white(),
                 false,
                 world_trans,
-                graphics,
+                &mut frame_state.graphics,
             );
 
             // draw ship velocity
@@ -242,7 +242,7 @@ impl Renderer {
                 color::Colors::white(),
                 false,
                 world_trans,
-                graphics,
+                &mut frame_state.graphics,
             );
         }
     }
