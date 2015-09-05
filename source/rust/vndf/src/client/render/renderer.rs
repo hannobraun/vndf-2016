@@ -76,9 +76,6 @@ impl Renderer {
         let world_trans = translate(cam_trans, cast(cam_pos));
         let screen_trans = translate(pixel_to_screen, cast(cam_pos));
 
-        let world_trans: Mat4<f32> = cast(world_trans);
-        let screen_trans: Mat4<f32> = cast(screen_trans);
-
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
         graphics.clear();
