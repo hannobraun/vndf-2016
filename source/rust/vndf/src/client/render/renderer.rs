@@ -81,8 +81,8 @@ impl Renderer {
         console: &Console,
         window : &Window,
     ) {
-        let     window_size = window.get_size();
         let mut graphics    = window.create_graphics();
+        let     window_size = window.get_size();
 
         let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
