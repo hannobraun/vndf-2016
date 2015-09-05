@@ -69,8 +69,8 @@ impl Renderer {
             Vec2::new(size.0 as f32, size.1 as f32)
         };
 
-        let cam_pos = self.camera.update(&frame);
-        let camera_translation = translation(cast(cam_pos));
+        let camera_position    = self.camera.update(&frame);
+        let camera_translation = translation(cast(camera_position));
 
         let camera_to_screen = ortho(window_size);
         let world_to_pixel   = camera_to_screen * camera_translation;
