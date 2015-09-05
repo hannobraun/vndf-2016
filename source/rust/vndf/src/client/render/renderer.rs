@@ -13,7 +13,10 @@ use nalgebra::{
 
 use client::interface::Frame;
 use client::window::Window;
-use client::render::base::color;
+use client::render::base::{
+    color,
+    Graphics,
+};
 use client::render::draw::{
     GlyphDrawer,
     ShipDrawer,
@@ -102,9 +105,6 @@ impl Renderer {
         let transform: Mat4<f32> = cast(transform);
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
-        
-        let advance_x   = self.glyph_drawer.advance_x;
-        let line_height = self.line_height;
 
         let vec2_scaled = Vec2::new(1.0,1.0) *
             self.scaling_factor *
@@ -112,49 +112,7 @@ impl Renderer {
         let vec2_text_scaled = Vec2::new(1.0,1.0) *
             (self.camera.zoom as f32);
         
-        // render console output
-        for (y, line) in output.iter().enumerate() {
-            self.glyph_drawer.draw(
-                &line,
-                position_cli(0, y, advance_x, line_height, window_size),
-                Vec2::new(1.0,1.0),
-                1.0,
-                color::Colors::white(),
-                false,
-                transform,
-                &mut graphics,
-                );
-        }
-
-        let mut command_line = String::new();
-        let prompt_ypos = 23;
-
-        write!(&mut command_line, "> {}", command.0)
-            .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
-
-
-        self.glyph_drawer.draw(
-            &command_line,
-            position_cli(0, prompt_ypos, advance_x, line_height, window_size),
-            Vec2::new(1.0,1.0),
-            1.0,
-            color::Colors::white(),
-            false,
-            transform,
-            &mut graphics,
-            );
-
-        //draw cursor position in prompt
-        self.glyph_drawer.draw(
-            &"_".to_string(),
-            position_cli(command.1 + 2, prompt_ypos, advance_x, line_height, window_size),
-            Vec2::new(1.0,1.0),
-            1.0,
-            color::Colors::white(),
-            false,
-            transform,
-            &mut graphics,
-            );
+        self.render_console(output, command, window_size, transform, &mut graphics);
 
         // draw ship selection, where necessary
         for id in frame.select_ids.iter() {
@@ -271,6 +229,54 @@ impl Renderer {
         }
         
         graphics.flush();
+    }
+
+    fn render_console(&mut self, output : &[String], command: (&str, usize), window_size: (u32, u32), transform: Mat4<f32>, graphics: &mut Graphics) {
+        let advance_x   = self.glyph_drawer.advance_x;
+        let line_height = self.line_height;
+
+        for (y, line) in output.iter().enumerate() {
+            self.glyph_drawer.draw(
+                &line,
+                position_cli(0, y, advance_x, line_height, window_size),
+                Vec2::new(1.0,1.0),
+                1.0,
+                color::Colors::white(),
+                false,
+                transform,
+                graphics,
+            );
+        }
+
+        let mut command_line = String::new();
+        let prompt_ypos = 23;
+
+        write!(&mut command_line, "> {}", command.0)
+            .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
+
+
+        self.glyph_drawer.draw(
+            &command_line,
+            position_cli(0, prompt_ypos, advance_x, line_height, window_size),
+            Vec2::new(1.0,1.0),
+            1.0,
+            color::Colors::white(),
+            false,
+            transform,
+            graphics,
+        );
+
+         //draw cursor position in prompt
+        self.glyph_drawer.draw(
+            &"_".to_string(),
+            position_cli(command.1 + 2, prompt_ypos, advance_x, line_height, window_size),
+            Vec2::new(1.0,1.0),
+            1.0,
+            color::Colors::white(),
+            false,
+            transform,
+            graphics,
+        );
     }
 }
 
