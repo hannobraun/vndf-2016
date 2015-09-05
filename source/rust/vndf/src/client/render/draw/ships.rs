@@ -93,6 +93,17 @@ impl ShipDrawer {
 		)
 	}
 
+	pub fn line(graphics: &mut Graphics) -> ShipDrawer {
+		ShipDrawer::new(
+			graphics,
+			gfx::PrimitiveType::LineStrip,
+			&[
+				Vertex { pos: [ 0.0, 0.0 ] },
+				Vertex { pos: [ 1.0, 0.0 ] },
+			],
+		)
+	}
+
 	pub fn draw(
 		&mut self,
 		ship     : &Ship,
