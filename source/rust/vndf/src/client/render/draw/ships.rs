@@ -63,11 +63,15 @@ pub struct ShipDrawer {
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, vertices: &[Vertex]) -> ShipDrawer {
+	pub fn new(
+		graphics : &mut Graphics,
+		primitive: gfx::PrimitiveType,
+		vertices : &[Vertex]
+	) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
-			gfx::PrimitiveType::TriangleStrip,
+			primitive,
 			vertices,
 		);
 
@@ -83,7 +87,7 @@ impl ShipDrawer {
 			Vertex { pos: [  0.0,  0.5 ] },
 		];
 
-		ShipDrawer::new(graphics, &triangle)
+		ShipDrawer::new(graphics, gfx::PrimitiveType::TriangleStrip, &triangle)
 	}
 
 	pub fn draw(
