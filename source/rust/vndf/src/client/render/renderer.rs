@@ -89,14 +89,14 @@ impl Renderer {
 
         frame_state.graphics.clear();
         
-        self.render_console(console, window_size, camera_to_screen, &mut frame_state.graphics);
+        self.render_console(console, window_size, camera_to_screen, &mut frame_state);
         self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state.graphics);
         self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state.graphics);
 
         frame_state.graphics.flush();
     }
 
-    fn render_console(&mut self, console: &Console, window_size: Vec2<f32>, transform: Mat4<f32>, graphics: &mut Graphics) {
+    fn render_console(&mut self, console: &Console, window_size: Vec2<f32>, transform: Mat4<f32>, frame_state: &mut FrameState) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 
@@ -107,7 +107,7 @@ impl Renderer {
                 color::Colors::white(),
                 false,
                 transform,
-                graphics,
+                &mut frame_state.graphics,
             );
         }
 
@@ -124,7 +124,7 @@ impl Renderer {
             color::Colors::white(),
             false,
             transform,
-            graphics,
+            &mut frame_state.graphics,
         );
 
          //draw cursor position in prompt
@@ -134,7 +134,7 @@ impl Renderer {
             color::Colors::white(),
             false,
             transform,
-            graphics,
+            &mut frame_state.graphics,
         );
     }
 
