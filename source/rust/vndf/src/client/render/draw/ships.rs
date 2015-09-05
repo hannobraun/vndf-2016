@@ -70,7 +70,7 @@ impl ShipDrawer {
 		);
 
 		ShipDrawer {
-			batch    : batch,
+			batch: batch,
 		}
 	}
 
