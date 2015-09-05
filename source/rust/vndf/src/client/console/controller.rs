@@ -14,7 +14,7 @@ use client::interface::{
 use shared::game::{ManeuverData,EntityId};
 use client::render::camera::CameraTrack;
 
-pub struct Cli {
+pub struct Controller {
     input_buffer: String,
     text        : Vec<String>,
     height      : u16,
@@ -27,15 +27,15 @@ pub struct Cli {
     prompt_idx: usize, // cursor for the current active prompt
 }
 
-impl Cli {
-    pub fn new() -> Cli {
+impl Controller {
+    pub fn new() -> Controller {
         let mut text = Vec::new();
         text.push(format!("VNDF Ship Control System"));
         text.push(format!("Type \"help\" to list available commands"));
 
         let height = 24;
 
-        Cli {
+        Controller {
             input_buffer: String::new(),
             text        : text,
             height      : height,

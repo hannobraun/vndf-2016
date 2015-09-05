@@ -1,4 +1,4 @@
 mod controller;
 
 
-pub use self::controller::Cli;
+pub use self::controller::Controller;

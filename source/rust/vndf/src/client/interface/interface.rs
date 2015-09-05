@@ -10,7 +10,7 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
-use client::console::Cli;
+use client::console;
 use client::mouse::Mouse;
 use client::keyboard::Keyboard;
 use client::config::Config;
@@ -31,7 +31,7 @@ pub trait Interface: Sized {
 
 pub struct Player {
     events  : Vec<InputEvent>,
-    cli     : Cli,
+    cli     : console::Controller,
     window  : Window,
     renderer: Renderer,
     mouse   : Mouse, // NOTE: this might be renamed to selector or controller
@@ -40,7 +40,7 @@ pub struct Player {
 
 impl Interface for Player {
     fn new(config: Config) -> io::Result<Player> {
-        let cli    = Cli::new();
+        let cli    = console::Controller::new();
         let window = Window::new(
             (800.0 * config.scaling_factor) as u32,
             (600.0 * config.scaling_factor) as u32,
