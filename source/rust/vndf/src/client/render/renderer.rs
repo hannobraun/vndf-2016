@@ -90,8 +90,7 @@ impl Renderer {
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
         let world_trans = translate(cam_trans,cam_pos);
         let screen_trans = translate(pixel_to_screen,cam_pos);
-        
-        let transform: Mat4<f32> = cast(pixel_to_screen);
+
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
 
@@ -99,7 +98,7 @@ impl Renderer {
 
         graphics.clear();
         
-        self.render_console(console, window_size, transform, &mut graphics);
+        self.render_console(console, window_size, cast(pixel_to_screen), &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
         self.render_ships(frame, scale_factor, world_trans, screen_trans, &mut graphics);
 
