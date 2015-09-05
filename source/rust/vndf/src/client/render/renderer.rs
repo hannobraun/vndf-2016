@@ -106,9 +106,7 @@ impl Renderer {
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
 
-        let vec2_scaled = Vec2::new(1.0,1.0) *
-            self.scaling_factor *
-            (self.camera.zoom as f32);
+        let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
         let vec2_text_scaled = Vec2::new(1.0,1.0) *
             (self.camera.zoom as f32);
         
@@ -126,7 +124,7 @@ impl Renderer {
                 let transform = world_trans * translation.to_homogeneous();
 
                 self.triangle.draw(
-                    vec2_scaled.x * SHIP_SIZE * 1.25,
+                    scale_factor * SHIP_SIZE * 1.25,
                     color::Colors::white(),
                     transform,
                     &mut graphics,
@@ -151,7 +149,7 @@ impl Renderer {
                 ),
             );
             self.line.draw(
-                vec2_scaled.x * ship_velocity.norm() * 50.0,
+                scale_factor * ship_velocity.norm() * 50.0,
                 color::Colors::red(),
                 world_trans * transform.to_homogeneous(),
                 &mut graphics,
@@ -169,7 +167,7 @@ impl Renderer {
             let transform = world_trans * translation.to_homogeneous();
 
             self.triangle.draw(
-                vec2_scaled.x * SHIP_SIZE,
+                scale_factor * SHIP_SIZE,
                 color,
                 transform,
                 &mut graphics,
