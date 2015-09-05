@@ -56,17 +56,6 @@ impl Renderer {
         }
     }
 
-    /// transforms camera z-positioning
-    /// specify zoom-out level
-    fn get_transform_camera(size: Vec2<f64>, z: f64) -> Mat4<f64> {
-        let mut z = z.abs();
-        if z < 1.0 { z = 1.0; }
-        let mat = Ortho3::new(size.x * z, size.y * z,
-                              -1.0,1.0
-                              ).to_mat();
-        mat
-    }
-
     pub fn render(
         &mut self,
         frame  : &Frame,
@@ -83,8 +72,8 @@ impl Renderer {
         let pixel_to_screen = ortho(window_size);
 
         let cam_pos = self.camera.update(&frame);
-        let cam_trans = Renderer::get_transform_camera(cast(window_size), self.camera.zoom);
-        let world_trans = translate(cam_trans,cam_pos);
+        let cam_trans = ortho(window_size * self.camera.zoom as f32);
+        let world_trans = translate(cast(cam_trans),cam_pos);
         let screen_trans = translate(cast(pixel_to_screen),cam_pos);
 
         let world_trans: Mat4<f32> = cast(world_trans);
