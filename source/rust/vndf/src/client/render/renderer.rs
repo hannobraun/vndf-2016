@@ -38,7 +38,7 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShipDrawer::triangle(&mut graphics, SHIP_SIZE);
+        let ship_drawer  = ShipDrawer::triangle(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
@@ -108,8 +108,6 @@ impl Renderer {
             (self.camera.zoom as f32);
         let vec2_text_scaled = Vec2::new(1.0,1.0) *
             (self.camera.zoom as f32);
-
-        self.ship_drawer.ship_size = vec2_scaled.x * SHIP_SIZE; //resize when necessary
         
         // render console output
         for (y, line) in output.iter().enumerate() {
@@ -197,6 +195,7 @@ impl Renderer {
             }
             self.ship_drawer.draw(
                 &ship_position,
+                vec2_scaled.x * SHIP_SIZE,
                 color,
                 world_trans,
                 &mut graphics,

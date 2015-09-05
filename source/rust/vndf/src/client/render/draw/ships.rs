@@ -59,12 +59,10 @@ gfx_parameters!(Params {
 
 pub struct ShipDrawer {
 	batch: Batch<Params<gl::Resources>>,
-
-	pub ship_size: f32,
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, vertices: &[Vertex], ship_size: f32) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics, vertices: &[Vertex]) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -73,23 +71,23 @@ impl ShipDrawer {
 
 		ShipDrawer {
 			batch    : batch,
-			ship_size: ship_size,
 		}
 	}
 
-	pub fn triangle(graphics: &mut Graphics, size: f32) -> ShipDrawer {
+	pub fn triangle(graphics: &mut Graphics) -> ShipDrawer {
 		let triangle = [
 			Vertex { pos: [ -0.5, -0.5 ] },
 			Vertex { pos: [  0.5, -0.5 ] },
 			Vertex { pos: [  0.0,  0.5 ] },
 		];
 
-		ShipDrawer::new(graphics, &triangle, size)
+		ShipDrawer::new(graphics, &triangle)
 	}
 
 	pub fn draw(
 		&mut self,
 		ship     : &Ship,
+		size     : f32,
 		color    : color::Color,
 		transform: Mat4<f32>,
 		graphics : &mut Graphics,
@@ -102,7 +100,7 @@ impl ShipDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-			size     : self.ship_size,
+			size     : size,
 			color    : color,
 			_r       : PhantomData,
 		};
