@@ -81,7 +81,7 @@ impl Renderer {
         let cam_pos = self.camera.update(&frame);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
         let world_trans = translate(cam_trans,cam_pos);
-        let screen_trans = translate(pixel_to_screen,cam_pos);
+        let screen_trans = translate(cast(pixel_to_screen),cam_pos);
 
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
@@ -297,9 +297,9 @@ fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
 }
 
 /// get new ortho transform matrix based on window size specified
-fn ortho(size: (u32,u32)) -> Mat4<f64> {
+fn ortho(size: (u32,u32)) -> Mat4<f32> {
     let ortho = Ortho3::new(
-        size.0 as f64, size.1 as f64,
+        size.0 as f32, size.1 as f32,
         -1.0, 1.0
     );
 
