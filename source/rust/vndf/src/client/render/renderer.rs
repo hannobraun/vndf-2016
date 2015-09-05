@@ -70,12 +70,13 @@ impl Renderer {
         };
 
         let cam_pos = self.camera.update(&frame);
+        let camera_translation = translation(cast(cam_pos));
 
         let camera_to_screen = ortho(window_size);
-        let world_to_pixel   = translate(camera_to_screen, cast(cam_pos));
+        let world_to_pixel   = camera_to_screen * camera_translation;
 
         let cam_trans = ortho(window_size * self.camera.zoom);
-        let world_to_camera = translate(cam_trans, cast(cam_pos));
+        let world_to_camera = cam_trans * camera_translation;
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
@@ -251,14 +252,13 @@ fn ortho(size: Vec2<f32>) -> Mat4<f32> {
     ortho.to_mat()
 }
 
-/// translates transform, used for camera positioning
-fn translate(transform: Mat4<f32>, pos: Vec2<f32>) -> Mat4<f32> {
+fn translation(v: Vec2<f32>) -> Mat4<f32> {
     let translation = Iso3::new(
-        Vec3::new(pos[0], pos[1], 0.0),
+        Vec3::new(v.x, v.y, 0.0),
         Vec3::new(0.0, 0.0, 0.0),
-        );
+    );
 
-    transform * translation.to_homogeneous()
+    translation.to_homogeneous()
 }
 
 /// This is used to position CLI text
