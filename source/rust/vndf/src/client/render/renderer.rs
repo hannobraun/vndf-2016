@@ -62,7 +62,7 @@ impl Renderer {
         console: &Console,
         window : &Window,
     ) {
-        let mut graphics = window.create_graphics();
+        let mut frame_state = FrameState::new(window);
 
         let window_size = {
             let size = window.get_size();
@@ -87,13 +87,13 @@ impl Renderer {
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
-        graphics.clear();
+        frame_state.graphics.clear();
         
-        self.render_console(console, window_size, camera_to_screen, &mut graphics);
-        self.render_selections(frame, world_to_camera, scale_factor, &mut graphics);
-        self.render_ships(frame, scale_factor, world_to_camera, &mut graphics);
+        self.render_console(console, window_size, camera_to_screen, &mut frame_state.graphics);
+        self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state.graphics);
+        self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state.graphics);
 
-        graphics.flush();
+        frame_state.graphics.flush();
     }
 
     fn render_console(&mut self, console: &Console, window_size: Vec2<f32>, transform: Mat4<f32>, graphics: &mut Graphics) {
@@ -244,6 +244,19 @@ impl Renderer {
                 world_trans,
                 graphics,
             );
+        }
+    }
+}
+
+
+struct FrameState {
+    graphics: Graphics,
+}
+
+impl FrameState {
+    pub fn new(window: &Window) -> FrameState {
+        FrameState {
+            graphics: window.create_graphics(),
         }
     }
 }
