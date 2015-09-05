@@ -74,16 +74,6 @@ impl Renderer {
                               ).to_mat();
         mat
     }
-    
-    /// translates transform, used for camera positioning
-    fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
-        let translation = Iso3::new(
-            Vec3::new(pos[0], pos[1], 0.0),
-            Vec3::new(0.0, 0.0, 0.0),
-            );
-
-        transform * translation.to_homogeneous()
-    }
 
     pub fn render(
         &mut self,
@@ -99,8 +89,8 @@ impl Renderer {
         let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
-        let world_trans = Renderer::translate(cam_trans,cam_pos);
-        let screen_trans = Renderer::translate(transform,cam_pos);
+        let world_trans = translate(cam_trans,cam_pos);
+        let screen_trans = translate(transform,cam_pos);
         
         let transform: Mat4<f32> = cast(transform);
         let world_trans: Mat4<f32> = cast(world_trans);
@@ -302,4 +292,14 @@ fn position_cli(
         (-1.0 * ((width as f32 / 2.0) - pad_x)) + advance_x * x as f32,
         ((height as f32 / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
     )
+}
+
+/// translates transform, used for camera positioning
+fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
+    let translation = Iso3::new(
+        Vec3::new(pos[0], pos[1], 0.0),
+        Vec3::new(0.0, 0.0, 0.0),
+        );
+
+    transform * translation.to_homogeneous()
 }
