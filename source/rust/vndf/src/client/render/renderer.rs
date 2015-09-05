@@ -109,7 +109,7 @@ impl Renderer {
         let vec2_text_scaled = Vec2::new(1.0,1.0) *
             (self.camera.zoom as f32);
 
-        self.ship_drawer.ship_size = vec2_scaled * SHIP_SIZE; //resize when necessary
+        self.ship_drawer.ship_size = vec2_scaled.x * SHIP_SIZE; //resize when necessary
         
         // render console output
         for (y, line) in output.iter().enumerate() {
@@ -219,7 +219,7 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.glyph_drawer.draw(
                     ship_comm,
-                    ship_position + line_advance - Vec2::new(0.0, ship_size.y),
+                    ship_position + line_advance - Vec2::new(0.0, ship_size),
                     vec2_text_scaled,
                     self.camera.zoom,
                     color::Colors::white(),

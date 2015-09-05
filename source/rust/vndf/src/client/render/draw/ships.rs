@@ -60,7 +60,7 @@ gfx_parameters!(Params {
 pub struct ShipDrawer {
 	batch: Batch<Params<gl::Resources>>,
 
-	pub ship_size: Vec2<f32>,
+	pub ship_size: f32,
 }
 
 impl ShipDrawer {
@@ -73,7 +73,7 @@ impl ShipDrawer {
 
 		ShipDrawer {
 			batch    : batch,
-			ship_size: Vec2::new(ship_size, ship_size),
+			ship_size: ship_size,
 		}
 	}
 
@@ -102,7 +102,7 @@ impl ShipDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-			size     : *self.ship_size.as_array(),
+			size     : [self.ship_size, self.ship_size],
 			color    : color,
 			_r       : PhantomData,
 		};
