@@ -62,7 +62,7 @@ impl Renderer {
         console: &Console,
         window : &Window,
     ) {
-        let mut graphics    = window.create_graphics();
+        let mut graphics = window.create_graphics();
 
         let window_size = {
             let size = window.get_size();
