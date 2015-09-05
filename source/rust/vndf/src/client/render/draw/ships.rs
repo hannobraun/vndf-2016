@@ -81,13 +81,15 @@ impl ShipDrawer {
 	}
 
 	pub fn triangle(graphics: &mut Graphics) -> ShipDrawer {
-		let triangle = [
-			Vertex { pos: [ -0.5, -0.5 ] },
-			Vertex { pos: [  0.5, -0.5 ] },
-			Vertex { pos: [  0.0,  0.5 ] },
-		];
-
-		ShipDrawer::new(graphics, gfx::PrimitiveType::TriangleStrip, &triangle)
+		ShipDrawer::new(
+			graphics,
+			gfx::PrimitiveType::TriangleStrip,
+			&[
+				Vertex { pos: [ -0.5, -0.5 ] },
+				Vertex { pos: [  0.5, -0.5 ] },
+				Vertex { pos: [  0.0,  0.5 ] },
+			],
+		)
 	}
 
 	pub fn draw(
