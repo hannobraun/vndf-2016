@@ -69,12 +69,13 @@ impl Renderer {
             Vec2::new(size.0 as f32, size.1 as f32)
         };
 
-        let pixel_to_screen = ortho(window_size);
-
         let cam_pos = self.camera.update(&frame);
+
+        let pixel_to_screen = ortho(window_size);
+        let world_to_screen = translate(pixel_to_screen, cast(cam_pos));
+
         let cam_trans = ortho(window_size * self.camera.zoom);
         let world_trans = translate(cam_trans, cast(cam_pos));
-        let world_to_screen = translate(pixel_to_screen, cast(cam_pos));
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
