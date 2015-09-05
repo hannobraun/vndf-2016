@@ -73,8 +73,8 @@ impl Renderer {
 
         let cam_pos = self.camera.update(&frame);
         let cam_trans = ortho(window_size * self.camera.zoom);
-        let world_trans = translate(cast(cam_trans),cam_pos);
-        let screen_trans = translate(cast(pixel_to_screen),cam_pos);
+        let world_trans = translate(cam_trans, cast(cam_pos));
+        let screen_trans = translate(pixel_to_screen, cast(cam_pos));
 
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
@@ -262,7 +262,7 @@ fn position_cli(
 }
 
 /// translates transform, used for camera positioning
-fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
+fn translate(transform: Mat4<f32>, pos: Vec2<f32>) -> Mat4<f32> {
     let translation = Iso3::new(
         Vec3::new(pos[0], pos[1], 0.0),
         Vec3::new(0.0, 0.0, 0.0),
