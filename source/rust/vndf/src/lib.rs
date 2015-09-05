@@ -9,6 +9,7 @@ extern crate glutin;
 extern crate libc;
 #[macro_use] extern crate log;
 extern crate nalgebra;
+extern crate num;
 extern crate rand;
 extern crate rustc_serialize;
 #[macro_use] extern crate scan_fmt;
