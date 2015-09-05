@@ -84,8 +84,6 @@ impl Renderer {
         let     window_size = window.get_size();
         let mut graphics    = window.create_graphics();
 
-        graphics.clear();
-
         let transform  = Renderer::get_transform(window_size);
         let cam_pos = self.camera.update(&frame,None);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
@@ -97,6 +95,8 @@ impl Renderer {
         let screen_trans: Mat4<f32> = cast(screen_trans);
 
         let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
+
+        graphics.clear();
         
         self.render_console(console, window_size, transform, &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
