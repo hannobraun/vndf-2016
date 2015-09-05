@@ -170,7 +170,6 @@ impl Renderer {
 
         for (ship_id, ship) in &frame.ships {
             let ship_position = cast(ship.position);
-            let ship_size     = self.ship_drawer.ship_size;
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
 
@@ -219,7 +218,7 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.glyph_drawer.draw(
                     ship_comm,
-                    ship_position + line_advance - Vec2::new(0.0, ship_size),
+                    ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
                     vec2_text_scaled,
                     self.camera.zoom,
                     color::Colors::white(),
