@@ -92,6 +92,7 @@ impl Renderer {
             if let Some(size) = window.get_size().ok() { size }
             else { return }
         };
+        if window_size == (0,0) { return } //skip render frame if minimized!
         
         let mut graphics    = window.create_graphics();
 
