@@ -90,7 +90,7 @@ impl Renderer {
         command: (&str,usize),
         frame  : &Frame,
         window : &Window,
-        ) {
+    ) {
         let     window_size = window.get_size();
         let mut graphics    = window.create_graphics();
 
