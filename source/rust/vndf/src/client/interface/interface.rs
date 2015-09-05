@@ -10,7 +10,7 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
-use client::cli::Cli;
+use client::console::Cli;
 use client::mouse::Mouse;
 use client::keyboard::Keyboard;
 use client::config::Config;

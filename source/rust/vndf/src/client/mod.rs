@@ -1,5 +1,5 @@
 pub mod args;
-pub mod cli;
+pub mod console;
 pub mod config;
 pub mod debug;
 pub mod font;
