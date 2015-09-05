@@ -107,106 +107,11 @@ impl Renderer {
         let screen_trans: Mat4<f32> = cast(screen_trans);
 
         let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
-        let vec2_text_scaled = Vec2::new(1.0,1.0) *
-            (self.camera.zoom as f32);
         
         self.render_console(output, command, window_size, transform, &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
+        self.render_ships(frame, scale_factor, world_trans, screen_trans, &mut graphics);
 
-        for (ship_id, ship) in &frame.ships {
-            let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
-            let line_advance  = Vec2::new(0.0, -self.line_height);
-
-            let ship_position: Vec2<f32> = cast(ship.position);
-            let ship_velocity: Vec2<f32> = cast(ship.velocity);
-
-            // draw ship velocity line
-            let transform = Iso3::new(
-                Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
-                Vec3::new(
-                    0.0,
-                    0.0,
-                    angle_of(ship_velocity),
-                ),
-            );
-            self.line.draw(
-                scale_factor * ship_velocity.norm() * 50.0,
-                color::Colors::red(),
-                world_trans * transform.to_homogeneous(),
-                &mut graphics,
-            );
-
-            let mut color = color::Colors::blue();
-            if let Some(sid) = frame.ship_id {
-                if *ship_id == sid  { color = color::Colors::green_spring(); }
-            }
-
-            let translation = Iso3::new(
-                Vec3::new(ship_position.x, ship_position.y, 0.0),
-                Vec3::new(0.0, 0.0, 0.0),
-            );
-            let transform = world_trans * translation.to_homogeneous();
-
-            self.triangle.draw(
-                scale_factor * SHIP_SIZE,
-                color,
-                transform,
-                &mut graphics,
-            );
-
-            // draw ship id
-            self.glyph_drawer.draw(
-                &ship_id.to_string(),
-                ship_position - line_advance + Vec2::new(0.0,5.0),
-                vec2_text_scaled,
-                self.camera.zoom,
-                color::Colors::white(),
-                true,
-                screen_trans,
-                &mut graphics,
-                );
-
-            // draw ship broadcast
-            if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
-                self.glyph_drawer.draw(
-                    ship_comm,
-                    ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
-                    vec2_text_scaled,
-                    self.camera.zoom,
-                    color::Colors::white(),
-                    true,
-                    screen_trans,
-                    &mut graphics,
-                    );
-            }
-
-            // draw ship position
-            let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
-            self.glyph_drawer.draw(
-                &pos,
-                ship_position + pos_offset,
-                vec2_text_scaled,
-                self.camera.zoom,
-                color::Colors::white(),
-                false,
-                screen_trans,
-                &mut graphics,
-                );
-
-            // draw ship velocity
-            let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
-            self.glyph_drawer.draw(
-                &vel,
-                ship_position + pos_offset + line_advance,
-                vec2_text_scaled,
-                self.camera.zoom,
-                color::Colors::white(),
-                false,
-                screen_trans,
-                &mut graphics,
-                );
-        }
-        
         graphics.flush();
     }
 
@@ -276,6 +181,104 @@ impl Renderer {
                     graphics,
                 );
             }
+        }
+    }
+
+    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, screen_trans: Mat4<f32>, graphics: &mut Graphics) {
+        let vec2_text_scaled = Vec2::new(1.0,1.0) * (self.camera.zoom as f32);
+
+        for (ship_id, ship) in &frame.ships {
+            let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
+            let line_advance  = Vec2::new(0.0, -self.line_height);
+
+            let ship_position: Vec2<f32> = cast(ship.position);
+            let ship_velocity: Vec2<f32> = cast(ship.velocity);
+
+            // draw ship velocity line
+            let transform = Iso3::new(
+                Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
+                Vec3::new(
+                    0.0,
+                    0.0,
+                    angle_of(ship_velocity),
+                ),
+            );
+            self.line.draw(
+                scale_factor * ship_velocity.norm() * 50.0,
+                color::Colors::red(),
+                world_trans * transform.to_homogeneous(),
+                graphics,
+            );
+
+            let mut color = color::Colors::blue();
+            if let Some(sid) = frame.ship_id {
+                if *ship_id == sid  { color = color::Colors::green_spring(); }
+            }
+
+            let translation = Iso3::new(
+                Vec3::new(ship_position.x, ship_position.y, 0.0),
+                Vec3::new(0.0, 0.0, 0.0),
+            );
+            let transform = world_trans * translation.to_homogeneous();
+
+            self.triangle.draw(
+                scale_factor * SHIP_SIZE,
+                color,
+                transform,
+                graphics,
+            );
+
+            // draw ship id
+            self.glyph_drawer.draw(
+                &ship_id.to_string(),
+                ship_position - line_advance + Vec2::new(0.0,5.0),
+                vec2_text_scaled,
+                self.camera.zoom,
+                color::Colors::white(),
+                true,
+                screen_trans,
+                graphics,
+                );
+
+            // draw ship broadcast
+            if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
+                self.glyph_drawer.draw(
+                    ship_comm,
+                    ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
+                    vec2_text_scaled,
+                    self.camera.zoom,
+                    color::Colors::white(),
+                    true,
+                    screen_trans,
+                    graphics,
+                    );
+            }
+
+            // draw ship position
+            let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
+            self.glyph_drawer.draw(
+                &pos,
+                ship_position + pos_offset,
+                vec2_text_scaled,
+                self.camera.zoom,
+                color::Colors::white(),
+                false,
+                screen_trans,
+                graphics,
+                );
+
+            // draw ship velocity
+            let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
+            self.glyph_drawer.draw(
+                &vel,
+                ship_position + pos_offset + line_advance,
+                vec2_text_scaled,
+                self.camera.zoom,
+                color::Colors::white(),
+                false,
+                screen_trans,
+                graphics,
+                );
         }
     }
 }
