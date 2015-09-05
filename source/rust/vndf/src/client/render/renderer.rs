@@ -84,7 +84,6 @@ impl Renderer {
         //                 concerned.
         let camera_to_screen = ortho(window_size);
         let world_to_camera  = ortho(window_size * self.camera.zoom) * camera_translation;
-        let world_to_pixel   = camera_to_screen * camera_translation;
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
@@ -92,7 +91,7 @@ impl Renderer {
         
         self.render_console(console, window_size, camera_to_screen, &mut graphics);
         self.render_selections(frame, world_to_camera, scale_factor, &mut graphics);
-        self.render_ships(frame, scale_factor, world_to_camera, world_to_pixel, &mut graphics);
+        self.render_ships(frame, scale_factor, world_to_camera, &mut graphics);
 
         graphics.flush();
     }
@@ -160,7 +159,7 @@ impl Renderer {
         }
     }
 
-    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, screen_trans: Mat4<f32>, graphics: &mut Graphics) {
+    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, graphics: &mut Graphics) {
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
@@ -208,7 +207,7 @@ impl Renderer {
                 ship_position - line_advance + Vec2::new(0.0,5.0),
                 color::Colors::white(),
                 true,
-                screen_trans,
+                world_trans,
                 graphics,
             );
 
@@ -219,7 +218,7 @@ impl Renderer {
                     ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
                     color::Colors::white(),
                     true,
-                    screen_trans,
+                    world_trans,
                     graphics,
                 );
             }
@@ -231,7 +230,7 @@ impl Renderer {
                 ship_position + pos_offset,
                 color::Colors::white(),
                 false,
-                screen_trans,
+                world_trans,
                 graphics,
             );
 
@@ -242,7 +241,7 @@ impl Renderer {
                 ship_position + pos_offset + line_advance,
                 color::Colors::white(),
                 false,
-                screen_trans,
+                world_trans,
                 graphics,
             );
         }
