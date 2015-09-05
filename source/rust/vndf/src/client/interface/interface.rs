@@ -89,7 +89,7 @@ impl Interface for Player {
             (self.cli.input(),self.cli.get_prompt_idx()),
             frame,
             &self.window,
-            );
+        );
         self.window.swap_buffers();
 
         // frame delay notifier
