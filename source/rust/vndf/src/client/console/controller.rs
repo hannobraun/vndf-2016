@@ -6,6 +6,7 @@ use glutin::Event::{
     ReceivedCharacter,
 };
 
+use client::console::Console;
 use client::interface::{
     Frame,
     InputEvent,
@@ -15,8 +16,9 @@ use shared::game::{ManeuverData,EntityId};
 use client::render::camera::CameraTrack;
 
 pub struct Controller {
+    console: Console,
+
     input_buffer: String,
-    text        : Vec<String>,
     height      : u16,
 
     cmd_history: Vec<String>,
@@ -36,8 +38,9 @@ impl Controller {
         let height = 24;
 
         Controller {
+            console: Console::new(text),
+
             input_buffer: String::new(),
-            text        : text,
             height      : height,
             cmd_history: vec!(),
             cmd_history_idx: 0,
@@ -54,8 +57,8 @@ impl Controller {
         window_events: &Vec<Event>,
             ) {
         match frame.message {
-            Message::Notice(ref message) => self.text.push(format!("Notice: {}", message)),
-            Message::Error(ref message)  => self.text.push(format!("Error: {}", message)),
+            Message::Notice(ref message) => self.console.output.push(format!("Notice: {}", message)),
+            Message::Error(ref message)  => self.console.output.push(format!("Error: {}", message)),
             Message::None                => (),
         }
 
@@ -145,8 +148,8 @@ impl Controller {
             }
         }
 
-        while self.text.len() > (self.height - 2) as usize {
-            self.text.remove(0);
+        while self.console.output.len() > (self.height - 2) as usize {
+            self.console.output.remove(0);
         }
     }
 
@@ -188,7 +191,7 @@ impl Controller {
     }
     
     pub fn text(&self) -> &[String] {
-        self.text.as_ref()
+        self.console.output.as_ref()
     }
 
     pub fn input(&self) -> &str {
@@ -201,7 +204,7 @@ impl Controller {
         line  : &str,
         frame : &Frame
             ) {
-        self.text.push(format!("> {}", line));
+        self.console.output.push(format!("> {}", line));
 
         let mut splits = line.splitn(2, ' ');
 
@@ -210,9 +213,9 @@ impl Controller {
 
         match command {
             "list-broadcasts" => {
-                self.text.push(format!("{} broadcasts", frame.broadcasts.len()));
+                self.console.output.push(format!("{} broadcasts", frame.broadcasts.len()));
                 for (eid,msg) in &frame.broadcasts {
-                    self.text.push(format!("{}: {}", eid, msg));
+                    self.console.output.push(format!("{}: {}", eid, msg));
                 }
             },
             "start-broadcast" => {
@@ -227,14 +230,14 @@ impl Controller {
                     Some(ship_id) => {
                         let ship = frame.ships[&ship_id];
 
-                        self.text.push(format!(
+                        self.console.output.push(format!(
                             "Position: ({}, {}); Velocity: ({}, {})\n",
                             ship.position.x, ship.position.y,
                             ship.velocity.x, ship.velocity.y,
                             ));
                     },
                     None => {
-                        self.text.push(format!("No data available."));
+                        self.console.output.push(format!("No data available."));
                     },
                 }
             },
@@ -244,7 +247,7 @@ impl Controller {
                     None         => format!("Comm Id is currently unknown"),
                 };
                 
-                self.text.push(message);
+                self.console.output.push(message);
             },
 
             "schedule-maneuver" => {
@@ -263,7 +266,7 @@ impl Controller {
                                 game_time_s
                             }
                         else {
-                            self.text.push(format!(
+                            self.console.output.push(format!(
                                 "{} {}",
                                 "Server connection not fully established ",
                                 "yet. Please try again in a moment."
@@ -286,7 +289,7 @@ impl Controller {
                                 )
                     },
                     _ =>
-                        self.text.push(format!("Error parsing arguments")),
+                        self.console.output.push(format!("Error parsing arguments")),
                 }
             },
             
@@ -324,13 +327,13 @@ impl Controller {
                     "clear-selection - Clears currently selected entities",
                     ];
 
-                self.text.push(format!("Available commands:"));
+                self.console.output.push(format!("Available commands:"));
                 for line in &help {
-                    self.text.push(format!("{}", line))
+                    self.console.output.push(format!("{}", line))
                 }
             }
 
-            _ => self.text.push(format!("Unknown command: {}\n", command)),
+            _ => self.console.output.push(format!("Unknown command: {}\n", command)),
         }
     }
 }
