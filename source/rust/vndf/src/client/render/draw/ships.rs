@@ -22,9 +22,9 @@ static VERTEX_SRC: &'static [u8] = b"
 
 	attribute vec2 pos;
 
-	uniform mat4 transform;
-	uniform vec2 size;
-	uniform vec3 color;
+	uniform mat4  transform;
+	uniform float size;
+	uniform vec3  color;
 
 	varying vec3 v_color;
 
@@ -52,7 +52,7 @@ gfx_vertex!(Vertex {
 
 gfx_parameters!(Params {
 	transform@ transform: [[f32; 4]; 4],
-	size     @ size     : [f32; 2],
+	size     @ size     : f32,
 	color	 @ color    : [f32; 3],
 });
 
@@ -102,7 +102,7 @@ impl ShipDrawer {
 
 		let params = Params {
 			transform: *transform.as_array(),
-			size     : [self.ship_size, self.ship_size],
+			size     : self.ship_size,
 			color    : color,
 			_r       : PhantomData,
 		};
