@@ -64,11 +64,6 @@ impl Renderer {
     ) {
         let mut frame_state = FrameState::new(window);
 
-        let window_size = {
-            let size = window.get_size();
-            Vec2::new(size.0 as f32, size.1 as f32)
-        };
-
         let camera_position    = self.camera.update(&frame);
         let camera_translation = translation(cast(camera_position));
 
@@ -82,28 +77,28 @@ impl Renderer {
         //                 window.
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
-        let camera_to_screen = ortho(window_size);
-        let world_to_camera  = ortho(window_size * self.camera.zoom) * camera_translation;
+        let camera_to_screen = ortho(frame_state.window_size);
+        let world_to_camera  = ortho(frame_state.window_size * self.camera.zoom) * camera_translation;
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
         frame_state.graphics.clear();
         
-        self.render_console(console, window_size, camera_to_screen, &mut frame_state);
+        self.render_console(console, camera_to_screen, &mut frame_state);
         self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state);
         self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state);
 
         frame_state.graphics.flush();
     }
 
-    fn render_console(&mut self, console: &Console, window_size: Vec2<f32>, transform: Mat4<f32>, frame_state: &mut FrameState) {
+    fn render_console(&mut self, console: &Console, transform: Mat4<f32>, frame_state: &mut FrameState) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 
         for (y, line) in console.output.iter().enumerate() {
             self.glyph_drawer.draw(
                 &line,
-                position_cli(0, y, advance_x, line_height, window_size),
+                position_cli(0, y, advance_x, line_height, frame_state.window_size),
                 color::Colors::white(),
                 false,
                 transform,
@@ -120,7 +115,7 @@ impl Renderer {
 
         self.glyph_drawer.draw(
             &command_line,
-            position_cli(0, prompt_ypos, advance_x, line_height, window_size),
+            position_cli(0, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
             transform,
@@ -130,7 +125,7 @@ impl Renderer {
          //draw cursor position in prompt
         self.glyph_drawer.draw(
             &"_".to_string(),
-            position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, window_size),
+            position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
             transform,
@@ -250,13 +245,20 @@ impl Renderer {
 
 
 struct FrameState {
-    graphics: Graphics,
+    graphics   : Graphics,
+    window_size: Vec2<f32>,
 }
 
 impl FrameState {
     pub fn new(window: &Window) -> FrameState {
+        let window_size = {
+            let size = window.get_size();
+            Vec2::new(size.0 as f32, size.1 as f32)
+        };
+
         FrameState {
-            graphics: window.create_graphics(),
+            graphics   : window.create_graphics(),
+            window_size: window_size,
         }
     }
 }
