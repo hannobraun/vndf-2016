@@ -83,7 +83,7 @@ impl Renderer {
 
         graphics.clear();
         
-        self.render_console(console, window_size, cast(pixel_to_screen), &mut graphics);
+        self.render_console(console, window_size, pixel_to_screen, &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
         self.render_ships(frame, scale_factor, world_trans, screen_trans, &mut graphics);
 
