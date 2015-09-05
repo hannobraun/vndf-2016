@@ -141,7 +141,7 @@ impl Renderer {
     fn render_selections(&mut self, frame: &Frame, world_trans: Mat4<f32>, scale_factor: f32, graphics: &mut Graphics) {
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom);
+                let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom as f64);
 
                 let translation = Iso3::new(
                     Vec3::new(position.x as f32, position.y as f32, 0.0),
@@ -208,7 +208,7 @@ impl Renderer {
                 &ship_id.to_string(),
                 ship_position - line_advance + Vec2::new(0.0,5.0),
                 vec2_text_scaled,
-                self.camera.zoom,
+                self.camera.zoom as f64,
                 color::Colors::white(),
                 true,
                 screen_trans,
@@ -221,7 +221,7 @@ impl Renderer {
                     ship_comm,
                     ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
                     vec2_text_scaled,
-                    self.camera.zoom,
+                    self.camera.zoom as f64,
                     color::Colors::white(),
                     true,
                     screen_trans,
@@ -235,7 +235,7 @@ impl Renderer {
                 &pos,
                 ship_position + pos_offset,
                 vec2_text_scaled,
-                self.camera.zoom,
+                self.camera.zoom as f64,
                 color::Colors::white(),
                 false,
                 screen_trans,
@@ -248,7 +248,7 @@ impl Renderer {
                 &vel,
                 ship_position + pos_offset + line_advance,
                 vec2_text_scaled,
-                self.camera.zoom,
+                self.camera.zoom as f64,
                 color::Colors::white(),
                 false,
                 screen_trans,
