@@ -90,7 +90,7 @@ impl Renderer {
         frame_state.graphics.clear();
         
         self.render_console(console, window_size, camera_to_screen, &mut frame_state);
-        self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state.graphics);
+        self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state);
         self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state.graphics);
 
         frame_state.graphics.flush();
@@ -138,7 +138,7 @@ impl Renderer {
         );
     }
 
-    fn render_selections(&mut self, frame: &Frame, world_trans: Mat4<f32>, scale_factor: f32, graphics: &mut Graphics) {
+    fn render_selections(&mut self, frame: &Frame, world_trans: Mat4<f32>, scale_factor: f32, frame_state: &mut FrameState) {
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
                 let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom as f64);
@@ -153,7 +153,7 @@ impl Renderer {
                     scale_factor * SHIP_SIZE * 1.25,
                     color::Colors::white(),
                     transform,
-                    graphics,
+                    &mut frame_state.graphics,
                 );
             }
         }
