@@ -62,30 +62,15 @@ impl Renderer {
         console: &Console,
         window : &Window,
     ) {
-        let mut frame_state = FrameState::new(window);
-
-        let camera_position    = self.camera.update(&frame);
-        let camera_translation = translation(cast(camera_position));
-
-        // The following transformation matrices are named based on the
-        // following nomenclature:
-        // - screen space: The representation used by OpenGL. After the shaders
-        //                 are done with it, point will be transformed to that
-        //                 space.
-        // - camera space: The coordinates from the view of the camera.
-        //                 Corresponds to the pixel coordinates relative to the
-        //                 window.
-        // - world space:  The only space relevant, as far as the game logic is
-        //                 concerned.
-        let world_to_camera  = ortho(frame_state.window_size * self.camera.zoom) * camera_translation;
+        let mut frame_state = FrameState::new(window, frame, &mut self.camera);
 
         let scale_factor = self.scaling_factor * (self.camera.zoom);
 
         frame_state.graphics.clear();
         
         self.render_console(console, &mut frame_state);
-        self.render_selections(frame, world_to_camera, scale_factor, &mut frame_state);
-        self.render_ships(frame, scale_factor, world_to_camera, &mut frame_state);
+        self.render_selections(frame, scale_factor, &mut frame_state);
+        self.render_ships(frame, scale_factor, &mut frame_state);
 
         frame_state.graphics.flush();
     }
@@ -132,7 +117,7 @@ impl Renderer {
         );
     }
 
-    fn render_selections(&mut self, frame: &Frame, world_trans: Mat4<f32>, scale_factor: f32, frame_state: &mut FrameState) {
+    fn render_selections(&mut self, frame: &Frame, scale_factor: f32, frame_state: &mut FrameState) {
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
                 let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom as f64);
@@ -141,7 +126,7 @@ impl Renderer {
                     Vec3::new(position.x as f32, position.y as f32, 0.0),
                     Vec3::new(0.0, 0.0, 0.0),
                 );
-                let transform = world_trans * translation.to_homogeneous();
+                let transform = frame_state.world_to_camera * translation.to_homogeneous();
 
                 self.triangle.draw(
                     scale_factor * SHIP_SIZE * 1.25,
@@ -153,7 +138,7 @@ impl Renderer {
         }
     }
 
-    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, frame_state: &mut FrameState) {
+    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
@@ -173,7 +158,7 @@ impl Renderer {
             self.line.draw(
                 scale_factor * ship_velocity.norm() * 50.0,
                 color::Colors::red(),
-                world_trans * transform.to_homogeneous(),
+                frame_state.world_to_camera * transform.to_homogeneous(),
                 &mut frame_state.graphics,
             );
 
@@ -186,7 +171,7 @@ impl Renderer {
                 Vec3::new(ship_position.x, ship_position.y, 0.0),
                 Vec3::new(0.0, 0.0, 0.0),
             );
-            let transform = world_trans * translation.to_homogeneous();
+            let transform = frame_state.world_to_camera * translation.to_homogeneous();
 
             self.triangle.draw(
                 scale_factor * SHIP_SIZE,
@@ -201,7 +186,7 @@ impl Renderer {
                 ship_position - line_advance + Vec2::new(0.0,5.0),
                 color::Colors::white(),
                 true,
-                world_trans,
+                frame_state.world_to_camera,
                 &mut frame_state.graphics,
             );
 
@@ -212,7 +197,7 @@ impl Renderer {
                     ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
                     color::Colors::white(),
                     true,
-                    world_trans,
+                    frame_state.world_to_camera,
                     &mut frame_state.graphics,
                 );
             }
@@ -224,7 +209,7 @@ impl Renderer {
                 ship_position + pos_offset,
                 color::Colors::white(),
                 false,
-                world_trans,
+                frame_state.world_to_camera,
                 &mut frame_state.graphics,
             );
 
@@ -235,7 +220,7 @@ impl Renderer {
                 ship_position + pos_offset + line_advance,
                 color::Colors::white(),
                 false,
-                world_trans,
+                frame_state.world_to_camera,
                 &mut frame_state.graphics,
             );
         }
@@ -248,14 +233,18 @@ struct FrameState {
     window_size: Vec2<f32>,
 
     camera_to_screen: Mat4<f32>,
+    world_to_camera : Mat4<f32>,
 }
 
 impl FrameState {
-    pub fn new(window: &Window) -> FrameState {
+    pub fn new(window: &Window, frame: &Frame, camera: &mut Camera) -> FrameState {
         let window_size = {
             let size = window.get_size();
             Vec2::new(size.0 as f32, size.1 as f32)
         };
+
+        let camera_position    = camera.update(&frame);
+        let camera_translation = translation(cast(camera_position));
 
         // The following transformation matrices are named based on the
         // following nomenclature:
@@ -268,12 +257,14 @@ impl FrameState {
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
         let camera_to_screen = ortho(window_size);
+        let world_to_camera  = ortho(window_size * camera.zoom) * camera_translation;
 
         FrameState {
             graphics   : window.create_graphics(),
             window_size: window_size,
 
             camera_to_screen: camera_to_screen,
+            world_to_camera : world_to_camera,
         }
     }
 }
