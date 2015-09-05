@@ -26,6 +26,7 @@ const SHIP_SIZE: f32 = 30.0;
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
     triangle      : ShipDrawer,
+    line          : ShipDrawer,
     pub camera    : Camera,
     line_height   : f32,
     scaling_factor: f32,
@@ -39,10 +40,12 @@ impl Renderer {
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
         let triangle     = ShipDrawer::triangle(&mut graphics);
+        let line         = ShipDrawer::line(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
             triangle      : triangle,
+            line          : line,
             camera        : Camera::new(),
             line_height   : font_height,
             scaling_factor: scaling_factor,
