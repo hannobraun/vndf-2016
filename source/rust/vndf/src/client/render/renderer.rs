@@ -100,6 +100,7 @@ impl Renderer {
     fn render_console(&mut self, console: &Console, window_size: (u32, u32), transform: Mat4<f32>, graphics: &mut Graphics) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
+        let window_size = Vec2::new(window_size.0 as f32, window_size.1 as f32);
 
         for (y, line) in console.output.iter().enumerate() {
             self.glyph_drawer.draw(
@@ -273,16 +274,14 @@ fn position_cli(
     y          : usize,
     advance_x  : f32,
     line_height: f32,
-    window_size: (u32, u32),
+    window_size: Vec2<f32>,
 ) -> Vec2<f32> {
-    let (width, height) = window_size;
-
     let pad_x = 10.0;
     let pad_y = 30.0;
 
     Vec2::new(
-        (-1.0 * ((width as f32 / 2.0) - pad_x)) + advance_x * x as f32,
-        ((height as f32 / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
+        (-1.0 * ((window_size.x / 2.0) - pad_x)) + advance_x * x as f32,
+        ((window_size.y / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
     )
 }
 
