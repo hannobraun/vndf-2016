@@ -16,7 +16,7 @@ use shared::game::{ManeuverData,EntityId};
 use client::render::camera::CameraTrack;
 
 pub struct Controller {
-    console: Console,
+    pub console: Console,
 
     height      : u16,
 
