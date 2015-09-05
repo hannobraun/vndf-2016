@@ -94,9 +94,11 @@ impl Renderer {
         let cam_pos = self.camera.update(&frame,None);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
         let world_trans = Renderer::translate(cam_trans,cam_pos);
+        let screen_trans = Renderer::translate(transform,cam_pos);
         
         let transform: Mat4<f32> = cast(transform);
         let world_trans: Mat4<f32> = cast(world_trans);
+        let screen_trans: Mat4<f32> = cast(screen_trans);
         
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
@@ -209,7 +211,7 @@ impl Renderer {
                 self.camera.zoom,
                 color::Colors::white(),
                 true,
-                world_trans,
+                screen_trans,
                 &mut graphics,
                 );
 
@@ -222,7 +224,7 @@ impl Renderer {
                     self.camera.zoom,
                     color::Colors::white(),
                     true,
-                    world_trans,
+                    screen_trans,
                     &mut graphics,
                     );
             }
@@ -236,7 +238,7 @@ impl Renderer {
                 self.camera.zoom,
                 color::Colors::white(),
                 false,
-                world_trans,
+                screen_trans,
                 &mut graphics,
                 );
 
@@ -249,7 +251,7 @@ impl Renderer {
                 self.camera.zoom,
                 color::Colors::white(),
                 false,
-                world_trans,
+                screen_trans,
                 &mut graphics,
                 );
         }
