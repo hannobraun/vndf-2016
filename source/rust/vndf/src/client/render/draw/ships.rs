@@ -58,6 +58,7 @@ gfx_parameters!(Params {
 });
 
 
+// TODO: Rename to something more fitting
 pub struct ShipDrawer {
 	batch: Batch<Params<gl::Resources>>,
 }
