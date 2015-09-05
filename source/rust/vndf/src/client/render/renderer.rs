@@ -72,6 +72,16 @@ impl Renderer {
         let camera_position    = self.camera.update(&frame);
         let camera_translation = translation(cast(camera_position));
 
+        // The following transformation matrices are named based on the
+        // following nomenclature:
+        // - screen space: The representation used by OpenGL. After the shaders
+        //                 are done with it, point will be transformed to that
+        //                 space.
+        // - camera space: The coordinates from the view of the camera.
+        //                 Corresponds to the pixel coordinates relative to the
+        //                 window.
+        // - world space:  The only space relevant, as far as the game logic is
+        //                 concerned.
         let camera_to_screen = ortho(window_size);
         let world_to_camera  = ortho(window_size * self.camera.zoom) * camera_translation;
         let world_to_pixel   = camera_to_screen * camera_translation;
