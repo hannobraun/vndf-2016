@@ -72,7 +72,7 @@ impl Renderer {
         let cam_pos = self.camera.update(&frame);
 
         let pixel_to_screen = ortho(window_size);
-        let world_to_screen = translate(pixel_to_screen, cast(cam_pos));
+        let world_to_pixel  = translate(pixel_to_screen, cast(cam_pos));
 
         let cam_trans = ortho(window_size * self.camera.zoom);
         let world_trans = translate(cam_trans, cast(cam_pos));
@@ -83,7 +83,7 @@ impl Renderer {
         
         self.render_console(console, window_size, pixel_to_screen, &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
-        self.render_ships(frame, scale_factor, world_trans, world_to_screen, &mut graphics);
+        self.render_ships(frame, scale_factor, world_trans, world_to_pixel, &mut graphics);
 
         graphics.flush();
     }
