@@ -74,9 +74,12 @@ impl Renderer {
         window : &Window,
     ) {
         let mut graphics    = window.create_graphics();
-        let     window_size = window.get_size();
 
-        let window_size = Vec2::new(window_size.0 as f32, window_size.1 as f32);
+        let window_size = {
+            let size = window.get_size();
+            Vec2::new(size.0 as f32, size.1 as f32)
+        };
+
         let pixel_to_screen = ortho(window_size);
 
         let cam_pos = self.camera.update(&frame);
