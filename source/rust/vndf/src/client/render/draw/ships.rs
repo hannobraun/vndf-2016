@@ -3,13 +3,7 @@ use std::marker::PhantomData;
 use gfx;
 use gfx_device_gl as gl;
 
-use nalgebra::{
-	Iso3,
-	Mat4,
-	ToHomogeneous,
-	Vec2,
-	Vec3,
-};
+use nalgebra::Mat4;
 
 use client::render::base::{
 	Batch,
@@ -106,18 +100,11 @@ impl ShipDrawer {
 
 	pub fn draw(
 		&mut self,
-		ship     : &Ship,
 		size     : f32,
 		color    : color::Color,
 		transform: Mat4<f32>,
 		graphics : &mut Graphics,
 	) {
-		let translation = Iso3::new(
-			Vec3::new(ship.x, ship.y, 0.0),
-			Vec3::new(0.0, 0.0, 0.0),
-		);
-		let transform = transform * translation.to_homogeneous();
-
 		let params = Params {
 			transform: *transform.as_array(),
 			size     : size,
@@ -131,6 +118,3 @@ impl ShipDrawer {
 		);
 	}
 }
-
-
-pub type Ship = Vec2<f32>;
