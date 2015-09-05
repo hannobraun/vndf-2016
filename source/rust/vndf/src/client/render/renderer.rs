@@ -11,6 +11,7 @@ use nalgebra::{
     Norm,
 };
 
+use client::console::Console;
 use client::interface::Frame;
 use client::window::Window;
 use client::render::base::{
@@ -86,9 +87,8 @@ impl Renderer {
 
     pub fn render(
         &mut self,
-        output : &[String],
-        command: (&str,usize),
         frame  : &Frame,
+        console: &Console,
         window : &Window,
     ) {
         let     window_size = window.get_size();
@@ -108,18 +108,18 @@ impl Renderer {
 
         let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
         
-        self.render_console(output, command, window_size, transform, &mut graphics);
+        self.render_console(console, window_size, transform, &mut graphics);
         self.render_selections(frame, world_trans, scale_factor, &mut graphics);
         self.render_ships(frame, scale_factor, world_trans, screen_trans, &mut graphics);
 
         graphics.flush();
     }
 
-    fn render_console(&mut self, output : &[String], command: (&str, usize), window_size: (u32, u32), transform: Mat4<f32>, graphics: &mut Graphics) {
+    fn render_console(&mut self, console: &Console, window_size: (u32, u32), transform: Mat4<f32>, graphics: &mut Graphics) {
         let advance_x   = self.glyph_drawer.advance_x;
         let line_height = self.line_height;
 
-        for (y, line) in output.iter().enumerate() {
+        for (y, line) in console.output.iter().enumerate() {
             self.glyph_drawer.draw(
                 &line,
                 position_cli(0, y, advance_x, line_height, window_size),
@@ -135,7 +135,7 @@ impl Renderer {
         let mut command_line = String::new();
         let prompt_ypos = 23;
 
-        write!(&mut command_line, "> {}", command.0)
+        write!(&mut command_line, "> {}", console.input)
             .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
 
 
@@ -153,7 +153,7 @@ impl Renderer {
          //draw cursor position in prompt
         self.glyph_drawer.draw(
             &"_".to_string(),
-            position_cli(command.1 + 2, prompt_ypos, advance_x, line_height, window_size),
+            position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, window_size),
             Vec2::new(1.0,1.0),
             1.0,
             color::Colors::white(),

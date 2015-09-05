@@ -85,9 +85,8 @@ impl Interface for Player {
         }
         
         self.renderer.render(
-            self.cli.text(),
-            (self.cli.input(),self.cli.get_prompt_idx()),
             frame,
+            &self.cli.console,
             &self.window,
         );
         self.window.swap_buffers();
