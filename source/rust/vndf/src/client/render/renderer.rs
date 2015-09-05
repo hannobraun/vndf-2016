@@ -13,13 +13,13 @@ use nalgebra::{
 
 use client::interface::Frame;
 use client::window::Window;
-use client::render::base::{color,Shape};
+use client::render::base::color;
 use client::render::draw::{
     GlyphDrawer,
     ShipDrawer,
-    ShapeDrawer,
 };
 use client::render::camera::{Camera};
+use shared::util::angle_of;
 
 const SHIP_SIZE: f32 = 30.0;
 
@@ -177,26 +177,27 @@ impl Renderer {
         }
 
         for (ship_id, ship) in &frame.ships {
-            let ship_position = cast(ship.position);
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
 
+            let ship_position: Vec2<f32> = cast(ship.position);
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
             // draw ship velocity line
-            let mag = ship_velocity.sqnorm().sqrt(); // get vector magnitude
-            
-            let line = Shape::line(
-                [0.0,0.0],
-                *(ship_velocity * mag * 20.0).as_array(),
-                (1.0 * self.scaling_factor),
+            let transform = Iso3::new(
+                Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
+                Vec3::new(
+                    0.0,
+                    0.0,
+                    angle_of(ship_velocity),
+                ),
             );
-            ShapeDrawer::new(&mut graphics, &line)
-                .draw(ship_position,
-                      vec2_scaled,
-                      color::Colors::red(),
-                      world_trans,
-                      &mut graphics);
+            self.line.draw(
+                vec2_scaled.x * ship_velocity.norm() * 50.0,
+                color::Colors::red(),
+                world_trans * transform.to_homogeneous(),
+                &mut graphics,
+            );
 
             let mut color = color::Colors::blue();
             if let Some(sid) = frame.ship_id {
