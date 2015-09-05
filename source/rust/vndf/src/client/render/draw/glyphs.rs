@@ -88,7 +88,7 @@ impl GlyphDrawer {
                 Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },
                 Vertex { pos: [  0.5,  0.5 ], tex_coord: [ 1.0, 0.0 ] },
                 Vertex { pos: [  0.5, -0.5 ], tex_coord: [ 1.0, 1.0 ] },
-            ]
+            ],
         );
 
         let     font     = Font::load(font_size);
