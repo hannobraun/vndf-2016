@@ -72,14 +72,14 @@ impl Renderer {
         let pixel_to_screen = ortho(window_size);
 
         let cam_pos = self.camera.update(&frame);
-        let cam_trans = ortho(window_size * self.camera.zoom as f32);
+        let cam_trans = ortho(window_size * self.camera.zoom);
         let world_trans = translate(cast(cam_trans),cam_pos);
         let screen_trans = translate(cast(pixel_to_screen),cam_pos);
 
         let world_trans: Mat4<f32> = cast(world_trans);
         let screen_trans: Mat4<f32> = cast(screen_trans);
 
-        let scale_factor = self.scaling_factor * (self.camera.zoom as f32);
+        let scale_factor = self.scaling_factor * (self.camera.zoom);
 
         graphics.clear();
         
@@ -160,7 +160,7 @@ impl Renderer {
     }
 
     fn render_ships(&mut self, frame: &Frame, scale_factor: f32, world_trans: Mat4<f32>, screen_trans: Mat4<f32>, graphics: &mut Graphics) {
-        let vec2_text_scaled = Vec2::new(1.0,1.0) * (self.camera.zoom as f32);
+        let vec2_text_scaled = Vec2::new(1.0,1.0) * self.camera.zoom;
 
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
