@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 
+use gfx;
 use gfx_device_gl as gl;
 
 use nalgebra::{
@@ -66,6 +67,7 @@ impl ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
+			gfx::PrimitiveType::TriangleStrip,
 			vertices,
 		);
 

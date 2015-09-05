@@ -82,6 +82,7 @@ impl GlyphDrawer {
         let batch = Batch::new(
             graphics,
             VERTEX_SRC, FRAGMENT_SRC,
+            gfx::PrimitiveType::TriangleStrip,
             &[
                 Vertex { pos: [ -0.5,  0.5 ], tex_coord: [ 0.0, 0.0 ] },
                 Vertex { pos: [ -0.5, -0.5 ], tex_coord: [ 0.0, 1.0 ] },

@@ -17,6 +17,7 @@ impl<P: ShaderParam<Resources=gl::Resources>> Batch<P> {
 		graphics    : &mut Graphics,
 		vertex_src  : &[u8],
 		fragment_src: &[u8],
+		primitive   : gfx::PrimitiveType,
 		mesh        : &[V],
 	) -> Batch<P> {
 		let program = graphics.factory
@@ -24,7 +25,7 @@ impl<P: ShaderParam<Resources=gl::Resources>> Batch<P> {
 			.unwrap_or_else(|e| panic!("Error linking program: {:?}", e));
 
 		let mesh  = graphics.factory.create_mesh(mesh);
-		let slice = mesh.to_slice(gfx::PrimitiveType::TriangleStrip);
+		let slice = mesh.to_slice(primitive);
 
 		let batch = gfx::batch::Core::new(mesh, program)
 			.unwrap_or_else(|e| panic!("Error making batch: {:?}", e));
