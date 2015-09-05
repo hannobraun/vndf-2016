@@ -298,8 +298,10 @@ fn translate(transform: Mat4<f64>, pos: Vec2<f64>) -> Mat4<f64> {
 
 /// get new ortho transform matrix based on window size specified
 fn ortho(size: (u32,u32)) -> Mat4<f64> {
-    Ortho3::new(
+    let ortho = Ortho3::new(
         size.0 as f64, size.1 as f64,
         -1.0, 1.0
-            ).to_mat()
+    );
+
+    ortho.to_mat()
 }
