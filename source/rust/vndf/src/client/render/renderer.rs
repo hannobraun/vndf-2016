@@ -25,7 +25,7 @@ const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
-    ship_drawer   : ShipDrawer,
+    triangle      : ShipDrawer,
     pub camera    : Camera,
     line_height   : f32,
     scaling_factor: f32,
@@ -38,11 +38,11 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShipDrawer::triangle(&mut graphics);
+        let triangle     = ShipDrawer::triangle(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
-            ship_drawer   : ship_drawer,
+            triangle      : triangle,
             camera        : Camera::new(),
             line_height   : font_height,
             scaling_factor: scaling_factor,
@@ -193,7 +193,7 @@ impl Renderer {
             if let Some(sid) = frame.ship_id {
                 if *ship_id == sid  { color = color::Colors::green_spring(); }
             }
-            self.ship_drawer.draw(
+            self.triangle.draw(
                 &ship_position,
                 vec2_scaled.x * SHIP_SIZE,
                 color,
