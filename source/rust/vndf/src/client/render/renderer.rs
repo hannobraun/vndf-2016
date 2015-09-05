@@ -38,7 +38,7 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShipDrawer::new(&mut graphics, SHIP_SIZE);
+        let ship_drawer  = ShipDrawer::triangle(&mut graphics, SHIP_SIZE);
 
         Renderer {
             glyph_drawer  : glyph_drawer,

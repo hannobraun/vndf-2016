@@ -64,21 +64,27 @@ pub struct ShipDrawer {
 }
 
 impl ShipDrawer {
-	pub fn new(graphics: &mut Graphics, ship_size: f32) -> ShipDrawer {
+	pub fn new(graphics: &mut Graphics, vertices: &[Vertex], ship_size: f32) -> ShipDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
-			&[
-				Vertex { pos: [ -0.5, -0.5 ] },
-				Vertex { pos: [  0.5, -0.5 ] },
-				Vertex { pos: [  0.0,  0.5 ] },
-			]
+			vertices,
 		);
 
 		ShipDrawer {
 			batch    : batch,
 			ship_size: Vec2::new(ship_size, ship_size),
 		}
+	}
+
+	pub fn triangle(graphics: &mut Graphics, size: f32) -> ShipDrawer {
+		let triangle = [
+			Vertex { pos: [ -0.5, -0.5 ] },
+			Vertex { pos: [  0.5, -0.5 ] },
+			Vertex { pos: [  0.0,  0.5 ] },
+		];
+
+		ShipDrawer::new(graphics, &triangle, size)
 	}
 
 	pub fn draw(
