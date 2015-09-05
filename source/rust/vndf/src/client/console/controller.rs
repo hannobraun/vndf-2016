@@ -18,7 +18,6 @@ use client::render::camera::CameraTrack;
 pub struct Controller {
     console: Console,
 
-    input_buffer: String,
     height      : u16,
 
     cmd_history: Vec<String>,
@@ -40,7 +39,6 @@ impl Controller {
         Controller {
             console: Console::new(text),
 
-            input_buffer: String::new(),
             height      : height,
             cmd_history: vec!(),
             cmd_history_idx: 0,
@@ -66,7 +64,7 @@ impl Controller {
             match *event {
                 ReceivedCharacter(c) =>
                     if !c.is_control() {
-                        self.input_buffer.insert(self.prompt_idx,c);
+                        self.console.input.insert(self.prompt_idx,c);
                         self.is_cmd_history = false;
                         self.prompt_idx +=1;
                     },
@@ -74,7 +72,7 @@ impl Controller {
                     if self.prompt_idx > 0 { self.prompt_idx -= 1; }
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Right)) => {
-                    if self.prompt_idx < self.input_buffer.chars().count()  {
+                    if self.prompt_idx < self.console.input.chars().count()  {
                         self.prompt_idx += 1;
                     }
                 },
@@ -82,32 +80,32 @@ impl Controller {
                     self.prompt_idx = 0;
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::End)) => {
-                    self.prompt_idx = self.input_buffer.chars().count();
+                    self.prompt_idx = self.console.input.chars().count();
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Delete)) => {
-                    let byte_index = self.input_buffer
+                    let byte_index = self.console.input
                         .char_indices()
                         .nth(self.prompt_idx);
                     if let Some((byte_index, _)) = byte_index {
-                        self.input_buffer.remove(byte_index);
+                        self.console.input.remove(byte_index);
                     }
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Back)) => {
                     if self.prompt_idx > 0 {
                         self.prompt_idx -= 1;
 
-                        let byte_index = self.input_buffer
+                        let byte_index = self.console.input
                             .char_indices()
                             .nth(self.prompt_idx);
                         if let Some((byte_index, _)) = byte_index {
-                            self.input_buffer.remove(byte_index);
+                            self.console.input.remove(byte_index);
                         }
                     }
 
                     self.is_cmd_history = false;
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Return)) => {
-                    let command = self.input_buffer.clone();
+                    let command = self.console.input.clone();
                     
                     if command != "" {
                         let mut found = (false,0);
@@ -119,7 +117,7 @@ impl Controller {
                         
                         self.cmd_history.insert(0,command.clone());
                         
-                        self.input_buffer.clear();
+                        self.console.input.clear();
                         self.tmp_cmd_buffer.clear();
                         self.is_cmd_history = false;
                         self.cmd_history_idx = 0; //optionally reset idx
@@ -134,14 +132,14 @@ impl Controller {
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Up)) => {
                     let cmd = self.get_history(true);
-                    self.input_buffer.clear();
-                    self.input_buffer.push_str(&cmd);
+                    self.console.input.clear();
+                    self.console.input.push_str(&cmd);
                     self.prompt_idx = cmd.chars().count();
                 },
                 KeyboardInput(Pressed, _, Some(VirtualKeyCode::Down)) => {
                     let cmd = self.get_history(false);
-                    self.input_buffer.clear();
-                    self.input_buffer.push_str(&cmd);
+                    self.console.input.clear();
+                    self.console.input.push_str(&cmd);
                     self.prompt_idx = cmd.chars().count();
                 },
                 _ => (), // ignore other events
@@ -159,7 +157,7 @@ impl Controller {
         //shift cursor based on direction
         if rev { //heading to past commands
             if !self.is_cmd_history  { //first time pulling up history?
-                self.tmp_cmd_buffer = self.input_buffer.clone();
+                self.tmp_cmd_buffer = self.console.input.clone();
             }
             else if self.cmd_history_idx < (self.cmd_history.len()-1) {
                 self.cmd_history_idx += 1;
@@ -195,7 +193,7 @@ impl Controller {
     }
 
     pub fn input(&self) -> &str {
-        self.input_buffer.as_ref()
+        self.console.input.as_ref()
     }
 
     fn handle_line(
