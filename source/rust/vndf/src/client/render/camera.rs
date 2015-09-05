@@ -61,8 +61,7 @@ impl Camera {
     
     /// must be called to update camera positioning
     pub fn update (&mut self,
-                   frame: &Frame,
-                   offset: Option<Vec2<f64>>)
+                   frame: &Frame)
                    -> Vec2<f64> {
         let mut pos = Vec2::new(0.0,0.0);
         let mut vel = Vec2::new(0.0,0.0);
@@ -79,10 +78,6 @@ impl Camera {
                 }
             },
             _ => (),
-        }
-        
-        if let Some(offset) = offset {
-            pos = pos+offset;
         }
 
         // NOTE: must invert each coordinate to track

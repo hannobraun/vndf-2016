@@ -86,7 +86,7 @@ impl Renderer {
 
         let pixel_to_screen = Renderer::get_transform(window_size);
 
-        let cam_pos = self.camera.update(&frame,None);
+        let cam_pos = self.camera.update(&frame);
         let cam_trans = Renderer::get_transform_camera(window_size, self.camera.zoom);
         let world_trans = translate(cam_trans,cam_pos);
         let screen_trans = translate(pixel_to_screen,cam_pos);
