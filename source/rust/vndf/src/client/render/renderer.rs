@@ -126,7 +126,7 @@ impl Renderer {
                     Vec3::new(position.x as f32, position.y as f32, 0.0),
                     Vec3::new(0.0, 0.0, 0.0),
                 );
-                let transform = frame_state.world_to_camera * translation.to_homogeneous();
+                let transform = frame_state.world_to_screen * translation.to_homogeneous();
 
                 self.triangle.draw(
                     scale_factor * SHIP_SIZE * 1.25,
@@ -158,7 +158,7 @@ impl Renderer {
             self.line.draw(
                 scale_factor * ship_velocity.norm() * 50.0,
                 color::Colors::red(),
-                frame_state.world_to_camera * transform.to_homogeneous(),
+                frame_state.world_to_screen * transform.to_homogeneous(),
                 &mut frame_state.graphics,
             );
 
@@ -171,7 +171,7 @@ impl Renderer {
                 Vec3::new(ship_position.x, ship_position.y, 0.0),
                 Vec3::new(0.0, 0.0, 0.0),
             );
-            let transform = frame_state.world_to_camera * translation.to_homogeneous();
+            let transform = frame_state.world_to_screen * translation.to_homogeneous();
 
             self.triangle.draw(
                 scale_factor * SHIP_SIZE,
@@ -186,7 +186,7 @@ impl Renderer {
                 ship_position - line_advance + Vec2::new(0.0,5.0),
                 color::Colors::white(),
                 true,
-                frame_state.world_to_camera,
+                frame_state.world_to_screen,
                 &mut frame_state.graphics,
             );
 
@@ -197,7 +197,7 @@ impl Renderer {
                     ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
                     color::Colors::white(),
                     true,
-                    frame_state.world_to_camera,
+                    frame_state.world_to_screen,
                     &mut frame_state.graphics,
                 );
             }
@@ -209,7 +209,7 @@ impl Renderer {
                 ship_position + pos_offset,
                 color::Colors::white(),
                 false,
-                frame_state.world_to_camera,
+                frame_state.world_to_screen,
                 &mut frame_state.graphics,
             );
 
@@ -220,7 +220,7 @@ impl Renderer {
                 ship_position + pos_offset + line_advance,
                 color::Colors::white(),
                 false,
-                frame_state.world_to_camera,
+                frame_state.world_to_screen,
                 &mut frame_state.graphics,
             );
         }
@@ -233,7 +233,7 @@ struct FrameState {
     window_size: Vec2<f32>,
 
     camera_to_screen: Mat4<f32>,
-    world_to_camera : Mat4<f32>,
+    world_to_screen : Mat4<f32>,
 }
 
 impl FrameState {
@@ -257,14 +257,14 @@ impl FrameState {
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
         let camera_to_screen = ortho(window_size);
-        let world_to_camera  = ortho(window_size * camera.zoom) * camera_translation;
+        let world_to_screen  = ortho(window_size * camera.zoom) * camera_translation;
 
         FrameState {
             graphics   : window.create_graphics(),
             window_size: window_size,
 
             camera_to_screen: camera_to_screen,
-            world_to_camera : world_to_camera,
+            world_to_screen : world_to_screen,
         }
     }
 }
