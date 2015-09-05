@@ -238,7 +238,7 @@ impl Renderer {
                 true,
                 screen_trans,
                 graphics,
-                );
+            );
 
             // draw ship broadcast
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
@@ -251,7 +251,7 @@ impl Renderer {
                     true,
                     screen_trans,
                     graphics,
-                    );
+                );
             }
 
             // draw ship position
@@ -265,7 +265,7 @@ impl Renderer {
                 false,
                 screen_trans,
                 graphics,
-                );
+            );
 
             // draw ship velocity
             let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
@@ -278,7 +278,7 @@ impl Renderer {
                 false,
                 screen_trans,
                 graphics,
-                );
+            );
         }
     }
 }
