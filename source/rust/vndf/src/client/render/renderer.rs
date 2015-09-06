@@ -145,10 +145,9 @@ impl Renderer {
 
     fn render_ships(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
-            let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
+            let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
             let line_advance  = Vec2::new(0.0, -self.line_height);
 
-            let ship_position: Vec2<f32> = cast(ship.position);
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
             let position = Vec4::new(
@@ -219,10 +218,10 @@ impl Renderer {
             let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
             self.glyph_drawer.draw(
                 &pos,
-                ship_position + pos_offset,
+                pos_offset,
                 color::Colors::white(),
                 false,
-                frame_state.world_to_screen,
+                camera_to_object,
                 &mut frame_state.graphics,
             );
 
@@ -230,10 +229,10 @@ impl Renderer {
             let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
             self.glyph_drawer.draw(
                 &vel,
-                ship_position + pos_offset + line_advance,
+                pos_offset + line_advance,
                 color::Colors::white(),
                 false,
-                frame_state.world_to_screen,
+                camera_to_object,
                 &mut frame_state.graphics,
             );
         }
