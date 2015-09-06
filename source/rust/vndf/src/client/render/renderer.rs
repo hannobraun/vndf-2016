@@ -7,6 +7,7 @@ use nalgebra::{
     Iso3,
     Vec2,
     Vec3,
+    Vec4,
     ToHomogeneous,
     Norm,
 };
@@ -146,6 +147,14 @@ impl Renderer {
             let ship_position: Vec2<f32> = cast(ship.position);
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
+            let position = Vec4::new(
+                ship.position.x as f32,
+                ship.position.y as f32,
+                0.0,
+                1.0,
+            );
+            let position = frame_state.world_to_camera * position;
+
             // draw ship velocity line
             let transform = Iso3::new(
                 Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
@@ -168,13 +177,13 @@ impl Renderer {
             }
 
             let translation = Iso3::new(
-                Vec3::new(ship_position.x, ship_position.y, 0.0),
+                Vec3::new(position.x, position.y, 0.0),
                 Vec3::new(0.0, 0.0, 0.0),
             );
-            let transform = frame_state.world_to_screen * translation.to_homogeneous();
+            let transform = frame_state.camera_to_screen * translation.to_homogeneous();
 
             self.triangle.draw(
-                scale_factor * SHIP_SIZE,
+                SHIP_SIZE * self.scaling_factor,
                 color,
                 transform,
                 &mut frame_state.graphics,
