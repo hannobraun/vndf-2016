@@ -32,7 +32,9 @@ pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
     triangle      : ShipDrawer,
     line          : ShipDrawer,
+
     pub camera    : Camera,
+
     line_height   : f32,
     scaling_factor: f32,
 }
