@@ -67,10 +67,14 @@ impl Renderer {
         console: &Console,
         window : &Window,
     ) {
-        let mut frame_state = FrameState::new(window, frame, &mut self.camera);
+        let mut frame_state =
+            match FrameState::new(window, frame, &mut self.camera) {
+                Some(frame_state) => frame_state,
+                None              => return,
+            };
 
         frame_state.graphics.clear();
-        
+
         self.render_console(console, &mut frame_state);
         self.render_selections(frame, &mut frame_state);
         self.render_ships(frame, &mut frame_state);
@@ -253,9 +257,18 @@ struct FrameState {
 }
 
 impl FrameState {
-    pub fn new(window: &Window, frame: &Frame, camera: &mut Camera) -> FrameState {
+    pub fn new(window: &Window, frame: &Frame, camera: &mut Camera) -> Option<FrameState> {
         let window_size = {
-            let size = window.get_size();
+            let size = match window.get_size().ok() {
+                Some(size) => size,
+                None       => return None,
+            };
+
+            if size == (0, 0) {
+                //skip render frame if minimized!
+                return None;
+            }
+
             Vec2::new(size.0 as f32, size.1 as f32)
         };
 
@@ -282,13 +295,13 @@ impl FrameState {
         let camera_to_screen = ortho(window_size);
         let world_to_camera  = camera_zoom * camera_translation;
 
-        FrameState {
+        Some(FrameState {
             graphics   : window.create_graphics(),
             window_size: window_size,
 
             camera_to_screen: camera_to_screen,
             world_to_camera : world_to_camera,
-        }
+        })
     }
 }
 
