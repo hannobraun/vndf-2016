@@ -180,12 +180,12 @@ impl Renderer {
                 Vec3::new(position.x, position.y, 0.0),
                 Vec3::new(0.0, 0.0, 0.0),
             );
-            let transform = frame_state.camera_to_screen * translation.to_homogeneous();
+            let camera_to_object = frame_state.camera_to_screen * translation.to_homogeneous();
 
             self.triangle.draw(
                 SHIP_SIZE * self.scaling_factor,
                 color,
-                transform,
+                camera_to_object,
                 &mut frame_state.graphics,
             );
 
