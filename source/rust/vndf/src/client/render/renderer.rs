@@ -196,10 +196,10 @@ impl Renderer {
             // draw ship id
             self.glyph_drawer.draw(
                 &ship_id.to_string(),
-                ship_position - line_advance + Vec2::new(0.0,5.0),
+                Vec2::new(0.0, self.ship_size * 0.6),
                 color::Colors::white(),
                 true,
-                frame_state.world_to_screen,
+                camera_to_object,
                 &mut frame_state.graphics,
             );
 
