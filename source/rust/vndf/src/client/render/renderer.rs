@@ -36,6 +36,7 @@ pub struct Renderer {
     pub camera    : Camera,
 
     line_height   : f32,
+    ship_size     : f32,
     scaling_factor: f32,
 }
 
@@ -55,6 +56,7 @@ impl Renderer {
             line          : line,
             camera        : Camera::new(),
             line_height   : font_height,
+            ship_size     : SHIP_SIZE * scaling_factor,
             scaling_factor: scaling_factor,
         }
     }
