@@ -155,6 +155,12 @@ impl Renderer {
             );
             let position = frame_state.world_to_camera * position;
 
+            let translation = Iso3::new(
+                Vec3::new(position.x, position.y, 0.0),
+                Vec3::new(0.0, 0.0, 0.0),
+            );
+            let camera_to_object = frame_state.camera_to_screen * translation.to_homogeneous();
+
             // draw ship velocity line
             let transform = Iso3::new(
                 Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
@@ -175,12 +181,6 @@ impl Renderer {
             if let Some(sid) = frame.ship_id {
                 if *ship_id == sid  { color = color::Colors::green_spring(); }
             }
-
-            let translation = Iso3::new(
-                Vec3::new(position.x, position.y, 0.0),
-                Vec3::new(0.0, 0.0, 0.0),
-            );
-            let camera_to_object = frame_state.camera_to_screen * translation.to_homogeneous();
 
             self.triangle.draw(
                 SHIP_SIZE * self.scaling_factor,
