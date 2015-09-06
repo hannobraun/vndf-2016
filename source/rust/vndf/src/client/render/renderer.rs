@@ -187,7 +187,7 @@ impl Renderer {
             }
 
             self.triangle.draw(
-                SHIP_SIZE * self.scaling_factor,
+                self.ship_size,
                 color,
                 camera_to_object,
                 &mut frame_state.graphics,
