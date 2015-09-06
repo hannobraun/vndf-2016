@@ -233,6 +233,7 @@ struct FrameState {
     window_size: Vec2<f32>,
 
     camera_to_screen: Mat4<f32>,
+    world_to_camera : Mat4<f32>,
     world_to_screen : Mat4<f32>,
 }
 
@@ -246,6 +247,13 @@ impl FrameState {
         let camera_position    = camera.update(&frame);
         let camera_translation = translation(cast(camera_position));
 
+        let camera_zoom = Mat4::new(
+            camera.zoom,         0.0,         0.0, 0.0,
+                    0.0, camera.zoom,         0.0, 0.0,
+                    0.0,         0.0, camera.zoom, 0.0,
+                    0.0,         0.0,         0.0, 1.0,
+        );
+
         // The following transformation matrices are named based on the
         // following nomenclature:
         // - screen space: The representation used by OpenGL. After the shaders
@@ -257,6 +265,7 @@ impl FrameState {
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
         let camera_to_screen = ortho(window_size);
+        let world_to_camera  = camera_zoom * camera_translation;
         let world_to_screen  = ortho(window_size * camera.zoom) * camera_translation;
 
         FrameState {
@@ -264,6 +273,7 @@ impl FrameState {
             window_size: window_size,
 
             camera_to_screen: camera_to_screen,
+            world_to_camera : world_to_camera,
             world_to_screen : world_to_screen,
         }
     }
