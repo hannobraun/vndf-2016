@@ -163,7 +163,7 @@ impl Renderer {
 
             // draw ship velocity line
             let transform = Iso3::new(
-                Vec3::new(ship.position.x as f32, ship.position.y as f32, 0.0),
+                Vec3::new(0.0, 0.0, 0.0),
                 Vec3::new(
                     0.0,
                     0.0,
@@ -171,9 +171,9 @@ impl Renderer {
                 ),
             );
             self.line.draw(
-                scale_factor * ship_velocity.norm() * 50.0,
+                ship_velocity.norm() * self.scaling_factor * 50.0,
                 color::Colors::red(),
-                frame_state.world_to_screen * transform.to_homogeneous(),
+                camera_to_object * transform.to_homogeneous(),
                 &mut frame_state.graphics,
             );
 
