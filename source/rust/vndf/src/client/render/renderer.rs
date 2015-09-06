@@ -69,12 +69,10 @@ impl Renderer {
     ) {
         let mut frame_state = FrameState::new(window, frame, &mut self.camera);
 
-        let scale_factor = self.scaling_factor * (self.camera.zoom);
-
         frame_state.graphics.clear();
         
         self.render_console(console, &mut frame_state);
-        self.render_selections(frame, scale_factor, &mut frame_state);
+        self.render_selections(frame, &mut frame_state);
         self.render_ships(frame, &mut frame_state);
 
         frame_state.graphics.flush();
@@ -122,19 +120,25 @@ impl Renderer {
         );
     }
 
-    fn render_selections(&mut self, frame: &Frame, scale_factor: f32, frame_state: &mut FrameState) {
+    fn render_selections(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let position = ship.position + Vec2::new(0.0, 2.0 * self.camera.zoom as f64);
+                let position = Vec4::new(
+                    ship.position.x as f32,
+                    ship.position.y as f32,
+                    0.0,
+                    1.0,
+                );
+                let position = frame_state.world_to_camera * position;
 
                 let translation = Iso3::new(
-                    Vec3::new(position.x as f32, position.y as f32, 0.0),
+                    Vec3::new(position.x, position.y, 0.0),
                     Vec3::new(0.0, 0.0, 0.0),
                 );
-                let transform = frame_state.world_to_screen * translation.to_homogeneous();
+                let transform = frame_state.camera_to_screen * translation.to_homogeneous();
 
                 self.triangle.draw(
-                    scale_factor * SHIP_SIZE * 1.25,
+                    self.ship_size * 1.25,
                     color::Colors::white(),
                     transform,
                     &mut frame_state.graphics,
