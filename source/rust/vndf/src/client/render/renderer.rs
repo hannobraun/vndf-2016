@@ -207,10 +207,10 @@ impl Renderer {
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
                 self.glyph_drawer.draw(
                     ship_comm,
-                    ship_position + line_advance - Vec2::new(0.0, SHIP_SIZE),
+                    -Vec2::new(0.0, self.ship_size),
                     color::Colors::white(),
                     true,
-                    frame_state.world_to_screen,
+                    camera_to_object,
                     &mut frame_state.graphics,
                 );
             }
