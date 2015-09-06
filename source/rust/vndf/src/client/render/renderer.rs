@@ -71,7 +71,7 @@ impl Renderer {
         
         self.render_console(console, &mut frame_state);
         self.render_selections(frame, scale_factor, &mut frame_state);
-        self.render_ships(frame, scale_factor, &mut frame_state);
+        self.render_ships(frame, &mut frame_state);
 
         frame_state.graphics.flush();
     }
@@ -139,7 +139,7 @@ impl Renderer {
         }
     }
 
-    fn render_ships(&mut self, frame: &Frame, scale_factor: f32, frame_state: &mut FrameState) {
+    fn render_ships(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(SHIP_SIZE, 10.0);
             let line_advance  = Vec2::new(0.0, -self.line_height);
