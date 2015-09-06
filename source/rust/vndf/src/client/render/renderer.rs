@@ -250,7 +250,6 @@ struct FrameState {
 
     camera_to_screen: Mat4<f32>,
     world_to_camera : Mat4<f32>,
-    world_to_screen : Mat4<f32>,
 }
 
 impl FrameState {
@@ -282,7 +281,6 @@ impl FrameState {
         //                 concerned.
         let camera_to_screen = ortho(window_size);
         let world_to_camera  = camera_zoom * camera_translation;
-        let world_to_screen  = ortho(window_size * camera.zoom) * camera_translation;
 
         FrameState {
             graphics   : window.create_graphics(),
@@ -290,7 +288,6 @@ impl FrameState {
 
             camera_to_screen: camera_to_screen,
             world_to_camera : world_to_camera,
-            world_to_screen : world_to_screen,
         }
     }
 }
