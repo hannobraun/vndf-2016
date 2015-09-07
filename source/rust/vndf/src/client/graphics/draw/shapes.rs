@@ -52,17 +52,16 @@ gfx_parameters!(Params {
 });
 
 
-// TODO: Rename to something more fitting
-pub struct ShipDrawer {
+pub struct ShapeDrawer {
 	batch: Batch<Params<gl::Resources>>,
 }
 
-impl ShipDrawer {
+impl ShapeDrawer {
 	pub fn new(
 		graphics : &mut Graphics,
 		primitive: gfx::PrimitiveType,
 		vertices : &[Vertex]
-	) -> ShipDrawer {
+	) -> ShapeDrawer {
 		let batch = Batch::new(
 			graphics,
 			VERTEX_SRC, FRAGMENT_SRC,
@@ -70,13 +69,13 @@ impl ShipDrawer {
 			vertices,
 		);
 
-		ShipDrawer {
+		ShapeDrawer {
 			batch: batch,
 		}
 	}
 
-	pub fn ship(graphics: &mut Graphics) -> ShipDrawer {
-		ShipDrawer::new(
+	pub fn ship(graphics: &mut Graphics) -> ShapeDrawer {
+		ShapeDrawer::new(
 			graphics,
 			gfx::PrimitiveType::TriangleStrip,
 			&[
@@ -87,8 +86,8 @@ impl ShipDrawer {
 		)
 	}
 
-	pub fn line(graphics: &mut Graphics) -> ShipDrawer {
-		ShipDrawer::new(
+	pub fn line(graphics: &mut Graphics) -> ShapeDrawer {
+		ShapeDrawer::new(
 			graphics,
 			gfx::PrimitiveType::LineStrip,
 			&[

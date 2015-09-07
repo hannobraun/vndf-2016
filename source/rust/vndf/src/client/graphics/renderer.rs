@@ -19,7 +19,7 @@ use client::graphics::base::{
 };
 use client::graphics::draw::{
     GlyphDrawer,
-    ShipDrawer,
+    ShapeDrawer,
 };
 use client::graphics::camera::{Camera};
 use client::interface::Frame;
@@ -30,8 +30,8 @@ const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
-    triangle      : ShipDrawer,
-    line          : ShipDrawer,
+    triangle      : ShapeDrawer,
+    line          : ShapeDrawer,
 
     pub camera    : Camera,
 
@@ -47,8 +47,8 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let triangle     = ShipDrawer::ship(&mut graphics);
-        let line         = ShipDrawer::line(&mut graphics);
+        let triangle     = ShapeDrawer::ship(&mut graphics);
+        let line         = ShapeDrawer::line(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
