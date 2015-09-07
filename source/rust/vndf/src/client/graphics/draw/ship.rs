@@ -66,52 +66,52 @@ impl ShipDrawer {
             let transform = transforms.symbol_to_screen(cast(ship.position));
 
             self.draw_velocity_line(
-                graphics,
                 cast(ship.velocity),
                 transform,
+                graphics,
             );
 
             if frame.select_ids.contains(ship_id) {
                 self.draw_selection(
-                    graphics,
                     transform,
+                    graphics,
                 );
             }
 
             self.draw_symbol(
-                graphics,
-                transform,
                 frame,
                 *ship_id,
+                transform,
+                graphics,
             );
 
             self.draw_name(
-                graphics,
-                transform,
                 *ship_id,
+                transform,
+                graphics,
             );
 
             if let Some(broadcast) = frame.broadcasts.get(&ship_id) {
                 self.draw_broadcast(
-                    graphics,
-                    transform,
                     broadcast,
+                    transform,
+                    graphics,
                 );
             }
 
             self.draw_info(
-                graphics,
-                transform,
                 ship,
+                transform,
+                graphics,
             );
         }
     }
 
     pub fn draw_velocity_line(
         &mut self,
-        graphics : &mut Graphics,
         velocity : Vec2<f32>,
-        transform: Mat4<f32>
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         // draw ship velocity line
         let line_rotation = Iso3::new(
@@ -132,8 +132,8 @@ impl ShipDrawer {
 
     pub fn draw_selection(
         &mut self,
-        graphics : &mut Graphics,
         transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         self.symbol_drawer.draw(
             self.ship_size * 1.25,
@@ -145,10 +145,10 @@ impl ShipDrawer {
 
     pub fn draw_symbol(
         &mut self,
-        graphics : &mut Graphics,
-        transform: Mat4<f32>,
         frame    : &Frame,
         ship_id  : EntityId,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         let mut color = color::Colors::blue();
         if let Some(sid) = frame.ship_id {
@@ -165,9 +165,9 @@ impl ShipDrawer {
 
     pub fn draw_name(
         &mut self,
-        graphics : &mut Graphics,
-        transform: Mat4<f32>,
         ship_id  : EntityId,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         // draw ship id
         self.glyph_drawer.draw(
@@ -182,9 +182,9 @@ impl ShipDrawer {
 
     pub fn draw_broadcast(
         &mut self,
-        graphics : &mut Graphics,
-        transform: Mat4<f32>,
         broadcast: &str,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         self.glyph_drawer.draw(
             broadcast,
@@ -198,9 +198,9 @@ impl ShipDrawer {
 
     pub fn draw_info(
         &mut self,
-        graphics : &mut Graphics,
-        transform: Mat4<f32>,
         ship     : &Body,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
     ) {
         let offset      = Vec2::new(0.7, 0.3) * self.ship_size;
         let line_offset = Vec2::new(0.0, -self.line_height);
