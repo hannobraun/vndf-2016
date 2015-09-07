@@ -75,7 +75,7 @@ impl ShipDrawer {
 		}
 	}
 
-	pub fn triangle(graphics: &mut Graphics) -> ShipDrawer {
+	pub fn ship(graphics: &mut Graphics) -> ShipDrawer {
 		ShipDrawer::new(
 			graphics,
 			gfx::PrimitiveType::TriangleStrip,
