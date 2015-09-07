@@ -1,7 +1,11 @@
+#![feature(path_ext, result_expect)]
+
+
 use std::env::{
     self,
     Args,
 };
+use std::fs::PathExt;
 use std::path::PathBuf;
 use std::process::{
     Command,
@@ -29,9 +33,24 @@ fn main() {
     const BINARY_PATH: &'static str = "output/cargo/debug";
     const RUST_PATH  : &'static str = "source/rust/vndf";
 
+    let mut still_searching = true;
+    let mut root_path = env::current_dir().expect("Expected current directory");
+    while still_searching {
+        let candidate = root_path.join("project.conf");
+
+        if candidate.exists() {
+            still_searching = false;
+        }
+        else {
+            if !root_path.pop() {
+                panic!("Could not find VNDF repository root");
+            }
+        }
+    }
+
     let paths = Paths {
-        binaries   : PathBuf::from(BINARY_PATH),
-        rust_source: PathBuf::from(RUST_PATH),
+        binaries   : root_path.join(BINARY_PATH),
+        rust_source: root_path.join(RUST_PATH),
     };
 
 
