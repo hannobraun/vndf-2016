@@ -117,9 +117,12 @@ impl Mouse {
             let coord = Mouse::convert_coord(click,window_size);
             let select = Mouse::check_selection(coord,frame,cam_pos);
             if let Some(id) = select {
-                // TODO: consider conbining these two and handling selection
-                // logic outside of this, in interface perhaps
-                events.push(InputEvent::Select(vec!(id)));
+                if !frame.select_ids.contains(&id) {
+                    events.push(InputEvent::Select(vec!(id)));
+                }
+                else {
+                    events.push(InputEvent::Deselect(vec!(id)));
+                }
             }
         }
         else if let Some(drag_end) = self.drag.1 {
