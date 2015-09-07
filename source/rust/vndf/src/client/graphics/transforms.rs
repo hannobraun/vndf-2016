@@ -8,6 +8,7 @@ use nalgebra::{
     Ortho3,
     Vec2,
     Vec3,
+    Vec4,
 };
 
 use client::graphics::camera::Camera;
@@ -48,6 +49,26 @@ impl Transforms {
             camera_to_screen: camera_to_screen,
             world_to_camera : world_to_camera,
         }
+    }
+
+    pub fn symbol_to_screen(&self, world_position: Vec2<f32>) -> Mat4<f32> {
+        let world_position = Vec4::new(
+            world_position.x,
+            world_position.y,
+            0.0,
+            1.0,
+        );
+
+        let camera_position = self.world_to_camera * world_position;
+
+        let camera_translation =
+            Iso3::new(
+                Vec3::new(camera_position.x, camera_position.y, 0.0),
+                Vec3::new(0.0, 0.0, 0.0),
+            )
+            .to_homogeneous();
+
+        self.camera_to_screen * camera_translation
     }
 }
 

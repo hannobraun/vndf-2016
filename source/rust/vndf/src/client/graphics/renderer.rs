@@ -5,7 +5,6 @@ use nalgebra::{
     Iso3,
     Vec2,
     Vec3,
-    Vec4,
     ToHomogeneous,
     Norm,
 };
@@ -123,19 +122,7 @@ impl Renderer {
     fn render_selections(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for id in frame.select_ids.iter() {
             if let Some(ship) = frame.ships.get(&id) {
-                let position = Vec4::new(
-                    ship.position.x as f32,
-                    ship.position.y as f32,
-                    0.0,
-                    1.0,
-                );
-                let position = frame_state.transforms.world_to_camera * position;
-
-                let translation = Iso3::new(
-                    Vec3::new(position.x, position.y, 0.0),
-                    Vec3::new(0.0, 0.0, 0.0),
-                );
-                let transform = frame_state.transforms.camera_to_screen * translation.to_homogeneous();
+                let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
 
                 self.ship_drawer.draw(
                     self.ship_size * 1.25,
@@ -154,19 +141,7 @@ impl Renderer {
 
             let ship_velocity: Vec2<f32> = cast(ship.velocity);
 
-            let position = Vec4::new(
-                ship.position.x as f32,
-                ship.position.y as f32,
-                0.0,
-                1.0,
-            );
-            let position = frame_state.transforms.world_to_camera * position;
-
-            let translation = Iso3::new(
-                Vec3::new(position.x, position.y, 0.0),
-                Vec3::new(0.0, 0.0, 0.0),
-            );
-            let camera_to_object = frame_state.transforms.camera_to_screen * translation.to_homogeneous();
+            let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
 
             // draw ship velocity line
             let line_rotation = Iso3::new(
@@ -180,7 +155,7 @@ impl Renderer {
             self.line_drawer.draw(
                 ship_velocity.norm() * self.scaling_factor * 50.0,
                 color::Colors::red(),
-                camera_to_object * line_rotation.to_homogeneous(),
+                transform * line_rotation.to_homogeneous(),
                 &mut frame_state.graphics,
             );
 
@@ -192,7 +167,7 @@ impl Renderer {
             self.ship_drawer.draw(
                 self.ship_size,
                 color,
-                camera_to_object,
+                transform,
                 &mut frame_state.graphics,
             );
 
@@ -202,7 +177,7 @@ impl Renderer {
                 Vec2::new(0.0, self.ship_size * 0.6),
                 color::Colors::white(),
                 true,
-                camera_to_object,
+                transform,
                 &mut frame_state.graphics,
             );
 
@@ -213,7 +188,7 @@ impl Renderer {
                     -Vec2::new(0.0, self.ship_size),
                     color::Colors::white(),
                     true,
-                    camera_to_object,
+                    transform,
                     &mut frame_state.graphics,
                 );
             }
@@ -225,7 +200,7 @@ impl Renderer {
                 pos_offset,
                 color::Colors::white(),
                 false,
-                camera_to_object,
+                transform,
                 &mut frame_state.graphics,
             );
 
@@ -236,7 +211,7 @@ impl Renderer {
                 pos_offset + line_advance,
                 color::Colors::white(),
                 false,
-                camera_to_object,
+                transform,
                 &mut frame_state.graphics,
             );
         }
