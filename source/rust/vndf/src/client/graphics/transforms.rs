@@ -1,13 +1,13 @@
 use nalgebra::{
-	cast,
+    cast,
 
-	ToHomogeneous,
+    ToHomogeneous,
 
-	Iso3,
-	Mat4,
-	Ortho3,
-	Vec2,
-	Vec3,
+    Iso3,
+    Mat4,
+    Ortho3,
+    Vec2,
+    Vec3,
 };
 
 use client::graphics::camera::Camera;
@@ -15,13 +15,13 @@ use client::interface::Frame;
 
 
 pub struct Transforms {
-	pub camera_to_screen: Mat4<f32>,
+    pub camera_to_screen: Mat4<f32>,
     pub world_to_camera : Mat4<f32>,
 }
 
 impl Transforms {
-	pub fn new(frame: &Frame, camera: &mut Camera, window_size: Vec2<f32>) -> Transforms {
-		let camera_position    = camera.update(frame);
+    pub fn new(frame: &Frame, camera: &mut Camera, window_size: Vec2<f32>) -> Transforms {
+        let camera_position    = camera.update(frame);
         let camera_translation = translation(cast(camera_position));
 
         let camera_zoom = Mat4::new(
@@ -48,7 +48,7 @@ impl Transforms {
             camera_to_screen: camera_to_screen,
             world_to_camera : world_to_camera,
         }
-	}
+    }
 }
 
 
