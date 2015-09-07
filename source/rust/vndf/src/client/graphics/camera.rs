@@ -17,7 +17,6 @@ pub struct Camera {
     vel: Vec2<f64>,
     speed: f64, // camera transition speed
     pub zoom: f32,
-    //time: f64,
 }
 
 const MAX_ZOOM: f32 = 1000.0;
@@ -30,7 +29,6 @@ impl Camera {
             vel: Vec2::new(0.0,0.0),
             speed: 0.3,
             zoom: 1.0,
-            //time: precise_time_s(),
         }
     }
 
@@ -100,8 +98,6 @@ impl Camera {
         }
         else { self.pos = pos; } //removes jittering
 
-        //let dt = precise_time_s() - self.time;
-        //self.time = dt;
         self.pos
     }
 
