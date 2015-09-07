@@ -66,11 +66,9 @@ impl ShipDrawer {
             );
 
             if frame.select_ids.contains(ship_id) {
-                self.symbol_drawer.draw(
-                    self.ship_size * 1.25,
-                    color::Colors::white(),
-                    transform,
+                self.draw_selection(
                     &mut frame_state.graphics,
+                    transform,
                 );
             }
 
@@ -151,6 +149,19 @@ impl ShipDrawer {
             velocity.norm() * self.scaling_factor * 50.0,
             color::Colors::red(),
             transform * line_rotation.to_homogeneous(),
+            graphics,
+        );
+    }
+
+    pub fn draw_selection(
+        &mut self,
+        graphics : &mut Graphics,
+        transform: Mat4<f32>,
+    ) {
+        self.symbol_drawer.draw(
+            self.ship_size * 1.25,
+            color::Colors::white(),
+            transform,
             graphics,
         );
     }
