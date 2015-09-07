@@ -200,10 +200,18 @@ impl ShipDrawer {
         let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
         let line_advance  = Vec2::new(0.0, -self.line_height);
 
+        let position = format!("pos: ({:.2}, {:.2})",
+            ship.position[0],
+            ship.position[1],
+        );
+        let velocity = format!("vel: ({:.2}, {:.2})",
+            ship.velocity[0],
+            ship.velocity[1],
+        );
+
         // draw ship position
-        let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
         self.glyph_drawer.draw(
-            &pos,
+            &position,
             pos_offset,
             color::Colors::white(),
             false,
@@ -212,9 +220,8 @@ impl ShipDrawer {
         );
 
         // draw ship velocity
-        let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
         self.glyph_drawer.draw(
-            &vel,
+            &velocity,
             pos_offset + line_advance,
             color::Colors::white(),
             false,
