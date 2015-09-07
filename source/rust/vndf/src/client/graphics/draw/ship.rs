@@ -86,15 +86,11 @@ impl ShipDrawer {
                 *ship_id,
             );
 
-            // draw ship broadcast
             if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
-                self.glyph_drawer.draw(
-                    ship_comm,
-                    -Vec2::new(0.0, self.ship_size),
-                    color::Colors::white(),
-                    true,
-                    transform,
+                self.draw_broadcast(
                     &mut frame_state.graphics,
+                    transform,
+                    ship_comm,
                 );
             }
 
@@ -188,6 +184,22 @@ impl ShipDrawer {
         self.glyph_drawer.draw(
             &ship_id.to_string(),
             Vec2::new(0.0, self.ship_size * 0.6),
+            color::Colors::white(),
+            true,
+            transform,
+            graphics,
+        );
+    }
+
+    pub fn draw_broadcast(
+        &mut self,
+        graphics : &mut Graphics,
+        transform: Mat4<f32>,
+        broadcast: &str,
+    ) {
+        self.glyph_drawer.draw(
+            broadcast,
+            -Vec2::new(0.0, self.ship_size),
             color::Colors::white(),
             true,
             transform,
