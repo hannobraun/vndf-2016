@@ -88,7 +88,7 @@ impl Renderer {
                 position_cli(0, y, advance_x, line_height, frame_state.window_size),
                 color::Colors::white(),
                 false,
-                frame_state.camera_to_screen,
+                frame_state.transforms.camera_to_screen,
                 &mut frame_state.graphics,
             );
         }
@@ -105,7 +105,7 @@ impl Renderer {
             position_cli(0, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
-            frame_state.camera_to_screen,
+            frame_state.transforms.camera_to_screen,
             &mut frame_state.graphics,
         );
 
@@ -115,7 +115,7 @@ impl Renderer {
             position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, frame_state.window_size),
             color::Colors::white(),
             false,
-            frame_state.camera_to_screen,
+            frame_state.transforms.camera_to_screen,
             &mut frame_state.graphics,
         );
     }
@@ -129,13 +129,13 @@ impl Renderer {
                     0.0,
                     1.0,
                 );
-                let position = frame_state.world_to_camera * position;
+                let position = frame_state.transforms.world_to_camera * position;
 
                 let translation = Iso3::new(
                     Vec3::new(position.x, position.y, 0.0),
                     Vec3::new(0.0, 0.0, 0.0),
                 );
-                let transform = frame_state.camera_to_screen * translation.to_homogeneous();
+                let transform = frame_state.transforms.camera_to_screen * translation.to_homogeneous();
 
                 self.ship_drawer.draw(
                     self.ship_size * 1.25,
@@ -160,13 +160,13 @@ impl Renderer {
                 0.0,
                 1.0,
             );
-            let position = frame_state.world_to_camera * position;
+            let position = frame_state.transforms.world_to_camera * position;
 
             let translation = Iso3::new(
                 Vec3::new(position.x, position.y, 0.0),
                 Vec3::new(0.0, 0.0, 0.0),
             );
-            let camera_to_object = frame_state.camera_to_screen * translation.to_homogeneous();
+            let camera_to_object = frame_state.transforms.camera_to_screen * translation.to_homogeneous();
 
             // draw ship velocity line
             let transform = Iso3::new(
