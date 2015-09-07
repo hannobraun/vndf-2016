@@ -80,14 +80,10 @@ impl ShipDrawer {
                 *ship_id,
             );
 
-            // draw ship id
-            self.glyph_drawer.draw(
-                &ship_id.to_string(),
-                Vec2::new(0.0, self.ship_size * 0.6),
-                color::Colors::white(),
-                true,
-                transform,
+            self.draw_name(
                 &mut frame_state.graphics,
+                transform,
+                *ship_id,
             );
 
             // draw ship broadcast
@@ -177,6 +173,23 @@ impl ShipDrawer {
         self.symbol_drawer.draw(
             self.ship_size,
             color,
+            transform,
+            graphics,
+        );
+    }
+
+    pub fn draw_name(
+        &mut self,
+        graphics : &mut Graphics,
+        transform: Mat4<f32>,
+        ship_id  : EntityId,
+    ) {
+        // draw ship id
+        self.glyph_drawer.draw(
+            &ship_id.to_string(),
+            Vec2::new(0.0, self.ship_size * 0.6),
+            color::Colors::white(),
+            true,
             transform,
             graphics,
         );
