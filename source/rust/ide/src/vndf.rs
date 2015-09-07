@@ -55,8 +55,8 @@ fn main() {
 
 
     match command {
-        "client" => build_and_run("vndf-client", args, paths),
-        "server" => build_and_run("vndf-server", args, paths),
+        "client" => build_and_run("vndf-client", args, paths, "vndf_client=trace"),
+        "server" => build_and_run("vndf-server", args, paths, "trace"),
         "test"   => run_tests(paths),
 
         _ => print!("Unknown command: {}\n", command),
@@ -88,7 +88,7 @@ fn run_tests(paths: Paths) {
 }
 
 
-fn build_and_run(binary: &str, args: Args, paths: Paths) {
+fn build_and_run(binary: &str, args: Args, paths: Paths, log_config: &str) {
     run_command(
         Command::new("cargo")
             .args(&["build", "--bin", binary])
@@ -99,7 +99,7 @@ fn build_and_run(binary: &str, args: Args, paths: Paths) {
     for arg in args {
         command.arg(arg);
     }
-    command.env("RUST_LOG", "trace");
+    command.env("RUST_LOG", log_config);
 
     run_command(&mut command);
 }
