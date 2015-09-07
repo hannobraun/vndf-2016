@@ -209,24 +209,22 @@ impl ShipDrawer {
             ship.velocity.y,
         );
 
-        // draw ship position
-        self.glyph_drawer.draw(
-            &position,
-            offset,
-            color::Colors::white(),
-            false,
-            transform,
-            graphics,
-        );
+        let mut advance = Vec2::new(0.0, 0.0);
 
-        // draw ship velocity
-        self.glyph_drawer.draw(
-            &velocity,
-            offset + line_offset,
-            color::Colors::white(),
-            false,
-            transform,
-            graphics,
-        );
+        let mut draw = |text| {
+            self.glyph_drawer.draw(
+                text,
+                offset + advance,
+                color::Colors::white(),
+                false,
+                transform,
+                graphics,
+            );
+
+            advance = advance + line_offset;
+        };
+
+        draw(&position);
+        draw(&velocity);
     }
 }
