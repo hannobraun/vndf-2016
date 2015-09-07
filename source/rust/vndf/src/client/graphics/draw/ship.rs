@@ -197,8 +197,8 @@ impl ShipDrawer {
         transform: Mat4<f32>,
         ship     : &Body,
     ) {
-        let offset       = Vec2::new(0.7, 0.3) * self.ship_size;
-        let line_advance = Vec2::new(0.0, -self.line_height);
+        let offset      = Vec2::new(0.7, 0.3) * self.ship_size;
+        let line_offset = Vec2::new(0.0, -self.line_height);
 
         let position = format!("pos: ({:.2}, {:.2})",
             ship.position.x,
@@ -222,7 +222,7 @@ impl ShipDrawer {
         // draw ship velocity
         self.glyph_drawer.draw(
             &velocity,
-            offset + line_advance,
+            offset + line_offset,
             color::Colors::white(),
             false,
             transform,
