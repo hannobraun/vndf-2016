@@ -31,7 +31,7 @@ const SHIP_SIZE: f32 = 30.0;
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
     ship_drawer   : ShapeDrawer,
-    line          : ShapeDrawer,
+    line_drawer   : ShapeDrawer,
 
     pub camera    : Camera,
 
@@ -48,12 +48,12 @@ impl Renderer {
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
         let ship_drawer  = ShapeDrawer::ship(&mut graphics);
-        let line         = ShapeDrawer::line(&mut graphics);
+        let line_drawer  = ShapeDrawer::line(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
             ship_drawer   : ship_drawer,
-            line          : line,
+            line_drawer   : line_drawer,
             camera        : Camera::new(),
             line_height   : font_height,
             ship_size     : SHIP_SIZE * scaling_factor,
@@ -181,7 +181,7 @@ impl Renderer {
                     angle_of(ship_velocity),
                 ),
             );
-            self.line.draw(
+            self.line_drawer.draw(
                 ship_velocity.norm() * self.scaling_factor * 50.0,
                 color::Colors::red(),
                 camera_to_object * transform.to_homogeneous(),
