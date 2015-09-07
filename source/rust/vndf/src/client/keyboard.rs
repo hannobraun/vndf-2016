@@ -55,8 +55,8 @@ impl Keyboard {
     }
 
     fn handle_keys_held (&mut self,
-                         events: &mut Vec<InputEvent>,
-                         frame: &Frame,
+                         _events: &mut Vec<InputEvent>,
+                         _frame: &Frame,
                          camera: &mut Camera) {
         if self.held_keys[VirtualKeyCode::Tab as usize] {
             if self.held_keys[VirtualKeyCode::PageUp as usize] {
@@ -72,7 +72,7 @@ impl Keyboard {
                             key: VirtualKeyCode,
                             events: &mut Vec<InputEvent>,
                             frame: &Frame,
-                            camera: &mut Camera) {
+                            _camera: &mut Camera) {
         match key {
             VirtualKeyCode::Escape => {
                 events.push(InputEvent::Quit);
