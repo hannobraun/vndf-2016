@@ -169,7 +169,7 @@ impl Renderer {
             let camera_to_object = frame_state.transforms.camera_to_screen * translation.to_homogeneous();
 
             // draw ship velocity line
-            let transform = Iso3::new(
+            let line_rotation = Iso3::new(
                 Vec3::new(0.0, 0.0, 0.0),
                 Vec3::new(
                     0.0,
@@ -180,7 +180,7 @@ impl Renderer {
             self.line_drawer.draw(
                 ship_velocity.norm() * self.scaling_factor * 50.0,
                 color::Colors::red(),
-                camera_to_object * transform.to_homogeneous(),
+                camera_to_object * line_rotation.to_homogeneous(),
                 &mut frame_state.graphics,
             );
 
