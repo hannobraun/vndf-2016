@@ -76,7 +76,7 @@ fn build_and_run(binary: &str, args: Args, paths: Paths) {
             .current_dir(paths.rust_source)
     );
 
-    let mut command = Command::new(format!("{}/{}", paths.binaries.display(), binary));
+    let mut command = Command::new(paths.binaries.join(binary));
     for arg in args {
         command.arg(arg);
     }
