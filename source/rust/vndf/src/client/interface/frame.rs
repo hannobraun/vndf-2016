@@ -5,11 +5,11 @@ use rustc_serialize::json::{
     DecodeResult,
 };
 
+use client::graphics::camera::CameraTrack;
 use shared::game::{
     Body,
     EntityId,
 };
-use client::graphics::camera::CameraTrack;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]

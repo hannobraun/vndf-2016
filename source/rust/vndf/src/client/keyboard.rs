@@ -1,16 +1,15 @@
-use rand::{random,thread_rng, sample};
-
-// TODO: Clean up
 use glutin::Event;
 use glutin::Event::{KeyboardInput,Closed};
 use glutin::VirtualKeyCode;
 use glutin::ElementState::{Pressed,Released};
-use shared::game::{ManeuverData};
+use rand::{random,thread_rng, sample};
+
 use client::graphics::camera::Camera;
 use client::interface::{
     Frame,
     InputEvent,
 };
+use shared::game::{ManeuverData};
 
 /// Keyboard Input Controller
 pub struct Keyboard {

@@ -7,13 +7,13 @@ use glutin::Event::{
 };
 
 use client::console::Console;
+use client::graphics::camera::CameraTrack;
 use client::interface::{
     Frame,
     InputEvent,
     Message,
 };
 use shared::game::{ManeuverData,EntityId};
-use client::graphics::camera::CameraTrack;
 
 pub struct Controller {
     pub console: Console,
