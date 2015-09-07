@@ -113,7 +113,6 @@ impl ShipDrawer {
         transform: Mat4<f32>,
         graphics : &mut Graphics,
     ) {
-        // draw ship velocity line
         let line_rotation = Iso3::new(
             Vec3::new(0.0, 0.0, 0.0),
             Vec3::new(
@@ -169,7 +168,6 @@ impl ShipDrawer {
         transform: Mat4<f32>,
         graphics : &mut Graphics,
     ) {
-        // draw ship id
         self.glyph_drawer.draw(
             &ship_id.to_string(),
             Vec2::new(0.0, self.ship_size * 0.6),
