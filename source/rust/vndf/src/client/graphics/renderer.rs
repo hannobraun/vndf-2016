@@ -71,7 +71,6 @@ impl Renderer {
         frame_state.graphics.clear();
 
         self.render_console(console, &mut frame_state);
-        self.render_selections(frame, &mut frame_state);
         self.render_ships(frame, &mut frame_state);
 
         frame_state.graphics.flush();
@@ -119,21 +118,6 @@ impl Renderer {
         );
     }
 
-    fn render_selections(&mut self, frame: &Frame, frame_state: &mut FrameState) {
-        for id in frame.select_ids.iter() {
-            if let Some(ship) = frame.ships.get(&id) {
-                let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
-
-                self.ship_drawer.draw(
-                    self.ship_size * 1.25,
-                    color::Colors::white(),
-                    transform,
-                    &mut frame_state.graphics,
-                );
-            }
-        }
-    }
-
     fn render_ships(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
             let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
@@ -158,6 +142,15 @@ impl Renderer {
                 transform * line_rotation.to_homogeneous(),
                 &mut frame_state.graphics,
             );
+
+            if frame.select_ids.contains(ship_id) {
+                self.ship_drawer.draw(
+                    self.ship_size * 1.25,
+                    color::Colors::white(),
+                    transform,
+                    &mut frame_state.graphics,
+                );
+            }
 
             let mut color = color::Colors::blue();
             if let Some(sid) = frame.ship_id {
