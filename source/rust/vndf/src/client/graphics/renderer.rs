@@ -29,11 +29,11 @@ use shared::util::angle_of;
 const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
-    glyph_drawer  : GlyphDrawer,
-    ship_drawer   : ShapeDrawer,
-    line_drawer   : ShapeDrawer,
+    glyph_drawer: GlyphDrawer,
+    ship_drawer : ShapeDrawer,
+    line_drawer : ShapeDrawer,
 
-    pub camera    : Camera,
+    pub camera: Camera,
 
     line_height   : f32,
     ship_size     : f32,
