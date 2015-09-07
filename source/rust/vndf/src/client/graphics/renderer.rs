@@ -10,7 +10,9 @@ use client::graphics::camera::{Camera};
 use client::interface::Frame;
 use client::window::Window;
 
+
 const SHIP_SIZE: f32 = 30.0;
+
 
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
