@@ -86,11 +86,11 @@ impl ShipDrawer {
                 *ship_id,
             );
 
-            if let Some(ship_comm) = frame.broadcasts.get(&ship_id) {
+            if let Some(broadcast) = frame.broadcasts.get(&ship_id) {
                 self.draw_broadcast(
                     &mut frame_state.graphics,
                     transform,
-                    ship_comm,
+                    broadcast,
                 );
             }
 
