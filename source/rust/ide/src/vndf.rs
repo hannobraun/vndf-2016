@@ -28,27 +28,38 @@ fn main() {
         }
     };
 
+    let paths = Paths {
+        binaries   : BINARY_PATH,
+        rust_source: RUST_PATH,
+    };
+
     match command {
-        "client" => build_and_run("vndf-client", args),
-        "server" => build_and_run("vndf-server", args),
-        "test"   => run_tests(),
+        "client" => build_and_run("vndf-client", args, paths),
+        "server" => build_and_run("vndf-server", args, paths),
+        "test"   => run_tests(paths),
 
         _ => print!("Unknown command: {}\n", command),
     }
 }
 
 
-fn run_tests() {
+struct Paths {
+    binaries   : &'static str,
+    rust_source: &'static str,
+}
+
+
+fn run_tests(paths: Paths) {
     let path = format!(
         "{}:{}",
         env::var("PATH").unwrap_or_else(|e| panic!("Environment error: {}", e)),
-        BINARY_PATH,
+        paths.binaries,
     );
 
     run_command(
         Command::new("cargo")
             .arg("test")
-            .current_dir(RUST_PATH)
+            .current_dir(paths.rust_source)
             .env("PATH", path)
             .env("RUST_LOG", "vndf_server=info")
             .env("RUST_BACKTRACE", "1")
@@ -56,14 +67,14 @@ fn run_tests() {
 }
 
 
-fn build_and_run(binary: &str, args: Args) {
+fn build_and_run(binary: &str, args: Args, paths: Paths) {
     run_command(
         Command::new("cargo")
             .args(&["build", "--bin", binary])
-            .current_dir(RUST_PATH)
+            .current_dir(paths.rust_source)
     );
 
-    let mut command = Command::new(format!("{}/{}", BINARY_PATH, binary));
+    let mut command = Command::new(format!("{}/{}", paths.binaries, binary));
     for arg in args {
         command.arg(arg);
     }
