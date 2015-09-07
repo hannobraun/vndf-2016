@@ -19,7 +19,7 @@ use client::interface::{
 use shared::game::EntityId;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
-const DRAGMIN_TIME: f64 = 0.30f64; // 75ms time minimum
+const DRAGMIN_TIME: f64 = 0.30f64; // 30ms time minimum
 
 #[derive(Debug)]
 pub struct Mouse {
