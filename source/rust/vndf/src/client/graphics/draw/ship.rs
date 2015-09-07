@@ -197,8 +197,8 @@ impl ShipDrawer {
         transform: Mat4<f32>,
         ship     : &Body,
     ) {
-        let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
-        let line_advance  = Vec2::new(0.0, -self.line_height);
+        let pos_offset   = Vec2::new(0.7, 0.3) * self.ship_size;
+        let line_advance = Vec2::new(0.0, -self.line_height);
 
         let position = format!("pos: ({:.2}, {:.2})",
             ship.position.x,
