@@ -201,12 +201,12 @@ impl ShipDrawer {
         let line_advance  = Vec2::new(0.0, -self.line_height);
 
         let position = format!("pos: ({:.2}, {:.2})",
-            ship.position[0],
-            ship.position[1],
+            ship.position.x,
+            ship.position.y,
         );
         let velocity = format!("vel: ({:.2}, {:.2})",
-            ship.velocity[0],
-            ship.velocity[1],
+            ship.velocity.x,
+            ship.velocity.y,
         );
 
         // draw ship position
