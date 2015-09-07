@@ -1,5 +1,5 @@
 use glutin::Event;
-use glutin::Event::{KeyboardInput,Closed};
+use glutin::Event::{KeyboardInput};
 use glutin::VirtualKeyCode;
 use glutin::ElementState::{Pressed,Released};
 use rand::{random,thread_rng, sample};
@@ -44,8 +44,6 @@ impl Keyboard {
 
                     self.handle_keys_released(key, events,frame,camera);
                 },
-                // NOTE: this should probably be in Interface's update
-                Closed => events.push(InputEvent::Quit), 
                 _ => {},
             }
         }

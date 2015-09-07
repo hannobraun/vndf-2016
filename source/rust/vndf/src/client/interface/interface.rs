@@ -10,6 +10,9 @@ use std::sync::mpsc::{
 use std::thread::spawn;
 use std::vec::Drain;
 
+use glutin::Event;
+use glutin::Event::{Closed};
+
 use client::config::Config;
 use client::console;
 use client::graphics::Renderer;
@@ -60,7 +63,16 @@ impl Interface for Player {
 
     fn update(&mut self, frame: &mut Frame)
               -> io::Result<Drain<InputEvent>> {
-        let window_events = self.window.poll_events().collect();
+        let window_events: Vec<Event> = self.window.poll_events().collect();
+
+        // handle a closed-window event
+        for event in window_events.iter() {
+            match *event {
+                Closed => self.events.push(InputEvent::Quit), 
+                _ => {},
+            }
+        }
+        
         self.keyboard.update(&mut self.events,
                              frame,
                              &window_events,
