@@ -21,6 +21,7 @@ use client::graphics::draw::{
 };
 use client::graphics::frame_state::FrameState;
 use client::interface::Frame;
+use shared::game::EntityId;
 use shared::util::angle_of;
 
 
@@ -72,16 +73,11 @@ impl ShipDrawer {
                 );
             }
 
-            let mut color = color::Colors::blue();
-            if let Some(sid) = frame.ship_id {
-                if *ship_id == sid  { color = color::Colors::green_spring(); }
-            }
-
-            self.symbol_drawer.draw(
-                self.ship_size,
-                color,
-                transform,
+            self.draw_symbol(
                 &mut frame_state.graphics,
+                transform,
+                frame,
+                *ship_id,
             );
 
             // draw ship id
@@ -161,6 +157,26 @@ impl ShipDrawer {
         self.symbol_drawer.draw(
             self.ship_size * 1.25,
             color::Colors::white(),
+            transform,
+            graphics,
+        );
+    }
+
+    pub fn draw_symbol(
+        &mut self,
+        graphics : &mut Graphics,
+        transform: Mat4<f32>,
+        frame    : &Frame,
+        ship_id  : EntityId,
+    ) {
+        let mut color = color::Colors::blue();
+        if let Some(sid) = frame.ship_id {
+            if ship_id == sid  { color = color::Colors::green_spring(); }
+        }
+
+        self.symbol_drawer.draw(
+            self.ship_size,
+            color,
             transform,
             graphics,
         );
