@@ -2,6 +2,7 @@ use std::env::{
     self,
     Args,
 };
+use std::path::PathBuf;
 use std::process::{
     Command,
     Stdio,
@@ -29,8 +30,8 @@ fn main() {
     const RUST_PATH  : &'static str = "source/rust/vndf";
 
     let paths = Paths {
-        binaries   : BINARY_PATH,
-        rust_source: RUST_PATH,
+        binaries   : PathBuf::from(BINARY_PATH),
+        rust_source: PathBuf::from(RUST_PATH),
     };
 
 
@@ -45,8 +46,8 @@ fn main() {
 
 
 struct Paths {
-    binaries   : &'static str,
-    rust_source: &'static str,
+    binaries   : PathBuf,
+    rust_source: PathBuf,
 }
 
 
@@ -54,7 +55,7 @@ fn run_tests(paths: Paths) {
     let path = format!(
         "{}:{}",
         env::var("PATH").unwrap_or_else(|e| panic!("Environment error: {}", e)),
-        paths.binaries,
+        paths.binaries.display(),
     );
 
     run_command(
@@ -75,7 +76,7 @@ fn build_and_run(binary: &str, args: Args, paths: Paths) {
             .current_dir(paths.rust_source)
     );
 
-    let mut command = Command::new(format!("{}/{}", paths.binaries, binary));
+    let mut command = Command::new(format!("{}/{}", paths.binaries.display(), binary));
     for arg in args {
         command.arg(arg);
     }
