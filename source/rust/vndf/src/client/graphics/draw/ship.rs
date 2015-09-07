@@ -107,7 +107,7 @@ impl ShipDrawer {
         }
     }
 
-    pub fn draw_velocity_line(
+    fn draw_velocity_line(
         &mut self,
         velocity : Vec2<f32>,
         transform: Mat4<f32>,
@@ -130,7 +130,7 @@ impl ShipDrawer {
         );
     }
 
-    pub fn draw_selection(
+    fn draw_selection(
         &mut self,
         transform: Mat4<f32>,
         graphics : &mut Graphics,
@@ -143,7 +143,7 @@ impl ShipDrawer {
         );
     }
 
-    pub fn draw_symbol(
+    fn draw_symbol(
         &mut self,
         frame    : &Frame,
         ship_id  : EntityId,
@@ -163,7 +163,7 @@ impl ShipDrawer {
         );
     }
 
-    pub fn draw_name(
+    fn draw_name(
         &mut self,
         ship_id  : EntityId,
         transform: Mat4<f32>,
@@ -180,7 +180,7 @@ impl ShipDrawer {
         );
     }
 
-    pub fn draw_broadcast(
+    fn draw_broadcast(
         &mut self,
         broadcast: &str,
         transform: Mat4<f32>,
@@ -196,7 +196,7 @@ impl ShipDrawer {
         );
     }
 
-    pub fn draw_info(
+    fn draw_info(
         &mut self,
         ship     : &Body,
         transform: Mat4<f32>,
