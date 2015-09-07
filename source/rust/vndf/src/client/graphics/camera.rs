@@ -1,4 +1,4 @@
-//use time::precise_time_s;
+use std::collections::HashSet;
 use nalgebra::{Vec2,Translation,Norm};
 use shared::game::EntityId;
 use client::interface::Frame;
@@ -6,7 +6,7 @@ use client::interface::Frame;
 /// Camera tracking types
 #[derive(Debug,Clone,RustcDecodable,RustcEncodable,PartialEq)]
 pub enum CameraTrack {
-    Entity(Vec<EntityId>),
+    Entity(HashSet<EntityId>),
     Position,
     Default,
 }
@@ -74,7 +74,9 @@ impl Camera {
             },
             CameraTrack::Default => { 
                 if let Some(id) = frame.ship_id {
-                    self.track = CameraTrack::Entity(vec!(id));
+                    let mut set = HashSet::new();
+                    set.insert(id);
+                    self.track = CameraTrack::Entity(set);
                 }
             },
             _ => (),
@@ -105,7 +107,7 @@ impl Camera {
 
     /// gets the average position of multiple entities
     // NOTE: This assumes that frame will hold all entities (eg: ships & planets)
-    pub fn get_average_pos (v: &Vec<EntityId>, frame: &Frame) -> (Vec2<f64>,Vec2<f64>) {
+    pub fn get_average_pos (v: &HashSet<EntityId>, frame: &Frame) -> (Vec2<f64>,Vec2<f64>) {
         let mut pos = Vec2::new(0.0,0.0);
         let mut vel = Vec2::new(0.0,0.0);
         let total_ships = v.len() as f64;

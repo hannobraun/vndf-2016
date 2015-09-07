@@ -15,6 +15,7 @@ pub enum InputEvent {
 
     Track(CameraTrack), //TODO: rename to Select?
     Select(Vec<EntityId>),
+    Deselect(Vec<EntityId>),
     
     Quit,
 }

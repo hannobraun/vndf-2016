@@ -1,4 +1,4 @@
-use std::collections::{HashMap,BTreeMap};
+use std::collections::{HashMap,BTreeMap,HashSet};
 
 use rustc_serialize::json::{
     self,
@@ -20,7 +20,7 @@ pub struct Frame {
     pub broadcasts  : HashMap<EntityId, String>,
     pub ships       : BTreeMap<EntityId, Body>,
     pub camera_track: Option<CameraTrack>,
-    pub select_ids  : Vec<EntityId>,
+    pub select_ids  : HashSet<EntityId>,
     pub deltatime   : f64, // time between last frame and this frame
 }
 
@@ -33,7 +33,7 @@ impl Frame {
             broadcasts  : HashMap::new(),
             ships       : BTreeMap::new(),
             camera_track: Some(CameraTrack::Default),
-            select_ids  : Vec::new(),
+            select_ids  : HashSet::new(),
             deltatime   : 0.0,
         }
     }

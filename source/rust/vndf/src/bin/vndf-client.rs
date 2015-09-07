@@ -26,6 +26,7 @@ use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
 
+use vndf::client::graphics::camera::CameraTrack;
 
 fn main() {
     env_logger::init().unwrap_or_else(|e|
@@ -113,9 +114,33 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 InputEvent::Track(track) => {
                     frame.camera_track = Some(track);
                 },
+                
                 InputEvent::Select(ids) => {
-                    frame.select_ids = ids;
+                    // TODO: consider moving this logic to Interface
+                    for id in ids {
+                        frame.select_ids.insert(id);
+                    }
+
+                    frame.camera_track = Some(CameraTrack::Entity
+                                              (frame.select_ids.clone()));
                 },
+                InputEvent::Deselect(ids) => {
+                    if ids.is_empty() { frame.select_ids.clear(); }
+                    else {
+                        for id in ids {
+                            frame.select_ids.remove(&id);
+                        }
+                    }
+                    // update camera tracking
+                    if frame.select_ids.is_empty() {
+                        frame.camera_track = Some(CameraTrack::Default);
+                    }
+                    else {
+                        frame.camera_track = Some(CameraTrack::Entity
+                                                  (frame.select_ids.clone()));
+                    }
+                },
+                
                 InputEvent::Quit => {
                     break 'main;
                 },

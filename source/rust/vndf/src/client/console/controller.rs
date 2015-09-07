@@ -7,7 +7,6 @@ use glutin::Event::{
 };
 
 use client::console::Console;
-use client::graphics::camera::CameraTrack;
 use client::interface::{
     Frame,
     InputEvent,
@@ -289,25 +288,17 @@ impl Controller {
             },
             
             "select-entity" => {
-                let args = args.split(' ');
-                let mut ents = vec!();
-                
-                for n in args {
-                    if let Some(id) = n.parse::<EntityId>().ok() {
-                        if frame.ships.get(&id).is_some() {
-                            ents.push(id);
-                        }
-                    }
-                }
-
-                // for now, both select and track entities
-                events.push(InputEvent::Track(CameraTrack::Entity(ents.clone())));
+                let ents = Controller::parse_entity_ids(args);
                 events.push(InputEvent::Select(ents));
             },
 
+            "deselect-entity" => {
+                let ents = Controller::parse_entity_ids(args);
+                events.push(InputEvent::Deselect(ents));
+            },
+
             "clear-selection" => {
-                events.push(InputEvent::Select(vec!()));
-                events.push(InputEvent::Track(CameraTrack::Default));
+                events.push(InputEvent::Deselect(vec!()));
             },
             
             "help" => {
@@ -330,5 +321,20 @@ impl Controller {
 
             _ => self.console.output.push(format!("Unknown command: {}\n", command)),
         }
+    }
+
+    /// parses entity ids from args
+    /// does not check if entityid currently exists
+    pub fn parse_entity_ids(args: &str) -> Vec<EntityId> {
+        let args = args.split(' ');
+        let mut ents = vec!();
+        
+        for n in args {
+            if let Some(id) = n.parse::<EntityId>().ok() {
+                ents.push(id);
+            }
+        }
+
+        ents
     }
 }
