@@ -30,7 +30,7 @@ const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
     glyph_drawer  : GlyphDrawer,
-    triangle      : ShapeDrawer,
+    ship_drawer   : ShapeDrawer,
     line          : ShapeDrawer,
 
     pub camera    : Camera,
@@ -47,12 +47,12 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         
         let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let triangle     = ShapeDrawer::ship(&mut graphics);
+        let ship_drawer  = ShapeDrawer::ship(&mut graphics);
         let line         = ShapeDrawer::line(&mut graphics);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
-            triangle      : triangle,
+            ship_drawer   : ship_drawer,
             line          : line,
             camera        : Camera::new(),
             line_height   : font_height,
@@ -141,7 +141,7 @@ impl Renderer {
                 );
                 let transform = frame_state.camera_to_screen * translation.to_homogeneous();
 
-                self.triangle.draw(
+                self.ship_drawer.draw(
                     self.ship_size * 1.25,
                     color::Colors::white(),
                     transform,
@@ -193,7 +193,7 @@ impl Renderer {
                 if *ship_id == sid  { color = color::Colors::green_spring(); }
             }
 
-            self.triangle.draw(
+            self.ship_drawer.draw(
                 self.ship_size,
                 color,
                 camera_to_object,
