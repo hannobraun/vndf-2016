@@ -30,9 +30,6 @@ impl Keyboard {
     {
         for event in window_events.iter() {
             match *event {
-                KeyboardInput(Pressed, _, Some(VirtualKeyCode::Escape)) => {
-                    events.push(InputEvent::Quit);
-                },
                 KeyboardInput(Pressed, _, Some(key)) => {
                     self.held_keys[key as usize] = true;
                 },
@@ -45,28 +42,7 @@ impl Keyboard {
                         self.held_keys[nkey] != self.held_keys[nkey];
                     }
 
-                    // debug key to send a random maneuver
-                    if self.held_keys[VirtualKeyCode::Tab as usize] {
-                        if key == VirtualKeyCode::F9 {
-                            let mut rng = thread_rng();
-                            let a = sample(&mut rng, 1..359, 1);
-                            
-                            let direction_rad = (a[0] as f64).to_radians();
-
-                            let game_time_s = {
-                                if let Some(game_time_s) = frame.game_time_s {
-                                    game_time_s
-                                }
-                                else {return} };
-                            let data = ManeuverData {
-                                start_s   : game_time_s + 0.0,
-                                duration_s: random::<u8>() as f64,
-                                angle     : direction_rad,
-                            };
-
-                            events.push(InputEvent::ScheduleManeuver(data));
-                        }
-                    }
+                    self.handle_keys_released(key, events,frame,camera);
                 },
                 // NOTE: this should probably be in Interface's update
                 Closed => events.push(InputEvent::Quit), 
@@ -74,6 +50,14 @@ impl Keyboard {
             }
         }
 
+        // always handle any possible held keys
+        self.handle_keys_held(events,frame,camera);
+    }
+
+    fn handle_keys_held (&mut self,
+                         events: &mut Vec<InputEvent>,
+                         frame: &Frame,
+                         camera: &mut Camera) {
         if self.held_keys[VirtualKeyCode::Tab as usize] {
             if self.held_keys[VirtualKeyCode::PageUp as usize] {
                 camera.zoom(0.25);
@@ -83,5 +67,39 @@ impl Keyboard {
             }
         }
     }
-    
+
+    fn handle_keys_released(&mut self,
+                            key: VirtualKeyCode,
+                            events: &mut Vec<InputEvent>,
+                            frame: &Frame,
+                            camera: &mut Camera) {
+        match key {
+            VirtualKeyCode::Escape => {
+                events.push(InputEvent::Quit);
+            },
+            VirtualKeyCode::F9 => {
+                // debug key to send a random maneuver, while tab is pressed
+                if self.held_keys[VirtualKeyCode::Tab as usize] {
+                    let mut rng = thread_rng();
+                    let a = sample(&mut rng, 1..359, 1);
+                    
+                    let direction_rad = (a[0] as f64).to_radians();
+
+                    let game_time_s = {
+                        if let Some(game_time_s) = frame.game_time_s {
+                            game_time_s
+                        }
+                        else {return} };
+                    let data = ManeuverData {
+                        start_s   : game_time_s + 0.0,
+                        duration_s: random::<u8>() as f64,
+                        angle     : direction_rad,
+                    };
+
+                    events.push(InputEvent::ScheduleManeuver(data));
+                }
+            },
+            _ => {},
+        }
+    }
 }
