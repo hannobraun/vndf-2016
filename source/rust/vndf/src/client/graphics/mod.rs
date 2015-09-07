@@ -2,6 +2,7 @@ pub mod base;
 pub mod draw;
 pub mod camera;
 
+mod frame_state;
 mod renderer;
 
 
