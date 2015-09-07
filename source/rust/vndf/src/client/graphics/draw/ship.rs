@@ -21,7 +21,10 @@ use client::graphics::draw::{
 };
 use client::graphics::frame_state::FrameState;
 use client::interface::Frame;
-use shared::game::EntityId;
+use shared::game::{
+    Body,
+    EntityId,
+};
 use shared::util::angle_of;
 
 
@@ -55,9 +58,6 @@ impl ShipDrawer {
 
     pub fn draw(&mut self, frame: &Frame, frame_state: &mut FrameState) {
         for (ship_id, ship) in &frame.ships {
-            let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
-            let line_advance  = Vec2::new(0.0, -self.line_height);
-
             let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
 
             self.draw_velocity_line(
@@ -94,26 +94,10 @@ impl ShipDrawer {
                 );
             }
 
-            // draw ship position
-            let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
-            self.glyph_drawer.draw(
-                &pos,
-                pos_offset,
-                color::Colors::white(),
-                false,
-                transform,
+            self.draw_info(
                 &mut frame_state.graphics,
-            );
-
-            // draw ship velocity
-            let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
-            self.glyph_drawer.draw(
-                &vel,
-                pos_offset + line_advance,
-                color::Colors::white(),
-                false,
                 transform,
-                &mut frame_state.graphics,
+                ship,
             );
         }
     }
@@ -202,6 +186,38 @@ impl ShipDrawer {
             -Vec2::new(0.0, self.ship_size),
             color::Colors::white(),
             true,
+            transform,
+            graphics,
+        );
+    }
+
+    pub fn draw_info(
+        &mut self,
+        graphics : &mut Graphics,
+        transform: Mat4<f32>,
+        ship     : &Body,
+    ) {
+        let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
+        let line_advance  = Vec2::new(0.0, -self.line_height);
+
+        // draw ship position
+        let pos = format!("pos: ({:.2}, {:.2})", ship.position[0], ship.position[1]);
+        self.glyph_drawer.draw(
+            &pos,
+            pos_offset,
+            color::Colors::white(),
+            false,
+            transform,
+            graphics,
+        );
+
+        // draw ship velocity
+        let vel = format!("vel: ({:.2}, {:.2})", ship.velocity[0], ship.velocity[1]);
+        self.glyph_drawer.draw(
+            &vel,
+            pos_offset + line_advance,
+            color::Colors::white(),
+            false,
             transform,
             graphics,
         );
