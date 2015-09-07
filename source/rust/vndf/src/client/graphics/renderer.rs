@@ -57,7 +57,7 @@ impl Renderer {
         frame_state.graphics.clear();
 
         self.console_drawer.draw(console, &mut frame_state);
-        self.ship_drawer.draw(frame, &mut frame_state);
+        self.ship_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
 
         frame_state.graphics.flush();
     }

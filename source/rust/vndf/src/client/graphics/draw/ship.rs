@@ -19,7 +19,7 @@ use client::graphics::draw::{
     GlyphDrawer,
     ShapeDrawer,
 };
-use client::graphics::frame_state::FrameState;
+use client::graphics::transforms::Transforms;
 use client::interface::Frame;
 use shared::game::{
     Body,
@@ -56,46 +56,51 @@ impl ShipDrawer {
         }
     }
 
-    pub fn draw(&mut self, frame: &Frame, frame_state: &mut FrameState) {
+    pub fn draw(
+        &mut self,
+        frame     : &Frame,
+        transforms: &Transforms,
+        graphics  : &mut Graphics,
+    ) {
         for (ship_id, ship) in &frame.ships {
-            let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
+            let transform = transforms.symbol_to_screen(cast(ship.position));
 
             self.draw_velocity_line(
-                &mut frame_state.graphics,
+                graphics,
                 cast(ship.velocity),
                 transform,
             );
 
             if frame.select_ids.contains(ship_id) {
                 self.draw_selection(
-                    &mut frame_state.graphics,
+                    graphics,
                     transform,
                 );
             }
 
             self.draw_symbol(
-                &mut frame_state.graphics,
+                graphics,
                 transform,
                 frame,
                 *ship_id,
             );
 
             self.draw_name(
-                &mut frame_state.graphics,
+                graphics,
                 transform,
                 *ship_id,
             );
 
             if let Some(broadcast) = frame.broadcasts.get(&ship_id) {
                 self.draw_broadcast(
-                    &mut frame_state.graphics,
+                    graphics,
                     transform,
                     broadcast,
                 );
             }
 
             self.draw_info(
-                &mut frame_state.graphics,
+                graphics,
                 transform,
                 ship,
             );
