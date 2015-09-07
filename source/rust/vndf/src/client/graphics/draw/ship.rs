@@ -5,6 +5,7 @@ use nalgebra::{
     ToHomogeneous,
 
     Iso3,
+    Mat4,
     Vec2,
     Vec3,
 };
@@ -56,24 +57,12 @@ impl ShipDrawer {
             let pos_offset    = Vec2::new(0.7, 0.3) * self.ship_size;
             let line_advance  = Vec2::new(0.0, -self.line_height);
 
-            let ship_velocity: Vec2<f32> = cast(ship.velocity);
-
             let transform = frame_state.transforms.symbol_to_screen(cast(ship.position));
 
-            // draw ship velocity line
-            let line_rotation = Iso3::new(
-                Vec3::new(0.0, 0.0, 0.0),
-                Vec3::new(
-                    0.0,
-                    0.0,
-                    angle_of(ship_velocity),
-                ),
-            );
-            self.line_drawer.draw(
-                ship_velocity.norm() * self.scaling_factor * 50.0,
-                color::Colors::red(),
-                transform * line_rotation.to_homogeneous(),
+            self.draw_velocity_line(
                 &mut frame_state.graphics,
+                cast(ship.velocity),
+                transform,
             );
 
             if frame.select_ids.contains(ship_id) {
@@ -141,5 +130,28 @@ impl ShipDrawer {
                 &mut frame_state.graphics,
             );
         }
+    }
+
+    pub fn draw_velocity_line(
+        &mut self,
+        graphics : &mut Graphics,
+        velocity : Vec2<f32>,
+        transform: Mat4<f32>
+    ) {
+        // draw ship velocity line
+        let line_rotation = Iso3::new(
+            Vec3::new(0.0, 0.0, 0.0),
+            Vec3::new(
+                0.0,
+                0.0,
+                angle_of(velocity),
+            ),
+        );
+        self.line_drawer.draw(
+            velocity.norm() * self.scaling_factor * 50.0,
+            color::Colors::red(),
+            transform * line_rotation.to_homogeneous(),
+            graphics,
+        );
     }
 }
