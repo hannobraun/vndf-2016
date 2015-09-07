@@ -8,11 +8,6 @@ use std::process::{
 };
 
 
-// TODO: Those paths are redundantly specified in project.conf
-const BINARY_PATH: &'static str = "output/cargo/debug";
-const RUST_PATH  : &'static str = "source/rust/vndf";
-
-
 fn main() {
     let mut args = env::args();
 
@@ -28,10 +23,16 @@ fn main() {
         }
     };
 
+
+    // TODO: Those paths are redundantly specified in project.conf
+    const BINARY_PATH: &'static str = "output/cargo/debug";
+    const RUST_PATH  : &'static str = "source/rust/vndf";
+
     let paths = Paths {
         binaries   : BINARY_PATH,
         rust_source: RUST_PATH,
     };
+
 
     match command {
         "client" => build_and_run("vndf-client", args, paths),
