@@ -1,5 +1,3 @@
-use std::fmt::Write;
-
 use nalgebra::{
     cast,
     Iso3,
@@ -13,6 +11,7 @@ use client::console::Console;
 use client::graphics::frame_state::FrameState;
 use client::graphics::base::color;
 use client::graphics::draw::{
+    ConsoleDrawer,
     GlyphDrawer,
     ShapeDrawer,
 };
@@ -24,9 +23,10 @@ use shared::util::angle_of;
 const SHIP_SIZE: f32 = 30.0;
 
 pub struct Renderer {
-    glyph_drawer: GlyphDrawer,
-    ship_drawer : ShapeDrawer,
-    line_drawer : ShapeDrawer,
+    glyph_drawer  : GlyphDrawer,
+    ship_drawer   : ShapeDrawer,
+    line_drawer   : ShapeDrawer,
+    console_drawer: ConsoleDrawer,
 
     pub camera: Camera,
 
@@ -41,14 +41,16 @@ impl Renderer {
 
         let font_height = 18.0 * scaling_factor;
         
-        let glyph_drawer = GlyphDrawer::new(&mut graphics, font_height as u32);
-        let ship_drawer  = ShapeDrawer::ship(&mut graphics);
-        let line_drawer  = ShapeDrawer::line(&mut graphics);
+        let glyph_drawer   = GlyphDrawer::new(&mut graphics, font_height as u32);
+        let ship_drawer    = ShapeDrawer::ship(&mut graphics);
+        let line_drawer    = ShapeDrawer::line(&mut graphics);
+        let console_drawer = ConsoleDrawer::new(&mut graphics, font_height);
 
         Renderer {
             glyph_drawer  : glyph_drawer,
             ship_drawer   : ship_drawer,
             line_drawer   : line_drawer,
+            console_drawer: console_drawer,
             camera        : Camera::new(),
             line_height   : font_height,
             ship_size     : SHIP_SIZE * scaling_factor,
@@ -70,52 +72,10 @@ impl Renderer {
 
         frame_state.graphics.clear();
 
-        self.render_console(console, &mut frame_state);
+        self.console_drawer.draw(console, &mut frame_state);
         self.render_ships(frame, &mut frame_state);
 
         frame_state.graphics.flush();
-    }
-
-    fn render_console(&mut self, console: &Console, frame_state: &mut FrameState) {
-        let advance_x   = self.glyph_drawer.advance_x;
-        let line_height = self.line_height;
-
-        for (y, line) in console.output.iter().enumerate() {
-            self.glyph_drawer.draw(
-                &line,
-                position_cli(0, y, advance_x, line_height, frame_state.window_size),
-                color::Colors::white(),
-                false,
-                frame_state.transforms.camera_to_screen,
-                &mut frame_state.graphics,
-            );
-        }
-
-        let mut command_line = String::new();
-        let prompt_ypos = 23;
-
-        write!(&mut command_line, "> {}", console.input)
-            .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
-
-
-        self.glyph_drawer.draw(
-            &command_line,
-            position_cli(0, prompt_ypos, advance_x, line_height, frame_state.window_size),
-            color::Colors::white(),
-            false,
-            frame_state.transforms.camera_to_screen,
-            &mut frame_state.graphics,
-        );
-
-         //draw cursor position in prompt
-        self.glyph_drawer.draw(
-            &"_".to_string(),
-            position_cli(console.prompt_index + 2, prompt_ypos, advance_x, line_height, frame_state.window_size),
-            color::Colors::white(),
-            false,
-            frame_state.transforms.camera_to_screen,
-            &mut frame_state.graphics,
-        );
     }
 
     fn render_ships(&mut self, frame: &Frame, frame_state: &mut FrameState) {
@@ -209,23 +169,4 @@ impl Renderer {
             );
         }
     }
-}
-
-
-/// This is used to position CLI text
-/// It takes in to account the window sizing
-fn position_cli(
-    x          : usize,
-    y          : usize,
-    advance_x  : f32,
-    line_height: f32,
-    window_size: Vec2<f32>,
-) -> Vec2<f32> {
-    let pad_x = 10.0;
-    let pad_y = 30.0;
-
-    Vec2::new(
-        (-1.0 * ((window_size.x / 2.0) - pad_x)) + advance_x * x as f32,
-        ((window_size.y / 2.0) - pad_y) + line_height * (y as f32 * -1.0),
-    )
 }
