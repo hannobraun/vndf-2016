@@ -4,7 +4,7 @@ use rustc_serialize::json::{
 };
 
 use shared::game::{ManeuverData,EntityId};
-use client::render::camera::CameraTrack;
+use client::graphics::camera::CameraTrack;
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub enum InputEvent {

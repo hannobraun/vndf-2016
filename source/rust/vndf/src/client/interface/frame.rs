@@ -9,7 +9,7 @@ use shared::game::{
     Body,
     EntityId,
 };
-use client::render::camera::CameraTrack;
+use client::graphics::camera::CameraTrack;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]

@@ -11,11 +11,11 @@ use glutin::Event::{
     MouseWheel,
 };
 
+use client::graphics::camera::{Camera,CameraTrack};
 use client::interface::{
     Frame,
     InputEvent,
 };
-use client::render::camera::{Camera,CameraTrack};
 use shared::game::EntityId;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum

@@ -17,7 +17,7 @@ use client::font::{
     self,
     Font,
 };
-use client::render::base::{
+use client::graphics::base::{
     Batch,
     Graphics,
     Texture,

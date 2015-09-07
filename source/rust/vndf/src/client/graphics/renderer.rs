@@ -13,17 +13,17 @@ use nalgebra::{
 };
 
 use client::console::Console;
-use client::interface::Frame;
-use client::window::Window;
-use client::render::base::{
+use client::graphics::base::{
     color,
     Graphics,
 };
-use client::render::draw::{
+use client::graphics::draw::{
     GlyphDrawer,
     ShipDrawer,
 };
-use client::render::camera::{Camera};
+use client::graphics::camera::{Camera};
+use client::interface::Frame;
+use client::window::Window;
 use shared::util::angle_of;
 
 const SHIP_SIZE: f32 = 30.0;

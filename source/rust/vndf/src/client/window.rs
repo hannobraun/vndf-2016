@@ -1,6 +1,6 @@
 use glutin;
 
-use client::render::base::Graphics;
+use client::graphics::base::Graphics;
 
 // TODO: consider as a trait instead of an inner object?
 pub struct Window {

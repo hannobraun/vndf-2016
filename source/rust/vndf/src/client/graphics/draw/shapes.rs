@@ -11,7 +11,7 @@ use nalgebra::{
 	Vec3,
 };
 
-use client::render::base::{
+use client::graphics::base::{
 	Batch,
 	Graphics,
 	color,

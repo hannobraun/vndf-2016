@@ -11,6 +11,7 @@ use std::thread::spawn;
 use std::vec::Drain;
 
 use client::console;
+use client::graphics::Renderer;
 use client::mouse::Mouse;
 use client::keyboard::Keyboard;
 use client::config::Config;
@@ -18,7 +19,6 @@ use client::interface::{
     Frame,
     InputEvent,
 };
-use client::render::Renderer;
 use client::window::Window;
 
 const MAX_FRAME_TIME: f64 = 0.020; // 15ms minimum frame time

@@ -5,7 +5,7 @@ use gfx_device_gl as gl;
 
 use nalgebra::Mat4;
 
-use client::render::base::{
+use client::graphics::base::{
 	Batch,
 	Graphics,
 	color,

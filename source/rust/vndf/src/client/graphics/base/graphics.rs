@@ -4,7 +4,7 @@ use gfx_device_gl as gl;
 
 use libc::c_void;
 
-use client::render::base::Batch;
+use client::graphics::base::Batch;
 
 
 pub struct Graphics {

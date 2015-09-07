@@ -13,7 +13,7 @@ use client::interface::{
     Message,
 };
 use shared::game::{ManeuverData,EntityId};
-use client::render::camera::CameraTrack;
+use client::graphics::camera::CameraTrack;
 
 pub struct Controller {
     pub console: Console,
