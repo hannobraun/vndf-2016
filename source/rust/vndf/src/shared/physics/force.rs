@@ -7,7 +7,7 @@ impl Gravity {
 	Gravity { constant: g }
     }
 
-    /// assumes Frame's ships have a mass equivalent
+    // /// assumes Frame's ships have a mass equivalent
     //pub fn apply_gravity (&mut Frame);
     
     //pub fn get_gravity (&self, other: &Ship) -> Vec2<f32>;

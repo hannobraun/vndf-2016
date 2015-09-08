@@ -1,34 +1,36 @@
-pub struct Collision {
-    points: Vec4<f64>, // bounding box
+use nalgebra::Pnt2;
+
+use client::graphics::SHIP_SIZE;
+
+
+pub enum CollideKind {
+    Sphere,
+    Rect,
+}
+
+pub struct Collider {
+    points: [Pnt2<f32>;4], // bounding box
     kind: CollideKind,
 }
 
-use nalgebra::Pnt2;
-use client::graphics::SHIP_SIZE;
-
-impl Collison {
-    pub fn new (points: [Pnt2;4]) -> Collision {
-	Collision { points: points,
-	}
+impl Collider {
+    pub fn new (points: [Pnt2<f32>;4], kind: CollideKind) -> Collider {
+	Collider { points: points,
+		   kind: kind, }
     }
 
     /// builds based on current ship mesh layout (from equilateral triangle)
-    pub fn new_from_ship () -> Collision {
+    pub fn new_from_ship () -> Collider {
 	let size = SHIP_SIZE/2.0;
 	let p = [Pnt2::new(-0.5,-0.5) * size,
 		 Pnt2::new(0.5,-0.5) * size,
 		 Pnt2::new(0.5,0.5) * size,
 		 Pnt2::new(-0.5,0.5) * size,];
 	
-	Collision::new(p,CollideKind::Rect)
+	Collider::new(p,CollideKind::Rect)
     }
 
-    pub check_collision (&self, other: &Collision) -> bool {
+    pub fn check_collision (&self, other: &Collider) -> bool {
 	false
     }
-}
-
-pub enum CollideKind {
-    Sphere,
-    Rect,
 }
