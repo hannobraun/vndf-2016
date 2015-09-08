@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use glutin::VirtualKeyCode;
 use glutin::ElementState::Pressed;
 use glutin::Event;
@@ -23,6 +25,9 @@ pub struct Controller {
     cmd_history_idx: usize, //history index/cursor
     is_cmd_history: bool,
     tmp_cmd_buffer: String, //used to temporarily store typed characters
+
+    comm_cache: HashMap<EntityId, String>, // cache of all broadcasts, to be compared
+    comm_subscribe: bool,
 }
 
 impl Controller {
@@ -41,6 +46,9 @@ impl Controller {
             cmd_history_idx: 0,
             is_cmd_history: false,
             tmp_cmd_buffer: String::new(),
+
+            comm_cache: HashMap::new(),
+            comm_subscribe: true,
         }
     }
 
@@ -145,6 +153,29 @@ impl Controller {
         while self.console.output.len() > (self.height - 2) as usize {
             self.console.output.remove(0);
         }
+
+        // check for new broadcasts
+        // NOTE: does not display re-broadcasted text that is exactly the same
+        for (id,msg) in &frame.broadcasts {
+            let mut new_comm = false;
+            if let Some(m) = self.comm_cache.get(id) {
+                if msg != m {
+                    new_comm = true;
+                }
+            }
+            else { // entirely new broadcaster
+                new_comm = true;
+            }
+
+            if new_comm & self.comm_subscribe {
+                self.comm_cache.insert(*id,msg.clone());
+                if let Some(my_id) = frame.ship_id {
+                    if my_id != *id {
+                        self.console.output.push(format!("{}: {}", id, msg));
+                    }
+                }
+            }
+        }
     }
 
     fn get_history (&mut self, rev: bool) -> String {
@@ -217,6 +248,14 @@ impl Controller {
             },
             "stop-broadcast" => {
                 events.push(InputEvent::StopBroadcast);
+            },
+
+            "comm-subscribe" => {
+                self.comm_subscribe = true;
+            },
+
+            "comm-ignore" => {
+                self.comm_subscribe = false;
             },
 
             "nav-data" => {
