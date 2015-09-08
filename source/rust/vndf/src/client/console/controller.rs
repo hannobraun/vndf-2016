@@ -345,6 +345,7 @@ impl Controller {
                     "list-broadcasts - Lists all received broadcasts",
                     "start-broadcast <text> - Start sending a broadcast",
                     "stop-broadcast - Stop sending the current broadcast",
+                    "comm-subscribe/ignore - actively list or ignore new broadcasts",
                     "nav-data - Print navigation data",
                     "comm-data - Print communication data",
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
