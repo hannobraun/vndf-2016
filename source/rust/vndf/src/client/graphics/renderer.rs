@@ -1,4 +1,5 @@
 use client::console::Console;
+use client::graphics::SHIP_SIZE;
 use client::graphics::frame_state::FrameState;
 use client::graphics::draw::{
     ConsoleDrawer,
@@ -7,9 +8,6 @@ use client::graphics::draw::{
 use client::graphics::camera::{Camera};
 use client::interface::Frame;
 use client::window::Window;
-
-
-const SHIP_SIZE: f32 = 30.0;
 
 
 pub struct Renderer {
