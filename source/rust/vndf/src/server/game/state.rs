@@ -36,7 +36,7 @@ impl GameState {
             .with_body(Body {
                 position: Vec2::new(0.0, 0.0),
                 velocity: Vec2::new(1.0, 0.0),
-                
+                mass: 0.0f32,
             })
             .return_id()
     }

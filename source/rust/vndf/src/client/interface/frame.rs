@@ -10,6 +10,7 @@ use shared::game::{
     Body,
     EntityId,
 };
+use shared::planet::Planet;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
@@ -17,8 +18,12 @@ pub struct Frame {
     pub ship_id     : Option<EntityId>,
     pub game_time_s : Option<f64>,
     pub message     : Message,
+
     pub broadcasts  : HashMap<EntityId, String>,
     pub ships       : BTreeMap<EntityId, Body>,
+
+    pub planets     : BTreeMap<EntityId, Planet>,
+    
     pub camera_track: Option<CameraTrack>,
     pub select_ids  : HashSet<EntityId>,
     pub deltatime   : f64, // time between last frame and this frame
@@ -32,6 +37,7 @@ impl Frame {
             message     : Message::None,
             broadcasts  : HashMap::new(),
             ships       : BTreeMap::new(),
+            planets     : BTreeMap::new(),
             camera_track: Some(CameraTrack::Default),
             select_ids  : HashSet::new(),
             deltatime   : 0.0,

@@ -8,6 +8,7 @@ pub type EntityId = u64;
 pub struct Body {
     pub position: Vec2<f64>,
     pub velocity: Vec2<f64>,
+    pub mass    : f32,
     
 }
 
