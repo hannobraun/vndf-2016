@@ -62,9 +62,10 @@ impl Renderer {
 
         frame_state.graphics.clear();
 
+	self.planet_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
         self.console_drawer.draw(console, &mut frame_state);
         self.ship_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
-        self.planet_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
+        
         
         frame_state.graphics.flush();
     }
