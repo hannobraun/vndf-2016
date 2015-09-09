@@ -1,4 +1,4 @@
-use rand::{random,thread_rng, sample};
+use rand::{thread_rng, sample};
 use nalgebra::Vec2;
 
 use shared::game::{Body};
