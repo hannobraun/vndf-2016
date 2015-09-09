@@ -129,6 +129,7 @@ impl ShapeDrawer {
     }
 }
 
+/// convenience function to build planet mesh
 fn mesh_oval (w: f32, h: f32, n: u8) -> Vec<Vertex> {
     let t = 2.0 * (PI as f32) / n as f32;
     let hw = w / 2.0;
