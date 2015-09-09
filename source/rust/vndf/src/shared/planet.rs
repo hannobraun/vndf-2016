@@ -1,3 +1,4 @@
+use rand::{random,thread_rng, sample};
 use nalgebra::Vec2;
 
 use shared::game::{Body};
@@ -26,9 +27,13 @@ pub struct PlanetBuilder {
 
 impl PlanetBuilder {
     pub fn default () -> PlanetBuilder {
-        PlanetBuilder { planet: Planet::new(Vec2::new(0.0,0.0),
-                                            1.0,
-                                            1.0,
+        // random placement and size
+        let mut rng = thread_rng();
+        let a = sample(&mut rng, 1..1000, 4);
+        
+        PlanetBuilder { planet: Planet::new(Vec2::new(a[0] as f64,a[1] as f64),
+                                            a[2] as f32,
+                                            a[3] as f32,
                                             Colors::gold()) }
     }
 
