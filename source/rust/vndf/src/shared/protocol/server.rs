@@ -4,11 +4,12 @@ use shared::game::{
 	EntityId,
 };
 
+use server::game::state::EntityState;
 
 #[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum Event {
 	Heartbeat(f64),
 	ShipId(EntityId),
-	UpdateEntity(EntityId, (Body, Option<Broadcast>)),
+	UpdateEntity(EntityState),
 	RemoveEntity(EntityId),
 }

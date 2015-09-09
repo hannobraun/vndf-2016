@@ -25,7 +25,8 @@ use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
-
+use vndf::shared::game::Attributes;
+use vndf::shared::planet::Planet;
 use vndf::client::graphics::camera::CameraTrack;
 
 fn main() {
@@ -155,8 +156,19 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 server::Event::ShipId(ship_id) => {
                     frame.ship_id = Some(ship_id);
                 },
-                server::Event::UpdateEntity(id, (ship, broadcast)) => {
-                    frame.ships.insert(id, ship);
+                server::Event::UpdateEntity(ent) => {
+		    let (id, (body,broadcast,attr)) = ent;
+
+		    // for now match against attr, later we should cache this
+		    match attr {
+			Some(Attributes::Ship) => { frame.ships.insert(id, body); },
+			Some(Attributes::Planet(attr)) => {
+			    let planet = Planet { body: body,
+						  attr: attr };
+			    frame.planets.insert(id,planet);
+			},
+			_ =>  { frame.ships.insert(id, body); }, //default to ships
+		    }
 
                     match broadcast {
                         Some(broadcast) => {

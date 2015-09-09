@@ -18,7 +18,7 @@ use shared::game::{
 };
 
 // TODO: consider renaming this
-pub type EntityState = (EntityId, (Body, Option<Broadcast>));
+pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
 
 #[derive(Debug)]
 pub struct GameState {
@@ -120,7 +120,9 @@ impl GameState {
                      broadcast.clone()
                      );
 
-            self.export_buffer.push((*id, (*body, broadcast)))
+	    let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
+	    
+            self.export_buffer.push((*id, (*body, broadcast, attr)))
         }
 
         self.export_buffer.drain(..)

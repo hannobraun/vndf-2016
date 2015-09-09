@@ -65,9 +65,9 @@ fn main() {
 
 		game_state.on_update(now_s);
 
-		for (id, entity) in game_state.export_entities() {
+		for ent in game_state.export_entities() {
 			outgoing_events.push(
-				ServerEvent::UpdateEntity(id, entity),
+				ServerEvent::UpdateEntity(ent),
 				Recipients::All,
 			)
 		}
