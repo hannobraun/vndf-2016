@@ -35,11 +35,17 @@ impl PlanetBuilder {
         // random placement and size
         let mut rng = thread_rng();
         let a = sample(&mut rng, 1..1000, 4);
-        
-        PlanetBuilder { planet: Planet::new(Vec2::new(a[0] as f64,a[1] as f64),
-                                            a[2] as f32,
-                                            a[3] as f32,
-                                            Colors::gold()) }
+
+	let b = sample(&mut rng, 0..2, 2);
+	let x = a[0] * (if b[0] < 0 { 1 }
+			else { -1 } );
+	let y = a[1] * (if b[1] < 0 { 1 }
+			else { -1 } );
+	
+        PlanetBuilder { planet: Planet::new(Vec2::new((x*3) as f64,(y*2) as f64),
+                                            a[2] as f32/2.0,
+                                            a[3] as f32/2.0,
+                                            Colors::random()) }
     }
 
     pub fn position (mut self, pos: Vec2<f64>) -> PlanetBuilder {
