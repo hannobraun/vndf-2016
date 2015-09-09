@@ -1,36 +1,55 @@
 use nalgebra::Pnt2;
+use ncollide::shape::{Ball,Convex};
+//use ncollide::bounding_volume::HasBoundingSphere;
 
 use client::graphics::SHIP_SIZE;
 
 
 pub enum CollideKind {
-    Sphere,
-    Rect,
+    Ship(Convex<Pnt2<f32>>),
+    Planet(Ball<f32>),
 }
 
 pub struct Collider {
-    _points: [Pnt2<f32>;4], // bounding box
-    _kind: CollideKind,
+    kind: CollideKind,
 }
 
 impl Collider {
-    pub fn new (points: [Pnt2<f32>;4], kind: CollideKind) -> Collider {
-	Collider { _points: points,
-		   _kind: kind, }
+    pub fn new (kind: CollideKind) -> Collider {
+	Collider { kind: kind, }
     }
 
     /// builds based on current ship mesh layout (from equilateral triangle)
-    pub fn new_from_ship () -> Collider {
-	let size = SHIP_SIZE/2.0;
-	let p = [Pnt2::new(-0.5,-0.5) * size,
-		 Pnt2::new(0.5,-0.5) * size,
-		 Pnt2::new(0.5,0.5) * size,
-		 Pnt2::new(-0.5,0.5) * size,];
+    // TODO: make ship mesh points as public in shapes module
+    pub fn new_from_ship (scaling_factor: f32) -> Collider {
+	let size = SHIP_SIZE/2.0 * scaling_factor;
+	let p = vec![Pnt2::new(-0.5, -0.5) * size,
+		     Pnt2::new( 0.5, -0.5) * size,
+		     Pnt2::new( 0.0,  0.5) * size,];
+	let c = Convex::new(p);
 	
-	Collider::new(p,CollideKind::Rect)
+	Collider::new(CollideKind::Ship(c))
     }
 
-    pub fn check_collision (&self, _other: &Collider) -> bool {
-	false
+    pub fn new_from_planet (planet_size: f32, scaling_factor: f32) -> Collider {
+	let size = planet_size/2.0 * scaling_factor;
+	let b = Ball::new(size);
+	
+	Collider::new(CollideKind::Planet(b))
+    }
+
+    pub fn check_collision (&self, other: &Collider) -> bool {
+	let mut is_collide = false;
+	match (&self.kind,&other.kind) {
+	    (&CollideKind::Ship(ref c1),&CollideKind::Ship(ref c2)) => {
+
+	    },
+	    (&CollideKind::Ship(ref c),&CollideKind::Planet(ref b)) => {
+
+	    },
+	    _ => { warn!("Unsupported collision types"); }
+	}
+
+	is_collide
     }
 }
