@@ -16,11 +16,13 @@ use shared::game::{
     ManeuverData,
 };
 
+// TODO: consider renaming this
+pub type EntityState = (EntityId, (Body, Option<Broadcast>));
 
 #[derive(Debug)]
 pub struct GameState {
     entities     : Entities,
-    export_buffer: Vec<(EntityId, (Body, Option<Broadcast>))>,
+    export_buffer: Vec<EntityState>,
 }
 
 impl GameState {
@@ -108,7 +110,7 @@ impl GameState {
     }
 
     pub fn export_entities(&mut self)
-                           -> Drain<(EntityId, (Body, Option<Broadcast>))>
+                           -> Drain<EntityState>
     {
         for (id, body) in &self.entities.bodies {
             let broadcast = self.entities.broadcasts
