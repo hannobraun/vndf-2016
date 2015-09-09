@@ -17,6 +17,8 @@ use shared::game::{
     Attributes,
 };
 
+use shared::planet::PlanetBuilder;
+
 // TODO: consider renaming this
 pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
 
@@ -34,6 +36,17 @@ impl GameState {
         }
     }
 
+    /// currently loads a random state
+    pub fn load_state (&mut self) {
+	for _ in (0..5) {
+	    let planet = PlanetBuilder::default().build();
+	    let id = self.entities.create_entity()
+		.with_body(planet.body)
+		.with_attributes(Attributes::Planet(planet.attr)).return_id();
+	    debug!("Creating random planet {}", id);
+	}
+    }
+    
     pub fn on_enter(&mut self) -> EntityId {
         self.entities.create_entity()
             .with_body(Body {

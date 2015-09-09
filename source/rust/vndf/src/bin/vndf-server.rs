@@ -42,6 +42,8 @@ fn main() {
     let mut incoming_events = IncomingEvents::new();
     let mut outgoing_events = OutgoingEvents::new();
 
+    game_state.load_state();
+    
     loop {
         trace!("Start server main loop iteration");
 
