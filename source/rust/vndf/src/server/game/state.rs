@@ -14,6 +14,7 @@ use shared::game::{
     Broadcast,
     EntityId,
     ManeuverData,
+    Attributes,
 };
 
 // TODO: consider renaming this
