@@ -1,4 +1,5 @@
 use std::marker::PhantomData;
+use std::f64::consts::PI;
 
 use gfx;
 use gfx_device_gl as gl;
@@ -97,6 +98,16 @@ impl ShapeDrawer {
             )
     }
 
+    pub fn planet(graphics: &mut Graphics) -> ShapeDrawer {
+        let shape = mesh_oval(1.0,1.0,50);
+        
+	ShapeDrawer::new(
+	    graphics,
+	    gfx::PrimitiveType::TriangleStrip,
+	    shape.as_ref(),
+	    )
+    }
+
     pub fn draw(
         &mut self,
         size     : f32,
@@ -116,4 +127,19 @@ impl ShapeDrawer {
             &params,
             );
     }
+}
+
+fn mesh_oval (w: f32, h: f32, n: u8) -> Vec<Vertex> {
+    let t = 2.0 * (PI as f32) / n as f32;
+    let hw = w / 2.0;
+    let hh = h / 2.0;
+    
+    let mut points: Vec<Vertex> = vec!();
+    for i in (0..n+1) {
+        points.push(Vertex { pos: [0.0,0.0] });
+        points.push(Vertex { pos: [hw * (t*i as f32).cos(),
+                                   hh * (t*i as f32).sin()] });
+    }
+    
+    points
 }
