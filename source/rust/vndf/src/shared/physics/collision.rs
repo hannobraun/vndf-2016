@@ -9,14 +9,14 @@ pub enum CollideKind {
 }
 
 pub struct Collider {
-    points: [Pnt2<f32>;4], // bounding box
-    kind: CollideKind,
+    _points: [Pnt2<f32>;4], // bounding box
+    _kind: CollideKind,
 }
 
 impl Collider {
     pub fn new (points: [Pnt2<f32>;4], kind: CollideKind) -> Collider {
-	Collider { points: points,
-		   kind: kind, }
+	Collider { _points: points,
+		   _kind: kind, }
     }
 
     /// builds based on current ship mesh layout (from equilateral triangle)
@@ -30,7 +30,7 @@ impl Collider {
 	Collider::new(p,CollideKind::Rect)
     }
 
-    pub fn check_collision (&self, other: &Collider) -> bool {
+    pub fn check_collision (&self, _other: &Collider) -> bool {
 	false
     }
 }

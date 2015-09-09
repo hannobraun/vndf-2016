@@ -1,10 +1,11 @@
 pub struct Gravity {
-    constant: f32, // -9.8 m/s^2 as units/s.squared()
+    _constant: f32, // -9.8 m/s^2 as units/s.squared()
 }
 
 impl Gravity {
+    #[allow(dead_code)]
     fn new (g: f32) -> Gravity {
-	Gravity { constant: g }
+	Gravity { _constant: g }
     }
 
     // /// assumes Frame's ships have a mass equivalent
