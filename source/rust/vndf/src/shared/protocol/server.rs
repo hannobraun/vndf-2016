@@ -1,8 +1,4 @@
-use shared::game::{
-	Body,
-	Broadcast,
-	EntityId,
-};
+use shared::game::{EntityId};
 
 use server::game::state::EntityState;
 
