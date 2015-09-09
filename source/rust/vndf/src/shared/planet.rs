@@ -4,13 +4,13 @@ use nalgebra::Vec2;
 use shared::game::{Body};
 use client::graphics::base::{Color,Colors};
 
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
+#[derive(Clone, Copy, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub struct Planet {
     pub body: Body,
     pub attr: PlanetAttr,
 }
 
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
+#[derive(Clone, Copy, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub struct PlanetAttr {
     pub color: Color,
     pub size: f32,
