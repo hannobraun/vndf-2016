@@ -6,12 +6,13 @@ use ncollide::bounding_volume::{BoundingSphere,
 
 use client::graphics::SHIP_SIZE;
 
-
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub enum CollideKind {
     Ship(Convex<Pnt2<f32>>),
     Planet(Ball<f32>),
 }
 
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub struct Collider {
     kind: CollideKind,
 }

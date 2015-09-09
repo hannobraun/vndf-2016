@@ -11,6 +11,7 @@ use shared::game::{
     EntityId,
 };
 use shared::planet::Planet;
+use shared::physics::collision::Collider;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
@@ -21,8 +22,9 @@ pub struct Frame {
 
     pub broadcasts  : HashMap<EntityId, String>,
     pub ships       : BTreeMap<EntityId, Body>,
-
     pub planets     : BTreeMap<EntityId, Planet>,
+
+    pub colliders   : HashMap<EntityId, Collider>,
     
     pub camera_track: Option<CameraTrack>,
     pub select_ids  : HashSet<EntityId>,
@@ -35,9 +37,13 @@ impl Frame {
             ship_id     : None,
             game_time_s : None,
             message     : Message::None,
+            
             broadcasts  : HashMap::new(),
             ships       : BTreeMap::new(),
             planets     : BTreeMap::new(),
+
+            colliders   : HashMap::new(),
+            
             camera_track: Some(CameraTrack::Default),
             select_ids  : HashSet::new(),
             deltatime   : 0.0,
