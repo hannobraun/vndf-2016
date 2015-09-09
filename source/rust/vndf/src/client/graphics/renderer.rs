@@ -4,6 +4,7 @@ use client::graphics::frame_state::FrameState;
 use client::graphics::draw::{
     ConsoleDrawer,
     ShipDrawer,
+    PlanetDrawer,
 };
 use client::graphics::camera::{Camera};
 use client::interface::Frame;
@@ -13,7 +14,8 @@ use client::window::Window;
 pub struct Renderer {
     console_drawer: ConsoleDrawer,
     ship_drawer   : ShipDrawer,
-
+    planet_drawer : PlanetDrawer,
+    
     pub camera: Camera,
 }
 
@@ -30,11 +32,17 @@ impl Renderer {
             ship_size,
             font_height,
             scaling_factor,
+            );
+
+        let planet_drawer = PlanetDrawer::new(
+            &mut graphics,
+            scaling_factor,
         );
 
         Renderer {
             console_drawer: console_drawer,
             ship_drawer   : ship_drawer,
+            planet_drawer : planet_drawer,
 
             camera: Camera::new(),
         }
@@ -56,7 +64,8 @@ impl Renderer {
 
         self.console_drawer.draw(console, &mut frame_state);
         self.ship_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
-
+        self.planet_drawer.draw(frame, &frame_state.transforms, &mut frame_state.graphics);
+        
         frame_state.graphics.flush();
     }
 }
