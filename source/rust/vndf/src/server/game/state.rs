@@ -80,46 +80,46 @@ impl GameState {
         let mut to_destroy = Vec::new();
         for (&id, maneuver) in &mut self.entities.maneuvers {
             if now_s >= maneuver.data.start_s {
-            let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
-            let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
+                let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
+                let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
 
-            match self.entities.bodies.get_mut(&maneuver.ship_id) {
-                Some(body) =>
-                // TODO(E7GyYwQy): Take passed time since last iteration
-                //                 into account.
-                body.velocity = body.velocity + acceleration,
+                match self.entities.bodies.get_mut(&maneuver.ship_id) {
+                    Some(body) =>
+                        // TODO(E7GyYwQy): Take passed time since last iteration
+                        //                 into account.
+                        body.velocity = body.velocity + acceleration,
 
-            // The ship might not exist due to timing issues (it could
-            // have been destroyed while the message was in flight). If
-            // this happens too often, it might also be the symptom of a
-            // bug.
-            None => debug!("Ship not found: {}", maneuver.ship_id),
+                    // The ship might not exist due to timing issues (it could
+                    // have been destroyed while the message was in flight). If
+                    // this happens too often, it might also be the symptom of a
+                    // bug.
+                    None => debug!("Ship not found: {}", maneuver.ship_id),
+                }
+            }
+
+            if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
+                to_destroy.push(id);
+            }
+        }
+
+        for id in to_destroy {
+            self.entities.destroy_entity(&id);
+        }
     }
-}
 
-if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
-to_destroy.push(id);
-                        }
-                }
+    pub fn export_entities(&mut self)
+                           -> Drain<(EntityId, (Body, Option<Broadcast>))>
+    {
+        for (id, body) in &self.entities.bodies {
+            let broadcast = self.entities.broadcasts
+                .get(id)
+                .map(|broadcast|
+                     broadcast.clone()
+                     );
 
-                for id in to_destroy {
-                        self.entities.destroy_entity(&id);
-                }
+            self.export_buffer.push((*id, (*body, broadcast)))
         }
 
-        pub fn export_entities(&mut self)
-                -> Drain<(EntityId, (Body, Option<Broadcast>))>
-        {
-                for (id, body) in &self.entities.bodies {
-                        let broadcast = self.entities.broadcasts
-                                .get(id)
-                                .map(|broadcast|
-                                        broadcast.clone()
-                                );
-
-                        self.export_buffer.push((*id, (*body, broadcast)))
-                }
-
-                self.export_buffer.drain(..)
-        }
+        self.export_buffer.drain(..)
+    }
 }
