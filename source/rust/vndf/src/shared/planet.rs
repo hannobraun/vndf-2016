@@ -6,9 +6,9 @@ use client::graphics::base::{Color,Colors};
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub struct Planet {
-    body: Body,
-    color: Color,
-    size: f32,
+    pub body: Body,
+    pub color: Color,
+    pub size: f32,
 }
 
 impl Planet {
