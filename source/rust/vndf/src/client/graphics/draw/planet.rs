@@ -27,8 +27,8 @@ impl PlanetDrawer {
         for (_id,planet) in &frame.planets {
             let transform = transforms.symbol_to_screen(cast(planet.body.position));
             self.symbol_drawer.draw(
-                planet.size * self.scaling_factor,
-                planet.color,
+                planet.attr.size * self.scaling_factor,
+                planet.attr.color,
                 transform,
                 graphics,
                 );

@@ -7,6 +7,11 @@ use client::graphics::base::{Color,Colors};
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
 pub struct Planet {
     pub body: Body,
+    pub attr: PlanetAttr,
+}
+
+#[derive(Clone, Debug, RustcDecodable, RustcEncodable, PartialEq)]
+pub struct PlanetAttr {
     pub color: Color,
     pub size: f32,
 }
@@ -16,8 +21,8 @@ impl Planet {
         Planet { body: Body { position: pos,
                               velocity: Vec2::new(0.0,0.0),
                               mass: mass, },
-                 color: color,
-                 size: size, }
+                 attr: PlanetAttr { color: color,
+				    size: size, } }
     }
 }
 
@@ -42,7 +47,7 @@ impl PlanetBuilder {
         self
     }
     pub fn size (mut self, size: f32) -> PlanetBuilder {
-        self.planet.size = size;
+        self.planet.attr.size = size;
         self
     }
     pub fn mass (mut self, mass: f32) -> PlanetBuilder {
@@ -50,7 +55,7 @@ impl PlanetBuilder {
         self
     }
     pub fn color (mut self, color: Color) -> PlanetBuilder {
-        self.planet.color = color;
+        self.planet.attr.color = color;
         self
     }
 
