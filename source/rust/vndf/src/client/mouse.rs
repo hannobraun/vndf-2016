@@ -116,7 +116,13 @@ impl Mouse {
             //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
             let select = Mouse::check_selection(coord,frame,cam_pos);
-            if let Some(id) = select {
+
+	    let adj_pos: Vec2<f64> = cast(Vec2::new(coord[0],coord[1])
+					  + (cam_pos * -1.0));
+	    let select2 = Mouse::check_selection2(adj_pos,
+						  frame);
+	    
+            if let Some(id) = select2 {
                 if !frame.select_ids.contains(&id) {
                     events.push(InputEvent::Select(vec!(id)));
                 }
@@ -191,6 +197,28 @@ impl Mouse {
                 (d[1].abs() < (ship_size/2.0)) {
                 return Some(id.clone());
             }
+        }
+
+        None
+    }
+
+    fn check_selection2(pos: Vec2<f64>,
+                       frame: &Frame)
+                       -> Option<EntityId> {
+        let pos = Vec2::new(pos[0],pos[1]);
+	
+        for (id,coll) in frame.colliders.iter() {
+	    if let Some(body) = frame.ships.get(&id) {
+		if coll.check_pos(&body.position,&pos) {
+		    return Some(*id)
+		}
+	    }
+	    else if let Some(planet) = frame.planets.get(&id) {
+		if coll.check_pos(&planet.body.position,&pos) {
+		    return Some(*id)
+		}
+	    }
+	    else { trace!("no entity found by id {}", id); }
         }
 
         None

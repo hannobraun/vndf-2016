@@ -2,6 +2,7 @@ use nalgebra::{Pnt2,Vec2};
 use ncollide::shape::{Ball,Convex};
 use ncollide::bounding_volume::{bounding_sphere,
 				BoundingVolume,};
+use ncollide::point::{PointQuery};
 
 use client::graphics::SHIP_SIZE;
 
@@ -65,5 +66,23 @@ impl Collider {
 	}
 
 	is_collide
+    }
+
+    /// checks if position is inside collider
+    /// requires this collider's position, and position of interest
+    pub fn check_pos (&self, pos: &Vec2<f64>, other_pos: &Vec2<f64>) -> bool {
+	let mut c1_b;
+	
+	match self.kind {
+	    CollideKind::Ship(ref c1) => {
+                c1_b = bounding_sphere(c1,pos);
+	    },
+	    CollideKind::Planet(ref c1) => {
+		c1_b = bounding_sphere(c1,pos);
+	    },
+	}
+
+	let c2_b = bounding_sphere(&Ball::new(1.0f64),other_pos);
+	c2_b.intersects(&c1_b)
     }
 }
