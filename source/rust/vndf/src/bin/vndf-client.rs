@@ -150,7 +150,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		InputEvent::Collision(id1,id2) => {
 		    // TODO: remove ship from scene
-		    trace!("Ship Collision {} {}", id1, id2);
+		    trace!("INTERFACE: Ship Collision {} {}", id1, id2);
 		},
                 
                 InputEvent::Quit => {
@@ -215,6 +215,11 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.broadcasts.remove(&id);
                     frame.ships.remove(&id);
                 },
+
+		server::Event::Collision(id1,id2) => {
+		    // TODO: remove ship from scene
+		    trace!("SERVER: Ship Collision {} {}", id1, id2);
+		},
             }
 
             last_server_activity = precise_time_s();

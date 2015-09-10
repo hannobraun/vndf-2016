@@ -24,7 +24,7 @@ use vndf::server::outgoing_events::{
     Recipients,
 };
 use vndf::shared::protocol::server::Event as ServerEvent;
-
+use vndf::shared::game::Attributes;
 
 fn main() {
     env_logger::init().unwrap_or_else(|e|
@@ -36,13 +36,15 @@ fn main() {
     let mut game_state = GameState::new();
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
+    
+    let planets = game_state.load_state();
 
     info!("Listening on port {}", args.port);
 
     let mut incoming_events = IncomingEvents::new();
     let mut outgoing_events = OutgoingEvents::new();
 
-    game_state.load_state();
+    
     
     loop {
         trace!("Start server main loop iteration");
@@ -73,6 +75,46 @@ fn main() {
                 Recipients::All,
                 )
         }
+
+	// check collisions
+	// TODO: needs some notion of space-partitioning for efficiency
+	let entities = game_state.get_entities();
+	for (ship_id,ship_body) in entities.bodies.iter() {
+	    // check only from the perspective of a ship
+	    if let Some(attr) = entities.attributes.get(&ship_id) {
+		if attr != &Attributes::Ship { continue }
+	    } // if not found, likely a ship anyways
+	    
+	    let ship_coll = {
+		if let Some (coll) = entities.colliders.get(&ship_id) { coll }
+		else { warn!("No collider found for ship {}", ship_id);
+		       continue }
+	    };
+	    for planet_id in planets.iter() {
+		let planet_coll = {
+		    if let Some (coll) = entities.colliders.get(&planet_id) { coll }
+		    else { warn!("No collider found for planet {}", planet_id);
+			   continue }
+		};
+		let planet_body = {
+		    if let Some (body) = entities.bodies.get(&planet_id) { body }
+		    else { warn!("No body found for planet {}", planet_id);
+			   continue }
+		};
+		
+		if ship_coll.check_collision(&ship_body.position,
+					     (planet_coll,&planet_body.position)) {
+		    outgoing_events.push(
+			ServerEvent::Collision(*ship_id,*planet_id),
+			Recipients::All);
+		}
+	    }
+
+	    // TODO: ship-ship collision checks
+	    //for (ship_id2,ship_body2) in frame.ships.iter() {
+	    //    if ship_id == ship_id2 { continue }
+	    //}
+	}
 
         outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);
         outgoing_events.send(&mut clients, &mut network);
