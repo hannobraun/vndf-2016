@@ -18,6 +18,7 @@ use shared::game::{
 };
 
 use shared::planet::PlanetBuilder;
+use shared::physics::collision::Collider;
 
 // TODO: consider renaming this
 pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
@@ -39,11 +40,15 @@ impl GameState {
     /// currently loads a random state
     pub fn load_state (&mut self) -> Vec<EntityId> {
 	let mut planets = vec!();
+
+	// generate planets
 	for _ in (0..5) {
 	    let planet = PlanetBuilder::default().build();
 	    let id = self.entities.create_entity()
 		.with_body(planet.body)
-		.with_attributes(Attributes::Planet(planet.attr)).return_id();
+		.with_attributes(Attributes::Planet(planet.attr))
+		.with_collider(Collider::new_from_planet(planet.attr.size,1.0))
+		.return_id();
 	    debug!("Creating random planet {}", id);
 	    planets.push(id);
 	}
