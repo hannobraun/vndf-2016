@@ -106,14 +106,18 @@ impl Camera {
     pub fn get_average_pos (v: &HashSet<EntityId>, frame: &Frame) -> (Vec2<f64>,Vec2<f64>) {
         let mut pos = Vec2::new(0.0,0.0);
         let mut vel = Vec2::new(0.0,0.0);
-        let total_ships = v.len() as f64;
-        let total = Vec2::new(total_ships,total_ships);
+        let total_bodies = v.len() as f64; //might want to calc this without planets
+        let total = Vec2::new(total_bodies,total_bodies);
         
         // for now grab ships
         for n in v.iter() {
             if let Some(b) = frame.ships.get(&n) {
                 pos = pos + b.position;
                 vel = vel + b.velocity;
+            }
+            else if let Some(b) = frame.planets.get(&n) {
+                pos = pos + b.body.position;
+                vel = vel + b.body.velocity;
             }
         }
 
