@@ -37,7 +37,8 @@ impl GameState {
     }
 
     /// currently loads a random state
-    pub fn load_state (&mut self) {
+    pub fn load_state (&mut self) -> Vec<EntityId> {
+	let mut planets = vec!();
 	for _ in (0..5) {
 	    let planet = PlanetBuilder::default().build();
 	    let id = self.entities.create_entity()
@@ -45,6 +46,8 @@ impl GameState {
 		.with_attributes(Attributes::Planet(planet.attr)).return_id();
 	    debug!("Creating random planet {}", id);
 	}
+	
+	planets
     }
     
     pub fn on_enter(&mut self) -> EntityId {
