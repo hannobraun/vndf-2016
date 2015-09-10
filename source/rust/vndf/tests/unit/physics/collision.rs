@@ -19,8 +19,8 @@ fn collision() {
 				(&c1,&Vec2::new(16.0,16.0))));
 
     assert!(c2.check_collision(&origin,
-			       (&c3,&Vec2::new(planet_rad,planet_rad))));
+			       (&c3,&Vec2::new(planet_rad as f64,planet_rad as f64))));
 
     assert!(!c2.check_collision(&origin,
-			       (&c3,&Vec2::new(planet_size,planet_size))));
+			       (&c3,&Vec2::new(planet_size as f64,planet_size as f64))));
 }
