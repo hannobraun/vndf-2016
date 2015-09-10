@@ -1,11 +1,14 @@
 use nalgebra::{Pnt2,Vec2};
 use ncollide::shape::{Ball,Convex};
 use ncollide::bounding_volume::{BoundingSphere,
-                                HasBoundingVolume,
-                                BoundingVolume};
+				bounding_sphere,
+				BoundingVolume,};
 
 use client::graphics::SHIP_SIZE;
 
+// TODO: Consider removing collidekind and going with BoundingSphere only;
+// this means that if we wanted to have higher accuracy (odd shape sizes)
+// then we'd need this back, at a minimum
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
 pub enum CollideKind {
     Ship(Convex<Pnt2<f32>>),
@@ -46,17 +49,17 @@ impl Collider {
                             pos: &Vec2<f32>,
                             other: (&Collider,&Vec2<f32>))
                             -> bool {
-        let (other_kind, other_pos) = (&other.0.kind,&other.1);
+        let (other_kind, other_pos) = (&other.0.kind,other.1);
 	let mut is_collide = false;
 	match (&self.kind, other_kind) {
 	    (&CollideKind::Ship(ref c1), &CollideKind::Ship(ref c2)) => {
-                let c1_b = c1.bounding_volume(pos);
-                let c2_b: BoundingSphere<Pnt2<f32>> = c2.bounding_volume(*other_pos);
+                let c1_b: BoundingSphere<Pnt2<f32>> = bounding_sphere(c1,pos);
+                let c2_b = bounding_sphere(c2,other_pos);
                 is_collide = c2_b.intersects(&c1_b);
 	    },
 	    (&CollideKind::Ship(ref c1), &CollideKind::Planet(ref c2)) => {
-                let c1_b = c1.bounding_volume(pos);
-                let c2_b: BoundingSphere<Pnt2<f32>> = c2.bounding_volume(*other_pos);
+		let c1_b = bounding_sphere(c1,pos);
+                let c2_b = bounding_sphere(c2,other_pos);
                 is_collide = c2_b.intersects(&c1_b);
 	    },
 	    _ => { warn!("Unsupported collision types"); }
