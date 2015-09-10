@@ -1,7 +1,6 @@
 use nalgebra::{Pnt2,Vec2};
 use ncollide::shape::{Ball,Convex};
-use ncollide::bounding_volume::{BoundingSphere,
-				bounding_sphere,
+use ncollide::bounding_volume::{bounding_sphere,
 				BoundingVolume,};
 
 use client::graphics::SHIP_SIZE;
@@ -53,7 +52,7 @@ impl Collider {
 	let mut is_collide = false;
 	match (&self.kind, other_kind) {
 	    (&CollideKind::Ship(ref c1), &CollideKind::Ship(ref c2)) => {
-                let c1_b: BoundingSphere<Pnt2<f32>> = bounding_sphere(c1,pos);
+                let c1_b = bounding_sphere(c1,pos);
                 let c2_b = bounding_sphere(c2,other_pos);
                 is_collide = c2_b.intersects(&c1_b);
 	    },
