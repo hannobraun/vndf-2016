@@ -3,7 +3,7 @@ use std::io::prelude::*;
 
 use toml;
 
-
+#[derive(Debug,Clone)]
 pub struct Config {
 	pub scaling_factor: f32,
 }

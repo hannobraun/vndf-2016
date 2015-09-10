@@ -29,6 +29,7 @@ const MAX_FRAME_TIME: f64 = 0.020; // 15ms minimum frame time
 pub trait Interface: Sized {
     fn new(config: Config) -> io::Result<Self>;
     fn update(&mut self, frame: &mut Frame) -> io::Result<Drain<InputEvent>>;
+    fn get_config(&self) -> Option<Config>;
 }
 
 
@@ -39,6 +40,7 @@ pub struct Player {
     renderer: Renderer,
     mouse   : Mouse, // NOTE: this might be renamed to selector or controller
     keyboard: Keyboard,
+    config  : Config,
 }
 
 impl Interface for Player {
@@ -58,6 +60,7 @@ impl Interface for Player {
             renderer: renderer,
             mouse   : Mouse::new(),
             keyboard: Keyboard::new(),
+            config  : config,
         })
     }
 
@@ -114,6 +117,8 @@ impl Interface for Player {
         
         Ok(self.events.drain(..))
     }
+
+    fn get_config (&self) -> Option<Config> { Some(self.config.clone()) }
 }
 
 pub struct Headless {
@@ -170,4 +175,6 @@ impl Interface for Headless {
 
         Ok(self.events.drain(..))
     }
+
+    fn get_config (&self) -> Option<Config> { None }
 }
