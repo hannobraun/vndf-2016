@@ -7,6 +7,7 @@ use shared::game::{
     EntityId,
     Attributes,
 };
+use shared::physics::collision::Collider;
 
 
 /// This module contains prototype code for an entity-component system (ECS).
@@ -31,6 +32,7 @@ pub struct Entities {
     pub broadcasts: Components<Broadcast>,
     pub maneuvers : Components<Maneuver>,
     pub attributes: Components<Attributes>,
+    pub colliders : Components<Collider>,
 }
 
 impl Entities {
@@ -41,6 +43,7 @@ impl Entities {
             broadcasts: HashMap::new(),
             maneuvers : HashMap::new(),
 	    attributes: HashMap::new(),
+	    colliders : HashMap::new(),
         }
     }
 
@@ -55,6 +58,7 @@ impl Entities {
             broadcasts: &mut self.broadcasts,
             maneuvers : &mut self.maneuvers,
 	    attributes: &mut self.attributes,
+	    colliders : &mut self.colliders,
 	}
     }
 
@@ -66,6 +70,7 @@ impl Entities {
 	    broadcasts: &mut self.broadcasts,
 	    maneuvers : &mut self.maneuvers,
 	    attributes: &mut self.attributes,
+	    colliders : &mut self.colliders,
 	}
     }
 
@@ -74,6 +79,7 @@ impl Entities {
         self.broadcasts.remove(id);
         self.maneuvers.remove(id);
 	self.attributes.remove(id);
+	self.colliders.remove(id);
     }
 }
 
@@ -85,6 +91,7 @@ pub struct EntityBuilder<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     attributes: &'c mut Components<Attributes>,
+    colliders : &'c mut Components<Collider>,
 }
 
 impl<'c> EntityBuilder<'c> {
@@ -108,6 +115,11 @@ impl<'c> EntityBuilder<'c> {
 	self
     }
 
+    pub fn with_collider(mut self, component: Collider) -> EntityBuilder<'c> {
+	self.colliders.insert(self.id, component);
+	self
+    }
+
     pub fn return_id(self) -> EntityId {
 	self.id
     }
@@ -121,6 +133,7 @@ pub struct EntityUpdater<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     attributes: &'c mut Components<Attributes>,
+    colliders : &'c mut Components<Collider>,
 }
 
 impl<'c> EntityUpdater<'c> {
@@ -144,6 +157,11 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 
+    pub fn add_collider(mut self, component: Collider) -> EntityUpdater<'c> {
+	self.colliders.insert(self.id, component);
+	self
+    }
+
     pub fn remove_body(mut self) -> EntityUpdater<'c> {
         self.bodies.remove(&self.id);
         self
@@ -156,6 +174,16 @@ impl<'c> EntityUpdater<'c> {
 
     pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
         self.maneuvers.remove(&self.id);
+        self
+    }
+
+    pub fn remove_attributes(mut self) -> EntityUpdater<'c> {
+        self.attributes.remove(&self.id);
+        self
+    }
+
+    pub fn remove_colliders(mut self) -> EntityUpdater<'c> {
+        self.colliders.remove(&self.id);
         self
     }
 }
