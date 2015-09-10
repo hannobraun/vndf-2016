@@ -1,4 +1,4 @@
-use rand::{thread_rng, sample};
+use rand::{thread_rng, sample, random};
 use nalgebra::Vec2;
 
 use shared::game::{Body};
@@ -36,10 +36,9 @@ impl PlanetBuilder {
         let mut rng = thread_rng();
         let a = sample(&mut rng, 1..1000, 4);
 
-	let b = sample(&mut rng, 0..2, 2);
-	let x = a[0] * (if b[0] < 0 { 1 }
+	let x = a[0] * (if random::<bool>() { 1 }
 			else { -1 } );
-	let y = a[1] * (if b[1] < 0 { 1 }
+	let y = a[1] * (if random::<bool>() { 1 }
 			else { -1 } );
 	
         PlanetBuilder { planet: Planet::new(Vec2::new((x*2) as f64,y as f64),
