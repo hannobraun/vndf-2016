@@ -63,6 +63,7 @@ impl GameState {
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
+	    .with_collider(Collider::new_from_ship(1.0))
             .return_id()
     }
 
