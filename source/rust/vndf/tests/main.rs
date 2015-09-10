@@ -11,6 +11,9 @@ mod unit {
 	mod client {
 		mod color;
 	}
+    mod physics {
+	mod collision;
+    }
 }
 
 mod integration {
