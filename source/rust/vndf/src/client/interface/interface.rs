@@ -109,6 +109,32 @@ impl Interface for Player {
         );
         self.window.swap_buffers();
 
+	// check collisions
+	// TODO: needs some notion of space-partitioning for efficiency
+	for (ship_id,ship_body) in frame.ships.iter() {
+	    let ship_coll = {
+		if let Some (coll) = frame.colliders.get(&ship_id) { coll }
+		else { warn!("No collider found for ship {}", ship_id);
+		       continue }
+	    };
+	    for (planet_id,planet) in frame.planets.iter() {
+		let planet_coll = {
+		    if let Some (coll) = frame.colliders.get(&planet_id) { coll }
+		    else { warn!("No collider found for planet {}", planet_id);
+			   continue }
+		};
+		if ship_coll.check_collision(&ship_body.position,
+					     (planet_coll,&planet.body.position)) {
+		    self.events.push(InputEvent::Collision(*ship_id,*planet_id));
+		}
+	    }
+
+	    // TODO: ship-ship collision checks
+	    //for (ship_id2,ship_body2) in frame.ships.iter() {
+	    //    if ship_id == ship_id2 { continue }
+	    //}
+	}
+
         // frame delay notifier
         if frame.deltatime > MAX_FRAME_TIME {
             // notify of frame delays
