@@ -27,6 +27,7 @@ use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
 use vndf::shared::game::Attributes;
 use vndf::shared::planet::Planet;
+use vndf::shared::physics::collision::Collider;
 use vndf::client::graphics::camera::CameraTrack;
 
 fn main() {
@@ -54,13 +55,18 @@ fn init_interface<I: Interface>() -> I {
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
     let mut frame = Frame::new();
-    
+
     let mut network = Network::new(args.server);
     let mut last_server_activity = precise_time_s();
     
     let mut frame_time = precise_time_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
+
+    let config = interface.get_config();
+
+    let mut scale = 1.0;
+    if let Some(conf) = config { scale = conf.scaling_factor; }
     
     'main: loop {
         let now = precise_time_s();
@@ -161,13 +167,34 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
 		    // for now match against attr, later we should cache this
 		    match attr {
-			Some(Attributes::Ship) => { frame.ships.insert(id, body); },
+			Some(Attributes::Ship) => {
+                            frame.ships.insert(id, body);
+                            if !frame.colliders.contains_key(&id) {
+                                frame.colliders.insert(
+                                    id,
+                                    Collider::new_from_ship(scale));
+                            }
+                        },
 			Some(Attributes::Planet(attr)) => {
 			    let planet = Planet { body: body,
 						  attr: attr };
 			    frame.planets.insert(id,planet);
+
+                            if !frame.colliders.contains_key(&id) {
+                                frame.colliders.insert(
+                                    id,
+                                    Collider::new_from_planet(scale,
+                                                              attr.size));
+                            }
 			},
-			_ =>  { frame.ships.insert(id, body); }, //default to ships
+			_ =>  { //default to ships
+                            frame.ships.insert(id, body);
+                            if !frame.colliders.contains_key(&id) {
+                                frame.colliders.insert(
+                                    id,
+                                    Collider::new_from_ship(scale));
+                            }
+                        },
 		    }
 
                     match broadcast {
