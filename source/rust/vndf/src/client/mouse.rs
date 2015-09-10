@@ -115,14 +115,13 @@ impl Mouse {
         if let Some(click) = self.click {
             //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
-            let select = Mouse::check_selection(coord,frame,cam_pos);
 
 	    let adj_pos: Vec2<f64> = cast(Vec2::new(coord[0],coord[1])
 					  + (cam_pos * -1.0));
-	    let select2 = Mouse::check_selection2(adj_pos,
+	    let select = Mouse::check_selection(adj_pos,
 						  frame);
 	    
-            if let Some(id) = select2 {
+            if let Some(id) = select {
                 if !frame.select_ids.contains(&id) {
                     events.push(InputEvent::Select(vec!(id)));
                 }
@@ -177,32 +176,7 @@ impl Mouse {
         [x as f32,-1.0*y as f32]
     }
 
-    // NOTE: assumes ships are equilateral triangles, & calcs bounding box
-    // TODO: This is broken with a scale_factor != 1, as it assumes ships are
-    //       sized 30 pixels wide and high. The actual ship size is stored in
-    //       ShipDrawer. Maybe we can move it (together with font size, window
-    //       size and other data) into some struct that can be accessed easily
-    //       in all places that need that data.
-    // we'll need to pass in mesh data eventually 
-    fn check_selection(pos: [f32;2],
-                       frame: &Frame,
-                       cam_pos: Vec2<f32>)
-                       -> Option<EntityId> {
-        let ship_size = 30.0;
-        let pos = Vec2::new(pos[0],pos[1]);
-        let adj_pos: Vec2<f64> = cast(pos + (cam_pos * -1.0));
-        for (id,ship) in frame.ships.iter() {
-            let d = adj_pos - ship.position;
-            if (d[0].abs() < (ship_size/2.0)) &
-                (d[1].abs() < (ship_size/2.0)) {
-                return Some(id.clone());
-            }
-        }
-
-        None
-    }
-
-    fn check_selection2(pos: Vec2<f64>,
+    fn check_selection(pos: Vec2<f64>,
                        frame: &Frame)
                        -> Option<EntityId> {
         let pos = Vec2::new(pos[0],pos[1]);
