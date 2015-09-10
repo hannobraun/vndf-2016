@@ -42,9 +42,9 @@ impl PlanetBuilder {
 	let y = a[1] * (if b[1] < 0 { 1 }
 			else { -1 } );
 	
-        PlanetBuilder { planet: Planet::new(Vec2::new((x*3) as f64,(y*2) as f64),
-                                            a[2] as f32/2.0,
-                                            a[3] as f32/2.0,
+        PlanetBuilder { planet: Planet::new(Vec2::new((x*2) as f64,y as f64),
+                                            a[2] as f32 * 2.0,
+                                            a[3] as f32 * 2.0,
                                             Colors::random()) }
     }
 
