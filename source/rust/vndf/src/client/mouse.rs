@@ -75,8 +75,8 @@ impl Mouse {
                         MouseScrollDelta::LineDelta(_,y) => {
                             camera.zoom(y as f32 / 3.5);
                         },
-                        MouseScrollDelta::PixelDelta(_,_) => {
-                            warn!("Warning: Touchpad not supported");
+                        MouseScrollDelta::PixelDelta(_,y) => {
+                            camera.zoom(y as f32 / 3.5); //pixeldelta might need tweaking
                         },
                     }
                 },
