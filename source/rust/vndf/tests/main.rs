@@ -5,27 +5,27 @@ extern crate vndf;
 
 
 mod unit {
-	mod server {
-		mod game;
-	}
-	mod client {
-		mod color;
-	}
+    mod server {
+        mod game;
+    }
+    mod client {
+        mod color;
+    }
     mod physics {
-	mod collision;
+        mod collision;
     }
 }
 
 mod integration {
-	mod client {
-		mod input;
-		mod protocol;
-	}
-	mod server {
-		mod protocol;
-	}
+    mod client {
+        mod input;
+        mod protocol;
+    }
+    mod server {
+        mod protocol;
+    }
 }
 mod acceptance {
-	mod basic;
-	mod navigation;
+    mod basic;
+    mod navigation;
 }
