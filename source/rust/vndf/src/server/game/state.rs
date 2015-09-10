@@ -45,6 +45,7 @@ impl GameState {
 		.with_body(planet.body)
 		.with_attributes(Attributes::Planet(planet.attr)).return_id();
 	    debug!("Creating random planet {}", id);
+	    planets.push(id);
 	}
 	
 	planets
@@ -142,5 +143,9 @@ impl GameState {
         }
 
         self.export_buffer.drain(..)
+    }
+
+    pub fn get_entities(&self) -> &Entities {
+	&self.entities
     }
 }
