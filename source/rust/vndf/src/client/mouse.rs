@@ -132,16 +132,26 @@ impl Mouse {
         }
         else if let Some(drag_end) = self.drag.1 {
             let drag_start = self.drag.0.unwrap();
-            let start = Mouse::convert_coord(drag_start,window_size);
-            let end = Mouse::convert_coord(drag_end,window_size);
+            let start = Mouse::convert_coord(drag_start,window_size) * camera.zoom;
+            let end = Mouse::convert_coord(drag_end,window_size) * camera.zoom;
             let start = start + (cam_pos * -1.0);
             let end = end + (cam_pos * -1.0);
             
             let mut v = vec!();
+	    
             for (id,ship) in frame.ships.iter() {
                 let ship_pos: Vec2<f32> = cast(ship.position);
                 if Mouse::within_bounds(ship_pos[0],start[0],end[0]) {
                     if Mouse::within_bounds(ship_pos[1],start[1],end[1]) {
+                        v.push(id.clone());
+                    }
+                }
+            }
+
+	    for (id,planet) in frame.planets.iter() {
+                let planet_pos: Vec2<f32> = cast(planet.body.position);
+                if Mouse::within_bounds(planet_pos[0],start[0],end[0]) {
+                    if Mouse::within_bounds(planet_pos[1],start[1],end[1]) {
                         v.push(id.clone());
                     }
                 }
