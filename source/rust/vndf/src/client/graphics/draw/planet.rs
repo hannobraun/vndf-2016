@@ -39,7 +39,7 @@ impl PlanetDrawer {
 	    // draw selection behind planet
 	    if frame.select_ids.contains(id) {
                 self.symbol_drawer.draw(
-		    scale * 1.01/zoom, //this needs tweaking
+		    (scale/zoom) + 3.0, //this needs tweaking
 		    color::Colors::white(),
 		    transform,
 		    graphics,
