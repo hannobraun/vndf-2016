@@ -13,11 +13,13 @@ pub enum InputEvent {
 
     ScheduleManeuver(ManeuverData),
 
-    Track(CameraTrack), //TODO: rename to Select?
+    Track(CameraTrack), // sets camera tracking
+    
     Select(Vec<EntityId>),
     Deselect(Vec<EntityId>),
 
     Collision(EntityId,EntityId), // TODO: create collision type events?
+    VisualCollision(EntityId,EntityId), // TODO: rename me?
     
     Quit,
 }

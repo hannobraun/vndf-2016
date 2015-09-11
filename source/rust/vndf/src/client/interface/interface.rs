@@ -13,6 +13,8 @@ use std::vec::Drain;
 use glutin::Event;
 use glutin::Event::{Closed};
 
+use shared::physics::collision::{Collider};
+
 use client::config::Config;
 use client::console;
 use client::graphics::Renderer;
@@ -145,6 +147,13 @@ impl Interface for Player {
                 if ship_coll.check_collision(&ship_body.position,
 					     (ship_coll2,&ship_body2.position)) {
 		    self.events.push(InputEvent::Collision(*ship_id,*ship_id2));
+		}
+                // NOTE: previous logic denotes the requirement for colliders
+                // even though below function does not require it
+                else if Collider::check_collision_zoomed(&ship_body.position,
+					       &ship_body2.position,
+                                               self.renderer.camera.zoom) {
+		    self.events.push(InputEvent::VisualCollision(*ship_id,*ship_id2));
 		}
 	    }
 	}

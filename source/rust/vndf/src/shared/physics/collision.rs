@@ -67,6 +67,28 @@ impl Collider {
 	is_collide
     }
 
+    /// checks a collision between ships, while zoomed
+    // NOTE: this is currently a free function, no previous colliders necessary
+    pub fn check_collision_zoomed (pos: &Vec2<f64>,
+                                   other_pos: &Vec2<f64>,
+                                   zoom: f32)
+                                   -> bool {
+	let mut is_collide = false;
+
+        let c1 = {
+            match Collider::new_from_ship(zoom).kind {
+	        CollideKind::Ship(c) => c,
+	        _ => panic!("Incompatible collidekind built"),
+	    }};
+
+        let c2 = c1.clone();
+        
+        let c1_b = bounding_sphere(&c1,pos);
+        let c2_b = bounding_sphere(&c2,other_pos);
+        
+        c2_b.intersects(&c1_b)
+    }
+
     /// checks if position is inside collider
     /// requires this collider's position, and position of interest
     pub fn check_pos (&self, pos: &Vec2<f64>,
