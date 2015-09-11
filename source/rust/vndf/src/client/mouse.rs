@@ -119,7 +119,8 @@ impl Mouse {
 	    let adj_pos: Vec2<f64> = cast(coord * camera.zoom
 					  + (cam_pos * -1.0));
 	    let select = Mouse::check_selection(adj_pos,
-						  frame);
+						frame,
+						camera.zoom);
 	    
             if let Some(id) = select {
                 if !frame.select_ids.contains(&id) {
@@ -189,10 +190,9 @@ impl Mouse {
 
     /// check the position against all known colliders
     fn check_selection(pos: Vec2<f64>,
-                       frame: &Frame)
+                       frame: &Frame,
+		       zoom: f32,)
                        -> Option<EntityId> {
-        let pos = Vec2::new(pos[0],pos[1]);
-
 	// NOTE: to make sure we select ships first, we should iterate over them manually
 	// if we make changes to frame so that ships and planets becomes Bodies like server,
 	// then we'll need to change this and basically collect planets during iteration
@@ -203,7 +203,7 @@ impl Mouse {
 
 	for (id,body) in frame.ships.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
-		if coll.check_pos(&body.position,&pos) {
+		if coll.check_pos(&body.position,&pos, Some(zoom)) {
 		    return Some(*id)
 		}
 	    }
@@ -212,7 +212,7 @@ impl Mouse {
 
 	for (id,planet) in frame.planets.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
-		if coll.check_pos(&planet.body.position,&pos) {
+		if coll.check_pos(&planet.body.position,&pos, Some(zoom)) {
 		    return Some(*id)
 		}
 	    }

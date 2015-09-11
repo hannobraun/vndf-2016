@@ -69,14 +69,25 @@ impl Collider {
 
     /// checks if position is inside collider
     /// requires this collider's position, and position of interest
-    pub fn check_pos (&self, pos: &Vec2<f64>, other_pos: &Vec2<f64>) -> bool {
+    pub fn check_pos (&self, pos: &Vec2<f64>,
+		      other_pos: &Vec2<f64>,
+		      zoom: Option<f32>)
+		      -> bool {
 	let c1_b;
 	
 	match self.kind {
 	    CollideKind::Ship(ref c1) => {
-                c1_b = bounding_sphere(c1,pos);
+		let c = {if let Some(zoom) = zoom {
+		    match Collider::new_from_ship(zoom).kind {
+			CollideKind::Ship(c) => c,
+			_ => panic!("Incompatible collidekind built"),
+		    }
+		}
+			 else { c1.clone() }};
+                c1_b = bounding_sphere(&c,pos);
 	    },
 	    CollideKind::Planet(ref c1) => {
+		// NOTE: currently selecting a planet does not seem to need zoom factor
 		c1_b = bounding_sphere(c1,pos);
 	    },
 	}
