@@ -111,17 +111,17 @@ impl Interface for Player {
 
 	// check collisions
 	// TODO: needs some notion of space-partitioning for efficiency
-	for (ship_id,ship_body) in frame.ships.iter() {
+	'ships: for (ship_id,ship_body) in frame.ships.iter() {
 	    let ship_coll = {
 		if let Some (coll) = frame.colliders.get(&ship_id) { coll }
 		else { warn!("No collider found for ship {}", ship_id);
-		       continue }
+		       continue 'ships }
 	    };
-	    for (planet_id,planet) in frame.planets.iter() {
+	    'planets: for (planet_id,planet) in frame.planets.iter() {
 		let planet_coll = {
 		    if let Some (coll) = frame.colliders.get(&planet_id) { coll }
 		    else { warn!("No collider found for planet {}", planet_id);
-			   continue }
+			   continue 'planets }
 		};
 		if ship_coll.check_collision(&ship_body.position,
 					     (planet_coll,&planet.body.position)) {
