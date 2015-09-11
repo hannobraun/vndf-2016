@@ -79,27 +79,27 @@ fn main() {
 	// check collisions
 	// TODO: needs some notion of space-partitioning for efficiency
 	let entities = game_state.get_entities();
-	for (ship_id,ship_body) in entities.bodies.iter() {
+	'ships: for (ship_id,ship_body) in entities.bodies.iter() {
 	    // check only from the perspective of a ship
 	    if let Some(attr) = entities.attributes.get(&ship_id) {
-		if attr != &Attributes::Ship { continue }
+		if attr != &Attributes::Ship { continue 'ships }
 	    } // if not found, likely a ship anyways
 	    
 	    let ship_coll = {
 		if let Some (coll) = entities.colliders.get(&ship_id) { coll }
 		else { warn!("No collider found for ship {}", ship_id);
-		       continue }
+		       continue 'ships }
 	    };
-	    for planet_id in planets.iter() {
+	    'planets: for planet_id in planets.iter() {
 		let planet_coll = {
 		    if let Some (coll) = entities.colliders.get(&planet_id) { coll }
 		    else { warn!("No collider found for planet {}", planet_id);
-			   continue }
+			   continue 'planets }
 		};
 		let planet_body = {
 		    if let Some (body) = entities.bodies.get(&planet_id) { body }
 		    else { warn!("No body found for planet {}", planet_id);
-			   continue }
+			   continue 'planets }
 		};
 		
 		if ship_coll.check_collision(&ship_body.position,
