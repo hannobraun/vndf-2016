@@ -60,6 +60,17 @@ impl GridDrawer {
                 transform,
                 graphics,
 		);
+
+	    // draw inverse
+	    let transform = transforms.symbol_to_screen(
+		cast(Vec2::new(-1.0 * x_zoom, -1.0*y as f32)));
+
+	    self.draw_line(
+		zoom/scale,
+		Vec2::new(x_zoom,0.0),
+                transform,
+                graphics,
+		);
         }
 
 	// draw vertical lines
@@ -68,6 +79,17 @@ impl GridDrawer {
 	    let x = y*GRID_UNIT;
 	    let transform = transforms.symbol_to_screen(
 		cast(Vec2::new(x as f32, -1.0 * y_zoom)));
+
+	    self.draw_line(
+		zoom/scale,
+		Vec2::new(0.0,y_zoom),
+                transform,
+                graphics,
+		);
+
+	    // draw inverse lines, since range iter cannot handle anything but positives
+	    let transform = transforms.symbol_to_screen(
+		cast(Vec2::new(-1.0*x as f32, -1.0 * y_zoom)));
 
 	    self.draw_line(
 		zoom/scale,
