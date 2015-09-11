@@ -47,10 +47,17 @@ impl GridDrawer {
                 graphics: &mut Graphics,) {
 	let scale = self.scaling_factor;
 
+	let mut grid_unit = GRID_UNIT;
+	
+	if zoom > 100.0 { grid_unit = GRID_UNIT*100; }
+	else if zoom > 50.0 { grid_unit = GRID_UNIT*50; }
+	else if zoom > 10.0 { grid_unit = GRID_UNIT*10; }
+
+	
 	// draw horizontal lines
 	let x_zoom = win_size[0]*zoom;
-	for x in (0..(zoom * win_size[0] / GRID_UNIT as f32) as u32) {
-	    let y = x*GRID_UNIT;
+	for x in (0..(x_zoom / grid_unit as f32) as u32) {
+	    let y = x*grid_unit;
 	    let transform = transforms.symbol_to_screen(
 		cast(Vec2::new(-1.0 * x_zoom, y as f32)));
 
@@ -75,8 +82,8 @@ impl GridDrawer {
 
 	// draw vertical lines
 	let y_zoom = win_size[1]*zoom;
-	for y in (0..(zoom * win_size[1] / GRID_UNIT as f32) as u32) {
-	    let x = y*GRID_UNIT;
+	for y in (0..(y_zoom / grid_unit as f32) as u32) {
+	    let x = y*grid_unit;
 	    let transform = transforms.symbol_to_screen(
 		cast(Vec2::new(x as f32, -1.0 * y_zoom)));
 
