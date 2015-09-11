@@ -169,6 +169,7 @@ impl Mouse {
     }
 
     /// converts mouse coordinate to world position
+    // TODO: consider taking camera position into account
     pub fn convert_coord(pos: (i32,i32), window_size: (u32,u32)) -> [f32;2] {
         let x = pos.0 - (window_size.0 as i32) /2;
         let y = pos.1 - (window_size.1 as i32) /2;
@@ -176,24 +177,37 @@ impl Mouse {
         [x as f32,-1.0*y as f32]
     }
 
+    /// check the position against all known colliders
     fn check_selection(pos: Vec2<f64>,
                        frame: &Frame)
                        -> Option<EntityId> {
         let pos = Vec2::new(pos[0],pos[1]);
+
+	// NOTE: to make sure we select ships first, we should iterate over them manually
+	// if we make changes to frame so that ships and planets becomes Bodies like server,
+	// then we'll need to change this and basically collect planets during iteration
+	// then iter over them after we check all ships
 	
-        for (id,coll) in frame.colliders.iter() {
-	    if let Some(body) = frame.ships.get(&id) {
+	// TODO: remove ships from iteration of which are not on the screen/in view;
+	// see within_bounds function
+
+	for (id,body) in frame.ships.iter() {
+	    if let Some(coll) = frame.colliders.get(&id) {
 		if coll.check_pos(&body.position,&pos) {
 		    return Some(*id)
 		}
 	    }
-	    else if let Some(planet) = frame.planets.get(&id) {
+	    else { trace!("no collider found for ship id {}", id); }
+	}
+
+	for (id,planet) in frame.planets.iter() {
+	    if let Some(coll) = frame.colliders.get(&id) {
 		if coll.check_pos(&planet.body.position,&pos) {
 		    return Some(*id)
 		}
 	    }
-	    else { trace!("no entity found by id {}", id); }
-        }
+	    else { trace!("no collider found for planet id {}", id); }
+	}
 
         None
     }
