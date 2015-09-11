@@ -116,7 +116,7 @@ impl Mouse {
             //TODO: if no entity, pass on to UI (or viceversa)
             let coord = Mouse::convert_coord(click,window_size);
 
-	    let adj_pos: Vec2<f64> = cast(Vec2::new(coord[0],coord[1])
+	    let adj_pos: Vec2<f64> = cast(coord * camera.zoom
 					  + (cam_pos * -1.0));
 	    let select = Mouse::check_selection(adj_pos,
 						  frame);
