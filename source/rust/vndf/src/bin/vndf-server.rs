@@ -90,6 +90,8 @@ fn main() {
 		else { warn!("No collider found for ship {}", ship_id);
 		       continue 'ships }
 	    };
+
+            // check ship collisions with planets
 	    'planets: for planet_id in planets.iter() {
 		let planet_coll = {
 		    if let Some (coll) = entities.colliders.get(&planet_id) { coll }
@@ -110,10 +112,26 @@ fn main() {
 		}
 	    }
 
-	    // TODO: ship-ship collision checks
-	    //for (ship_id2,ship_body2) in frame.ships.iter() {
-	    //    if ship_id == ship_id2 { continue }
-	    //}
+            // check ship collisions with eachother
+	    'other_ships: for (ship_id2,ship_body2) in entities.bodies.iter() {
+	        if ship_id == ship_id2 { continue 'other_ships }
+                
+	        if let Some(attr) = entities.attributes.get(&ship_id2) {
+		    if attr != &Attributes::Ship { continue 'other_ships }
+	        } // if not found, likely a ship anyways
+
+                let ship_coll2 = {
+		    if let Some (coll) = entities.colliders.get(&ship_id2) { coll }
+		    else { warn!("No collider found for ship {}", ship_id2);
+		           continue 'other_ships }
+	        };
+                if ship_coll.check_collision(&ship_body.position,
+					     (ship_coll2,&ship_body2.position)) {
+		    outgoing_events.push(
+			ServerEvent::Collision(*ship_id,*ship_id2),
+			Recipients::All);
+		}
+	    }
 	}
 
         outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);
