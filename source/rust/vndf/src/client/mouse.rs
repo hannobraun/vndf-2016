@@ -134,8 +134,8 @@ impl Mouse {
             let drag_start = self.drag.0.unwrap();
             let start = Mouse::convert_coord(drag_start,window_size);
             let end = Mouse::convert_coord(drag_end,window_size);
-            let start = *Vec2::from_array_ref(&start) + (cam_pos * -1.0);
-            let end = *Vec2::from_array_ref(&end) + (cam_pos * -1.0);
+            let start = start + (cam_pos * -1.0);
+            let end = end + (cam_pos * -1.0);
             
             let mut v = vec!();
             for (id,ship) in frame.ships.iter() {
@@ -170,11 +170,11 @@ impl Mouse {
 
     /// converts mouse coordinate to world position
     // TODO: consider taking camera position into account
-    pub fn convert_coord(pos: (i32,i32), window_size: (u32,u32)) -> [f32;2] {
+    pub fn convert_coord(pos: (i32,i32), window_size: (u32,u32)) -> Vec2<f32> {
         let x = pos.0 - (window_size.0 as i32) /2;
         let y = pos.1 - (window_size.1 as i32) /2;
 
-        [x as f32,-1.0*y as f32]
+        Vec2::new(x as f32,-1.0*y as f32)
     }
 
     /// check the position against all known colliders
