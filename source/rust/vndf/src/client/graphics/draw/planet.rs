@@ -29,6 +29,7 @@ impl PlanetDrawer {
 
     pub fn draw(&mut self,
                 frame: &Frame,
+		zoom: f32,
                 transforms: &Transforms,
                 graphics: &mut Graphics,) {
         for (id,planet) in &frame.planets {
@@ -38,7 +39,7 @@ impl PlanetDrawer {
 	    // draw selection behind planet
 	    if frame.select_ids.contains(id) {
                 self.symbol_drawer.draw(
-		    scale * 1.01, //this needs tweaking
+		    scale * 1.01/zoom, //this needs tweaking
 		    color::Colors::white(),
 		    transform,
 		    graphics,
@@ -47,7 +48,7 @@ impl PlanetDrawer {
 	   
 	    // draw planet
             self.symbol_drawer.draw(
-                scale,
+                scale/zoom,
                 planet.attr.color,
                 transform,
                 graphics,
@@ -56,7 +57,7 @@ impl PlanetDrawer {
 	    
 	    self.draw_name(
                 *id,
-		scale,
+		scale/zoom,
                 transform,
                 graphics,
 		);

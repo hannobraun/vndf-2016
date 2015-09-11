@@ -2,7 +2,8 @@ use nalgebra::{
     cast,
 
     ToHomogeneous,
-
+    Inv,
+    
     Iso3,
     Mat4,
     Ortho3,
@@ -43,8 +44,14 @@ impl Transforms {
         // - world space:  The only space relevant, as far as the game logic is
         //                 concerned.
         let camera_to_screen = ortho(window_size);
-        let world_to_camera  = camera_zoom * camera_translation;
+	
+	let world_to_camera = {
+	    if let Some(cam_zoom) = camera_zoom.inv() {
+		cam_zoom * camera_translation
+	    } // maybe we should warn! or panic! otherwise?
+	    else { camera_translation }}; // probably not necessary
 
+	
         Transforms {
             camera_to_screen: camera_to_screen,
             world_to_camera : world_to_camera,
