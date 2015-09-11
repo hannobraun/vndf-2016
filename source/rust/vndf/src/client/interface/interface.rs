@@ -117,6 +117,8 @@ impl Interface for Player {
 		else { warn!("No collider found for ship {}", ship_id);
 		       continue 'ships }
 	    };
+
+            // check ships colliding into planets
 	    'planets: for (planet_id,planet) in frame.planets.iter() {
 		let planet_coll = {
 		    if let Some (coll) = frame.colliders.get(&planet_id) { coll }
@@ -129,10 +131,22 @@ impl Interface for Player {
 		}
 	    }
 
-	    // TODO: ship-ship collision checks
-	    //for (ship_id2,ship_body2) in frame.ships.iter() {
-	    //    if ship_id == ship_id2 { continue }
-	    //}
+            // check ships colliding into eachother
+	    'other_ships: for (ship_id2,ship_body2) in frame.ships.iter() {
+	        if ship_id == ship_id2 { continue 'other_ships }
+
+                // NOTE: we need two separate checks, one for actual collisions
+                // and another for visual collisions while zoomed (ie: to be grouped)
+                let ship_coll2 = {
+		    if let Some (coll) = frame.colliders.get(&ship_id2) { coll }
+		    else { warn!("No collider found for ship {}", ship_id2);
+		           continue 'other_ships }
+	        };
+                if ship_coll.check_collision(&ship_body.position,
+					     (ship_coll2,&ship_body2.position)) {
+		    self.events.push(InputEvent::Collision(*ship_id,*ship_id2));
+		}
+	    }
 	}
 
         // frame delay notifier
