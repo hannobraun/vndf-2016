@@ -109,7 +109,6 @@ impl Camera {
         let total_bodies = v.len() as f64; //might want to calc this without planets
         let total = Vec2::new(total_bodies,total_bodies);
         
-        // for now grab ships
         for n in v.iter() {
             if let Some(b) = frame.ships.get(&n) {
                 pos = pos + b.position;
