@@ -1,4 +1,4 @@
-#![feature(path_ext, result_expect)]
+#![feature(path_ext)]
 
 
 use std::env::{
