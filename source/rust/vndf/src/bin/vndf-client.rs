@@ -148,14 +148,14 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     }
                 },
 
-		InputEvent::Collision(id1,id2) => {
-		    // TODO: remove ship from scene
-		    trace!("INTERFACE: Ship Collision {} {}", id1, id2);
-		},
+                InputEvent::Collision(id1,id2) => {
+                    // TODO: remove ship from scene
+                    trace!("INTERFACE: Ship Collision {} {}", id1, id2);
+                },
 
                 InputEvent::VisualCollision(id1,id2) => {
-		    trace!("INTERFACE: Visual Ship Collision while Zoomed {} {}", id1, id2);
-		},
+                    trace!("INTERFACE: Visual Ship Collision while Zoomed {} {}", id1, id2);
+                },
                 
                 InputEvent::Quit => {
                     break 'main;
@@ -172,11 +172,11 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.ship_id = Some(ship_id);
                 },
                 server::Event::UpdateEntity(ent) => {
-		    let (id, (body,broadcast,attr)) = ent;
+                    let (id, (body,broadcast,attr)) = ent;
 
-		    // for now match against attr, later we should cache this
-		    match attr {
-			Some(Attributes::Ship) => {
+                    // for now match against attr, later we should cache this
+                    match attr {
+                        Some(Attributes::Ship) => {
                             frame.ships.insert(id, body);
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
@@ -184,10 +184,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                     Collider::new_from_ship(scale));
                             }
                         },
-			Some(Attributes::Planet(attr)) => {
-			    let planet = Planet { body: body,
-						  attr: attr };
-			    frame.planets.insert(id,planet);
+                        Some(Attributes::Planet(attr)) => {
+                            let planet = Planet { body: body,
+                                                  attr: attr };
+                            frame.planets.insert(id,planet);
 
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
@@ -195,8 +195,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                     Collider::new_from_planet(scale,
                                                               attr.size));
                             }
-			},
-			_ =>  { //default to ships
+                        },
+                        _ =>  { //default to ships
                             frame.ships.insert(id, body);
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
@@ -204,7 +204,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                     Collider::new_from_ship(scale));
                             }
                         },
-		    }
+                    }
 
                     match broadcast {
                         Some(broadcast) => {
@@ -220,10 +220,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.ships.remove(&id);
                 },
 
-		server::Event::Collision(id1,id2) => {
-		    // TODO: remove ship from scene
-		    trace!("SERVER: Ship Collision {} {}", id1, id2);
-		},
+                server::Event::Collision(id1,id2) => {
+                    // TODO: remove ship from scene
+                    trace!("SERVER: Ship Collision {} {}", id1, id2);
+                },
             }
 
             last_server_activity = precise_time_s();
