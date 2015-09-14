@@ -101,11 +101,11 @@ impl ShapeDrawer {
     pub fn planet(graphics: &mut Graphics) -> ShapeDrawer {
         let shape = mesh_oval(1.0,1.0,50);
         
-	ShapeDrawer::new(
-	    graphics,
-	    gfx::PrimitiveType::TriangleStrip,
-	    shape.as_ref(),
-	    )
+        ShapeDrawer::new(
+            graphics,
+            gfx::PrimitiveType::TriangleStrip,
+            shape.as_ref(),
+        )
     }
 
     pub fn draw(
