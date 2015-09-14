@@ -25,9 +25,26 @@ Project management is done on
 [Trello](https://trello.com/b/WdwuT2Fx/von-neumann-defense-force).
 
 
+## Get Started
+
+We're using a command-line application called Pan to help with development.
+Before you can start working on VNDF, you need to build and set up Pan.
+
+On Linux:
+
+> ./setup.sh
+
+On Windows:
+
+> ./setup.bat
+
+After that is done, follow the instructions that the setup script prints to set
+up Pan.
+
+
 ## Run all tests
 
-> ./scripts/test
+> pan test
 
 This will compile the project and run all tests. Please do this regularly,
 especially before pushing code to GitHub.
@@ -35,14 +52,14 @@ especially before pushing code to GitHub.
 
 ## Start the server
 
-> ./scripts/server
+> pan server
 
 This will compile the project and run a server process.
 
 
 ## Start the client
 
-> ./scripts/client
+> pan client
 
 This will start the client. You need to run a server first, for the client to
 connect to (see above).
