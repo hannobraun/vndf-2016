@@ -1,5 +1,5 @@
 SET vndf_path=%CD%
-cd source/rust/ide
+cd source/rust/pan
 cargo build
 @echo off
 (echo IDE built. Add it to your path by executing the following command:
