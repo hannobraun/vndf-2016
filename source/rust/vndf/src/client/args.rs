@@ -11,7 +11,6 @@ pub struct Args {
 	pub headless      : bool,
 	pub server        : SocketAddr,
 	pub net_timeout_s : f64,
-	pub sleep_ms      : u32,
 }
 
 impl Args {
@@ -64,10 +63,6 @@ impl Args {
 			Some(timeout_s) => timeout_s.parse().unwrap(),
 			None            => 5.0,
 		};
-		let sleep_duration_ms = match matches.opt_str("sleep-duration") {
-			Some(duration_ms) => duration_ms.parse().unwrap(),
-			None              => 20,
-		};
 
 		let server_address = (host.as_ref(), port);
 		let server_address = match server_address.to_socket_addrs() {
@@ -88,7 +83,6 @@ impl Args {
 			headless      : matches.opt_present("headless"),
 			server        : server_address,
 			net_timeout_s : net_timeout_s,
-			sleep_ms      : sleep_duration_ms,
 		}
 	}
 }
