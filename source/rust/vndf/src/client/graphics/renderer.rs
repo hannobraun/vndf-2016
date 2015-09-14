@@ -38,13 +38,13 @@ impl Renderer {
 
         let planet_drawer = PlanetDrawer::new(
             &mut graphics,
-	    font_height,
+            font_height,
             scaling_factor,
             );
 
-	let grid_drawer =  GridDrawer::new(
+        let grid_drawer =  GridDrawer::new(
             &mut graphics,
-	    font_height,
+            font_height,
             scaling_factor,
             );
 
@@ -52,7 +52,7 @@ impl Renderer {
             console_drawer: console_drawer,
             ship_drawer   : ship_drawer,
             planet_drawer : planet_drawer,
-	    grid_drawer   : grid_drawer,
+            grid_drawer   : grid_drawer,
 
             camera: Camera::new(),
         }
@@ -72,24 +72,28 @@ impl Renderer {
 
         frame_state.graphics.clear();
 
-	self.grid_drawer.draw(frame,
-			      self.camera.zoom,
-			      &frame_state.window_size,
-			      &frame_state.transforms,
-			      &mut frame_state.graphics);
-	
-	self.planet_drawer.draw(frame,
-				self.camera.zoom,
-				&frame_state.transforms,
-				&mut frame_state.graphics);
-	
+        self.grid_drawer.draw(
+            frame,
+            self.camera.zoom,
+            &frame_state.window_size,
+            &frame_state.transforms,
+            &mut frame_state.graphics,
+        );
+
+        self.planet_drawer.draw(frame,
+            self.camera.zoom,
+            &frame_state.transforms,
+            &mut frame_state.graphics,
+        );
+
         self.console_drawer.draw(console, &mut frame_state);
-	
-        self.ship_drawer.draw(frame,
-			      &frame_state.transforms,
-			      &mut frame_state.graphics);
-        
-        
+
+        self.ship_drawer.draw(
+            frame,
+            &frame_state.transforms,
+            &mut frame_state.graphics,
+        );
+
         frame_state.graphics.flush();
     }
 }
