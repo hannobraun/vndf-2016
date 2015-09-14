@@ -44,7 +44,6 @@ impl Renderer {
 
         let grid_drawer =  GridDrawer::new(
             &mut graphics,
-            font_height,
             scaling_factor,
             );
 
@@ -73,7 +72,6 @@ impl Renderer {
         frame_state.graphics.clear();
 
         self.grid_drawer.draw(
-            frame,
             self.camera.zoom,
             &frame_state.window_size,
             &frame_state.transforms,

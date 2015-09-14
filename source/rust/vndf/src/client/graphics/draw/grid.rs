@@ -10,42 +10,35 @@ use nalgebra::{
     Vec3,
 };
 
-use shared::game::{EntityId};
 use shared::util::angle_of;
 
 use client::graphics::base::{Graphics,color};
-use client::graphics::draw::{ShapeDrawer, GlyphDrawer};
+use client::graphics::draw::ShapeDrawer;
 use client::graphics::transforms::Transforms;
 
-use client::interface::Frame;
 
 pub const GRID_UNIT: u32 = 100;
 
 pub struct GridDrawer {
     scaling_factor: f32,
     symbol_drawer: ShapeDrawer,
-    glyph_drawer: GlyphDrawer,
 }
 
 impl GridDrawer {
     pub fn new(graphics: &mut Graphics,
-               font_size     : f32,
                scaling_factor: f32,)
                -> GridDrawer {
         GridDrawer {
             scaling_factor: scaling_factor,
             symbol_drawer: ShapeDrawer::line(graphics),
-            glyph_drawer: GlyphDrawer::new(graphics, font_size as u32),
         }
     }
 
     pub fn draw(&mut self,
-                frame: &Frame,
                 zoom: f32,
                 win_size: &Vec2<f32>,
                 transforms: &Transforms,
                 graphics: &mut Graphics,) {
-        let scale = self.scaling_factor;
 
         let mut grid_unit = GRID_UNIT;
 
@@ -62,7 +55,6 @@ impl GridDrawer {
                 cast(Vec2::new(-1.0 * x_zoom, y as f32)));
 
             self.draw_line(
-                zoom/scale,
                 Vec2::new(x_zoom,0.0),
                 transform,
                 graphics,
@@ -73,7 +65,6 @@ impl GridDrawer {
                 cast(Vec2::new(-1.0 * x_zoom, -1.0*y as f32)));
 
             self.draw_line(
-                zoom/scale,
                 Vec2::new(x_zoom,0.0),
                 transform,
                 graphics,
@@ -88,7 +79,6 @@ impl GridDrawer {
                 cast(Vec2::new(x as f32, -1.0 * y_zoom)));
 
             self.draw_line(
-                zoom/scale,
                 Vec2::new(0.0,y_zoom),
                 transform,
                 graphics,
@@ -99,7 +89,6 @@ impl GridDrawer {
                 cast(Vec2::new(-1.0*x as f32, -1.0 * y_zoom)));
 
             self.draw_line(
-                zoom/scale,
                 Vec2::new(0.0,y_zoom),
                 transform,
                 graphics,
@@ -109,7 +98,6 @@ impl GridDrawer {
 
     fn draw_line(
         &mut self,
-        scale: f32,
         vec: Vec2<f32>,
         transform: Mat4<f32>,
         graphics : &mut Graphics,
@@ -128,22 +116,5 @@ impl GridDrawer {
             transform * line_rotation.to_homogeneous(),
             graphics,
         );
-    }
-    
-    fn draw_text(&mut self,
-                 id  : EntityId,
-                 scale: f32,
-                 transform: Mat4<f32>,
-                 graphics : &mut Graphics,) {
-        let center = Vec2::new(0.0, 3.0);
-
-        self.glyph_drawer.draw(
-            &id.to_string(),
-            center,
-            color::Colors::orange(),
-            true,
-            transform,
-            graphics,
-            );
     }
 }
