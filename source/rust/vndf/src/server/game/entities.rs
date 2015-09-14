@@ -42,44 +42,44 @@ impl Entities {
             bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
             maneuvers : HashMap::new(),
-	    attributes: HashMap::new(),
-	    colliders : HashMap::new(),
+            attributes: HashMap::new(),
+            colliders : HashMap::new(),
         }
     }
 
     pub fn create_entity(&mut self) -> EntityBuilder {
-	let id = self.next_id;
-	self.next_id += 1;
+        let id = self.next_id;
+        self.next_id += 1;
 
-	EntityBuilder {
+        EntityBuilder {
             id: id,
 
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
             maneuvers : &mut self.maneuvers,
-	    attributes: &mut self.attributes,
-	    colliders : &mut self.colliders,
-	}
+            attributes: &mut self.attributes,
+            colliders : &mut self.colliders,
+        }
     }
 
     pub fn update_entity(&mut self, id: EntityId) -> EntityUpdater {
-	EntityUpdater {
-	    id: id,
+        EntityUpdater {
+            id: id,
 
-	    bodies    : &mut self.bodies,
-	    broadcasts: &mut self.broadcasts,
-	    maneuvers : &mut self.maneuvers,
-	    attributes: &mut self.attributes,
-	    colliders : &mut self.colliders,
-	}
+            bodies    : &mut self.bodies,
+            broadcasts: &mut self.broadcasts,
+            maneuvers : &mut self.maneuvers,
+            attributes: &mut self.attributes,
+            colliders : &mut self.colliders,
+        }
     }
 
     pub fn destroy_entity(&mut self, id: &EntityId) {
         self.bodies.remove(id);
         self.broadcasts.remove(id);
         self.maneuvers.remove(id);
-	self.attributes.remove(id);
-	self.colliders.remove(id);
+        self.attributes.remove(id);
+        self.colliders.remove(id);
     }
 }
 
@@ -101,27 +101,27 @@ impl<'c> EntityBuilder<'c> {
     }
 
     pub fn with_broadcast(mut self, component: Broadcast) -> EntityBuilder<'c> {
-	self.broadcasts.insert(self.id, component);
-	self
+        self.broadcasts.insert(self.id, component);
+        self
     }
 
     pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
-	self.maneuvers.insert(self.id, component);
-	self
+        self.maneuvers.insert(self.id, component);
+        self
     }
 
     pub fn with_attributes(mut self, component: Attributes) -> EntityBuilder<'c> {
-	self.attributes.insert(self.id, component);
-	self
+        self.attributes.insert(self.id, component);
+        self
     }
 
     pub fn with_collider(mut self, component: Collider) -> EntityBuilder<'c> {
-	self.colliders.insert(self.id, component);
-	self
+        self.colliders.insert(self.id, component);
+        self
     }
 
     pub fn return_id(self) -> EntityId {
-	self.id
+        self.id
     }
 }
 
@@ -158,8 +158,8 @@ impl<'c> EntityUpdater<'c> {
     }
 
     pub fn add_collider(mut self, component: Collider) -> EntityUpdater<'c> {
-	self.colliders.insert(self.id, component);
-	self
+        self.colliders.insert(self.id, component);
+        self
     }
 
     pub fn remove_body(mut self) -> EntityUpdater<'c> {
