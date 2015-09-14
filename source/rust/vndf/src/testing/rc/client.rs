@@ -24,7 +24,6 @@ impl Client {
 				"--server-host=localhost",
 				format!("--server-port={}", port).as_ref(),
 				format!("--network-timeout={}", 0.05).as_ref(),
-				format!("--sleep-duration={}", 5).as_ref(),
 			]
 		);
 
