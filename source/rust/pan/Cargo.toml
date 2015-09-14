@@ -1,8 +1,4 @@
 [package]
-name    = "vndf-ide"
+name    = "pan"
 version = "0.1.0"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
-
-
-[[bin]]
-name = "vndf"
