@@ -39,21 +39,21 @@ impl GameState {
 
     /// currently loads a random state
     pub fn load_state (&mut self) -> Vec<EntityId> {
-	let mut planets = vec!();
+        let mut planets = vec!();
 
-	// generate planets
-	for _ in (0..5) {
-	    let planet = PlanetBuilder::default().build();
-	    let id = self.entities.create_entity()
-		.with_body(planet.body)
-		.with_attributes(Attributes::Planet(planet.attr))
-		.with_collider(Collider::new_from_planet(planet.attr.size,1.0))
-		.return_id();
-	    debug!("Creating random planet {}", id);
-	    planets.push(id);
-	}
-	
-	planets
+        // generate planets
+        for _ in (0..5) {
+            let planet = PlanetBuilder::default().build();
+            let id = self.entities.create_entity()
+                .with_body(planet.body)
+                .with_attributes(Attributes::Planet(planet.attr))
+                .with_collider(Collider::new_from_planet(planet.attr.size,1.0))
+                .return_id();
+            debug!("Creating random planet {}", id);
+            planets.push(id);
+        }
+
+        planets
     }
     
     pub fn on_enter(&mut self) -> EntityId {
@@ -63,7 +63,7 @@ impl GameState {
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
-	    .with_collider(Collider::new_from_ship(1.0))
+            .with_collider(Collider::new_from_ship(1.0))
             .return_id()
     }
 
@@ -141,10 +141,10 @@ impl GameState {
                 .get(id)
                 .map(|broadcast|
                      broadcast.clone()
-                     );
+                );
 
-	    let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
-	    
+            let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
+
             self.export_buffer.push((*id, (*body, broadcast, attr)))
         }
 
@@ -152,6 +152,6 @@ impl GameState {
     }
 
     pub fn get_entities(&self) -> &Entities {
-	&self.entities
+        &self.entities
     }
 }
