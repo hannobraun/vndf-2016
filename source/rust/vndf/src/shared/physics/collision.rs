@@ -73,7 +73,6 @@ impl Collider {
                                    other_pos: &Vec2<f64>,
                                    zoom: f32)
                                    -> bool {
-    let mut is_collide = false;
 
         let c1 = {
             match Collider::new_from_ship(zoom).kind {
