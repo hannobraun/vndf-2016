@@ -54,7 +54,7 @@ impl Interface for Player {
         let window = Window::new(
             (800.0 * config.scaling_factor) as u32,
             (600.0 * config.scaling_factor) as u32,
-        );
+            );
 
         let renderer = Renderer::new(&window, config.scaling_factor);
 
@@ -87,11 +87,11 @@ impl Interface for Player {
                              &mut self.renderer.camera);
 
         if let Some(size) = self.window.get_size().ok() {
-        self.mouse.update(&mut self.events,
-                          frame,
-                          &window_events,
-                          size,
-                          &mut self.renderer.camera);
+            self.mouse.update(&mut self.events,
+                              frame,
+                              &window_events,
+                              size,
+                              &mut self.renderer.camera);
         }
         
         self.cli.update(&mut self.events, frame, &window_events);
@@ -111,10 +111,10 @@ impl Interface for Player {
             frame,
             &self.cli.console,
             &self.window,
-        );
+            );
         self.window.swap_buffers();
 
-	check_collisions(frame,&mut self.events, self.renderer.camera.zoom);
+        check_collisions(frame,self.renderer.camera.zoom);
 
         // frame delay notifier
         if frame.deltatime > MAX_FRAME_TIME {
@@ -129,54 +129,35 @@ impl Interface for Player {
 }
 
 fn check_collisions(frame: &mut Frame,
-                    events: &mut Vec<InputEvent>,
                     zoom: f32) {
     // TODO: needs some notion of space-partitioning for efficiency
     'ships: for (ship_id,ship_body) in frame.ships.iter() {
-	let ship_coll = {
-	    if let Some (coll) = frame.colliders.get(&ship_id) { coll }
-	    else { warn!("No collider found for ship {}", ship_id);
-		   continue 'ships }
-	};
-
-        // check ships colliding into planets
-	'planets: for (planet_id,planet) in frame.planets.iter() {
-	    let planet_coll = {
-		if let Some (coll) = frame.colliders.get(&planet_id) { coll }
-		else { warn!("No collider found for planet {}", planet_id);
-		       continue 'planets }
-	    };
-	    if ship_coll.check_collision(&ship_body.position,
-					 (planet_coll,&planet.body.position)) {
-		events.push(InputEvent::Collision(*ship_id,*planet_id));
-	    }
-	}
+        let ship_coll = {
+            if let Some (coll) = frame.colliders.get(&ship_id) { coll }
+            else { warn!("No collider found for ship {}", ship_id);
+                   continue 'ships }
+        };
 
         // check ships colliding into eachother
-	'other_ships: for (ship_id2,ship_body2) in frame.ships.iter() {
-	    if ship_id == ship_id2 { continue 'other_ships }
-
-            // NOTE: we need two separate checks, one for actual collisions
-            // and another for visual collisions while zoomed (ie: to be grouped)
+        'other_ships: for (ship_id2,ship_body2) in frame.ships.iter() {
+            if ship_id == ship_id2 { continue 'other_ships }
+            
             let ship_coll2 = {
-		if let Some (coll) = frame.colliders.get(&ship_id2) { coll }
-		else { warn!("No collider found for ship {}", ship_id2);
-		       continue 'other_ships }
-	    };
-            if ship_coll.check_collision(&ship_body.position,
-					 (ship_coll2,&ship_body2.position)) {
-		events.push(InputEvent::Collision(*ship_id,*ship_id2));
-	    }
+                if let Some (coll) = frame.colliders.get(&ship_id2) { coll }
+                else { warn!("No collider found for ship {}", ship_id2);
+                       continue 'other_ships }
+            };
+
+            
             // NOTE: previous logic denotes the requirement for colliders
             // even though below function does not require it
 
-            if (zoom > 1.0) &
-                Collider::check_collision_zoomed(&ship_body.position,
-					         &ship_body2.position,
-                                                 zoom) {
-		    events.push(InputEvent::VisualCollision(*ship_id,*ship_id2));
-		}
-	}
+            if Collider::check_collision_zoomed(&ship_body.position,
+                                                &ship_body2.position,
+                                                zoom) {
+                // visual collision made between *ship_id,*ship_id2
+            }
+        }
     }
 }
 
