@@ -17,9 +17,6 @@ pub enum InputEvent {
     
     Select(Vec<EntityId>),
     Deselect(Vec<EntityId>),
-
-    Collision(EntityId,EntityId), // TODO: create collision type events?
-    VisualCollision(EntityId,EntityId), // TODO: rename me?
     
     Quit,
 }

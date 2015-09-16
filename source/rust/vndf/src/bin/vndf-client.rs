@@ -147,15 +147,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                                   (frame.select_ids.clone()));
                     }
                 },
-
-                InputEvent::Collision(id1,id2) => {
-                    // TODO: remove ship from scene
-                    trace!("INTERFACE: Ship Collision {} {}", id1, id2);
-                },
-
-                InputEvent::VisualCollision(id1,id2) => {
-                    trace!("INTERFACE: Visual Ship Collision while Zoomed {} {}", id1, id2);
-                },
                 
                 InputEvent::Quit => {
                     break 'main;
