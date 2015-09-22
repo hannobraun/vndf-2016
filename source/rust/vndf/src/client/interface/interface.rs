@@ -16,6 +16,8 @@ use std::vec::Drain;
 use glutin::Event;
 use glutin::Event::{Closed};
 
+use nalgebra::cast;
+
 use shared::physics::{SphereCollider};
 
 use client::config::Config;
@@ -28,6 +30,8 @@ use client::interface::{
 use client::keyboard::Keyboard;
 use client::mouse::Mouse;
 use client::window::Window;
+
+use client::graphics::SHIP_SIZE;
 
 const MAX_FRAME_TIME: f64 = 0.020; // 15ms minimum frame time
 
@@ -152,12 +156,11 @@ fn check_collisions(frame: &mut Frame,
             // NOTE: previous logic denotes the requirement for colliders
             // even though below function does not require it
 
-            // TODO: reimplement zoomed collision detection
-            //if SphereCollider::check_collision_zoomed(&ship_body.position,
-            //                                    &ship_body2.position,
-            //                                    zoom) {
+            let b = SphereCollider::new_from_oval(SHIP_SIZE * zoom);
+            if SphereCollider::check_collision((&b,&cast(ship_body.position)),
+                                               (&b,&cast(ship_body2.position)),) {
                 // visual collision made between *ship_id,*ship_id2
-            //}
+            }
         }
     }
 }
