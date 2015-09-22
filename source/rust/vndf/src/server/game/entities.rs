@@ -7,7 +7,9 @@ use shared::game::{
     EntityId,
     Attributes,
 };
-use shared::physics::collision::Collider;
+
+//use shared::physics::Sphere;
+use ncollide::shape::{Ball};
 
 
 /// This module contains prototype code for an entity-component system (ECS).
@@ -32,7 +34,7 @@ pub struct Entities {
     pub broadcasts: Components<Broadcast>,
     pub maneuvers : Components<Maneuver>,
     pub attributes: Components<Attributes>,
-    pub colliders : Components<Collider>,
+    pub colliders : Components<Ball<f32>>,
 }
 
 impl Entities {
@@ -91,7 +93,7 @@ pub struct EntityBuilder<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     attributes: &'c mut Components<Attributes>,
-    colliders : &'c mut Components<Collider>,
+    colliders : &'c mut Components<Ball<f32>>,
 }
 
 impl<'c> EntityBuilder<'c> {
@@ -115,7 +117,7 @@ impl<'c> EntityBuilder<'c> {
         self
     }
 
-    pub fn with_collider(mut self, component: Collider) -> EntityBuilder<'c> {
+    pub fn with_collider(mut self, component: Ball<f32>) -> EntityBuilder<'c> {
         self.colliders.insert(self.id, component);
         self
     }
@@ -133,7 +135,7 @@ pub struct EntityUpdater<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     attributes: &'c mut Components<Attributes>,
-    colliders : &'c mut Components<Collider>,
+    colliders : &'c mut Components<Ball<f32>>,
 }
 
 impl<'c> EntityUpdater<'c> {
@@ -157,7 +159,7 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 
-    pub fn add_collider(mut self, component: Collider) -> EntityUpdater<'c> {
+    pub fn add_collider(mut self, component: Ball<f32>) -> EntityUpdater<'c> {
         self.colliders.insert(self.id, component);
         self
     }

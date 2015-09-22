@@ -5,13 +5,15 @@ use rustc_serialize::json::{
     DecodeResult,
 };
 
+use ncollide::shape::{Ball};
+
 use client::graphics::camera::CameraTrack;
 use shared::game::{
     Body,
     EntityId,
 };
 use shared::planet::Planet;
-use shared::physics::collision::Collider;
+use shared::physics::Sphere;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
@@ -24,7 +26,7 @@ pub struct Frame {
     pub ships       : BTreeMap<EntityId, Body>,
     pub planets     : BTreeMap<EntityId, Planet>,
 
-    pub colliders   : HashMap<EntityId, Collider>,
+    pub colliders   : HashMap<EntityId, Ball<f32>>,
     
     pub camera_track: Option<CameraTrack>,
     pub select_ids  : HashSet<EntityId>,

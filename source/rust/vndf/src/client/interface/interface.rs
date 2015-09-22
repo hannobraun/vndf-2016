@@ -16,7 +16,7 @@ use std::vec::Drain;
 use glutin::Event;
 use glutin::Event::{Closed};
 
-use shared::physics::collision::{Collider};
+use shared::physics::{SphereCollider};
 
 use client::config::Config;
 use client::console;
@@ -152,11 +152,12 @@ fn check_collisions(frame: &mut Frame,
             // NOTE: previous logic denotes the requirement for colliders
             // even though below function does not require it
 
-            if Collider::check_collision_zoomed(&ship_body.position,
-                                                &ship_body2.position,
-                                                zoom) {
+            // TODO: reimplement zoomed collision detection
+            //if SphereCollider::check_collision_zoomed(&ship_body.position,
+            //                                    &ship_body2.position,
+            //                                    zoom) {
                 // visual collision made between *ship_id,*ship_id2
-            }
+            //}
         }
     }
 }

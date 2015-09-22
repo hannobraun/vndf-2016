@@ -18,7 +18,9 @@ use shared::game::{
 };
 
 use shared::planet::PlanetBuilder;
-use shared::physics::collision::Collider;
+use shared::physics::SphereCollider;
+
+use client::graphics::SHIP_SIZE; // TODO: move this to top client module
 
 // TODO: consider renaming this
 pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
@@ -47,7 +49,7 @@ impl GameState {
             let id = self.entities.create_entity()
                 .with_body(planet.body)
                 .with_attributes(Attributes::Planet(planet.attr))
-                .with_collider(Collider::new_from_planet(planet.attr.size,1.0))
+                .with_collider(SphereCollider::new_from_oval(planet.attr.size))
                 .return_id();
             debug!("Creating random planet {}", id);
             planets.push(id);
@@ -63,7 +65,7 @@ impl GameState {
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
-            .with_collider(Collider::new_from_ship(1.0))
+            .with_collider(SphereCollider::new_from_oval(SHIP_SIZE))
             .return_id()
     }
 

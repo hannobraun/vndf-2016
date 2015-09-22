@@ -1,119 +1,55 @@
-use nalgebra::{Pnt2,Vec2};
-use ncollide::shape::{Ball,Convex};
+use nalgebra::{Vec2};
+use ncollide::shape::{Ball};
 use ncollide::bounding_volume::{bounding_sphere,
-                BoundingVolume,};
+				BoundingVolume,
+                                BoundingSphere};
 
-use client::graphics::SHIP_SIZE;
+// Only deal with Ball<f32>
+pub type Sphere = BoundingSphere<Ball<f32>>; // precomputed bounding sphere
 
-// TODO: Consider removing collidekind and going with BoundingSphere only;
-// this means that if we wanted to have higher accuracy (odd shape sizes)
-// then we'd need this back, at a minimum
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
-pub enum CollideKind {
-    Ship(Convex<Pnt2<f64>>),
-    Planet(Ball<f64>),
-}
+pub struct SphereCollider;
 
-#[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
-pub struct Collider {
-    kind: CollideKind,
-}
+impl SphereCollider {
+    pub fn new_from_oval (diameter: f32) -> Ball<f32>  {
+	let b = Ball::new(diameter/2.0);
+        b
 
-impl Collider {
-    pub fn new (kind: CollideKind) -> Collider {
-    Collider { kind: kind, }
+            // we'll return this once ncollide supports boundingsphere in hashmap
+            //SphereCollider::as_sphere(&b,&Vec2::new(0.0,0.0))
     }
 
-    /// builds based on current ship mesh layout (from equilateral triangle)
-    // TODO: make ship mesh points as public in shapes module
-    pub fn new_from_ship (scaling_factor: f32) -> Collider {
-        let size = (SHIP_SIZE/2.0 * scaling_factor) as f64;
-        let p = vec![Pnt2::new(-0.5, -0.5) * size,
-                 Pnt2::new( 0.5, -0.5) * size,
-                 Pnt2::new( 0.0,  0.5) * size,];
-        let c = Convex::new(p);
+    /*/// rebuilds convex to pre-computed bounding sphere
+    pub fn as_sphere (c: &Ball<f32>, pos: &Vec2<f32>) -> Sphere {
+        bounding_sphere(c,pos)
+    }*/
 
-        Collider::new(CollideKind::Ship(c))
+    /*/// updates an existing boundingsphere
+    pub fn update (bs: &mut Sphere,
+                   pos: &Vec2<f32>,
+                   zoom: f32) {
+        *bs = BoundingSphere::new(*bs.center() + *pos,
+                                  bs.radius() *  zoom)
+    }*/
+
+    /// checks if position is inside
+    pub fn check_pos (b: &Ball<f32>,
+                      pos: &Vec2<f32>,
+                      zoom: f32,)
+		      -> bool {
+
+        let bs1 = bounding_sphere(b,pos);
+	let bs2 = bounding_sphere(&Ball::new(1.0*zoom),pos);
+	bs1.intersects(&bs2)
     }
 
-    pub fn new_from_planet (planet_size: f32, scaling_factor: f32) -> Collider {
-        let size = (planet_size/2.0 * scaling_factor) as f64;
-        let b = Ball::new(size);
+    /// checks for collision
+    // TODO: integrate zooming
+    pub fn check_collision (c1: (&Ball<f32>, &Vec2<f32>),
+                            c2: (&Ball<f32>, &Vec2<f32>),)
+		            -> bool {
 
-        Collider::new(CollideKind::Planet(b))
-    }
-
-    /// requires two colliders and their associated positions in the world
-    pub fn check_collision (&self,
-                            pos: &Vec2<f64>,
-                            other: (&Collider,&Vec2<f64>))
-                            -> bool {
-        let (other_kind, other_pos) = (&other.0.kind,other.1);
-        let mut is_collide = false;
-        match (&self.kind, other_kind) {
-            (&CollideKind::Ship(ref c1), &CollideKind::Ship(ref c2)) => {
-                    let c1_b = bounding_sphere(c1,pos);
-                    let c2_b = bounding_sphere(c2,other_pos);
-                    is_collide = c2_b.intersects(&c1_b);
-            },
-            (&CollideKind::Ship(ref c1), &CollideKind::Planet(ref c2)) => {
-            let c1_b = bounding_sphere(c1,pos);
-                    let c2_b = bounding_sphere(c2,other_pos);
-                    is_collide = c2_b.intersects(&c1_b);
-            },
-            _ => { warn!("Unsupported collision types"); }
-        }
-
-        is_collide
-    }
-
-    /// checks a collision between ships, while zoomed
-    // NOTE: this is currently a free function, no previous colliders necessary
-    pub fn check_collision_zoomed (pos: &Vec2<f64>,
-                                   other_pos: &Vec2<f64>,
-                                   zoom: f32)
-                                   -> bool {
-
-        let c1 = {
-            match Collider::new_from_ship(zoom).kind {
-            CollideKind::Ship(c) => c,
-            _ => panic!("Incompatible collidekind built"),
-        }};
-
-        let c2 = c1.clone();
-        
-        let c1_b = bounding_sphere(&c1,pos);
-        let c2_b = bounding_sphere(&c2,other_pos);
-        
-        c2_b.intersects(&c1_b)
-    }
-
-    /// checks if position is inside collider
-    /// requires this collider's position, and position of interest
-    pub fn check_pos (&self, pos: &Vec2<f64>,
-              other_pos: &Vec2<f64>,
-              zoom: Option<f32>)
-              -> bool {
-        let c1_b;
-
-        match self.kind {
-            CollideKind::Ship(ref c1) => {
-            let c = {if let Some(zoom) = zoom {
-                match Collider::new_from_ship(zoom).kind {
-                CollideKind::Ship(c) => c,
-                _ => panic!("Incompatible collidekind built"),
-                }
-            }
-                 else { c1.clone() }};
-                    c1_b = bounding_sphere(&c,pos);
-            },
-            CollideKind::Planet(ref c1) => {
-            // NOTE: currently selecting a planet does not seem to need zoom factor
-            c1_b = bounding_sphere(c1,pos);
-            },
-        }
-
-        let c2_b = bounding_sphere(&Ball::new(1.0f64),other_pos);
-        c2_b.intersects(&c1_b)
+        let bs1 = bounding_sphere(c1.0,c1.1);
+	let bs2 = bounding_sphere(c2.0,c2.1);
+	bs1.intersects(&bs2)
     }
 }

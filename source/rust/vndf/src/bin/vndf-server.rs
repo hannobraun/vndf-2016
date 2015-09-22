@@ -5,6 +5,7 @@ extern crate env_logger;
 #[macro_use]
 extern crate log;
 extern crate time;
+extern crate nalgebra;
 
 extern crate vndf;
 
@@ -13,6 +14,8 @@ use std::env;
 use std::thread::sleep_ms;
 
 use time::precise_time_s;
+
+use nalgebra::cast;
 
 use vndf::server::args::Args;
 use vndf::server::clients::Clients;
@@ -25,6 +28,8 @@ use vndf::server::outgoing_events::{
 };
 use vndf::shared::protocol::server::Event as ServerEvent;
 use vndf::shared::game::Attributes;
+
+use vndf::shared::physics::SphereCollider;
 
 fn main() {
     env_logger::init().unwrap_or_else(|e|
@@ -103,9 +108,9 @@ fn main() {
 		    else { warn!("No body found for planet {}", planet_id);
 			   continue 'planets }
 		};
-		
-		if ship_coll.check_collision(&ship_body.position,
-					     (planet_coll,&planet_body.position)) {
+
+                if SphereCollider::check_collision((ship_coll,&cast(ship_body.position)),
+					           (planet_coll,&cast(planet_body.position))) {
 		    outgoing_events.push(
 			ServerEvent::Collision(*ship_id,*planet_id),
 			Recipients::All);
@@ -125,8 +130,8 @@ fn main() {
 		    else { warn!("No collider found for ship {}", ship_id2);
 		           continue 'other_ships }
 	        };
-                if ship_coll.check_collision(&ship_body.position,
-					     (ship_coll2,&ship_body2.position)) {
+                if SphereCollider::check_collision((ship_coll,&cast(ship_body.position)),
+					           (ship_coll2,&cast(ship_body2.position))) {
 		    outgoing_events.push(
 			ServerEvent::Collision(*ship_id,*ship_id2),
 			Recipients::All);

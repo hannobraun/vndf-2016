@@ -17,6 +17,7 @@ use client::interface::{
     InputEvent,
 };
 use shared::game::EntityId;
+use shared::physics::SphereCollider;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum
 const DRAGMIN_TIME: f64 = 0.30f64; // 30ms time minimum
@@ -203,20 +204,26 @@ impl Mouse {
 
 	for (id,body) in frame.ships.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
-		if coll.check_pos(&body.position,&pos, Some(zoom)) {
+                // update collider on the spot to reflect new position
+                //SphereCollider::update(coll,&body.position); // TODO: implement this when ncollide updates
+                
+		if SphereCollider::check_pos(coll, &cast(pos), zoom*10.0) {
 		    return Some(*id)
 		}
 	    }
-	    else { trace!("no collider found for ship id {}", id); }
+	    else { warn!("no collider found for ship id {}", id); }
 	}
 
 	for (id,planet) in frame.planets.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
-		if coll.check_pos(&planet.body.position,&pos, Some(zoom)) {
+                // update collider on the spot to reflect new position
+                //SphereCollider::update(coll,&planet.body.position);
+                
+		if SphereCollider::check_pos(&coll, &cast(pos), zoom*10.0) {
 		    return Some(*id)
 		}
 	    }
-	    else { trace!("no collider found for planet id {}", id); }
+	    else { warn!("no collider found for planet id {}", id); }
 	}
 
         None

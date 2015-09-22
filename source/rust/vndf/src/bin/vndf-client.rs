@@ -27,8 +27,10 @@ use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
 use vndf::shared::game::Attributes;
 use vndf::shared::planet::Planet;
-use vndf::shared::physics::collision::Collider;
+use vndf::shared::physics::SphereCollider;
 use vndf::client::graphics::camera::CameraTrack;
+
+use vndf::client::graphics::SHIP_SIZE;
 
 fn main() {
     env_logger::init().unwrap_or_else(|e|
@@ -172,7 +174,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
                                     id,
-                                    Collider::new_from_ship(scale));
+                                    SphereCollider::new_from_oval(SHIP_SIZE));
                             }
                         },
                         Some(Attributes::Planet(attr)) => {
@@ -183,8 +185,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
                                     id,
-                                    Collider::new_from_planet(scale,
-                                                              attr.size));
+                                    SphereCollider::new_from_oval(attr.size));
                             }
                         },
                         _ =>  { //default to ships
@@ -192,7 +193,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                             if !frame.colliders.contains_key(&id) {
                                 frame.colliders.insert(
                                     id,
-                                    Collider::new_from_ship(scale));
+                                    SphereCollider::new_from_oval(SHIP_SIZE));
                             }
                         },
                     }
