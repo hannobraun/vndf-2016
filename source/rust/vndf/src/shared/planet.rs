@@ -48,7 +48,7 @@ impl PlanetBuilder {
     pub fn default () -> PlanetBuilder {
         // random placement and size
         let mut rng = thread_rng();
-        let pos = sample(&mut rng, 1..1000, 2);
+        let pos = sample(&mut rng, 1..10000, 2);
         let size = sample(&mut rng, MIN_SIZE..MAX_SIZE, 1);
         let mass = sample(&mut rng, MIN_MASS..MAX_MASS, 1);
 

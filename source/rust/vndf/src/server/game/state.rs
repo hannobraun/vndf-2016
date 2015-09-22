@@ -21,6 +21,7 @@ use shared::planet::PlanetBuilder;
 use shared::physics::SphereCollider;
 
 use client::graphics::SHIP_SIZE; // TODO: move this to top client module
+use shared::planet;
 
 // TODO: consider renaming this
 pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
@@ -42,10 +43,28 @@ impl GameState {
     /// currently loads a random state
     pub fn load_state (&mut self) -> Vec<EntityId> {
         let mut planets = vec!();
-
+        let mut iterations = 15;
+        let mut max_tries = 500;
+        
         // generate planets
-        for _ in (0..5) {
+        'load: while iterations>0 {
             let planet = PlanetBuilder::default().build();
+
+            for pid in planets.iter() {
+                let other_body = self.entities.bodies.get(&pid).unwrap();
+                if ((other_body.position.x - planet.body.position.x).abs()
+                    < (planet::MAX_SIZE as f64 + planet.attr.size as f64)) |
+                ((other_body.position.y - planet.body.position.y).abs()
+                 < (planet::MAX_SIZE as f64 + planet.attr.size as f64))
+                {
+                    max_tries -= 1;
+                    if max_tries < 0 { break 'load; }
+                    continue 'load;
+                }
+            }
+
+            iterations -= 1; // reduce iterations
+            
             let id = self.entities.create_entity()
                 .with_body(planet.body)
                 .with_attributes(Attributes::Planet(planet.attr))
