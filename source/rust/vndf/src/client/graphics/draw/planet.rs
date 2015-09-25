@@ -35,9 +35,9 @@ impl PlanetDrawer {
                 zoom: f32,
                 transforms: &Transforms,
                 graphics: &mut Graphics,) {
-        for (id,planet) in &frame.planets {
-            let transform = transforms.symbol_to_screen(cast(planet.body.position));
-            let scale = planet.attr.size * self.scaling_factor;
+        for (id, &(body, planet)) in &frame.planets {
+            let transform = transforms.symbol_to_screen(cast(body.position));
+            let scale = planet.size * self.scaling_factor;
 
             // draw selection behind planet
             if frame.select_ids.contains(id) {
@@ -52,7 +52,7 @@ impl PlanetDrawer {
             // draw planet
             self.symbol_drawer.draw(
                 scale/zoom,
-                planet.attr.color,
+                planet.color,
                 transform,
                 graphics,
             );

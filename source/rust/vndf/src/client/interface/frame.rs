@@ -11,8 +11,8 @@ use client::graphics::camera::CameraTrack;
 use shared::game::{
     Body,
     EntityId,
+    Planet,
 };
-use shared::planet::Planet;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
@@ -23,7 +23,7 @@ pub struct Frame {
 
     pub broadcasts  : HashMap<EntityId, String>,
     pub ships       : BTreeMap<EntityId, Body>,
-    pub planets     : BTreeMap<EntityId, Planet>,
+    pub planets     : BTreeMap<EntityId, (Body, Planet)>,
 
     pub colliders   : HashMap<EntityId, Ball<f32>>,
     

@@ -150,8 +150,8 @@ impl Mouse {
                 }
             }
 
-	    for (id,planet) in frame.planets.iter() {
-                let planet_pos: Vec2<f32> = cast(planet.body.position);
+	    for (id, &(body, _)) in frame.planets.iter() {
+                let planet_pos: Vec2<f32> = cast(body.position);
                 if Mouse::within_bounds(planet_pos[0],start[0],end[0]) {
                     if Mouse::within_bounds(planet_pos[1],start[1],end[1]) {
                         v.push(id.clone());
