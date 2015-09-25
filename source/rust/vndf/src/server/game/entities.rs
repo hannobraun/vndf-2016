@@ -97,6 +97,11 @@ pub struct EntityBuilder<'c> {
 }
 
 impl<'c> EntityBuilder<'c> {
+    pub fn with_attributes(mut self, component: Attributes) -> EntityBuilder<'c> {
+        self.attributes.insert(self.id, component);
+        self
+    }
+
     pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
         self.bodies.insert(self.id, component);
         self
@@ -107,18 +112,13 @@ impl<'c> EntityBuilder<'c> {
         self
     }
 
-    pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
-        self.maneuvers.insert(self.id, component);
-        self
-    }
-
-    pub fn with_attributes(mut self, component: Attributes) -> EntityBuilder<'c> {
-        self.attributes.insert(self.id, component);
-        self
-    }
-
     pub fn with_collider(mut self, component: Ball<f32>) -> EntityBuilder<'c> {
         self.colliders.insert(self.id, component);
+        self
+    }
+
+    pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
+        self.maneuvers.insert(self.id, component);
         self
     }
 
@@ -139,6 +139,11 @@ pub struct EntityUpdater<'c> {
 }
 
 impl<'c> EntityUpdater<'c> {
+    pub fn add_attributes(mut self, component: Attributes) -> EntityUpdater<'c> {
+        self.attributes.insert(self.id, component);
+        self
+    }
+
     pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
         self.bodies.insert(self.id, component);
         self
@@ -149,18 +154,18 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 
+    pub fn add_collider(mut self, component: Ball<f32>) -> EntityUpdater<'c> {
+        self.colliders.insert(self.id, component);
+        self
+    }
+
     pub fn add_maneuver(mut self, component: Maneuver) -> EntityUpdater<'c> {
         self.maneuvers.insert(self.id, component);
         self
     }
 
-    pub fn add_attributes(mut self, component: Attributes) -> EntityUpdater<'c> {
-        self.attributes.insert(self.id, component);
-        self
-    }
-
-    pub fn add_collider(mut self, component: Ball<f32>) -> EntityUpdater<'c> {
-        self.colliders.insert(self.id, component);
+    pub fn remove_attributes(mut self) -> EntityUpdater<'c> {
+        self.attributes.remove(&self.id);
         self
     }
 
@@ -174,18 +179,13 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 
-    pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
-        self.maneuvers.remove(&self.id);
-        self
-    }
-
-    pub fn remove_attributes(mut self) -> EntityUpdater<'c> {
-        self.attributes.remove(&self.id);
-        self
-    }
-
     pub fn remove_colliders(mut self) -> EntityUpdater<'c> {
         self.colliders.remove(&self.id);
+        self
+    }
+
+    pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
+        self.maneuvers.remove(&self.id);
         self
     }
 }
