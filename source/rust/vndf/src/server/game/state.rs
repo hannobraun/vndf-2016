@@ -15,6 +15,7 @@ use shared::game::{
     Broadcast,
     EntityId,
     ManeuverData,
+    Ship,
 };
 
 use shared::planet::PlanetBuilder;
@@ -84,6 +85,7 @@ impl GameState {
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
+            .with_ship(Ship)
             .with_collider(SphereCollider::new_from_oval(SHIP_SIZE))
             .return_id()
     }
