@@ -5,7 +5,7 @@ use rustc_serialize::json::{
     DecodeResult,
 };
 
-use ncollide::shape::{Ball};
+use ncollide::shape::Ball;
 
 use client::graphics::camera::CameraTrack;
 use shared::game::{
