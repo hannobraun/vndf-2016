@@ -3,6 +3,7 @@ use shared::game::{
 	Body,
 	Broadcast,
 	EntityId,
+	Ship,
 };
 
 
@@ -12,6 +13,7 @@ pub type Entity = (
 		Body,
 		Option<Broadcast>,
 		Option<Attributes>,
+		Option<Ship>,
 	)
 );
 

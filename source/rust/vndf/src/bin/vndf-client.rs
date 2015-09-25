@@ -160,7 +160,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.ship_id = Some(ship_id);
                 },
                 server::Event::UpdateEntity(ent) => {
-                    let (id, (body,broadcast,attr)) = ent;
+                    let (id, (body,broadcast,attr, _)) = ent;
 
                     // for now match against attr, later we should cache this
                     match attr {

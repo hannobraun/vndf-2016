@@ -162,10 +162,15 @@ impl GameState {
                 .map(|broadcast|
                      broadcast.clone()
                 );
+            let ship = self.entities.ships
+                .get(id)
+                .map(|ship|
+                    *ship
+                );
 
             let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
 
-            self.export_buffer.push((*id, (*body, broadcast, attr)))
+            self.export_buffer.push((*id, (*body, broadcast, attr, ship)))
         }
 
         self.export_buffer.drain(..)
