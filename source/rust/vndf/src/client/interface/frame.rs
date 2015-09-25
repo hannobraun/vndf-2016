@@ -13,7 +13,6 @@ use shared::game::{
     EntityId,
 };
 use shared::planet::Planet;
-use shared::physics::Sphere;
 
 
 #[derive(Clone, Debug, RustcDecodable, RustcEncodable)]
