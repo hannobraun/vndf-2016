@@ -164,14 +164,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
                     // for now match against attr, later we should cache this
                     match attr {
-                        Some(Attributes::Ship) => {
-                            frame.ships.insert(id, body);
-                            if !frame.colliders.contains_key(&id) {
-                                frame.colliders.insert(
-                                    id,
-                                    SphereCollider::new_from_oval(SHIP_SIZE));
-                            }
-                        },
                         Some(Attributes::Planet(attr)) => {
                             let planet = Planet { body: body,
                                                   attr: attr };
