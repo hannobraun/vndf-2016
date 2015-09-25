@@ -24,13 +24,12 @@ use shared::physics::SphereCollider;
 use client::graphics::SHIP_SIZE; // TODO: move this to top client module
 use shared::planet;
 
-// TODO: consider renaming this
-pub type EntityState = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
+pub type Entity = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
 
 #[derive(Debug)]
 pub struct GameState {
     entities     : Entities,
-    export_buffer: Vec<EntityState>,
+    export_buffer: Vec<Entity>,
 }
 
 impl GameState {
@@ -157,7 +156,7 @@ impl GameState {
     }
 
     pub fn export_entities(&mut self)
-                           -> Drain<EntityState>
+                           -> Drain<Entity>
     {
         for (id, body) in &self.entities.bodies {
             let broadcast = self.entities.broadcasts
