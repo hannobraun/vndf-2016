@@ -67,9 +67,14 @@ impl GameState {
         for _ in 0 .. 5 {
             current_distance += Range::new(15000.0, 100000.0).sample(&mut rng);
 
+            let rotation = Rot2::new(Vec1::new(
+                Range::new(0.0, 360.0).sample(&mut rng),
+            ));
+            let position = rotation.rotate(&Vec2::new(current_distance, 0.0));
+
             let moon_id = self.entities.create_entity()
                 .with_body(Body {
-                    position: Vec2::new(current_distance, 0.0),
+                    position: position,
                     velocity: Vec2::new(0.0, 0.0),
                     mass    : 1.0, // not used anywhere at the moment
                 })
