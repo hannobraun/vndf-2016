@@ -8,7 +8,6 @@ use shared::game::{
     Attributes,
 };
 
-//use shared::physics::Sphere;
 use ncollide::shape::{Ball};
 
 
