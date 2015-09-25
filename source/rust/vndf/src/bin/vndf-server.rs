@@ -27,7 +27,6 @@ use vndf::server::outgoing_events::{
     Recipients,
 };
 use vndf::shared::protocol::server::Event as ServerEvent;
-use vndf::shared::game::Attributes;
 
 use vndf::shared::physics::SphereCollider;
 
@@ -85,11 +84,9 @@ fn main() {
         let entities = game_state.get_entities();
         'ships: for (ship_id,ship_body) in entities.bodies.iter() {
             // check only from the perspective of a ship
-            if let Some(attr) = entities.attributes.get(&ship_id) {
-                if attr != &Attributes::Ship {
-                    continue 'ships
-                }
-            } // if not found, likely a ship anyways
+            if entities.ships.get(&ship_id).is_none() {
+                continue 'ships
+            }
 
             let ship_coll = {
                 if let Some (coll) = entities.colliders.get(&ship_id) {
@@ -135,12 +132,10 @@ fn main() {
                 if ship_id == ship_id2 {
                     continue 'other_ships
                 }
-                
-                if let Some(attr) = entities.attributes.get(&ship_id2) {
-                    if attr != &Attributes::Ship {
-                        continue 'other_ships
-                    }
-                } // if not found, likely a ship anyways
+
+                if entities.ships.get(&ship_id).is_none() {
+                    continue 'other_ships
+                }
 
                 let ship_coll2 = {
                     if let Some (coll) = entities.colliders.get(&ship_id2) {
