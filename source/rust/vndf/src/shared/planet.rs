@@ -25,11 +25,11 @@ pub struct PlanetAttr {
 
 impl Planet {
     pub fn new (pos: Vec2<f64>, size: f32, mass: f32, color: Color) -> Planet {
-        let size = { if (size < MIN_SIZE as f32) { MIN_SIZE as f32 }
-                     else if (size > MAX_SIZE as f32) { MAX_SIZE as f32 }
+        let size = { if size < MIN_SIZE as f32 { MIN_SIZE as f32 }
+                     else if size > MAX_SIZE as f32 { MAX_SIZE as f32 }
                      else { size }};
-        let mass = { if (mass < MIN_MASS as f32) { MIN_MASS as f32 }
-                     else if (mass > MAX_MASS as f32) { MAX_MASS as f32 }
+        let mass = { if mass < MIN_MASS as f32 { MIN_MASS as f32 }
+                     else if mass > MAX_MASS as f32 { MAX_MASS as f32 }
                      else { mass }};
         
         Planet { body: Body { position: pos,
