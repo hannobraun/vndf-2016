@@ -10,11 +10,11 @@ use nalgebra::{
 use server::game::data::Maneuver;
 use server::game::entities::Entities;
 use shared::game::{
+    Attributes,
     Body,
     Broadcast,
     EntityId,
     ManeuverData,
-    Attributes,
 };
 
 use shared::planet::PlanetBuilder;
