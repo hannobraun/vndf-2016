@@ -170,7 +170,15 @@ impl GameState {
 
             let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
 
-            self.export_buffer.push((*id, (*body, broadcast, attr, ship)))
+            self.export_buffer.push(Entity {
+                id: *id,
+
+                body: *body,
+
+                attributes: attr,
+                broadcast : broadcast,
+                ship      : ship,
+            });
         }
 
         self.export_buffer.drain(..)

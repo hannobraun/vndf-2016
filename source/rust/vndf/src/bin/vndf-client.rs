@@ -159,38 +159,37 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 server::Event::ShipId(ship_id) => {
                     frame.ship_id = Some(ship_id);
                 },
-                server::Event::UpdateEntity(ent) => {
-                    let (id, (body,broadcast,attr, _)) = ent;
+                server::Event::UpdateEntity(entity) => {
 
                     // for now match against attr, later we should cache this
-                    match attr {
+                    match entity.attributes {
                         Some(Attributes::Planet(attr)) => {
-                            let planet = Planet { body: body,
+                            let planet = Planet { body: entity.body,
                                                   attr: attr };
-                            frame.planets.insert(id,planet);
+                            frame.planets.insert(entity.id,planet);
 
-                            if !frame.colliders.contains_key(&id) {
+                            if !frame.colliders.contains_key(&entity.id) {
                                 frame.colliders.insert(
-                                    id,
+                                    entity.id,
                                     SphereCollider::new_from_oval(attr.size));
                             }
                         },
                         _ =>  { //default to ships
-                            frame.ships.insert(id, body);
-                            if !frame.colliders.contains_key(&id) {
+                            frame.ships.insert(entity.id, entity.body);
+                            if !frame.colliders.contains_key(&entity.id) {
                                 frame.colliders.insert(
-                                    id,
+                                    entity.id,
                                     SphereCollider::new_from_oval(SHIP_SIZE));
                             }
                         },
                     }
 
-                    match broadcast {
+                    match entity.broadcast {
                         Some(broadcast) => {
-                            frame.broadcasts.insert(id, broadcast.message);
+                            frame.broadcasts.insert(entity.id, broadcast.message);
                         },
                         None => {
-                            frame.broadcasts.remove(&id);
+                            frame.broadcasts.remove(&entity.id);
                         }
                     }
                 },
