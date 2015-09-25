@@ -30,8 +30,8 @@ pub struct ManeuverData {
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Planet {
-	color: Color,
-	size : f32,
+	pub color: Color,
+	pub size : f32,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
