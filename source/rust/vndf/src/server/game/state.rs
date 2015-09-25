@@ -41,7 +41,7 @@ impl GameState {
     }
 
     /// currently loads a random state
-    pub fn load_state (&mut self) -> Vec<EntityId> {
+    pub fn generate_planets (&mut self) -> Vec<EntityId> {
         let mut planets = vec!();
         let mut iterations = 15;
         let mut max_tries = 500;
