@@ -136,21 +136,25 @@ fn check_collisions(frame: &mut Frame,
                     zoom: f32) {
     // TODO: needs some notion of space-partitioning for efficiency
     'ships: for (ship_id,ship_body) in frame.ships.iter() {
-        let ship_coll = {
-            if let Some (coll) = frame.colliders.get(&ship_id) { coll }
-            else { warn!("No collider found for ship {}", ship_id);
-                   continue 'ships }
-        };
+        if let Some (_) = frame.colliders.get(&ship_id) {
+            // collision
+        }
+        else {
+            warn!("No collider found for ship {}", ship_id);
+            continue 'ships
+        }
 
         // check ships colliding into eachother
         'other_ships: for (ship_id2,ship_body2) in frame.ships.iter() {
             if ship_id == ship_id2 { continue 'other_ships }
             
-            let ship_coll2 = {
-                if let Some (coll) = frame.colliders.get(&ship_id2) { coll }
-                else { warn!("No collider found for ship {}", ship_id2);
-                       continue 'other_ships }
-            };
+            if let Some (_) = frame.colliders.get(&ship_id2) {
+                // collision
+            }
+            else {
+                warn!("No collider found for ship {}", ship_id2);
+                continue 'other_ships
+            }
 
             
             // NOTE: previous logic denotes the requirement for colliders
