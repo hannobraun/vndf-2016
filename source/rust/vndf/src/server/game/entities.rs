@@ -56,11 +56,11 @@ impl Entities {
         EntityBuilder {
             id: id,
 
+            attributes: &mut self.attributes,
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
-            maneuvers : &mut self.maneuvers,
-            attributes: &mut self.attributes,
             colliders : &mut self.colliders,
+            maneuvers : &mut self.maneuvers,
         }
     }
 
@@ -68,11 +68,11 @@ impl Entities {
         EntityUpdater {
             id: id,
 
+            attributes: &mut self.attributes,
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
-            maneuvers : &mut self.maneuvers,
-            attributes: &mut self.attributes,
             colliders : &mut self.colliders,
+            maneuvers : &mut self.maneuvers,
         }
     }
 
@@ -89,11 +89,11 @@ impl Entities {
 pub struct EntityBuilder<'c> {
     id: EntityId,
 
+    attributes: &'c mut Components<Attributes>,
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
-    maneuvers : &'c mut Components<Maneuver>,
-    attributes: &'c mut Components<Attributes>,
     colliders : &'c mut Components<Ball<f32>>,
+    maneuvers : &'c mut Components<Maneuver>,
 }
 
 impl<'c> EntityBuilder<'c> {
@@ -131,11 +131,11 @@ impl<'c> EntityBuilder<'c> {
 pub struct EntityUpdater<'c> {
     id: EntityId,
 
+    attributes: &'c mut Components<Attributes>,
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
-    maneuvers : &'c mut Components<Maneuver>,
-    attributes: &'c mut Components<Attributes>,
     colliders : &'c mut Components<Ball<f32>>,
+    maneuvers : &'c mut Components<Maneuver>,
 }
 
 impl<'c> EntityUpdater<'c> {
