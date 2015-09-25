@@ -6,9 +6,15 @@ use nalgebra::{
     Vec1,
     Vec2,
 };
+use rand::thread_rng;
+use rand::distributions::{
+    Range,
+    Sample,
+};
 
 use server::game::data::Maneuver;
 use server::game::entities::Entities;
+use shared::color::Colors;
 use shared::game::{
     Body,
     Broadcast,
@@ -19,11 +25,9 @@ use shared::game::{
 };
 use shared::protocol::server::Entity;
 
-use shared::planet::PlanetBuilder;
 use shared::physics::SphereCollider;
 
 use client::graphics::SHIP_SIZE; // TODO: move this to top client module
-use shared::planet;
 
 
 #[derive(Debug)]
@@ -42,40 +46,43 @@ impl GameState {
 
     /// currently loads a random state
     pub fn generate_planets (&mut self) -> Vec<EntityId> {
-        let mut planets = vec!();
-        let mut iterations = 15;
-        let mut max_tries = 500;
-        
-        // generate planets
-        'load: while iterations>0 {
-            let planet = PlanetBuilder::default().build();
+        let mut planets = Vec::new();
+        let mut rng     = thread_rng();
 
-            for pid in planets.iter() {
-                let other_body = self.entities.bodies.get(&pid).unwrap();
-                if ((other_body.position.x - planet.body.position.x).abs()
-                    < (planet::MAX_SIZE as f64 + planet.attr.size as f64)) |
-                ((other_body.position.y - planet.body.position.y).abs()
-                 < (planet::MAX_SIZE as f64 + planet.attr.size as f64))
-                {
-                    max_tries -= 1;
-                    if max_tries < 0 { break 'load; }
-                    continue 'load;
-                }
-            }
 
-            iterations -= 1; // reduce iterations
-            
-            let id = self.entities.create_entity()
-                .with_body(planet.body)
-                .with_planet(Planet {
-                    color: planet.attr.color,
-                    size : planet.attr.size,
+        let planet_id = self.entities.create_entity()
+            .with_body(Body {
+                position: Vec2::new(0.0, 0.0),
+                velocity: Vec2::new(0.0, 0.0),
+                mass    : 1.0, // not used anywhere at the moment
+            })
+            .with_planet(Planet {
+                color: Colors::random(),
+                size : Range::new(5000.0, 10000.0).sample(&mut rng),
+            })
+            .return_id();
+
+        let mut current_distance = 0.0;
+
+        for _ in 0 .. 5 {
+            current_distance += Range::new(15000.0, 100000.0).sample(&mut rng);
+
+            let moon_id = self.entities.create_entity()
+                .with_body(Body {
+                    position: Vec2::new(current_distance, 0.0),
+                    velocity: Vec2::new(0.0, 0.0),
+                    mass    : 1.0, // not used anywhere at the moment
                 })
-                .with_collider(SphereCollider::new_from_oval(planet.attr.size))
+                .with_planet(Planet {
+                    color: Colors::random(),
+                    size : Range::new(500.0, 2000.0).sample(&mut rng),
+                })
                 .return_id();
-            debug!("Creating random planet {}", id);
-            planets.push(id);
+
+            planets.push(moon_id);
         }
+
+        planets.push(planet_id);
 
         planets
     }
