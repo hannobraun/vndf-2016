@@ -25,8 +25,10 @@ use vndf::shared::protocol::client::schedule_maneuver;
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
-use vndf::shared::game::Attributes;
-use vndf::shared::planet::Planet;
+use vndf::shared::planet::{
+    Planet,
+    PlanetAttr,
+};
 use vndf::shared::physics::SphereCollider;
 use vndf::client::graphics::camera::CameraTrack;
 
@@ -170,20 +172,20 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         }
                     }
 
-                    // for now match against attr, later we should cache this
-                    match entity.attributes {
-                        Some(Attributes::Planet(attr)) => {
-                            let planet = Planet { body: entity.body,
-                                                  attr: attr };
-                            frame.planets.insert(entity.id,planet);
+                    if let Some(planet) = entity.planet {
+                        let attr = PlanetAttr {
+                            color: planet.color,
+                            size : planet.size,
+                        };
+                        let planet = Planet { body: entity.body,
+                                              attr: attr };
+                        frame.planets.insert(entity.id,planet);
 
-                            if !frame.colliders.contains_key(&entity.id) {
-                                frame.colliders.insert(
-                                    entity.id,
-                                    SphereCollider::new_from_oval(attr.size));
-                            }
-                        },
-                        _ => {},
+                        if !frame.colliders.contains_key(&entity.id) {
+                            frame.colliders.insert(
+                                entity.id,
+                                SphereCollider::new_from_oval(attr.size));
+                        }
                     }
 
                     match entity.broadcast {
