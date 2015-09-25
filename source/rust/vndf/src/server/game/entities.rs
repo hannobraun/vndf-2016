@@ -8,7 +8,7 @@ use shared::game::{
     Attributes,
 };
 
-use ncollide::shape::{Ball};
+use ncollide::shape::Ball;
 
 
 /// This module contains prototype code for an entity-component system (ECS).
