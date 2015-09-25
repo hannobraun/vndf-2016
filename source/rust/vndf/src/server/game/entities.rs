@@ -29,22 +29,23 @@ pub type Components<T> = HashMap<EntityId, T>;
 pub struct Entities {
     next_id: u64,
 
+    pub attributes: Components<Attributes>,
     pub bodies    : Components<Body>,
     pub broadcasts: Components<Broadcast>,
-    pub maneuvers : Components<Maneuver>,
-    pub attributes: Components<Attributes>,
     pub colliders : Components<Ball<f32>>,
+    pub maneuvers : Components<Maneuver>,
 }
 
 impl Entities {
     pub fn new() -> Entities {
         Entities {
-            next_id   : 0,
+            next_id: 0,
+
+            attributes: HashMap::new(),
             bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
-            maneuvers : HashMap::new(),
-            attributes: HashMap::new(),
             colliders : HashMap::new(),
+            maneuvers : HashMap::new(),
         }
     }
 
