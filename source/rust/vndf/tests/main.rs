@@ -8,7 +8,7 @@ mod unit {
     mod server {
         mod game;
     }
-    mod client {
+    mod shared {
         mod color;
     }
     mod physics {
