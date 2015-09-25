@@ -17,6 +17,7 @@ use shared::game::{
     ManeuverData,
     Ship,
 };
+use shared::protocol::server::Entity;
 
 use shared::planet::PlanetBuilder;
 use shared::physics::SphereCollider;
@@ -24,7 +25,6 @@ use shared::physics::SphereCollider;
 use client::graphics::SHIP_SIZE; // TODO: move this to top client module
 use shared::planet;
 
-pub type Entity = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
 
 #[derive(Debug)]
 pub struct GameState {

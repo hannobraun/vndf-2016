@@ -1,6 +1,13 @@
-use shared::game::{EntityId};
+use shared::game::{
+	Attributes,
+	Body,
+	Broadcast,
+	EntityId,
+};
 
-use server::game::state::Entity;
+
+pub type Entity = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
+
 
 #[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum Event {
