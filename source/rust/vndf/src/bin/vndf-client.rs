@@ -65,11 +65,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
     network.send(ClientEvent::Public(client_event::Public::Login));
 
-    let config = interface.get_config();
-
-    let mut scale = 1.0;
-    if let Some(conf) = config { scale = conf.scaling_factor; }
-    
     'main: loop {
         let now = precise_time_s();
         frame.deltatime = now-frame_time;
