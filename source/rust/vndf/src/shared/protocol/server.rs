@@ -6,7 +6,14 @@ use shared::game::{
 };
 
 
-pub type Entity = (EntityId, (Body, Option<Broadcast>, Option<Attributes>));
+pub type Entity = (
+	EntityId,
+	(
+		Body,
+		Option<Broadcast>,
+		Option<Attributes>,
+	)
+);
 
 
 #[derive(Clone, Debug, PartialEq, RustcDecodable, RustcEncodable)]
