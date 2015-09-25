@@ -10,11 +10,7 @@ use nalgebra::{
     Vec3,
 };
 
-use client::graphics::base::{
-    color,
-
-    Graphics,
-};
+use client::graphics::base::Graphics;
 use client::graphics::draw::{
     GlyphDrawer,
     ShapeDrawer,
@@ -25,6 +21,7 @@ use shared::game::{
     Body,
     EntityId,
 };
+use shared::color;
 use shared::util::angle_of;
 
 

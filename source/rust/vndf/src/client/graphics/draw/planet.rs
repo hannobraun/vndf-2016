@@ -2,9 +2,10 @@ use nalgebra::{cast,Mat4,Vec2};
 
 use shared::game::{EntityId};
 
-use client::graphics::base::{Graphics,color};
+use client::graphics::base::Graphics;
 use client::graphics::draw::{ShapeDrawer, GlyphDrawer};
 use client::graphics::transforms::Transforms;
+use shared::color;
 
 use client::interface::Frame;
 

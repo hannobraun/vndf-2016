@@ -21,8 +21,8 @@ use client::graphics::base::{
     Batch,
     Graphics,
     Texture,
-    color,
 };
+use shared::color;
 
 
 static VERTEX_SRC: &'static [u8] = b"

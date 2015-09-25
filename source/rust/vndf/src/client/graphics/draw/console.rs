@@ -3,13 +3,10 @@ use std::fmt::Write;
 use nalgebra::Vec2;
 
 use client::console::Console;
-use client::graphics::base::{
-    color,
-
-    Graphics,
-};
+use client::graphics::base::Graphics;
 use client::graphics::draw::GlyphDrawer;
 use client::graphics::frame_state::FrameState;
+use shared::color;
 
 
 pub struct ConsoleDrawer {

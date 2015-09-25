@@ -1,4 +1,9 @@
-use vndf::client::graphics::base::color::{Color, Colorable, Colors};
+use vndf::shared::color::{
+	Color,
+	Colorable,
+	Colors,
+};
+
 
 #[test]
 fn conversion() {

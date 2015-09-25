@@ -12,9 +12,10 @@ use nalgebra::{
 
 use shared::util::angle_of;
 
-use client::graphics::base::{Graphics,color};
+use client::graphics::base::Graphics;
 use client::graphics::draw::ShapeDrawer;
 use client::graphics::transforms::Transforms;
+use shared::color;
 
 
 pub const GRID_UNIT: u32 = 100;
