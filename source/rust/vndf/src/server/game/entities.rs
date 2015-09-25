@@ -87,11 +87,11 @@ impl Entities {
     }
 
     pub fn destroy_entity(&mut self, id: &EntityId) {
+        self.attributes.remove(id);
         self.bodies.remove(id);
         self.broadcasts.remove(id);
-        self.maneuvers.remove(id);
-        self.attributes.remove(id);
         self.colliders.remove(id);
+        self.maneuvers.remove(id);
         self.planets.remove(id);
         self.ships.remove(id);
     }
