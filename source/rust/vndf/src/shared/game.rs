@@ -1,6 +1,8 @@
 use nalgebra::Vec2;
 
+use shared::color::Color;
 use shared::planet;
+
 
 pub type EntityId = u64;
 
@@ -24,6 +26,12 @@ pub struct ManeuverData {
     pub start_s   : f64,
     pub duration_s: f64,
     pub angle     : f64,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
+pub struct Planet {
+	color: Color,
+	size : f32,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
