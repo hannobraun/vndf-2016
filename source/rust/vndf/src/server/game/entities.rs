@@ -92,6 +92,8 @@ impl Entities {
         self.maneuvers.remove(id);
         self.attributes.remove(id);
         self.colliders.remove(id);
+        self.planets.remove(id);
+        self.ships.remove(id);
     }
 }
 
