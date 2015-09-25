@@ -15,7 +15,7 @@ use ncollide::shape::{Ball};
 /// This module contains prototype code for an entity-component system (ECS).
 /// I've experimented with entity systems in the past, and come to the
 /// conclusion that the best approach to implement one in Rust is to use code
-/// generation to generated game-specific code.
+/// generation to generate game-specific code.
 ///
 /// So far, I haven't found a good API approach that I really like, however. In
 /// this module, I'd like to prototype approaches until we hit on something that
