@@ -1,11 +1,16 @@
-use rand::{thread_rng, sample, random};
+use rand::{
+    thread_rng,
+    sample,
+    random,
+};
 use nalgebra::Vec2;
 
 use shared::color::{
     Color,
     Colors,
 };
-use shared::game::{Body};
+use shared::game::Body;
+
 
 pub const MAX_SIZE: i32 = 1000;
 pub const MIN_SIZE: i32 = 100;

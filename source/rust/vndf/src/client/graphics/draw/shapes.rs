@@ -3,7 +3,6 @@ use std::f64::consts::PI;
 
 use gfx;
 use gfx_device_gl as gl;
-
 use nalgebra::Mat4;
 
 use client::graphics::base::{

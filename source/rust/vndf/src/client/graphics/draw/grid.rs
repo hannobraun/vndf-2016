@@ -10,12 +10,11 @@ use nalgebra::{
     Vec3,
 };
 
-use shared::util::angle_of;
-
 use client::graphics::base::Graphics;
 use client::graphics::draw::ShapeDrawer;
 use client::graphics::transforms::Transforms;
 use shared::color;
+use shared::util::angle_of;
 
 
 pub const GRID_UNIT: u32 = 100;

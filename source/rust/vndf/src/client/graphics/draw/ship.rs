@@ -17,11 +17,11 @@ use client::graphics::draw::{
 };
 use client::graphics::transforms::Transforms;
 use client::interface::Frame;
+use shared::color;
 use shared::game::{
     Body,
     EntityId,
 };
-use shared::color;
 use shared::util::angle_of;
 
 
