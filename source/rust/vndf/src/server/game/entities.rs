@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 use server::game::data::Maneuver;
 use shared::game::{
+    Attributes,
     Body,
     Broadcast,
     EntityId,
-    Attributes,
 };
 
 use ncollide::shape::Ball;
