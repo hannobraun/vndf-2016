@@ -155,9 +155,7 @@ impl GameState {
         }
     }
 
-    pub fn export_entities(&mut self)
-                           -> Drain<Entity>
-    {
+    pub fn export_entities(&mut self) -> Drain<Entity> {
         for (id, body) in &self.entities.bodies {
             let broadcast = self.entities.broadcasts
                 .get(id)
