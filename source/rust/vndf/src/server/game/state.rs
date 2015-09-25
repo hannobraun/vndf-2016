@@ -15,6 +15,7 @@ use shared::game::{
     Broadcast,
     EntityId,
     ManeuverData,
+    Planet,
     Ship,
 };
 use shared::protocol::server::Entity;
@@ -67,6 +68,10 @@ impl GameState {
             
             let id = self.entities.create_entity()
                 .with_body(planet.body)
+                .with_planet(Planet {
+                    color: planet.attr.color,
+                    size : planet.attr.size,
+                })
                 .with_attributes(Attributes::Planet(planet.attr))
                 .with_collider(SphereCollider::new_from_oval(planet.attr.size))
                 .return_id();
