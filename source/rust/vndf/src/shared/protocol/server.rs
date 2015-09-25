@@ -3,6 +3,7 @@ use shared::game::{
 	Body,
 	Broadcast,
 	EntityId,
+	Planet,
 	Ship,
 };
 
@@ -15,6 +16,7 @@ pub struct Entity {
 
 	pub attributes: Option<Attributes>,
 	pub broadcast : Option<Broadcast>,
+	pub planet    : Option<Planet>,
 	pub ship      : Option<Ship>,
 }
 

@@ -167,6 +167,11 @@ impl GameState {
                 .map(|broadcast|
                      broadcast.clone()
                 );
+            let planet = self.entities.planets
+                .get(id)
+                .map(|planet|
+                    *planet
+                );
             let ship = self.entities.ships
                 .get(id)
                 .map(|ship|
@@ -182,6 +187,7 @@ impl GameState {
 
                 attributes: attr,
                 broadcast : broadcast,
+                planet    : planet,
                 ship      : ship,
             });
         }
