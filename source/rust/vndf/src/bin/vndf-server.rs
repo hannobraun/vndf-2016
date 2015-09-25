@@ -82,7 +82,6 @@ fn main() {
         }
 
         // check collisions
-        // TODO: needs some notion of space-partitioning for efficiency
         let entities = game_state.get_entities();
         'ships: for (ship_id,ship_body) in entities.bodies.iter() {
             // check only from the perspective of a ship
