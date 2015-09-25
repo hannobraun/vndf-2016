@@ -1,7 +1,6 @@
 use nalgebra::Vec2;
 
 use shared::color::Color;
-use shared::planet;
 
 
 pub type EntityId = u64;
@@ -36,8 +35,3 @@ pub struct Planet {
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Ship;
-
-#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
-pub enum Attributes {
-    Planet(planet::PlanetAttr),
-}

@@ -10,7 +10,6 @@ use nalgebra::{
 use server::game::data::Maneuver;
 use server::game::entities::Entities;
 use shared::game::{
-    Attributes,
     Body,
     Broadcast,
     EntityId,
@@ -72,7 +71,6 @@ impl GameState {
                     color: planet.attr.color,
                     size : planet.attr.size,
                 })
-                .with_attributes(Attributes::Planet(planet.attr))
                 .with_collider(SphereCollider::new_from_oval(planet.attr.size))
                 .return_id();
             debug!("Creating random planet {}", id);
@@ -178,14 +176,11 @@ impl GameState {
                     *ship
                 );
 
-            let attr = self.entities.attributes.get(id).map(|attr| attr.clone());
-
             self.export_buffer.push(Entity {
                 id: *id,
 
                 body: *body,
 
-                attributes: attr,
                 broadcast : broadcast,
                 planet    : planet,
                 ship      : ship,

@@ -2,7 +2,6 @@ use std::collections::HashMap;
 
 use server::game::data::Maneuver;
 use shared::game::{
-    Attributes,
     Body,
     Broadcast,
     EntityId,
@@ -31,7 +30,6 @@ pub type Components<T> = HashMap<EntityId, T>;
 pub struct Entities {
     next_id: u64,
 
-    pub attributes: Components<Attributes>,
     pub bodies    : Components<Body>,
     pub broadcasts: Components<Broadcast>,
     pub colliders : Components<Ball<f32>>,
@@ -45,7 +43,6 @@ impl Entities {
         Entities {
             next_id: 0,
 
-            attributes: HashMap::new(),
             bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
             colliders : HashMap::new(),
@@ -62,7 +59,6 @@ impl Entities {
         EntityBuilder {
             id: id,
 
-            attributes: &mut self.attributes,
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
             colliders : &mut self.colliders,
@@ -76,7 +72,6 @@ impl Entities {
         EntityUpdater {
             id: id,
 
-            attributes: &mut self.attributes,
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
             colliders : &mut self.colliders,
@@ -87,7 +82,6 @@ impl Entities {
     }
 
     pub fn destroy_entity(&mut self, id: &EntityId) {
-        self.attributes.remove(id);
         self.bodies.remove(id);
         self.broadcasts.remove(id);
         self.colliders.remove(id);
@@ -101,7 +95,6 @@ impl Entities {
 pub struct EntityBuilder<'c> {
     id: EntityId,
 
-    attributes: &'c mut Components<Attributes>,
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
     colliders : &'c mut Components<Ball<f32>>,
@@ -111,11 +104,6 @@ pub struct EntityBuilder<'c> {
 }
 
 impl<'c> EntityBuilder<'c> {
-    pub fn with_attributes(mut self, component: Attributes) -> EntityBuilder<'c> {
-        self.attributes.insert(self.id, component);
-        self
-    }
-
     pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
         self.bodies.insert(self.id, component);
         self
@@ -155,7 +143,6 @@ impl<'c> EntityBuilder<'c> {
 pub struct EntityUpdater<'c> {
     id: EntityId,
 
-    attributes: &'c mut Components<Attributes>,
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
     colliders : &'c mut Components<Ball<f32>>,
@@ -165,11 +152,6 @@ pub struct EntityUpdater<'c> {
 }
 
 impl<'c> EntityUpdater<'c> {
-    pub fn add_attributes(mut self, component: Attributes) -> EntityUpdater<'c> {
-        self.attributes.insert(self.id, component);
-        self
-    }
-
     pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
         self.bodies.insert(self.id, component);
         self
@@ -197,11 +179,6 @@ impl<'c> EntityUpdater<'c> {
 
     pub fn add_ship(mut self, component: Ship) -> EntityUpdater<'c> {
         self.ships.insert(self.id, component);
-        self
-    }
-
-    pub fn remove_attributes(mut self) -> EntityUpdater<'c> {
-        self.attributes.remove(&self.id);
         self
     }
 
