@@ -161,6 +161,15 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 },
                 server::Event::UpdateEntity(entity) => {
 
+                    if let Some(_) = entity.ship {
+                        frame.ships.insert(entity.id, entity.body);
+                        if !frame.colliders.contains_key(&entity.id) {
+                            frame.colliders.insert(
+                                entity.id,
+                                SphereCollider::new_from_oval(SHIP_SIZE));
+                        }
+                    }
+
                     // for now match against attr, later we should cache this
                     match entity.attributes {
                         Some(Attributes::Planet(attr)) => {
@@ -174,14 +183,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                     SphereCollider::new_from_oval(attr.size));
                             }
                         },
-                        _ =>  { //default to ships
-                            frame.ships.insert(entity.id, entity.body);
-                            if !frame.colliders.contains_key(&entity.id) {
-                                frame.colliders.insert(
-                                    entity.id,
-                                    SphereCollider::new_from_oval(SHIP_SIZE));
-                            }
-                        },
+                        _ => {},
                     }
 
                     match entity.broadcast {
