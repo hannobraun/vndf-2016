@@ -202,7 +202,7 @@ impl Mouse {
 	// TODO: remove ships from iteration of which are not on the screen/in view;
 	// see within_bounds function
 
-	for (id,body) in frame.ships.iter() {
+	for (id, _) in frame.ships.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
                 // update collider on the spot to reflect new position
                 //SphereCollider::update(coll,&body.position); // TODO: implement this when ncollide updates
@@ -214,7 +214,7 @@ impl Mouse {
 	    else { warn!("no collider found for ship id {}", id); }
 	}
 
-	for (id,planet) in frame.planets.iter() {
+	for (id, _) in frame.planets.iter() {
 	    if let Some(coll) = frame.colliders.get(&id) {
                 // update collider on the spot to reflect new position
                 //SphereCollider::update(coll,&planet.body.position);
