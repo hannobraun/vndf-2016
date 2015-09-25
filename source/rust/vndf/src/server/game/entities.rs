@@ -6,6 +6,7 @@ use shared::game::{
     Body,
     Broadcast,
     EntityId,
+    Ship,
 };
 
 use ncollide::shape::Ball;
@@ -34,6 +35,7 @@ pub struct Entities {
     pub broadcasts: Components<Broadcast>,
     pub colliders : Components<Ball<f32>>,
     pub maneuvers : Components<Maneuver>,
+    pub ships     : Components<Ship>,
 }
 
 impl Entities {
@@ -46,6 +48,7 @@ impl Entities {
             broadcasts: HashMap::new(),
             colliders : HashMap::new(),
             maneuvers : HashMap::new(),
+            ships     : HashMap::new(),
         }
     }
 
@@ -61,6 +64,7 @@ impl Entities {
             broadcasts: &mut self.broadcasts,
             colliders : &mut self.colliders,
             maneuvers : &mut self.maneuvers,
+            ships     : &mut self.ships,
         }
     }
 
@@ -73,6 +77,7 @@ impl Entities {
             broadcasts: &mut self.broadcasts,
             colliders : &mut self.colliders,
             maneuvers : &mut self.maneuvers,
+            ships     : &mut self.ships,
         }
     }
 
@@ -94,6 +99,7 @@ pub struct EntityBuilder<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     colliders : &'c mut Components<Ball<f32>>,
     maneuvers : &'c mut Components<Maneuver>,
+    ships     : &'c mut Components<Ship>,
 }
 
 impl<'c> EntityBuilder<'c> {
@@ -122,6 +128,11 @@ impl<'c> EntityBuilder<'c> {
         self
     }
 
+    pub fn with_ship(mut self, component: Ship) -> EntityBuilder<'c> {
+        self.ships.insert(self.id, component);
+        self
+    }
+
     pub fn return_id(self) -> EntityId {
         self.id
     }
@@ -136,6 +147,7 @@ pub struct EntityUpdater<'c> {
     broadcasts: &'c mut Components<Broadcast>,
     colliders : &'c mut Components<Ball<f32>>,
     maneuvers : &'c mut Components<Maneuver>,
+    ships     : &'c mut Components<Ship>,
 }
 
 impl<'c> EntityUpdater<'c> {
@@ -164,6 +176,11 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 
+    pub fn add_ship(mut self, component: Ship) -> EntityUpdater<'c> {
+        self.ships.insert(self.id, component);
+        self
+    }
+
     pub fn remove_attributes(mut self) -> EntityUpdater<'c> {
         self.attributes.remove(&self.id);
         self
@@ -186,6 +203,11 @@ impl<'c> EntityUpdater<'c> {
 
     pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
         self.maneuvers.remove(&self.id);
+        self
+    }
+
+    pub fn remove_ship(mut self) -> EntityUpdater<'c> {
+        self.ships.remove(&self.id);
         self
     }
 }

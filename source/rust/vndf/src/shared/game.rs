@@ -27,6 +27,9 @@ pub struct ManeuverData {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
+pub struct Ship;
+
+#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub enum Attributes {
     Ship,
     Planet(planet::PlanetAttr),
