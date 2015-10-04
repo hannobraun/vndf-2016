@@ -124,3 +124,28 @@ fn scheduled_maneuvers_should_be_visible() {
 			*frame.maneuvers.iter().next().unwrap().1 == data
 	});
 }
+
+#[test]
+fn finished_maneuvers_should_be_removed() {
+	let     server = rc::Server::start();
+	let mut client = rc::Client::start(server.port());
+
+	let frame = client.wait_until(|frame| {
+		frame.game_time_s.is_some()
+	});
+
+	let data = ManeuverData {
+		start_s   : frame.game_time_s.unwrap() + 0.1,
+		duration_s: 0.1,
+		angle     : 0.0,
+	};
+
+	client.input(InputEvent::ScheduleManeuver(data));
+
+	client.wait_until(|frame| {
+		frame.maneuvers.len() == 1
+	});
+	client.wait_until(|frame| {
+		frame.maneuvers.len() == 0
+	});
+}

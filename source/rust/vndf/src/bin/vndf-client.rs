@@ -194,6 +194,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 },
                 server::Event::RemoveEntity(id) => {
                     frame.broadcasts.remove(&id);
+                    frame.maneuvers.remove(&id);
                     frame.ships.remove(&id);
                 },
 
