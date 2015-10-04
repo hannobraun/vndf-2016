@@ -84,7 +84,7 @@ fn main() {
             outgoing_events.push(
                 ServerEvent::UpdateEntity(ent),
                 Recipients::All,
-                )
+            );
         }
 
         // check collisions
