@@ -149,3 +149,29 @@ fn finished_maneuvers_should_be_removed() {
 		frame.maneuvers.len() == 0
 	});
 }
+
+#[test]
+fn players_should_only_see_their_own_maneuvers() {
+	let     server   = rc::Server::start();
+	let mut client_a = rc::Client::start(server.port());
+
+	let frame = client_a.wait_until(|frame| {
+		frame.game_time_s.is_some()
+	});
+
+	let data = ManeuverData {
+		start_s   : frame.game_time_s.unwrap() + 1000.0,
+		duration_s: 1.0,
+		angle     : 0.0,
+	};
+
+	client_a.input(InputEvent::ScheduleManeuver(data));
+
+	let mut client_b = rc::Client::start(server.port());
+
+	let frame = client_b.wait_until(|frame| {
+		frame.ships.len() == 2
+	});
+
+	assert_eq!(frame.maneuvers.len(), 0);
+}

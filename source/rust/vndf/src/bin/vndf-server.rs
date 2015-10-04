@@ -79,11 +79,34 @@ fn main() {
         }
 
         for entity in game_state.export_entities() {
-            // TODO: This sends all maneuvers to all clients. Clients should
-            //       only see their own maneuvers.
+            let recipients = match entity.maneuver {
+                Some(maneuver) => {
+                    // Not pretty, but works.
+                    let mut address = None;
+                    for (the_address, client) in &clients.clients {
+                        if client.ship_id == maneuver.ship_id {
+                            address = Some(the_address);
+                        }
+                    }
+
+                    match address {
+                        Some(address) => Recipients::One(*address),
+                        None => {
+                            warn!(
+                                "Found maneuver with no matching ship: {:?}",
+                                maneuver
+                            );
+                            continue;
+                        },
+                    }
+                },
+
+                None => Recipients::All,
+            };
+
             outgoing_events.push(
                 ServerEvent::UpdateEntity(entity),
-                Recipients::All,
+                recipients,
             );
         }
 
