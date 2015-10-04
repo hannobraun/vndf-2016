@@ -182,6 +182,11 @@ impl GameState {
                 .map(|broadcast|
                      broadcast.clone()
                 );
+            let maneuver = self.entities.maneuvers
+                .get(id)
+                .map(|maneuver|
+                    maneuver.data
+                );
             let planet = self.entities.planets
                 .get(id)
                 .map(|planet|
@@ -198,6 +203,7 @@ impl GameState {
 
                 body     : body,
                 broadcast: broadcast,
+                maneuver : maneuver,
                 planet   : planet,
                 ship     : ship,
             });
