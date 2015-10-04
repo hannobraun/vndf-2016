@@ -29,10 +29,11 @@ fn it_should_send_navigation_data() {
 		frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
 	);
 
-	assert!(is_point_on_line(
-		frame_2.ships[&ship_id].position,
-		frame_1.ships[&ship_id].position, frame_1.ships[&ship_id].velocity,
-	));
+	let p  = frame_2.ships[&ship_id].position;
+	let l1 = frame_1.ships[&ship_id].position;
+	let l2 = frame_1.ships[&ship_id].velocity;
+
+	assert!(is_point_on_line(p, l1, l2));
 }
 
 #[test]
