@@ -20,7 +20,7 @@ pub struct Broadcast {
     pub message: String,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]
 pub struct Maneuver {
     pub ship_id: EntityId,
     pub data   : ManeuverData,
