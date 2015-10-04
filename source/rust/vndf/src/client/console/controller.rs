@@ -363,7 +363,7 @@ impl Controller {
                     "list-maneuvers - List all scheduled maneuvers",
                     "select-entity <list of ship_id, separate by space>",
                     "clear-selection - Clears currently selected entities",
-                    ];
+                ];
 
                 self.console.output.push(format!("Available commands:"));
                 for line in &help {
