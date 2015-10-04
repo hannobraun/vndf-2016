@@ -171,7 +171,12 @@ impl GameState {
     }
 
     pub fn export_entities(&mut self) -> Drain<Entity> {
-        for (id, body) in &self.entities.bodies {
+        for id in &self.entities.entities {
+            let body = self.entities.bodies
+                .get(id)
+                .map(|body|
+                     *body
+                );
             let broadcast = self.entities.broadcasts
                 .get(id)
                 .map(|broadcast|
@@ -191,7 +196,7 @@ impl GameState {
             self.export_buffer.push(Entity {
                 id: *id,
 
-                body     : Some(*body),
+                body     : body,
                 broadcast: broadcast,
                 planet   : planet,
                 ship     : ship,
