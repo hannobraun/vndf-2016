@@ -31,9 +31,10 @@ use vndf::shared::protocol::server::Event as ServerEvent;
 use vndf::shared::physics::SphereCollider;
 
 fn main() {
-    env_logger::init().unwrap_or_else(|e|
-                                      panic!("Error initializing logger: {}", e)
-                                      );
+    env_logger::init()
+        .unwrap_or_else(|e|
+            panic!("Error initializing logger: {}", e)
+        );
 
     let args = Args::parse(env::args());
 
