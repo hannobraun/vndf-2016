@@ -158,23 +158,24 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     frame.ship_id = Some(ship_id);
                 },
                 server::Event::UpdateEntity(entity) => {
-
-                    if let Some(_) = entity.ship {
-                        frame.ships.insert(entity.id, entity.body);
-                        if !frame.colliders.contains_key(&entity.id) {
-                            frame.colliders.insert(
-                                entity.id,
-                                SphereCollider::new_from_oval(SHIP_SIZE));
+                    if let Some(body) = entity.body {
+                        if let Some(_) = entity.ship {
+                            frame.ships.insert(entity.id, body);
+                            if !frame.colliders.contains_key(&entity.id) {
+                                frame.colliders.insert(
+                                    entity.id,
+                                    SphereCollider::new_from_oval(SHIP_SIZE));
+                            }
                         }
-                    }
 
-                    if let Some(planet) = entity.planet {
-                        frame.planets.insert(entity.id, (entity.body, planet));
+                        if let Some(planet) = entity.planet {
+                            frame.planets.insert(entity.id, (body, planet));
 
-                        if !frame.colliders.contains_key(&entity.id) {
-                            frame.colliders.insert(
-                                entity.id,
-                                SphereCollider::new_from_oval(planet.size));
+                            if !frame.colliders.contains_key(&entity.id) {
+                                frame.colliders.insert(
+                                    entity.id,
+                                    SphereCollider::new_from_oval(planet.size));
+                            }
                         }
                     }
 

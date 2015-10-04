@@ -191,8 +191,7 @@ impl GameState {
             self.export_buffer.push(Entity {
                 id: *id,
 
-                body: *body,
-
+                body     : Some(*body),
                 broadcast: broadcast,
                 planet   : planet,
                 ship     : ship,

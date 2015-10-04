@@ -71,7 +71,7 @@ fn maneuvers_should_apply_thrust_over_time() {
 fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	for entity in game_state.export_entities() {
 		if entity.id == body_id {
-			return entity.body;
+			return entity.body.unwrap();
 		}
 	}
 

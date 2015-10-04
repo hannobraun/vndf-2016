@@ -11,8 +11,7 @@ use shared::game::{
 pub struct Entity {
 	pub id: EntityId,
 
-	pub body: Body,
-
+	pub body      : Option<Body>,
 	pub broadcast : Option<Broadcast>,
 	pub planet    : Option<Planet>,
 	pub ship      : Option<Ship>,
