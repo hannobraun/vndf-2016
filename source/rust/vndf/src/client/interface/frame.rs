@@ -21,9 +21,10 @@ pub struct Frame {
     pub game_time_s : Option<f64>,
     pub message     : Message,
 
-    pub broadcasts  : HashMap<EntityId, String>,
-    pub ships       : BTreeMap<EntityId, Body>,
-    pub planets     : BTreeMap<EntityId, (Body, Planet)>,
+    pub ships  : BTreeMap<EntityId, Body>,
+    pub planets: BTreeMap<EntityId, (Body, Planet)>,
+
+    pub broadcasts: HashMap<EntityId, String>,
 
     pub colliders   : HashMap<EntityId, Ball<f32>>,
     
@@ -39,9 +40,10 @@ impl Frame {
             game_time_s : None,
             message     : Message::None,
             
-            broadcasts  : HashMap::new(),
-            ships       : BTreeMap::new(),
-            planets     : BTreeMap::new(),
+            ships  : BTreeMap::new(),
+            planets: BTreeMap::new(),
+
+            broadcasts: HashMap::new(),
 
             colliders   : HashMap::new(),
             
