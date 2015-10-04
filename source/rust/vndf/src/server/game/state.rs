@@ -49,12 +49,11 @@ impl GameState {
     }
 
     /// currently loads a random state
-    pub fn generate_planets (&mut self) -> Vec<EntityId> {
-        let mut planets = Vec::new();
-        let mut rng     = thread_rng();
+    pub fn generate_planets (&mut self) {
+        let mut rng = thread_rng();
 
 
-        let planet_id = self.entities.create_entity()
+        self.entities.create_entity()
             .with_body(Body {
                 position: Vec2::new(0.0, 0.0),
                 velocity: Vec2::new(0.0, 0.0),
@@ -76,7 +75,7 @@ impl GameState {
             ));
             let position = rotation.rotate(&Vec2::new(current_distance, 0.0));
 
-            let moon_id = self.entities.create_entity()
+            self.entities.create_entity()
                 .with_body(Body {
                     position: position,
                     velocity: Vec2::new(0.0, 0.0),
@@ -87,13 +86,7 @@ impl GameState {
                     size : Range::new(500.0, 2000.0).sample(&mut rng),
                 })
                 .return_id();
-
-            planets.push(moon_id);
         }
-
-        planets.push(planet_id);
-
-        planets
     }
     
     pub fn on_enter(&mut self) -> EntityId {
