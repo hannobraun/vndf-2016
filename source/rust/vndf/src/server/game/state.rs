@@ -191,7 +191,7 @@ impl GameState {
             let maneuver = self.entities.maneuvers
                 .get(id)
                 .map(|maneuver|
-                    maneuver.data
+                    *maneuver
                 );
             let planet = self.entities.planets
                 .get(id)

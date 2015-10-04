@@ -2,7 +2,7 @@ use shared::game::{
 	Body,
 	Broadcast,
 	EntityId,
-	ManeuverData,
+	Maneuver,
 	Planet,
 	Ship,
 };
@@ -14,7 +14,7 @@ pub struct Entity {
 
 	pub body      : Option<Body>,
 	pub broadcast : Option<Broadcast>,
-	pub maneuver  : Option<ManeuverData>,
+	pub maneuver  : Option<Maneuver>,
 	pub planet    : Option<Planet>,
 	pub ship      : Option<Ship>,
 }

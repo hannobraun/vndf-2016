@@ -180,7 +180,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     }
 
                     if let Some(maneuver) = entity.maneuver {
-                        frame.maneuvers.insert(entity.id, maneuver);
+                        frame.maneuvers.insert(entity.id, maneuver.data);
                     }
 
                     match entity.broadcast {
