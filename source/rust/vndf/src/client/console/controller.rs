@@ -325,6 +325,17 @@ impl Controller {
                         self.console.output.push(format!("Error parsing arguments")),
                 }
             },
+            "list-maneuvers" => {
+                self.console.output.push(format!("Scheduled maneuvers:"));
+                for (_, maneuver) in &frame.maneuvers {
+                    self.console.output.push(format!(
+                        "Start: {}; Duration: {}; Angle: {}",
+                        maneuver.start_s,
+                        maneuver.duration_s,
+                        maneuver.angle,
+                    ));
+                }
+            },
             
             "select-entity" => {
                 let ents = Controller::parse_entity_ids(args);
