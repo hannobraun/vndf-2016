@@ -179,6 +179,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         }
                     }
 
+                    if let Some(maneuver) = entity.maneuver {
+                        frame.maneuvers.insert(entity.id, maneuver);
+                    }
+
                     match entity.broadcast {
                         Some(broadcast) => {
                             frame.broadcasts.insert(entity.id, broadcast.message);

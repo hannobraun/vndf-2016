@@ -101,3 +101,26 @@ fn it_should_schedule_maneuvers() {
 		new_difference < old_difference
 	});
 }
+
+#[test]
+fn scheduled_maneuvers_should_be_visible() {
+	let     server = rc::Server::start();
+	let mut client = rc::Client::start(server.port());
+
+	let frame = client.wait_until(|frame| {
+		frame.game_time_s.is_some()
+	});
+
+	let data = ManeuverData {
+		start_s   : frame.game_time_s.unwrap() + 1000.0,
+		duration_s: 1.0,
+		angle     : 0.0,
+	};
+
+	client.input(InputEvent::ScheduleManeuver(data));
+
+	client.wait_until(|frame| {
+		frame.maneuvers.len() == 1 &&
+			*frame.maneuvers.iter().next().unwrap().1 == data
+	});
+}
