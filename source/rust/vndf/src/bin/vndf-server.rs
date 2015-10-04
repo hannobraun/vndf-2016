@@ -78,11 +78,11 @@ fn main() {
             );
         }
 
-        for ent in game_state.export_entities() {
+        for entity in game_state.export_entities() {
             // TODO: This sends all maneuvers to all clients. Clients should
             //       only see their own maneuvers.
             outgoing_events.push(
-                ServerEvent::UpdateEntity(ent),
+                ServerEvent::UpdateEntity(entity),
                 Recipients::All,
             );
         }
