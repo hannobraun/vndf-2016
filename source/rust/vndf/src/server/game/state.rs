@@ -172,6 +172,7 @@ impl GameState {
 
         for id in to_destroy {
             self.entities.destroy_entity(&id);
+            self.destroyed_entities.push(id);
         }
     }
 
