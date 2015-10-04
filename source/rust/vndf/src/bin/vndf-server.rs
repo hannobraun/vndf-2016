@@ -41,7 +41,7 @@ fn main() {
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
     
-    let planets = game_state.generate_planets();
+    game_state.generate_planets();
 
     info!("Listening on port {}", args.port);
 
@@ -129,7 +129,7 @@ fn main() {
             };
 
             // check ship collisions with planets
-            'planets: for planet_id in planets.iter() {
+            'planets: for (planet_id, _) in entities.planets.iter() {
                 let planet_coll = {
                     if let Some (coll) = entities.colliders.get(&planet_id) {
                         coll
