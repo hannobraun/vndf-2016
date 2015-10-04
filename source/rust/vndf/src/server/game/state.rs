@@ -34,6 +34,8 @@ use client::graphics::SHIP_SIZE; // TODO: move this to top client module
 pub struct GameState {
     entities     : Entities,
     export_buffer: Vec<Entity>,
+
+    destroyed_entities: Vec<EntityId>,
 }
 
 impl GameState {
@@ -41,6 +43,8 @@ impl GameState {
         GameState {
             entities     : Entities::new(),
             export_buffer: Vec::new(),
+
+            destroyed_entities: Vec::new(),
         }
     }
 
@@ -106,6 +110,7 @@ impl GameState {
 
     pub fn on_leave(&mut self, ship_id: &EntityId) {
         self.entities.destroy_entity(ship_id);
+        self.destroyed_entities.push(*ship_id);
     }
 
     pub fn on_start_broadcast(&mut self, ship_id: EntityId, message: String) {
@@ -214,5 +219,9 @@ impl GameState {
 
     pub fn get_entities(&self) -> &Entities {
         &self.entities
+    }
+
+    pub fn destroyed_entities(&mut self) -> Drain<EntityId> {
+        self.destroyed_entities.drain(..)
     }
 }

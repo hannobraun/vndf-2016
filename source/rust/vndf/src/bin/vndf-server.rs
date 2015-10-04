@@ -64,14 +64,17 @@ fn main() {
             );
 
         clients.remove_inactive(now_s, args.client_timeout_s, |client| {
-            outgoing_events.push(
-                ServerEvent::RemoveEntity(client.ship_id),
-                Recipients::All,
-                );
             game_state.on_leave(&client.ship_id);
         });
 
         game_state.on_update(now_s);
+
+        for id in game_state.destroyed_entities() {
+            outgoing_events.push(
+                ServerEvent::RemoveEntity(id),
+                Recipients::All,
+            );
+        }
 
         for ent in game_state.export_entities() {
             outgoing_events.push(
