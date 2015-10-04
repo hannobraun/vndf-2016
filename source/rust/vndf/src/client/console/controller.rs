@@ -360,6 +360,7 @@ impl Controller {
                     "nav-data - Print navigation data",
                     "comm-data - Print communication data",
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
+                    "list-maneuvers - List all scheduled maneuvers",
                     "select-entity <list of ship_id, separate by space>",
                     "clear-selection - Clears currently selected entities",
                     ];
