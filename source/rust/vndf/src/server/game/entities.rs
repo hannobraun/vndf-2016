@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::collections::{
+    HashMap,
+    HashSet,
+};
 
 use server::game::data::Maneuver;
 use shared::game::{
@@ -30,6 +33,8 @@ pub type Components<T> = HashMap<EntityId, T>;
 pub struct Entities {
     next_id: u64,
 
+    pub entities: HashSet<EntityId>,
+
     pub bodies    : Components<Body>,
     pub broadcasts: Components<Broadcast>,
     pub colliders : Components<Ball<f32>>,
@@ -43,6 +48,8 @@ impl Entities {
         Entities {
             next_id: 0,
 
+            entities: HashSet::new(),
+
             bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
             colliders : HashMap::new(),
@@ -55,6 +62,8 @@ impl Entities {
     pub fn create_entity(&mut self) -> EntityBuilder {
         let id = self.next_id;
         self.next_id += 1;
+
+        self.entities.insert(id);
 
         EntityBuilder {
             id: id,
@@ -88,6 +97,8 @@ impl Entities {
         self.maneuvers.remove(id);
         self.planets.remove(id);
         self.ships.remove(id);
+
+        self.entities.remove(id);
     }
 }
 
