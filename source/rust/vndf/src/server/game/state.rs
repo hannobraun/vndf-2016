@@ -1,3 +1,4 @@
+use std::f64::consts::PI;
 use std::vec::Drain;
 
 use nalgebra::{
@@ -36,6 +37,8 @@ pub struct GameState {
     export_buffer: Vec<Entity>,
 
     destroyed_entities: Vec<EntityId>,
+
+    planet_id: EntityId,
 }
 
 impl GameState {
@@ -43,7 +46,7 @@ impl GameState {
         let mut entities = Entities::new();
         let mut rng      = thread_rng();
 
-        entities.create_entity()
+        let planet_id = entities.create_entity()
             .with_body(Body {
                 position: Vec2::new(0.0, 0.0),
                 velocity: Vec2::new(0.0, 0.0),
@@ -83,13 +86,27 @@ impl GameState {
             export_buffer: Vec::new(),
 
             destroyed_entities: Vec::new(),
+
+            planet_id: planet_id,
         }
     }
     
     pub fn on_enter(&mut self) -> EntityId {
+        let position = {
+            let body   = self.entities.bodies[&self.planet_id];
+            let planet = self.entities.planets[&self.planet_id];
+
+            let position = body.position + Vec2::new(planet.size + 500.0, 0.0);
+
+            let rotation = Rot2::new(Vec1::new(
+                Range::new(0.0, 2.0 * PI).sample(&mut thread_rng())
+            ));
+            rotation.rotate(&position)
+        };
+
         self.entities.create_entity()
             .with_body(Body {
-                position: Vec2::new(0.0, 0.0),
+                position: position,
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
