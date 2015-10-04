@@ -3,11 +3,11 @@ use std::collections::{
     HashSet,
 };
 
-use server::game::data::Maneuver;
 use shared::game::{
     Body,
     Broadcast,
     EntityId,
+    Maneuver,
     Planet,
     Ship,
 };

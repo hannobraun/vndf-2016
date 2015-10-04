@@ -12,13 +12,13 @@ use rand::distributions::{
     Sample,
 };
 
-use server::game::data::Maneuver;
 use server::game::entities::Entities;
 use shared::color::Colors;
 use shared::game::{
     Body,
     Broadcast,
     EntityId,
+    Maneuver,
     ManeuverData,
     Planet,
     Ship,
