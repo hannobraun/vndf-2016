@@ -40,20 +40,10 @@ pub struct GameState {
 
 impl GameState {
     pub fn new() -> GameState {
-        GameState {
-            entities     : Entities::new(),
-            export_buffer: Vec::new(),
+        let mut entities = Entities::new();
+        let mut rng      = thread_rng();
 
-            destroyed_entities: Vec::new(),
-        }
-    }
-
-    /// currently loads a random state
-    pub fn generate_planets (&mut self) {
-        let mut rng = thread_rng();
-
-
-        self.entities.create_entity()
+        entities.create_entity()
             .with_body(Body {
                 position: Vec2::new(0.0, 0.0),
                 velocity: Vec2::new(0.0, 0.0),
@@ -75,7 +65,7 @@ impl GameState {
             ));
             let position = rotation.rotate(&Vec2::new(current_distance, 0.0));
 
-            self.entities.create_entity()
+            entities.create_entity()
                 .with_body(Body {
                     position: position,
                     velocity: Vec2::new(0.0, 0.0),
@@ -86,6 +76,13 @@ impl GameState {
                     size : Range::new(500.0, 2000.0).sample(&mut rng),
                 })
                 .return_id();
+        }
+
+        GameState {
+            entities     : entities,
+            export_buffer: Vec::new(),
+
+            destroyed_entities: Vec::new(),
         }
     }
     

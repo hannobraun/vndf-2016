@@ -40,8 +40,6 @@ fn main() {
     let mut game_state = GameState::new();
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
-    
-    game_state.generate_planets();
 
     info!("Listening on port {}", args.port);
 
