@@ -193,9 +193,9 @@ impl GameState {
 
                 body: *body,
 
-                broadcast : broadcast,
-                planet    : planet,
-                ship      : ship,
+                broadcast: broadcast,
+                planet   : planet,
+                ship     : ship,
             });
         }
 
