@@ -70,6 +70,8 @@ fn main() {
         game_state.on_update(now_s);
 
         for id in game_state.destroyed_entities() {
+            // This sends the ids of all destroyed maneuvers to all clients. Not
+            // nice, but ok for now.
             outgoing_events.push(
                 ServerEvent::RemoveEntity(id),
                 Recipients::All,
@@ -77,6 +79,8 @@ fn main() {
         }
 
         for ent in game_state.export_entities() {
+            // TODO: This sends all maneuvers to all clients. Clients should
+            //       only see their own maneuvers.
             outgoing_events.push(
                 ServerEvent::UpdateEntity(ent),
                 Recipients::All,
