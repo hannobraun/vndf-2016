@@ -11,6 +11,7 @@ use client::graphics::camera::CameraTrack;
 use shared::game::{
     Body,
     EntityId,
+    ManeuverData,
     Planet,
 };
 
@@ -21,8 +22,9 @@ pub struct Frame {
     pub game_time_s : Option<f64>,
     pub message     : Message,
 
-    pub ships  : BTreeMap<EntityId, Body>,
-    pub planets: BTreeMap<EntityId, (Body, Planet)>,
+    pub ships    : BTreeMap<EntityId, Body>,
+    pub planets  : BTreeMap<EntityId, (Body, Planet)>,
+    pub maneuvers: BTreeMap<EntityId, ManeuverData>,
 
     pub broadcasts: HashMap<EntityId, String>,
 
@@ -40,8 +42,9 @@ impl Frame {
             game_time_s : None,
             message     : Message::None,
             
-            ships  : BTreeMap::new(),
-            planets: BTreeMap::new(),
+            ships    : BTreeMap::new(),
+            planets  : BTreeMap::new(),
+            maneuvers: BTreeMap::new(),
 
             broadcasts: HashMap::new(),
 
