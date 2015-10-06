@@ -43,7 +43,8 @@ fn main() {
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
 
-    InitialState.apply(&mut game_state);
+    let initial_state = InitialState::new();
+    initial_state.apply(&mut game_state);
 
     info!("Listening on port {}", args.port);
 

@@ -21,6 +21,10 @@ use shared::game::{
 pub struct InitialState;
 
 impl InitialState {
+    pub fn new() -> InitialState {
+        InitialState
+    }
+
     pub fn apply(&self, game_state: &mut GameState) {
         let entities = &mut game_state.entities;
 
