@@ -1,3 +1,5 @@
+use std::env;
+
 use rand::random;
 
 
@@ -6,8 +8,11 @@ pub fn random_port(min: u16, max: u16) -> u16 {
 	r % (max - min) + min
 }
 
-// TODO: Make Windows-compatible
 pub fn random_path() -> String {
+	let mut temp_file = env::temp_dir();
+
 	let r: u16 = random();
-	format!("/tmp/vndf-test-{}", r)
+	temp_file.push(format!("vndf-test-{}", r));
+
+	temp_file.display().to_string()
 }
