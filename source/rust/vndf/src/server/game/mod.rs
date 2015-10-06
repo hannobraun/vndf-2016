@@ -1,2 +1,3 @@
 pub mod entities;
+pub mod initial_state;
 pub mod state;

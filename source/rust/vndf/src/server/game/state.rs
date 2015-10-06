@@ -6,21 +6,14 @@ use nalgebra::{
     Vec1,
     Vec2,
 };
-use rand::thread_rng;
-use rand::distributions::{
-    Range,
-    Sample,
-};
 
 use server::game::entities::Entities;
-use shared::color::Colors;
 use shared::game::{
     Body,
     Broadcast,
     EntityId,
     Maneuver,
     ManeuverData,
-    Planet,
     Ship,
 };
 use shared::protocol::server::Entity;
@@ -30,8 +23,8 @@ use shared::physics::SphereCollider;
 
 #[derive(Debug)]
 pub struct GameState {
-    entities      : Entities,
-    spawn_position: Vec2<f64>,
+    pub entities      : Entities,
+    pub spawn_position: Vec2<f64>,
 
     export_buffer: Vec<Entity>,
     destroyed_entities: Vec<EntityId>,
@@ -39,58 +32,13 @@ pub struct GameState {
 
 impl GameState {
     pub fn new() -> GameState {
-        let mut entities = Entities::new();
-        let mut rng      = thread_rng();
-
-        let planet_id = entities.create_entity()
-            .with_body(Body {
-                position: Vec2::new(0.0, 0.0),
-                velocity: Vec2::new(0.0, 0.0),
-                mass    : 1.0, // not used anywhere at the moment
-            })
-            .with_planet(Planet {
-                color: Colors::random(),
-                size : Range::new(5000.0, 10000.0).sample(&mut rng),
-            })
-            .return_id();
-
-        let mut current_distance = 0.0;
-
-        for _ in 0 .. 5 {
-            current_distance += Range::new(15000.0, 100000.0).sample(&mut rng);
-
-            let rotation = Rot2::new(Vec1::new(
-                Range::new(0.0, 360.0).sample(&mut rng),
-            ));
-            let position = rotation.rotate(&Vec2::new(current_distance, 0.0));
-
-            entities.create_entity()
-                .with_body(Body {
-                    position: position,
-                    velocity: Vec2::new(0.0, 0.0),
-                    mass    : 1.0, // not used anywhere at the moment
-                })
-                .with_planet(Planet {
-                    color: Colors::random(),
-                    size : Range::new(500.0, 2000.0).sample(&mut rng),
-                })
-                .return_id();
-        }
-
-        let spawn_position = {
-            let body   = entities.bodies[&planet_id];
-            let planet = entities.planets[&planet_id];
-
-            body.position + Vec2::new(0.0, planet.size + 500.0)
-        };
-
         GameState {
-            entities     : entities,
+            entities     : Entities::new(),
             export_buffer: Vec::new(),
 
             destroyed_entities: Vec::new(),
 
-            spawn_position: spawn_position,
+            spawn_position: Vec2::new(0.0, 0.0),
         }
     }
     
