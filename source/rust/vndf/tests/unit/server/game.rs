@@ -71,6 +71,47 @@ fn maneuvers_should_apply_thrust_over_time() {
 }
 
 
+#[test]
+fn maneuver_thrust_should_be_configurable() {
+	let mut game_state = GameState::new();
+
+	let ship_id_a = game_state.on_enter();
+	let ship_id_b = game_state.on_enter();
+
+	let start_s    = 0.5;
+	let duration_s = 1.0;
+	let angle      = 0.0;
+
+	let maneuver_a = ManeuverData {
+		start_s   : start_s,
+		duration_s: duration_s,
+		angle     : angle,
+		thrust    : 1.0,
+	};
+	let maneuver_b = ManeuverData {
+		start_s   : start_s,
+		duration_s: duration_s,
+		angle     : angle,
+		thrust    : 0.5,
+	};
+
+	game_state.on_schedule_maneuver(ship_id_a, maneuver_a);
+	game_state.on_schedule_maneuver(ship_id_b, maneuver_b);
+	game_state.on_update(start_s + duration_s);
+
+	let body_a = get_body(ship_id_a, &mut game_state);
+	let body_b = get_body(ship_id_b, &mut game_state);
+
+	print!("body_a.velocity.x: {}\n", body_a.velocity.x);
+	print!("body_b.velocity.x: {}\n", body_b.velocity.x);
+
+	assert!(body_a.velocity.x > body_b.velocity.x);
+}
+
+// TODO: Thrust > 1.0 should equal 1.0
+// TODO: Thrust < 0.0 should equal 0.0
+
+
 fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	for entity in game_state.export_entities() {
 		if entity.id == body_id {
