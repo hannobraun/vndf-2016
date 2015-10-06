@@ -34,13 +34,12 @@ pub struct GameState {
 impl GameState {
     pub fn new() -> GameState {
         GameState {
-            entities     : Entities::new(),
-            export_buffer: Vec::new(),
+            entities      : Entities::new(),
+            spawn_position: Vec2::new(0.0, 0.0),
 
+            export_buffer     : Vec::new(),
             to_destroy        : Vec::new(),
             destroyed_entities: Vec::new(),
-
-            spawn_position: Vec2::new(0.0, 0.0),
         }
     }
     
