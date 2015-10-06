@@ -17,9 +17,9 @@ impl Server {
 		let mut process = Process::start(
 			"vndf-server",
 			&[
-				format!("--port={}", port).as_ref(),
-				format!("--client-timeout={}", 0.1).as_ref(),
-				format!("--sleep-duration={}", 5).as_ref(),
+				format!("--port={}"          , port).as_ref(),
+				format!("--client-timeout={}", 0.1 ).as_ref(),
+				format!("--sleep-duration={}", 5   ).as_ref(),
 			]
 		);
 		process.read_stderr_line(); // Make sure it's ready
