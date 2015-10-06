@@ -27,5 +27,6 @@ mod integration {
 }
 mod acceptance {
     mod basic;
+    mod celestials;
     mod navigation;
 }

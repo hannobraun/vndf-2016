@@ -1,6 +1,7 @@
 use std::vec::Drain;
 
 use nalgebra::{
+    Norm,
     Rot2,
     Rotate,
     Vec1,
@@ -86,6 +87,7 @@ impl GameState {
     pub fn on_update(&mut self, now_s: f64) {
         self.integrate();
         self.apply_maneuvers(now_s);
+        self.check_collisions();
 
         for id in self.to_destroy.drain(..) {
             self.entities.destroy_entity(&id);
@@ -174,6 +176,21 @@ impl GameState {
 
             if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
                 self.to_destroy.push(id);
+            }
+        }
+    }
+
+    fn check_collisions(&mut self) {
+        for (ship_id, _) in &self.entities.ships {
+            for (celestial_id, celestial) in &self.entities.planets {
+                let ship_pos      = self.entities.bodies[ship_id].position;
+                let celestial_pos = self.entities.bodies[celestial_id].position;
+
+                let squared_size = celestial.size * celestial.size;
+
+                if (ship_pos - celestial_pos).sqnorm() < squared_size {
+                    self.to_destroy.push(*ship_id);
+                }
             }
         }
     }
