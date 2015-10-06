@@ -26,7 +26,7 @@ pub struct GameState {
     pub entities      : Entities,
     pub spawn_position: Vec2<f64>,
 
-    export_buffer: Vec<Entity>,
+    export_buffer     : Vec<Entity>,
     destroyed_entities: Vec<EntityId>,
 }
 
