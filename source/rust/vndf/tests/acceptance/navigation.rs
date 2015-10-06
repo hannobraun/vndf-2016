@@ -113,17 +113,17 @@ fn scheduled_maneuvers_should_be_visible() {
 		frame.game_time_s.is_some()
 	});
 
-	let data = ManeuverData {
+	let maneuver_data = ManeuverData {
 		start_s   : frame.game_time_s.unwrap() + 1000.0,
 		duration_s: 1.0,
 		angle     : 0.0,
 	};
 
-	client.input(InputEvent::ScheduleManeuver(data));
+	client.input(InputEvent::ScheduleManeuver(maneuver_data));
 
 	client.wait_until(|frame| {
 		frame.maneuvers.len() == 1 &&
-			*frame.maneuvers.iter().next().unwrap().1 == data
+			*frame.maneuvers.iter().next().unwrap().1 == maneuver_data
 	});
 }
 
