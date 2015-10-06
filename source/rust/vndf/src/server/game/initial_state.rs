@@ -1,3 +1,6 @@
+use std::fs::File;
+use std::io::prelude::*;
+
 use nalgebra::{
     Vec1,
     Vec2,
@@ -9,6 +12,7 @@ use rand::distributions::{
     Range,
     Sample,
 };
+use rustc_serialize::json;
 
 use server::game::state::GameState;
 use shared::color::Colors;
@@ -65,6 +69,41 @@ impl InitialState {
         InitialState {
             celestials    : celestials,
             spawn_position: spawn_position,
+        }
+    }
+
+    pub fn from_file(path: &str) -> Self {
+        let mut file = match File::open(path) {
+            Ok(file)   => file,
+            Err(error) => panic!("Error opening initial state file: {}", error),
+        };
+
+        let mut initial_state_data = String::new();
+        if let Err(error) = file.read_to_string(&mut initial_state_data) {
+            panic!("Error reading initial state: {}", error);
+        }
+
+        match json::decode(&initial_state_data) {
+            Ok(initial_state) =>
+                initial_state,
+            Err(error) =>
+                panic!("Error decoding initial state: {}", error),
+        }
+    }
+
+    pub fn to_file(&self, path: &str) {
+        let initial_state_data = match json::encode(self) {
+            Ok(data)   => data,
+            Err(error) => panic!("Error encoding initial state: {}", error),
+        };
+
+        let mut file = match File::create(path) {
+            Ok(file)   => file,
+            Err(error) => panic!("Error creating file: {}", error),
+        };
+
+        if let Err(error) = file.write_all(initial_state_data.as_bytes()) {
+            panic!("Error writing initial state: {}", error);
         }
     }
 
