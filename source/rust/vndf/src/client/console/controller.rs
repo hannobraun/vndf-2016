@@ -361,7 +361,7 @@ impl Controller {
                     "comm-subscribe/ignore - actively list or ignore new broadcasts",
                     "nav-data - Print navigation data",
                     "comm-data - Print communication data",
-                    "schedule-maneuver <delay (s)> <duration (s)> <degrees> - Schedule a maneuver",
+                    "schedule-maneuver <delay (s)> <duration (s)> <degrees> <thrust> - Schedule a maneuver",
                     "list-maneuvers - List all scheduled maneuvers",
                     "select-entity <list of ship_id, separate by space>",
                     "clear-selection - Clears currently selected entities",
