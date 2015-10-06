@@ -330,10 +330,11 @@ impl Controller {
                 self.console.output.push(format!("Scheduled maneuvers:"));
                 for (_, maneuver) in &frame.maneuvers {
                     self.console.output.push(format!(
-                        "Start: {}; Duration: {}; Angle: {}",
+                        "Start: {}; Duration: {}; Angle: {}, Thrust: {}",
                         maneuver.start_s,
                         maneuver.duration_s,
                         maneuver.angle,
+                        maneuver.thrust,
                     ));
                 }
             },
