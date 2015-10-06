@@ -136,7 +136,7 @@ impl GameState {
         &mut self,
         ship_id: EntityId,
         data   : ManeuverData,
-        ) {
+    ) {
         self.entities.create_entity()
             .with_maneuver(Maneuver {
                 ship_id: ship_id,
