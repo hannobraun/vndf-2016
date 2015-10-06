@@ -35,7 +35,7 @@ pub struct GameState {
 
     destroyed_entities: Vec<EntityId>,
 
-    planet_id: EntityId,
+    spawn_position: Vec2<f64>,
 }
 
 impl GameState {
@@ -78,27 +78,27 @@ impl GameState {
                 .return_id();
         }
 
+        let spawn_position = {
+            let body   = entities.bodies[&planet_id];
+            let planet = entities.planets[&planet_id];
+
+            body.position + Vec2::new(0.0, planet.size + 500.0)
+        };
+
         GameState {
             entities     : entities,
             export_buffer: Vec::new(),
 
             destroyed_entities: Vec::new(),
 
-            planet_id: planet_id,
+            spawn_position: spawn_position,
         }
     }
     
     pub fn on_enter(&mut self) -> EntityId {
-        let position = {
-            let body   = self.entities.bodies[&self.planet_id];
-            let planet = self.entities.planets[&self.planet_id];
-
-            body.position + Vec2::new(0.0, planet.size + 500.0)
-        };
-
         self.entities.create_entity()
             .with_body(Body {
-                position: position,
+                position: self.spawn_position,
                 velocity: Vec2::new(1.0, 0.0),
                 mass: 0.0f32,
             })
