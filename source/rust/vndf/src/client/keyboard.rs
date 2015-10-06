@@ -92,6 +92,7 @@ impl Keyboard {
                         start_s   : game_time_s + 0.0,
                         duration_s: random::<u8>() as f64,
                         angle     : direction_rad,
+                        thrust    : 1.0,
                     };
 
                     events.push(InputEvent::ScheduleManeuver(data));

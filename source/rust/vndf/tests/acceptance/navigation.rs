@@ -84,6 +84,7 @@ fn it_should_schedule_maneuvers() {
 		start_s   : frame.game_time_s.unwrap(),
 		duration_s: 1.0,
 		angle     : maneuver_direction_rad,
+		thrust    : 1.0,
 	};
 
 	client.input(InputEvent::ScheduleManeuver(data));
@@ -117,6 +118,7 @@ fn scheduled_maneuvers_should_be_visible() {
 		start_s   : frame.game_time_s.unwrap() + 1000.0,
 		duration_s: 1.0,
 		angle     : 0.0,
+		thrust    : 1.0,
 	};
 
 	client.input(InputEvent::ScheduleManeuver(maneuver_data));
@@ -154,6 +156,7 @@ fn finished_maneuvers_should_be_removed() {
 		start_s   : frame.game_time_s.unwrap() + 0.1,
 		duration_s: 0.1,
 		angle     : 0.0,
+		thrust    : 1.0,
 	};
 
 	client.input(InputEvent::ScheduleManeuver(data));
@@ -179,6 +182,7 @@ fn players_should_only_see_their_own_maneuvers() {
 		start_s   : frame.game_time_s.unwrap() + 1000.0,
 		duration_s: 1.0,
 		angle     : 0.0,
+		thrust    : 1.0,
 	};
 
 	client_a.input(InputEvent::ScheduleManeuver(data));

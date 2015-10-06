@@ -31,6 +31,7 @@ pub struct ManeuverData {
     pub start_s   : f64,
     pub duration_s: f64,
     pub angle     : f64,
+    pub thrust    : f64, // 0.0 = 0%, 1.0 = 100%
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, RustcDecodable, RustcEncodable)]

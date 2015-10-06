@@ -17,11 +17,13 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 		start_s   : 0.5,
 		duration_s: 0.05,
 		angle     : 1.0,
+		thrust    : 1.0,
 	};
 	let maneuver_b = ManeuverData {
 		start_s   : 1.0,
 		duration_s: 0.05,
 		angle     : -1.0,
+		thrust    : 1.0,
 	};
 
 	game_state.on_schedule_maneuver(ship_id, maneuver_a);
@@ -50,6 +52,7 @@ fn maneuvers_should_apply_thrust_over_time() {
 		start_s   : 0.5,
 		duration_s: 0.2,
 		angle     : 1.0,
+		thrust    : 1.0,
 	};
 
 	game_state.on_schedule_maneuver(ship_id, maneuver);

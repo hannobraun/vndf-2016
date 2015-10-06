@@ -315,6 +315,8 @@ impl Controller {
                             start_s   : game_time_s + delay_s,
                             duration_s: duration_s,
                             angle     : direction_rad,
+                            // TODO: Read thrust from command
+                            thrust    : 1.0,
                         };
 
                         events.push(
