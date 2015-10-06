@@ -24,7 +24,7 @@ pub struct InitialState {
 }
 
 impl InitialState {
-    pub fn new() -> InitialState {
+    pub fn random() -> InitialState {
         let mut rng = thread_rng();
 
         let mut celestials = Vec::new();
