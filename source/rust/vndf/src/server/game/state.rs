@@ -27,8 +27,6 @@ use shared::protocol::server::Entity;
 
 use shared::physics::SphereCollider;
 
-use client::graphics::SHIP_SIZE; // TODO: move this to top client module
-
 
 #[derive(Debug)]
 pub struct GameState {
@@ -105,7 +103,7 @@ impl GameState {
                 mass: 0.0f32,
             })
             .with_ship(Ship)
-            .with_collider(SphereCollider::new_from_oval(SHIP_SIZE))
+            .with_collider(SphereCollider::new_from_oval(1.0))
             .return_id()
     }
 
