@@ -12,6 +12,7 @@ pub enum InputEvent {
     StopBroadcast,
 
     ScheduleManeuver(ManeuverData),
+    CancelManeuver(EntityId),
 
     Track(CameraTrack), // sets camera tracking
     

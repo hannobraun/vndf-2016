@@ -21,7 +21,10 @@ use vndf::client::interface::{
     Message,
 };
 use vndf::client::network::Network;
-use vndf::shared::protocol::client::schedule_maneuver;
+use vndf::shared::protocol::client::{
+    cancel_maneuver,
+    schedule_maneuver,
+};
 use vndf::shared::protocol::client::Event as ClientEvent;
 use vndf::shared::protocol::client::event as client_event;
 use vndf::shared::protocol::server;
@@ -113,6 +116,15 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         "Scheduling maneuver".to_string()
                             );
                 },
+
+                InputEvent::CancelManeuver(id) => {
+                    network.send(cancel_maneuver(id));
+
+                    frame.message = Message::Notice(
+                        "Cancelling maneuver".to_string()
+                    );
+                },
+
                 InputEvent::Track(track) => {
                     frame.camera_track = Some(track);
                 },

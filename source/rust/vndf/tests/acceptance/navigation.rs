@@ -170,6 +170,36 @@ fn finished_maneuvers_should_be_removed() {
 }
 
 #[test]
+fn players_should_be_able_to_cancel_maneuvers() {
+	let     server = rc::Server::start(InitialState::new());
+	let mut client = rc::Client::start(server.port());
+
+	let frame = client.wait_until(|frame| {
+		frame.game_time_s.is_some()
+	});
+
+	let data = ManeuverData {
+		start_s   : frame.game_time_s.unwrap() + 1000.0,
+		duration_s: 1000.0,
+		angle     : 0.0,
+		thrust    : 1.0,
+	};
+
+	client.input(InputEvent::ScheduleManeuver(data));
+
+	let frame = client.wait_until(|frame| {
+		frame.maneuvers.len() == 1
+	});
+
+	let id = frame.maneuvers.iter().next().unwrap().0;
+	client.input(InputEvent::CancelManeuver(*id));
+
+	client.wait_until(|frame| {
+		frame.maneuvers.len() == 0
+	});
+}
+
+#[test]
 fn players_should_only_see_their_own_maneuvers() {
 	let     server   = rc::Server::start(InitialState::new());
 	let mut client_a = rc::Client::start(server.port());
