@@ -67,6 +67,16 @@ impl InitialState {
         }
     }
 
+    pub fn with_celestial(mut self, celestial: Celestial) -> Self {
+        self.celestials.push(celestial);
+        self
+    }
+
+    pub fn with_spawn_position(mut self, position: Vec2<f64>) -> Self {
+        self.spawn_position = position;
+        self
+    }
+
     pub fn apply(&self, game_state: &mut GameState) {
         let entities = &mut game_state.entities;
 
