@@ -90,6 +90,6 @@ impl InitialState {
 
 #[derive(Clone, Copy)]
 pub struct Celestial {
-    position: Vec2<f64>,
-    size    : f64,
+    pub position: Vec2<f64>,
+    pub size    : f64,
 }
