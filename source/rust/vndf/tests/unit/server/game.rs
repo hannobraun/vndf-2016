@@ -158,6 +158,32 @@ fn maneuver_thrust_should_stay_within_limits() {
 	assert!(body_c.velocity.x == body_d.velocity.x);
 }
 
+#[test]
+fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
+	let mut game_state = GameState::new();
+
+	let ship_id_a = game_state.on_enter();
+	let ship_id_b = game_state.on_enter();
+
+	let maneuver = ManeuverData {
+		start_s   : 0.5,
+		duration_s: 1.0,
+		angle     : 0.0,
+		thrust    : 1.0,
+	};
+
+	game_state.on_schedule_maneuver(ship_id_a, maneuver);
+	game_state.on_schedule_maneuver(ship_id_b, maneuver);
+
+	assert_eq!(game_state.entities.maneuvers.len(), 2);
+
+	let maneuver_id_a = get_maneuver_id(ship_id_a, &mut game_state);
+	game_state.on_cancel_maneuver(ship_id_b, maneuver_id_a);
+	game_state.on_update(0.0);
+
+	assert_eq!(game_state.entities.maneuvers.len(), 2);
+}
+
 
 fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	for entity in game_state.export_entities() {
@@ -167,6 +193,16 @@ fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
 	}
 
 	unreachable!();
+}
+
+fn get_maneuver_id(ship_id: EntityId, game_state: &mut GameState) -> EntityId {
+	for (id, maneuver) in &game_state.entities.maneuvers {
+		if ship_id == maneuver.ship_id {
+			return *id;
+		}
+	}
+
+	panic!("Maneuver not found");
 }
 
 fn angle_has_decreased(direction: f64, before: Body, after: Body, ) -> bool {
