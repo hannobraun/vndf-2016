@@ -123,7 +123,16 @@ fn scheduled_maneuvers_should_be_visible() {
 
 	client.wait_until(|frame| {
 		if frame.maneuvers.len() == 1 {
-			let data = *frame.maneuvers.iter().next().unwrap().1;
+			let mut data = *frame.maneuvers.iter().next().unwrap().1;
+
+			if (data.start_s - maneuver_data.start_s).abs() < 0.001 {
+				// The time might be slightly off, due to the imperfect time
+				// synchronization between client and server. This is fine. As
+				// long as it roughly matches, we don't care, and we don't want
+				// the comparison below to fail because of it.
+				data.start_s = maneuver_data.start_s;
+			}
+
 			maneuver_data == data
 		}
 		else {
