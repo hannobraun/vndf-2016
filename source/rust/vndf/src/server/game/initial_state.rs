@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::Path;
 
 use nalgebra::{
     Vec1,
@@ -72,7 +73,7 @@ impl InitialState {
         }
     }
 
-    pub fn from_file(path: &str) -> Self {
+    pub fn from_file<P: AsRef<Path>>(path: P) -> Self {
         let mut file = match File::open(path) {
             Ok(file)   => file,
             Err(error) => panic!("Error opening initial state file: {}", error),
@@ -91,7 +92,7 @@ impl InitialState {
         }
     }
 
-    pub fn to_file(&self, path: &str) {
+    pub fn to_file<P: AsRef<Path>>(&self, path: P) {
         let initial_state_data = match json::encode(self) {
             Ok(data)   => data,
             Err(error) => panic!("Error encoding initial state: {}", error),
