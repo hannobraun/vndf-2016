@@ -84,11 +84,7 @@ impl GameState {
     }
 
     pub fn on_update(&mut self, now_s: f64) {
-        for (_, body) in &mut self.entities.bodies {
-            // TODO(E7GyYwQy): Take passed time since last iteration into
-            //                 account.
-            body.position = body.position + body.velocity;
-        }
+        self.integrate();
 
 
         let mut to_destroy = Vec::new();
@@ -170,5 +166,14 @@ impl GameState {
 
     pub fn destroyed_entities(&mut self) -> Drain<EntityId> {
         self.destroyed_entities.drain(..)
+    }
+
+
+    fn integrate(&mut self) {
+         for (_, body) in &mut self.entities.bodies {
+            // TODO(E7GyYwQy): Take passed time since last iteration into
+            //                 account.
+            body.position = body.position + body.velocity;
+        }
     }
 }
