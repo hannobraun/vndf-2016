@@ -1,3 +1,4 @@
+use vndf::server::game::initial_state::InitialState;
 use vndf::shared::protocol::client::{
 	login,
 	start_broadcast,
@@ -14,7 +15,7 @@ use vndf::testing::{
 
 #[test]
 fn it_should_ignore_clients_that_havent_logged_in() {
-	let     server   = rc::Server::start();
+	let     server   = rc::Server::start(InitialState::new());
 	let mut client_1 = mock::Client::start(server.port());
 	let mut client_2 = mock::Client::start(server.port());
 
@@ -38,7 +39,7 @@ fn it_should_ignore_clients_that_havent_logged_in() {
 
 #[test]
 fn it_should_ignore_duplicate_logins() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = mock::Client::start(server.port());
 
 	client.send(login());
@@ -89,7 +90,7 @@ fn it_should_ignore_duplicate_logins() {
 
 #[test]
 fn it_should_send_regular_heartbeats_with_current_game_time() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = mock::Client::start(server.port());
 
 	client.send(login());

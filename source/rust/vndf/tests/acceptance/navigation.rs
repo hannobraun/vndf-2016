@@ -1,5 +1,6 @@
 use std::f64::consts::PI;
 
+use vndf::server::game::initial_state::InitialState;
 use vndf::client::interface::InputEvent;
 use vndf::shared::game::ManeuverData;
 use vndf::shared::util::{
@@ -11,7 +12,7 @@ use vndf::testing::rc;
 
 #[test]
 fn it_should_send_navigation_data() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = rc::Client::start(server.port());
 
 	let frame_1 = client.wait_until(|frame|
@@ -38,7 +39,7 @@ fn it_should_send_navigation_data() {
 
 #[test]
 fn it_should_display_other_players_ships() {
-	let     server   = rc::Server::start();
+	let     server   = rc::Server::start(InitialState::new());
 	let mut client_a = rc::Client::start(server.port());
 
 	client_a.wait_until(|frame|
@@ -63,7 +64,7 @@ fn it_should_display_other_players_ships() {
 
 #[test]
 fn it_should_schedule_maneuvers() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = rc::Client::start(server.port());
 
 	let frame = client.wait_until(|frame| {
@@ -105,7 +106,7 @@ fn it_should_schedule_maneuvers() {
 
 #[test]
 fn scheduled_maneuvers_should_be_visible() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = rc::Client::start(server.port());
 
 	let frame = client.wait_until(|frame| {
@@ -128,7 +129,7 @@ fn scheduled_maneuvers_should_be_visible() {
 
 #[test]
 fn finished_maneuvers_should_be_removed() {
-	let     server = rc::Server::start();
+	let     server = rc::Server::start(InitialState::new());
 	let mut client = rc::Client::start(server.port());
 
 	let frame = client.wait_until(|frame| {
@@ -153,7 +154,7 @@ fn finished_maneuvers_should_be_removed() {
 
 #[test]
 fn players_should_only_see_their_own_maneuvers() {
-	let     server   = rc::Server::start();
+	let     server   = rc::Server::start(InitialState::new());
 	let mut client_a = rc::Client::start(server.port());
 
 	let frame = client_a.wait_until(|frame| {

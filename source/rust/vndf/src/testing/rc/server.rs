@@ -1,3 +1,4 @@
+use server::game::initial_state::InitialState;
 use testing::process::Process;
 use testing::util::random_port;
 
@@ -8,7 +9,9 @@ pub struct Server {
 }
 
 impl Server {
-	pub fn start() -> Server {
+	pub fn start(_initial_state: InitialState) -> Server {
+		// TODO: Configure server process to use initial state
+
 		let port = random_port(40000, 50000);
 
 		let mut process = Process::start(
