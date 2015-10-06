@@ -122,8 +122,13 @@ fn scheduled_maneuvers_should_be_visible() {
 	client.input(InputEvent::ScheduleManeuver(maneuver_data));
 
 	client.wait_until(|frame| {
-		frame.maneuvers.len() == 1 &&
-			*frame.maneuvers.iter().next().unwrap().1 == maneuver_data
+		if frame.maneuvers.len() == 1 {
+			let data = *frame.maneuvers.iter().next().unwrap().1;
+			maneuver_data == data
+		}
+		else {
+			false
+		}
 	});
 }
 
