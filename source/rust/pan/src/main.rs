@@ -82,7 +82,7 @@ fn run_tests(paths: Paths) {
             .arg("test")
             .current_dir(paths.rust_source)
             .env("PATH", path)
-            .env("RUST_LOG", "vndf_server=trace,vndf_client=trace,vndf=trace")
+            .env("RUST_LOG", "vndf_server=debug,vndf_client=debug,vndf=debug")
             .env("RUST_BACKTRACE", "1")
     );
 }
