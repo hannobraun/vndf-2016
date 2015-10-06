@@ -7,6 +7,7 @@ pub struct Args {
 	pub port            : u16,
 	pub client_timeout_s: f64,
 	pub sleep_ms        : u32,
+	pub initial_state   : String,
 }
 
 impl Args {
@@ -15,6 +16,7 @@ impl Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
 			sleep_ms        : 500,
+			initial_state   : "".to_string(),
 		};
 
 		let mut options = Options::new();
@@ -36,6 +38,12 @@ impl Args {
 			"Length of the sleep in the main loop (in milliseconds)",
 			args.sleep_ms.to_string().as_ref(),
 		);
+		options.optopt(
+			"",
+			"initial-state",
+			"Path of the initial state file to load",
+			&args.initial_state,
+		);
 
 		let matches = match options.parse(cli_args) {
 			Ok(matches) => matches,
@@ -53,6 +61,10 @@ impl Args {
 		args.sleep_ms = match matches.opt_str("sleep-duration") {
 			Some(duration) => duration.parse().unwrap(),
 			None           => args.sleep_ms,
+		};
+		args.initial_state = match matches.opt_str("initial-state") {
+			Some(initial_state) => initial_state.parse().unwrap(),
+			None                => args.initial_state,
 		};
 
 		args
