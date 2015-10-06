@@ -21,7 +21,7 @@ use shared::game::{
 pub struct InitialState;
 
 impl InitialState {
-    pub fn apply(game_state: &mut GameState) {
+    pub fn apply(&self, game_state: &mut GameState) {
         let entities = &mut game_state.entities;
 
         let mut rng = thread_rng();
