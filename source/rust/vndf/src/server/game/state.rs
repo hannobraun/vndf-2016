@@ -56,8 +56,7 @@ impl GameState {
     }
 
     pub fn on_leave(&mut self, ship_id: &EntityId) {
-        self.entities.destroy_entity(ship_id);
-        self.destroyed_entities.push(*ship_id);
+        self.to_destroy.push(*ship_id);
     }
 
     pub fn on_start_broadcast(&mut self, ship_id: EntityId, message: String) {
