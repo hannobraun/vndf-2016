@@ -288,7 +288,7 @@ impl Controller {
                     args,
                     "{} {} {}",
                     f64, f64, f64
-                        );
+                );
 
                 match result {
                     (Some(delay_s), Some(duration_s), Some(direction_deg)) => {
