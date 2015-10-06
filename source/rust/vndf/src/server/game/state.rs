@@ -30,12 +30,11 @@ use shared::physics::SphereCollider;
 
 #[derive(Debug)]
 pub struct GameState {
-    entities     : Entities,
-    export_buffer: Vec<Entity>,
-
-    destroyed_entities: Vec<EntityId>,
-
+    entities      : Entities,
     spawn_position: Vec2<f64>,
+
+    export_buffer: Vec<Entity>,
+    destroyed_entities: Vec<EntityId>,
 }
 
 impl GameState {
