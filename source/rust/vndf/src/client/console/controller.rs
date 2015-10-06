@@ -328,9 +328,10 @@ impl Controller {
             },
             "list-maneuvers" => {
                 self.console.output.push(format!("Scheduled maneuvers:"));
-                for (_, maneuver) in &frame.maneuvers {
+                for (id, maneuver) in &frame.maneuvers {
                     self.console.output.push(format!(
-                        "Start: {}; Duration: {}; Angle: {}, Thrust: {}",
+                        "{}: Start: {}; Duration: {}; Angle: {}, Thrust: {}",
+                        id,
                         maneuver.start_s,
                         maneuver.duration_s,
                         maneuver.angle,
