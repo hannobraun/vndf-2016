@@ -154,7 +154,12 @@ impl GameState {
     fn apply_maneuvers(&mut self, now_s: f64) {
         for (&id, maneuver) in &mut self.entities.maneuvers {
             if now_s >= maneuver.data.start_s {
-                let thrust = maneuver.data.thrust;
+                let thrust = match maneuver.data.thrust {
+                    thrust if thrust > 1.0 => 1.0,
+                    thrust if thrust < 0.0 => 0.0,
+
+                    thrust => thrust,
+                };
 
                 let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
                 let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
