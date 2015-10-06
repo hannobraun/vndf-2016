@@ -1,27 +1,27 @@
 use nalgebra::{
-	Vec1,
-	Vec2,
-	Rot2,
-	Rotate,
+    Vec1,
+    Vec2,
+    Rot2,
+    Rotate,
 };
 use rand::thread_rng;
 use rand::distributions::{
-	Range,
-	Sample,
+    Range,
+    Sample,
 };
 
 use server::game::state::GameState;
 use shared::color::Colors;
 use shared::game::{
-	Body,
-	Planet,
+    Body,
+    Planet,
 };
 
 
 pub fn apply(game_state: &mut GameState) {
-	let entities = &mut game_state.entities;
+    let entities = &mut game_state.entities;
 
-	let mut rng = thread_rng();
+    let mut rng = thread_rng();
 
     let planet_id = entities.create_entity()
         .with_body(Body {
