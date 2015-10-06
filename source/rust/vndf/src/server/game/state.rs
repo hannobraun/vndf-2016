@@ -86,31 +86,7 @@ impl GameState {
 
     pub fn on_update(&mut self, now_s: f64) {
         self.integrate();
-
-
-        for (&id, maneuver) in &mut self.entities.maneuvers {
-            if now_s >= maneuver.data.start_s {
-                let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
-                let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
-
-                match self.entities.bodies.get_mut(&maneuver.ship_id) {
-                    Some(body) =>
-                        // TODO(E7GyYwQy): Take passed time since last iteration
-                        //                 into account.
-                        body.velocity = body.velocity + acceleration,
-
-                    // The ship might not exist due to timing issues (it could
-                    // have been destroyed while the message was in flight). If
-                    // this happens too often, it might also be the symptom of a
-                    // bug.
-                    None => debug!("Ship not found: {}", maneuver.ship_id),
-                }
-            }
-
-            if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
-                self.to_destroy.push(id);
-            }
-        }
+        self.apply_maneuvers(now_s);
 
         for id in self.to_destroy.drain(..) {
             self.entities.destroy_entity(&id);
@@ -174,6 +150,32 @@ impl GameState {
             // TODO(E7GyYwQy): Take passed time since last iteration into
             //                 account.
             body.position = body.position + body.velocity;
+        }
+    }
+
+    fn apply_maneuvers(&mut self, now_s: f64) {
+        for (&id, maneuver) in &mut self.entities.maneuvers {
+            if now_s >= maneuver.data.start_s {
+                let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
+                let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
+
+                match self.entities.bodies.get_mut(&maneuver.ship_id) {
+                    Some(body) =>
+                        // TODO(E7GyYwQy): Take passed time since last iteration
+                        //                 into account.
+                        body.velocity = body.velocity + acceleration,
+
+                    // The ship might not exist due to timing issues (it could
+                    // have been destroyed while the message was in flight). If
+                    // this happens too often, it might also be the symptom of a
+                    // bug.
+                    None => debug!("Ship not found: {}", maneuver.ship_id),
+                }
+            }
+
+            if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
+                self.to_destroy.push(id);
+            }
         }
     }
 }
