@@ -102,9 +102,6 @@ fn maneuver_thrust_should_be_configurable() {
 	let body_a = get_body(ship_id_a, &mut game_state);
 	let body_b = get_body(ship_id_b, &mut game_state);
 
-	print!("body_a.velocity.x: {}\n", body_a.velocity.x);
-	print!("body_b.velocity.x: {}\n", body_b.velocity.x);
-
 	assert!(body_a.velocity.x > body_b.velocity.x);
 }
 
