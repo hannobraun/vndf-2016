@@ -18,6 +18,7 @@ use shared::game::{
 };
 
 
+#[derive(RustcDecodable, RustcEncodable)]
 pub struct InitialState {
     celestials    : Vec<Celestial>,
     spawn_position: Vec2<f64>,
@@ -98,7 +99,7 @@ impl InitialState {
 }
 
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, RustcDecodable, RustcEncodable)]
 pub struct Celestial {
     pub position: Vec2<f64>,
     pub size    : f64,
