@@ -286,12 +286,12 @@ impl Controller {
             "schedule-maneuver" => {
                 let result = scan_fmt!(
                     args,
-                    "{} {} {}",
-                    f64, f64, f64
+                    "{} {} {} {}",
+                    f64, f64, f64, f64
                 );
 
                 match result {
-                    (Some(delay_s), Some(duration_s), Some(direction_deg)) => {
+                    (Some(delay_s), Some(duration_s), Some(direction_deg), Some(thrust)) => {
                         let direction_rad = (direction_deg as f64).to_radians();
 
                         let game_time_s =
@@ -315,8 +315,7 @@ impl Controller {
                             start_s   : game_time_s + delay_s,
                             duration_s: duration_s,
                             angle     : direction_rad,
-                            // TODO: Read thrust from command
-                            thrust    : 1.0,
+                            thrust    : thrust,
                         };
 
                         events.push(
