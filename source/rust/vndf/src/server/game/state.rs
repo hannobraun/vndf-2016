@@ -1,4 +1,3 @@
-use std::f64::consts::PI;
 use std::vec::Drain;
 
 use nalgebra::{
@@ -96,12 +95,7 @@ impl GameState {
             let body   = self.entities.bodies[&self.planet_id];
             let planet = self.entities.planets[&self.planet_id];
 
-            let position = body.position + Vec2::new(planet.size + 500.0, 0.0);
-
-            let rotation = Rot2::new(Vec1::new(
-                Range::new(0.0, 2.0 * PI).sample(&mut thread_rng())
-            ));
-            rotation.rotate(&position)
+            body.position + Vec2::new(0.0, planet.size + 500.0)
         };
 
         self.entities.create_entity()
