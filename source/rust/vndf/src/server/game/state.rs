@@ -27,6 +27,7 @@ pub struct GameState {
     pub spawn_position: Vec2<f64>,
 
     export_buffer     : Vec<Entity>,
+    to_destroy        : Vec<EntityId>,
     destroyed_entities: Vec<EntityId>,
 }
 
@@ -36,6 +37,7 @@ impl GameState {
             entities     : Entities::new(),
             export_buffer: Vec::new(),
 
+            to_destroy        : Vec::new(),
             destroyed_entities: Vec::new(),
 
             spawn_position: Vec2::new(0.0, 0.0),
@@ -87,7 +89,6 @@ impl GameState {
         self.integrate();
 
 
-        let mut to_destroy = Vec::new();
         for (&id, maneuver) in &mut self.entities.maneuvers {
             if now_s >= maneuver.data.start_s {
                 let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
@@ -108,11 +109,11 @@ impl GameState {
             }
 
             if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
-                to_destroy.push(id);
+                self.to_destroy.push(id);
             }
         }
 
-        for id in to_destroy {
+        for id in self.to_destroy.drain(..) {
             self.entities.destroy_entity(&id);
             self.destroyed_entities.push(id);
         }
