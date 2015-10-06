@@ -26,5 +26,4 @@ pub enum Event {
     ShipId(EntityId),
     UpdateEntity(Entity),
     RemoveEntity(EntityId),
-    Collision(EntityId,EntityId),
 }

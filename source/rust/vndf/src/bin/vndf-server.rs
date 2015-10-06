@@ -15,8 +15,6 @@ use std::thread::sleep_ms;
 
 use time::precise_time_s;
 
-use nalgebra::cast;
-
 use vndf::server::args::Args;
 use vndf::server::clients::Clients;
 use vndf::server::game::initial_state::InitialState;
@@ -29,7 +27,6 @@ use vndf::server::outgoing_events::{
 };
 use vndf::shared::protocol::server::Event as ServerEvent;
 
-use vndf::shared::physics::SphereCollider;
 
 fn main() {
     env_logger::init()
@@ -114,81 +111,6 @@ fn main() {
                 ServerEvent::UpdateEntity(entity),
                 recipients,
             );
-        }
-
-        // check collisions
-        let entities = game_state.get_entities();
-        'ships: for (ship_id,ship_body) in entities.bodies.iter() {
-            // check only from the perspective of a ship
-            if entities.ships.get(&ship_id).is_none() {
-                continue 'ships
-            }
-
-            let ship_coll = {
-                if let Some (coll) = entities.colliders.get(&ship_id) {
-                    coll
-                }
-                else {
-                    warn!("No collider found for ship {}", ship_id);
-                    continue 'ships
-                }
-            };
-
-            // check ship collisions with planets
-            'planets: for (planet_id, _) in entities.planets.iter() {
-                let planet_coll = {
-                    if let Some (coll) = entities.colliders.get(&planet_id) {
-                        coll
-                    }
-                    else {
-                        warn!("No collider found for planet {}", planet_id);
-                        continue 'planets
-                    }
-                };
-                let planet_body = {
-                    if let Some (body) = entities.bodies.get(&planet_id) {
-                        body
-                    }
-                    else {
-                        warn!("No body found for planet {}", planet_id);
-                        continue 'planets
-                    }
-                };
-
-                if SphereCollider::check_collision((ship_coll,&cast(ship_body.position)),
-                                                   (planet_coll,&cast(planet_body.position))) {
-                    outgoing_events.push(
-                        ServerEvent::Collision(*ship_id,*planet_id),
-                        Recipients::All);
-                }
-            }
-
-            // check ship collisions with eachother
-            'other_ships: for (ship_id2,ship_body2) in entities.bodies.iter() {
-                if ship_id == ship_id2 {
-                    continue 'other_ships
-                }
-
-                if entities.ships.get(&ship_id).is_none() {
-                    continue 'other_ships
-                }
-
-                let ship_coll2 = {
-                    if let Some (coll) = entities.colliders.get(&ship_id2) {
-                        coll
-                    }
-                    else {
-                        warn!("No collider found for ship {}", ship_id2);
-                        continue 'other_ships
-                    }
-                };
-                if SphereCollider::check_collision((ship_coll,&cast(ship_body.position)),
-                                                   (ship_coll2,&cast(ship_body2.position))) {
-                    outgoing_events.push(
-                        ServerEvent::Collision(*ship_id,*ship_id2),
-                        Recipients::All);
-                }
-            }
         }
 
         outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);

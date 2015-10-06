@@ -12,8 +12,6 @@ use shared::game::{
     Ship,
 };
 
-use ncollide::shape::Ball;
-
 
 /// This module contains prototype code for an entity-component system (ECS).
 /// I've experimented with entity systems in the past, and come to the
@@ -37,7 +35,6 @@ pub struct Entities {
 
     pub bodies    : Components<Body>,
     pub broadcasts: Components<Broadcast>,
-    pub colliders : Components<Ball<f32>>,
     pub maneuvers : Components<Maneuver>,
     pub planets   : Components<Planet>,
     pub ships     : Components<Ship>,
@@ -52,7 +49,6 @@ impl Entities {
 
             bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
-            colliders : HashMap::new(),
             maneuvers : HashMap::new(),
             planets   : HashMap::new(),
             ships     : HashMap::new(),
@@ -70,7 +66,6 @@ impl Entities {
 
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
-            colliders : &mut self.colliders,
             maneuvers : &mut self.maneuvers,
             planets   : &mut self.planets,
             ships     : &mut self.ships,
@@ -83,7 +78,6 @@ impl Entities {
 
             bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
-            colliders : &mut self.colliders,
             maneuvers : &mut self.maneuvers,
             planets   : &mut self.planets,
             ships     : &mut self.ships,
@@ -93,7 +87,6 @@ impl Entities {
     pub fn destroy_entity(&mut self, id: &EntityId) {
         self.bodies.remove(id);
         self.broadcasts.remove(id);
-        self.colliders.remove(id);
         self.maneuvers.remove(id);
         self.planets.remove(id);
         self.ships.remove(id);
@@ -108,7 +101,6 @@ pub struct EntityBuilder<'c> {
 
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
-    colliders : &'c mut Components<Ball<f32>>,
     maneuvers : &'c mut Components<Maneuver>,
     planets   : &'c mut Components<Planet>,
     ships     : &'c mut Components<Ship>,
@@ -122,11 +114,6 @@ impl<'c> EntityBuilder<'c> {
 
     pub fn with_broadcast(mut self, component: Broadcast) -> EntityBuilder<'c> {
         self.broadcasts.insert(self.id, component);
-        self
-    }
-
-    pub fn with_collider(mut self, component: Ball<f32>) -> EntityBuilder<'c> {
-        self.colliders.insert(self.id, component);
         self
     }
 
@@ -156,7 +143,6 @@ pub struct EntityUpdater<'c> {
 
     bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
-    colliders : &'c mut Components<Ball<f32>>,
     maneuvers : &'c mut Components<Maneuver>,
     planets   : &'c mut Components<Planet>,
     ships     : &'c mut Components<Ship>,
@@ -170,11 +156,6 @@ impl<'c> EntityUpdater<'c> {
 
     pub fn add_broadcast(mut self, component: Broadcast) -> EntityUpdater<'c> {
         self.broadcasts.insert(self.id, component);
-        self
-    }
-
-    pub fn add_collider(mut self, component: Ball<f32>) -> EntityUpdater<'c> {
-        self.colliders.insert(self.id, component);
         self
     }
 
@@ -200,11 +181,6 @@ impl<'c> EntityUpdater<'c> {
 
     pub fn remove_broadcast(mut self) -> EntityUpdater<'c> {
         self.broadcasts.remove(&self.id);
-        self
-    }
-
-    pub fn remove_colliders(mut self) -> EntityUpdater<'c> {
-        self.colliders.remove(&self.id);
         self
     }
 

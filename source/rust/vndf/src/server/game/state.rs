@@ -19,8 +19,6 @@ use shared::game::{
 };
 use shared::protocol::server::Entity;
 
-use shared::physics::SphereCollider;
-
 
 #[derive(Debug)]
 pub struct GameState {
@@ -52,7 +50,6 @@ impl GameState {
                 mass: 0.0f32,
             })
             .with_ship(Ship)
-            .with_collider(SphereCollider::new_from_oval(1.0))
             .return_id()
     }
 
