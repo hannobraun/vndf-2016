@@ -19,7 +19,7 @@ use nalgebra::cast;
 
 use vndf::server::args::Args;
 use vndf::server::clients::Clients;
-use vndf::server::game::initial_state;
+use vndf::server::game::initial_state::InitialState;
 use vndf::server::game::state::GameState;
 use vndf::server::incoming_events::IncomingEvents;
 use vndf::server::network::Network;
@@ -43,7 +43,7 @@ fn main() {
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
 
-    initial_state::apply(&mut game_state);
+    InitialState::apply(&mut game_state);
 
     info!("Listening on port {}", args.port);
 
