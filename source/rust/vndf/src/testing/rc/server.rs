@@ -1,6 +1,9 @@
 use server::game::initial_state::InitialState;
 use testing::process::Process;
-use testing::util::random_port;
+use testing::util::{
+    random_path,
+    random_port,
+};
 
 
 pub struct Server {
@@ -10,8 +13,8 @@ pub struct Server {
 
 impl Server {
     pub fn start(initial_state: InitialState) -> Server {
-        let initial_state_file = "initial-state.json";
-        initial_state.to_file(initial_state_file);
+        let initial_state_file = random_path();
+        initial_state.to_file(&initial_state_file);
 
         let port = random_port(40000, 50000);
 
