@@ -1,4 +1,7 @@
-use shared::game::ManeuverData;
+use shared::game::{
+	EntityId,
+	ManeuverData,
+};
 
 
 #[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
@@ -20,13 +23,17 @@ impl Event {
 			Event::Privileged(StartBroadcast(_))   => true,
 			Event::Privileged(StopBroadcast)       => true,
 			Event::Privileged(ScheduleManeuver(_)) => true,
+			Event::Privileged(CancelManeuver(_))   => true,
 		}
 	}
 }
 
 
 pub mod event {
-	use shared::game::ManeuverData;
+	use shared::game::{
+		EntityId,
+		ManeuverData,
+	};
 
 
 	#[derive(Debug, PartialEq, RustcDecodable, RustcEncodable)]
@@ -42,6 +49,7 @@ pub mod event {
 		StopBroadcast,
 
 		ScheduleManeuver(ManeuverData),
+		CancelManeuver(EntityId),
 	}
 }
 
@@ -56,4 +64,8 @@ pub fn start_broadcast(message: String) -> Event {
 
 pub fn schedule_maneuver(data: ManeuverData) -> Event {
 	Event::Privileged(event::Privileged::ScheduleManeuver(data))
+}
+
+pub fn cancel_maneuver(id: EntityId) -> Event {
+	Event::Privileged(event::Privileged::CancelManeuver(id))
 }
