@@ -339,6 +339,21 @@ impl Controller {
                     ));
                 }
             },
+            "cancel-maneuver" => {
+                let result = scan_fmt!(
+                    args,
+                    "{}",
+                    EntityId
+                );
+
+                match result {
+                    Some(id) => {
+                        events.push(InputEvent::CancelManeuver(id));
+                    },
+                    _ =>
+                        self.console.output.push(format!("Error parsing arguments")),
+                }
+            },
             
             "select-entity" => {
                 let ents = Controller::parse_entity_ids(args);
