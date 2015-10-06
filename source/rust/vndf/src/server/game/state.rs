@@ -81,6 +81,15 @@ impl GameState {
             });
     }
 
+    pub fn on_cancel_maneuver(
+        &mut self,
+        _ship_id   : EntityId,
+        maneuver_id: EntityId,
+    ) {
+        // TODO: Validate event
+        self.to_destroy.push(maneuver_id);
+    }
+
     pub fn on_update(&mut self, now_s: f64) {
         self.integrate();
         self.apply_maneuvers(now_s);
