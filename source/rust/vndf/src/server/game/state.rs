@@ -190,15 +190,15 @@ impl GameState {
                     thrust => thrust,
                 };
 
-                let rotation     = Rot2::new(Vec1::new(maneuver.data.angle));
-                let acceleration = rotation.rotate(&Vec2::new(1.0, 0.0));
-                let acceleration = acceleration * thrust;
+                let rotation = Rot2::new(Vec1::new(maneuver.data.angle));
+                let force    = rotation.rotate(&Vec2::new(1.0, 0.0));
+                let force    = force * thrust;
 
                 match self.entities.bodies.get_mut(&maneuver.ship_id) {
                     Some(body) =>
                         // TODO(E7GyYwQy): Take passed time since last iteration
                         //                 into account.
-                        body.velocity = body.velocity + acceleration,
+                        body.velocity = body.velocity + force,
 
                     // The ship might not exist due to timing issues (it could
                     // have been destroyed while the message was in flight). If
