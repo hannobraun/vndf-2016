@@ -6,6 +6,7 @@ use server::game::state::{
 };
 use shared::game::{
 	Body,
+	Broadcast,
 	EntityId,
 	Ship,
 };
@@ -39,5 +40,23 @@ impl GameEvent for Leave {
 
 	fn execute(self, game_state: &mut GameState) {
 		game_state.to_destroy.push(self.ship_id);
+	}
+}
+
+
+pub struct StartBroadcast {
+	pub ship_id: EntityId,
+	pub message: String,
+}
+
+impl GameEvent for StartBroadcast {
+	type Output = ();
+
+	fn execute(self, game_state: &mut GameState) {
+		game_state.entities.update_entity(self.ship_id)
+            .add_broadcast(Broadcast {
+                sender : self.ship_id,
+                message: self.message,
+            });
 	}
 }

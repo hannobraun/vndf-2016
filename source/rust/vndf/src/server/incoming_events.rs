@@ -159,7 +159,10 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.on_start_broadcast(client.ship_id, message)
+			game_state.handle_event(events::StartBroadcast {
+				ship_id: client.ship_id,
+				message: message,
+			})
 		},
 		client::event::Privileged::StopBroadcast => {
 			game_state.on_stop_broadcast(client.ship_id)

@@ -11,7 +11,6 @@ use nalgebra::{
 use server::game::data::Spawner;
 use server::game::entities::Entities;
 use shared::game::{
-    Broadcast,
     EntityId,
     Maneuver,
     ManeuverData,
@@ -51,14 +50,6 @@ impl GameState {
 
     pub fn handle_event<E: GameEvent>(&mut self, event: E) -> E::Output {
         event.execute(self)
-    }
-
-    pub fn on_start_broadcast(&mut self, ship_id: EntityId, message: String) {
-        self.entities.update_entity(ship_id)
-            .add_broadcast(Broadcast {
-                sender : ship_id,
-                message: message,
-            });
     }
 
     pub fn on_stop_broadcast(&mut self, ship_id: EntityId) {
