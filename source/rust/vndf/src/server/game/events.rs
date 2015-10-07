@@ -105,7 +105,7 @@ impl GameEvent for ScheduleManeuver {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        true
+        self.data.thrust >= 0.0 && self.data.thrust <= 1.0
     }
 
     fn execute(self, game_state: &mut GameState) {

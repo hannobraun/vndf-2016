@@ -181,78 +181,32 @@ fn game_state_should_reject_invalid_events() {
 }
 
 #[test]
-fn maneuver_thrust_should_stay_within_limits() {
-	let mut game_state = GameState::new();
+fn maneuver_thrust_should_be_validated() {
+	let thrust_above_max = events::ScheduleManeuver {
+		ship_id: 0,
 
-	let ship_id_a = game_state.handle_event(events::Enter).unwrap();
-	let ship_id_b = game_state.handle_event(events::Enter).unwrap();
-	let ship_id_c = game_state.handle_event(events::Enter).unwrap();
-	let ship_id_d = game_state.handle_event(events::Enter).unwrap();
+		data: ManeuverData {
+			start_s   : 0.0,
+			duration_s: 1.0,
+			angle     : 0.0,
+			thrust    : 1.01,
+		}
+	};
+	let thrust_below_min = events::ScheduleManeuver {
+		ship_id: 0,
 
-	let start_s    = 0.5;
-	let duration_s = 1.0;
-	let angle      = 0.0;
-
-	let maneuver_a = ManeuverData {
-		start_s   : start_s,
-		duration_s: duration_s,
-		angle     : angle,
-		thrust    : 1.0,
-	};
-	let maneuver_b = ManeuverData {
-		start_s   : start_s,
-		duration_s: duration_s,
-		angle     : angle,
-		thrust    : 2.0,
-	};
-	let maneuver_c = ManeuverData {
-		start_s   : start_s,
-		duration_s: duration_s,
-		angle     : angle,
-		thrust    : 0.0,
-	};
-	let maneuver_d = ManeuverData {
-		start_s   : start_s,
-		duration_s: duration_s,
-		angle     : angle,
-		thrust    : -1.0,
+		data: ManeuverData {
+			start_s   : 0.0,
+			duration_s: 1.0,
+			angle     : 0.0,
+			thrust    : -0.01,
+		}
 	};
 
-	game_state
-		.handle_event(events::ScheduleManeuver {
-			ship_id: ship_id_a,
-			data   : maneuver_a,
-		})
-		.unwrap();
-	game_state
-		.handle_event(events::ScheduleManeuver {
-			ship_id: ship_id_b,
-			data   : maneuver_b,
-		})
-		.unwrap();
-	game_state
-		.handle_event(events::ScheduleManeuver {
-			ship_id: ship_id_c,
-			data   : maneuver_c,
-		})
-		.unwrap();
-	game_state
-		.handle_event(events::ScheduleManeuver {
-			ship_id: ship_id_d,
-			data   : maneuver_d,
-		})
-		.unwrap();
-	game_state
-		.handle_event(events::Update { now_s: start_s + duration_s })
-		.unwrap();
+	let game_state = GameState::new();
 
-	let body_a = get_body(ship_id_a, &mut game_state);
-	let body_b = get_body(ship_id_b, &mut game_state);
-	let body_c = get_body(ship_id_c, &mut game_state);
-	let body_d = get_body(ship_id_d, &mut game_state);
-
-	assert!(body_a.velocity.x == body_b.velocity.x);
-	assert!(body_c.velocity.x == body_d.velocity.x);
+	assert_eq!(thrust_above_max.validate(&game_state), false);
+	assert_eq!(thrust_below_min.validate(&game_state), false);
 }
 
 #[test]
