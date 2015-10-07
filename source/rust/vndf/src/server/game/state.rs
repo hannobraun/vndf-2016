@@ -111,8 +111,8 @@ impl GameState {
     }
 
     pub fn on_update(&mut self, now_s: f64) {
-        self.integrate();
         self.apply_maneuvers(now_s);
+        self.integrate();
         self.check_collisions();
 
         for id in self.to_destroy.drain(..) {
