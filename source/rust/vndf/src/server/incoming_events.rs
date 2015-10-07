@@ -126,7 +126,9 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.handle_event(events::Enter);
+				let ship_id = game_state
+					.handle_event(events::Enter)
+					.unwrap(); // Enter event always validates
 
 				let client = Client {
 					ship_id      : ship_id,
@@ -159,27 +161,35 @@ fn handle_privileged_event(
 			// updated.
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state.handle_event(events::StartBroadcast {
-				ship_id: client.ship_id,
-				message: message,
-			})
+			game_state
+				.handle_event(events::StartBroadcast {
+					ship_id: client.ship_id,
+					message: message,
+				})
+				.unwrap();
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state.handle_event(events::StopBroadcast {
-				ship_id: client.ship_id,
-			})
+			game_state
+				.handle_event(events::StopBroadcast {
+					ship_id: client.ship_id,
+				})
+				.unwrap();
 		},
 		client::event::Privileged::ScheduleManeuver(data) => {
-			game_state.handle_event(events::ScheduleManeuver {
-				ship_id: client.ship_id,
-				data   : data,
-			})
+			game_state
+				.handle_event(events::ScheduleManeuver {
+					ship_id: client.ship_id,
+					data   : data,
+				})
+				.unwrap();
 		},
 		client::event::Privileged::CancelManeuver(maneuver_id) => {
-			game_state.handle_event(events::CancelManeuver {
-				ship_id    : client.ship_id,
-				maneuver_id: maneuver_id,
-			})
+			game_state
+				.handle_event(events::CancelManeuver {
+					ship_id    : client.ship_id,
+					maneuver_id: maneuver_id,
+				})
+				.unwrap();
 		},
 	}
 }

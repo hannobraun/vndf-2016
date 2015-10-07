@@ -68,10 +68,14 @@ fn main() {
         );
 
         clients.remove_inactive(now_s, args.client_timeout_s, |client| {
-            game_state.handle_event(events::Leave { ship_id: client.ship_id });
+            game_state
+                .handle_event(events::Leave { ship_id: client.ship_id })
+                .unwrap();
         });
 
-        game_state.handle_event(events::Update { now_s: now_s });
+        game_state
+            .handle_event(events::Update { now_s: now_s })
+            .unwrap();
 
         for id in game_state.destroyed_entities() {
             // This sends the ids of all destroyed maneuvers to all clients. Not

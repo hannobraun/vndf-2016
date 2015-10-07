@@ -38,10 +38,10 @@ impl GameState {
         }
     }
 
-    pub fn handle_event<E>(&mut self, event: E) -> E::Output
+    pub fn handle_event<E>(&mut self, event: E) -> Result<E::Output, ()>
         where E: GameEvent
     {
-        event.execute(self)
+        Ok(event.execute(self))
     }
 
     pub fn export_entities(&mut self) -> Drain<Entity> {

@@ -12,7 +12,7 @@ use vndf::shared::util::angle_of;
 fn it_should_execute_multiple_maneuvers_after_each_other() {
 	let mut game_state = GameState::new();
 
-	let ship_id = game_state.handle_event(events::Enter);
+	let ship_id = game_state.handle_event(events::Enter).unwrap();
 
 	let maneuver_a = ManeuverData {
 		start_s   : 0.5,
@@ -27,23 +27,31 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 		thrust    : 1.0,
 	};
 
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id,
-		data   : maneuver_a,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id,
-		data   : maneuver_b,
-	});
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id,
+			data   : maneuver_a,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id,
+			data   : maneuver_b,
+		})
+		.unwrap();
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.handle_event(events::Update { now_s: maneuver_a.start_s + 0.1 });
+	game_state
+		.handle_event(events::Update { now_s: maneuver_a.start_s + 0.1 })
+		.unwrap();
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver_a.angle, before, after));
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.handle_event(events::Update { now_s: maneuver_b.start_s + 0.1 });
+	game_state
+		.handle_event(events::Update { now_s: maneuver_b.start_s + 0.1 })
+		.unwrap();
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver_b.angle, before, after));
@@ -53,7 +61,7 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 fn maneuvers_should_apply_thrust_over_time() {
 	let mut game_state = GameState::new();
 
-	let ship_id = game_state.handle_event(events::Enter);
+	let ship_id = game_state.handle_event(events::Enter).unwrap();
 
 	let maneuver = ManeuverData {
 		start_s   : 0.5,
@@ -62,23 +70,29 @@ fn maneuvers_should_apply_thrust_over_time() {
 		thrust    : 1.0,
 	};
 
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id,
-		data   : maneuver,
-	});
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id,
+			data   : maneuver,
+		})
+		.unwrap();
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.handle_event(events::Update {
-		now_s: maneuver.start_s + maneuver.duration_s / 2.0
-	});
+	game_state
+		.handle_event(events::Update {
+			now_s: maneuver.start_s + maneuver.duration_s / 2.0
+		})
+		.unwrap();
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver.angle, before, after));
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.handle_event(events::Update {
-		now_s: maneuver.start_s + maneuver.duration_s
-	});
+	game_state
+		.handle_event(events::Update {
+			now_s: maneuver.start_s + maneuver.duration_s
+		})
+		.unwrap();
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver.angle, before, after));
@@ -89,8 +103,8 @@ fn maneuvers_should_apply_thrust_over_time() {
 fn maneuver_thrust_should_be_configurable() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.handle_event(events::Enter);
-	let ship_id_b = game_state.handle_event(events::Enter);
+	let ship_id_a = game_state.handle_event(events::Enter).unwrap();
+	let ship_id_b = game_state.handle_event(events::Enter).unwrap();
 
 	let start_s    = 0.5;
 	let duration_s = 1.0;
@@ -109,15 +123,21 @@ fn maneuver_thrust_should_be_configurable() {
 		thrust    : 0.5,
 	};
 
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_a,
-		data   : maneuver_a,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_b,
-		data   : maneuver_b,
-	});
-	game_state.handle_event(events::Update { now_s: start_s + duration_s });
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_a,
+			data   : maneuver_a,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_b,
+			data   : maneuver_b,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::Update { now_s: start_s + duration_s })
+		.unwrap();
 
 	let body_a = get_body(ship_id_a, &mut game_state);
 	let body_b = get_body(ship_id_b, &mut game_state);
@@ -129,10 +149,10 @@ fn maneuver_thrust_should_be_configurable() {
 fn maneuver_thrust_should_stay_within_limits() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.handle_event(events::Enter);
-	let ship_id_b = game_state.handle_event(events::Enter);
-	let ship_id_c = game_state.handle_event(events::Enter);
-	let ship_id_d = game_state.handle_event(events::Enter);
+	let ship_id_a = game_state.handle_event(events::Enter).unwrap();
+	let ship_id_b = game_state.handle_event(events::Enter).unwrap();
+	let ship_id_c = game_state.handle_event(events::Enter).unwrap();
+	let ship_id_d = game_state.handle_event(events::Enter).unwrap();
 
 	let start_s    = 0.5;
 	let duration_s = 1.0;
@@ -163,23 +183,33 @@ fn maneuver_thrust_should_stay_within_limits() {
 		thrust    : -1.0,
 	};
 
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_a,
-		data   : maneuver_a,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_b,
-		data   : maneuver_b,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_c,
-		data   : maneuver_c,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_d,
-		data   : maneuver_d,
-	});
-	game_state.handle_event(events::Update { now_s: start_s + duration_s });
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_a,
+			data   : maneuver_a,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_b,
+			data   : maneuver_b,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_c,
+			data   : maneuver_c,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_d,
+			data   : maneuver_d,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::Update { now_s: start_s + duration_s })
+		.unwrap();
 
 	let body_a = get_body(ship_id_a, &mut game_state);
 	let body_b = get_body(ship_id_b, &mut game_state);
@@ -194,8 +224,8 @@ fn maneuver_thrust_should_stay_within_limits() {
 fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.handle_event(events::Enter);
-	let ship_id_b = game_state.handle_event(events::Enter);
+	let ship_id_a = game_state.handle_event(events::Enter).unwrap();
+	let ship_id_b = game_state.handle_event(events::Enter).unwrap();
 
 	let maneuver = ManeuverData {
 		start_s   : 0.5,
@@ -204,23 +234,29 @@ fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
 		thrust    : 1.0,
 	};
 
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_a,
-		data   : maneuver,
-	});
-	game_state.handle_event(events::ScheduleManeuver {
-		ship_id: ship_id_b,
-		data   : maneuver,
-	});
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_a,
+			data   : maneuver,
+		})
+		.unwrap();
+	game_state
+		.handle_event(events::ScheduleManeuver {
+			ship_id: ship_id_b,
+			data   : maneuver,
+		})
+		.unwrap();
 
 	assert_eq!(game_state.entities.maneuvers.len(), 2);
 
 	let maneuver_id_a = get_maneuver_id(ship_id_a, &mut game_state);
-	game_state.handle_event(events::CancelManeuver {
-		ship_id    : ship_id_b,
-		maneuver_id: maneuver_id_a,
-	});
-	game_state.handle_event(events::Update { now_s: 0.0 });
+	game_state
+		.handle_event(events::CancelManeuver {
+			ship_id    : ship_id_b,
+			maneuver_id: maneuver_id_a,
+		})
+		.unwrap();
+	game_state.handle_event(events::Update { now_s: 0.0 }).unwrap();
 
 	assert_eq!(game_state.entities.maneuvers.len(), 2);
 }
