@@ -115,8 +115,8 @@ impl InitialState {
         self
     }
 
-    pub fn with_spawn_position(mut self, position: Vec2<f64>) -> Self {
-        self.spawner.position = position;
+    pub fn with_spawner(mut self, spawner: Spawner) -> Self {
+        self.spawner = spawner;
         self
     }
 
