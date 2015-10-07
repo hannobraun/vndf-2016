@@ -154,42 +154,37 @@ fn handle_privileged_event(
 ) {
 	client.last_active_s = now_s;
 
-	match event {
+	let result = match event {
 		client::event::Privileged::Heartbeat => {
 			// Nothing to do here, really, as the the time of
 			// last activity for the client has already been
 			// updated.
+			return;
 		},
 		client::event::Privileged::StartBroadcast(message) => {
-			game_state
-				.handle_event(events::StartBroadcast {
-					ship_id: client.ship_id,
-					message: message,
-				})
-				.unwrap();
+			game_state.handle_event(events::StartBroadcast {
+				ship_id: client.ship_id,
+				message: message,
+			})
 		},
 		client::event::Privileged::StopBroadcast => {
-			game_state
-				.handle_event(events::StopBroadcast {
-					ship_id: client.ship_id,
-				})
-				.unwrap();
+			game_state.handle_event(events::StopBroadcast {
+				ship_id: client.ship_id,
+			})
 		},
 		client::event::Privileged::ScheduleManeuver(data) => {
-			game_state
-				.handle_event(events::ScheduleManeuver {
-					ship_id: client.ship_id,
-					data   : data,
-				})
-				.unwrap();
+			game_state.handle_event(events::ScheduleManeuver {
+				ship_id: client.ship_id,
+				data   : data,
+			})
 		},
 		client::event::Privileged::CancelManeuver(maneuver_id) => {
-			game_state
-				.handle_event(events::CancelManeuver {
-					ship_id    : client.ship_id,
-					maneuver_id: maneuver_id,
-				})
-				.unwrap();
+			game_state.handle_event(events::CancelManeuver {
+				ship_id    : client.ship_id,
+				maneuver_id: maneuver_id,
+			})
 		},
-	}
+	};
+
+	result.unwrap();
 }
