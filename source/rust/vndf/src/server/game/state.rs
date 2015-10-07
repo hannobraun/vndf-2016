@@ -10,11 +10,7 @@ use nalgebra::{
 
 use server::game::data::Spawner;
 use server::game::entities::Entities;
-use shared::game::{
-    EntityId,
-    Maneuver,
-    ManeuverData,
-};
+use shared::game::EntityId;
 use shared::protocol::server::Entity;
 
 
@@ -50,18 +46,6 @@ impl GameState {
 
     pub fn handle_event<E: GameEvent>(&mut self, event: E) -> E::Output {
         event.execute(self)
-    }
-
-    pub fn on_schedule_maneuver(
-        &mut self,
-        ship_id: EntityId,
-        data   : ManeuverData,
-    ) {
-        self.entities.create_entity()
-            .with_maneuver(Maneuver {
-                ship_id: ship_id,
-                data   : data,
-            });
     }
 
     pub fn on_cancel_maneuver(

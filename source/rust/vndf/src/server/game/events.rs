@@ -8,6 +8,8 @@ use shared::game::{
     Body,
     Broadcast,
     EntityId,
+    Maneuver,
+    ManeuverData,
     Ship,
 };
 
@@ -73,5 +75,23 @@ impl GameEvent for StopBroadcast {
         game_state.entities
             .update_entity(self.ship_id)
             .remove_broadcast();
+    }
+}
+
+
+pub struct ScheduleManeuver {
+    pub ship_id: EntityId,
+    pub data   : ManeuverData,
+}
+
+impl GameEvent for ScheduleManeuver {
+    type Output = ();
+
+    fn execute(self, game_state: &mut GameState) {
+        game_state.entities.create_entity()
+            .with_maneuver(Maneuver {
+                ship_id: self.ship_id,
+                data   : self.data,
+            });
     }
 }
