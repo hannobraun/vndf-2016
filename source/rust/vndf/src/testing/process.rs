@@ -86,10 +86,9 @@ impl Process {
 			panic!("Failed to write to stdin: {}", error);
 		}
 	}
-}
 
-impl Drop for Process {
-	fn drop(&mut self) {
+
+	fn print_debug_output(&mut self) {
 		self.kill();
 
 		self.stdout
@@ -106,6 +105,12 @@ impl Drop for Process {
 		print!("Output for process {}\n", self.path);
 		print!("stdout:\n{}\n", self.stdout_buf);
 		print!("stderr:\n{}\n", stderr);
+	}
+}
+
+impl Drop for Process {
+	fn drop(&mut self) {
+		self.print_debug_output();
 	}
 }
 
