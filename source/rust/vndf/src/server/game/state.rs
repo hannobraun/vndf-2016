@@ -49,7 +49,7 @@ impl GameState {
                 position: self.spawner.position,
                 velocity: self.spawner.velocity,
                 force   : Vec2::new(0.0, 0.0),
-                mass: 0.0f32,
+                mass    : 1.0,
             })
             .with_ship(Ship)
             .return_id()
