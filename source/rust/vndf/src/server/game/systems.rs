@@ -12,16 +12,9 @@ use server::game::state::GameState;
 pub fn apply_maneuvers(game_state: &mut GameState, now_s: f64) {
     for (&id, maneuver) in &mut game_state.entities.maneuvers {
         if now_s >= maneuver.data.start_s {
-            let thrust = match maneuver.data.thrust {
-                thrust if thrust > 1.0 => 1.0,
-                thrust if thrust < 0.0 => 0.0,
-
-                thrust => thrust,
-            };
-
             let rotation = Rot2::new(Vec1::new(maneuver.data.angle));
             let force    = rotation.rotate(&Vec2::new(1.0, 0.0));
-            let force    = force * thrust;
+            let force    = force * maneuver.data.thrust;
 
             match game_state.entities.bodies.get_mut(&maneuver.ship_id) {
                 Some(body) =>
