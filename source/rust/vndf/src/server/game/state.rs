@@ -9,6 +9,7 @@ use shared::protocol::server::Entity;
 pub trait GameEvent {
     type Output;
 
+    fn validate(&self, game_state: &GameState) -> bool;
     fn execute(self, game_state: &mut GameState) -> Self::Output;
 }
 

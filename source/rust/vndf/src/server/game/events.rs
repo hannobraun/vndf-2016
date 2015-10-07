@@ -20,6 +20,10 @@ pub struct Enter;
 impl GameEvent for Enter {
     type Output = EntityId;
 
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
+
     fn execute(self, game_state: &mut GameState) -> EntityId {
         game_state.entities.create_entity()
             .with_body(Body {
@@ -41,6 +45,10 @@ pub struct Leave {
 impl GameEvent for Leave {
     type Output = ();
 
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
+
     fn execute(self, game_state: &mut GameState) {
         game_state.to_destroy.push(self.ship_id);
     }
@@ -54,6 +62,10 @@ pub struct StartBroadcast {
 
 impl GameEvent for StartBroadcast {
     type Output = ();
+
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
 
     fn execute(self, game_state: &mut GameState) {
         game_state.entities.update_entity(self.ship_id)
@@ -72,6 +84,10 @@ pub struct StopBroadcast {
 impl GameEvent for StopBroadcast {
     type Output = ();
 
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
+
     fn execute(self, game_state: &mut GameState) {
         game_state.entities
             .update_entity(self.ship_id)
@@ -87,6 +103,10 @@ pub struct ScheduleManeuver {
 
 impl GameEvent for ScheduleManeuver {
     type Output = ();
+
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
 
     fn execute(self, game_state: &mut GameState) {
         game_state.entities.create_entity()
@@ -105,6 +125,10 @@ pub struct CancelManeuver {
 
 impl GameEvent for CancelManeuver {
     type Output = ();
+
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
 
     fn execute(self, game_state: &mut GameState) {
         match game_state.entities.maneuvers.get(&self.maneuver_id) {
@@ -138,6 +162,10 @@ pub struct Update {
 
 impl GameEvent for Update {
     type Output = ();
+
+    fn validate(&self, _: &GameState) -> bool {
+        false
+    }
 
     fn execute(self, game_state: &mut GameState) {
         systems::apply_maneuvers(game_state, self.now_s);
