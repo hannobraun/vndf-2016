@@ -11,6 +11,22 @@ use vndf::testing::rc;
 
 
 #[test]
+fn celestial_bodies_should_be_visibile_to_the_player() {
+	let initial_state = InitialState::new()
+		.with_celestial(Celestial {
+			position: Vec2::new(-100.0, 0.0),
+			size    : 10.0,
+		});
+
+	let     server = rc::Server::start(initial_state);
+	let mut client = rc::Client::start(server.port());
+
+	client.wait_until(|frame|
+		frame.planets.len() == 1
+	);
+}
+
+#[test]
 fn a_ship_colliding_with_a_celestial_body_should_be_removed() {
 	let initial_state = InitialState::new()
 		.with_celestial(Celestial {

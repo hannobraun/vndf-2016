@@ -179,15 +179,15 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                                     SphereCollider::new_from_oval(SHIP_SIZE));
                             }
                         }
+                    }
 
-                        if let Some(planet) = entity.planet {
-                            frame.planets.insert(entity.id, planet);
+                    if let Some(planet) = entity.planet {
+                        frame.planets.insert(entity.id, planet);
 
-                            if !frame.colliders.contains_key(&entity.id) {
-                                frame.colliders.insert(
-                                    entity.id,
-                                    SphereCollider::new_from_oval(planet.size as f32));
-                            }
+                        if !frame.colliders.contains_key(&entity.id) {
+                            frame.colliders.insert(
+                                entity.id,
+                                SphereCollider::new_from_oval(planet.size as f32));
                         }
                     }
 
