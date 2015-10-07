@@ -187,6 +187,6 @@ fn handle_privileged_event(
     };
 
     if let Err(()) = result {
-        warn!("Invalid event from client: {:?}\n", client);
+        warn!("Invalid event from client: {:?}", client);
     }
 }
