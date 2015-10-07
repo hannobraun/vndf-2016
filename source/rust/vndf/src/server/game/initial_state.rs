@@ -26,15 +26,15 @@ use shared::game::{
 
 #[derive(Debug, RustcDecodable, RustcEncodable)]
 pub struct InitialState {
-    celestials    : Vec<Celestial>,
-    spawn_position: Vec2<f64>,
+    celestials: Vec<Celestial>,
+    spawner   : Spawner,
 }
 
 impl InitialState {
     pub fn new() -> Self {
         InitialState {
-            celestials    : Vec::new(),
-            spawn_position: Vec2::new(0.0, 0.0),
+            celestials: Vec::new(),
+            spawner   : Spawner::new(),
         }
     }
 
@@ -65,12 +65,13 @@ impl InitialState {
             });
         }
 
-        let spawn_position =
+        let mut spawner = Spawner::new();
+        spawner.position =
             planet.position + Vec2::new(0.0, planet.size + 500.0);
 
         InitialState {
-            celestials    : celestials,
-            spawn_position: spawn_position,
+            celestials: celestials,
+            spawner   : spawner,
         }
     }
 
@@ -115,7 +116,7 @@ impl InitialState {
     }
 
     pub fn with_spawn_position(mut self, position: Vec2<f64>) -> Self {
-        self.spawn_position = position;
+        self.spawner.position = position;
         self
     }
 
@@ -136,10 +137,7 @@ impl InitialState {
                 });
         }
 
-        game_state.spawner = Spawner {
-            position: self.spawn_position,
-            velocity: Vec2::new(1.0, 0.0),
-        };
+        game_state.spawner = self.spawner;
     }
 }
 
