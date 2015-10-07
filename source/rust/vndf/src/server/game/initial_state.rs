@@ -135,7 +135,7 @@ impl InitialState {
                 });
         }
 
-        game_state.spawn_position = self.spawn_position;
+        game_state.spawner = self.spawn_position;
     }
 }
 
