@@ -124,8 +124,8 @@ impl InitialState {
             entities.create_entity()
                 .with_planet(Planet {
                     position: celestial.position,
-                    color   : Colors::random(),
                     size    : celestial.size,
+                    color   : Colors::random(),
                 });
         }
 
