@@ -176,7 +176,10 @@ impl GameState {
          for (_, body) in &mut self.entities.bodies {
             // TODO(E7GyYwQy): Take passed time since last iteration into
             //                 account.
+            body.velocity = body.velocity + body.force;
             body.position = body.position + body.velocity;
+
+            body.force = Vec2::new(0.0, 0.0);
         }
     }
 
@@ -196,9 +199,7 @@ impl GameState {
 
                 match self.entities.bodies.get_mut(&maneuver.ship_id) {
                     Some(body) =>
-                        // TODO(E7GyYwQy): Take passed time since last iteration
-                        //                 into account.
-                        body.velocity = body.velocity + force,
+                        body.force = body.force + force,
 
                     // The ship might not exist due to timing issues (it could
                     // have been destroyed while the message was in flight). If
