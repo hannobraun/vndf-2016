@@ -21,7 +21,7 @@ impl GameEvent for Enter {
     type Output = EntityId;
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) -> EntityId {
@@ -46,7 +46,7 @@ impl GameEvent for Leave {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
@@ -64,7 +64,7 @@ impl GameEvent for StartBroadcast {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
@@ -85,7 +85,7 @@ impl GameEvent for StopBroadcast {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
@@ -105,7 +105,7 @@ impl GameEvent for ScheduleManeuver {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
@@ -127,7 +127,7 @@ impl GameEvent for CancelManeuver {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
@@ -164,7 +164,7 @@ impl GameEvent for Update {
     type Output = ();
 
     fn validate(&self, _: &GameState) -> bool {
-        false
+        true
     }
 
     fn execute(self, game_state: &mut GameState) {
