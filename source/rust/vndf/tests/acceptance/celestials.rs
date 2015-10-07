@@ -20,8 +20,6 @@ fn a_ship_colliding_with_a_celestial_body_should_be_removed() {
 			velocity: Vec2::new(1.0, 0.0),
 		});
 
-	print!("initial state: {:?}\n", initial_state);
-
 	let     server = rc::Server::start(initial_state);
 	let mut client = rc::Client::start(server.port());
 
