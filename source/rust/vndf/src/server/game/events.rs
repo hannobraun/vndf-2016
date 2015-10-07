@@ -126,32 +126,18 @@ pub struct CancelManeuver {
 impl GameEvent for CancelManeuver {
     type Output = ();
 
-    fn validate(&self, _: &GameState) -> bool {
-        true
+    fn validate(&self, game_state: &GameState) -> bool {
+        let maneuver =
+            match game_state.entities.maneuvers.get(&self.maneuver_id) {
+                Some(maneuver) => maneuver,
+                None           => return false,
+            };
+
+        self.ship_id == maneuver.ship_id
     }
 
     fn execute(self, game_state: &mut GameState) {
-        match game_state.entities.maneuvers.get(&self.maneuver_id) {
-            Some(maneuver) => {
-                if maneuver.ship_id == self.ship_id {
-                    game_state.to_destroy.push(self.maneuver_id);
-                }
-                else {
-                    // This could be a bug or malicious behavior.
-                    debug!(
-                        "{}. Ship: {}; Maneuver: {}",
-                        "Player tried to cancel foreign maneuver",
-                        self.ship_id,
-                        self.maneuver_id,
-                    );
-                }
-            },
-            None =>
-                // This could happen, if the maneuver was finished while the
-                // cancel message was in flight. It might also be the symptom of
-                // a bug.
-                debug!("Could not find maneuver: {}", self.maneuver_id),
-        }
+        game_state.to_destroy.push(self.maneuver_id);
     }
 }
 
