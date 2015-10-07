@@ -8,6 +8,7 @@ use nalgebra::{
     Vec2,
 };
 
+use server::game::data::Spawner;
 use server::game::entities::Entities;
 use shared::game::{
     Body,
@@ -23,7 +24,7 @@ use shared::protocol::server::Entity;
 #[derive(Debug)]
 pub struct GameState {
     pub entities: Entities,
-    pub spawner : Vec2<f64>,
+    pub spawner : Spawner,
 
     export_buffer     : Vec<Entity>,
     to_destroy        : Vec<EntityId>,
@@ -34,7 +35,7 @@ impl GameState {
     pub fn new() -> GameState {
         GameState {
             entities: Entities::new(),
-            spawner : Vec2::new(0.0, 0.0),
+            spawner : Spawner::new(),
 
             export_buffer     : Vec::new(),
             to_destroy        : Vec::new(),
@@ -45,7 +46,7 @@ impl GameState {
     pub fn on_enter(&mut self) -> EntityId {
         self.entities.create_entity()
             .with_body(Body {
-                position: self.spawner,
+                position: self.spawner.position,
                 velocity: Vec2::new(1.0, 0.0),
                 force   : Vec2::new(0.0, 0.0),
                 mass: 0.0f32,

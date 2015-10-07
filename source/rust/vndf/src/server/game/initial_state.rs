@@ -15,6 +15,7 @@ use rand::distributions::{
 };
 use rustc_serialize::json;
 
+use server::game::data::Spawner;
 use server::game::state::GameState;
 use shared::color::Colors;
 use shared::game::{
@@ -135,7 +136,9 @@ impl InitialState {
                 });
         }
 
-        game_state.spawner = self.spawn_position;
+        game_state.spawner = Spawner {
+            position: self.spawn_position,
+        };
     }
 }
 
