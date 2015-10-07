@@ -181,7 +181,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         }
 
                         if let Some(planet) = entity.planet {
-                            frame.planets.insert(entity.id, (body, planet));
+                            frame.planets.insert(entity.id, planet);
 
                             if !frame.colliders.contains_key(&entity.id) {
                                 frame.colliders.insert(

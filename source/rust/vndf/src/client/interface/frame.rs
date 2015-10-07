@@ -23,7 +23,7 @@ pub struct Frame {
     pub message     : Message,
 
     pub ships    : BTreeMap<EntityId, Body>,
-    pub planets  : BTreeMap<EntityId, (Body, Planet)>,
+    pub planets  : BTreeMap<EntityId, Planet>,
     pub maneuvers: BTreeMap<EntityId, ManeuverData>,
 
     pub broadcasts: HashMap<EntityId, String>,

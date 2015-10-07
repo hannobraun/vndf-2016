@@ -114,9 +114,8 @@ impl Camera {
                 pos = pos + b.position;
                 vel = vel + b.velocity;
             }
-            else if let Some(&(body, _)) = frame.planets.get(&n) {
-                pos = pos + body.position;
-                vel = vel + body.velocity;
+            else if let Some(planet) = frame.planets.get(&n) {
+                pos = pos + planet.position;
             }
         }
 
