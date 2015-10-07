@@ -1,5 +1,8 @@
+use std::io::{
+	self,
+	BufReader,
+};
 use std::io::prelude::*;
-use std::io::BufReader;
 use std::process::{
 	Child,
 	ChildStderr,
@@ -88,29 +91,27 @@ impl Process {
 	}
 
 
-	fn print_debug_output(&mut self) {
+	fn print_debug_output(&mut self) -> io::Result<()> {
 		self.kill();
 
-		self.stdout
-			.read_to_string(&mut self.stdout_buf)
-			.ok()
-			.expect("Error reading from stdout");
+		try!(self.stdout.read_to_string(&mut self.stdout_buf));
 
 		let mut stderr = String::new();
-		self.stderr
-			.read_to_string(&mut stderr)
-			.ok()
-			.expect("Error reading from stderr");
+		try!(self.stderr.read_to_string(&mut stderr));
 
 		print!("Output for process {}\n", self.path);
 		print!("stdout:\n{}\n", self.stdout_buf);
 		print!("stderr:\n{}\n", stderr);
+
+		Ok(())
 	}
 }
 
 impl Drop for Process {
 	fn drop(&mut self) {
-		self.print_debug_output();
+		if let Err(error) = self.print_debug_output() {
+			print!("Error printing debug output: {}\n", error);
+		}
 	}
 }
 
