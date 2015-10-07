@@ -60,3 +60,18 @@ impl GameEvent for StartBroadcast {
             });
     }
 }
+
+
+pub struct StopBroadcast {
+    pub ship_id: EntityId,
+}
+
+impl GameEvent for StopBroadcast {
+    type Output = ();
+
+    fn execute(self, game_state: &mut GameState) {
+        game_state.entities
+            .update_entity(self.ship_id)
+            .remove_broadcast();
+    }
+}

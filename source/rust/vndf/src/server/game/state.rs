@@ -52,10 +52,6 @@ impl GameState {
         event.execute(self)
     }
 
-    pub fn on_stop_broadcast(&mut self, ship_id: EntityId) {
-        self.entities.update_entity(ship_id).remove_broadcast();
-    }
-
     pub fn on_schedule_maneuver(
         &mut self,
         ship_id: EntityId,
