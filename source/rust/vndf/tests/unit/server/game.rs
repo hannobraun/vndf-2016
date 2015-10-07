@@ -1,5 +1,10 @@
+use nalgebra::Vec2;
+
 use vndf::server::game::events;
-use vndf::server::game::state::{GameState};
+use vndf::server::game::state::{
+	GameEvent,
+	GameState,
+};
 use vndf::shared::game::{
 	Body,
 	EntityId,
@@ -143,6 +148,36 @@ fn maneuver_thrust_should_be_configurable() {
 	let body_b = get_body(ship_id_b, &mut game_state);
 
 	assert!(body_a.velocity.x > body_b.velocity.x);
+}
+
+#[test]
+fn game_state_should_reject_invalid_events() {
+	struct InvalidEvent;
+
+	impl GameEvent for InvalidEvent {
+		type Output = ();
+
+		fn validate(&self, _: &GameState) -> bool {
+			false
+		}
+		fn execute(self, game_state: &mut GameState) {
+			game_state.entities
+				.create_entity()
+					.with_body(Body {
+						position: Vec2::new(0.0, 0.0),
+						velocity: Vec2::new(0.0, 0.0),
+						force   : Vec2::new(0.0, 0.0),
+						mass    : 0.0,
+					});
+		}
+	}
+
+	let mut game_state = GameState::new();
+
+	let result = game_state.handle_event(InvalidEvent);
+
+	assert!(result.is_err());
+	assert_eq!(game_state.entities.bodies.len(), 0);
 }
 
 #[test]

@@ -41,7 +41,12 @@ impl GameState {
     pub fn handle_event<E>(&mut self, event: E) -> Result<E::Output, ()>
         where E: GameEvent
     {
-        Ok(event.execute(self))
+        if event.validate(self) {
+            Ok(event.execute(self))
+        }
+        else {
+            Err(())
+        }
     }
 
     pub fn export_entities(&mut self) -> Drain<Entity> {
