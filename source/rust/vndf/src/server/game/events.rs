@@ -23,3 +23,14 @@ impl Enter {
             .return_id()
 	}
 }
+
+
+pub struct Leave {
+	pub ship_id: EntityId,
+}
+
+impl Leave {
+	pub fn execute(self, game_state: &mut GameState) {
+		game_state.to_destroy.push(self.ship_id);
+	}
+}

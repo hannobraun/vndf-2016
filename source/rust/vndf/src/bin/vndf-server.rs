@@ -17,6 +17,7 @@ use time::precise_time_s;
 
 use vndf::server::args::Args;
 use vndf::server::clients::Clients;
+use vndf::server::game::events;
 use vndf::server::game::initial_state::InitialState;
 use vndf::server::game::state::GameState;
 use vndf::server::incoming_events::IncomingEvents;
@@ -67,7 +68,7 @@ fn main() {
         );
 
         clients.remove_inactive(now_s, args.client_timeout_s, |client| {
-            game_state.on_leave(&client.ship_id);
+            game_state.on_leave(events::Leave { ship_id: client.ship_id });
         });
 
         game_state.on_update(now_s);
