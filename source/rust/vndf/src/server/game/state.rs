@@ -2,7 +2,6 @@ use std::vec::Drain;
 
 use server::game::data::Spawner;
 use server::game::entities::Entities;
-use server::game::systems;
 use shared::game::EntityId;
 use shared::protocol::server::Entity;
 
@@ -40,18 +39,6 @@ impl GameState {
 
     pub fn handle_event<E: GameEvent>(&mut self, event: E) -> E::Output {
         event.execute(self)
-    }
-
-    pub fn on_update(&mut self, now_s: f64) {
-        systems::apply_maneuvers(self, now_s);
-        systems::apply_gravity(self);
-        systems::integrate(self);
-        systems::check_collisions(self);
-
-        for id in self.to_destroy.drain(..) {
-            self.entities.destroy_entity(&id);
-            self.destroyed.push(id);
-        }
     }
 
     pub fn export_entities(&mut self) -> Drain<Entity> {

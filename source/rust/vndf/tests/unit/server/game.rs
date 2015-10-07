@@ -37,13 +37,13 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 	});
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(maneuver_a.start_s + 0.1);
+	game_state.handle_event(events::Update { now_s: maneuver_a.start_s + 0.1 });
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver_a.angle, before, after));
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(maneuver_b.start_s + 0.1);
+	game_state.handle_event(events::Update { now_s: maneuver_b.start_s + 0.1 });
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver_b.angle, before, after));
@@ -68,13 +68,17 @@ fn maneuvers_should_apply_thrust_over_time() {
 	});
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(maneuver.start_s + maneuver.duration_s / 2.0);
+	game_state.handle_event(events::Update {
+		now_s: maneuver.start_s + maneuver.duration_s / 2.0
+	});
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver.angle, before, after));
 
 	let before = get_body(ship_id, &mut game_state);
-	game_state.on_update(maneuver.start_s + maneuver.duration_s);
+	game_state.handle_event(events::Update {
+		now_s: maneuver.start_s + maneuver.duration_s
+	});
 	let after = get_body(ship_id, &mut game_state);
 
 	assert!(angle_has_decreased(maneuver.angle, before, after));
@@ -113,7 +117,7 @@ fn maneuver_thrust_should_be_configurable() {
 		ship_id: ship_id_b,
 		data   : maneuver_b,
 	});
-	game_state.on_update(start_s + duration_s);
+	game_state.handle_event(events::Update { now_s: start_s + duration_s });
 
 	let body_a = get_body(ship_id_a, &mut game_state);
 	let body_b = get_body(ship_id_b, &mut game_state);
@@ -175,7 +179,7 @@ fn maneuver_thrust_should_stay_within_limits() {
 		ship_id: ship_id_d,
 		data   : maneuver_d,
 	});
-	game_state.on_update(start_s + duration_s);
+	game_state.handle_event(events::Update { now_s: start_s + duration_s });
 
 	let body_a = get_body(ship_id_a, &mut game_state);
 	let body_b = get_body(ship_id_b, &mut game_state);
@@ -216,7 +220,7 @@ fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
 		ship_id    : ship_id_b,
 		maneuver_id: maneuver_id_a,
 	});
-	game_state.on_update(0.0);
+	game_state.handle_event(events::Update { now_s: 0.0 });
 
 	assert_eq!(game_state.entities.maneuvers.len(), 2);
 }

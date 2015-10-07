@@ -4,6 +4,7 @@ use server::game::state::{
     GameEvent,
     GameState,
 };
+use server::game::systems;
 use shared::game::{
     Body,
     Broadcast,
@@ -126,6 +127,27 @@ impl GameEvent for CancelManeuver {
                 // cancel message was in flight. It might also be the symptom of
                 // a bug.
                 debug!("Could not find maneuver: {}", self.maneuver_id),
+        }
+    }
+}
+
+
+pub struct Update {
+    pub now_s: f64,
+}
+
+impl GameEvent for Update {
+    type Output = ();
+
+    fn execute(self, game_state: &mut GameState) {
+        systems::apply_maneuvers(game_state, self.now_s);
+        systems::apply_gravity(game_state);
+        systems::integrate(game_state);
+        systems::check_collisions(game_state);
+
+        for id in game_state.to_destroy.drain(..) {
+            game_state.entities.destroy_entity(&id);
+            game_state.destroyed.push(id);
         }
     }
 }
