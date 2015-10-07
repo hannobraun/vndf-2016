@@ -18,10 +18,7 @@ use rustc_serialize::json;
 use server::game::data::Spawner;
 use server::game::state::GameState;
 use shared::color::Colors;
-use shared::game::{
-    Body,
-    Planet,
-};
+use shared::game::Planet;
 
 
 #[derive(Debug, RustcDecodable, RustcEncodable)]
@@ -125,12 +122,6 @@ impl InitialState {
 
         for celestial in &self.celestials {
             entities.create_entity()
-                .with_body(Body {
-                    position: celestial.position,
-                    velocity: Vec2::new(0.0, 0.0),
-                    force   : Vec2::new(0.0, 0.0),
-                    mass    : 1.0, // not used anywhere at the moment
-                })
                 .with_planet(Planet {
                     position: celestial.position,
                     color   : Colors::random(),
