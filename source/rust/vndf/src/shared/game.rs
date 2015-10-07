@@ -38,6 +38,7 @@ pub struct ManeuverData {
 pub struct Planet {
     pub position: Vec2<f64>,
     pub size    : f64,
+    pub mass    : f64,
     pub color   : Color,
 }
 

@@ -1,3 +1,4 @@
+use std::f64::consts::PI;
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
@@ -121,10 +122,15 @@ impl InitialState {
         let entities = &mut game_state.entities;
 
         for celestial in &self.celestials {
+            // Let's say mass is just proportional to volume.
+            let size_cubed = celestial.size * celestial.size * celestial.size;
+            let mass       = size_cubed * 4.0 / 3.0 * PI;
+
             entities.create_entity()
                 .with_planet(Planet {
                     position: celestial.position,
                     size    : celestial.size,
+                    mass    : mass,
                     color   : Colors::random(),
                 });
         }
