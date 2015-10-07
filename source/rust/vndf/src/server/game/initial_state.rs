@@ -132,8 +132,9 @@ impl InitialState {
                     mass    : 1.0, // not used anywhere at the moment
                 })
                 .with_planet(Planet {
-                    color: Colors::random(),
-                    size : celestial.size,
+                    position: celestial.position,
+                    color   : Colors::random(),
+                    size    : celestial.size,
                 });
         }
 
