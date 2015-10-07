@@ -218,12 +218,12 @@ impl GameState {
 
     fn check_collisions(&mut self) {
         for (ship_id, _) in &self.entities.ships {
-            for (_, celestial) in &self.entities.planets {
+            for (_, planet) in &self.entities.planets {
                 let ship_pos = self.entities.bodies[ship_id].position;
 
-                let squared_size = celestial.size * celestial.size;
+                let squared_size = planet.size * planet.size;
 
-                if (ship_pos - celestial.position).sqnorm() < squared_size {
+                if (ship_pos - planet.position).sqnorm() < squared_size {
                     self.to_destroy.push(*ship_id);
                 }
             }
