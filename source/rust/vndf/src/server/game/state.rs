@@ -20,6 +20,13 @@ use shared::game::{
 use shared::protocol::server::Entity;
 
 
+pub trait GameEvent {
+    type Output;
+
+    fn execute(self, game_state: &mut GameState) -> Self::Output;
+}
+
+
 #[derive(Debug)]
 pub struct GameState {
     pub entities: Entities,

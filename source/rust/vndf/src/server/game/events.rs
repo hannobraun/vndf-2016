@@ -1,6 +1,9 @@
 use nalgebra::Vec2;
 
-use server::game::state::GameState;
+use server::game::state::{
+	GameEvent,
+	GameState,
+};
 use shared::game::{
 	Body,
 	EntityId,
@@ -10,8 +13,10 @@ use shared::game::{
 
 pub struct Enter;
 
-impl Enter {
-	pub fn execute(self, game_state: &mut GameState) -> EntityId {
+impl GameEvent for Enter {
+	type Output = EntityId;
+
+	fn execute(self, game_state: &mut GameState) -> EntityId {
 		game_state.entities.create_entity()
             .with_body(Body {
                 position: game_state.spawner.position,
@@ -29,8 +34,10 @@ pub struct Leave {
 	pub ship_id: EntityId,
 }
 
-impl Leave {
-	pub fn execute(self, game_state: &mut GameState) {
+impl GameEvent for Leave {
+	type Output = ();
+
+	fn execute(self, game_state: &mut GameState) {
 		game_state.to_destroy.push(self.ship_id);
 	}
 }
