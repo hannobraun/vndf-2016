@@ -138,6 +138,7 @@ impl InitialState {
 
         game_state.spawner = Spawner {
             position: self.spawn_position,
+            velocity: Vec2::new(1.0, 0.0),
         };
     }
 }

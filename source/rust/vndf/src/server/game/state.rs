@@ -47,7 +47,7 @@ impl GameState {
         self.entities.create_entity()
             .with_body(Body {
                 position: self.spawner.position,
-                velocity: Vec2::new(1.0, 0.0),
+                velocity: self.spawner.velocity,
                 force   : Vec2::new(0.0, 0.0),
                 mass: 0.0f32,
             })
