@@ -19,10 +19,10 @@ pub struct GameState {
     pub entities: Entities,
     pub spawner : Spawner,
 
-    pub to_destroy: Vec<EntityId>,
+    pub to_destroy        : Vec<EntityId>,
+    pub destroyed_entities: Vec<EntityId>,
 
-    export_buffer     : Vec<Entity>,
-    destroyed_entities: Vec<EntityId>,
+    export_buffer: Vec<Entity>,
 }
 
 impl GameState {
