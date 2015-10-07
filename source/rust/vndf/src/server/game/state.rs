@@ -10,7 +10,6 @@ use nalgebra::{
 
 use server::game::data::Spawner;
 use server::game::entities::Entities;
-use server::game::events;
 use shared::game::{
     Broadcast,
     EntityId,
@@ -49,12 +48,8 @@ impl GameState {
             destroyed_entities: Vec::new(),
         }
     }
-    
-    pub fn on_enter(&mut self, event: events::Enter) -> EntityId {
-        event.execute(self)
-    }
 
-    pub fn on_leave(&mut self, event: events::Leave) {
+    pub fn handle_event<E: GameEvent>(&mut self, event: E) -> E::Output {
         event.execute(self)
     }
 

@@ -68,7 +68,7 @@ fn main() {
         );
 
         clients.remove_inactive(now_s, args.client_timeout_s, |client| {
-            game_state.on_leave(events::Leave { ship_id: client.ship_id });
+            game_state.handle_event(events::Leave { ship_id: client.ship_id });
         });
 
         game_state.on_update(now_s);

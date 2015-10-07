@@ -126,7 +126,7 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.on_enter(events::Enter);
+				let ship_id = game_state.handle_event(events::Enter);
 
 				let client = Client {
 					ship_id      : ship_id,
