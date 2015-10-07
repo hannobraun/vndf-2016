@@ -113,6 +113,7 @@ impl GameState {
 
     pub fn on_update(&mut self, now_s: f64) {
         self.apply_maneuvers(now_s);
+        self.apply_gravity();
         self.integrate();
         self.check_collisions();
 
@@ -201,6 +202,23 @@ impl GameState {
 
             if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
                 self.to_destroy.push(id);
+            }
+        }
+    }
+
+    fn apply_gravity(&mut self) {
+        for (_, planet) in &self.entities.planets {
+            for (_, body) in &mut self.entities.bodies {
+                let g = 6.674e-11; // unit: N * m^2 / kg^2
+
+                let body_to_planet = body.position - planet.position;
+                let distance       = body_to_planet.norm();
+                let direction      = body_to_planet / distance;
+
+                let force =
+                    direction * -g * (planet.mass * body.mass) / distance;
+
+                body.force = body.force + force;
             }
         }
     }
