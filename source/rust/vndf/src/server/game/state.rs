@@ -48,34 +48,6 @@ impl GameState {
         event.execute(self)
     }
 
-    pub fn on_cancel_maneuver(
-        &mut self,
-        ship_id    : EntityId,
-        maneuver_id: EntityId,
-    ) {
-        match self.entities.maneuvers.get(&maneuver_id) {
-            Some(maneuver) => {
-                if maneuver.ship_id == ship_id {
-                    self.to_destroy.push(maneuver_id);
-                }
-                else {
-                    // This could be a bug or malicious behavior.
-                    debug!(
-                        "{}. Ship: {}; Maneuver: {}",
-                        "Player tried to cancel foreign maneuver",
-                        ship_id,
-                        maneuver_id,
-                    );
-                }
-            },
-            None =>
-                // This could happen, if the maneuver was finished while the
-                // cancel message was in flight. It might also be the symptom of
-                // a bug.
-                debug!("Could not find maneuver: {}", maneuver_id),
-        }
-    }
-
     pub fn on_update(&mut self, now_s: f64) {
         self.apply_maneuvers(now_s);
         self.apply_gravity();

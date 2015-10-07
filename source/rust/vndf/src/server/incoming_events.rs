@@ -176,7 +176,10 @@ fn handle_privileged_event(
 			})
 		},
 		client::event::Privileged::CancelManeuver(maneuver_id) => {
-			game_state.on_cancel_maneuver(client.ship_id, maneuver_id)
+			game_state.handle_event(events::CancelManeuver {
+				ship_id    : client.ship_id,
+				maneuver_id: maneuver_id,
+			})
 		},
 	}
 }

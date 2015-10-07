@@ -212,7 +212,10 @@ fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
 	assert_eq!(game_state.entities.maneuvers.len(), 2);
 
 	let maneuver_id_a = get_maneuver_id(ship_id_a, &mut game_state);
-	game_state.on_cancel_maneuver(ship_id_b, maneuver_id_a);
+	game_state.handle_event(events::CancelManeuver {
+		ship_id    : ship_id_b,
+		maneuver_id: maneuver_id_a,
+	});
 	game_state.on_update(0.0);
 
 	assert_eq!(game_state.entities.maneuvers.len(), 2);
