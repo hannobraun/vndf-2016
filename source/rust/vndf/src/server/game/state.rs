@@ -19,8 +19,8 @@ pub struct GameState {
     pub entities: Entities,
     pub spawner : Spawner,
 
-    pub to_destroy        : Vec<EntityId>,
-    pub destroyed_entities: Vec<EntityId>,
+    pub to_destroy: Vec<EntityId>,
+    pub destroyed : Vec<EntityId>,
 
     export_buffer: Vec<Entity>,
 }
@@ -33,7 +33,7 @@ impl GameState {
 
             export_buffer     : Vec::new(),
             to_destroy        : Vec::new(),
-            destroyed_entities: Vec::new(),
+            destroyed         : Vec::new(),
         }
     }
 
@@ -49,7 +49,7 @@ impl GameState {
 
         for id in self.to_destroy.drain(..) {
             self.entities.destroy_entity(&id);
-            self.destroyed_entities.push(id);
+            self.destroyed.push(id);
         }
     }
 
@@ -100,6 +100,6 @@ impl GameState {
     }
 
     pub fn destroyed_entities(&mut self) -> Drain<EntityId> {
-        self.destroyed_entities.drain(..)
+        self.destroyed.drain(..)
     }
 }
