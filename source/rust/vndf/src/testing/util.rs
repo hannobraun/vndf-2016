@@ -12,7 +12,7 @@ pub fn random_path() -> String {
 	let mut temp_file = env::temp_dir();
 
 	let r: u16 = random();
-	temp_file.push(format!("vndf-test-{}", r));
+	temp_file.push(format!("vndf-testing-{}", r));
 
 	temp_file.display().to_string()
 }

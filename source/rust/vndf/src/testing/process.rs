@@ -1,3 +1,4 @@
+use std::fs::File;
 use std::io::{
 	self,
 	BufReader,
@@ -11,6 +12,8 @@ use std::process::{
 	Command,
 	Stdio,
 };
+
+use testing::util::random_path;
 
 
 pub struct Process {
@@ -99,9 +102,18 @@ impl Process {
 		let mut stderr = String::new();
 		try!(self.stderr.read_to_string(&mut stderr));
 
-		print!("Output for process {}\n", self.path);
-		print!("stdout:\n{}\n", self.stdout_buf);
-		print!("stderr:\n{}\n", stderr);
+		let     path   = random_path();
+		let mut output = try!(File::create(&path));
+
+		try!(write!(output, "Output for process {}\n", self.path));
+		try!(write!(output, "stdout:\n{}\n", self.stdout_buf));
+		try!(write!(output, "stderr:\n{}\n", stderr));
+
+		print!(
+			"Output for process {} written to file://{}\n",
+			self.path,
+			path,
+		);
 
 		Ok(())
 	}
