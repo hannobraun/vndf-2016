@@ -38,7 +38,9 @@ impl GameState {
         }
     }
 
-    pub fn handle_event<E: GameEvent>(&mut self, event: E) -> E::Output {
+    pub fn handle_event<E>(&mut self, event: E) -> E::Output
+        where E: GameEvent
+    {
         event.execute(self)
     }
 
