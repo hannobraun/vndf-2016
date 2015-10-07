@@ -1,7 +1,7 @@
 use nalgebra::Vec2;
 
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug, RustcDecodable, RustcEncodable)]
 pub struct Spawner {
 	pub position: Vec2<f64>,
 	pub velocity: Vec2<f64>,
