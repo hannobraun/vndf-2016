@@ -31,9 +31,10 @@ impl GameState {
             entities: Entities::new(),
             spawner : Spawner::new(),
 
-            export_buffer     : Vec::new(),
-            to_destroy        : Vec::new(),
-            destroyed         : Vec::new(),
+            to_destroy: Vec::new(),
+            destroyed : Vec::new(),
+
+            export_buffer: Vec::new(),
         }
     }
 
