@@ -47,6 +47,7 @@ impl GameState {
             .with_body(Body {
                 position: self.spawn_position,
                 velocity: Vec2::new(1.0, 0.0),
+                force   : Vec2::new(0.0, 0.0),
                 mass: 0.0f32,
             })
             .with_ship(Ship)

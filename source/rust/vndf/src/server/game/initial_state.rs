@@ -126,6 +126,7 @@ impl InitialState {
                 .with_body(Body {
                     position: celestial.position,
                     velocity: Vec2::new(0.0, 0.0),
+                    force   : Vec2::new(0.0, 0.0),
                     mass    : 1.0, // not used anywhere at the moment
                 })
                 .with_planet(Planet {
