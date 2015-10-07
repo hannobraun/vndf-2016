@@ -173,17 +173,6 @@ impl GameState {
     }
 
 
-    fn integrate(&mut self) {
-         for (_, body) in &mut self.entities.bodies {
-            // TODO(E7GyYwQy): Take passed time since last iteration into
-            //                 account.
-            body.velocity = body.velocity + body.force;
-            body.position = body.position + body.velocity;
-
-            body.force = Vec2::new(0.0, 0.0);
-        }
-    }
-
     fn apply_maneuvers(&mut self, now_s: f64) {
         for (&id, maneuver) in &mut self.entities.maneuvers {
             if now_s >= maneuver.data.start_s {
@@ -213,6 +202,17 @@ impl GameState {
             if now_s >= maneuver.data.start_s + maneuver.data.duration_s {
                 self.to_destroy.push(id);
             }
+        }
+    }
+
+    fn integrate(&mut self) {
+         for (_, body) in &mut self.entities.bodies {
+            // TODO(E7GyYwQy): Take passed time since last iteration into
+            //                 account.
+            body.velocity = body.velocity + body.force;
+            body.position = body.position + body.velocity;
+
+            body.force = Vec2::new(0.0, 0.0);
         }
     }
 
