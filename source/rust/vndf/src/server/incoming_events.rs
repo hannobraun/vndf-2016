@@ -4,6 +4,7 @@ use server::clients::{
 	Client,
 	Clients,
 };
+use server::game::events;
 use server::game::state::GameState;
 use server::outgoing_events::{
 	OutgoingEvents,
@@ -125,7 +126,7 @@ fn handle_public_event(
 				debug!("Ignoring duplicate login: {}", address);
 			}
 			else {
-				let ship_id = game_state.on_enter();
+				let ship_id = game_state.on_enter(events::Enter);
 
 				let client = Client {
 					ship_id      : ship_id,

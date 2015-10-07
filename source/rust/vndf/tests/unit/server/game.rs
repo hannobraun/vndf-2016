@@ -1,3 +1,4 @@
+use vndf::server::game::events;
 use vndf::server::game::state::{GameState};
 use vndf::shared::game::{
 	Body,
@@ -11,7 +12,7 @@ use vndf::shared::util::angle_of;
 fn it_should_execute_multiple_maneuvers_after_each_other() {
 	let mut game_state = GameState::new();
 
-	let ship_id = game_state.on_enter();
+	let ship_id = game_state.on_enter(events::Enter);
 
 	let maneuver_a = ManeuverData {
 		start_s   : 0.5,
@@ -46,7 +47,7 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 fn maneuvers_should_apply_thrust_over_time() {
 	let mut game_state = GameState::new();
 
-	let ship_id = game_state.on_enter();
+	let ship_id = game_state.on_enter(events::Enter);
 
 	let maneuver = ManeuverData {
 		start_s   : 0.5,
@@ -75,8 +76,8 @@ fn maneuvers_should_apply_thrust_over_time() {
 fn maneuver_thrust_should_be_configurable() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.on_enter();
-	let ship_id_b = game_state.on_enter();
+	let ship_id_a = game_state.on_enter(events::Enter);
+	let ship_id_b = game_state.on_enter(events::Enter);
 
 	let start_s    = 0.5;
 	let duration_s = 1.0;
@@ -109,10 +110,10 @@ fn maneuver_thrust_should_be_configurable() {
 fn maneuver_thrust_should_stay_within_limits() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.on_enter();
-	let ship_id_b = game_state.on_enter();
-	let ship_id_c = game_state.on_enter();
-	let ship_id_d = game_state.on_enter();
+	let ship_id_a = game_state.on_enter(events::Enter);
+	let ship_id_b = game_state.on_enter(events::Enter);
+	let ship_id_c = game_state.on_enter(events::Enter);
+	let ship_id_d = game_state.on_enter(events::Enter);
 
 	let start_s    = 0.5;
 	let duration_s = 1.0;
@@ -162,8 +163,8 @@ fn maneuver_thrust_should_stay_within_limits() {
 fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
 	let mut game_state = GameState::new();
 
-	let ship_id_a = game_state.on_enter();
-	let ship_id_b = game_state.on_enter();
+	let ship_id_a = game_state.on_enter(events::Enter);
+	let ship_id_b = game_state.on_enter(events::Enter);
 
 	let maneuver = ManeuverData {
 		start_s   : 0.5,

@@ -10,13 +10,12 @@ use nalgebra::{
 
 use server::game::data::Spawner;
 use server::game::entities::Entities;
+use server::game::events;
 use shared::game::{
-    Body,
     Broadcast,
     EntityId,
     Maneuver,
     ManeuverData,
-    Ship,
 };
 use shared::protocol::server::Entity;
 
@@ -43,16 +42,8 @@ impl GameState {
         }
     }
     
-    pub fn on_enter(&mut self) -> EntityId {
-        self.entities.create_entity()
-            .with_body(Body {
-                position: self.spawner.position,
-                velocity: self.spawner.velocity,
-                force   : Vec2::new(0.0, 0.0),
-                mass    : 1.0,
-            })
-            .with_ship(Ship)
-            .return_id()
+    pub fn on_enter(&mut self, event: events::Enter) -> EntityId {
+        event.execute(self)
     }
 
     pub fn on_leave(&mut self, ship_id: &EntityId) {
