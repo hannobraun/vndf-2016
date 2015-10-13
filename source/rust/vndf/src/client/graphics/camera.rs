@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 use nalgebra::{Vec2,Translation,Norm};
-use shared::game::EntityId;
+use shared::game::data::EntityId;
 use client::interface::Frame;
 
 /// Camera tracking types

@@ -1,6 +1,6 @@
 use nalgebra::Vec2;
 
-use shared::game::Body;
+use shared::game::data::Body;
 
 
 pub fn integrate(body: &mut Body, delta_t_s: f64) {

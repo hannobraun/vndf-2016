@@ -9,7 +9,7 @@ use client::interface::{
     Frame,
     InputEvent,
 };
-use shared::game::{ManeuverData};
+use shared::game::data::{ManeuverData};
 
 /// Keyboard Input Controller
 pub struct Keyboard {

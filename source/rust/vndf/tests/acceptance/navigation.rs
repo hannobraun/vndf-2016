@@ -2,7 +2,7 @@ use std::f64::consts::PI;
 
 use vndf::server::game::initial_state::InitialState;
 use vndf::client::interface::InputEvent;
-use vndf::shared::game::ManeuverData;
+use vndf::shared::game::data::ManeuverData;
 use vndf::shared::util::{
 	angle_of,
 	is_point_on_line,

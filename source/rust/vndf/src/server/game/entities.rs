@@ -1,4 +1,4 @@
-use shared::game::{
+use shared::game::data::{
     Body,
     Broadcast,
     EntityId,

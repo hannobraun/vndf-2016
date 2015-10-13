@@ -18,7 +18,7 @@ use client::graphics::draw::{
 use client::graphics::transforms::Transforms;
 use client::interface::Frame;
 use shared::color;
-use shared::game::{
+use shared::game::data::{
     Body,
     EntityId,
 };

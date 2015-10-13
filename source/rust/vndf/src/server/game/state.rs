@@ -2,7 +2,7 @@ use std::vec::Drain;
 
 use server::game::data::Spawner;
 use server::game::entities::Entities;
-use shared::game::EntityId;
+use shared::game::data::EntityId;
 use shared::protocol::server::Entity;
 
 

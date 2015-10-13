@@ -9,7 +9,7 @@ use client::graphics::draw::{ShapeDrawer, GlyphDrawer};
 use client::graphics::transforms::Transforms;
 use client::interface::Frame;
 use shared::color;
-use shared::game::EntityId;
+use shared::game::data::EntityId;
 
 
 pub struct PlanetDrawer {

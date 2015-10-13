@@ -5,7 +5,7 @@ use server::game::state::{
     GameState,
 };
 use server::game::systems;
-use shared::game::{
+use shared::game::data::{
     Body,
     Broadcast,
     EntityId,

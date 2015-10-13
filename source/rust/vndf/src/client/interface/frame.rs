@@ -8,7 +8,7 @@ use rustc_serialize::json::{
 use ncollide::shape::Ball;
 
 use client::graphics::camera::CameraTrack;
-use shared::game::{
+use shared::game::data::{
     Body,
     EntityId,
     ManeuverData,

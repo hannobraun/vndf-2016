@@ -16,7 +16,7 @@ use client::interface::{
     Frame,
     InputEvent,
 };
-use shared::game::EntityId;
+use shared::game::data::EntityId;
 use shared::physics::SphereCollider;
 
 const DRAGMIN_PX: i32 = 5i32;      // arbitrary 5px minimum

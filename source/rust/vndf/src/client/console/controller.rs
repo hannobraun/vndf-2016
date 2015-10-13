@@ -14,7 +14,7 @@ use client::interface::{
     InputEvent,
     Message,
 };
-use shared::game::{ManeuverData,EntityId};
+use shared::game::data::{ManeuverData,EntityId};
 
 pub struct Controller {
     pub console: Console,

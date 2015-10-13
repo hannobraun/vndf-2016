@@ -19,7 +19,7 @@ use rustc_serialize::json;
 use server::game::data::Spawner;
 use server::game::state::GameState;
 use shared::color::Colors;
-use shared::game::Planet;
+use shared::game::data::Planet;
 
 
 #[derive(Debug, RustcDecodable, RustcEncodable)]

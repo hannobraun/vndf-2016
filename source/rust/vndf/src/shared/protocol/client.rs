@@ -1,4 +1,4 @@
-use shared::game::{
+use shared::game::data::{
 	EntityId,
 	ManeuverData,
 };
@@ -30,7 +30,7 @@ impl Event {
 
 
 pub mod event {
-	use shared::game::{
+	use shared::game::data::{
 		EntityId,
 		ManeuverData,
 	};

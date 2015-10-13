@@ -6,7 +6,7 @@ use vndf::server::game::initial_state::{
 	Celestial,
 	InitialState,
 };
-use vndf::shared::game::Body;
+use vndf::shared::game::data::Body;
 use vndf::testing::rc;
 
 

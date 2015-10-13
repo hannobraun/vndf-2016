@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::net::SocketAddr;
 
-use shared::game::EntityId;
+use shared::game::data::EntityId;
 
 
 pub struct Clients {

@@ -5,7 +5,7 @@ use vndf::server::game::state::{
     GameEvent,
     GameState,
 };
-use vndf::shared::game::{
+use vndf::shared::game::data::{
     Body,
     EntityId,
     ManeuverData,
