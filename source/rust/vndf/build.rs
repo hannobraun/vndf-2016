@@ -1,7 +1,9 @@
+use std::cmp::max;
 use std::env;
 use std::fs::File;
 use std::io;
 use std::io::prelude::*;
+use std::iter::repeat;
 use std::path::Path;
 
 
@@ -35,6 +37,18 @@ impl Entities {
     }
 
     fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        let max_collection_length = self.components.iter().fold(
+            0,
+            |length, &(_, collection, _)|
+                max(length, collection.chars().count())
+        );
+
+        let padding = |collection: &str| -> String {
+            repeat(" ")
+                .take(max_collection_length - collection.chars().count())
+                .collect()
+        };
+
         try!(writer.write_all(
 b"use std::collections::{
     HashMap,
@@ -57,8 +71,8 @@ pub struct Entities {
         for &(_, collection, type_name) in &self.components {
             try!(write!(
                 writer,
-                "    pub {}: Components<{}>,\n",
-                collection, type_name,
+                "    pub {}{}: Components<{}>,\n",
+                collection, padding(collection), type_name,
             ));
         }
 
@@ -79,8 +93,8 @@ impl Entities {
         for &(_, collection, _) in &self.components {
             try!(write!(
                 writer,
-                "            {}: HashMap::new(),\n",
-                collection,
+                "            {}{}: HashMap::new(),\n",
+                collection, padding(collection),
             ));
         }
 
@@ -104,8 +118,8 @@ b"
         for &(_, collection, _) in &self.components {
             try!(write!(
                 writer,
-                "            {}: &mut self.{},\n",
-                collection, collection,
+                "            {}{}: &mut self.{},\n",
+                collection, padding(collection), collection,
             ));
         }
 
@@ -123,8 +137,8 @@ b"
         for &(_, collection, _) in &self.components {
             try!(write!(
                 writer,
-                "            {}: &mut self.{},\n",
-                collection, collection,
+                "            {}{}: &mut self.{},\n",
+                collection, padding(collection), collection,
             ));
         }
 
@@ -161,8 +175,8 @@ pub struct EntityBuilder<'c> {
         for &(_, collection, type_name) in &self.components {
             try!(write!(
                 writer,
-                "    {}: &'c mut Components<{}>,\n",
-                collection, type_name,
+                "    {}{}: &'c mut Components<{}>,\n",
+                collection, padding(collection), type_name,
             ));
         }
 
@@ -203,8 +217,8 @@ pub struct EntityUpdater<'c> {
         for &(_, collection, type_name) in &self.components {
             try!(write!(
                 writer,
-                "    {}: &'c mut Components<{}>,\n",
-                collection, type_name,
+                "    {}{}: &'c mut Components<{}>,\n",
+                collection, padding(collection), type_name,
             ));
         }
 
