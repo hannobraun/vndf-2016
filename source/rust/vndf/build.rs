@@ -17,11 +17,21 @@ fn main() {
 }
 
 
-struct Entities;
+struct Entities {
+    components: Vec<(&'static str, &'static str, &'static str)>,
+}
 
 impl Entities {
     fn new() -> Entities {
-        Entities
+        Entities {
+            components: vec![
+                ("body"     , "bodies"    , "Body"     ),
+                ("broadcast", "broadcasts", "Broadcast"),
+                ("maneuver" , "maneuvers" , "Maneuver" ),
+                ("planet"   , "planets"   , "Planet"   ),
+                ("ship"     , "ships"     , "Ship"     ),
+            ],
+        }
     }
 
     fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
@@ -44,13 +54,13 @@ pub struct Entities {
 "
         ));
 
-        try!(writer.write_all(
-b"    pub bodies    : Components<Body>,
-    pub broadcasts: Components<Broadcast>,
-    pub maneuvers : Components<Maneuver>,
-    pub planets   : Components<Planet>,
-    pub ships     : Components<Ship>,"
-        ));
+        for &(_, collection, type_name) in &self.components {
+            try!(write!(
+                writer,
+                "    pub {}: Components<{}>,\n",
+                collection, type_name,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -66,14 +76,13 @@ impl Entities {
 "
         ));
 
-        try!(writer.write_all(
-b"            bodies    : HashMap::new(),
-            broadcasts: HashMap::new(),
-            maneuvers : HashMap::new(),
-            planets   : HashMap::new(),
-            ships     : HashMap::new(),"
-
-        ));
+        for &(_, collection, _) in &self.components {
+            try!(write!(
+                writer,
+                "            {}: HashMap::new(),\n",
+                collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -92,13 +101,13 @@ b"
 "
         ));
 
-        try!(writer.write_all(
-b"            bodies    : &mut self.bodies,
-            broadcasts: &mut self.broadcasts,
-            maneuvers : &mut self.maneuvers,
-            planets   : &mut self.planets,
-            ships     : &mut self.ships,"
-        ));
+        for &(_, collection, _) in &self.components {
+            try!(write!(
+                writer,
+                "            {}: &mut self.{},\n",
+                collection, collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -111,14 +120,13 @@ b"
 "
         ));
 
-        try!(writer.write_all(
-
-b"            bodies    : &mut self.bodies,
-            broadcasts: &mut self.broadcasts,
-            maneuvers : &mut self.maneuvers,
-            planets   : &mut self.planets,
-            ships     : &mut self.ships,"
-        ));
+        for &(_, collection, _) in &self.components {
+            try!(write!(
+                writer,
+                "            {}: &mut self.{},\n",
+                collection, collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -129,14 +137,13 @@ b"
 "
         ));
 
-        try!(writer.write_all(
-b"        self.bodies.remove(id);
-        self.broadcasts.remove(id);
-        self.maneuvers.remove(id);
-        self.planets.remove(id);
-        self.ships.remove(id);
-"
-        ));
+        for &(_, collection, _) in &self.components {
+            try!(write!(
+                writer,
+                "        self.{}.remove(id);\n",
+                collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -151,13 +158,13 @@ pub struct EntityBuilder<'c> {
 "
         ));
 
-        try!(writer.write_all(
-b"    bodies    : &'c mut Components<Body>,
-    broadcasts: &'c mut Components<Broadcast>,
-    maneuvers : &'c mut Components<Maneuver>,
-    planets   : &'c mut Components<Planet>,
-    ships     : &'c mut Components<Ship>,"
-        ));
+        for &(_, collection, type_name) in &self.components {
+            try!(write!(
+                writer,
+                "    {}: &'c mut Components<{}>,\n",
+                collection, type_name,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -167,33 +174,17 @@ impl<'c> EntityBuilder<'c> {
 "
         ));
 
-        try!(writer.write_all(
-b"    pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
-        self.bodies.insert(self.id, component);
+        for &(name, collection, type_name) in &self.components {
+            try!(write!(
+                writer,
+"    pub fn with_{}(mut self, component: {}) -> EntityBuilder<'c> {{
+        self.{}.insert(self.id, component);
         self
-    }
-
-    pub fn with_broadcast(mut self, component: Broadcast) -> EntityBuilder<'c> {
-        self.broadcasts.insert(self.id, component);
-        self
-    }
-
-    pub fn with_maneuver(mut self, component: Maneuver) -> EntityBuilder<'c> {
-        self.maneuvers.insert(self.id, component);
-        self
-    }
-
-    pub fn with_planet(mut self, component: Planet) -> EntityBuilder<'c> {
-        self.planets.insert(self.id, component);
-        self
-    }
-
-    pub fn with_ship(mut self, component: Ship) -> EntityBuilder<'c> {
-        self.ships.insert(self.id, component);
-        self
-    }
-"
-        ));
+    }}
+",
+                name, type_name, collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -209,13 +200,13 @@ pub struct EntityUpdater<'c> {
 "
         ));
 
-        try!(writer.write_all(
-b"    bodies    : &'c mut Components<Body>,
-    broadcasts: &'c mut Components<Broadcast>,
-    maneuvers : &'c mut Components<Maneuver>,
-    planets   : &'c mut Components<Planet>,
-    ships     : &'c mut Components<Ship>,"
-        ));
+        for &(_, collection, type_name) in &self.components {
+            try!(write!(
+                writer,
+                "    {}: &'c mut Components<{}>,\n",
+                collection, type_name,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -225,32 +216,17 @@ impl<'c> EntityUpdater<'c> {
 "
         ));
 
-        try!(writer.write_all(
-b"    pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
-        self.bodies.insert(self.id, component);
+        for &(name, collection, type_name) in &self.components {
+            try!(write!(
+                writer,
+"    pub fn add_{}(mut self, component: {}) -> EntityUpdater<'c> {{
+        self.{}.insert(self.id, component);
         self
-    }
-
-    pub fn add_broadcast(mut self, component: Broadcast) -> EntityUpdater<'c> {
-        self.broadcasts.insert(self.id, component);
-        self
-    }
-
-    pub fn add_maneuver(mut self, component: Maneuver) -> EntityUpdater<'c> {
-        self.maneuvers.insert(self.id, component);
-        self
-    }
-
-    pub fn add_planet(mut self, component: Planet) -> EntityUpdater<'c> {
-        self.planets.insert(self.id, component);
-        self
-    }
-
-    pub fn add_ship(mut self, component: Ship) -> EntityUpdater<'c> {
-        self.ships.insert(self.id, component);
-        self
-    }"
-        ));
+    }}
+",
+                name, type_name, collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
@@ -258,32 +234,17 @@ b"
 "
         ));
 
-        try!(writer.write_all(
-b"    pub fn remove_body(mut self) -> EntityUpdater<'c> {
-        self.bodies.remove(&self.id);
+        for &(name, collection, _) in &self.components {
+            try!(write!(
+                writer,
+"    pub fn remove_{}(mut self) -> EntityUpdater<'c> {{
+        self.{}.remove(&self.id);
         self
-    }
-
-    pub fn remove_broadcast(mut self) -> EntityUpdater<'c> {
-        self.broadcasts.remove(&self.id);
-        self
-    }
-
-    pub fn remove_maneuver(mut self) -> EntityUpdater<'c> {
-        self.maneuvers.remove(&self.id);
-        self
-    }
-
-    pub fn remove_planet(mut self) -> EntityUpdater<'c> {
-        self.planets.remove(&self.id);
-        self
-    }
-
-    pub fn remove_ship(mut self) -> EntityUpdater<'c> {
-        self.ships.remove(&self.id);
-        self
-    }"
-        ));
+    }}
+",
+                name, collection,
+            ));
+        }
 
         try!(writer.write_all(
 b"
