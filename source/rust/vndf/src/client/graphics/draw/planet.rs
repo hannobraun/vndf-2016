@@ -37,7 +37,7 @@ impl PlanetDrawer {
                 graphics: &mut Graphics,) {
         for (id, planet) in &frame.planets {
             let transform = transforms.symbol_to_screen(cast(planet.position));
-            let scale = planet.size as f32 * self.scaling_factor;
+            let scale = planet.radius as f32 * self.scaling_factor;
 
             // draw selection behind planet
             if frame.select_ids.contains(id) {

@@ -187,7 +187,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                         if !frame.colliders.contains_key(&entity.id) {
                             frame.colliders.insert(
                                 entity.id,
-                                SphereCollider::new_from_oval(planet.size as f32));
+                                SphereCollider::new_from_oval(planet.radius as f32));
                         }
                     }
 
