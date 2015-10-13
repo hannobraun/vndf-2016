@@ -14,6 +14,11 @@ fn main() {
     let mut file = File::create(&path).unwrap();
 
     Entities::new()
+        .with_component("body"     , "bodies"    , "Body"     )
+        .with_component("broadcast", "broadcasts", "Broadcast")
+        .with_component("maneuver" , "maneuvers" , "Maneuver" )
+        .with_component("planet"   , "planets"   , "Planet"   )
+        .with_component("ship"     , "ships"     , "Ship"     )
         .generate(&mut file)
         .unwrap();
 }
@@ -26,14 +31,18 @@ struct Entities {
 impl Entities {
     fn new() -> Entities {
         Entities {
-            components: vec![
-                ("body"     , "bodies"    , "Body"     ),
-                ("broadcast", "broadcasts", "Broadcast"),
-                ("maneuver" , "maneuvers" , "Maneuver" ),
-                ("planet"   , "planets"   , "Planet"   ),
-                ("ship"     , "ships"     , "Ship"     ),
-            ],
+            components: Vec::new(),
         }
+    }
+
+    fn with_component(
+        mut self,
+        name      : &'static str,
+        collection: &'static str,
+        type_name : &'static str,
+    ) -> Self {
+        self.components.push((name, collection, type_name));
+        self
     }
 
     fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
