@@ -11,12 +11,16 @@ fn main() {
 
     let mut file = File::create(&path).unwrap();
 
-    generate(&mut file).unwrap();
+    Entities.generate(&mut file).unwrap();
 }
 
-fn generate<W: Write>(writer: &mut W) -> io::Result<()> {
-    writer
-        .write_all(
+
+struct Entities;
+
+impl Entities {
+    fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
+        writer
+            .write_all(
 b"use std::collections::{
     HashMap,
     HashSet,
@@ -207,5 +211,6 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 }"
-        )
+            )
+    }
 }
