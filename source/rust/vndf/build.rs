@@ -230,7 +230,6 @@ impl<'c> EntityUpdater<'c> {
 
         try!(writer.write_all(
 b"
-
 "
         ));
 
@@ -247,8 +246,8 @@ b"
         }
 
         try!(writer.write_all(
-b"
-}"
+b"}
+"
         ));
 
         Ok(())
