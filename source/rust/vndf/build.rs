@@ -19,8 +19,7 @@ struct Entities;
 
 impl Entities {
     fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
-        writer
-            .write_all(
+        writer.write_all(
 b"use std::collections::{
     HashMap,
     HashSet,
@@ -211,6 +210,6 @@ impl<'c> EntityUpdater<'c> {
         self
     }
 }"
-            )
+        )
     }
 }
