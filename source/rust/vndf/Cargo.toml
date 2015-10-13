@@ -2,6 +2,7 @@
 name    = "vndf"
 version = "0.0.1"
 authors = ["Hanno Braun <mail@hannobraun.de>"]
+build   = "build.rs"
 
 
 [lib]
