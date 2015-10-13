@@ -83,13 +83,13 @@ impl Renderer {
             &mut frame_state.graphics,
         );
 
-        self.console_drawer.draw(console, &mut frame_state);
-
         self.ship_drawer.draw(
             frame,
             &frame_state.transforms,
             &mut frame_state.graphics,
         );
+
+        self.console_drawer.draw(console, &mut frame_state);
 
         frame_state.graphics.flush();
     }
