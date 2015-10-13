@@ -1,7 +1,7 @@
 use nalgebra::{Vec2};
 use ncollide::shape::{Ball};
 use ncollide::bounding_volume::{bounding_sphere,
-				BoundingVolume,
+                                BoundingVolume,
                                 BoundingSphere};
 
 // Only deal with Ball<f32>
@@ -11,7 +11,7 @@ pub struct SphereCollider;
 
 impl SphereCollider {
     pub fn new_from_oval (diameter: f32) -> Ball<f32>  {
-	let b = Ball::new(diameter/2.0);
+        let b = Ball::new(diameter/2.0);
         b
 
             // we'll return this once ncollide supports boundingsphere in hashmap
@@ -35,21 +35,21 @@ impl SphereCollider {
     pub fn check_pos (b: &Ball<f32>,
                       pos: &Vec2<f32>,
                       zoom: f32,)
-		      -> bool {
+                      -> bool {
 
         let bs1 = bounding_sphere(b,pos);
-	let bs2 = bounding_sphere(&Ball::new(1.0*zoom),pos);
-	bs1.intersects(&bs2)
+        let bs2 = bounding_sphere(&Ball::new(1.0*zoom),pos);
+        bs1.intersects(&bs2)
     }
 
     /// checks for collision
     // TODO: integrate zooming
     pub fn check_collision (c1: (&Ball<f32>, &Vec2<f32>),
                             c2: (&Ball<f32>, &Vec2<f32>),)
-		            -> bool {
+                            -> bool {
 
         let bs1 = bounding_sphere(c1.0,c1.1);
-	let bs2 = bounding_sphere(c2.0,c2.1);
-	bs1.intersects(&bs2)
+        let bs2 = bounding_sphere(c2.0,c2.1);
+        bs1.intersects(&bs2)
     }
 }
