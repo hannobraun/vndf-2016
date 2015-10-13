@@ -1,5 +1,6 @@
 use std::env;
 use std::fs::File;
+use std::io;
 use std::io::prelude::*;
 use std::path::Path;
 
@@ -10,7 +11,11 @@ fn main() {
 
     let mut file = File::create(&path).unwrap();
 
-    file
+    generate(&mut file).unwrap();
+}
+
+fn generate<W: Write>(writer: &mut W) -> io::Result<()> {
+    writer
         .write_all(
 b"use std::collections::{
     HashMap,
@@ -203,5 +208,4 @@ impl<'c> EntityUpdater<'c> {
     }
 }"
         )
-        .unwrap();
 }
