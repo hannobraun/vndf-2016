@@ -3,6 +3,11 @@ use std::io::prelude::*;
 
 use toml;
 
+
+/// Looks for a configuration file called client-config.toml in the working
+/// directory.
+
+
 #[derive(Debug,Clone)]
 pub struct Config {
     pub scaling_factor: f32,
