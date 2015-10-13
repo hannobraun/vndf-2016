@@ -65,9 +65,9 @@ pub fn integrate(game_state: &mut GameState) {
 pub fn check_collisions(game_state: &mut GameState) {
     for (&body_id, body) in &game_state.entities.bodies {
         for (_, planet) in &game_state.entities.planets {
-            let squared_size = planet.radius * planet.radius;
+            let squared_radius = planet.radius * planet.radius;
 
-            if (body.position - planet.position).sqnorm() < squared_size {
+            if (body.position - planet.position).sqnorm() < squared_radius {
                 game_state.to_destroy.push(body_id);
             }
         }
