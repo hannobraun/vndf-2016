@@ -156,7 +156,7 @@ impl GameEvent for Update {
     fn execute(self, game_state: &mut GameState) {
         systems::apply_maneuvers(game_state, self.now_s);
         systems::apply_gravity(game_state);
-        systems::integrate(game_state, 0.5);
+        systems::move_bodies(game_state, 0.5);
         systems::check_collisions(game_state);
 
         for id in game_state.to_destroy.drain(..) {
