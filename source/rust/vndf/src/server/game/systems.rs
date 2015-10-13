@@ -38,16 +38,7 @@ pub fn apply_maneuvers(game_state: &mut GameState, now_s: f64) {
 pub fn apply_gravity(game_state: &mut GameState) {
     for (_, planet) in &game_state.entities.planets {
         for (_, body) in &mut game_state.entities.bodies {
-            let g = 6.674e-11; // unit: N * m^2 / kg^2
-
-            let body_to_planet = body.position - planet.position;
-            let distance       = body_to_planet.norm();
-            let direction      = body_to_planet / distance;
-
-            let force =
-                direction * -g * (planet.mass * body.mass) / distance;
-
-            body.force = body.force + force;
+            logic::apply_gravity(planet, body);
         }
     }
 }
