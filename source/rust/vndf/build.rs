@@ -11,13 +11,19 @@ fn main() {
 
     let mut file = File::create(&path).unwrap();
 
-    Entities.generate(&mut file).unwrap();
+    Entities::new()
+        .generate(&mut file)
+        .unwrap();
 }
 
 
 struct Entities;
 
 impl Entities {
+    fn new() -> Entities {
+        Entities
+    }
+
     fn generate<W: Write>(&self, writer: &mut W) -> io::Result<()> {
         writer.write_all(
 b"use std::collections::{
