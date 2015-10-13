@@ -40,12 +40,12 @@ pub struct Entities {
     next_id: u64,
 
     pub entities: HashSet<EntityId>,
+
 "
         ));
 
         try!(writer.write_all(
-b"
-    pub bodies    : Components<Body>,
+b"    pub bodies    : Components<Body>,
     pub broadcasts: Components<Broadcast>,
     pub maneuvers : Components<Maneuver>,
     pub planets   : Components<Planet>,
@@ -62,12 +62,12 @@ impl Entities {
             next_id: 0,
 
             entities: HashSet::new(),
+
 "
         ));
 
         try!(writer.write_all(
-b"
-            bodies    : HashMap::new(),
+b"            bodies    : HashMap::new(),
             broadcasts: HashMap::new(),
             maneuvers : HashMap::new(),
             planets   : HashMap::new(),
@@ -88,12 +88,12 @@ b"
 
         EntityBuilder {
             id: id,
+
 "
         ));
 
         try!(writer.write_all(
-b"
-            bodies    : &mut self.bodies,
+b"            bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
             maneuvers : &mut self.maneuvers,
             planets   : &mut self.planets,
@@ -112,8 +112,8 @@ b"
         ));
 
         try!(writer.write_all(
-b"
-            bodies    : &mut self.bodies,
+
+b"            bodies    : &mut self.bodies,
             broadcasts: &mut self.broadcasts,
             maneuvers : &mut self.maneuvers,
             planets   : &mut self.planets,
@@ -125,12 +125,12 @@ b"
         }
     }
 
-    pub fn destroy_entity(&mut self, id: &EntityId) {"
+    pub fn destroy_entity(&mut self, id: &EntityId) {
+"
         ));
 
         try!(writer.write_all(
-b"
-        self.bodies.remove(id);
+b"        self.bodies.remove(id);
         self.broadcasts.remove(id);
         self.maneuvers.remove(id);
         self.planets.remove(id);
@@ -147,12 +147,12 @@ b"
 
 pub struct EntityBuilder<'c> {
     id: EntityId,
+
 "
         ));
 
         try!(writer.write_all(
-b"
-    bodies    : &'c mut Components<Body>,
+b"    bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     planets   : &'c mut Components<Planet>,
@@ -163,12 +163,12 @@ b"
 b"
 }
 
-impl<'c> EntityBuilder<'c> {"
+impl<'c> EntityBuilder<'c> {
+"
         ));
 
         try!(writer.write_all(
-b"
-    pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
+b"    pub fn with_body(mut self, component: Body) -> EntityBuilder<'c> {
         self.bodies.insert(self.id, component);
         self
     }
@@ -205,12 +205,12 @@ b"
 
 pub struct EntityUpdater<'c> {
     id: EntityId,
+
 "
         ));
 
         try!(writer.write_all(
-b"
-    bodies    : &'c mut Components<Body>,
+b"    bodies    : &'c mut Components<Body>,
     broadcasts: &'c mut Components<Broadcast>,
     maneuvers : &'c mut Components<Maneuver>,
     planets   : &'c mut Components<Planet>,
@@ -221,12 +221,12 @@ b"
 b"
 }
 
-impl<'c> EntityUpdater<'c> {"
+impl<'c> EntityUpdater<'c> {
+"
         ));
 
         try!(writer.write_all(
-b"
-    pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
+b"    pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
         self.bodies.insert(self.id, component);
         self
     }
