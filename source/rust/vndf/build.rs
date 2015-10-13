@@ -249,9 +249,17 @@ b"    pub fn add_body(mut self, component: Body) -> EntityUpdater<'c> {
     pub fn add_ship(mut self, component: Ship) -> EntityUpdater<'c> {
         self.ships.insert(self.id, component);
         self
-    }
+    }"
+        ));
 
-    pub fn remove_body(mut self) -> EntityUpdater<'c> {
+        try!(writer.write_all(
+b"
+
+"
+        ));
+
+        try!(writer.write_all(
+b"    pub fn remove_body(mut self) -> EntityUpdater<'c> {
         self.bodies.remove(&self.id);
         self
     }
