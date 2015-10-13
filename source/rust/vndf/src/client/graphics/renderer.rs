@@ -39,7 +39,6 @@ impl Renderer {
         let planet_drawer = PlanetDrawer::new(
             &mut graphics,
             font_height,
-            scaling_factor,
             );
 
         let grid_drawer =  GridDrawer::new(

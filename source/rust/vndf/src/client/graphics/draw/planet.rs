@@ -13,18 +13,15 @@ use shared::game::EntityId;
 
 
 pub struct PlanetDrawer {
-    scaling_factor: f32,
     symbol_drawer: ShapeDrawer,
     glyph_drawer: GlyphDrawer,
 }
 
 impl PlanetDrawer {
     pub fn new(graphics: &mut Graphics,
-               font_size     : f32,
-               scaling_factor: f32,)
+               font_size     : f32,)
                -> PlanetDrawer {
         PlanetDrawer {
-            scaling_factor: scaling_factor,
                 symbol_drawer: ShapeDrawer::planet(graphics),
             glyph_drawer: GlyphDrawer::new(graphics, font_size as u32),
         }
@@ -37,7 +34,7 @@ impl PlanetDrawer {
                 graphics: &mut Graphics,) {
         for (id, planet) in &frame.planets {
             let transform = transforms.symbol_to_screen(cast(planet.position));
-            let scale = planet.radius as f32 * 2.0 * self.scaling_factor;
+            let scale = planet.radius as f32 * 2.0;
 
             // draw selection behind planet
             if frame.select_ids.contains(id) {
