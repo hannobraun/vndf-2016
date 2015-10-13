@@ -7,7 +7,7 @@ use nalgebra::{
 };
 
 use server::game::state::GameState;
-use shared::game::logic::integrate;
+use shared::game::logic;
 
 
 pub fn apply_maneuvers(game_state: &mut GameState, now_s: f64) {
@@ -54,7 +54,7 @@ pub fn apply_gravity(game_state: &mut GameState) {
 
 pub fn move_bodies(game_state: &mut GameState, delta_t_s: f64) {
      for (_, body) in &mut game_state.entities.bodies {
-        integrate(body, delta_t_s);
+        logic::integrate(body, delta_t_s);
     }
 }
 
