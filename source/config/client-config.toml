@@ -1,0 +1,4 @@
+# Scales the size of text and symbols on screen by the given factor. Set this to
+# a higher value, if you're using a HiDPI display and think stuff of screen is
+# too small.
+scaling_factor = 1.0
