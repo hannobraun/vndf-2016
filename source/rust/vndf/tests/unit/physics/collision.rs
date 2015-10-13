@@ -15,17 +15,17 @@ fn collision() {
     
     assert!(SphereCollider::
             check_collision((&c1,&origin),
-			    (&c2,&origin)));
+                (&c2,&origin)));
 
     assert!(!SphereCollider::
             check_collision((&c2,&origin),
-			    (&c1,&Vec2::new(SHIP_SIZE,SHIP_SIZE))));
+                (&c1,&Vec2::new(SHIP_SIZE,SHIP_SIZE))));
 
     assert!(SphereCollider::
             check_collision((&c2,&origin),
-			    (&c3,&Vec2::new(planet_rad,planet_rad))));
+                (&c3,&Vec2::new(planet_rad,planet_rad))));
 
     assert!(!SphereCollider::
             check_collision((&c2,&origin),
-			    (&c3,&Vec2::new(planet_diameter,planet_diameter))));
+                (&c3,&Vec2::new(planet_diameter,planet_diameter))));
 }
