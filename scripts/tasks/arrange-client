@@ -20,3 +20,4 @@ echo "$START_SCRIPT_CONTENTS" > $START_SCRIPT &&
 chmod a+x $START_SCRIPT &&
 cp $CLIENT_BINARY $DIST_BIN_DIR &&
 cp -r source/assets $DIST_DIR/source
+cp source/config/client-config.toml $DIST_DIR
