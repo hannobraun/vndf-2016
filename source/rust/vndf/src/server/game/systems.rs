@@ -51,12 +51,10 @@ pub fn apply_gravity(game_state: &mut GameState) {
     }
 }
 
-pub fn integrate(game_state: &mut GameState) {
+pub fn integrate(game_state: &mut GameState, delta_t_s: f64) {
      for (_, body) in &mut game_state.entities.bodies {
-        // TODO(E7GyYwQy): Take passed time since last iteration into
-        //                 account.
-        body.velocity = body.velocity + body.force;
-        body.position = body.position + body.velocity;
+        body.velocity = body.velocity + body.force    * delta_t_s;
+        body.position = body.position + body.velocity * delta_t_s;
 
         body.force = Vec2::new(0.0, 0.0);
     }
