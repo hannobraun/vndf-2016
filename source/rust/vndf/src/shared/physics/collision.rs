@@ -10,8 +10,8 @@ pub type Sphere = BoundingSphere<Ball<f32>>; // precomputed bounding sphere
 pub struct SphereCollider;
 
 impl SphereCollider {
-    pub fn new_from_oval (diameter: f32) -> Ball<f32>  {
-        let b = Ball::new(diameter/2.0);
+    pub fn new_from_oval (radius: f32) -> Ball<f32>  {
+        let b = Ball::new(radius);
         b
 
             // we'll return this once ncollide supports boundingsphere in hashmap

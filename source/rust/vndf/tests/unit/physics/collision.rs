@@ -4,12 +4,12 @@ use vndf::client::graphics::SHIP_SIZE;
 
 #[test]
 fn collision() {
-    let c1 = SphereCollider::new_from_oval(SHIP_SIZE);
-    let c2 = SphereCollider::new_from_oval(SHIP_SIZE);
+    let c1 = SphereCollider::new_from_oval(SHIP_SIZE / 2.0);
+    let c2 = SphereCollider::new_from_oval(SHIP_SIZE / 2.0);
 
     let planet_diameter = 30.0;
     let planet_radius = planet_diameter/2.0;
-    let c3 = SphereCollider::new_from_oval(planet_diameter);
+    let c3 = SphereCollider::new_from_oval(planet_radius);
     
     let origin = Vec2::new(0.0,0.0);
     
