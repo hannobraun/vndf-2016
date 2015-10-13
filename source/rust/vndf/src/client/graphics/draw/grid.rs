@@ -49,7 +49,7 @@ impl GridDrawer {
 
         // draw horizontal lines
         let x_zoom = win_size[0]*zoom;
-        for x in (0..(x_zoom / grid_unit as f32) as u32) {
+        for x in 0..(x_zoom / grid_unit as f32) as u32 {
             let y = x*grid_unit;
             let transform = transforms.symbol_to_screen(
                 cast(Vec2::new(-1.0 * x_zoom, y as f32)));
@@ -73,7 +73,7 @@ impl GridDrawer {
 
         // draw vertical lines
         let y_zoom = win_size[1]*zoom;
-        for y in (0..(y_zoom / grid_unit as f32) as u32) {
+        for y in 0..(y_zoom / grid_unit as f32) as u32 {
             let x = y*grid_unit;
             let transform = transforms.symbol_to_screen(
                 cast(Vec2::new(x as f32, -1.0 * y_zoom)));

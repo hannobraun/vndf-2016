@@ -135,7 +135,7 @@ fn mesh_oval (w: f32, h: f32, n: u8) -> Vec<Vertex> {
     let hh = h / 2.0;
     
     let mut points: Vec<Vertex> = vec!();
-    for i in (0..n+1) {
+    for i in 0..n+1 {
         points.push(Vertex { pos: [0.0,0.0] });
         points.push(Vertex { pos: [hw * (t*i as f32).cos(),
                                    hh * (t*i as f32).sin()] });
