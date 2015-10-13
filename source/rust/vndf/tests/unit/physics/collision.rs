@@ -7,9 +7,9 @@ fn collision() {
     let c1 = SphereCollider::new_from_oval(SHIP_SIZE);
     let c2 = SphereCollider::new_from_oval(SHIP_SIZE);
 
-    let planet_size = 30.0; //diameter
-    let planet_rad = planet_size/2.0;
-    let c3 = SphereCollider::new_from_oval(planet_size);
+    let planet_diameter = 30.0;
+    let planet_rad = planet_diameter/2.0;
+    let c3 = SphereCollider::new_from_oval(planet_diameter);
     
     let origin = Vec2::new(0.0,0.0);
     
@@ -27,5 +27,5 @@ fn collision() {
 
     assert!(!SphereCollider::
             check_collision((&c2,&origin),
-			    (&c3,&Vec2::new(planet_size,planet_size))));
+			    (&c3,&Vec2::new(planet_diameter,planet_diameter))));
 }
