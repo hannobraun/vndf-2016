@@ -25,15 +25,6 @@ b"use std::collections::{
     HashSet,
 };
 
-use shared::game::{
-    Body,
-    Broadcast,
-    EntityId,
-    Maneuver,
-    Planet,
-    Ship,
-};
-
 
 pub type Components<T> = HashMap<EntityId, T>;
 
