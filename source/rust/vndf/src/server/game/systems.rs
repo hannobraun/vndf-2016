@@ -7,7 +7,7 @@ use nalgebra::{
 };
 
 use server::game::state::GameState;
-use shared::physics::integration::integrate;
+use shared::game::logic::integrate;
 
 
 pub fn apply_maneuvers(game_state: &mut GameState, now_s: f64) {
