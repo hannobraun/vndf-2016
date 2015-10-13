@@ -19,7 +19,7 @@ A few notes before I start:
 
 - A player logs into the game for the first time. Their ship is slowly moving
   through space.
-- The player ship is represented by a symbol, next to it text that represents
+- The player ship is represented by a symbol, next to it is text that represents
   the most important information about the ship. This information includes the
   current position and velocity.
 
@@ -29,7 +29,7 @@ OPEN QUESTION: What other information is displayed next to the ship?
   stays in the middle of the screen.
 - Extending from the player ship to the right is a prominent, slightly curved
   line that represents the ship's predicted course.
-- In the background is a regular grid. As the camera is zoomed in closely, the
+- In the background is a regular grid. The camera is zoomed in closely, so the
   grid cells are scaled to match a relatively small distance in space, like
   1 km.
 - The grid has a constant position in the coordinate system, which means it is
@@ -75,7 +75,7 @@ OPEN QUESTION: I described the predicted path at first as only originating from
 the ship symbol and forming a circle only when the full orbit into view. Maybe
 it should have been a full circle (that we first only saw a tiny part of) from
 the beginning? The variation I described should be easier to implement (just
-keep computing more path segments until you reach the edge of the screen or the
+keep computing more path segments until you reach the edge of the screen, or the
 player ship), while the "full circle" option would need to detect somehow that
 the player is in an orbit.
 
@@ -111,7 +111,7 @@ complete the first parts of the tutorial?
   position, velocity, size, mass, energy emission, and composition.
 - As the objects are mostly composed of metal and emit little energy, the player
   concludes that these are either wrecks or inactive ships. The player is
-  optimistic and judges that those are wrecks, not ships lying in waiting.
+  optimistic and judges that those are wrecks, not ships lying in wait.
 - The player selects a few nearby objects by clicking on them. The selected
   object's symbols are somehow marked as being selected.
 - For the selected objects, the predicted paths are displayed. Like the player's
@@ -172,8 +172,8 @@ remains to be determined.
   with a certain payload (weapons, cargo capacity, other systems) that is
   capable of interplanetary flight still weighs hundreds of tons, making it too
   sluggish to navigate closely to the debris. The player decides to dispatch
-  some drones to break the debris and part and load the pieces into the ship's
-  cargo hold.
+  some drones to break the debris into small parts and load the pieces into the
+  ship's cargo hold.
 - The drones are small spaceships that are remote-controlled by the player's
   ship. They have an extremly short range and are reliant on the main ship, but
   they have some basic tools to break apart resources and carry them to the
@@ -196,7 +196,7 @@ build things out of.
 
 - With the cargo hold full, but the fuel tanks looking not so good, there is not
   much the player can still do here. They decide to fly to the planet the moon
-  orbits, which is settled and serves as a trade hub.
+  orbits, which is settled, and serves as a trade hub.
 - The player zooms out yet again, until they see the planet the moon orbits. The
   ship, the moon and the other objects around the moon that the player
   discovered earlier, now occupy the same few pixels on the screen. To give a
@@ -211,8 +211,8 @@ objects" would be composed of the symbols for the different parts of objects
 that part of the collection.
 
 - Similar to how they did before, the player schedules two maneuvers. One to get
-  the ship out of the moons orbit and towards the planet, another to brake and
-  enter orbit once near the planet.
+  the ship out of the moons orbit and towards the planet, another to decelerate
+  to enter orbit once near the planet.
 - After the first maneuver is executed, the player now faces a long journey. Not
   wanting to wait, the player decides to do a faster-than-light jump.
 
@@ -256,3 +256,71 @@ FUTURE EXTENSION: Eventually we'd want something better, like a player-driven
 economy. For the beginning, we should keep it simple though, and being able to
 exchange stuff at a planet seems like the best way to get the rest of the game
 up and running first.
+
+
+## Being Attacked By Pirates
+
+- After having completed the New Player Experience (see previous scenario), the
+  player decides to set out again in the hopes of finding more resources.
+- Rather than heading back to the moon were they came from, the player decides
+  to go to another moon this time. The player has heard that this moon has a
+  large debris field in low orbit from a battle between player factions that
+  happened a few weeks earlier.
+- The player sets up the maneuvers for a Hohmann Transfer to the target moon.
+  After a short wait, the ship arrives at the point of the first maneuver, which
+  heightens the the opposite side of the ship's orbit, so the orbit intersects
+  with the moon.
+- After the ship has finished the maneuver, the player engages their FTL drive
+  and selects the point on the predicated path that's closest to the moon as the
+  target of the FTL jump. As the ship's cargo hold is empty this time, it only
+  takes a few seconds for the FTL drive to charge.
+- The ship arrives near the moon in an instant. As this is the point of the
+  second maneuver, the ship starts executing the maneuver, which turns the
+  ship's course into a low orbit around the moon.
+- As the maneuver happens, sensor data starts coming in. The player's ship has
+  landed near a small wreck. As this piece of debris is very close to the ship,
+  its passive sensors are capable of recognizing it as a wreck, without the need
+  to use active sensors.
+- The player dispatches their drones to harvest the wreck. After a while, the
+  wreck has been stripped on anything usable. The remains can no longer be
+  picked up by sensors.
+- The player navigates to a different wreck and harvests that, too. This repeats
+  multiple times, with the player using active sensors to find new wrecks once
+  in a while.
+- While the player is working on a larger piece of wreck, the sensors pick up an
+  unknown object that comes into view over the moon's horizon. The object is
+  much faster than most other objects at this altitude, which indicates that it
+  moves on a highly elliptical orbit, with the other side of the orbit much
+  farther from the planet.
+- The player pays no mind to this, as it is only one of many objects in orbit
+  around the planet, most of which haven't been identified.
+- As the object reaches its closest point to the player's ship, around 50 km
+  inside the ship's orbit, the object starts emitting a large amount of energy
+  (the heat of a thrusting engine) and starts decelerating. The player can
+  recognize this from the text next to the object's symbol.
+- As the ship's sensors pick this up, the object's classification changes to
+  "ship". This is reflected by the symbol changing to the ship symbol.
+- Almost immediately, the enemy ship starts firing missiles at the player's
+  ship.
+- The player's own missile launchers are set to defensive mode (the default
+  setting), and start firing defensive missiles shortly after the enemy
+  missile's launch. The defensive missiles intercept the enemy missiles and
+  destroy them.
+- The player decides to strike back and switches half of their missile launchers
+  to offensive mode, selecting the enemy ship as a target. Instead of
+  intercepting incoming missiles, the missiles launched from those launchers are
+  programmed to fly directly to the enemy ship.
+- After a short while, it becomes clear that the player is being overpowered.
+  The enemy ship manages to destroy the player's missiles at about the halfway
+  point between the ships, while the explosions from the enemy missiles come
+  closer and closer.
+- The player decides to flee. They execute a maneuver that brings them back to
+  the safety of the planet and engage the FTL drive. As the cargo hold is almost
+  full, the FTL drive takes a while to charge.
+- As the enemy missiles manage to come closer and closer, it becomes clear that
+  the FTL drive won't be charged in time.
+- To prevent expensive damage to their ship, the player ejects all the collected
+  cargo. This decreases the mass of the ship, reducing the energy that is
+  required for an FTL jump. The energy requirement for the jump is fulfilled
+  instantly, and the player's ship jumps away, leaving their hard-earned cargo
+  behind for the pirate to collect.
