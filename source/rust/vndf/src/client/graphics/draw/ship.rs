@@ -1,13 +1,7 @@
 use nalgebra::{
     cast,
-
-    Norm,
-    ToHomogeneous,
-
-    Iso3,
     Mat4,
     Vec2,
-    Vec3,
 };
 
 use client::graphics::base::Graphics;
@@ -22,17 +16,14 @@ use shared::game::data::{
     Body,
     EntityId,
 };
-use shared::util::angle_of;
 
 
 pub struct ShipDrawer {
     ship_size     : f32,
     line_height   : f32,
-    scaling_factor: f32,
 
     symbol_drawer: ShapeDrawer,
     glyph_drawer : GlyphDrawer,
-    line_drawer  : ShapeDrawer,
 }
 
 impl ShipDrawer {
@@ -40,16 +31,13 @@ impl ShipDrawer {
         graphics      : &mut Graphics,
         ship_size     : f32,
         font_size     : f32,
-        scaling_factor: f32,
     ) -> ShipDrawer {
         ShipDrawer {
             ship_size     : ship_size,
             line_height   : font_size,
-            scaling_factor: scaling_factor,
 
             symbol_drawer: ShapeDrawer::ship(graphics),
             glyph_drawer : GlyphDrawer::new(graphics, font_size as u32),
-            line_drawer  : ShapeDrawer::line(graphics),
         }
     }
 
@@ -61,12 +49,6 @@ impl ShipDrawer {
     ) {
         for (ship_id, ship) in &frame.ships {
             let transform = transforms.symbol_to_screen(cast(ship.position));
-
-            self.draw_velocity_line(
-                cast(ship.velocity),
-                transform,
-                graphics,
-            );
 
             if frame.select_ids.contains(ship_id) {
                 self.draw_selection(
@@ -102,28 +84,6 @@ impl ShipDrawer {
                 graphics,
             );
         }
-    }
-
-    fn draw_velocity_line(
-        &mut self,
-        velocity : Vec2<f32>,
-        transform: Mat4<f32>,
-        graphics : &mut Graphics,
-    ) {
-        let line_rotation = Iso3::new(
-            Vec3::new(0.0, 0.0, 0.0),
-            Vec3::new(
-                0.0,
-                0.0,
-                angle_of(velocity),
-            ),
-        );
-        self.line_drawer.draw(
-            velocity.norm() * self.scaling_factor * 50.0,
-            color::Colors::red(),
-            transform * line_rotation.to_homogeneous(),
-            graphics,
-        );
     }
 
     fn draw_selection(

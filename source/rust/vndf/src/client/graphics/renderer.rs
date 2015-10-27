@@ -6,6 +6,7 @@ use client::graphics::draw::{
     ShipDrawer,
     PlanetDrawer,
     GridDrawer,
+    PathDrawer,
 };
 use client::graphics::camera::{Camera};
 use client::interface::Frame;
@@ -17,6 +18,7 @@ pub struct Renderer {
     ship_drawer   : ShipDrawer,
     planet_drawer : PlanetDrawer,
     grid_drawer   : GridDrawer,
+    path_drawer   : PathDrawer,
     
     pub camera: Camera,
 }
@@ -33,8 +35,7 @@ impl Renderer {
             &mut graphics,
             ship_size,
             font_height,
-            scaling_factor,
-            );
+        );
 
         let planet_drawer = PlanetDrawer::new(
             &mut graphics,
@@ -46,11 +47,14 @@ impl Renderer {
             scaling_factor,
             );
 
+        let path_drawer = PathDrawer::new(&mut graphics, scaling_factor);
+
         Renderer {
             console_drawer: console_drawer,
             ship_drawer   : ship_drawer,
             planet_drawer : planet_drawer,
             grid_drawer   : grid_drawer,
+            path_drawer   : path_drawer,
 
             camera: Camera::new(),
         }
@@ -73,6 +77,12 @@ impl Renderer {
         self.grid_drawer.draw(
             self.camera.zoom,
             &frame_state.window_size,
+            &frame_state.transforms,
+            &mut frame_state.graphics,
+        );
+
+        self.path_drawer.draw(
+            frame,
             &frame_state.transforms,
             &mut frame_state.graphics,
         );
