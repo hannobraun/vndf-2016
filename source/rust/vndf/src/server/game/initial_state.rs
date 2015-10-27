@@ -43,7 +43,7 @@ impl InitialState {
 
         let planet = Celestial {
             position: Vec2::new(0.0, 0.0),
-            size    : Range::new(5000.0, 10000.0).sample(&mut rng),
+            size    : Range::new(500.0, 1000.0).sample(&mut rng),
         };
         celestials.push(planet);
 
@@ -59,7 +59,7 @@ impl InitialState {
 
             celestials.push(Celestial {
                 position: position,
-                size    : Range::new(500.0, 2000.0).sample(&mut rng),
+                size    : Range::new(50.0, 200.0).sample(&mut rng),
             });
         }
 
@@ -124,7 +124,7 @@ impl InitialState {
         for celestial in &self.celestials {
             // Let's say mass is just proportional to volume.
             let size_cubed = celestial.size * celestial.size * celestial.size;
-            let mass       = size_cubed * 4.0 / 3.0 * PI;
+            let mass       = size_cubed * 4.0 / 3.0 * PI * 1000.0;
 
             entities.create_entity()
                 .with_planet(Planet {
