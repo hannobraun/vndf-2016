@@ -35,11 +35,11 @@
 
 					<p>
 						The last few weeks have been kind of a mixed bag. First
-						Chris got really busy, but I hit my stride and got a lot
-						done, so it kind of evened out. Then I got busy, too,
-						and basically nothing happened for two weeks. Still,
-						some things got done in the end, and the game has made
-						some visible progress compared to last month!
+						Chris got busy, but I hit my stride and got a lot done,
+						so it kind of evened out. Then I got busy, too, and
+						basically nothing happened for two weeks. Still, some
+						things got done, and the game has made some visible
+						progress compared to last month!
 					</p>
 
 					<p>
@@ -65,13 +65,13 @@
 						</li>
 						<li>
 							<a href="#configuration">Configuration</a>:
-							A documented configuration file is now shipped with
-							the game.
+							A documented configuration file is now being shipped
+							with the game.
 						</li>
 						<li>
 							<a href="#under-the-hood">Under the Hood</a>:
 							Some improvements have been made under the hood to
-							make development a bit more smooth.
+							make development more smooth.
 						</li>
 					</ul>
 
@@ -111,8 +111,9 @@
 					<p>
 						Of course, that screenshot demonstrates the next
 						problem: When you zoom out far enough to actually see a
-						few moons, they are so small you can barely see them.
-						Space is big!
+						few moons, they are so small you can barely make them
+						out. Space is big, but a solution will find its way into
+						the game eventually.
 					</p>
 				</section>
 
@@ -124,16 +125,16 @@
 						It's been a while since I
 						<a href="/news/newsletter-june-2015/#navigation" target="_blank">started
 						working on the navigation feature</a>, and I'm proud to
-						say I've finally implemented everything I had in mind.
+						say I finally finished implemented everything I wanted.
 					</p>
 
 					<p>
 						I've added an additional argument to the
-						<code>schedule-maneuver</code> command, to allow you to
-						set the thrust of a maneuver. In addition, there's now a
-						<code>list-maneuvers</code> command, to list all
+						<code>schedule-maneuver</code> command, to allow players
+						to set the thrust of a maneuver. In addition, there's
+						now a <code>list-maneuvers</code> command, to list all
 						scheduled maneuvers, as well as a
-						<code>cancel-maneuver</code> command to cancel them.
+						<code>cancel-maneuver</code> command to cancel one.
 					</p>
 
 					<a
@@ -149,7 +150,7 @@
 					<p>
 						Work is currently ongoing to show the predicted path of
 						the player's ship, based on the maneuver information
-						that is now available. In addition, once the navigation
+						that is available now. In addition, once the navigation
 						feature has stabilized a bit (we might still change it
 						here or there), we can start displaying the scheduled
 						maneuvers graphically and introduce a user interface for
@@ -163,10 +164,10 @@
 
 					<p>
 						Now that we have planets again, it would be a shame not
-						to do something with them. Consequently, I implemented
-						both gravity and collision detection. In addition, ships
-						always spawn a few hundred kilometers above the planet's
-						surface.
+						to do something with them. This is why I implemented
+						both gravity and collision detection. In addition, I
+						changed the spawn point for ships to a spot a few
+						hundred kilometers above the planet's surface.
 					</p>
 
 					<a
@@ -184,7 +185,7 @@
 						to stay in orbit, you can watch it slowly plunge to a
 						certain death, which is strangely satisfying. I'm sure
 						it will get old soon, though, and I'll have to implement
-						new features. Oh well.
+						some new features to entertain me. Oh well.
 					</p>
 				</section>
 
@@ -196,8 +197,8 @@
 						Last month, I
 						<a href="/news/newsletter-september-2015/#hidpi-support" target="_blank">introduced
 						the new configuration file</a>. As of today, a
-						documented example configuration file ships with the
-						game to make this feature more accessible.
+						documented example file ships with the game to make this
+						feature more accessible.
 					</p>
 
 					<p>
@@ -219,7 +220,7 @@
 					</p>
 
 					<p>
-						The event that validates game events on the server side
+						The code that validates game events on the server side
 						has been refactored to be more robust and secure. This
 						is very important, as there's always the potential for
 						abuse in a multiplayer game. For example, players can
@@ -227,9 +228,10 @@
 						validated properly, and player's could cancel the
 						scheduled maneuvers of other players. Or, even more
 						hilariously, since canceling a scheduled maneuver
-						technically means removing an entity from the game, what
-						if players could misuse that to remove any entity from
-						the game, like planets or each other's ships.
+						technically means removing an entity from the game,
+						imagine if players could misuse that to remove any
+						entity from the game, like planets or each other's
+						ships.
 					</p>
 
 					<p>
@@ -238,9 +240,10 @@
 						short ECS) is basically a way to organize game data and
 						game logic. We've been using a homegrown one for a
 						while, but a lot of that code had become repetitive, and
-						thus error-prone. Now the code that previously had to be
-						maintained manually is being generated from a simple
-						specification, making it much easier to handle.
+						thus error-prone. Now the code that handles game data,
+						which previously had to be maintained manually is being
+						generated from a simple specification, making it much
+						easier to handle.
 					</p>
 				</section>
 
