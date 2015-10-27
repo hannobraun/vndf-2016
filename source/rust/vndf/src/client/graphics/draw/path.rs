@@ -11,19 +11,21 @@ use client::graphics::draw::ShapeDrawer;
 use client::graphics::transforms::Transforms;
 use client::interface::Frame;
 use shared::color::Colors;
+use shared::game::logic::{
+    apply_gravity,
+    integrate,
+};
 use shared::util::angle_of;
 
 
 pub struct PathDrawer {
-    scaling_factor: f32,
-    line_drawer   : ShapeDrawer,
+    line_drawer: ShapeDrawer,
 }
 
 impl PathDrawer {
-    pub fn new(graphics: &mut Graphics, scaling_factor: f32) -> Self {
+    pub fn new(graphics: &mut Graphics) -> Self {
         PathDrawer {
-            line_drawer   : ShapeDrawer::line(graphics),
-            scaling_factor: scaling_factor,
+            line_drawer: ShapeDrawer::line(graphics),
         }
     }
 
@@ -33,27 +35,42 @@ impl PathDrawer {
         transforms: &Transforms,
         graphics  : &mut Graphics,
     ) {
-        let ship = match frame.ship_id {
+        let mut ship = match frame.ship_id {
             Some(id) => frame.ships[&id],
             None     => return,
         };
 
-        let transform = transforms.symbol_to_screen(cast(ship.position));
+        let mut previous_position = ship.position;
+        for _ in 0 .. 100 {
+            for (_, planet) in &frame.planets {
+                apply_gravity(planet, &mut ship);
+            }
+            integrate(&mut ship, 50.0);
 
-        let line_rotation = Iso3::new(
-            Vec3::new(0.0, 0.0, 0.0),
-            Vec3::new(
-                0.0,
-                0.0,
-                angle_of(cast(ship.velocity)),
-            ),
-        );
+            let movement = previous_position - ship.position;
+            previous_position = ship.position;
 
-        self.line_drawer.draw(
-            ship.velocity.norm() as f32 * self.scaling_factor * 50.0,
-            Colors::red(),
-            transform * line_rotation.to_homogeneous(),
-            graphics,
-        );
+            let transform: Iso3<f32> = Iso3::new(
+                Vec3::new(
+                    ship.position.x as f32,
+                    ship.position.y as f32,
+                    0.0
+                ),
+                Vec3::new(
+                    0.0,
+                    0.0,
+                    angle_of(cast(movement)),
+                ),
+            );
+
+            self.line_drawer.draw(
+                movement.norm() as f32,
+                Colors::red(),
+                transforms.camera_to_screen
+                    * transforms.world_to_camera
+                    * transform.to_homogeneous(),
+                graphics,
+            );
+        }
     }
 }

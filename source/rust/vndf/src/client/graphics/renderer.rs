@@ -47,7 +47,7 @@ impl Renderer {
             scaling_factor,
             );
 
-        let path_drawer = PathDrawer::new(&mut graphics, scaling_factor);
+        let path_drawer = PathDrawer::new(&mut graphics);
 
         Renderer {
             console_drawer: console_drawer,
