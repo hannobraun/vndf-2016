@@ -10,13 +10,13 @@ dependencies = [
  "glutin 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
  "scan_fmt 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "time 0.1.32 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time 0.1.33 (registry+https://github.com/rust-lang/crates.io-index)",
  "toml 0.1.23 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -31,7 +31,7 @@ dependencies = [
 
 [[package]]
 name = "aho-corasick"
-version = "0.3.2"
+version = "0.3.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "memchr 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -39,7 +39,7 @@ dependencies = [
 
 [[package]]
 name = "android_glue"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -62,7 +62,7 @@ name = "cgl"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gleam 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gleam 0.1.13 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -152,13 +152,13 @@ version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
- "libz-sys 0.1.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libz-sys 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "gcc"
-version = "0.3.18"
+version = "0.3.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "advapi32-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -231,7 +231,7 @@ dependencies = [
 
 [[package]]
 name = "gleam"
-version = "0.1.12"
+version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gl_common 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -245,7 +245,7 @@ name = "glutin"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "android_glue 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "android_glue 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "cgl 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cocoa 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "core-foundation 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -296,10 +296,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libz-sys"
-version = "0.1.8"
+version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "gcc 0.3.18 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gcc 0.3.19 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.1.10 (registry+https://github.com/rust-lang/crates.io-index)",
  "pkg-config 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -339,7 +339,7 @@ dependencies = [
 
 [[package]]
 name = "nalgebra"
-version = "0.3.0"
+version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -366,7 +366,7 @@ name = "ncollide_entities"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_utils 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -378,7 +378,7 @@ name = "ncollide_math"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -389,7 +389,7 @@ name = "ncollide_pipeline"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_entities 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_queries 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -402,7 +402,7 @@ name = "ncollide_procedural"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_utils 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -414,7 +414,7 @@ name = "ncollide_queries"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_entities 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_utils 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -427,7 +427,7 @@ name = "ncollide_transformation"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_entities 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_procedural 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -442,7 +442,7 @@ name = "ncollide_utils"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "nalgebra 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "ncollide_math 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "num 0.1.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.11 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -496,7 +496,7 @@ name = "regex"
 version = "0.1.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "aho-corasick 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "aho-corasick 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "memchr 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "regex-syntax 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -555,7 +555,7 @@ dependencies = [
 
 [[package]]
 name = "time"
-version = "0.1.32"
+version = "0.1.33"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "kernel32-sys 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
