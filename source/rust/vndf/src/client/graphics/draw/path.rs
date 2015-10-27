@@ -65,7 +65,7 @@ impl PathDrawer {
 
             self.line_drawer.draw(
                 movement.norm() as f32,
-                Colors::red(),
+                Colors::white(),
                 transforms.camera_to_screen
                     * transforms.world_to_camera
                     * transform.to_homogeneous(),
