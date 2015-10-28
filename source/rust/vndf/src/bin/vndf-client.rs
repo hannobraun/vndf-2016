@@ -20,6 +20,7 @@ use vndf::client::interface::{
     Interface,
     Message,
 };
+use vndf::client::interpolator::Interpolator;
 use vndf::client::network::Network;
 use vndf::shared::protocol::client::{
     cancel_maneuver,
@@ -57,11 +58,12 @@ fn init_interface<I: Interface>() -> I {
 }
 
 fn run<I: Interface>(args: Args, mut interface: I) {    
-    let mut frame = Frame::new();
+    let mut frame        = Frame::new();
+    let mut interpolator = Interpolator::new();
 
     let mut network = Network::new(args.server);
     let mut last_server_activity = precise_time_s();
-    
+
     let mut frame_time = precise_time_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
@@ -72,6 +74,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
         frame_time = now;
         
         trace!("Start client main loop iteration");
+
+        frame.ships.clear();
+        // TODO: Pass interpolated time
+        interpolator.interpolate(0.0, &mut frame.ships);
 
         let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
@@ -172,7 +178,9 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 server::Event::UpdateEntity(entity) => {
                     if let Some(body) = entity.body {
                         if let Some(_) = entity.ship {
-                            frame.ships.insert(entity.id, body);
+                            // TODO: Pass current server time
+                            interpolator.update_ship(0.0, entity.id, body);
+
                             if !frame.colliders.contains_key(&entity.id) {
                                 frame.colliders.insert(
                                     entity.id,
@@ -207,7 +215,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 server::Event::RemoveEntity(id) => {
                     frame.broadcasts.remove(&id);
                     frame.maneuvers.remove(&id);
-                    frame.ships.remove(&id);
+
+                    interpolator.remove_ship(&id);
                 },
             }
 
