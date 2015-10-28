@@ -77,8 +77,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
         trace!("Start client main loop iteration");
 
         frame.ships.clear();
-        // TODO: Pass interpolated time
-        interpolator.interpolate(0.0, &mut frame.ships);
+        interpolator.interpolate(
+            times.server_interpolated_s(),
+            &mut frame.ships,
+        );
 
         let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
