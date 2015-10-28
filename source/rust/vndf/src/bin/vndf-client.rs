@@ -57,7 +57,7 @@ fn init_interface<I: Interface>() -> I {
     }
 }
 
-fn run<I: Interface>(args: Args, mut interface: I) {    
+fn run<I: Interface>(args: Args, mut interface: I) {
     let mut frame        = Frame::new();
     let mut interpolator = Interpolator::new();
 
