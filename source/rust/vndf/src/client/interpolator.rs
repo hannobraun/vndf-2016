@@ -1,5 +1,7 @@
 use std::collections::BTreeMap;
 
+use nalgebra::Vec2;
+
 use shared::game::data::{
     Body,
     EntityId,
@@ -70,8 +72,11 @@ impl Interpolated {
                 let s = (time_s - time_2_s) / (time_2_s - time_1_s);
 
                 let mut ship = ship_1;
-                ship.position = ship_1.position
-                    + (ship_2.position - ship_1.position) * s;
+                ship.position = interpolate(
+                    ship_1.position,
+                    ship_2.position,
+                    s,
+                );
 
                 ship
             },
@@ -80,4 +85,8 @@ impl Interpolated {
             },
         }
     }
+}
+
+fn interpolate(v1: Vec2<f64>, v2: Vec2<f64>, s: f64) -> Vec2<f64> {
+    v1 + (v2 - v1) * s
 }
