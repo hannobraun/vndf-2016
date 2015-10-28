@@ -69,20 +69,34 @@ fn it_should_interpolate_between_snapshots_sent_by_server() {
 	let ship_1 = frame_1.ships.iter().next().unwrap().1;
 	let ship_2 = frame_2.ships.iter().next().unwrap().1;
 
-	// The interpolated positions must be somewhere between the two positions.
-	assert!(is_point_on_line(
+	assert_interpolation(
 		ship_1.position,
-		position_1,
-		position_2,
-	));
-	assert!(is_point_on_line(
 		ship_2.position,
 		position_1,
 		position_2,
+	);
+}
+
+fn assert_interpolation(
+	interpolated_1: Vec2<f64>,
+	interpolated_2: Vec2<f64>,
+	snapshot_1    : Vec2<f64>,
+	snapshot_2    : Vec2<f64>,
+) {
+	// The interpolated positions must be somewhere between the two positions.
+	assert!(is_point_on_line(
+		interpolated_1,
+		snapshot_1,
+		snapshot_2,
+	));
+	assert!(is_point_on_line(
+		interpolated_2,
+		snapshot_1,
+		snapshot_2,
 	));
 
-	let initial_to_1 = ship_1.position - position_1;
-	let initial_to_2 = ship_2.position - position_1;
+	let initial_to_1 = interpolated_1 - snapshot_1;
+	let initial_to_2 = interpolated_2 - snapshot_1;
 
 	// The second interpolated position must be closer to the final position.
 	assert!(initial_to_1.norm() < initial_to_2.norm());
