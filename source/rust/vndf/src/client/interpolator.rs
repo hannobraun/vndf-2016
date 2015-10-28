@@ -77,6 +77,11 @@ impl Interpolated {
                     ship_2.position,
                     s,
                 );
+                ship.velocity = interpolate(
+                    ship_1.velocity,
+                    ship_2.velocity,
+                    s,
+                );
 
                 ship
             },

@@ -36,13 +36,15 @@ fn it_should_interpolate_between_snapshots_sent_by_server() {
 
 	let position_1 = Vec2::new(1.0, 2.0);
 	let position_2 = Vec2::new(2.0, 2.5);
+	let velocity_1 = Vec2::new(1.0, 0.5);
+	let velocity_2 = Vec2::new(0.5, 0.0);
 
 	let mut ship = Entity {
 		id: 0,
 
 		body: Some(Body {
 			position: position_1,
-			velocity: Vec2::new(1.0, 0.5),
+			velocity: velocity_1,
 			force   : Vec2::new(0.0, 0.0),
 			mass    : 0.0,
 		}),
@@ -57,6 +59,7 @@ fn it_should_interpolate_between_snapshots_sent_by_server() {
 	server.send(address, server::Event::UpdateEntity(ship.clone()));
 
 	ship.body.as_mut().unwrap().position = position_2;
+	ship.body.as_mut().unwrap().velocity = velocity_2;
 
 	server.send(address, server::Event::Heartbeat(2.0));
 	server.send(address, server::Event::UpdateEntity(ship));
@@ -74,6 +77,12 @@ fn it_should_interpolate_between_snapshots_sent_by_server() {
 		ship_2.position,
 		position_1,
 		position_2,
+	);
+	assert_interpolation(
+		ship_1.velocity,
+		ship_2.velocity,
+		velocity_1,
+		velocity_2,
 	);
 }
 
