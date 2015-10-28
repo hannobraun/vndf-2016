@@ -17,7 +17,7 @@ pub fn apply_gravity(planet: &Planet, body: &mut Body) {
     let direction      = body_to_planet / distance;
 
     let force =
-        direction * -g * (planet.mass * body.mass) / distance;
+        direction * -g * (planet.mass * body.mass) / (distance * distance);
 
     body.force = body.force + force;
 }
