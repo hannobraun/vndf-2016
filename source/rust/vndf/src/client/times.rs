@@ -12,6 +12,11 @@ impl Times {
 		precise_time_s()
 	}
 
+	pub fn server_last_known_s(&self) -> f64 {
+		// TODO: Implement
+		0.0
+	}
+
 	pub fn server_interpolated_s(&self) -> f64 {
 		// TODO: Implement
 		0.0

@@ -181,8 +181,11 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 server::Event::UpdateEntity(entity) => {
                     if let Some(body) = entity.body {
                         if let Some(_) = entity.ship {
-                            // TODO: Pass current server time
-                            interpolator.update_ship(0.0, entity.id, body);
+                            interpolator.update_ship(
+                                times.server_last_known_s(),
+                                entity.id,
+                                body,
+                            );
 
                             if !frame.colliders.contains_key(&entity.id) {
                                 frame.colliders.insert(
