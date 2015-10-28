@@ -4,12 +4,10 @@
 extern crate env_logger;
 #[macro_use]
 extern crate log;
-extern crate time;
 
 extern crate vndf;
 
 use std::env;
-use time::precise_time_s;
 
 use vndf::client::args::Args;
 use vndf::client::config::Config;
@@ -22,6 +20,7 @@ use vndf::client::interface::{
 };
 use vndf::client::interpolator::Interpolator;
 use vndf::client::network::Network;
+use vndf::client::times::Times;
 use vndf::shared::protocol::client::{
     cancel_maneuver,
     schedule_maneuver,
@@ -58,18 +57,20 @@ fn init_interface<I: Interface>() -> I {
 }
 
 fn run<I: Interface>(args: Args, mut interface: I) {
+    let times = Times::new();
+
     let mut frame        = Frame::new();
     let mut interpolator = Interpolator::new();
 
     let mut network = Network::new(args.server);
-    let mut last_server_activity = precise_time_s();
+    let mut last_server_activity = times.client_now_s();
 
-    let mut frame_time = precise_time_s();
+    let mut frame_time = times.client_now_s();
 
     network.send(ClientEvent::Public(client_event::Public::Login));
 
     'main: loop {
-        let now = precise_time_s();
+        let now = times.client_now_s();
         frame.deltatime = now-frame_time;
         frame_time = now;
         
