@@ -41,11 +41,11 @@ impl PathDrawer {
         };
 
         let mut previous_position = ship.position;
-        for _ in 0 .. 500 {
+        for _ in 0 .. 1000 {
             for (_, planet) in &frame.planets {
                 apply_gravity(planet, &mut ship);
             }
-            integrate(&mut ship, 5.0);
+            integrate(&mut ship, 10.0);
 
             let movement = previous_position - ship.position;
             previous_position = ship.position;
