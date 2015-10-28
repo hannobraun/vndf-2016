@@ -65,7 +65,7 @@ impl InitialState {
 
         let mut spawner = Spawner::new();
         spawner.position =
-            planet.position + Vec2::new(0.0, planet.size + 500.0);
+            planet.position + Vec2::new(0.0, planet.size + 50.0);
 
         InitialState {
             celestials: celestials,
