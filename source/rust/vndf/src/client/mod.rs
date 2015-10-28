@@ -5,6 +5,7 @@ pub mod debug;
 pub mod font;
 pub mod graphics;
 pub mod interface;
+pub mod interpolator;
 pub mod network;
 pub mod window;
 pub mod mouse;
