@@ -76,12 +76,6 @@ fn run<I: Interface>(args: Args, mut interface: I) {
         
         trace!("Start client main loop iteration");
 
-        frame.ships.clear();
-        interpolator.interpolate(
-            times.server_interpolated_s(),
-            &mut frame.ships,
-        );
-
         let input_events = match interface.update(&mut frame) {
             Ok(events) => events,
             Err(error) => panic!("Error updating interface: {}", error),
@@ -229,6 +223,12 @@ fn run<I: Interface>(args: Args, mut interface: I) {
 
             last_server_activity = now;
         }
+
+        frame.ships.clear();
+        interpolator.interpolate(
+            times.server_interpolated_s(),
+            &mut frame.ships,
+        );
 
         if now - last_server_activity > args.net_timeout_s {
             frame.message = Message::Error(
