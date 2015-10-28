@@ -57,7 +57,7 @@ fn init_interface<I: Interface>() -> I {
 }
 
 fn run<I: Interface>(args: Args, mut interface: I) {
-    let times = Times::new();
+    let mut times = Times::new();
 
     let mut frame        = Frame::new();
     let mut interpolator = Interpolator::new();
@@ -173,6 +173,7 @@ fn run<I: Interface>(args: Args, mut interface: I) {
         for event in network.receive() {
             match event {
                 server::Event::Heartbeat(game_time_s) => {
+                    times.update_server_s(game_time_s);
                     frame.game_time_s = Some(game_time_s);
                 },
                 server::Event::ShipId(ship_id) => {
