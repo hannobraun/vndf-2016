@@ -62,8 +62,22 @@ impl Interpolated {
         self.current  = (time_s, ship);
     }
 
-    fn interpolate(&self, _time_s: f64) -> Body {
-        // TODO: Return interpolated ship
-        self.current.1
+    fn interpolate(&self, time_s: f64) -> Body {
+        match self.previous {
+            Some((time_1_s, ship_1)) => {
+                let (time_2_s, ship_2) = self.current;
+
+                let s = (time_s - time_2_s) / (time_2_s - time_1_s);
+
+                let mut ship = ship_1;
+                ship.position = ship_1.position
+                    + (ship_2.position - ship_1.position) * s;
+
+                ship
+            },
+            None => {
+                self.current.1
+            },
+        }
     }
 }

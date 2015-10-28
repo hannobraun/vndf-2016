@@ -20,6 +20,7 @@ mod integration {
     mod client {
         mod input;
         mod protocol;
+        mod graphics;
     }
     mod server {
         mod protocol;
