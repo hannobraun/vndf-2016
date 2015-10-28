@@ -124,7 +124,7 @@ impl InitialState {
         for celestial in &self.celestials {
             // Let's say mass is just proportional to volume.
             let size_cubed = celestial.size * celestial.size * celestial.size;
-            let mass       = size_cubed * 4.0 / 3.0 * PI * 1000.0;
+            let mass       = size_cubed * 4.0 / 3.0 * PI * 50000.0;
 
             entities.create_entity()
                 .with_planet(Planet {
