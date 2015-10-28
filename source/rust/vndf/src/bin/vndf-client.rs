@@ -220,10 +220,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                 },
             }
 
-            last_server_activity = precise_time_s();
+            last_server_activity = now;
         }
 
-        if precise_time_s() - last_server_activity > args.net_timeout_s {
+        if now - last_server_activity > args.net_timeout_s {
             frame.message = Message::Error(
                 "Lost connection to server".to_string()
                     );
