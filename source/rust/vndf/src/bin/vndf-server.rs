@@ -59,6 +59,8 @@ fn main() {
 
         let now_s = precise_time_s();
 
+        outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);
+
         incoming_events.receive(network.receive());
         incoming_events.handle(
             now_s,
@@ -118,7 +120,6 @@ fn main() {
             );
         }
 
-        outgoing_events.push(ServerEvent::Heartbeat(now_s), Recipients::All);
         outgoing_events.send(&mut clients, &mut network);
 
         // TODO(1oL33ljB): While physics will generally need to happen on a
