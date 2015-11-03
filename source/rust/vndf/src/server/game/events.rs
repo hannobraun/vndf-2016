@@ -143,8 +143,8 @@ impl GameEvent for CancelManeuver {
 
 
 pub struct FtlJump {
-    pub ship_id           : EntityId,
-    pub destination_time_s: f64,
+    pub ship_id      : EntityId,
+    pub target_time_s: f64,
 }
 
 impl GameEvent for FtlJump {
