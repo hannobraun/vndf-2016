@@ -184,9 +184,11 @@ fn handle_privileged_event(
                 maneuver_id: maneuver_id,
             })
         },
-        client::event::Privileged::FtlJump(_destination_time_s) => {
-            // TODO: Generate game event
-            Ok(())
+        client::event::Privileged::FtlJump(destination_time_s) => {
+            game_state.handle_event(events::FtlJump {
+                ship_id           : client.ship_id,
+                destination_time_s: destination_time_s,
+            })
         },
     };
 

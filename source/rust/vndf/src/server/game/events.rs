@@ -142,6 +142,24 @@ impl GameEvent for CancelManeuver {
 }
 
 
+pub struct FtlJump {
+    pub ship_id           : EntityId,
+    pub destination_time_s: f64,
+}
+
+impl GameEvent for FtlJump {
+    type Output = ();
+
+    fn validate(&self, _: &GameState) -> bool {
+        true
+    }
+
+    fn execute(self, _game_state: &mut GameState) {
+        // TODO: Perform FTL jump
+    }
+}
+
+
 pub struct Update {
     pub now_s: f64,
 }
