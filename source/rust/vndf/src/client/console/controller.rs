@@ -409,6 +409,7 @@ impl Controller {
                     "schedule-maneuver <delay (s)> <duration (s)> <degrees> <thrust> - Schedule a maneuver",
                     "list-maneuvers - List all scheduled maneuvers",
                     "cancel-maneuver <id> - Cancel scheduled maneuver",
+                    "ftl-jump <jump time (s)> - Perform a faster-than-light jump",
                     "select-entity <list of ship_id, separate by space>",
                     "clear-selection - Clears currently selected entities",
                 ];
