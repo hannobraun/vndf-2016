@@ -4,224 +4,224 @@ use vndf::server::game::initial_state::InitialState;
 use vndf::client::interface::InputEvent;
 use vndf::shared::game::data::ManeuverData;
 use vndf::shared::util::{
-	angle_of,
-	is_point_on_line,
+    angle_of,
+    is_point_on_line,
 };
 use vndf::testing::rc;
 
 
 #[test]
 fn it_should_send_navigation_data() {
-	let     server = rc::Server::start(InitialState::new());
-	let mut client = rc::Client::start(server.port());
+    let     server = rc::Server::start(InitialState::new());
+    let mut client = rc::Client::start(server.port());
 
-	let frame_1 = client.wait_until(|frame|
-		frame.ship_id.is_some() && frame.ships.len() == 1
-	);
-	let ship_id = match frame_1.ship_id {
-		Some(ship_id) => ship_id,
-		None          => panic!("Expected ship id"),
-	};
+    let frame_1 = client.wait_until(|frame|
+        frame.ship_id.is_some() && frame.ships.len() == 1
+    );
+    let ship_id = match frame_1.ship_id {
+        Some(ship_id) => ship_id,
+        None          => panic!("Expected ship id"),
+    };
 
-	let frame_1 = client.wait_until(|frame|
-		frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
-	);
-	let frame_2 = client.wait_until(|frame|
-		frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
-	);
+    let frame_1 = client.wait_until(|frame|
+        frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
+    );
+    let frame_2 = client.wait_until(|frame|
+        frame.ships[&ship_id].position != frame_1.ships[&ship_id].position
+    );
 
-	let p  = frame_2.ships[&ship_id].position;
-	let l1 = frame_1.ships[&ship_id].position;
-	let l2 = l1 + frame_1.ships[&ship_id].velocity;
+    let p  = frame_2.ships[&ship_id].position;
+    let l1 = frame_1.ships[&ship_id].position;
+    let l2 = l1 + frame_1.ships[&ship_id].velocity;
 
-	assert!(is_point_on_line(p, l1, l2));
+    assert!(is_point_on_line(p, l1, l2));
 }
 
 #[test]
 fn it_should_display_other_players_ships() {
-	let     server   = rc::Server::start(InitialState::new());
-	let mut client_a = rc::Client::start(server.port());
+    let     server   = rc::Server::start(InitialState::new());
+    let mut client_a = rc::Client::start(server.port());
 
-	client_a.wait_until(|frame|
-		frame.ships.len() == 1
-	);
+    client_a.wait_until(|frame|
+        frame.ships.len() == 1
+    );
 
-	let mut client_b = rc::Client::start(server.port());
+    let mut client_b = rc::Client::start(server.port());
 
-	client_a.wait_until(|frame|
-		frame.ships.len() == 2
-	);
-	client_b.wait_until(|frame|
-		frame.ships.len() == 2
-	);
+    client_a.wait_until(|frame|
+        frame.ships.len() == 2
+    );
+    client_b.wait_until(|frame|
+        frame.ships.len() == 2
+    );
 
-	drop(client_b);
+    drop(client_b);
 
-	client_a.wait_until(|frame|
-		frame.ships.len() == 1
-	);
+    client_a.wait_until(|frame|
+        frame.ships.len() == 1
+    );
 }
 
 #[test]
 fn it_should_schedule_maneuvers() {
-	let     server = rc::Server::start(InitialState::new());
-	let mut client = rc::Client::start(server.port());
+    let     server = rc::Server::start(InitialState::new());
+    let mut client = rc::Client::start(server.port());
 
-	let frame = client.wait_until(|frame| {
-		frame.game_time_s.is_some() &&
-			frame.ship_id.is_some() &&
-			frame.ships.len() == 1
-	});
-	let ship_id = match frame.ship_id {
-		Some(ship_id) => ship_id,
-		None          => panic!("Expected ship id"),
-	};
+    let frame = client.wait_until(|frame| {
+        frame.game_time_s.is_some() &&
+            frame.ship_id.is_some() &&
+            frame.ships.len() == 1
+    });
+    let ship_id = match frame.ship_id {
+        Some(ship_id) => ship_id,
+        None          => panic!("Expected ship id"),
+    };
 
-	let velocity_direction_rad = angle_of(frame.ships[&ship_id].velocity);
-	let maneuver_direction_rad = velocity_direction_rad + PI / 2.0;
+    let velocity_direction_rad = angle_of(frame.ships[&ship_id].velocity);
+    let maneuver_direction_rad = velocity_direction_rad + PI / 2.0;
 
-	let data = ManeuverData {
-		start_s   : frame.game_time_s.unwrap(),
-		duration_s: 1.0,
-		angle     : maneuver_direction_rad,
-		thrust    : 1.0,
-	};
+    let data = ManeuverData {
+        start_s   : frame.game_time_s.unwrap(),
+        duration_s: 1.0,
+        angle     : maneuver_direction_rad,
+        thrust    : 1.0,
+    };
 
-	client.input(InputEvent::ScheduleManeuver(data));
+    client.input(InputEvent::ScheduleManeuver(data));
 
-	client.wait_until(|frame| {
-		let new_velocity_direction_rad =
-			angle_of(frame.ships[&ship_id].velocity);
+    client.wait_until(|frame| {
+        let new_velocity_direction_rad =
+            angle_of(frame.ships[&ship_id].velocity);
 
-		let old_difference =
-			(maneuver_direction_rad - velocity_direction_rad).abs();
-		let new_difference =
-			(maneuver_direction_rad - new_velocity_direction_rad).abs();
+        let old_difference =
+            (maneuver_direction_rad - velocity_direction_rad).abs();
+        let new_difference =
+            (maneuver_direction_rad - new_velocity_direction_rad).abs();
 
-		// This test is too high-level to really test any of the details, so we
-		// just check whether the maneuver moved the velocity vector in the
-		// right direction.
-		new_difference < old_difference
-	});
+        // This test is too high-level to really test any of the details, so we
+        // just check whether the maneuver moved the velocity vector in the
+        // right direction.
+        new_difference < old_difference
+    });
 }
 
 #[test]
 fn scheduled_maneuvers_should_be_visible() {
-	let     server = rc::Server::start(InitialState::new());
-	let mut client = rc::Client::start(server.port());
+    let     server = rc::Server::start(InitialState::new());
+    let mut client = rc::Client::start(server.port());
 
-	let frame = client.wait_until(|frame| {
-		frame.game_time_s.is_some()
-	});
+    let frame = client.wait_until(|frame| {
+        frame.game_time_s.is_some()
+    });
 
-	let maneuver_data = ManeuverData {
-		start_s   : frame.game_time_s.unwrap() + 1000.0,
-		duration_s: 1.0,
-		angle     : 0.0,
-		thrust    : 1.0,
-	};
+    let maneuver_data = ManeuverData {
+        start_s   : frame.game_time_s.unwrap() + 1000.0,
+        duration_s: 1.0,
+        angle     : 0.0,
+        thrust    : 1.0,
+    };
 
-	client.input(InputEvent::ScheduleManeuver(maneuver_data));
+    client.input(InputEvent::ScheduleManeuver(maneuver_data));
 
-	client.wait_until(|frame| {
-		if frame.maneuvers.len() == 1 {
-			let mut data = *frame.maneuvers.iter().next().unwrap().1;
+    client.wait_until(|frame| {
+        if frame.maneuvers.len() == 1 {
+            let mut data = *frame.maneuvers.iter().next().unwrap().1;
 
-			if (data.start_s - maneuver_data.start_s).abs() < 0.001 {
-				// The time might be slightly off, due to the imperfect time
-				// synchronization between client and server. This is fine. As
-				// long as it roughly matches, we don't care, and we don't want
-				// the comparison below to fail because of it.
-				data.start_s = maneuver_data.start_s;
-			}
+            if (data.start_s - maneuver_data.start_s).abs() < 0.001 {
+                // The time might be slightly off, due to the imperfect time
+                // synchronization between client and server. This is fine. As
+                // long as it roughly matches, we don't care, and we don't want
+                // the comparison below to fail because of it.
+                data.start_s = maneuver_data.start_s;
+            }
 
-			maneuver_data == data
-		}
-		else {
-			false
-		}
-	});
+            maneuver_data == data
+        }
+        else {
+            false
+        }
+    });
 }
 
 #[test]
 fn finished_maneuvers_should_be_removed() {
-	let     server = rc::Server::start(InitialState::new());
-	let mut client = rc::Client::start(server.port());
+    let     server = rc::Server::start(InitialState::new());
+    let mut client = rc::Client::start(server.port());
 
-	let frame = client.wait_until(|frame| {
-		frame.game_time_s.is_some()
-	});
+    let frame = client.wait_until(|frame| {
+        frame.game_time_s.is_some()
+    });
 
-	let data = ManeuverData {
-		start_s   : frame.game_time_s.unwrap() + 0.1,
-		duration_s: 0.1,
-		angle     : 0.0,
-		thrust    : 1.0,
-	};
+    let data = ManeuverData {
+        start_s   : frame.game_time_s.unwrap() + 0.1,
+        duration_s: 0.1,
+        angle     : 0.0,
+        thrust    : 1.0,
+    };
 
-	client.input(InputEvent::ScheduleManeuver(data));
+    client.input(InputEvent::ScheduleManeuver(data));
 
-	client.wait_until(|frame| {
-		frame.maneuvers.len() == 1
-	});
-	client.wait_until(|frame| {
-		frame.maneuvers.len() == 0
-	});
+    client.wait_until(|frame| {
+        frame.maneuvers.len() == 1
+    });
+    client.wait_until(|frame| {
+        frame.maneuvers.len() == 0
+    });
 }
 
 #[test]
 fn players_should_be_able_to_cancel_maneuvers() {
-	let     server = rc::Server::start(InitialState::new());
-	let mut client = rc::Client::start(server.port());
+    let     server = rc::Server::start(InitialState::new());
+    let mut client = rc::Client::start(server.port());
 
-	let frame = client.wait_until(|frame| {
-		frame.game_time_s.is_some()
-	});
+    let frame = client.wait_until(|frame| {
+        frame.game_time_s.is_some()
+    });
 
-	let data = ManeuverData {
-		start_s   : frame.game_time_s.unwrap() + 1000.0,
-		duration_s: 1000.0,
-		angle     : 0.0,
-		thrust    : 1.0,
-	};
+    let data = ManeuverData {
+        start_s   : frame.game_time_s.unwrap() + 1000.0,
+        duration_s: 1000.0,
+        angle     : 0.0,
+        thrust    : 1.0,
+    };
 
-	client.input(InputEvent::ScheduleManeuver(data));
+    client.input(InputEvent::ScheduleManeuver(data));
 
-	let frame = client.wait_until(|frame| {
-		frame.maneuvers.len() == 1
-	});
+    let frame = client.wait_until(|frame| {
+        frame.maneuvers.len() == 1
+    });
 
-	let id = frame.maneuvers.iter().next().unwrap().0;
-	client.input(InputEvent::CancelManeuver(*id));
+    let id = frame.maneuvers.iter().next().unwrap().0;
+    client.input(InputEvent::CancelManeuver(*id));
 
-	client.wait_until(|frame| {
-		frame.maneuvers.len() == 0
-	});
+    client.wait_until(|frame| {
+        frame.maneuvers.len() == 0
+    });
 }
 
 #[test]
 fn players_should_only_see_their_own_maneuvers() {
-	let     server   = rc::Server::start(InitialState::new());
-	let mut client_a = rc::Client::start(server.port());
+    let     server   = rc::Server::start(InitialState::new());
+    let mut client_a = rc::Client::start(server.port());
 
-	let frame = client_a.wait_until(|frame| {
-		frame.game_time_s.is_some()
-	});
+    let frame = client_a.wait_until(|frame| {
+        frame.game_time_s.is_some()
+    });
 
-	let data = ManeuverData {
-		start_s   : frame.game_time_s.unwrap() + 1000.0,
-		duration_s: 1.0,
-		angle     : 0.0,
-		thrust    : 1.0,
-	};
+    let data = ManeuverData {
+        start_s   : frame.game_time_s.unwrap() + 1000.0,
+        duration_s: 1.0,
+        angle     : 0.0,
+        thrust    : 1.0,
+    };
 
-	client_a.input(InputEvent::ScheduleManeuver(data));
+    client_a.input(InputEvent::ScheduleManeuver(data));
 
-	let mut client_b = rc::Client::start(server.port());
+    let mut client_b = rc::Client::start(server.port());
 
-	let frame = client_b.wait_until(|frame| {
-		frame.ships.len() == 2
-	});
+    let frame = client_b.wait_until(|frame| {
+        frame.ships.len() == 2
+    });
 
-	assert_eq!(frame.maneuvers.len(), 0);
+    assert_eq!(frame.maneuvers.len(), 0);
 }
