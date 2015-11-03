@@ -66,6 +66,13 @@ impl Frame {
             Err(error)  => panic!("Encoding error: {}", error)
         }
     }
+
+    pub fn own_ship(&self) -> Option<&Body> {
+        match self.ship_id {
+            Some(id) => self.ships.get(&id),
+            None     => None,
+        }
+    }
 }
 
 
