@@ -172,6 +172,8 @@ impl GameEvent for Update {
     }
 
     fn execute(self, game_state: &mut GameState) {
+        game_state.time_s = self.now_s;
+
         systems::apply_maneuvers(game_state, self.now_s);
         systems::apply_gravity(game_state);
         systems::move_bodies(game_state, 0.5);

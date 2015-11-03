@@ -249,6 +249,15 @@ fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
     assert_eq!(game_state.entities.maneuvers.len(), 2);
 }
 
+#[test]
+fn updates_should_update_the_game_time() {
+    let mut game_state = GameState::new(0.0);
+
+    let now_s = 10.0;
+    game_state.handle_event(events::Update { now_s: now_s }).unwrap();
+    assert_eq!(game_state.time_s, now_s);
+}
+
 
 fn get_body(body_id: EntityId, game_state: &mut GameState) -> Body {
     for entity in game_state.export_entities() {
