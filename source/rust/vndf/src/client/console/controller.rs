@@ -354,6 +354,35 @@ impl Controller {
                         self.console.output.push(format!("Error parsing arguments")),
                 }
             },
+
+            "ftl-jump" => {
+                let result = scan_fmt!(
+                    args,
+                    "{}",
+                    f64
+                );
+
+                let game_time_s = if let Some(game_time_s) = frame.game_time_s {
+                    game_time_s
+                }
+                else {
+                    self.console.output.push(format!(
+                        "{} {}",
+                        "Server connection not fully established yet. ",
+                        "Please try again in a moment."
+                            ));
+                    return;
+                };
+
+                match result {
+                    Some(relavite_time_s) => {
+                        let target_time_s = game_time_s + relavite_time_s;
+                        events.push(InputEvent::FtlJump(target_time_s));
+                    },
+                    _ =>
+                        self.console.output.push(format!("Error parsing arguments")),
+                }
+            },
             
             "select-entity" => {
                 let ents = Controller::parse_entity_ids(args);
