@@ -15,7 +15,7 @@ use vndf::shared::util::angle_of;
 
 #[test]
 fn it_should_execute_multiple_maneuvers_after_each_other() {
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(0.0);
 
     let ship_id = game_state.handle_event(events::Enter).unwrap();
 
@@ -64,7 +64,7 @@ fn it_should_execute_multiple_maneuvers_after_each_other() {
 
 #[test]
 fn maneuvers_should_apply_thrust_over_time() {
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(0.0);
 
     let ship_id = game_state.handle_event(events::Enter).unwrap();
 
@@ -106,7 +106,7 @@ fn maneuvers_should_apply_thrust_over_time() {
 
 #[test]
 fn maneuver_thrust_should_be_configurable() {
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(0.0);
 
     let ship_id_a = game_state.handle_event(events::Enter).unwrap();
     let ship_id_b = game_state.handle_event(events::Enter).unwrap();
@@ -172,7 +172,7 @@ fn game_state_should_reject_invalid_events() {
         }
     }
 
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(0.0);
 
     let result = game_state.handle_event(InvalidEvent);
 
@@ -203,7 +203,7 @@ fn maneuver_thrust_should_be_validated() {
         }
     };
 
-    let game_state = GameState::new();
+    let game_state = GameState::new(0.0);
 
     assert_eq!(thrust_above_max.validate(&game_state), false);
     assert_eq!(thrust_below_min.validate(&game_state), false);
@@ -211,7 +211,7 @@ fn maneuver_thrust_should_be_validated() {
 
 #[test]
 fn players_should_only_be_able_to_cancel_their_own_maneuvers() {
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(0.0);
 
     let ship_id_a = game_state.handle_event(events::Enter).unwrap();
     let ship_id_b = game_state.handle_event(events::Enter).unwrap();

@@ -37,7 +37,7 @@ fn main() {
 
     let args = Args::parse(env::args());
 
-    let mut game_state = GameState::new();
+    let mut game_state = GameState::new(precise_time_s());
     let mut clients    = Clients::new();
     let mut network    = Network::new(args.port);
 

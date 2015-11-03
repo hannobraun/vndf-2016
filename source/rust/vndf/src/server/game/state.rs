@@ -18,6 +18,7 @@ pub trait GameEvent {
 pub struct GameState {
     pub entities: Entities,
     pub spawner : Spawner,
+    pub time_s  : f64,
 
     pub to_destroy: Vec<EntityId>,
     pub destroyed : Vec<EntityId>,
@@ -26,10 +27,11 @@ pub struct GameState {
 }
 
 impl GameState {
-    pub fn new() -> GameState {
+    pub fn new(initial_time_s: f64) -> GameState {
         GameState {
             entities: Entities::new(),
             spawner : Spawner::new(),
+            time_s  : initial_time_s,
 
             to_destroy: Vec::new(),
             destroyed : Vec::new(),
