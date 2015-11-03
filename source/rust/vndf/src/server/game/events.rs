@@ -13,6 +13,10 @@ use shared::game::data::{
     ManeuverData,
     Ship,
 };
+use shared::game::logic::{
+    apply_gravity,
+    integrate,
+};
 
 
 pub struct Enter;
@@ -154,8 +158,23 @@ impl GameEvent for FtlJump {
         true
     }
 
-    fn execute(self, _game_state: &mut GameState) {
-        // TODO: Perform FTL jump
+    fn execute(self, game_state: &mut GameState) {
+        let mut ship = match game_state.entities.bodies.get_mut(&self.ship_id) {
+            Some(ship) => ship,
+            None       => return,
+        };
+
+        let mut jump_time_s = game_state.time_s;
+        while jump_time_s < self.target_time_s {
+            let delta_s = 100.0;
+
+            for (_, planet) in &game_state.entities.planets {
+                apply_gravity(planet, &mut ship);
+            }
+            integrate(&mut ship, delta_s);
+
+            jump_time_s += delta_s;
+        }
     }
 }
 
