@@ -23,6 +23,7 @@ use vndf::client::network::Network;
 use vndf::client::times::Times;
 use vndf::shared::protocol::client::{
     cancel_maneuver,
+    ftl_jump,
     schedule_maneuver,
 };
 use vndf::shared::protocol::client::Event as ClientEvent;
@@ -128,8 +129,8 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     );
                 },
 
-                InputEvent::FtlJump(_destination_time_s) => {
-                    // TODO: Implement
+                InputEvent::FtlJump(destination_time_s) => {
+                    network.send(ftl_jump(destination_time_s));
                 },
 
                 InputEvent::Track(track) => {

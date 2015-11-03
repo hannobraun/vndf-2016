@@ -184,6 +184,10 @@ fn handle_privileged_event(
                 maneuver_id: maneuver_id,
             })
         },
+        client::event::Privileged::FtlJump(_destination_time_s) => {
+            // TODO: Generate game event
+            Ok(())
+        },
     };
 
     if let Err(()) = result {

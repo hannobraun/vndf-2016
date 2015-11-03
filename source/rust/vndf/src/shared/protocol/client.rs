@@ -24,6 +24,7 @@ impl Event {
 			Event::Privileged(StopBroadcast)       => true,
 			Event::Privileged(ScheduleManeuver(_)) => true,
 			Event::Privileged(CancelManeuver(_))   => true,
+			Event::Privileged(FtlJump(_))          => true,
 		}
 	}
 }
@@ -50,6 +51,8 @@ pub mod event {
 
 		ScheduleManeuver(ManeuverData),
 		CancelManeuver(EntityId),
+
+		FtlJump(f64),
 	}
 }
 
@@ -68,4 +71,8 @@ pub fn schedule_maneuver(data: ManeuverData) -> Event {
 
 pub fn cancel_maneuver(id: EntityId) -> Event {
 	Event::Privileged(event::Privileged::CancelManeuver(id))
+}
+
+pub fn ftl_jump(destination_time_s: f64) -> Event {
+	Event::Privileged(event::Privileged::FtlJump(destination_time_s))
 }
