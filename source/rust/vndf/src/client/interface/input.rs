@@ -14,6 +14,8 @@ pub enum InputEvent {
     ScheduleManeuver(ManeuverData),
     CancelManeuver(EntityId),
 
+    FtlJump(f64),
+
     Track(CameraTrack), // sets camera tracking
     
     Select(Vec<EntityId>),

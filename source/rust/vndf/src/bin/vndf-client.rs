@@ -128,6 +128,10 @@ fn run<I: Interface>(args: Args, mut interface: I) {
                     );
                 },
 
+                InputEvent::FtlJump(_destination_time_s) => {
+                    // TODO: Implement
+                },
+
                 InputEvent::Track(track) => {
                     frame.camera_track = Some(track);
                 },
