@@ -1,3 +1,5 @@
+#![cfg(feature="default")]
+
 pub mod args;
 pub mod console;
 pub mod config;

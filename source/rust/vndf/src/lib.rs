@@ -1,7 +1,6 @@
 #![feature(drain)]
 
-
-extern crate freetype;
+#[cfg(feature="default")] extern crate freetype;
 extern crate getopts;
 #[macro_use] extern crate gfx;
 extern crate gfx_device_gl;

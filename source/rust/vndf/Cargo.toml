@@ -16,10 +16,12 @@ test = false
 name = "vndf-client"
 test = false
 
+[features]
+default = ["freetype-rs"]
 
 [dependencies]
 env_logger      = "*"
-freetype-rs     = "*"
+freetype-rs     = { version = "*", optional = true }
 getopts         = "*"
 gfx             = "*"
 gfx_device_gl   = "*"
