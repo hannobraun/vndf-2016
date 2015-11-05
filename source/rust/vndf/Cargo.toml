@@ -17,15 +17,15 @@ name = "vndf-client"
 test = false
 
 [features]
-default = ["freetype-rs"]
+default = ["freetype-rs","gfx","gfx_device_gl","glutin"]
 
 [dependencies]
 env_logger      = "*"
 freetype-rs     = { version = "*", optional = true }
 getopts         = "*"
-gfx             = "*"
-gfx_device_gl   = "*"
-glutin          = "*"
+gfx             = { version = "*", optional = true }
+gfx_device_gl   = { version = "*", optional = true }
+glutin          = { version = "*", optional = true }
 libc            = "*"
 log             = "*"
 nalgebra        = "*"

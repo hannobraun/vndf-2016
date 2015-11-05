@@ -2,9 +2,9 @@
 
 #[cfg(feature="default")] extern crate freetype;
 extern crate getopts;
-#[macro_use] extern crate gfx;
-extern crate gfx_device_gl;
-extern crate glutin;
+#[cfg(feature="default")] #[macro_use] extern crate gfx;
+#[cfg(feature="default")] extern crate gfx_device_gl;
+#[cfg(feature="default")] extern crate glutin;
 extern crate libc;
 #[macro_use] extern crate log;
 extern crate nalgebra;
