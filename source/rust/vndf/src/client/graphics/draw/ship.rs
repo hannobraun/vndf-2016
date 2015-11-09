@@ -18,6 +18,7 @@ use shared::game::data::{
     Body,
     EntityId,
 };
+//use shared::physics::collision::{SphereCollider};
 
 
 pub struct ShipDrawer {
@@ -50,8 +51,13 @@ impl ShipDrawer {
         transforms: &Transforms,
         graphics  : &mut Graphics,
         ) {
-        let grouped_ships: HashSet<EntityId> = HashSet::new();
-        if cam_zoom > 1.0 { } // TODO: group ships and exclude from frame iter below
+        let mut grouped_ships: HashSet<EntityId> = HashSet::new();
+
+        if cam_zoom > 1.0 { // TODO: group ships and exclude from frame iter below
+            check_visual_collision(frame,
+                                   &mut grouped_ships,
+                                   cam_zoom);
+        }
         
         for (ship_id, ship) in &frame.ships {
             if grouped_ships.contains(&ship_id) { continue }
@@ -194,5 +200,36 @@ impl ShipDrawer {
 
         draw(&position);
         draw(&velocity);
+    }
+}
+
+fn check_visual_collision(frame: &Frame,
+                          _set: &mut HashSet<EntityId>,
+                          _zoom: f32) {
+    'ships: for (ship_id,_ship_body) in frame.ships.iter() {
+        let _ship_coll = {
+            if let Some (coll) = frame.colliders.get(&ship_id) { coll }
+            else { warn!("No collider found for ship {}", ship_id);
+                   continue 'ships }
+        };
+
+        // check ships colliding into eachother
+        'other_ships: for (ship_id2,_ship_body2) in frame.ships.iter() {
+            if ship_id == ship_id2 { continue 'other_ships }
+            
+            let _ship_coll2 = {
+                if let Some (coll) = frame.colliders.get(&ship_id2) { coll }
+                else { warn!("No collider found for ship {}", ship_id2);
+                       continue 'other_ships }
+            };
+
+            /*if SphereCollider::check_collision_zoomed(&ship_body.position,
+                                                &ship_body2.position,
+                                                zoom) {
+                // visual collision made between *ship_id,*ship_id2
+                set.insert(*ship_id);
+                set.insert(*ship_id2);
+            }*/
+        }
     }
 }
