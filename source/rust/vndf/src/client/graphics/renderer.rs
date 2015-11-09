@@ -95,6 +95,7 @@ impl Renderer {
 
         self.ship_drawer.draw(
             frame,
+            self.camera.zoom,
             &frame_state.transforms,
             &mut frame_state.graphics,
         );

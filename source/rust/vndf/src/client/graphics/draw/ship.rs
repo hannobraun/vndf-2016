@@ -4,6 +4,8 @@ use nalgebra::{
     Vec2,
 };
 
+use std::collections::HashSet;
+
 use client::graphics::base::Graphics;
 use client::graphics::draw::{
     GlyphDrawer,
@@ -44,10 +46,16 @@ impl ShipDrawer {
     pub fn draw(
         &mut self,
         frame     : &Frame,
+        cam_zoom  : f32,
         transforms: &Transforms,
         graphics  : &mut Graphics,
-    ) {
+        ) {
+        let grouped_ships: HashSet<EntityId> = HashSet::new();
+        if cam_zoom > 1.0 { } // TODO: group ships and exclude from frame iter below
+        
         for (ship_id, ship) in &frame.ships {
+            if grouped_ships.contains(&ship_id) { continue }
+            
             let transform = transforms.symbol_to_screen(cast(ship.position));
 
             if frame.select_ids.contains(ship_id) {
