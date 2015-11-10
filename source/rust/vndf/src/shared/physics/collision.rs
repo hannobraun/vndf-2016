@@ -43,13 +43,24 @@ impl SphereCollider {
     }
 
     /// checks for collision
-    // TODO: integrate zooming
     pub fn check_collision (c1: (&Ball<f32>, &Vec2<f32>),
                             c2: (&Ball<f32>, &Vec2<f32>),)
                             -> bool {
 
         let bs1 = bounding_sphere(c1.0,c1.1);
         let bs2 = bounding_sphere(c2.0,c2.1);
+        bs1.intersects(&bs2)
+    }
+    pub fn check_collision_zoomed (c1: (&Ball<f32>, &Vec2<f32>),
+                                   c2: (&Ball<f32>, &Vec2<f32>),
+                                   zoom: f32,)
+                                   -> bool {
+        let ball = Ball::new(c1.0.radius()*zoom);
+        let bs1 = bounding_sphere(&ball,c1.1);
+        
+        let ball = Ball::new(c2.0.radius()*zoom);
+        let bs2 = bounding_sphere(&ball,c2.1);
+        
         bs1.intersects(&bs2)
     }
 }
