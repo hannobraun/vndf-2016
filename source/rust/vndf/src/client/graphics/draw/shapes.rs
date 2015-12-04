@@ -115,7 +115,7 @@ impl ShapeDrawer {
         graphics : &mut Graphics,
         ) {
         let params = Params {
-            transform: *transform.as_array(),
+            transform: *transform.as_ref(),
             size     : size,
             color    : color,
             _r       : PhantomData,

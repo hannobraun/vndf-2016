@@ -173,10 +173,10 @@ impl GlyphDrawer {
             let transform = transform * translation.to_homogeneous();
 
             let params = Params {
-                transform: *transform.as_array(),
-                size     : *glyph.size.as_array(),
+                transform: *transform.as_ref(),
+                size     : *glyph.size.as_ref(),
                 color    : texture.to_param(),
-                o_color  : *Vec4::new(color[0],color[1],color[2],1.0).as_array(),
+                o_color  : *Vec4::new(color[0],color[1],color[2],1.0).as_ref(),
                 _r       : PhantomData,
             };
 
