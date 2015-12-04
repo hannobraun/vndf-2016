@@ -59,9 +59,9 @@ impl Args {
 			Err(error)  => return Err(format!("{}", error)),
 		};
 
-		parse_arg("port"          , &mut args.port            , &matches);
-		parse_arg("client-timeout", &mut args.client_timeout_s, &matches);
-		parse_arg("sleep-duration", &mut args.sleep_ms        , &matches);
+		try!(parse_arg("port"          , &mut args.port            , &matches));
+		try!(parse_arg("client-timeout", &mut args.client_timeout_s, &matches));
+		try!(parse_arg("sleep-duration", &mut args.sleep_ms        , &matches));
 
 		if let Some(initial_state) = matches.opt_str("initial-state") {
 			args.initial_state = Some(initial_state);
@@ -73,6 +73,7 @@ impl Args {
 
 
 fn parse_arg<T>(name: &str, target: &mut T, matches: &Matches)
+	-> Result<(), String>
 	where
 		T     : FromStr,
 		T::Err: Debug,
@@ -80,4 +81,6 @@ fn parse_arg<T>(name: &str, target: &mut T, matches: &Matches)
 	if let Some(arg) = matches.opt_str(name) {
 		*target = arg.parse().unwrap();
 	}
+
+	Ok(())
 }
