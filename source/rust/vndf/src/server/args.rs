@@ -28,19 +28,19 @@ impl Args {
 			"",
 			"port",
 			"port to listen on",
-			args.port.to_string().as_ref(),
+			&format!("{}", args.port),
 		);
 		options.optopt(
 			"",
 			"client-timeout",
 			"timeout after which a client is considered inactive (in seconds)",
-			args.client_timeout_s.to_string().as_ref()
+			&format!("{}", args.client_timeout_s),
 		);
 		options.optopt(
 			"",
 			"sleep-duration",
 			"Length of the sleep in the main loop (in milliseconds)",
-			args.sleep_ms.to_string().as_ref(),
+			&format!("{}", args.sleep_ms),
 		);
 		options.optopt(
 			"",
