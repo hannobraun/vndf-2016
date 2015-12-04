@@ -79,7 +79,10 @@ fn parse_arg<T>(name: &str, target: &mut T, matches: &Matches)
 		T::Err: Debug,
 {
 	if let Some(arg) = matches.opt_str(name) {
-		*target = arg.parse().unwrap();
+		*target = match arg.parse() {
+			Ok(value)  => value,
+			Err(error) => return Err(format!("{:?}", error)),
+		};
 	}
 
 	Ok(())
