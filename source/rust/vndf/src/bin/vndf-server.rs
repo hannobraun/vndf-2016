@@ -36,7 +36,8 @@ fn main() {
             panic!("Error initializing logger: {}", e)
         );
 
-    let args = Args::parse(env::args());
+    let args = Args::parse(env::args())
+        .expect("Failed to parse command-line arguments");
 
     let mut game_state = GameState::new(precise_time_s());
     let mut clients    = Clients::new();
