@@ -1,11 +1,7 @@
-#![feature(path_ext)]
-
-
 use std::env::{
     self,
     Args,
 };
-use std::fs::PathExt;
 use std::path::PathBuf;
 use std::process::{
     Command,
