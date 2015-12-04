@@ -40,7 +40,7 @@ impl Window {
                 Graphics::new(
                     |s| self.inner.get_proc_address(s),
                     (width as u16, height as u16),
-                    )
+                )
             },
             Err(err) => { panic!(err) }
         }
