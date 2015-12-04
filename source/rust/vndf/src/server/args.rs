@@ -11,13 +11,17 @@ pub struct Args {
 }
 
 impl Args {
-	pub fn parse(cli_args: env::Args) -> Args {
-		let mut args = Args {
+	pub fn default() -> Self {
+		Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
 			sleep_ms        : 500,
 			initial_state   : "".to_string(),
-		};
+		}
+	}
+
+	pub fn parse(cli_args: env::Args) -> Args {
+		let mut args = Args::default();
 
 		let mut options = Options::new();
 		options.optopt(
