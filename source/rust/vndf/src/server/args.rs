@@ -1,6 +1,11 @@
 use std::env;
+use std::fmt::Debug;
+use std::str::FromStr;
 
-use getopts::Options;
+use getopts::{
+	Matches,
+	Options,
+};
 
 
 pub struct Args {
@@ -54,19 +59,25 @@ impl Args {
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
-		if let Some(port) = matches.opt_str("port") {
-			args.port = port.parse().unwrap();
-		}
-		if let Some(timeout_s) = matches.opt_str("client-timeout") {
-			args.client_timeout_s = timeout_s.parse().unwrap();
-		}
-		if let Some(duration) = matches.opt_str("sleep-duration") {
-			args.sleep_ms = duration.parse().unwrap();
-		}
+		parse_arg("port"          , &mut args.port            , &matches);
+		parse_arg("client-timeout", &mut args.client_timeout_s, &matches);
+		parse_arg("sleep-duration", &mut args.sleep_ms        , &matches);
+
 		if let Some(initial_state) = matches.opt_str("initial-state") {
 			args.initial_state = Some(initial_state);
 		}
 
 		Ok(args)
+	}
+}
+
+
+fn parse_arg<T>(name: &str, target: &mut T, matches: &Matches)
+	where
+		T     : FromStr,
+		T::Err: Debug,
+{
+	if let Some(arg) = matches.opt_str(name) {
+		*target = arg.parse().unwrap();
 	}
 }
