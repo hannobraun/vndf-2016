@@ -54,22 +54,18 @@ impl Args {
 			Err(error)  => panic!("Error parsing arguments: {}", error),
 		};
 
-		args.port = match matches.opt_str("port") {
-			Some(port) => port.parse().unwrap(),
-			None       => args.port,
-		};
-		args.client_timeout_s = match matches.opt_str("client-timeout") {
-			Some(timeout_s) => timeout_s.parse().unwrap(),
-			None            => args.client_timeout_s,
-		};
-		args.sleep_ms = match matches.opt_str("sleep-duration") {
-			Some(duration) => duration.parse().unwrap(),
-			None           => args.sleep_ms,
-		};
-		args.initial_state = match matches.opt_str("initial-state") {
-			Some(initial_state) => initial_state.parse().unwrap(),
-			None                => args.initial_state,
-		};
+		if let Some(port) = matches.opt_str("port") {
+			args.port = port.parse().unwrap();
+		}
+		if let Some(timeout_s) = matches.opt_str("client-timeout") {
+			args.client_timeout_s = timeout_s.parse().unwrap();
+		}
+		if let Some(duration) = matches.opt_str("sleep-duration") {
+			args.sleep_ms = duration.parse().unwrap();
+		}
+		if let Some(initial_state) = matches.opt_str("initial-state") {
+			args.initial_state = initial_state;
+		}
 
 		args
 	}
