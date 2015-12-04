@@ -8,9 +8,10 @@ use std::sync::mpsc::{
     TryRecvError,
 };
 use std::thread::{
-    sleep_ms,
+    sleep,
     spawn,
 };
+use std::time::Duration;
 use std::vec::Drain;
 
 use glutin::Event;
@@ -213,7 +214,7 @@ impl Interface for Headless {
             }
         }
 
-        sleep_ms(5);
+        sleep(Duration::from_millis(5));
 
         print!("{}\n", frame.to_json());
 

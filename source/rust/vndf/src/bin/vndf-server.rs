@@ -11,7 +11,8 @@ extern crate vndf;
 
 
 use std::env;
-use std::thread::sleep_ms;
+use std::thread::sleep;
+use std::time::Duration;
 
 use time::precise_time_s;
 
@@ -126,6 +127,6 @@ fn main() {
         //                 fixed interval, there's not really a reason to delay
         //                 other kinds of logic by sleeping. For example,
         //                 broadcasts can be handled immediately.
-        sleep_ms(args.sleep_ms);
+        sleep(Duration::from_millis(args.sleep_ms as u64));
     }
 }
