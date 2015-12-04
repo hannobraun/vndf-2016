@@ -53,7 +53,6 @@ impl Window {
     pub fn swap_buffers(&self) {
         self.inner
             .swap_buffers()
-            .unwrap_or_else(|e| panic!("Error swapping buffers: {:?}", e)
-                            )
+            .unwrap_or_else(|e| panic!("Error swapping buffers: {:?}", e))
     }
 }
