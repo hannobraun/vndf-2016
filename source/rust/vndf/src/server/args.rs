@@ -7,7 +7,7 @@ pub struct Args {
 	pub port            : u16,
 	pub client_timeout_s: f64,
 	pub sleep_ms        : u64,
-	pub initial_state   : String,
+	pub initial_state   : Option<String>,
 }
 
 impl Args {
@@ -16,7 +16,7 @@ impl Args {
 			port            : 34481,
 			client_timeout_s: 5.0,
 			sleep_ms        : 500,
-			initial_state   : "".to_string(),
+			initial_state   : None,
 		}
 	}
 
@@ -46,7 +46,7 @@ impl Args {
 			"",
 			"initial-state",
 			"Path of the initial state file to load",
-			&args.initial_state,
+			"PATH",
 		);
 
 		let matches = match options.parse(cli_args) {
@@ -64,7 +64,7 @@ impl Args {
 			args.sleep_ms = duration.parse().unwrap();
 		}
 		if let Some(initial_state) = matches.opt_str("initial-state") {
-			args.initial_state = initial_state;
+			args.initial_state = Some(initial_state);
 		}
 
 		Ok(args)
