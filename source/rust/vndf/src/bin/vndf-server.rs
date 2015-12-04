@@ -75,7 +75,7 @@ fn main() {
 
         game_state
             .handle_event(events::Update { now_s: now_s })
-            .unwrap();
+            .expect("Update event should never fail to validate");
 
         for id in game_state.destroyed_entities() {
             // This sends the ids of all destroyed maneuvers to all clients. Not
