@@ -32,7 +32,7 @@ use vndf::shared::protocol::server::Event as ServerEvent;
 
 fn main() {
     env_logger::init()
-        .expect("Error initializing logger");
+        .expect("Failed to initialize logger");
 
     let args = Args::parse(env::args())
         .expect("Failed to parse command-line arguments");
