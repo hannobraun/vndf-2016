@@ -6,7 +6,7 @@ use getopts::Options;
 pub struct Args {
 	pub port            : u16,
 	pub client_timeout_s: f64,
-	pub sleep_ms        : u32,
+	pub sleep_ms        : u64,
 	pub initial_state   : String,
 }
 
