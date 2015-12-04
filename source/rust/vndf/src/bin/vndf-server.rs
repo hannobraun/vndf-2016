@@ -70,7 +70,7 @@ fn main() {
         clients.remove_inactive(now_s, args.client_timeout_s, |client| {
             game_state
                 .handle_event(events::Leave { ship_id: client.ship_id })
-                .unwrap();
+                .expect("Leave event should never fail to validate");
         });
 
         game_state
