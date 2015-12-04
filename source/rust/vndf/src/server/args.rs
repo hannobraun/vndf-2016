@@ -56,7 +56,7 @@ impl Args {
 
 		let matches = match options.parse(cli_args) {
 			Ok(matches) => matches,
-			Err(error)  => panic!("Error parsing arguments: {}", error),
+			Err(error)  => return Err(format!("{}", error)),
 		};
 
 		parse_arg("port"          , &mut args.port            , &matches);
