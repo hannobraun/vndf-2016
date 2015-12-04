@@ -44,8 +44,8 @@ fn main() {
     let mut network    = Network::new(args.port);
 
     let initial_state = match args.initial_state {
-        None       => InitialState::random(),
         Some(path) => InitialState::from_file(path),
+        None       => InitialState::random(),
     };
     initial_state.apply(&mut game_state);
 
