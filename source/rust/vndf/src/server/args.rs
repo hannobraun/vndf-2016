@@ -20,7 +20,7 @@ impl Args {
 		}
 	}
 
-	pub fn parse(cli_args: env::Args) -> Args {
+	pub fn parse(cli_args: env::Args) -> Self {
 		let mut args = Args::default();
 
 		let mut options = Options::new();
