@@ -52,8 +52,6 @@ fn main() {
     let mut incoming_events = IncomingEvents::new();
     let mut outgoing_events = OutgoingEvents::new();
 
-    
-    
     loop {
         trace!("Start server main loop iteration");
 
