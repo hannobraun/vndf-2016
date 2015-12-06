@@ -40,12 +40,12 @@ impl Renderer {
         let planet_drawer = PlanetDrawer::new(
             &mut graphics,
             font_height,
-            );
+        );
 
         let grid_drawer =  GridDrawer::new(
             &mut graphics,
             scaling_factor,
-            );
+        );
 
         let path_drawer = PathDrawer::new(&mut graphics);
 
