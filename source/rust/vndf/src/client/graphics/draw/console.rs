@@ -49,7 +49,6 @@ impl ConsoleDrawer {
         write!(&mut command_line, "> {}", console.input)
             .expect("Writing to String should not fail");
 
-
         self.glyph_drawer.draw(
             &command_line,
             position_cli(
