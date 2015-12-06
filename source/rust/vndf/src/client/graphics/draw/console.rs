@@ -27,20 +27,7 @@ impl ConsoleDrawer {
         let advance_x = self.glyph_drawer.advance_x;
 
         self.draw_output(console, frame_state);
-
-        self.glyph_drawer.draw(
-            &format!("> {}", console.input),
-            position_cli(
-                0, PROMPT_POS_Y,
-                advance_x,
-                self.font_size,
-                frame_state.window_size,
-            ),
-            color::Colors::white(),
-            false,
-            frame_state.transforms.camera_to_screen,
-            &mut frame_state.graphics,
-        );
+        self.draw_input(console, frame_state);
 
          //draw cursor position in prompt
         self.glyph_drawer.draw(
@@ -76,6 +63,24 @@ impl ConsoleDrawer {
                 &mut frame_state.graphics,
             );
         }
+    }
+
+    fn draw_input(&mut self, console: &Console, frame_state: &mut FrameState) {
+        let advance_x = self.glyph_drawer.advance_x;
+
+        self.glyph_drawer.draw(
+            &format!("> {}", console.input),
+            position_cli(
+                0, PROMPT_POS_Y,
+                advance_x,
+                self.font_size,
+                frame_state.window_size,
+            ),
+            color::Colors::white(),
+            false,
+            frame_state.transforms.camera_to_screen,
+            &mut frame_state.graphics,
+        );
     }
 }
 
