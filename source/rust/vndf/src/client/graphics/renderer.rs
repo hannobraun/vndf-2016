@@ -30,24 +30,26 @@ impl Renderer {
         let font_height = 18.0 * scaling_factor;
         let ship_size   = SHIP_SIZE * scaling_factor;
         
-        let console_drawer = ConsoleDrawer::new(&mut graphics, font_height);
+        let console_drawer = ConsoleDrawer::new(
+            &mut graphics,
+            font_height,
+        );
         let ship_drawer = ShipDrawer::new(
             &mut graphics,
             ship_size,
             font_height,
         );
-
         let planet_drawer = PlanetDrawer::new(
             &mut graphics,
             font_height,
         );
-
-        let grid_drawer =  GridDrawer::new(
+        let grid_drawer = GridDrawer::new(
             &mut graphics,
             scaling_factor,
         );
-
-        let path_drawer = PathDrawer::new(&mut graphics);
+        let path_drawer = PathDrawer::new(
+            &mut graphics,
+        );
 
         Renderer {
             console_drawer: console_drawer,
