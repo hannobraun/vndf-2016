@@ -9,6 +9,9 @@ use client::graphics::frame_state::FrameState;
 use shared::color;
 
 
+const PROMPT_POS_Y: usize = 23;
+
+
 pub struct ConsoleDrawer {
     font_size   : f32,
     glyph_drawer: GlyphDrawer,
@@ -42,7 +45,6 @@ impl ConsoleDrawer {
         }
 
         let mut command_line = String::new();
-        const PROMPT_POS_Y: usize = 23;
 
         write!(&mut command_line, "> {}", console.input)
             .expect("Writing to String should not fail");
