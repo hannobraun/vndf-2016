@@ -42,7 +42,7 @@ impl ConsoleDrawer {
         }
 
         let mut command_line = String::new();
-        let prompt_ypos = 23;
+        let prompt_pos_y = 23;
 
         write!(&mut command_line, "> {}", console.input)
             .expect("Writing to String should not fail");
@@ -51,7 +51,7 @@ impl ConsoleDrawer {
         self.glyph_drawer.draw(
             &command_line,
             position_cli(
-                0, prompt_ypos,
+                0, prompt_pos_y,
                 advance_x,
                 self.font_size,
                 frame_state.window_size,
@@ -66,7 +66,7 @@ impl ConsoleDrawer {
         self.glyph_drawer.draw(
             "_",
             position_cli(
-                console.prompt_index + 2, prompt_ypos,
+                console.prompt_index + 2, prompt_pos_y,
                 advance_x,
                 self.font_size,
                 frame_state.window_size,
