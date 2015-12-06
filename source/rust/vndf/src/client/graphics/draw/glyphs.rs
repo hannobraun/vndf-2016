@@ -114,7 +114,7 @@ impl GlyphDrawer {
         let advance_x = {
             let ref glyph = textures
                 .get(&'A')
-                .unwrap_or_else(|| panic!("Expected 'A' to be available"))
+                .expect("Expected 'A' to be available")
                 .0;
 
             glyph.advance.x
