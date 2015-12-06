@@ -64,7 +64,7 @@ impl ConsoleDrawer {
 
          //draw cursor position in prompt
         self.glyph_drawer.draw(
-            &"_".to_string(),
+            "_",
             position_cli(
                 console.prompt_index + 2, prompt_ypos,
                 advance_x,
