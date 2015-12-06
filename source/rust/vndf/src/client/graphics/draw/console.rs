@@ -28,7 +28,12 @@ impl ConsoleDrawer {
         for (y, line) in console.output.iter().enumerate() {
             self.glyph_drawer.draw(
                 &line,
-                position_cli(0, y, advance_x, self.font_size, frame_state.window_size),
+                position_cli(
+                    0, y,
+                    advance_x,
+                    self.font_size,
+                    frame_state.window_size,
+                ),
                 color::Colors::white(),
                 false,
                 frame_state.transforms.camera_to_screen,
@@ -45,7 +50,12 @@ impl ConsoleDrawer {
 
         self.glyph_drawer.draw(
             &command_line,
-            position_cli(0, prompt_ypos, advance_x, self.font_size, frame_state.window_size),
+            position_cli(
+                0, prompt_ypos,
+                advance_x,
+                self.font_size,
+                frame_state.window_size,
+            ),
             color::Colors::white(),
             false,
             frame_state.transforms.camera_to_screen,
@@ -55,7 +65,12 @@ impl ConsoleDrawer {
          //draw cursor position in prompt
         self.glyph_drawer.draw(
             &"_".to_string(),
-            position_cli(console.prompt_index + 2, prompt_ypos, advance_x, self.font_size, frame_state.window_size),
+            position_cli(
+                console.prompt_index + 2, prompt_ypos,
+                advance_x,
+                self.font_size,
+                frame_state.window_size,
+            ),
             color::Colors::white(),
             false,
             frame_state.transforms.camera_to_screen,
