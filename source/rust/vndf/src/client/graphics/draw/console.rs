@@ -40,7 +40,7 @@ impl ConsoleDrawer {
         let prompt_ypos = 23;
 
         write!(&mut command_line, "> {}", console.input)
-            .unwrap_or_else(|e| panic!("Error writing to String: {}", e));
+            .expect("Error writing to String");
 
 
         self.glyph_drawer.draw(
