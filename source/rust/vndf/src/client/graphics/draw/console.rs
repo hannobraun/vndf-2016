@@ -1,5 +1,3 @@
-use std::fmt::Write;
-
 use nalgebra::Vec2;
 
 use client::console::Console;
@@ -44,13 +42,8 @@ impl ConsoleDrawer {
             );
         }
 
-        let mut command_line = String::new();
-
-        write!(&mut command_line, "> {}", console.input)
-            .expect("Writing to String should not fail");
-
         self.glyph_drawer.draw(
-            &command_line,
+            &format!("> {}", console.input),
             position_cli(
                 0, PROMPT_POS_Y,
                 advance_x,
