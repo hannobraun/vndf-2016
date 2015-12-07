@@ -271,7 +271,7 @@ fn set_insert (set: &mut Vec<Vec<EntityId>>,
     }
     else {
         set.push(vec!(*ent));
-        (set.len(),0)
+        (set.len()-1,0)
     }
 }
 
