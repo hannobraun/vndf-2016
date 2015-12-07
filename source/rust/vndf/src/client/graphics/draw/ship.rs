@@ -58,7 +58,8 @@ impl ShipDrawer {
         }
         
         for (ship_id, ship) in &frame.ships {
-            //if grouped_ships.contains(&ship_id) { continue }
+            if set_contains (&grouped_ships,&ship_id)
+                .is_some() { continue }
             
             let transform = transforms.symbol_to_screen(cast(ship.position));
 
@@ -230,38 +231,38 @@ fn check_visual_collision(frame: &Frame,
             }
         }
     }
+}
 
-    /// convenience for adding and grouping entity into sub groups
-    fn set_insert (set: &mut Vec<Vec<EntityId>>,
-                   ent: &EntityId) -> (usize,usize) {
-        if let Some(r) = set_contains(set,ent) {
-            r
-        }
-        else {
-            set.push(vec!(*ent));
-            (set.len(),0)
-        }
+/// convenience for adding and grouping entity into sub groups
+fn set_insert (set: &mut Vec<Vec<EntityId>>,
+               ent: &EntityId) -> (usize,usize) {
+    if let Some(r) = set_contains(set,ent) {
+        r
     }
-
-    /// insert two entities that relate into same group in set
-    fn set_insert_pair (set: &mut Vec<Vec<EntityId>>,
-                        ents: (&EntityId,&EntityId)) {
-        let r = set_insert(set,ents.0);
-        set[r.0].push(*ents.1);
+    else {
+        set.push(vec!(*ent));
+        (set.len(),0)
     }
+}
 
-    /// determines if ship is in grouped sets, returns first group and index
-    // NOTE: this might be inefficient
-    fn set_contains (set: &Vec<Vec<EntityId>>,
-                     ent: &EntityId) -> Option<(usize,usize)> {
-        for (i,g) in set.iter().enumerate() {
-            for (j,e) in g.iter().enumerate() {
-                if e == ent {
-                    return Some((i,j))
-                }
+/// insert two entities that relate into same group in set
+fn set_insert_pair (set: &mut Vec<Vec<EntityId>>,
+                    ents: (&EntityId,&EntityId)) {
+    let r = set_insert(set,ents.0);
+    set[r.0].push(*ents.1);
+}
+
+/// determines if ship is in grouped sets, returns first group and index
+// NOTE: this might be inefficient
+fn set_contains (set: &Vec<Vec<EntityId>>,
+                 ent: &EntityId) -> Option<(usize,usize)> {
+    for (i,g) in set.iter().enumerate() {
+        for (j,e) in g.iter().enumerate() {
+            if e == ent {
+                return Some((i,j))
             }
         }
-
-        None
     }
+
+    None
 }
