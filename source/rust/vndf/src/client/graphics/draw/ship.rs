@@ -97,6 +97,36 @@ impl ShipDrawer {
                 graphics,
             );
         }
+
+        // draw ship groups
+        for (i,group) in grouped_ships.iter().enumerate() {
+            // TODO: collect ships info from group as average
+            let first_ship = frame.ships.get(&group[0]).unwrap();
+            
+            let transform = transforms.symbol_to_screen(cast(first_ship.position));
+            
+            self.draw_symbol(
+                frame,
+                group[0], //NOTE: this basically does nothing
+                // TODO: change draw_symbol to accept Option<Ship id>
+                
+                transform,
+                graphics,
+                );
+
+            self.draw_name(
+                i as EntityId,
+                transform,
+                graphics,
+                );
+
+            // TODO: collect ships info from group as average
+            self.draw_info(
+                first_ship,
+                transform,
+                graphics,
+            );
+        }
     }
 
     fn draw_selection(
