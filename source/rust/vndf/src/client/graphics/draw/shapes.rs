@@ -86,6 +86,26 @@ impl ShapeDrawer {
             )
     }
 
+    pub fn ship_group(graphics: &mut Graphics) -> ShapeDrawer {
+        ShapeDrawer::new(
+            graphics,
+            gfx::PrimitiveType::TriangleList,
+            &[
+                Vertex { pos: [ 0., 1. ] },
+                Vertex { pos: [ -1., -1. ] },
+                Vertex { pos: [ 1., -1. ] },
+
+                Vertex { pos: [ 2., 1. ] },
+                Vertex { pos: [ 1., -1. ] },
+                Vertex { pos: [ 3., -1. ] },
+
+                Vertex { pos: [ -2., 1. ] },
+                Vertex { pos: [ -1., -1. ] },
+                Vertex { pos: [ -3., -1. ] },
+                ],
+            )
+    }
+
     pub fn line(graphics: &mut Graphics) -> ShapeDrawer {
         ShapeDrawer::new(
             graphics,
