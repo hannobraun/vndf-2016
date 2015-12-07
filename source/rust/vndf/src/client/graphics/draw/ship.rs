@@ -25,6 +25,8 @@ pub struct ShipDrawer {
 
     symbol_drawer: ShapeDrawer,
     glyph_drawer : GlyphDrawer,
+
+    ships_drawer: ShapeDrawer,
 }
 
 impl ShipDrawer {
@@ -39,6 +41,8 @@ impl ShipDrawer {
 
             symbol_drawer: ShapeDrawer::ship(graphics),
             glyph_drawer : GlyphDrawer::new(graphics, font_size as u32),
+
+            ships_drawer: ShapeDrawer::ship_group(graphics),
         }
     }
 
@@ -105,11 +109,9 @@ impl ShipDrawer {
             
             let transform = transforms.symbol_to_screen(cast(first_ship.position));
             
-            self.draw_symbol(
+            self.draw_symbol_group(
                 frame,
-                group[0], //NOTE: this basically does nothing
-                // TODO: change draw_symbol to accept Option<Ship id>
-                
+                &grouped_ships,
                 transform,
                 graphics,
                 );
@@ -160,6 +162,29 @@ impl ShipDrawer {
             transform,
             graphics,
         );
+    }
+
+    // TODO: draw as a group of three ships
+    fn draw_symbol_group(
+        &mut self,
+        frame    : &Frame,
+        set: &Vec<Vec<EntityId>>,
+        transform: Mat4<f32>,
+        graphics : &mut Graphics,
+    ) {
+        let mut color = color::Colors::blue_sky();
+        if let Some(sid) = frame.ship_id {
+            if set_contains(set,&sid).is_some()  {
+                color = color::Colors::green_spring();
+            }
+        }
+
+        self.ships_drawer.draw(
+            self.ship_size,
+            color,
+            transform,
+            graphics,
+            );
     }
 
     fn draw_name(
@@ -263,23 +288,20 @@ fn check_visual_collision(frame: &Frame,
     }
 }
 
-/// convenience for adding and grouping entity into sub groups
-fn set_insert (set: &mut Vec<Vec<EntityId>>,
-               ent: &EntityId) -> (usize,usize) {
-    if let Some(r) = set_contains(set,ent) {
-        r
-    }
-    else {
-        set.push(vec!(*ent));
-        (set.len()-1,0)
-    }
-}
 
 /// insert two entities that relate into same group in set
 fn set_insert_pair (set: &mut Vec<Vec<EntityId>>,
                     ents: (&EntityId,&EntityId)) {
-    let r = set_insert(set,ents.0);
-    set[r.0].push(*ents.1);
+    if let Some(r) = set_contains(set,ents.0) {
+        set[r.0].push(*ents.1);
+    }
+    else if let Some(r) = set_contains(set,ents.1) {
+        set[r.0].push(*ents.0);
+    }
+    else { // new group
+        set.push(vec!(*ents.0,*ents.1));
+    }
+    
 }
 
 /// determines if ship is in grouped sets, returns first group and index
