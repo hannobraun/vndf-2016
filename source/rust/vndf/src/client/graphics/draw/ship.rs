@@ -124,7 +124,6 @@ impl ShipDrawer {
                 graphics,
                 );
 
-            // TODO: collect ships info from group as average
             self.draw_info(
                 &avg_ship,
                 transform,

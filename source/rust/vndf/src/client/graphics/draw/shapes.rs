@@ -91,17 +91,18 @@ impl ShapeDrawer {
             graphics,
             gfx::PrimitiveType::TriangleList,
             &[
-                Vertex { pos: [ 0., 1. ] },
-                Vertex { pos: [ -1., -1. ] },
-                Vertex { pos: [ 1., -1. ] },
+                // slightly taller center tri
+                Vertex { pos: [ 0., 0.6 ] },
+                Vertex { pos: [ -0.5, -0.6 ] },
+                Vertex { pos: [ 0.5, -0.6 ] },
 
-                Vertex { pos: [ 2., 1. ] },
-                Vertex { pos: [ 1., -1. ] },
-                Vertex { pos: [ 3., -1. ] },
+                Vertex { pos: [ 1., 0.5 ] },
+                Vertex { pos: [ 0.5, -0.5 ] },
+                Vertex { pos: [ 1.5, -0.5 ] },
 
-                Vertex { pos: [ -2., 1. ] },
-                Vertex { pos: [ -1., -1. ] },
-                Vertex { pos: [ -3., -1. ] },
+                Vertex { pos: [ -1., 0.5 ] },
+                Vertex { pos: [ -1.5, -0.5 ] },
+                Vertex { pos: [ -0.5, -0.5 ] },
                 ],
             )
     }
