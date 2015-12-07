@@ -4,8 +4,6 @@ use nalgebra::{
     Vec2,
 };
 
-use std::collections::HashSet;
-
 use client::graphics::base::Graphics;
 use client::graphics::draw::{
     GlyphDrawer,
@@ -51,7 +49,7 @@ impl ShipDrawer {
         transforms: &Transforms,
         graphics  : &mut Graphics,
         ) {
-        let mut grouped_ships: HashSet<EntityId> = HashSet::new();
+        let mut grouped_ships: Vec<Vec<EntityId>> = vec!();
 
         if cam_zoom > 1.0 { // TODO: group ships and exclude from frame iter below
             check_visual_collision(frame,
@@ -204,7 +202,7 @@ impl ShipDrawer {
 }
 
 fn check_visual_collision(frame: &Frame,
-                          set: &mut HashSet<EntityId>,
+                          set: &mut Vec<Vec<EntityId>>,
                           zoom: f32) {
     'ships: for (ship_id,ship_body) in frame.ships.iter() {
         let ship_coll = {
@@ -228,9 +226,42 @@ fn check_visual_collision(frame: &Frame,
                 (&ship_coll2,&cast(ship_body2.position)),
                 zoom) {
                 // visual collision made between *ship_id,*ship_id2
-                set.insert(*ship_id);
-                set.insert(*ship_id2);
+                set_insert_pair(set,(ship_id,ship_id2));
             }
         }
+    }
+
+    /// convenience for adding and grouping entity into sub groups
+    fn set_insert (set: &mut Vec<Vec<EntityId>>,
+                   ent: &EntityId) -> (usize,usize) {
+        if let Some(r) = set_contains(set,ent) {
+            r
+        }
+        else {
+            set.push(vec!(*ent));
+            (set.len(),0)
+        }
+    }
+
+    /// insert two entities that relate into same group in set
+    fn set_insert_pair (set: &mut Vec<Vec<EntityId>>,
+                        ents: (&EntityId,&EntityId)) {
+        let r = set_insert(set,ents.0);
+        set[r.0].push(*ents.1);
+    }
+
+    /// determines if ship is in grouped sets, returns first group and index
+    // NOTE: this might be inefficient
+    fn set_contains (set: &Vec<Vec<EntityId>>,
+                     ent: &EntityId) -> Option<(usize,usize)> {
+        for (i,g) in set.iter().enumerate() {
+            for (j,e) in g.iter().enumerate() {
+                if e == ent {
+                    return Some((i,j))
+                }
+            }
+        }
+
+        None
     }
 }
