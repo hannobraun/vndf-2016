@@ -2,6 +2,7 @@ use nalgebra::{
     cast,
     Mat4,
     Vec2,
+    zero,
 };
 
 use client::graphics::base::Graphics;
@@ -104,8 +105,9 @@ impl ShipDrawer {
 
         // draw ship groups
         for (i,group) in grouped_ships.iter().enumerate() {
-            // TODO: collect ships info from group as average
             let first_ship = frame.ships.get(&group[0]).unwrap();
+            
+            let avg_ship = group_avg(group,frame);
             
             let transform = transforms.symbol_to_screen(cast(first_ship.position));
             
@@ -117,14 +119,14 @@ impl ShipDrawer {
                 );
 
             self.draw_name(
-                i as EntityId,
+                i as EntityId, // TODO: consider some naming scheme for groups
                 transform,
                 graphics,
                 );
 
             // TODO: collect ships info from group as average
             self.draw_info(
-                first_ship,
+                &avg_ship,
                 transform,
                 graphics,
             );
@@ -317,4 +319,30 @@ fn set_contains (set: &Vec<Vec<EntityId>>,
     }
 
     None
+}
+
+fn group_avg (group: &Vec<EntityId>,
+              frame: &Frame) -> Body {
+    let mut avg_ship = Body { // TODO: as a Body default creation method
+        position:zero(),
+        velocity:zero(),
+        force:zero(),
+        mass:zero(),
+    };
+    
+    for ship in group {
+        let body = frame.ships.get(&ship).unwrap();
+        avg_ship.position = avg_ship.position + body.position;
+        avg_ship.velocity = avg_ship.velocity + body.velocity;
+        avg_ship.force = avg_ship.force + body.force;
+        avg_ship.mass = avg_ship.mass + body.mass;
+    }
+
+    avg_ship.position = avg_ship.position / group.len() as f64;
+    avg_ship.velocity = avg_ship.velocity / group.len() as f64;
+    avg_ship.force = avg_ship.force / group.len() as f64;
+    avg_ship.mass = avg_ship.mass / group.len() as f64;
+
+
+    avg_ship
 }
