@@ -55,10 +55,17 @@ impl Mouse {
                     self.drag_start = precise_time_s();
                 },
                 MouseInput(ElementState::Released,MouseButton::Left) => {
+                    let drag_0 = if let Some(pos) = self.drag.0 {
+                        pos
+                    }
+                    else {
+                        return
+                    };
+
                     if ((precise_time_s()-self.drag_start) > DRAGMIN_TIME) &
-                        (((self.drag.0).unwrap().0 - self.pos.0).abs() >
+                        ((drag_0.0 - self.pos.0).abs() >
                          DRAGMIN_PX) &
-                        (((self.drag.0).unwrap().1 - self.pos.1).abs() >
+                        ((drag_0.1 - self.pos.1).abs() >
                          DRAGMIN_PX)
                     {
                         self.drag.1 = Some(self.pos);
