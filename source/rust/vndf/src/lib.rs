@@ -1,5 +1,3 @@
-#![feature(drain)]
-
 #[cfg(feature="default")] extern crate freetype;
 extern crate getopts;
 #[cfg(feature="default")] #[macro_use] extern crate gfx;
