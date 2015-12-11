@@ -36,7 +36,10 @@ impl PathDrawer {
         graphics  : &mut Graphics,
     ) {
         let mut ship = match frame.ship_id {
-            Some(id) => frame.ships[&id],
+            Some(id) => match frame.ships.get(&id) {
+                Some(&ship) => ship,
+                None        => return,
+            },
             None     => return,
         };
 
