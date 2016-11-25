@@ -4,14 +4,14 @@
 
 This repository holds the source code for Von Neumann Defense Force, a multiplayer game that was in development for a number of years, but was ultimately abandoned. The game was created by [Hanno Braun](https://github.com/hannobraun), who was later joined by [Chris Gill](https://github.com/viperscape).
 
-This is the repository that was used from the very beginning, containing thousands of commits from the [very first one](https://github.com/hannobraun/vndf/commit/aeb419ea66cf03a783bdd18b4ef4b6ce6980f9a8), through all the twists and turns, all the successes, on to the last whimpers and final abandonment. We're releasing it in the hope that you may use the code for something useful, be it just to satisfy your own curiosity.
+This is the repository that was used from the very beginning, containing thousands of commits, from the [very first one](https://github.com/hannobraun/vndf/commit/aeb419ea66cf03a783bdd18b4ef4b6ce6980f9a8), through all the twists and turns, all the successes, on to the last whimpers and final abandonment. We're releasing it in the hope that you may use the code for something useful.
 
 Please note that the code in this repository is that of an in-progress game project that started years ago and was abandoned mid-development. As such, the code was never really intended for public consumption and is of varying quality.
 
 
 ## Getting Started
 
-This game is written in Rust. To work on it (or run it), you need the following prerequisites:
+This game is written in [Rust](https://www.rust-lang.org/). To work on it (or run it), you need the following prerequisites:
 - A Rust nightly from around December 2015 (the last time this game was being worked on). I recommend using [rustup](http://rustup.rs) to install it.
 - [FreeType](http://www.freetype.org/) is required to run and to build the
   client. On Linux, it should be available via your package manager. If you have
@@ -42,14 +42,14 @@ Start a client:
 
 > pan client
 
-This will start a client. You need to run the server first, so the client has something to connect to (see above).
+To successfully start a client, you need to run the server first, so the client has something to connect to (see above).
 
 
-## More Information
+## Additional Information
 
 The VNDF website is located at [http://hannobraun.de/vndf](http://hannobraun.de/vndf). Especially interesting is the [newsletter archive](http://hannobraun.de/vndf/news/).
 
-There's also some documentation in this repository in the [docs directory](https://github.com/hannobraun/vndf/tree/master/docs). The [game design](https://github.com/hannobraun/vndf/blob/master/docs/game-design/start-here.md) documentation is probably most interesting.
+There's also some documentation in the [docs directory](https://github.com/hannobraun/vndf/tree/master/docs) of this repository. The [game design](https://github.com/hannobraun/vndf/blob/master/docs/game-design/start-here.md) documentation is probably most interesting.
 
 And of course there's the [source code](https://github.com/hannobraun/vndf/tree/master/source/rust/vndf) itself.
 
