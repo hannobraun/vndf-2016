@@ -1,34 +1,24 @@
 # Von Neumann Defense Force
 
-## Prerequisites
+## About This Repository
 
-To work on VNDF you need two things:
-- Bash, to run the scripts in the `scripts/` directory. On Windows,
-  [Cygwin](https://www.cygwin.com/) should work.
-- An up-to-date installation of [Rust](https://www.rust-lang.org/). I recommend
-  [multirust](https://github.com/brson/multirust) to manage your installation.
+This repository holds the source code for Von Neumann Defense Force, a multiplayer game that was in development for a number of years, but was ultimately abandoned. The game was created by [Hanno Braun](https://github.com/hannobraun), who was later joined by [Chris Gill](https://github.com/viperscape).
+
+This is the repository that was used from the very beginning, containing thousands of commits from the [very first one](https://github.com/hannobraun/vndf/commit/aeb419ea66cf03a783bdd18b4ef4b6ce6980f9a8), through all the twists and turns, all the successes, on to the last whimpers and final abandonment. We're releasing it in the hope that you may use the code for something useful, be it just to satisfy your own curiosity.
+
+Please note that the code in this repository is that of an in-progress game project that started years ago and was abandoned mid-development. As such, the code was never really intended for public consumption and is of varying quality.
+
+
+## Getting Started
+
+This game is written in Rust. To work on it (or run it), you need the following prerequisites:
+- A Rust nightly from around December 2015 (the last time this game was being worked on). I recommend using [rustup](http://rustup.rs) to install it.
 - [FreeType](http://www.freetype.org/) is required to run and to build the
   client. On Linux, it should be available via your package manager. If you have
   installed it, but still get a link error, you might also need to install the
   matching `-dev` package.
 
-
-## Resources
-
-The source repository for this project is hosted on GitHub:
-https://github.com/hannobraun/vndf
-
-Documentation is available in the
-[docs](https://github.com/hannobraun/vndf/tree/master/docs/) directory.
-
-Project management is done on
-[Trello](https://trello.com/b/WdwuT2Fx/von-neumann-defense-force).
-
-
-## Get Started
-
-We're using a command-line application called Pan to help with development.
-Before you can start working on VNDF, you need to build and set up Pan.
+Once you're set up with Rust and Cargo, you can build Pan, the command-line "IDE" we used to help with development.
 
 On Linux:
 
@@ -38,35 +28,32 @@ On Windows:
 
 > ./setup.bat
 
-After that is done, follow the instructions that the setup script prints to set
-up Pan.
+Once Pan is set up, you can use it to do some standard development tasks.
 
-
-## Run all tests
+Run all tests:
 
 > pan test
 
-This will compile the project and run all tests. Please do this regularly,
-especially before pushing code to GitHub.
-
-
-## Start the server
+Start the server:
 
 > pan server
 
-This will compile the project and run a server process.
-
-
-## Start the client
+Start a client:
 
 > pan client
 
-This will start the client. You need to run a server first, for the client to
-connect to (see above).
+This will start a client. You need to run the server first, so the client has something to connect to (see above).
 
 
-## Deploy to the production environment
+## More Information
 
-This function has moved to another repository, because VNDF shares a server with
-other projects. Once VNDF gets a dedicated server, we'll move the deployment
-infrastructure back here.
+The VNDF website is located at [http://hannobraun.de/vndf](http://hannobraun.de/vndf). Especially interesting is the [newsletter archive](http://hannobraun.de/vndf/news/).
+
+There's also some documentation in this repository in the [docs directory](https://github.com/hannobraun/vndf/tree/master/docs). The [game design](https://github.com/hannobraun/vndf/blob/master/docs/game-design/start-here.md) documentation is probably most interesting.
+
+And of course there's the [source code](https://github.com/hannobraun/vndf/tree/master/source/rust/vndf) itself.
+
+
+## License
+
+Unless noted otherwise, all code in this repository is licensed under the conditions of the [CC0](https://creativecommons.org/publicdomain/zero/1.0/), which basically makes it available to everyone, without any restrictions. Please refer to the [summary](https://creativecommons.org/publicdomain/zero/1.0/) and the [full license text](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
