@@ -56,4 +56,4 @@ And of course there's the [source code](https://github.com/hannobraun/vndf/tree/
 
 ## License
 
-Unless noted otherwise, all code in this repository is licensed under the conditions of the [CC0](https://creativecommons.org/publicdomain/zero/1.0/), which basically makes it available to everyone, without any restrictions. Please refer to the [summary](https://creativecommons.org/publicdomain/zero/1.0/) and the [full license text](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+Unless noted otherwise, all code in this repository is licensed under the conditions of the [CC0](https://creativecommons.org/publicdomain/zero/1.0/), which basically makes it available to everyone, without any restrictions. Please refer to the [summary](https://creativecommons.org/publicdomain/zero/1.0/) and the [full legal text](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
