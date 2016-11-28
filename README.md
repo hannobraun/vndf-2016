@@ -4,7 +4,7 @@
 
 This repository holds the source code for Von Neumann Defense Force, a multiplayer game that was in development for a number of years, but was ultimately abandoned. The game was created by [Hanno Braun](https://github.com/hannobraun), who was later joined by [Chris Gill](https://github.com/viperscape).
 
-This is the repository that was used from the very beginning, containing thousands of commits, from the [very first one](https://github.com/hannobraun/vndf/commit/aeb419ea66cf03a783bdd18b4ef4b6ce6980f9a8), through all the twists and turns, all the successes, on to the last whimpers and final abandonment. We're releasing it in the hope that you may use the code for something useful.
+This is the repository that was used from the very beginning, containing thousands of commits, from the [very first one](https://github.com/hannobraun/vndf/commit/aeb419ea66cf03a783bdd18b4ef4b6ce6980f9a8), through all the twists and turns, all the failures and successes, on to the last whimpers and final abandonment. We're releasing it in the hope that you may use the code for something useful.
 
 Please note that the code in this repository is that of an in-progress game project that started years ago and was abandoned mid-development. As such, the code was never really intended for public consumption and is of varying quality.
 
